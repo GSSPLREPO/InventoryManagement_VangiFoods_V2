@@ -1,0 +1,1645 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InVanDBModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchId" />
+    </Key>
+    <Property Name="BranchId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganisationID" Type="Int32" />
+    <Property Name="BranchName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Abbreviation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPerson" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ContactNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="CountryID" Type="Int32" />
+    <Property Name="StateID" Type="Int32" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Organisation" Relationship="Self.FK_Branch_ToOrganisations" FromRole="Branch" ToRole="Organisations" />
+    <NavigationProperty Name="Departments" Relationship="Self.FK_Department_ToBranch" FromRole="Branch" ToRole="Department" />
+  </EntityType>
+  <EntityType Name="CityMaster">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateID" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="CityCode" Type="Int32" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="StateMaster" Relationship="Self.FK_CityMaster_StateMaster" FromRole="CityMaster" ToRole="StateMaster" />
+  </EntityType>
+  <EntityType Name="ClientMaster">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="ClientEmailId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPersonName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ContactNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="BankName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="BankBranchName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="BankAccountNo" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="IFSCCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="GSTINNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="BlackList" Type="Int32" />
+    <Property Name="ShipToAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ShipToCountry" Type="Int32" />
+    <Property Name="ShipToState" Type="Int32" />
+    <Property Name="ShipToCity" Type="Int32" />
+    <Property Name="ShipPinCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ShipStateCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="BillToAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="BillToCountry" Type="Int32" />
+    <Property Name="BillToState" Type="Int32" />
+    <Property Name="BillToCity" Type="Int32" />
+    <Property Name="BillPinCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="BillStateCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PanNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FSSAI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CountryCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TypeOfCompany" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="COAMaster">
+    <Key>
+      <PropertyRef Name="COAID" />
+    </Key>
+    <Property Name="COAID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="COANo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="WorkOrderID" Type="Int32" />
+    <Property Name="LabID" Type="Int32" />
+    <Property Name="COADate" Type="DateTime" Precision="0" />
+    <Property Name="ItemCategoryID" Type="Int32" />
+    <Property Name="ItemID" Type="Int32" />
+    <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BatchNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ManufecturingDate" Type="DateTime" Precision="0" />
+    <Property Name="BestBefore" Type="DateTime" Precision="0" />
+    <Property Name="Weight" Type="Double" />
+    <Property Name="PackingSize" Type="Double" />
+    <Property Name="Acidity" Type="Double" />
+    <Property Name="Salt" Type="Double" />
+    <Property Name="PH" Type="Double" />
+    <Property Name="BRIX" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Consistency" Type="Boolean" />
+    <Property Name="Ecoli" Type="Boolean" />
+    <Property Name="YestAndMold" Type="Boolean" />
+    <Property Name="ArobicCount" Type="Double" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Company_ID" />
+    </Key>
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Company_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContactNo" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CountryMaster">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CountryCode" Type="Int32" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CurrencyMasters" Relationship="Self.FK_CurrencyMaster_ToCountryMaster" FromRole="CountryMaster" ToRole="CurrencyMaster" />
+    <NavigationProperty Name="StateMasters" Relationship="Self.FK_StateMaster_CountryMaster" FromRole="CountryMaster" ToRole="StateMaster" />
+  </EntityType>
+  <EntityType Name="CurrencyMaster">
+    <Key>
+      <PropertyRef Name="CurrencyID" />
+    </Key>
+    <Property Name="CurrencyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="CurrencyName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CurrencyPrice" Type="Double" />
+    <Property Name="ndianCurrencyPrice" Type="Double" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CountryMaster" Relationship="Self.FK_CurrencyMaster_ToCountryMaster" FromRole="CurrencyMaster" ToRole="CountryMaster" />
+  </EntityType>
+  <EntityType Name="DebitNote">
+    <Key>
+      <PropertyRef Name="DebitNoteId" />
+    </Key>
+    <Property Name="DebitNoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RejectionNoteId" Type="Int32" />
+    <Property Name="GRNId" Type="Int32" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="DebitNoteNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="Grandtotal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GeneralRemarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="CheckedBy" Type="Int32" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+  </EntityType>
+  <EntityType Name="DebitNoteDetail">
+    <Key>
+      <PropertyRef Name="DebitNoteDetailsId" />
+    </Key>
+    <Property Name="DebitNoteDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DebitNoteId" Type="Int32" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Value" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentID" />
+    </Key>
+    <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPerson" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+    <NavigationProperty Name="Branch" Relationship="Self.FK_Department_ToBranch" FromRole="Department" ToRole="Branch" />
+  </EntityType>
+  <EntityType Name="DesignationMaster">
+    <Key>
+      <PropertyRef Name="DesignationID" />
+    </Key>
+    <Property Name="DesignationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DesignationName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="EmployeeMasters" Relationship="Self.FK_EmployeeMaster_EmployeeMaster" FromRole="DesignationMaster" ToRole="EmployeeMaster" />
+  </EntityType>
+  <EntityType Name="EmployeeMaster">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="OrganisationGroupId" Type="Int32" />
+    <Property Name="OrganisationId" Type="Int32" />
+    <Property Name="BranchID" Type="Int32" />
+    <Property Name="DepartmentID" Type="Int32" />
+    <Property Name="DesignationID" Type="Int32" />
+    <Property Name="EmployeeMobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeBirthDate" Type="DateTime" Precision="0" />
+    <Property Name="EmployeeJoingDate" Type="DateTime" Precision="0" />
+    <Property Name="EmployeeGender" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="CountryID" Type="Int32" />
+    <Property Name="StateID" Type="Int32" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="EmployeeAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PinNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeePic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DesignationMaster" Relationship="Self.FK_EmployeeMaster_EmployeeMaster" FromRole="EmployeeMaster" ToRole="DesignationMaster" />
+  </EntityType>
+  <EntityType Name="FinishGoodSery">
+    <Key>
+      <PropertyRef Name="FGSID" />
+    </Key>
+    <Property Name="FGSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PackageSize" Type="Int32" />
+    <Property Name="MfgDate" Type="DateTime" Precision="0" />
+    <Property Name="NoOfCartonBox" Type="Int32" />
+    <Property Name="QuantityInKG" Type="Double" />
+    <Property Name="BatchNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Packaging" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Sealing" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Labeling" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="QCCheck" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Remarks" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="LabMasters" Relationship="Self.FK_LabMaster_ToFinishGoodSeries" FromRole="FinishGoodSeries" ToRole="LabMaster" />
+  </EntityType>
+  <EntityType Name="GSTMaster">
+    <Key>
+      <PropertyRef Name="TaxID" />
+    </Key>
+    <Property Name="TaxID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TaxName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TaxRate" Type="Double" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="InquiryMaster">
+    <Key>
+      <PropertyRef Name="InquiryID" />
+    </Key>
+    <Property Name="InquiryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InquiryStatusID" Type="Int32" />
+    <Property Name="CompanyName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPersonName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfInquiry" Type="DateTime" Precision="0" />
+    <Property Name="ClientEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ClientAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ClientCountry" Type="Int32" />
+    <Property Name="ClientState" Type="Int32" />
+    <Property Name="ClientCity" Type="Int32" />
+    <Property Name="ClientZipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ItemCategoryID" Type="Int32" />
+    <Property Name="ItemID" Type="Int32" />
+    <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemQuantity" Type="Double" />
+    <Property Name="QuotedPrice" Type="Double" />
+    <Property Name="ExpectedPrice" Type="Double" />
+    <Property Name="CloserPrice" Type="Double" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="ItemCategoryMaster" Relationship="Self.FK_InquiryMaster_ToItemCategoryMaster" FromRole="InquiryMaster" ToRole="ItemCategoryMaster" />
+    <NavigationProperty Name="ItemMaster" Relationship="Self.FK_InquiryMaster_ToItemMaster" FromRole="InquiryMaster" ToRole="ItemMaster" />
+  </EntityType>
+  <EntityType Name="InvoiceMaster">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DANo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DADate" Type="DateTime" Precision="3" />
+    <Property Name="InvoiceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceDate" Type="DateTime" Precision="3" />
+    <Property Name="InvoiceType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfIssue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfRemoval" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TimeOfIssue" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TimeOfRemoval" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NotificationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CheckedById" Type="Int32" />
+    <Property Name="ApprovedById" Type="Int32" />
+    <Property Name="ApprovalStatus" Type="Int32" />
+    <Property Name="ApprovalRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedById" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedById" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="InwardNote">
+    <Key>
+      <PropertyRef Name="InwardNoteID" />
+    </Key>
+    <Property Name="InwardNoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InwardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InwardDate" Type="DateTime" Precision="0" />
+    <Property Name="PurchaseOrderId" Type="Int32" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PODate" Type="DateTime" Precision="0" />
+    <Property Name="LocationID" Type="Int32" />
+    <Property Name="BillingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ShippingAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+  </EntityType>
+  <EntityType Name="IssueNote">
+    <Key>
+      <PropertyRef Name="IssueNoteId" />
+    </Key>
+    <Property Name="IssueNoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DepartmentId" Type="Int32" />
+    <Property Name="IssueNoteNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsAgainstBOM" Type="Int32" />
+    <Property Name="SalesOrderId" Type="Int32" />
+    <Property Name="IssueNoteDate" Type="DateTime" Precision="3" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="WorkOrderNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="BatchNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="VendorName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PreparedBy" Type="Int32" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="CheckedBy" Type="Int32" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+  </EntityType>
+  <EntityType Name="IssueNoteDetail">
+    <Key>
+      <PropertyRef Name="IssueNoteDetailsId" />
+    </Key>
+    <Property Name="IssueNoteDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IssueNoteId" Type="Int32" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="QuantityRequested" Type="Double" />
+    <Property Name="QuantityIssued" Type="Double" />
+    <Property Name="CurrentStock" Type="Double" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ItemCategoryMaster">
+    <Key>
+      <PropertyRef Name="ItemCategoryID" />
+    </Key>
+    <Property Name="ItemCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemCategoryName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="InquiryMasters" Relationship="Self.FK_InquiryMaster_ToItemCategoryMaster" FromRole="ItemCategoryMaster" ToRole="InquiryMaster" />
+    <NavigationProperty Name="ItemMasters" Relationship="Self.FK_ItemMaster_ToItemCategoryMaster" FromRole="ItemCategoryMaster" ToRole="ItemMaster" />
+    <NavigationProperty Name="QCProductionSpecificationMasters" Relationship="Self.FK_QCProductionSpecificationMaster_ToItemCategoryMaster" FromRole="ItemCategoryMaster" ToRole="QCProductionSpecificationMaster" />
+  </EntityType>
+  <EntityType Name="ItemMaster">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ItemCategoryID" Type="Int32" />
+    <Property Name="ItemName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="InquiryMasters" Relationship="Self.FK_InquiryMaster_ToItemMaster" FromRole="ItemMaster" ToRole="InquiryMaster" />
+    <NavigationProperty Name="ItemCategoryMaster" Relationship="Self.FK_ItemMaster_ToItemCategoryMaster" FromRole="ItemMaster" ToRole="ItemCategoryMaster" />
+    <NavigationProperty Name="QCProductionSpecificationMasters" Relationship="Self.FK_QCProductionSpecificationMaster_ToItemMaster" FromRole="ItemMaster" ToRole="QCProductionSpecificationMaster" />
+  </EntityType>
+  <EntityType Name="LabMaster">
+    <Key>
+      <PropertyRef Name="LabID" />
+    </Key>
+    <Property Name="LabID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LocationID" Type="Int32" />
+    <Property Name="FGSID" Type="Int32" />
+    <Property Name="LabName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LabReport" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="FinishGoodSery" Relationship="Self.FK_LabMaster_ToFinishGoodSeries" FromRole="LabMaster" ToRole="FinishGoodSeries" />
+    <NavigationProperty Name="LocationMaster" Relationship="Self.FK_LabMaster_ToLocationMaster" FromRole="LabMaster" ToRole="LocationMaster" />
+  </EntityType>
+  <EntityType Name="LocationMaster">
+    <Key>
+      <PropertyRef Name="LocationID" />
+    </Key>
+    <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LocationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="LabMasters" Relationship="Self.FK_LabMaster_ToLocationMaster" FromRole="LocationMaster" ToRole="LabMaster" />
+    <NavigationProperty Name="MachineMasters" Relationship="Self.FK_MachineMaster_ToLocationMaster" FromRole="LocationMaster" ToRole="MachineMaster" />
+    <NavigationProperty Name="StorageLocationMasters" Relationship="Self.FK_StorageLocationMaster_ToLocationMaster" FromRole="LocationMaster" ToRole="StorageLocationMaster" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="Thread" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Level" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Logger" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="false" />
+    <Property Name="Exception" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="MachineMaster">
+    <Key>
+      <PropertyRef Name="MachineID" />
+    </Key>
+    <Property Name="MachineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MachineName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InstallationDate" Type="DateTime" Precision="0" />
+    <Property Name="LocationID" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ManufacturerName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPersonName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPersonEmail" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPersonMobileNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="LocationMaster" Relationship="Self.FK_MachineMaster_ToLocationMaster" FromRole="MachineMaster" ToRole="LocationMaster" />
+  </EntityType>
+  <EntityType Name="OrganisationGroup">
+    <Key>
+      <PropertyRef Name="OrganisationGroupId" />
+    </Key>
+    <Property Name="OrganisationGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Abbreviation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Details" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Organisations" Relationship="Self.FK_Organisations_ToOrganisationGroups" FromRole="OrganisationGroups" ToRole="Organisations" />
+  </EntityType>
+  <EntityType Name="Organisation">
+    <Key>
+      <PropertyRef Name="OrganisationId" />
+    </Key>
+    <Property Name="OrganisationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganisationGroupId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Abbreviation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Logo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Range" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Division" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Commisionerate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="StateCode" Type="Int32" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PANNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CINNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GSTINNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Branches" Relationship="Self.FK_Branch_ToOrganisations" FromRole="Organisations" ToRole="Branch" />
+    <NavigationProperty Name="OrganisationGroup" Relationship="Self.FK_Organisations_ToOrganisationGroups" FromRole="Organisations" ToRole="OrganisationGroups" />
+  </EntityType>
+  <EntityType Name="ProcessMaster">
+    <Key>
+      <PropertyRef Name="ProcessID" />
+    </Key>
+    <Property Name="ProcessID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProcessName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProcessStep" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PurchaseOrder">
+    <Key>
+      <PropertyRef Name="PurchaseOrderId" />
+    </Key>
+    <Property Name="PurchaseOrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganisationId" Type="Int32" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="PODate" Type="DateTime" Precision="0" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DespatchMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransportationMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+    <Property Name="WithComparison" Type="Boolean" />
+    <Property Name="Freight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ComparisionId" Type="Int32" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Tax" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OtherCharges" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentsTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentTermsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DeliveryTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TransitInsurance" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PackingAndForwarding" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TestToBeOffered" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SupervisionTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Warranty" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DeliveryTermsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovalStatus" Type="Int32" />
+    <Property Name="ApprovalRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Boolean" />
+    <Property Name="ApprovedById" Type="Int32" />
+    <Property Name="PreparedById" Type="Int32" />
+    <Property Name="CheckedById" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="FreightRs" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FreightGSTPercent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CheckedByDate" Type="DateTime" Precision="3" />
+    <Property Name="ApprovedByDate" Type="DateTime" Precision="3" />
+    <Property Name="QuatationNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderAmendment">
+    <Key>
+      <PropertyRef Name="PurchaseOrderAmendmentId" />
+    </Key>
+    <Property Name="PurchaseOrderAmendmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PurchaseOrderId" Type="Int32" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="PONo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="POAmendNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="POAmendDate" Type="DateTime" Precision="3" />
+    <Property Name="PODate" Type="DateTime" Precision="3" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentsTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DeliveryTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TransitInsurance" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PackingAndForwarding" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="TestToBeOffered" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SupervisionTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Warranty" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovalStatus" Type="Int32" />
+    <Property Name="ApprovalRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovedById" Type="Int32" />
+    <Property Name="PreparedById" Type="Int32" />
+    <Property Name="CheckedById" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="CheckedByDate" Type="DateTime" Precision="3" />
+    <Property Name="ApprovedByDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderAmendmentDetail">
+    <Key>
+      <PropertyRef Name="PurchaseOrderAmendmentDetailsId" />
+    </Key>
+    <Property Name="PurchaseOrderAmendmentDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PurchaseOrderAmendmentId" Type="Int32" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AmendQuantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AmendRate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AmendDISC" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AmendCgst" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AmendSgst" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AmendIgst" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Value" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="QCProductionSpecificationMaster">
+    <Key>
+      <PropertyRef Name="QCProductionSpecificationID" />
+    </Key>
+    <Property Name="QCProductionSpecificationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductionSpecification" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="ItemCategoryID" Type="Int32" Nullable="false" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="ItemCategoryMaster" Relationship="Self.FK_QCProductionSpecificationMaster_ToItemCategoryMaster" FromRole="QCProductionSpecificationMaster" ToRole="ItemCategoryMaster" />
+    <NavigationProperty Name="ItemMaster" Relationship="Self.FK_QCProductionSpecificationMaster_ToItemMaster" FromRole="QCProductionSpecificationMaster" ToRole="ItemMaster" />
+    <NavigationProperty Name="QCProductioObservationMastes" Relationship="Self.FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster" FromRole="QCProductionSpecificationMaster" ToRole="QCProductioObservationMaste" />
+    <NavigationProperty Name="QCProductioObservationMasters" Relationship="Self.FK_QCProductioObservationMaster_ToQCProductionSpecificationMaster" FromRole="QCProductionSpecificationMaster" ToRole="QCProductioObservationMaster" />
+  </EntityType>
+  <EntityType Name="QCProductioObservationMaste">
+    <Key>
+      <PropertyRef Name="QCProductionObservationID" />
+    </Key>
+    <Property Name="QCProductionObservationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QCProductionSpecificationID" Type="Int32" Nullable="false" />
+    <Property Name="ProductionObservation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="QCProductionSpecificationMaster" Relationship="Self.FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster" FromRole="QCProductioObservationMaste" ToRole="QCProductionSpecificationMaster" />
+  </EntityType>
+  <EntityType Name="QCProductioObservationMaster">
+    <Key>
+      <PropertyRef Name="QCProductionObservationID" />
+    </Key>
+    <Property Name="QCProductionObservationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="QCProductionSpecificationID" Type="Int32" Nullable="false" />
+    <Property Name="ProductionObservation" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="QCProductionSpecificationMaster" Relationship="Self.FK_QCProductioObservationMaster_ToQCProductionSpecificationMaster" FromRole="QCProductioObservationMaster" ToRole="QCProductionSpecificationMaster" />
+  </EntityType>
+  <EntityType Name="RecipeMaster">
+    <Key>
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="RecipeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RecipeName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="RejectionDataSheetMaster">
+    <Key>
+      <PropertyRef Name="RejectionID" />
+    </Key>
+    <Property Name="RejectionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RejectionDate" Type="DateTime" Precision="0" />
+    <Property Name="SupplierID" Type="Int32" Nullable="false" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfReceving" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="NameOfMaterial" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ManufecturingDate" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="BestBefore" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="ItemCategoryID" Type="Int32" />
+    <Property Name="ItemID" Type="Int32" />
+    <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TotalRecevingQuantiy" Type="Double" />
+    <Property Name="TotalRejectedQuantity" Type="Double" />
+    <Property Name="PostRejectedQuantity" Type="Double" />
+    <Property Name="ReasonForRejection" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CurrectiveAction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SupplierMaster" Relationship="Self.FK_RejectionDataSheetMaster_ToSupplierMaster" FromRole="RejectionDataSheetMaster" ToRole="SupplierMaster" />
+  </EntityType>
+  <EntityType Name="RequestForQuotation">
+    <Key>
+      <PropertyRef Name="RequestForQuotationId" />
+    </Key>
+    <Property Name="RequestForQuotationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganisationId" Type="Int32" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="RFQNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="RFQYear" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ItemId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="QuantityS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SOIDS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PRIDS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="RoleRight">
+    <Key>
+      <PropertyRef Name="RoleRightId" />
+    </Key>
+    <Property Name="RoleRightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="ScreenId" Type="Int32" />
+    <Property Name="LastModifiedUserId" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CheckedRole" Type="Boolean" />
+    <Property Name="ApprovedRole" Type="Boolean" />
+    <Property Name="PreparedRole" Type="Boolean" />
+    <Property Name="AddRight" Type="Boolean" />
+    <Property Name="UpdateRight" Type="Boolean" />
+    <Property Name="DeleteRight" Type="Boolean" />
+    <Property Name="ViewScreen" Type="Boolean" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_RoleRights_ToRoles" FromRole="RoleRights" ToRole="Roles" />
+    <NavigationProperty Name="ScreenName" Relationship="Self.FK_RoleRights_ToScreenName" FromRole="RoleRights" ToRole="ScreenName" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+    <NavigationProperty Name="RoleRights" Relationship="Self.FK_RoleRights_ToRoles" FromRole="Roles" ToRole="RoleRights" />
+  </EntityType>
+  <EntityType Name="SalesOrder">
+    <Key>
+      <PropertyRef Name="SalesOrderId" />
+    </Key>
+    <Property Name="SalesOrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganisationId" Type="Int32" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="SONo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SODate" Type="DateTime" Precision="0" />
+    <Property Name="ClientId" Type="Int32" />
+    <Property Name="DispatchTo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ServiceType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PONo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PODate" Type="DateTime" Precision="0" />
+    <Property Name="TransportationMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="QuatationRef" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DelivaryDate" Type="DateTime" Precision="3" />
+    <Property Name="SOIncharge" Type="Int32" />
+    <Property Name="OtherCharges" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="InspectionTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="InspectionTermsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentTermsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DeliveryTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DeliveryTermsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DespatchMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Freight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Payment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TaxId" Type="Int32" />
+    <Property Name="TransitInsurance" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="PackingAndForwarding" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="TestToBeOffered" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="SupervisionTerms" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="SOYear" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovalStatus" Type="Int32" />
+    <Property Name="Approvalremarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovedById" Type="Int32" />
+    <Property Name="CheckedById" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedById" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedById" Type="Int32" />
+    <Property Name="FreightRs" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FreightGSTPercent" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsOpen" Type="Boolean" />
+    <Property Name="SpecialRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ScreenName">
+    <Key>
+      <PropertyRef Name="ScreenId" />
+    </Key>
+    <Property Name="ScreenId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DisplayName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ScreenName1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <NavigationProperty Name="RoleRights" Relationship="Self.FK_RoleRights_ToScreenName" FromRole="ScreenName" ToRole="RoleRights" />
+  </EntityType>
+  <EntityType Name="SOItem">
+    <Key>
+      <PropertyRef Name="SOItemId" />
+    </Key>
+    <Property Name="SOItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SalesOrderId" Type="Int32" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsSchedule" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TaxId" Type="Int32" />
+    <Property Name="Value" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedById" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedById" Type="Int32" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="JoNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="SOItemSchedule">
+    <Key>
+      <PropertyRef Name="SOItemScheduleId" />
+    </Key>
+    <Property Name="SOItemScheduleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SOItemId" Type="Int32" />
+    <Property Name="ScheduleQuantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ScheduleDate" Type="DateTime" Precision="3" />
+    <Property Name="ActualDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedById" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedById" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StateMaster">
+    <Key>
+      <PropertyRef Name="StateID" />
+    </Key>
+    <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="StateName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="StateCode" Type="Int32" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CityMasters" Relationship="Self.FK_CityMaster_StateMaster" FromRole="StateMaster" ToRole="CityMaster" />
+    <NavigationProperty Name="CountryMaster" Relationship="Self.FK_StateMaster_CountryMaster" FromRole="StateMaster" ToRole="CountryMaster" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedById" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedById" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StockAdjustment_M">
+    <Key>
+      <PropertyRef Name="StockAdjustmentMId" />
+    </Key>
+    <Property Name="StockAdjustmentMId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdjustmentVoucherNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AdjustmentVoucherDate" Type="DateTime" Precision="3" />
+    <Property Name="AdjustmentVoucherWEF" Type="DateTime" Precision="3" />
+    <Property Name="CheckedBy" Type="Int32" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StockAdjustment_T">
+    <Key>
+      <PropertyRef Name="StockAdjustmentTId" />
+    </Key>
+    <Property Name="StockAdjustmentTId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StockAdjustmentMId" Type="Int32" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="Bookstock" Type="Double" />
+    <Property Name="Physicalstock" Type="Double" />
+    <Property Name="Reason" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ShortExcessId" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModificationDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModificationBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StockMaster">
+    <Key>
+      <PropertyRef Name="StockID" />
+    </Key>
+    <Property Name="StockID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StorageItemMappingID" Type="Int32" Nullable="false" />
+    <Property Name="ItemCategoryID" Type="Int32" Nullable="false" />
+    <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="ItemName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="StockQuantity" Type="Double" />
+    <Property Name="StockMinLeval" Type="Double" />
+    <Property Name="UnitID" Type="Int32" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="StockTransfer_M">
+    <Key>
+      <PropertyRef Name="StockTransferMId" />
+    </Key>
+    <Property Name="StockTransferMId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DocumentType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="SalesOrderId" Type="Int32" />
+    <Property Name="TransferNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="TransferType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="FromSite" Type="Int32" />
+    <Property Name="ToSite" Type="Int32" />
+    <Property Name="PreparedBy" Type="Int32" />
+    <Property Name="ApprovedBy" Type="Int32" />
+    <Property Name="AuthorisedBy" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StockTransfer_T">
+    <Key>
+      <PropertyRef Name="StockTransferTId" />
+    </Key>
+    <Property Name="StockTransferTId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StockTransferMId" Type="Int32" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="TransferQuantity" Type="Double" />
+    <Property Name="RequiredQuantity" Type="Double" />
+    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedby" Type="Int32" />
+  </EntityType>
+  <EntityType Name="StorageItemMapping">
+    <Key>
+      <PropertyRef Name="StorageItemMappingID" />
+    </Key>
+    <Property Name="StorageItemMappingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StorageLocationID" Type="Int32" />
+    <Property Name="ItemID" Type="Int32" />
+    <Property Name="Quantity" Type="Double" />
+    <Property Name="UnitID" Type="Int32" />
+    <Property Name="RowNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Per" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="StorageLocationMaster">
+    <Key>
+      <PropertyRef Name="StorageLocationID" />
+    </Key>
+    <Property Name="StorageLocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LocationID" Type="Int32" Nullable="false" />
+    <Property Name="StorageLocationName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="StorageDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="LocationMaster" Relationship="Self.FK_StorageLocationMaster_ToLocationMaster" FromRole="StorageLocationMaster" ToRole="LocationMaster" />
+  </EntityType>
+  <EntityType Name="SupplierMaster">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+    </Key>
+    <Property Name="SupplierID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="SupplierCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="SupplierEmailID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPersonName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="CountryID" Type="Int32" />
+    <Property Name="StateID" Type="Int32" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="Pincode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="StateCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="BankName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="BankBranch" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="BankAccountNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="IFSCCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="GSTINNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PANNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PaymentTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DeliveryTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="Int32" />
+    <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <NavigationProperty Name="RejectionDataSheetMasters" Relationship="Self.FK_RejectionDataSheetMaster_ToSupplierMaster" FromRole="SupplierMaster" ToRole="RejectionDataSheetMaster" />
+  </EntityType>
+  <EntityType Name="TermsAndConditionMaster">
+    <Key>
+      <PropertyRef Name="TermsConditionID" />
+    </Key>
+    <Property Name="TermsConditionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TermName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TermDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="UnitMaster">
+    <Key>
+      <PropertyRef Name="UnitID" />
+    </Key>
+    <Property Name="UnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnitName" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="UnitCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganisationId" Type="Int32" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="EmployeeId" Type="Int32" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="WorkOrder">
+    <Key>
+      <PropertyRef Name="WorkOrderId" />
+    </Key>
+    <Property Name="WorkOrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrganisationId" Type="Int32" />
+    <Property Name="BranchId" Type="Int32" />
+    <Property Name="SupplierId" Type="Int32" />
+    <Property Name="SONo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="INNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="WODate" Type="DateTime" Precision="3" />
+    <Property Name="WONo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DespatchMode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TransportationMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Freight" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Tax" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="OtherCharges" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="PaymentsTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentTermsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DeliveryTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DeliveryTermsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ApprovedById" Type="Int32" />
+    <Property Name="PreparedById" Type="Int32" />
+    <Property Name="CheckedById" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="FreightRs" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="FreightGSTPercent" Type="Decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="WorkOrderDetail">
+    <Key>
+      <PropertyRef Name="WorkOrderDetailsId" />
+    </Key>
+    <Property Name="WorkOrderDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WorkOrderId" Type="Int32" />
+    <Property Name="ItemType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="ItemName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="UnitId" Type="Int32" />
+    <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="Value" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+  </EntityType>
+  <EntityType Name="YearMaster">
+    <Key>
+      <PropertyRef Name="YearID" />
+    </Key>
+    <Property Name="YearID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="YearName" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_Branch_ToOrganisations">
+    <End Role="Organisations" Type="Self.Organisation" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisations">
+        <PropertyRef Name="OrganisationId" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="OrganisationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Department_ToBranch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Department" Type="Self.Department" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchId" />
+      </Principal>
+      <Dependent Role="Department">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CityMaster_StateMaster">
+    <End Role="StateMaster" Type="Self.StateMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StateMaster">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="CityMaster">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CurrencyMaster_ToCountryMaster">
+    <End Role="CountryMaster" Type="Self.CountryMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CurrencyMaster" Type="Self.CurrencyMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryMaster">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="CurrencyMaster">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StateMaster_CountryMaster">
+    <End Role="CountryMaster" Type="Self.CountryMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StateMaster" Type="Self.StateMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryMaster">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="StateMaster">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_EmployeeMaster">
+    <End Role="DesignationMaster" Type="Self.DesignationMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DesignationMaster">
+        <PropertyRef Name="DesignationID" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="DesignationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabMaster_ToFinishGoodSeries">
+    <End Role="FinishGoodSeries" Type="Self.FinishGoodSery" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LabMaster" Type="Self.LabMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FinishGoodSeries">
+        <PropertyRef Name="FGSID" />
+      </Principal>
+      <Dependent Role="LabMaster">
+        <PropertyRef Name="FGSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InquiryMaster_ToItemCategoryMaster">
+    <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="0..1" />
+    <End Role="InquiryMaster" Type="Self.InquiryMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCategoryMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Principal>
+      <Dependent Role="InquiryMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InquiryMaster_ToItemMaster">
+    <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="InquiryMaster" Type="Self.InquiryMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemMaster">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="InquiryMaster">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemMaster_ToItemCategoryMaster">
+    <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCategoryMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Principal>
+      <Dependent Role="ItemMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCProductionSpecificationMaster_ToItemCategoryMaster">
+    <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="1" />
+    <End Role="QCProductionSpecificationMaster" Type="Self.QCProductionSpecificationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCategoryMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Principal>
+      <Dependent Role="QCProductionSpecificationMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCProductionSpecificationMaster_ToItemMaster">
+    <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QCProductionSpecificationMaster" Type="Self.QCProductionSpecificationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemMaster">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="QCProductionSpecificationMaster">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabMaster_ToLocationMaster">
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LabMaster" Type="Self.LabMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LocationMaster">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="LabMaster">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MachineMaster_ToLocationMaster">
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MachineMaster" Type="Self.MachineMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LocationMaster">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="MachineMaster">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StorageLocationMaster_ToLocationMaster">
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StorageLocationMaster" Type="Self.StorageLocationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LocationMaster">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="StorageLocationMaster">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organisations_ToOrganisationGroups">
+    <End Role="OrganisationGroups" Type="Self.OrganisationGroup" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Organisations" Type="Self.Organisation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrganisationGroups">
+        <PropertyRef Name="OrganisationGroupId" />
+      </Principal>
+      <Dependent Role="Organisations">
+        <PropertyRef Name="OrganisationGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster">
+    <End Role="QCProductionSpecificationMaster" Type="Self.QCProductionSpecificationMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QCProductioObservationMaste" Type="Self.QCProductioObservationMaste" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QCProductionSpecificationMaster">
+        <PropertyRef Name="QCProductionSpecificationID" />
+      </Principal>
+      <Dependent Role="QCProductioObservationMaste">
+        <PropertyRef Name="QCProductionSpecificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCProductioObservationMaster_ToQCProductionSpecificationMaster">
+    <End Role="QCProductionSpecificationMaster" Type="Self.QCProductionSpecificationMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QCProductioObservationMaster" Type="Self.QCProductioObservationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QCProductionSpecificationMaster">
+        <PropertyRef Name="QCProductionSpecificationID" />
+      </Principal>
+      <Dependent Role="QCProductioObservationMaster">
+        <PropertyRef Name="QCProductionSpecificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RejectionDataSheetMaster_ToSupplierMaster">
+    <End Role="SupplierMaster" Type="Self.SupplierMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RejectionDataSheetMaster" Type="Self.RejectionDataSheetMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SupplierMaster">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="RejectionDataSheetMaster">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleRights_ToRoles">
+    <End Role="Roles" Type="Self.Role" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RoleRights" Type="Self.RoleRight" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="RoleRights">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleRights_ToScreenName">
+    <End Role="ScreenName" Type="Self.ScreenName" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RoleRights" Type="Self.RoleRight" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScreenName">
+        <PropertyRef Name="ScreenId" />
+      </Principal>
+      <Dependent Role="RoleRights">
+        <PropertyRef Name="ScreenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InVanDBContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Branches" EntityType="Self.Branch" />
+    <EntitySet Name="CityMasters" EntityType="Self.CityMaster" />
+    <EntitySet Name="ClientMasters" EntityType="Self.ClientMaster" />
+    <EntitySet Name="COAMasters" EntityType="Self.COAMaster" />
+    <EntitySet Name="Companies" EntityType="Self.Company" />
+    <EntitySet Name="CountryMasters" EntityType="Self.CountryMaster" />
+    <EntitySet Name="CurrencyMasters" EntityType="Self.CurrencyMaster" />
+    <EntitySet Name="DebitNotes" EntityType="Self.DebitNote" />
+    <EntitySet Name="DebitNoteDetails" EntityType="Self.DebitNoteDetail" />
+    <EntitySet Name="Departments" EntityType="Self.Department" />
+    <EntitySet Name="DesignationMasters" EntityType="Self.DesignationMaster" />
+    <EntitySet Name="EmployeeMasters" EntityType="Self.EmployeeMaster" />
+    <EntitySet Name="FinishGoodSeries" EntityType="Self.FinishGoodSery" />
+    <EntitySet Name="GSTMasters" EntityType="Self.GSTMaster" />
+    <EntitySet Name="InquiryMasters" EntityType="Self.InquiryMaster" />
+    <EntitySet Name="InvoiceMasters" EntityType="Self.InvoiceMaster" />
+    <EntitySet Name="InwardNotes" EntityType="Self.InwardNote" />
+    <EntitySet Name="IssueNotes" EntityType="Self.IssueNote" />
+    <EntitySet Name="IssueNoteDetails" EntityType="Self.IssueNoteDetail" />
+    <EntitySet Name="ItemCategoryMasters" EntityType="Self.ItemCategoryMaster" />
+    <EntitySet Name="ItemMasters" EntityType="Self.ItemMaster" />
+    <EntitySet Name="LabMasters" EntityType="Self.LabMaster" />
+    <EntitySet Name="LocationMasters" EntityType="Self.LocationMaster" />
+    <EntitySet Name="Logs" EntityType="Self.Log" />
+    <EntitySet Name="MachineMasters" EntityType="Self.MachineMaster" />
+    <EntitySet Name="OrganisationGroups" EntityType="Self.OrganisationGroup" />
+    <EntitySet Name="Organisations" EntityType="Self.Organisation" />
+    <EntitySet Name="ProcessMasters" EntityType="Self.ProcessMaster" />
+    <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrder" />
+    <EntitySet Name="PurchaseOrderAmendments" EntityType="Self.PurchaseOrderAmendment" />
+    <EntitySet Name="PurchaseOrderAmendmentDetails" EntityType="Self.PurchaseOrderAmendmentDetail" />
+    <EntitySet Name="QCProductionSpecificationMasters" EntityType="Self.QCProductionSpecificationMaster" />
+    <EntitySet Name="QCProductioObservationMastes" EntityType="Self.QCProductioObservationMaste" />
+    <EntitySet Name="QCProductioObservationMasters" EntityType="Self.QCProductioObservationMaster" />
+    <EntitySet Name="RecipeMasters" EntityType="Self.RecipeMaster" />
+    <EntitySet Name="RejectionDataSheetMasters" EntityType="Self.RejectionDataSheetMaster" />
+    <EntitySet Name="RequestForQuotations" EntityType="Self.RequestForQuotation" />
+    <EntitySet Name="RoleRights" EntityType="Self.RoleRight" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="SalesOrders" EntityType="Self.SalesOrder" />
+    <EntitySet Name="ScreenNames" EntityType="Self.ScreenName" />
+    <EntitySet Name="SOItems" EntityType="Self.SOItem" />
+    <EntitySet Name="SOItemSchedules" EntityType="Self.SOItemSchedule" />
+    <EntitySet Name="StateMasters" EntityType="Self.StateMaster" />
+    <EntitySet Name="Status" EntityType="Self.Status" />
+    <EntitySet Name="StockAdjustment_M" EntityType="Self.StockAdjustment_M" />
+    <EntitySet Name="StockAdjustment_T" EntityType="Self.StockAdjustment_T" />
+    <EntitySet Name="StockMasters" EntityType="Self.StockMaster" />
+    <EntitySet Name="StockTransfer_M" EntityType="Self.StockTransfer_M" />
+    <EntitySet Name="StockTransfer_T" EntityType="Self.StockTransfer_T" />
+    <EntitySet Name="StorageItemMappings" EntityType="Self.StorageItemMapping" />
+    <EntitySet Name="StorageLocationMasters" EntityType="Self.StorageLocationMaster" />
+    <EntitySet Name="SupplierMasters" EntityType="Self.SupplierMaster" />
+    <EntitySet Name="TermsAndConditionMasters" EntityType="Self.TermsAndConditionMaster" />
+    <EntitySet Name="UnitMasters" EntityType="Self.UnitMaster" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="WorkOrders" EntityType="Self.WorkOrder" />
+    <EntitySet Name="WorkOrderDetails" EntityType="Self.WorkOrderDetail" />
+    <EntitySet Name="YearMasters" EntityType="Self.YearMaster" />
+    <AssociationSet Name="FK_Branch_ToOrganisations" Association="Self.FK_Branch_ToOrganisations">
+      <End Role="Organisations" EntitySet="Organisations" />
+      <End Role="Branch" EntitySet="Branches" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Department_ToBranch" Association="Self.FK_Department_ToBranch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="Department" EntitySet="Departments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CityMaster_StateMaster" Association="Self.FK_CityMaster_StateMaster">
+      <End Role="StateMaster" EntitySet="StateMasters" />
+      <End Role="CityMaster" EntitySet="CityMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CurrencyMaster_ToCountryMaster" Association="Self.FK_CurrencyMaster_ToCountryMaster">
+      <End Role="CountryMaster" EntitySet="CountryMasters" />
+      <End Role="CurrencyMaster" EntitySet="CurrencyMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StateMaster_CountryMaster" Association="Self.FK_StateMaster_CountryMaster">
+      <End Role="CountryMaster" EntitySet="CountryMasters" />
+      <End Role="StateMaster" EntitySet="StateMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_EmployeeMaster" Association="Self.FK_EmployeeMaster_EmployeeMaster">
+      <End Role="DesignationMaster" EntitySet="DesignationMasters" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabMaster_ToFinishGoodSeries" Association="Self.FK_LabMaster_ToFinishGoodSeries">
+      <End Role="FinishGoodSeries" EntitySet="FinishGoodSeries" />
+      <End Role="LabMaster" EntitySet="LabMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InquiryMaster_ToItemCategoryMaster" Association="Self.FK_InquiryMaster_ToItemCategoryMaster">
+      <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMasters" />
+      <End Role="InquiryMaster" EntitySet="InquiryMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InquiryMaster_ToItemMaster" Association="Self.FK_InquiryMaster_ToItemMaster">
+      <End Role="ItemMaster" EntitySet="ItemMasters" />
+      <End Role="InquiryMaster" EntitySet="InquiryMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemMaster_ToItemCategoryMaster" Association="Self.FK_ItemMaster_ToItemCategoryMaster">
+      <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMasters" />
+      <End Role="ItemMaster" EntitySet="ItemMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCProductionSpecificationMaster_ToItemCategoryMaster" Association="Self.FK_QCProductionSpecificationMaster_ToItemCategoryMaster">
+      <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMasters" />
+      <End Role="QCProductionSpecificationMaster" EntitySet="QCProductionSpecificationMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCProductionSpecificationMaster_ToItemMaster" Association="Self.FK_QCProductionSpecificationMaster_ToItemMaster">
+      <End Role="ItemMaster" EntitySet="ItemMasters" />
+      <End Role="QCProductionSpecificationMaster" EntitySet="QCProductionSpecificationMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabMaster_ToLocationMaster" Association="Self.FK_LabMaster_ToLocationMaster">
+      <End Role="LocationMaster" EntitySet="LocationMasters" />
+      <End Role="LabMaster" EntitySet="LabMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MachineMaster_ToLocationMaster" Association="Self.FK_MachineMaster_ToLocationMaster">
+      <End Role="LocationMaster" EntitySet="LocationMasters" />
+      <End Role="MachineMaster" EntitySet="MachineMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StorageLocationMaster_ToLocationMaster" Association="Self.FK_StorageLocationMaster_ToLocationMaster">
+      <End Role="LocationMaster" EntitySet="LocationMasters" />
+      <End Role="StorageLocationMaster" EntitySet="StorageLocationMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organisations_ToOrganisationGroups" Association="Self.FK_Organisations_ToOrganisationGroups">
+      <End Role="OrganisationGroups" EntitySet="OrganisationGroups" />
+      <End Role="Organisations" EntitySet="Organisations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster" Association="Self.FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster">
+      <End Role="QCProductionSpecificationMaster" EntitySet="QCProductionSpecificationMasters" />
+      <End Role="QCProductioObservationMaste" EntitySet="QCProductioObservationMastes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCProductioObservationMaster_ToQCProductionSpecificationMaster" Association="Self.FK_QCProductioObservationMaster_ToQCProductionSpecificationMaster">
+      <End Role="QCProductionSpecificationMaster" EntitySet="QCProductionSpecificationMasters" />
+      <End Role="QCProductioObservationMaster" EntitySet="QCProductioObservationMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RejectionDataSheetMaster_ToSupplierMaster" Association="Self.FK_RejectionDataSheetMaster_ToSupplierMaster">
+      <End Role="SupplierMaster" EntitySet="SupplierMasters" />
+      <End Role="RejectionDataSheetMaster" EntitySet="RejectionDataSheetMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleRights_ToRoles" Association="Self.FK_RoleRights_ToRoles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="RoleRights" EntitySet="RoleRights" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleRights_ToScreenName" Association="Self.FK_RoleRights_ToScreenName">
+      <End Role="ScreenName" EntitySet="ScreenNames" />
+      <End Role="RoleRights" EntitySet="RoleRights" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

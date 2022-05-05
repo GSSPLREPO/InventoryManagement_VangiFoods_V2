@@ -1,0 +1,1603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="InVanDBModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchId" />
+    </Key>
+    <Property Name="BranchId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganisationID" Type="int" />
+    <Property Name="BranchName" Type="varchar(max)" />
+    <Property Name="Abbreviation" Type="varchar(max)" />
+    <Property Name="ContactPerson" Type="varchar(max)" />
+    <Property Name="ContactNo" Type="varchar(max)" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="CountryID" Type="int" />
+    <Property Name="StateID" Type="int" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CityMaster">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateID" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="varchar" MaxLength="70" />
+    <Property Name="CityCode" Type="int" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ClientMaster">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientName" Type="varchar" MaxLength="70" />
+    <Property Name="ClientEmailId" Type="varchar" MaxLength="30" />
+    <Property Name="ContactPersonName" Type="varchar" MaxLength="70" />
+    <Property Name="Designation" Type="varchar" MaxLength="50" />
+    <Property Name="Department" Type="varchar" MaxLength="50" />
+    <Property Name="ContactNo" Type="varchar" MaxLength="15" />
+    <Property Name="BankName" Type="varchar" MaxLength="70" />
+    <Property Name="BankBranchName" Type="varchar" MaxLength="70" />
+    <Property Name="BankAccountNo" Type="varchar" MaxLength="70" />
+    <Property Name="IFSCCode" Type="varchar" MaxLength="20" />
+    <Property Name="GSTINNo" Type="varchar" MaxLength="20" />
+    <Property Name="BlackList" Type="int" />
+    <Property Name="ShipToAddress" Type="varchar(max)" />
+    <Property Name="ShipToCountry" Type="int" />
+    <Property Name="ShipToState" Type="int" />
+    <Property Name="ShipToCity" Type="int" />
+    <Property Name="ShipPinCode" Type="varchar" MaxLength="20" />
+    <Property Name="ShipStateCode" Type="varchar" MaxLength="20" />
+    <Property Name="BillToAddress" Type="varchar(max)" />
+    <Property Name="BillToCountry" Type="int" />
+    <Property Name="BillToState" Type="int" />
+    <Property Name="BillToCity" Type="int" />
+    <Property Name="BillPinCode" Type="varchar" MaxLength="20" />
+    <Property Name="BillStateCode" Type="varchar" MaxLength="20" />
+    <Property Name="PanNo" Type="varchar" MaxLength="50" />
+    <Property Name="FSSAI" Type="varchar" MaxLength="50" />
+    <Property Name="CountryCode" Type="varchar" MaxLength="10" />
+    <Property Name="TypeOfCompany" Type="varchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="int" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="COAMaster">
+    <Key>
+      <PropertyRef Name="COAID" />
+    </Key>
+    <Property Name="COAID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="COANo" Type="nvarchar" MaxLength="30" />
+    <Property Name="WorkOrderID" Type="int" />
+    <Property Name="LabID" Type="int" />
+    <Property Name="COADate" Type="date" />
+    <Property Name="ItemCategoryID" Type="int" />
+    <Property Name="ItemID" Type="int" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="BatchNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="PONumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="ManufecturingDate" Type="date" />
+    <Property Name="BestBefore" Type="date" />
+    <Property Name="Weight" Type="float" />
+    <Property Name="PackingSize" Type="float" />
+    <Property Name="Acidity" Type="float" />
+    <Property Name="Salt" Type="float" />
+    <Property Name="PH" Type="float" />
+    <Property Name="BRIX" Type="varchar(max)" />
+    <Property Name="Consistency" Type="bit" />
+    <Property Name="Ecoli" Type="bit" />
+    <Property Name="YestAndMold" Type="bit" />
+    <Property Name="ArobicCount" Type="float" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="Status" Type="varchar" MaxLength="20" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="Company_ID" />
+    </Key>
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Company_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContactNo" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CountryMaster">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" MaxLength="50" />
+    <Property Name="CountryCode" Type="int" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="CurrencyMaster">
+    <Key>
+      <PropertyRef Name="CurrencyID" />
+    </Key>
+    <Property Name="CurrencyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="CurrencyName" Type="varchar" MaxLength="20" />
+    <Property Name="CurrencyPrice" Type="float" />
+    <Property Name="ndianCurrencyPrice" Type="float" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="DebitNote">
+    <Key>
+      <PropertyRef Name="DebitNoteId" />
+    </Key>
+    <Property Name="DebitNoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RejectionNoteId" Type="int" />
+    <Property Name="GRNId" Type="int" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="DebitNoteNo" Type="varchar" MaxLength="50" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="Grandtotal" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="GeneralRemarks" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="CheckedBy" Type="int" />
+    <Property Name="ApprovedBy" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="DebitNoteDetails">
+    <Key>
+      <PropertyRef Name="DebitNoteDetailsId" />
+    </Key>
+    <Property Name="DebitNoteDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DebitNoteId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="SGST" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CGST" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IGST" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Value" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentID" />
+    </Key>
+    <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentName" Type="varchar" MaxLength="50" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="ContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="ContactPerson" Type="varchar" MaxLength="200" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="DesignationMaster">
+    <Key>
+      <PropertyRef Name="DesignationID" />
+    </Key>
+    <Property Name="DesignationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DesignationName" Type="varchar" MaxLength="100" />
+    <Property Name="Description" Type="varchar" MaxLength="250" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EmployeeMaster">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeName" Type="varchar" MaxLength="200" />
+    <Property Name="OrganisationGroupId" Type="int" />
+    <Property Name="OrganisationId" Type="int" />
+    <Property Name="BranchID" Type="int" />
+    <Property Name="DepartmentID" Type="int" />
+    <Property Name="DesignationID" Type="int" />
+    <Property Name="EmployeeMobileNo" Type="varchar" MaxLength="12" />
+    <Property Name="EmployeeBirthDate" Type="date" />
+    <Property Name="EmployeeJoingDate" Type="date" />
+    <Property Name="EmployeeGender" Type="varchar" MaxLength="6" />
+    <Property Name="CountryID" Type="int" />
+    <Property Name="StateID" Type="int" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="EmployeeAddress" Type="varchar(max)" />
+    <Property Name="PinNumber" Type="varchar" MaxLength="10" />
+    <Property Name="EmployeePic" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FinishGoodSeries">
+    <Key>
+      <PropertyRef Name="FGSID" />
+    </Key>
+    <Property Name="FGSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="50" />
+    <Property Name="PackageSize" Type="int" />
+    <Property Name="MfgDate" Type="date" />
+    <Property Name="NoOfCartonBox" Type="int" />
+    <Property Name="QuantityInKG" Type="float" />
+    <Property Name="BatchNo" Type="varchar" MaxLength="50" />
+    <Property Name="PONumber" Type="varchar" MaxLength="50" />
+    <Property Name="Packaging" Type="nchar" MaxLength="10" />
+    <Property Name="Sealing" Type="nchar" MaxLength="10" />
+    <Property Name="Labeling" Type="nchar" MaxLength="10" />
+    <Property Name="QCCheck" Type="nchar" MaxLength="10" />
+    <Property Name="Remarks" Type="nchar" MaxLength="10" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="GSTMaster">
+    <Key>
+      <PropertyRef Name="TaxID" />
+    </Key>
+    <Property Name="TaxID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TaxName" Type="varchar" MaxLength="50" />
+    <Property Name="TaxRate" Type="float" />
+    <Property Name="Description" Type="varchar" MaxLength="250" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InquiryMaster">
+    <Key>
+      <PropertyRef Name="InquiryID" />
+    </Key>
+    <Property Name="InquiryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InquiryStatusID" Type="int" />
+    <Property Name="CompanyName" Type="varchar" MaxLength="70" />
+    <Property Name="ContactPersonName" Type="varchar" MaxLength="70" />
+    <Property Name="DateOfInquiry" Type="date" />
+    <Property Name="ClientEmail" Type="varchar" MaxLength="50" />
+    <Property Name="ClientAddress" Type="varchar(max)" />
+    <Property Name="ClientCountry" Type="int" />
+    <Property Name="ClientState" Type="int" />
+    <Property Name="ClientCity" Type="int" />
+    <Property Name="ClientZipCode" Type="varchar" MaxLength="50" />
+    <Property Name="ItemCategoryID" Type="int" />
+    <Property Name="ItemID" Type="int" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="ItemQuantity" Type="float" />
+    <Property Name="QuotedPrice" Type="float" />
+    <Property Name="ExpectedPrice" Type="float" />
+    <Property Name="CloserPrice" Type="float" />
+    <Property Name="PONumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InvoiceMaster">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DANo" Type="varchar" MaxLength="50" />
+    <Property Name="DADate" Type="datetime" />
+    <Property Name="InvoiceNo" Type="varchar" MaxLength="50" />
+    <Property Name="InvoiceDate" Type="datetime" />
+    <Property Name="InvoiceType" Type="varchar" MaxLength="50" />
+    <Property Name="DateOfIssue" Type="varchar" MaxLength="50" />
+    <Property Name="DateOfRemoval" Type="varchar" MaxLength="50" />
+    <Property Name="TimeOfIssue" Type="varchar" MaxLength="50" />
+    <Property Name="TimeOfRemoval" Type="varchar" MaxLength="50" />
+    <Property Name="NotificationNo" Type="varchar" MaxLength="50" />
+    <Property Name="CheckedById" Type="int" />
+    <Property Name="ApprovedById" Type="int" />
+    <Property Name="ApprovalStatus" Type="int" />
+    <Property Name="ApprovalRemarks" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedById" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedById" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InwardNote">
+    <Key>
+      <PropertyRef Name="InwardNoteID" />
+    </Key>
+    <Property Name="InwardNoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InwardNumber" Type="varchar" MaxLength="50" />
+    <Property Name="InwardDate" Type="date" />
+    <Property Name="PurchaseOrderId" Type="int" />
+    <Property Name="PONumber" Type="varchar" MaxLength="50" />
+    <Property Name="PODate" Type="date" />
+    <Property Name="LocationID" Type="int" />
+    <Property Name="BillingAddress" Type="varchar" MaxLength="500" />
+    <Property Name="ShippingAddress" Type="varchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="IssueNote">
+    <Key>
+      <PropertyRef Name="IssueNoteId" />
+    </Key>
+    <Property Name="IssueNoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DepartmentId" Type="int" />
+    <Property Name="IssueNoteNo" Type="varchar" MaxLength="50" />
+    <Property Name="IsAgainstBOM" Type="int" />
+    <Property Name="SalesOrderId" Type="int" />
+    <Property Name="IssueNoteDate" Type="datetime" />
+    <Property Name="PONumber" Type="varchar" MaxLength="50" />
+    <Property Name="WorkOrderNumber" Type="varchar" MaxLength="50" />
+    <Property Name="BatchNo" Type="varchar" MaxLength="50" />
+    <Property Name="VendorName" Type="varchar" MaxLength="500" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="PreparedBy" Type="int" />
+    <Property Name="ApprovedBy" Type="int" />
+    <Property Name="CheckedBy" Type="int" />
+    <Property Name="Status" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="IssueNoteDetails">
+    <Key>
+      <PropertyRef Name="IssueNoteDetailsId" />
+    </Key>
+    <Property Name="IssueNoteDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IssueNoteId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="QuantityRequested" Type="float" />
+    <Property Name="QuantityIssued" Type="float" />
+    <Property Name="CurrentStock" Type="float" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="ItemCategoryMaster">
+    <Key>
+      <PropertyRef Name="ItemCategoryID" />
+    </Key>
+    <Property Name="ItemCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemCategoryName" Type="varchar" MaxLength="70" />
+    <Property Name="Description" Type="varchar" MaxLength="150" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ItemMaster">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemCategoryID" Type="int" />
+    <Property Name="ItemName" Type="varchar" MaxLength="70" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LabMaster">
+    <Key>
+      <PropertyRef Name="LabID" />
+    </Key>
+    <Property Name="LabID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationID" Type="int" />
+    <Property Name="FGSID" Type="int" />
+    <Property Name="LabName" Type="varchar" MaxLength="100" />
+    <Property Name="LabReport" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LocationMaster">
+    <Key>
+      <PropertyRef Name="LocationID" />
+    </Key>
+    <Property Name="LocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationName" Type="varchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="Thread" Type="varchar" MaxLength="255" />
+    <Property Name="Level" Type="varchar" MaxLength="50" />
+    <Property Name="Logger" Type="varchar" MaxLength="255" />
+    <Property Name="Message" Type="varchar" MaxLength="4000" />
+    <Property Name="Exception" Type="varchar" MaxLength="2000" />
+  </EntityType>
+  <EntityType Name="MachineMaster">
+    <Key>
+      <PropertyRef Name="MachineID" />
+    </Key>
+    <Property Name="MachineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MachineName" Type="varchar" MaxLength="50" />
+    <Property Name="InstallationDate" Type="date" />
+    <Property Name="LocationID" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="500" />
+    <Property Name="ManufacturerName" Type="varchar" MaxLength="70" />
+    <Property Name="ContactPersonName" Type="varchar" MaxLength="70" />
+    <Property Name="ContactPersonEmail" Type="varchar" MaxLength="30" />
+    <Property Name="ContactPersonMobileNo" Type="varchar" MaxLength="15" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OrganisationGroups">
+    <Key>
+      <PropertyRef Name="OrganisationGroupId" />
+    </Key>
+    <Property Name="OrganisationGroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="varchar" MaxLength="50" />
+    <Property Name="Logo" Type="varchar(max)" />
+    <Property Name="StartDate" Type="date" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="Details" Type="varchar" MaxLength="500" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Organisations">
+    <Key>
+      <PropertyRef Name="OrganisationId" />
+    </Key>
+    <Property Name="OrganisationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganisationGroupId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="varchar" MaxLength="50" />
+    <Property Name="Logo" Type="varchar" MaxLength="100" />
+    <Property Name="ContactPerson" Type="varchar" MaxLength="50" />
+    <Property Name="ContactNo" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="100" />
+    <Property Name="Range" Type="varchar" MaxLength="50" />
+    <Property Name="Division" Type="varchar" MaxLength="50" />
+    <Property Name="Commisionerate" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Website" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="StateId" Type="int" />
+    <Property Name="StateCode" Type="int" />
+    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="PANNo" Type="varchar" MaxLength="50" />
+    <Property Name="CINNo" Type="varchar" MaxLength="50" />
+    <Property Name="GSTINNo" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="100" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ProcessMaster">
+    <Key>
+      <PropertyRef Name="ProcessID" />
+    </Key>
+    <Property Name="ProcessID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProcessName" Type="varchar" MaxLength="50" />
+    <Property Name="ProcessStep" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PurchaseOrder">
+    <Key>
+      <PropertyRef Name="PurchaseOrderId" />
+    </Key>
+    <Property Name="PurchaseOrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganisationId" Type="int" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="PODate" Type="date" />
+    <Property Name="PONumber" Type="varchar" MaxLength="50" />
+    <Property Name="DespatchMode" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransportationMode" Type="varchar" MaxLength="50" />
+    <Property Name="DeliveryDate" Type="datetime" />
+    <Property Name="WithComparison" Type="bit" />
+    <Property Name="Freight" Type="nvarchar" MaxLength="50" />
+    <Property Name="ComparisionId" Type="int" />
+    <Property Name="Total" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Tax" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="OtherCharges" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="GrandTotal" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="PaymentsTerms" Type="varchar(max)" />
+    <Property Name="PaymentTermsDesc" Type="varchar(max)" />
+    <Property Name="DeliveryTerms" Type="varchar(max)" />
+    <Property Name="TransitInsurance" Type="varchar(max)" />
+    <Property Name="PackingAndForwarding" Type="varchar(max)" />
+    <Property Name="TestToBeOffered" Type="varchar(max)" />
+    <Property Name="SupervisionTerms" Type="varchar(max)" />
+    <Property Name="Warranty" Type="varchar(max)" />
+    <Property Name="DeliveryTermsDesc" Type="varchar(max)" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="ApprovalStatus" Type="int" />
+    <Property Name="ApprovalRemarks" Type="varchar(max)" />
+    <Property Name="Status" Type="bit" />
+    <Property Name="ApprovedById" Type="int" />
+    <Property Name="PreparedById" Type="int" />
+    <Property Name="CheckedById" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="FreightRs" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="FreightGSTPercent" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="CheckedByDate" Type="datetime" />
+    <Property Name="ApprovedByDate" Type="datetime" />
+    <Property Name="QuatationNo" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderAmendment">
+    <Key>
+      <PropertyRef Name="PurchaseOrderAmendmentId" />
+    </Key>
+    <Property Name="PurchaseOrderAmendmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PurchaseOrderId" Type="int" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="PONo" Type="varchar" MaxLength="50" />
+    <Property Name="POAmendNo" Type="varchar" MaxLength="50" />
+    <Property Name="POAmendDate" Type="datetime" />
+    <Property Name="PODate" Type="datetime" />
+    <Property Name="Total" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="PaymentsTerms" Type="varchar(max)" />
+    <Property Name="DeliveryTerms" Type="nvarchar(max)" />
+    <Property Name="TransitInsurance" Type="varchar(max)" />
+    <Property Name="PackingAndForwarding" Type="varchar(max)" />
+    <Property Name="TestToBeOffered" Type="varchar(max)" />
+    <Property Name="SupervisionTerms" Type="varchar(max)" />
+    <Property Name="Warranty" Type="varchar(max)" />
+    <Property Name="ApprovalStatus" Type="int" />
+    <Property Name="ApprovalRemarks" Type="varchar(max)" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="ApprovedById" Type="int" />
+    <Property Name="PreparedById" Type="int" />
+    <Property Name="CheckedById" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="CheckedByDate" Type="datetime" />
+    <Property Name="ApprovedByDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderAmendmentDetails">
+    <Key>
+      <PropertyRef Name="PurchaseOrderAmendmentDetailsId" />
+    </Key>
+    <Property Name="PurchaseOrderAmendmentDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PurchaseOrderAmendmentId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="Quantity" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="AmendQuantity" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Rate" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="AmendRate" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="CGST" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="SGST" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="IGST" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="AmendDISC" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="AmendCgst" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="AmendSgst" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="AmendIgst" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Value" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+  </EntityType>
+  <EntityType Name="QCProductionSpecificationMaster">
+    <Key>
+      <PropertyRef Name="QCProductionSpecificationID" />
+    </Key>
+    <Property Name="QCProductionSpecificationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductionSpecification" Type="varchar" MaxLength="500" />
+    <Property Name="ItemCategoryID" Type="int" Nullable="false" />
+    <Property Name="ItemID" Type="int" Nullable="false" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="QCProductioObservationMaste">
+    <Key>
+      <PropertyRef Name="QCProductionObservationID" />
+    </Key>
+    <Property Name="QCProductionObservationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QCProductionSpecificationID" Type="int" Nullable="false" />
+    <Property Name="ProductionObservation" Type="varchar" MaxLength="500" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="QCProductioObservationMaster">
+    <Key>
+      <PropertyRef Name="QCProductionObservationID" />
+    </Key>
+    <Property Name="QCProductionObservationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QCProductionSpecificationID" Type="int" Nullable="false" />
+    <Property Name="ProductionObservation" Type="varchar" MaxLength="500" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RecipeMaster">
+    <Key>
+      <PropertyRef Name="RecipeID" />
+    </Key>
+    <Property Name="RecipeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RecipeName" Type="varchar" MaxLength="70" />
+    <Property Name="Description" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RejectionDataSheetMaster">
+    <Key>
+      <PropertyRef Name="RejectionID" />
+    </Key>
+    <Property Name="RejectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RejectionDate" Type="date" />
+    <Property Name="SupplierID" Type="int" Nullable="false" />
+    <Property Name="PONumber" Type="varchar" MaxLength="50" />
+    <Property Name="DateOfReceving" Type="nchar" MaxLength="10" />
+    <Property Name="NameOfMaterial" Type="nchar" MaxLength="10" />
+    <Property Name="ManufecturingDate" Type="nchar" MaxLength="10" />
+    <Property Name="BestBefore" Type="nchar" MaxLength="10" />
+    <Property Name="ItemCategoryID" Type="int" />
+    <Property Name="ItemID" Type="int" />
+    <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="TotalRecevingQuantiy" Type="float" />
+    <Property Name="TotalRejectedQuantity" Type="float" />
+    <Property Name="PostRejectedQuantity" Type="float" />
+    <Property Name="ReasonForRejection" Type="varchar(max)" />
+    <Property Name="CurrectiveAction" Type="varchar(max)" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RequestForQuotation">
+    <Key>
+      <PropertyRef Name="RequestForQuotationId" />
+    </Key>
+    <Property Name="RequestForQuotationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganisationId" Type="int" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="RFQNO" Type="varchar" MaxLength="50" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="RFQYear" Type="varchar" MaxLength="50" />
+    <Property Name="ItemId" Type="varchar(max)" />
+    <Property Name="QuantityS" Type="varchar(max)" />
+    <Property Name="SOIDS" Type="varchar(max)" />
+    <Property Name="PRIDS" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="RoleRights">
+    <Key>
+      <PropertyRef Name="RoleRightId" />
+    </Key>
+    <Property Name="RoleRightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="ScreenId" Type="int" />
+    <Property Name="LastModifiedUserId" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CheckedRole" Type="bit" />
+    <Property Name="ApprovedRole" Type="bit" />
+    <Property Name="PreparedRole" Type="bit" />
+    <Property Name="AddRight" Type="bit" />
+    <Property Name="UpdateRight" Type="bit" />
+    <Property Name="DeleteRight" Type="bit" />
+    <Property Name="ViewScreen" Type="bit" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="SalesOrder">
+    <Key>
+      <PropertyRef Name="SalesOrderId" />
+    </Key>
+    <Property Name="SalesOrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganisationId" Type="int" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="SONo" Type="varchar" MaxLength="50" />
+    <Property Name="SODate" Type="date" />
+    <Property Name="ClientId" Type="int" />
+    <Property Name="DispatchTo" Type="varchar(max)" />
+    <Property Name="ServiceType" Type="varchar" MaxLength="50" />
+    <Property Name="PONo" Type="varchar" MaxLength="50" />
+    <Property Name="PODate" Type="date" />
+    <Property Name="TransportationMode" Type="varchar" MaxLength="50" />
+    <Property Name="QuatationRef" Type="varchar" MaxLength="50" />
+    <Property Name="DelivaryDate" Type="datetime" />
+    <Property Name="SOIncharge" Type="int" />
+    <Property Name="OtherCharges" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="GrandTotal" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="InspectionTerms" Type="varchar(max)" />
+    <Property Name="InspectionTermsDesc" Type="varchar(max)" />
+    <Property Name="PaymentTerms" Type="varchar(max)" />
+    <Property Name="PaymentTermsDesc" Type="varchar(max)" />
+    <Property Name="DeliveryTerms" Type="varchar(max)" />
+    <Property Name="DeliveryTermsDesc" Type="varchar(max)" />
+    <Property Name="DespatchMode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Freight" Type="nvarchar" MaxLength="50" />
+    <Property Name="Payment" Type="nvarchar" MaxLength="50" />
+    <Property Name="TaxId" Type="int" />
+    <Property Name="TransitInsurance" Type="varchar" MaxLength="200" />
+    <Property Name="PackingAndForwarding" Type="varchar" MaxLength="200" />
+    <Property Name="TestToBeOffered" Type="varchar" MaxLength="200" />
+    <Property Name="SupervisionTerms" Type="varchar" MaxLength="200" />
+    <Property Name="SOYear" Type="varchar" MaxLength="50" />
+    <Property Name="ApprovalStatus" Type="int" />
+    <Property Name="Approvalremarks" Type="varchar(max)" />
+    <Property Name="ApprovedById" Type="int" />
+    <Property Name="CheckedById" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedById" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedById" Type="int" />
+    <Property Name="FreightRs" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="FreightGSTPercent" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="IsOpen" Type="bit" />
+    <Property Name="SpecialRemarks" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="ScreenName">
+    <Key>
+      <PropertyRef Name="ScreenId" />
+    </Key>
+    <Property Name="ScreenId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DisplayName" Type="nvarchar" MaxLength="100" />
+    <Property Name="ScreenName" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="SOItem">
+    <Key>
+      <PropertyRef Name="SOItemId" />
+    </Key>
+    <Property Name="SOItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SalesOrderId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="Quantity" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Rate" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="IsSchedule" Type="varchar" MaxLength="50" />
+    <Property Name="Discount" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="TaxId" Type="int" />
+    <Property Name="Value" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="DeliveryDate" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedById" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedById" Type="int" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="JoNo" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SOItemSchedule">
+    <Key>
+      <PropertyRef Name="SOItemScheduleId" />
+    </Key>
+    <Property Name="SOItemScheduleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SOItemId" Type="int" />
+    <Property Name="ScheduleQuantity" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="ScheduleDate" Type="datetime" />
+    <Property Name="ActualDate" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedById" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedById" Type="int" />
+  </EntityType>
+  <EntityType Name="StateMaster">
+    <Key>
+      <PropertyRef Name="StateID" />
+    </Key>
+    <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="StateName" Type="varchar" MaxLength="70" />
+    <Property Name="StateCode" Type="int" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Status">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedById" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedById" Type="int" />
+  </EntityType>
+  <EntityType Name="StockAdjustment_M">
+    <Key>
+      <PropertyRef Name="StockAdjustmentMId" />
+    </Key>
+    <Property Name="StockAdjustmentMId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdjustmentVoucherNo" Type="varchar" MaxLength="50" />
+    <Property Name="AdjustmentVoucherDate" Type="datetime" />
+    <Property Name="AdjustmentVoucherWEF" Type="datetime" />
+    <Property Name="CheckedBy" Type="int" />
+    <Property Name="ApprovedBy" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="StockAdjustment_T">
+    <Key>
+      <PropertyRef Name="StockAdjustmentTId" />
+    </Key>
+    <Property Name="StockAdjustmentTId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StockAdjustmentMId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Bookstock" Type="float" />
+    <Property Name="Physicalstock" Type="float" />
+    <Property Name="Reason" Type="varchar" MaxLength="50" />
+    <Property Name="ShortExcessId" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModificationDate" Type="datetime" />
+    <Property Name="LastModificationBy" Type="int" />
+  </EntityType>
+  <EntityType Name="StockMaster">
+    <Key>
+      <PropertyRef Name="StockID" />
+    </Key>
+    <Property Name="StockID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StorageItemMappingID" Type="int" Nullable="false" />
+    <Property Name="ItemCategoryID" Type="int" Nullable="false" />
+    <Property Name="ItemID" Type="int" Nullable="false" />
+    <Property Name="ItemName" Type="varchar" MaxLength="200" />
+    <Property Name="StockQuantity" Type="float" />
+    <Property Name="StockMinLeval" Type="float" />
+    <Property Name="UnitID" Type="int" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="StockTransfer_M">
+    <Key>
+      <PropertyRef Name="StockTransferMId" />
+    </Key>
+    <Property Name="StockTransferMId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DocumentType" Type="varchar" MaxLength="10" />
+    <Property Name="SalesOrderId" Type="int" />
+    <Property Name="TransferNo" Type="varchar" MaxLength="20" />
+    <Property Name="TransferType" Type="varchar" MaxLength="10" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="FromSite" Type="int" />
+    <Property Name="ToSite" Type="int" />
+    <Property Name="PreparedBy" Type="int" />
+    <Property Name="ApprovedBy" Type="int" />
+    <Property Name="AuthorisedBy" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="StockTransfer_T">
+    <Key>
+      <PropertyRef Name="StockTransferTId" />
+    </Key>
+    <Property Name="StockTransferTId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StockTransferMId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="TransferQuantity" Type="float" />
+    <Property Name="RequiredQuantity" Type="float" />
+    <Property Name="Remarks" Type="varchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedby" Type="int" />
+  </EntityType>
+  <EntityType Name="StorageItemMapping">
+    <Key>
+      <PropertyRef Name="StorageItemMappingID" />
+    </Key>
+    <Property Name="StorageItemMappingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StorageLocationID" Type="int" />
+    <Property Name="ItemID" Type="int" />
+    <Property Name="Quantity" Type="float" />
+    <Property Name="UnitID" Type="int" />
+    <Property Name="RowNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Per" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="StorageLocationMaster">
+    <Key>
+      <PropertyRef Name="StorageLocationID" />
+    </Key>
+    <Property Name="StorageLocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationID" Type="int" Nullable="false" />
+    <Property Name="StorageLocationName" Type="varchar" MaxLength="70" />
+    <Property Name="StorageDescription" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SupplierMaster">
+    <Key>
+      <PropertyRef Name="SupplierID" />
+    </Key>
+    <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SupplierName" Type="varchar" MaxLength="150" />
+    <Property Name="SupplierCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="SupplierAddress" Type="varchar" MaxLength="250" />
+    <Property Name="SupplierEmailID" Type="varchar" MaxLength="30" />
+    <Property Name="ContactPersonName" Type="varchar" MaxLength="150" />
+    <Property Name="CountryID" Type="int" />
+    <Property Name="StateID" Type="int" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="Pincode" Type="nvarchar" MaxLength="10" />
+    <Property Name="StateCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="BankName" Type="varchar" MaxLength="200" />
+    <Property Name="BankBranch" Type="varchar" MaxLength="200" />
+    <Property Name="BankAccountNo" Type="nvarchar" MaxLength="100" />
+    <Property Name="IFSCCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="GSTINNumber" Type="nvarchar" MaxLength="100" />
+    <Property Name="PANNumber" Type="nvarchar" MaxLength="100" />
+    <Property Name="PaymentTerms" Type="varchar(max)" />
+    <Property Name="DeliveryTerms" Type="varchar(max)" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ModifiedBy" Type="int" />
+    <Property Name="ModifiedDate" Type="datetime" />
+    <Property Name="IsDeleted" Type="int" />
+  </EntityType>
+  <EntityType Name="TermsAndConditionMaster">
+    <Key>
+      <PropertyRef Name="TermsConditionID" />
+    </Key>
+    <Property Name="TermsConditionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TermName" Type="varchar" MaxLength="50" />
+    <Property Name="TermDescription" Type="varchar(max)" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="UnitMaster">
+    <Key>
+      <PropertyRef Name="UnitID" />
+    </Key>
+    <Property Name="UnitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="70" />
+    <Property Name="UnitCode" Type="varchar" MaxLength="20" />
+    <Property Name="Description" Type="varchar" MaxLength="250" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganisationId" Type="int" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="EmployeeId" Type="int" />
+    <Property Name="Username" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="RoleId" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="varchar" MaxLength="50" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="WorkOrder">
+    <Key>
+      <PropertyRef Name="WorkOrderId" />
+    </Key>
+    <Property Name="WorkOrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrganisationId" Type="int" />
+    <Property Name="BranchId" Type="int" />
+    <Property Name="SupplierId" Type="int" />
+    <Property Name="SONo" Type="varchar" MaxLength="50" />
+    <Property Name="INNo" Type="varchar" MaxLength="50" />
+    <Property Name="WODate" Type="datetime" />
+    <Property Name="WONo" Type="varchar" MaxLength="50" />
+    <Property Name="DespatchMode" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransportationMode" Type="varchar" MaxLength="50" />
+    <Property Name="Freight" Type="nvarchar" MaxLength="50" />
+    <Property Name="Total" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Tax" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="OtherCharges" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="GrandTotal" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="PaymentsTerms" Type="varchar(max)" />
+    <Property Name="PaymentTermsDesc" Type="varchar(max)" />
+    <Property Name="DeliveryTerms" Type="varchar(max)" />
+    <Property Name="DeliveryTermsDesc" Type="varchar(max)" />
+    <Property Name="Remarks" Type="varchar(max)" />
+    <Property Name="ApprovedById" Type="int" />
+    <Property Name="PreparedById" Type="int" />
+    <Property Name="CheckedById" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="FreightRs" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="FreightGSTPercent" Type="numeric" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="WorkOrderDetails">
+    <Key>
+      <PropertyRef Name="WorkOrderDetailsId" />
+    </Key>
+    <Property Name="WorkOrderDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WorkOrderId" Type="int" />
+    <Property Name="ItemType" Type="varchar" MaxLength="10" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="ItemName" Type="varchar(max)" />
+    <Property Name="Quantity" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="Rate" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Discount" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="CGST" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="SGST" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="IGST" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Value" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+  </EntityType>
+  <EntityType Name="YearMaster">
+    <Key>
+      <PropertyRef Name="YearID" />
+    </Key>
+    <Property Name="YearID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="YearName" Type="varchar" MaxLength="9" />
+  </EntityType>
+  <Association Name="FK_Branch_ToOrganisations">
+    <End Role="Organisations" Type="Self.Organisations" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Branch" Type="Self.Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisations">
+        <PropertyRef Name="OrganisationId" />
+      </Principal>
+      <Dependent Role="Branch">
+        <PropertyRef Name="OrganisationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CityMaster_StateMaster">
+    <End Role="StateMaster" Type="Self.StateMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StateMaster">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="CityMaster">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CurrencyMaster_ToCountryMaster">
+    <End Role="CountryMaster" Type="Self.CountryMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CurrencyMaster" Type="Self.CurrencyMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryMaster">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="CurrencyMaster">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Department_ToBranch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Department" Type="Self.Department" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchId" />
+      </Principal>
+      <Dependent Role="Department">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_EmployeeMaster">
+    <End Role="DesignationMaster" Type="Self.DesignationMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DesignationMaster">
+        <PropertyRef Name="DesignationID" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="DesignationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InquiryMaster_ToItemCategoryMaster">
+    <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="0..1" />
+    <End Role="InquiryMaster" Type="Self.InquiryMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCategoryMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Principal>
+      <Dependent Role="InquiryMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InquiryMaster_ToItemMaster">
+    <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="InquiryMaster" Type="Self.InquiryMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemMaster">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="InquiryMaster">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemMaster_ToItemCategoryMaster">
+    <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCategoryMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Principal>
+      <Dependent Role="ItemMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabMaster_ToFinishGoodSeries">
+    <End Role="FinishGoodSeries" Type="Self.FinishGoodSeries" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LabMaster" Type="Self.LabMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FinishGoodSeries">
+        <PropertyRef Name="FGSID" />
+      </Principal>
+      <Dependent Role="LabMaster">
+        <PropertyRef Name="FGSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabMaster_ToLocationMaster">
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LabMaster" Type="Self.LabMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LocationMaster">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="LabMaster">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MachineMaster_ToLocationMaster">
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MachineMaster" Type="Self.MachineMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LocationMaster">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="MachineMaster">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Organisations_ToOrganisationGroups">
+    <End Role="OrganisationGroups" Type="Self.OrganisationGroups" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Organisations" Type="Self.Organisations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrganisationGroups">
+        <PropertyRef Name="OrganisationGroupId" />
+      </Principal>
+      <Dependent Role="Organisations">
+        <PropertyRef Name="OrganisationGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCProductionSpecificationMaster_ToItemCategoryMaster">
+    <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="1" />
+    <End Role="QCProductionSpecificationMaster" Type="Self.QCProductionSpecificationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCategoryMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Principal>
+      <Dependent Role="QCProductionSpecificationMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCProductionSpecificationMaster_ToItemMaster">
+    <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QCProductionSpecificationMaster" Type="Self.QCProductionSpecificationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemMaster">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="QCProductionSpecificationMaster">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster">
+    <End Role="QCProductionSpecificationMaster" Type="Self.QCProductionSpecificationMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QCProductioObservationMaste" Type="Self.QCProductioObservationMaste" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QCProductionSpecificationMaster">
+        <PropertyRef Name="QCProductionSpecificationID" />
+      </Principal>
+      <Dependent Role="QCProductioObservationMaste">
+        <PropertyRef Name="QCProductionSpecificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QCProductioObservationMaster_ToQCProductionSpecificationMaster">
+    <End Role="QCProductionSpecificationMaster" Type="Self.QCProductionSpecificationMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="QCProductioObservationMaster" Type="Self.QCProductioObservationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QCProductionSpecificationMaster">
+        <PropertyRef Name="QCProductionSpecificationID" />
+      </Principal>
+      <Dependent Role="QCProductioObservationMaster">
+        <PropertyRef Name="QCProductionSpecificationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RejectionDataSheetMaster_ToSupplierMaster">
+    <End Role="SupplierMaster" Type="Self.SupplierMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RejectionDataSheetMaster" Type="Self.RejectionDataSheetMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SupplierMaster">
+        <PropertyRef Name="SupplierID" />
+      </Principal>
+      <Dependent Role="RejectionDataSheetMaster">
+        <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleRights_ToRoles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RoleRights" Type="Self.RoleRights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="RoleRights">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleRights_ToScreenName">
+    <End Role="ScreenName" Type="Self.ScreenName" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="RoleRights" Type="Self.RoleRights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ScreenName">
+        <PropertyRef Name="ScreenId" />
+      </Principal>
+      <Dependent Role="RoleRights">
+        <PropertyRef Name="ScreenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StateMaster_CountryMaster">
+    <End Role="CountryMaster" Type="Self.CountryMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StateMaster" Type="Self.StateMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryMaster">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="StateMaster">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StorageLocationMaster_ToLocationMaster">
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="StorageLocationMaster" Type="Self.StorageLocationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LocationMaster">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="StorageLocationMaster">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="InVanDBModelsStoreContainer">
+    <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClientMaster" EntityType="Self.ClientMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="COAMaster" EntityType="Self.COAMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CountryMaster" EntityType="Self.CountryMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CurrencyMaster" EntityType="Self.CurrencyMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DebitNote" EntityType="Self.DebitNote" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DebitNoteDetails" EntityType="Self.DebitNoteDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DesignationMaster" EntityType="Self.DesignationMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmployeeMaster" EntityType="Self.EmployeeMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FinishGoodSeries" EntityType="Self.FinishGoodSeries" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GSTMaster" EntityType="Self.GSTMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InquiryMaster" EntityType="Self.InquiryMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InvoiceMaster" EntityType="Self.InvoiceMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InwardNote" EntityType="Self.InwardNote" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IssueNote" EntityType="Self.IssueNote" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IssueNoteDetails" EntityType="Self.IssueNoteDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemCategoryMaster" EntityType="Self.ItemCategoryMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ItemMaster" EntityType="Self.ItemMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LabMaster" EntityType="Self.LabMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LocationMaster" EntityType="Self.LocationMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MachineMaster" EntityType="Self.MachineMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrganisationGroups" EntityType="Self.OrganisationGroups" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Organisations" EntityType="Self.Organisations" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProcessMaster" EntityType="Self.ProcessMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOrderAmendment" EntityType="Self.PurchaseOrderAmendment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOrderAmendmentDetails" EntityType="Self.PurchaseOrderAmendmentDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QCProductionSpecificationMaster" EntityType="Self.QCProductionSpecificationMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QCProductioObservationMaste" EntityType="Self.QCProductioObservationMaste" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QCProductioObservationMaster" EntityType="Self.QCProductioObservationMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RecipeMaster" EntityType="Self.RecipeMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RejectionDataSheetMaster" EntityType="Self.RejectionDataSheetMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RequestForQuotation" EntityType="Self.RequestForQuotation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoleRights" EntityType="Self.RoleRights" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SalesOrder" EntityType="Self.SalesOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ScreenName" EntityType="Self.ScreenName" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SOItem" EntityType="Self.SOItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SOItemSchedule" EntityType="Self.SOItemSchedule" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StateMaster" EntityType="Self.StateMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockAdjustment_M" EntityType="Self.StockAdjustment_M" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockAdjustment_T" EntityType="Self.StockAdjustment_T" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockMaster" EntityType="Self.StockMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockTransfer_M" EntityType="Self.StockTransfer_M" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StockTransfer_T" EntityType="Self.StockTransfer_T" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StorageItemMapping" EntityType="Self.StorageItemMapping" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StorageLocationMaster" EntityType="Self.StorageLocationMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SupplierMaster" EntityType="Self.SupplierMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TermsAndConditionMaster" EntityType="Self.TermsAndConditionMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UnitMaster" EntityType="Self.UnitMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkOrder" EntityType="Self.WorkOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WorkOrderDetails" EntityType="Self.WorkOrderDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="YearMaster" EntityType="Self.YearMaster" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Branch_ToOrganisations" Association="Self.FK_Branch_ToOrganisations">
+      <End Role="Organisations" EntitySet="Organisations" />
+      <End Role="Branch" EntitySet="Branch" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CityMaster_StateMaster" Association="Self.FK_CityMaster_StateMaster">
+      <End Role="StateMaster" EntitySet="StateMaster" />
+      <End Role="CityMaster" EntitySet="CityMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CurrencyMaster_ToCountryMaster" Association="Self.FK_CurrencyMaster_ToCountryMaster">
+      <End Role="CountryMaster" EntitySet="CountryMaster" />
+      <End Role="CurrencyMaster" EntitySet="CurrencyMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Department_ToBranch" Association="Self.FK_Department_ToBranch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="Department" EntitySet="Department" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_EmployeeMaster" Association="Self.FK_EmployeeMaster_EmployeeMaster">
+      <End Role="DesignationMaster" EntitySet="DesignationMaster" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InquiryMaster_ToItemCategoryMaster" Association="Self.FK_InquiryMaster_ToItemCategoryMaster">
+      <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMaster" />
+      <End Role="InquiryMaster" EntitySet="InquiryMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InquiryMaster_ToItemMaster" Association="Self.FK_InquiryMaster_ToItemMaster">
+      <End Role="ItemMaster" EntitySet="ItemMaster" />
+      <End Role="InquiryMaster" EntitySet="InquiryMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemMaster_ToItemCategoryMaster" Association="Self.FK_ItemMaster_ToItemCategoryMaster">
+      <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMaster" />
+      <End Role="ItemMaster" EntitySet="ItemMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabMaster_ToFinishGoodSeries" Association="Self.FK_LabMaster_ToFinishGoodSeries">
+      <End Role="FinishGoodSeries" EntitySet="FinishGoodSeries" />
+      <End Role="LabMaster" EntitySet="LabMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabMaster_ToLocationMaster" Association="Self.FK_LabMaster_ToLocationMaster">
+      <End Role="LocationMaster" EntitySet="LocationMaster" />
+      <End Role="LabMaster" EntitySet="LabMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MachineMaster_ToLocationMaster" Association="Self.FK_MachineMaster_ToLocationMaster">
+      <End Role="LocationMaster" EntitySet="LocationMaster" />
+      <End Role="MachineMaster" EntitySet="MachineMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Organisations_ToOrganisationGroups" Association="Self.FK_Organisations_ToOrganisationGroups">
+      <End Role="OrganisationGroups" EntitySet="OrganisationGroups" />
+      <End Role="Organisations" EntitySet="Organisations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCProductionSpecificationMaster_ToItemCategoryMaster" Association="Self.FK_QCProductionSpecificationMaster_ToItemCategoryMaster">
+      <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMaster" />
+      <End Role="QCProductionSpecificationMaster" EntitySet="QCProductionSpecificationMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCProductionSpecificationMaster_ToItemMaster" Association="Self.FK_QCProductionSpecificationMaster_ToItemMaster">
+      <End Role="ItemMaster" EntitySet="ItemMaster" />
+      <End Role="QCProductionSpecificationMaster" EntitySet="QCProductionSpecificationMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster" Association="Self.FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster">
+      <End Role="QCProductionSpecificationMaster" EntitySet="QCProductionSpecificationMaster" />
+      <End Role="QCProductioObservationMaste" EntitySet="QCProductioObservationMaste" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QCProductioObservationMaster_ToQCProductionSpecificationMaster" Association="Self.FK_QCProductioObservationMaster_ToQCProductionSpecificationMaster">
+      <End Role="QCProductionSpecificationMaster" EntitySet="QCProductionSpecificationMaster" />
+      <End Role="QCProductioObservationMaster" EntitySet="QCProductioObservationMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RejectionDataSheetMaster_ToSupplierMaster" Association="Self.FK_RejectionDataSheetMaster_ToSupplierMaster">
+      <End Role="SupplierMaster" EntitySet="SupplierMaster" />
+      <End Role="RejectionDataSheetMaster" EntitySet="RejectionDataSheetMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleRights_ToRoles" Association="Self.FK_RoleRights_ToRoles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="RoleRights" EntitySet="RoleRights" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleRights_ToScreenName" Association="Self.FK_RoleRights_ToScreenName">
+      <End Role="ScreenName" EntitySet="ScreenName" />
+      <End Role="RoleRights" EntitySet="RoleRights" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StateMaster_CountryMaster" Association="Self.FK_StateMaster_CountryMaster">
+      <End Role="CountryMaster" EntitySet="CountryMaster" />
+      <End Role="StateMaster" EntitySet="StateMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StorageLocationMaster_ToLocationMaster" Association="Self.FK_StorageLocationMaster_ToLocationMaster">
+      <End Role="LocationMaster" EntitySet="LocationMaster" />
+      <End Role="StorageLocationMaster" EntitySet="StorageLocationMaster" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
