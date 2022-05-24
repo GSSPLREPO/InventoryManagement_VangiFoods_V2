@@ -11,12 +11,17 @@ namespace InVanWebApp.DAL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class UnitMaster
     {
         public int UnitID { get; set; }
+
+        [Required(ErrorMessage = "Unit name is required!")]
         public string UnitName { get; set; }
         public string UnitCode { get; set; }
+        
+        [StringLength(50, ErrorMessage = "Description length cannot exceed 50 characters!")]
         public string Description { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

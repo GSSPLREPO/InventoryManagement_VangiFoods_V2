@@ -27,8 +27,10 @@ namespace InVanWebApp.DAL
         public Nullable<bool> UpdateRight { get; set; }
         public Nullable<bool> DeleteRight { get; set; }
         public Nullable<bool> ViewScreen { get; set; }
+        public Nullable<int> UserId { get; set; }
     
         public virtual Role Role { get; set; }
         public virtual ScreenName ScreenName { get; set; }
+        public virtual User User { get; set; }
     }
 }

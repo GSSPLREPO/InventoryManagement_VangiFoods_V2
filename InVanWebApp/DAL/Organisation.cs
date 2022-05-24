@@ -18,6 +18,7 @@ namespace InVanWebApp.DAL
         public Organisation()
         {
             this.Branches = new HashSet<Branch>();
+            this.Users = new HashSet<User>();
         }
     
         public int OrganisationId { get; set; }
@@ -50,5 +51,7 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Branch> Branches { get; set; }
         public virtual OrganisationGroup OrganisationGroup { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

@@ -14,6 +14,12 @@ namespace InVanWebApp.DAL
     
     public partial class Department
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Department()
+        {
+            this.EmployeeMasters = new HashSet<EmployeeMaster>();
+        }
+    
         public int DepartmentID { get; set; }
         public string DepartmentName { get; set; }
         public Nullable<int> BranchId { get; set; }
@@ -27,5 +33,7 @@ namespace InVanWebApp.DAL
         public Nullable<int> LastModifiedby { get; set; }
     
         public virtual Branch Branch { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeMaster> EmployeeMasters { get; set; }
     }
 }

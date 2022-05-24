@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="InVanDBModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="InVanDBModels.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Branch">
           <Key>
             <PropertyRef Name="BranchId" />
@@ -409,6 +409,7 @@
             <PropertyRef Name="ItemCategoryID" />
           </Key>
           <Property Name="ItemCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemTypeId" Type="int" />
           <Property Name="ItemCategoryName" Type="varchar" MaxLength="70" />
           <Property Name="Description" Type="varchar" MaxLength="150" />
           <Property Name="IsDeleted" Type="int" />
@@ -422,9 +423,8 @@
             <PropertyRef Name="ItemID" />
           </Key>
           <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemCategoryID" Type="int" />
           <Property Name="ItemName" Type="varchar" MaxLength="70" />
-          <Property Name="ItemCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="90" />
           <Property Name="IsDeleted" Type="int" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -766,6 +766,7 @@
           <Property Name="RoleRightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleId" Type="int" />
           <Property Name="ScreenId" Type="int" />
+          <Property Name="UserId" Type="int" />
           <Property Name="LastModifiedUserId" Type="int" />
           <Property Name="LastModifiedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
@@ -1094,8 +1095,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrganisationId" Type="int" />
-          <Property Name="BranchId" Type="int" />
-          <Property Name="EmployeeId" Type="int" />
           <Property Name="Username" Type="varchar" MaxLength="50" />
           <Property Name="Password" Type="varchar" MaxLength="50" />
           <Property Name="RoleId" Type="int" />
@@ -1226,6 +1225,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EmployeeMaster_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="EmployeeMaster">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmployeeMaster_EmployeeMaster">
           <End Role="DesignationMaster" Type="Self.DesignationMaster" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1266,17 +1277,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemMaster_ToItemCategoryMaster">
-          <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="*" />
+        <Association Name="FK_ItemCategoryMaster_ItemMaster">
+          <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="0..1" />
+          <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ItemCategoryMaster">
-              <PropertyRef Name="ItemCategoryID" />
+            <Principal Role="ItemMaster">
+              <PropertyRef Name="ItemID" />
             </Principal>
-            <Dependent Role="ItemMaster">
-              <PropertyRef Name="ItemCategoryID" />
+            <Dependent Role="ItemCategoryMaster">
+              <PropertyRef Name="ItemTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1432,6 +1441,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RoleRights_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="RoleRights" Type="Self.RoleRights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleRights">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StateMaster_CountryMaster">
           <End Role="CountryMaster" Type="Self.CountryMaster" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1457,6 +1478,18 @@
             </Principal>
             <Dependent Role="StorageLocationMaster">
               <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Organisations">
+          <End Role="Organisations" Type="Self.Organisations" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organisations">
+              <PropertyRef Name="OrganisationId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="OrganisationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1536,6 +1569,10 @@
             <End Role="Branch" EntitySet="Branch" />
             <End Role="Department" EntitySet="Department" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmployeeMaster_Department" Association="Self.FK_EmployeeMaster_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmployeeMaster_EmployeeMaster" Association="Self.FK_EmployeeMaster_EmployeeMaster">
             <End Role="DesignationMaster" EntitySet="DesignationMaster" />
             <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
@@ -1548,9 +1585,9 @@
             <End Role="ItemMaster" EntitySet="ItemMaster" />
             <End Role="InquiryMaster" EntitySet="InquiryMaster" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemMaster_ToItemCategoryMaster" Association="Self.FK_ItemMaster_ToItemCategoryMaster">
-            <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMaster" />
+          <AssociationSet Name="FK_ItemCategoryMaster_ItemMaster" Association="Self.FK_ItemCategoryMaster_ItemMaster">
             <End Role="ItemMaster" EntitySet="ItemMaster" />
+            <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMaster" />
           </AssociationSet>
           <AssociationSet Name="FK_LabMaster_ToFinishGoodSeries" Association="Self.FK_LabMaster_ToFinishGoodSeries">
             <End Role="FinishGoodSeries" EntitySet="FinishGoodSeries" />
@@ -1596,6 +1633,10 @@
             <End Role="ScreenName" EntitySet="ScreenName" />
             <End Role="RoleRights" EntitySet="RoleRights" />
           </AssociationSet>
+          <AssociationSet Name="FK_RoleRights_Users" Association="Self.FK_RoleRights_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="RoleRights" EntitySet="RoleRights" />
+          </AssociationSet>
           <AssociationSet Name="FK_StateMaster_CountryMaster" Association="Self.FK_StateMaster_CountryMaster">
             <End Role="CountryMaster" EntitySet="CountryMaster" />
             <End Role="StateMaster" EntitySet="StateMaster" />
@@ -1604,9 +1645,12 @@
             <End Role="LocationMaster" EntitySet="LocationMaster" />
             <End Role="StorageLocationMaster" EntitySet="StorageLocationMaster" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_Organisations" Association="Self.FK_Users_Organisations">
+            <End Role="Organisations" EntitySet="Organisations" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InVanDBModels" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1823,6 +1867,7 @@
           <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedby" Type="Int32" />
           <NavigationProperty Name="Branch" Relationship="Self.FK_Department_ToBranch" FromRole="Department" ToRole="Branch" />
+          <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="Department" ToRole="EmployeeMaster" />
         </EntityType>
         <EntityType Name="DesignationMaster">
           <Key>
@@ -1865,6 +1910,7 @@
           <Property Name="LastModifiedBy" Type="Int32" />
           <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DesignationMaster" Relationship="Self.FK_EmployeeMaster_EmployeeMaster" FromRole="EmployeeMaster" ToRole="DesignationMaster" />
+          <NavigationProperty Name="Department" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="EmployeeMaster" ToRole="Department" />
         </EntityType>
         <EntityType Name="FinishGoodSery">
           <Key>
@@ -2036,6 +2082,8 @@
           <NavigationProperty Name="InquiryMasters" Relationship="Self.FK_InquiryMaster_ToItemCategoryMaster" FromRole="ItemCategoryMaster" ToRole="InquiryMaster" />
           <NavigationProperty Name="ItemMasters" Relationship="Self.FK_ItemMaster_ToItemCategoryMaster" FromRole="ItemCategoryMaster" ToRole="ItemMaster" />
           <NavigationProperty Name="QCProductionSpecificationMasters" Relationship="Self.FK_QCProductionSpecificationMaster_ToItemCategoryMaster" FromRole="ItemCategoryMaster" ToRole="QCProductionSpecificationMaster" />
+          <Property Name="ItemTypeId" Type="Int32" />
+          <NavigationProperty Name="ItemMaster" Relationship="InVanDBModels.FK_ItemCategoryMaster_ItemMaster" FromRole="ItemCategoryMaster" ToRole="ItemMaster" />
         </EntityType>
         <EntityType Name="ItemMaster">
           <Key>
@@ -2053,6 +2101,8 @@
           <NavigationProperty Name="InquiryMasters" Relationship="Self.FK_InquiryMaster_ToItemMaster" FromRole="ItemMaster" ToRole="InquiryMaster" />
           <NavigationProperty Name="ItemCategoryMaster" Relationship="Self.FK_ItemMaster_ToItemCategoryMaster" FromRole="ItemMaster" ToRole="ItemCategoryMaster" />
           <NavigationProperty Name="QCProductionSpecificationMasters" Relationship="Self.FK_QCProductionSpecificationMaster_ToItemMaster" FromRole="ItemMaster" ToRole="QCProductionSpecificationMaster" />
+          <Property Name="Description" Type="String" MaxLength="90" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ItemCategoryMasters" Relationship="InVanDBModels.FK_ItemCategoryMaster_ItemMaster" FromRole="ItemMaster" ToRole="ItemCategoryMaster" />
         </EntityType>
         <EntityType Name="LabMaster">
           <Key>
@@ -2168,6 +2218,7 @@
           <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Branches" Relationship="Self.FK_Branch_ToOrganisations" FromRole="Organisations" ToRole="Branch" />
           <NavigationProperty Name="OrganisationGroup" Relationship="Self.FK_Organisations_ToOrganisationGroups" FromRole="Organisations" ToRole="OrganisationGroups" />
+          <NavigationProperty Name="Users" Relationship="InVanDBModels.FK_Users_Organisations" FromRole="Organisation" ToRole="User" />
         </EntityType>
         <EntityType Name="ProcessMaster">
           <Key>
@@ -2417,6 +2468,8 @@
           <Property Name="ViewScreen" Type="Boolean" />
           <NavigationProperty Name="Role" Relationship="Self.FK_RoleRights_ToRoles" FromRole="RoleRights" ToRole="Roles" />
           <NavigationProperty Name="ScreenName" Relationship="Self.FK_RoleRights_ToScreenName" FromRole="RoleRights" ToRole="ScreenName" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="InVanDBModels.FK_RoleRights_Users" FromRole="RoleRight" ToRole="User" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -2751,6 +2804,8 @@
           <Property Name="CreatedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="LastModifiedBy" Type="Int32" />
           <Property Name="LastModifiedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="RoleRights" Relationship="InVanDBModels.FK_RoleRights_Users" FromRole="User" ToRole="RoleRight" />
+          <NavigationProperty Name="Organisation" Relationship="InVanDBModels.FK_Users_Organisations" FromRole="User" ToRole="Organisation" />
         </EntityType>
         <EntityType Name="WorkOrder">
           <Key>
@@ -3251,7 +3306,71 @@
             <End Role="ScreenName" EntitySet="ScreenNames" />
             <End Role="RoleRights" EntitySet="RoleRights" />
           </AssociationSet>
+          <AssociationSet Name="FK_EmployeeMaster_Department" Association="InVanDBModels.FK_EmployeeMaster_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleRights_Users" Association="InVanDBModels.FK_RoleRights_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="RoleRight" EntitySet="RoleRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemCategoryMaster_ItemMaster" Association="InVanDBModels.FK_ItemCategoryMaster_ItemMaster">
+            <End Role="ItemMaster" EntitySet="ItemMasters" />
+            <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMasters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Organisations" Association="InVanDBModels.FK_Users_Organisations">
+            <End Role="Organisation" EntitySet="Organisations" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_EmployeeMaster_Department">
+          <End Type="InVanDBModels.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="EmployeeMaster">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleRights_Users">
+          <End Type="InVanDBModels.User" Role="User" Multiplicity="0..1" />
+          <End Type="InVanDBModels.RoleRight" Role="RoleRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleRight">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemCategoryMaster_ItemMaster">
+          <End Type="InVanDBModels.ItemMaster" Role="ItemMaster" Multiplicity="0..1" />
+          <End Type="InVanDBModels.ItemCategoryMaster" Role="ItemCategoryMaster" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemMaster">
+              <PropertyRef Name="ItemID" />
+            </Principal>
+            <Dependent Role="ItemCategoryMaster">
+              <PropertyRef Name="ItemTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Organisations">
+          <End Type="InVanDBModels.Organisation" Role="Organisation" Multiplicity="0..1" />
+          <End Type="InVanDBModels.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organisation">
+              <PropertyRef Name="OrganisationId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="OrganisationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3679,6 +3798,7 @@
           <EntitySetMapping Name="ItemCategoryMasters">
             <EntityTypeMapping TypeName="InVanDBModels.ItemCategoryMaster">
               <MappingFragment StoreEntitySet="ItemCategoryMaster">
+                <ScalarProperty Name="ItemTypeId" ColumnName="ItemTypeId" />
                 <ScalarProperty Name="ItemCategoryID" ColumnName="ItemCategoryID" />
                 <ScalarProperty Name="ItemCategoryName" ColumnName="ItemCategoryName" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -3693,10 +3813,9 @@
           <EntitySetMapping Name="ItemMasters">
             <EntityTypeMapping TypeName="InVanDBModels.ItemMaster">
               <MappingFragment StoreEntitySet="ItemMaster">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ItemID" ColumnName="ItemID" />
-                <ScalarProperty Name="ItemCategoryID" ColumnName="ItemCategoryID" />
                 <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -4052,6 +4171,7 @@
           <EntitySetMapping Name="RoleRights">
             <EntityTypeMapping TypeName="InVanDBModels.RoleRight">
               <MappingFragment StoreEntitySet="RoleRights">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleRightId" ColumnName="RoleRightId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
                 <ScalarProperty Name="ScreenId" ColumnName="ScreenId" />
@@ -4401,8 +4521,6 @@
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="OrganisationId" ColumnName="OrganisationId" />
-                <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />

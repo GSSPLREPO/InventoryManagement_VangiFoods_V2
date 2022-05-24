@@ -128,8 +128,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="DAL\Branch.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
@@ -327,7 +330,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IItemRepository.cs" />
+    <Compile Include="Repository\IRolesRepository.cs" />
+    <Compile Include="Repository\ItemRepository.cs" />
     <Compile Include="Repository\IUnitRepository.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -335,6 +342,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="css\font-awesome.css" />
+    <Content Include="css\font-awesome.min.css" />
     <Content Include="DAL\InVanDBDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InVanDBDataModel.Context.cs</LastGenOutput>
@@ -419,6 +428,7 @@
     <Content Include="Theme\MainContent\images\logo-old.svg" />
     <Content Include="Theme\MainContent\images\logo.png" />
     <Content Include="Theme\MainContent\images\Logo.svg" />
+    <Content Include="Theme\MainContent\images\logoForLogin.png" />
     <Content Include="Theme\MainContent\images\samples\120x768\1.jpg" />
     <Content Include="Theme\MainContent\images\samples\120x768\10.jpg" />
     <Content Include="Theme\MainContent\images\samples\120x768\11.jpg" />
@@ -1112,6 +1122,15 @@
     <Content Include="Views\Shared\Dashboard.cshtml" />
     <Content Include="Views\Shared\SideNavBar.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\AddRole.cshtml" />
+    <Content Include="Views\Role\EditRole.cshtml" />
+    <Content Include="Views\Role\DeleteRole.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\AddItem.cshtml" />
+    <Content Include="Views\Item\EditItem.cshtml" />
+    <Content Include="Views\Item\DeleteItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

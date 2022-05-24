@@ -85,6 +85,10 @@
         <AssociationConnector Association="InVanDBModels.FK_RejectionDataSheetMaster_ToSupplierMaster" ManuallyRouted="false" />
         <AssociationConnector Association="InVanDBModels.FK_RoleRights_ToRoles" ManuallyRouted="false" />
         <AssociationConnector Association="InVanDBModels.FK_RoleRights_ToScreenName" ManuallyRouted="false" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_Department" />
+        <AssociationConnector Association="InVanDBModels.FK_RoleRights_Users" />
+        <AssociationConnector Association="InVanDBModels.FK_ItemCategoryMaster_ItemMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_Users_Organisations" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

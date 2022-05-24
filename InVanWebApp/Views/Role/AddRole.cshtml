@@ -1,33 +1,26 @@
-﻿@model InVanWebApp.DAL.UnitMaster
+﻿@model InVanWebApp.DAL.Role
 @{
-    ViewBag.Title = "AddUnit";
+    ViewBag.Title = "AddRole";
     Layout = "~/Views/Shared/MainMaster.cshtml";
+
 }
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h5>Add Unit</h5>
+        <h5>Add Role</h5>
         <hr />
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UnitName, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RoleName, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UnitName)
-                @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.RoleName)
+                @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UnitCode, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UnitCode)
-                @Html.ValidationMessageFor(model => model.UnitCode)
-            </div>
-        </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -45,10 +38,11 @@
 }
 
 <div>
-    @Html.ActionLink("Back to Unit List", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
 

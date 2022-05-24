@@ -8,26 +8,28 @@ using InVanWebApp.Repository;
 
 namespace InVanWebApp.Controllers
 {
-    public class UnitController : Controller
+    public class RoleController : Controller
     {
-        private IUnitRepository _unitRepository;
+        private IRolesRepository _rolesRepository;
 
         #region Initializing constructor
         /// <summary>
         /// Farheen: Constructor without parameter
         /// </summary>
-        public UnitController()
+        public RoleController()
         {
-            _unitRepository = new UnitRepository(new InVanDBContext());
+            _rolesRepository = new RoleRepository(new InVanDBContext());
         }
+
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
         /// </summary>
         /// <param name="unitRepository"></param>
-        public UnitController(IUnitRepository unitRepository)
+        public RoleController(IRolesRepository rolesRepository)
         {
-            _unitRepository = unitRepository;
+            _rolesRepository = rolesRepository;
         }
+
         #endregion
 
         #region  Bind grid
@@ -35,21 +37,22 @@ namespace InVanWebApp.Controllers
         ///Farheen: Get data and rendered it in it's view. 
         /// </summary>
         /// <returns></returns>
+        // GET: Role
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _unitRepository.GetAll();
+            var model = _rolesRepository.GetAll();
             return View(model);
         }
         #endregion
 
         #region Insert function
         /// <summary>
-        /// Farheen: Rendered the user to the add unit master form
+        /// Farheen: Rendered the user to the add role master form
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddUnit()
+        public ActionResult AddRole()
         {
             return View();
         }
@@ -60,13 +63,13 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddUnit(UnitMaster model)
+        public ActionResult AddRole(Role model)
         {
             if (ModelState.IsValid)
             {
-                _unitRepository.Insert(model);
+                _rolesRepository.Insert(model);
                 //_unitRepository.Save();
-                return RedirectToAction("Index", "Unit");
+                return RedirectToAction("Index", "Role");
             }
             return View();
         }
@@ -74,30 +77,29 @@ namespace InVanWebApp.Controllers
 
         #region  Update function
         /// <summary>
-        /// Farheen: Rendered the user to the edit page with details of a perticular record.
+        ///Farheen: Rendered the user to the edit page with details of a perticular record.
         /// </summary>
-        /// <param name="UnitID"></param>
+        /// <param name="RoleId"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditUnit(int UnitID)
+        public ActionResult EditRole(int RoleId)
         {
-            UnitMaster model = _unitRepository.GetById(UnitID);
+            Role model = _rolesRepository.GetById(RoleId);
             return View(model);
         }
 
         /// <summary>
-        /// Farheen: Pass the data to the repository for updating that record.
+        /// Farheen:  Pass the data to the repository for updating that record.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditUnit(UnitMaster model)
+        public ActionResult EditRole(Role model)
         {
             if (ModelState.IsValid)
             {
-                _unitRepository.Udate(model);
-                //_unitRepository.Save();
-                return RedirectToAction("Index", "Unit");
+                _rolesRepository.Udate(model);
+                return RedirectToAction("Index", "Role");
             }
             else
                 return View(model);
@@ -106,26 +108,23 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Delete function
-
         /// <summary>
-        /// Delete the perticular record
+        /// Farheen: Delete the perticular record
         /// </summary>
-        /// <param name="UnitId">record Id</param>
+        /// <param name="RoleId">record Id</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult DeleteUnit(int UnitId)
+        public ActionResult DeleteRole(int RoleId)
         {
-            UnitMaster model = _unitRepository.GetById(UnitId);
+            Role model = _rolesRepository.GetById(RoleId);
             return View(model);
         }
-
-
         [HttpPost]
-        public ActionResult Delete(int UnitId)
+        public ActionResult Delete(int RoleId)
         {
-            _unitRepository.Delete(UnitId);
+            _rolesRepository.Delete(RoleId);
             //_unitRepository.Save();
-            return RedirectToAction("Index", "Unit");
+            return RedirectToAction("Index", "Role");
         }
         #endregion
     }

@@ -14,6 +14,12 @@ namespace InVanWebApp.DAL
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.RoleRights = new HashSet<RoleRight>();
+        }
+    
         public int Id { get; set; }
         public Nullable<int> OrganisationId { get; set; }
         public Nullable<int> BranchId { get; set; }
@@ -26,5 +32,9 @@ namespace InVanWebApp.DAL
         public string CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public string LastModifiedDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RoleRight> RoleRights { get; set; }
+        public virtual Organisation Organisation { get; set; }
     }
 }

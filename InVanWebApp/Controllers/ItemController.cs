@@ -8,25 +8,25 @@ using InVanWebApp.Repository;
 
 namespace InVanWebApp.Controllers
 {
-    public class UnitController : Controller
+    public class ItemController : Controller
     {
-        private IUnitRepository _unitRepository;
+        private IItemRepository _itemRepository;
 
         #region Initializing constructor
         /// <summary>
         /// Farheen: Constructor without parameter
         /// </summary>
-        public UnitController()
+        public ItemController()
         {
-            _unitRepository = new UnitRepository(new InVanDBContext());
+            _itemRepository = new ItemRepository(new InVanDBContext());
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
         /// </summary>
         /// <param name="unitRepository"></param>
-        public UnitController(IUnitRepository unitRepository)
+        public ItemController(IItemRepository itemRepository)
         {
-            _unitRepository = unitRepository;
+            _itemRepository = itemRepository;
         }
         #endregion
 
@@ -38,18 +38,18 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _unitRepository.GetAll();
+            var model = _itemRepository.GetAll();
             return View(model);
         }
         #endregion
 
         #region Insert function
         /// <summary>
-        /// Farheen: Rendered the user to the add unit master form
+        /// Farheen: Rendered the user to the add item master form
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddUnit()
+        public ActionResult AddItem()
         {
             return View();
         }
@@ -60,13 +60,13 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddUnit(UnitMaster model)
+        public ActionResult AddItem(ItemMaster model)
         {
             if (ModelState.IsValid)
             {
-                _unitRepository.Insert(model);
+                _itemRepository.Insert(model);
                 //_unitRepository.Save();
-                return RedirectToAction("Index", "Unit");
+                return RedirectToAction("Index", "Item");
             }
             return View();
         }
@@ -76,12 +76,12 @@ namespace InVanWebApp.Controllers
         /// <summary>
         /// Farheen: Rendered the user to the edit page with details of a perticular record.
         /// </summary>
-        /// <param name="UnitID"></param>
+        /// <param name="ItemID"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditUnit(int UnitID)
+        public ActionResult EditItem(int ItemID)
         {
-            UnitMaster model = _unitRepository.GetById(UnitID);
+            ItemMaster model = _itemRepository.GetById(ItemID);
             return View(model);
         }
 
@@ -91,13 +91,12 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditUnit(UnitMaster model)
+        public ActionResult EditItem(ItemMaster model)
         {
             if (ModelState.IsValid)
             {
-                _unitRepository.Udate(model);
-                //_unitRepository.Save();
-                return RedirectToAction("Index", "Unit");
+                _itemRepository.Udate(model);
+                return RedirectToAction("Index", "Item");
             }
             else
                 return View(model);
@@ -110,23 +109,24 @@ namespace InVanWebApp.Controllers
         /// <summary>
         /// Delete the perticular record
         /// </summary>
-        /// <param name="UnitId">record Id</param>
+        /// <param name="ItemId">record Id</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult DeleteUnit(int UnitId)
+        public ActionResult DeleteItem(int ItemId)
         {
-            UnitMaster model = _unitRepository.GetById(UnitId);
+            ItemMaster model = _itemRepository.GetById(ItemId);
             return View(model);
         }
 
 
         [HttpPost]
-        public ActionResult Delete(int UnitId)
+        public ActionResult Delete(int ItemId)
         {
-            _unitRepository.Delete(UnitId);
+            _itemRepository.Delete(ItemId);
             //_unitRepository.Save();
-            return RedirectToAction("Index", "Unit");
+            return RedirectToAction("Index", "Item");
         }
         #endregion
+
     }
 }

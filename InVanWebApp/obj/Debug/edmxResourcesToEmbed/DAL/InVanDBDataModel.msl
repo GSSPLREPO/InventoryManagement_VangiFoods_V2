@@ -422,6 +422,7 @@
     <EntitySetMapping Name="ItemCategoryMasters">
       <EntityTypeMapping TypeName="InVanDBModels.ItemCategoryMaster">
         <MappingFragment StoreEntitySet="ItemCategoryMaster">
+          <ScalarProperty Name="ItemTypeId" ColumnName="ItemTypeId" />
           <ScalarProperty Name="ItemCategoryID" ColumnName="ItemCategoryID" />
           <ScalarProperty Name="ItemCategoryName" ColumnName="ItemCategoryName" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -436,10 +437,9 @@
     <EntitySetMapping Name="ItemMasters">
       <EntityTypeMapping TypeName="InVanDBModels.ItemMaster">
         <MappingFragment StoreEntitySet="ItemMaster">
+          <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="ItemID" ColumnName="ItemID" />
-          <ScalarProperty Name="ItemCategoryID" ColumnName="ItemCategoryID" />
           <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-          <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -795,6 +795,7 @@
     <EntitySetMapping Name="RoleRights">
       <EntityTypeMapping TypeName="InVanDBModels.RoleRight">
         <MappingFragment StoreEntitySet="RoleRights">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="RoleRightId" ColumnName="RoleRightId" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="ScreenId" ColumnName="ScreenId" />
@@ -1144,8 +1145,6 @@
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="OrganisationId" ColumnName="OrganisationId" />
-          <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />

@@ -1,26 +1,26 @@
-﻿@model IEnumerable<InVanWebApp.DAL.UnitMaster>
+﻿@model IEnumerable<InVanWebApp.DAL.ItemMaster>
 @{
-    ViewBag.Title = "Unit Master";
+    ViewBag.Title = "Item Master";
     Layout = "~/Views/Shared/MainMaster.cshtml";
-}
 
+}
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>Unit Master</title>
+    <title>Item Master</title>
 </head>
 <body>
     <div style="margin-top: -18px; margin-left: -20px; background: white;">
         <ul class="breadcrumb">
             <li><i class="fa fa-home"></i><a href="@Url.Action("Index","Dashboard")">Master</a></li>
-            <li class="active">/Unit Master</li>
+            <li class="active">/Item Master</li>
         </ul>
     </div>
     <div class="box box-primary; panel-body" runat="server" id="divPanel1" style="margin-top: -10px;
     margin-left: -20px;">
         <div class="box-header">
-            <h4 class="box-title" style="margin-left: -850px;">Unit Master</h4>
+            <h4 class="box-title" style="margin-left: -850px;">Item Master</h4>
         </div>
         <hr />
         <div class="panel-body">
@@ -28,16 +28,12 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            @Html.ActionLink("Add Unit", "AddUnit")
+                            @Html.ActionLink("Add Item", "AddItem")
                             <table class="table">
                                 <tr>
                                     <th>
                                         @*@Html.DisplayNameFor(model => model.UnitName)*@
-                                        @Html.DisplayName("Unit")
-                                    </th>
-                                    <th>
-                                        @*@Html.DisplayNameFor(model => model.UnitCode)*@
-                                        @Html.DisplayName("Unit Code")
+                                        @Html.DisplayName("Item Type")
                                     </th>
                                     <th>
                                         @*@Html.DisplayNameFor(model => model.Description)*@
@@ -52,17 +48,14 @@
                                 {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.UnitName)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.UnitCode)
+                                            @Html.DisplayFor(modelItem => item.ItemName)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Description)
                                         </td>
                                         <td>
-                                            @Html.ActionLink("Edit", "EditUnit", new { UnitID = item.UnitID }) |
-                                            @Html.ActionLink("Delete", "DeleteUnit", new { UnitId = item.UnitID })
+                                            @Html.ActionLink("Edit", "EditItem", new { ItemID = item.ItemID }) |
+                                            @Html.ActionLink("Delete", "DeleteItem", new { ItemID = item.ItemID })
                                         </td>
                                     </tr>
                                 }
@@ -76,3 +69,4 @@
 </body>
 
 </html>
+

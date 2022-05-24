@@ -213,6 +213,7 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedby" Type="Int32" />
     <NavigationProperty Name="Branch" Relationship="Self.FK_Department_ToBranch" FromRole="Department" ToRole="Branch" />
+    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="Department" ToRole="EmployeeMaster" />
   </EntityType>
   <EntityType Name="DesignationMaster">
     <Key>
@@ -255,6 +256,7 @@
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="DesignationMaster" Relationship="Self.FK_EmployeeMaster_EmployeeMaster" FromRole="EmployeeMaster" ToRole="DesignationMaster" />
+    <NavigationProperty Name="Department" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="EmployeeMaster" ToRole="Department" />
   </EntityType>
   <EntityType Name="FinishGoodSery">
     <Key>
@@ -426,6 +428,8 @@
     <NavigationProperty Name="InquiryMasters" Relationship="Self.FK_InquiryMaster_ToItemCategoryMaster" FromRole="ItemCategoryMaster" ToRole="InquiryMaster" />
     <NavigationProperty Name="ItemMasters" Relationship="Self.FK_ItemMaster_ToItemCategoryMaster" FromRole="ItemCategoryMaster" ToRole="ItemMaster" />
     <NavigationProperty Name="QCProductionSpecificationMasters" Relationship="Self.FK_QCProductionSpecificationMaster_ToItemCategoryMaster" FromRole="ItemCategoryMaster" ToRole="QCProductionSpecificationMaster" />
+    <Property Name="ItemTypeId" Type="Int32" />
+    <NavigationProperty Name="ItemMaster" Relationship="InVanDBModels.FK_ItemCategoryMaster_ItemMaster" FromRole="ItemCategoryMaster" ToRole="ItemMaster" />
   </EntityType>
   <EntityType Name="ItemMaster">
     <Key>
@@ -443,6 +447,8 @@
     <NavigationProperty Name="InquiryMasters" Relationship="Self.FK_InquiryMaster_ToItemMaster" FromRole="ItemMaster" ToRole="InquiryMaster" />
     <NavigationProperty Name="ItemCategoryMaster" Relationship="Self.FK_ItemMaster_ToItemCategoryMaster" FromRole="ItemMaster" ToRole="ItemCategoryMaster" />
     <NavigationProperty Name="QCProductionSpecificationMasters" Relationship="Self.FK_QCProductionSpecificationMaster_ToItemMaster" FromRole="ItemMaster" ToRole="QCProductionSpecificationMaster" />
+    <Property Name="Description" Type="String" MaxLength="90" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ItemCategoryMasters" Relationship="InVanDBModels.FK_ItemCategoryMaster_ItemMaster" FromRole="ItemMaster" ToRole="ItemCategoryMaster" />
   </EntityType>
   <EntityType Name="LabMaster">
     <Key>
@@ -558,6 +564,7 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Branches" Relationship="Self.FK_Branch_ToOrganisations" FromRole="Organisations" ToRole="Branch" />
     <NavigationProperty Name="OrganisationGroup" Relationship="Self.FK_Organisations_ToOrganisationGroups" FromRole="Organisations" ToRole="OrganisationGroups" />
+    <NavigationProperty Name="Users" Relationship="InVanDBModels.FK_Users_Organisations" FromRole="Organisation" ToRole="User" />
   </EntityType>
   <EntityType Name="ProcessMaster">
     <Key>
@@ -807,6 +814,8 @@
     <Property Name="ViewScreen" Type="Boolean" />
     <NavigationProperty Name="Role" Relationship="Self.FK_RoleRights_ToRoles" FromRole="RoleRights" ToRole="Roles" />
     <NavigationProperty Name="ScreenName" Relationship="Self.FK_RoleRights_ToScreenName" FromRole="RoleRights" ToRole="ScreenName" />
+    <Property Name="UserId" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="InVanDBModels.FK_RoleRights_Users" FromRole="RoleRight" ToRole="User" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -1141,6 +1150,8 @@
     <Property Name="CreatedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="RoleRights" Relationship="InVanDBModels.FK_RoleRights_Users" FromRole="User" ToRole="RoleRight" />
+    <NavigationProperty Name="Organisation" Relationship="InVanDBModels.FK_Users_Organisations" FromRole="User" ToRole="Organisation" />
   </EntityType>
   <EntityType Name="WorkOrder">
     <Key>
@@ -1641,5 +1652,69 @@
       <End Role="ScreenName" EntitySet="ScreenNames" />
       <End Role="RoleRights" EntitySet="RoleRights" />
     </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_Department" Association="InVanDBModels.FK_EmployeeMaster_Department">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleRights_Users" Association="InVanDBModels.FK_RoleRights_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="RoleRight" EntitySet="RoleRights" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ItemCategoryMaster_ItemMaster" Association="InVanDBModels.FK_ItemCategoryMaster_ItemMaster">
+      <End Role="ItemMaster" EntitySet="ItemMasters" />
+      <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Organisations" Association="InVanDBModels.FK_Users_Organisations">
+      <End Role="Organisation" EntitySet="Organisations" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
   </EntityContainer>
+  <Association Name="FK_EmployeeMaster_Department">
+    <End Type="InVanDBModels.Department" Role="Department" Multiplicity="0..1" />
+    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentID" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RoleRights_Users">
+    <End Type="InVanDBModels.User" Role="User" Multiplicity="0..1" />
+    <End Type="InVanDBModels.RoleRight" Role="RoleRight" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="RoleRight">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ItemCategoryMaster_ItemMaster">
+    <End Type="InVanDBModels.ItemMaster" Role="ItemMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.ItemCategoryMaster" Role="ItemCategoryMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemMaster">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="ItemCategoryMaster">
+        <PropertyRef Name="ItemTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Organisations">
+    <End Type="InVanDBModels.Organisation" Role="Organisation" Multiplicity="0..1" />
+    <End Type="InVanDBModels.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisation">
+        <PropertyRef Name="OrganisationId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="OrganisationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

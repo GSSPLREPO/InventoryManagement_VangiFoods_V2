@@ -38,5 +38,6 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         public virtual DesignationMaster DesignationMaster { get; set; }
+        public virtual Department Department { get; set; }
     }
 }

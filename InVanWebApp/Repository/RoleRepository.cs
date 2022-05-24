@@ -1,180 +1,161 @@
-﻿using System;
+﻿using InVanWebApp.DAL;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using InVanWebApp.DAL;
-using System.Data.Entity;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace InVanWebApp.Repository
 {
-    public class UnitRepository : IUnitRepository
+    public class RoleRepository : IRolesRepository
     {
         private readonly InVanDBContext _context;
-        private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
 
         #region Initializing constructor.
         /// <summary>
         /// Farheen: Constructor without parameter
         /// </summary>
-        public UnitRepository()
+        public RoleRepository()
         {
             //Define the DbContext object.
             _context = new InVanDBContext();
         }
 
         //Constructor with parameter for initializing the DbContext object.
-        public UnitRepository(InVanDBContext context)
+        public RoleRepository(InVanDBContext context)
         {
             _context = context;
+
         }
 
         #endregion
 
         #region  Bind grid
         /// <summary>
-        /// Farheen: This function is for fecthing list of unit master's.
+        /// Farheen: This function is for fecthing list of role master's.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UnitMaster> GetAll()
+        public IEnumerable<Role> GetAll()
         {
-            List<UnitMaster> unitMastersList = new List<UnitMaster>();
-            using (SqlConnection con = new SqlConnection(connString))
+            List<Role> RoleMastersList = new List<Role>();
+            using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_GetAll", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Role_GetAll", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var UnitMasters = new UnitMaster()
+                    var RoleMaster = new Role()
                     {
-                        UnitID =Convert.ToInt32(reader["UnitID"]),
-                        UnitName = reader["UnitName"].ToString(),
-                        UnitCode = reader["UnitCode"].ToString(),
-                        Description=reader["Description"].ToString()
+                        RoleId = Convert.ToInt32(reader["RoleId"]),
+                        RoleName = reader["RoleName"].ToString(),
+                        Description = reader["Description"].ToString()
                     };
-                    unitMastersList.Add(UnitMasters);
+                    RoleMastersList.Add(RoleMaster);
                 }
                 con.Close();
-                return unitMastersList;
+                return RoleMastersList;
             }
             //return _context.UnitMasters.ToList();
         }
         #endregion
 
         #region Update functions
+
         /// <summary>
         /// Farheen: This function is for fetch data for editing by ID
         /// </summary>
-        /// <param name="UnitID"></param>
+        /// <param name="RoleId"></param>
         /// <returns></returns>
-
-        public UnitMaster GetById(int UnitID)
+        public Role GetById(int RoleId)
         {
-            var unitMaster = new UnitMaster();
-            using (SqlConnection con = new SqlConnection(connString))
+            var roleMaster= new Role();
+            using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_GetByID", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Role_GetByID", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UnitID", UnitID);
+                cmd.Parameters.AddWithValue("@RoleId", RoleId);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    unitMaster=new UnitMaster()
+                    roleMaster = new Role()
                     {
-                        UnitID=Convert.ToInt32(reader["UnitID"]),
-                        UnitName = reader["UnitName"].ToString(),
-                        UnitCode = reader["UnitCode"].ToString(),
-                        Description = reader["Description"].ToString()
+                        RoleId = Convert.ToInt32(reader["RoleId"]),
+                        RoleName=reader["RoleName"].ToString(),
+                        Description=reader["Description"].ToString()
                     };
                 }
                 con.Close();
-                return unitMaster;
+                return roleMaster;
             }
-                //return _context.UnitMasters.Find(UnitID);
+
         }
 
         /// <summary>
         /// Farheen: Update record
         /// </summary>
-        /// <param name="unitMaster"></param>
-        public void Udate(UnitMaster unitMaster)
+        /// <param name="roleMaster"></param>
+        public void Udate(Role roleMaster)
         {
-            using (SqlConnection con = new SqlConnection(connString))
+            using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_Update", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Role_Update", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UnitID", unitMaster.UnitID);
-                cmd.Parameters.AddWithValue("@UnitName", unitMaster.UnitName);
-                cmd.Parameters.AddWithValue("@UnitCode", unitMaster.UnitCode);
-                cmd.Parameters.AddWithValue("@Description", unitMaster.Description);
+                cmd.Parameters.AddWithValue("@RoleId",roleMaster.RoleId);
+                cmd.Parameters.AddWithValue("@RoleName",roleMaster.RoleName);
+                cmd.Parameters.AddWithValue("@Description", roleMaster.Description);
                 cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
                 cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
-            //_context.Entry(unitMaster).State = EntityState.Modified;
         }
-
         #endregion
 
         #region Insert function
         /// <summary>
         /// Farheen: Insert record.
         /// </summary>
-        /// <param name="unitMaster"></param>
-        public void Insert(UnitMaster unitMaster)
+        /// <param name="roleMaster"></param>
+        public void Insert(Role roleMaster)
         {
-            using (SqlConnection con = new SqlConnection(connString))
+            using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_Insert", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Role_Insert", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UnitName",unitMaster.UnitName);
-                cmd.Parameters.AddWithValue("@UnitCode", unitMaster.UnitCode);
-                cmd.Parameters.AddWithValue("@Description", unitMaster.Description);
+                cmd.Parameters.AddWithValue("@RoleName", roleMaster.RoleName);
+                cmd.Parameters.AddWithValue("@Description", roleMaster.Description);
                 cmd.Parameters.AddWithValue("@CreatedBy", 1);
                 cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
-            }
-              //  _context.UnitMasters.Add(unitMaster);
+            };
         }
-
         #endregion
 
-        //public void Save()
-        //{
-        //    _context.SaveChanges();
-        //}
-
         #region Delete function
-
-        /// <summary>
-        /// Delete record by ID
-        /// </summary>
-        /// <param name="UnitID"></param>
-        public void Delete(int UnitID)
+        public void Delete(int RoleId)
         {
-            using (SqlConnection con = new SqlConnection(connString))
+            using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_Delete", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Role_Delete", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UnitID", UnitID);
+                cmd.Parameters.AddWithValue("@RoleId", RoleId);
                 cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
                 cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
-            }
-            //    UnitMaster unitMaster = _context.UnitMasters.Find(UnitID);
-            //_context.UnitMasters.Remove(unitMaster);
+            };
         }
+
         #endregion
 
         #region Dispose function

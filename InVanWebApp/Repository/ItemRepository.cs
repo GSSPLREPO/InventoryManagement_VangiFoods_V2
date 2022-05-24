@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using InVanWebApp.DAL;
-using System.Data.Entity;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Data;
+using InVanWebApp.Repository;
 
 namespace InVanWebApp.Repository
 {
-    public class UnitRepository : IUnitRepository
+    public class ItemRepository : IItemRepository
     {
         private readonly InVanDBContext _context;
         private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
@@ -19,14 +19,14 @@ namespace InVanWebApp.Repository
         /// <summary>
         /// Farheen: Constructor without parameter
         /// </summary>
-        public UnitRepository()
+        public ItemRepository()
         {
             //Define the DbContext object.
             _context = new InVanDBContext();
         }
 
         //Constructor with parameter for initializing the DbContext object.
-        public UnitRepository(InVanDBContext context)
+        public ItemRepository(InVanDBContext context)
         {
             _context = context;
         }
@@ -35,31 +35,30 @@ namespace InVanWebApp.Repository
 
         #region  Bind grid
         /// <summary>
-        /// Farheen: This function is for fecthing list of unit master's.
+        /// Farheen: This function is for fecthing list of item master's.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UnitMaster> GetAll()
+        public IEnumerable<ItemMaster> GetAll()
         {
-            List<UnitMaster> unitMastersList = new List<UnitMaster>();
+            List<ItemMaster> itemMastersList = new List<ItemMaster>();
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_GetAll", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_GetAll", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var UnitMasters = new UnitMaster()
+                    var ItemMasters = new ItemMaster()
                     {
-                        UnitID =Convert.ToInt32(reader["UnitID"]),
-                        UnitName = reader["UnitName"].ToString(),
-                        UnitCode = reader["UnitCode"].ToString(),
-                        Description=reader["Description"].ToString()
+                        ItemID = Convert.ToInt32(reader["ItemID"]),
+                        ItemName = reader["ItemName"].ToString(),
+                        Description = reader["Description"].ToString()
                     };
-                    unitMastersList.Add(UnitMasters);
+                    itemMastersList.Add(ItemMasters);
                 }
                 con.Close();
-                return unitMastersList;
+                return itemMastersList;
             }
             //return _context.UnitMasters.ToList();
         }
@@ -69,49 +68,47 @@ namespace InVanWebApp.Repository
         /// <summary>
         /// Farheen: This function is for fetch data for editing by ID
         /// </summary>
-        /// <param name="UnitID"></param>
+        /// <param name="ItemId"></param>
         /// <returns></returns>
 
-        public UnitMaster GetById(int UnitID)
+        public ItemMaster GetById(int ItemId)
         {
-            var unitMaster = new UnitMaster();
+            var itemMaster = new ItemMaster();
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_GetByID", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_GetByID", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UnitID", UnitID);
+                cmd.Parameters.AddWithValue("@ItemID", ItemId);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    unitMaster=new UnitMaster()
+                    itemMaster = new ItemMaster()
                     {
-                        UnitID=Convert.ToInt32(reader["UnitID"]),
-                        UnitName = reader["UnitName"].ToString(),
-                        UnitCode = reader["UnitCode"].ToString(),
+                        ItemID = Convert.ToInt32(reader["ItemID"]),
+                        ItemName = reader["ItemName"].ToString(),
                         Description = reader["Description"].ToString()
                     };
                 }
                 con.Close();
-                return unitMaster;
+                return itemMaster;
             }
-                //return _context.UnitMasters.Find(UnitID);
+            //return _context.UnitMasters.Find(UnitID);
         }
 
         /// <summary>
         /// Farheen: Update record
         /// </summary>
-        /// <param name="unitMaster"></param>
-        public void Udate(UnitMaster unitMaster)
+        /// <param name="itemMaster"></param>
+        public void Udate(ItemMaster itemMaster)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_Update", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_Update", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UnitID", unitMaster.UnitID);
-                cmd.Parameters.AddWithValue("@UnitName", unitMaster.UnitName);
-                cmd.Parameters.AddWithValue("@UnitCode", unitMaster.UnitCode);
-                cmd.Parameters.AddWithValue("@Description", unitMaster.Description);
+                cmd.Parameters.AddWithValue("@ItemID", itemMaster.ItemID);
+                cmd.Parameters.AddWithValue("@ItemName", itemMaster.ItemName);
+                cmd.Parameters.AddWithValue("@Description", itemMaster.Description);
                 cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
                 cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                 con.Open();
@@ -127,53 +124,44 @@ namespace InVanWebApp.Repository
         /// <summary>
         /// Farheen: Insert record.
         /// </summary>
-        /// <param name="unitMaster"></param>
-        public void Insert(UnitMaster unitMaster)
+        /// <param name="itemMaster"></param>
+        public void Insert(ItemMaster itemMaster)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_Insert", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_Insert", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UnitName",unitMaster.UnitName);
-                cmd.Parameters.AddWithValue("@UnitCode", unitMaster.UnitCode);
-                cmd.Parameters.AddWithValue("@Description", unitMaster.Description);
+                cmd.Parameters.AddWithValue("@ItemName", itemMaster.ItemName);
+                cmd.Parameters.AddWithValue("@Description", itemMaster.Description);
                 cmd.Parameters.AddWithValue("@CreatedBy", 1);
                 cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
-              //  _context.UnitMasters.Add(unitMaster);
         }
 
         #endregion
-
-        //public void Save()
-        //{
-        //    _context.SaveChanges();
-        //}
 
         #region Delete function
 
         /// <summary>
         /// Delete record by ID
         /// </summary>
-        /// <param name="UnitID"></param>
-        public void Delete(int UnitID)
+        /// <param name="ItemID"></param>
+        public void Delete(int ItemID)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_Delete", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_Delete", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UnitID", UnitID);
+                cmd.Parameters.AddWithValue("@ItemID", ItemID);
                 cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
                 cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
-            //    UnitMaster unitMaster = _context.UnitMasters.Find(UnitID);
-            //_context.UnitMasters.Remove(unitMaster);
         }
         #endregion
 

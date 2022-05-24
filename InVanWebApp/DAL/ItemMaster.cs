@@ -11,7 +11,8 @@ namespace InVanWebApp.DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class ItemMaster
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,10 +20,12 @@ namespace InVanWebApp.DAL
         {
             this.InquiryMasters = new HashSet<InquiryMaster>();
             this.QCProductionSpecificationMasters = new HashSet<QCProductionSpecificationMaster>();
+            this.ItemCategoryMasters = new HashSet<ItemCategoryMaster>();
         }
     
         public int ItemID { get; set; }
         public Nullable<int> ItemCategoryID { get; set; }
+        [Required(ErrorMessage ="Item type is required!")]
         public string ItemName { get; set; }
         public string ItemCode { get; set; }
         public Nullable<int> IsDeleted { get; set; }
@@ -30,11 +33,16 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+
+        [StringLength(50, ErrorMessage = "Description length cannot exceed 50 characters!")]
+        public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InquiryMaster> InquiryMasters { get; set; }
         public virtual ItemCategoryMaster ItemCategoryMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QCProductionSpecificationMaster> QCProductionSpecificationMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemCategoryMaster> ItemCategoryMasters { get; set; }
     }
 }
