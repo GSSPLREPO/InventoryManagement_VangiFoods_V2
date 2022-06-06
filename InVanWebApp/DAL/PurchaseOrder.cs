@@ -15,46 +15,46 @@ namespace InVanWebApp.DAL
     public partial class PurchaseOrder
     {
         public int PurchaseOrderId { get; set; }
-        public Nullable<int> OrganisationId { get; set; }
-        public Nullable<int> BranchId { get; set; }
-        public Nullable<int> SupplierId { get; set; }
-        public Nullable<System.DateTime> PODate { get; set; }
         public string PONumber { get; set; }
-        public string DespatchMode { get; set; }
-        public string TransportationMode { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
-        public Nullable<bool> WithComparison { get; set; }
-        public string Freight { get; set; }
-        public Nullable<int> ComparisionId { get; set; }
-        public Nullable<decimal> Total { get; set; }
         public Nullable<decimal> Tax { get; set; }
-        public decimal OtherCharges { get; set; }
         public Nullable<decimal> GrandTotal { get; set; }
-        public string PaymentsTerms { get; set; }
-        public string PaymentTermsDesc { get; set; }
-        public string DeliveryTerms { get; set; }
-        public string TransitInsurance { get; set; }
-        public string PackingAndForwarding { get; set; }
-        public string TestToBeOffered { get; set; }
-        public string SupervisionTerms { get; set; }
-        public string Warranty { get; set; }
-        public string DeliveryTermsDesc { get; set; }
-        public string Remarks { get; set; }
-        public Nullable<int> ApprovalStatus { get; set; }
-        public string ApprovalRemarks { get; set; }
-        public Nullable<bool> Status { get; set; }
-        public Nullable<int> ApprovedById { get; set; }
-        public Nullable<int> PreparedById { get; set; }
-        public Nullable<int> CheckedById { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<decimal> FreightRs { get; set; }
-        public Nullable<decimal> FreightGSTPercent { get; set; }
-        public Nullable<System.DateTime> CheckedByDate { get; set; }
-        public Nullable<System.DateTime> ApprovedByDate { get; set; }
-        public string QuatationNo { get; set; }
+        public Nullable<System.DateTime> DocumentDate { get; set; }
+        public string DocumentNumber { get; set; }
+        public string BuyerAddress { get; set; }
+        public string SupplierAddress { get; set; }
+        public Nullable<int> CompanyID { get; set; }
+        public int ItemID { get; set; }
+        public Nullable<decimal> ItemQuantity { get; set; }
+        public Nullable<decimal> TotalItemCost { get; set; }
+        public string OtherChargesDescription { get; set; }
+        public string OtherChargesTax { get; set; }
+        public Nullable<decimal> OtherChargesCost { get; set; }
+        public string Signature { get; set; }
+        public Nullable<int> TermsAndConditionID { get; set; }
+        public string Remark { get; set; }
+        public Nullable<bool> DraftFlag { get; set; }
+        public Nullable<int> InvoiceStatus { get; set; }
+        public Nullable<int> GoodsStatus { get; set; }
+        public string WorkOrderNo { get; set; }
+        public Nullable<int> Amendment { get; set; }
+        public string IndentNumber { get; set; }
+        public string Tittle { get; set; }
+    
+        public virtual Company Company { get; set; }
+        public virtual Item Item { get; set; }
+        public virtual Status Status1 { get; set; }
+        public virtual Status Status11 { get; set; }
+        public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
+
+        //Added: Fields added for dropdowns.
+        public string CompanyName { get; set; }
+        public string InvoiceStat { get; set; }
+        public string GoodsStat { get; set; }
     }
 }

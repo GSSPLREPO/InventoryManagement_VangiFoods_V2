@@ -11,8 +11,7 @@ namespace InVanWebApp.DAL
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,11 +21,7 @@ namespace InVanWebApp.DAL
         }
     
         public int RoleId { get; set; }
-        
-        [Required(ErrorMessage ="Role name is required!")]
         public string RoleName { get; set; }
-        
-        [StringLength(50, ErrorMessage = "Description length cannot exceed 50 characters!")]
         public string Description { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

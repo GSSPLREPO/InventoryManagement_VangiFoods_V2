@@ -115,6 +115,11 @@
     <EntitySetMapping Name="Companies">
       <EntityTypeMapping TypeName="InVanDBModels.Company">
         <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
           <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
@@ -467,6 +472,11 @@
     <EntitySetMapping Name="LocationMasters">
       <EntityTypeMapping TypeName="InVanDBModels.LocationMaster">
         <MappingFragment StoreEntitySet="LocationMaster">
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="City_ID" ColumnName="City_ID" />
+          <ScalarProperty Name="State_ID" ColumnName="State_ID" />
+          <ScalarProperty Name="Country_ID" ColumnName="Country_ID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
           <ScalarProperty Name="LocationID" ColumnName="LocationID" />
           <ScalarProperty Name="LocationName" ColumnName="LocationName" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
@@ -577,48 +587,37 @@
     <EntitySetMapping Name="PurchaseOrders">
       <EntityTypeMapping TypeName="InVanDBModels.PurchaseOrder">
         <MappingFragment StoreEntitySet="PurchaseOrder">
+          <ScalarProperty Name="Tittle" ColumnName="Tittle" />
+          <ScalarProperty Name="IndentNumber" ColumnName="IndentNumber" />
+          <ScalarProperty Name="Amendment" ColumnName="Amendment" />
+          <ScalarProperty Name="WorkOrderNo" ColumnName="WorkOrderNo" />
+          <ScalarProperty Name="GoodsStatus" ColumnName="GoodsStatus" />
+          <ScalarProperty Name="InvoiceStatus" ColumnName="InvoiceStatus" />
+          <ScalarProperty Name="DraftFlag" ColumnName="DraftFlag" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="TermsAndConditionID" ColumnName="TermsAndConditionID" />
+          <ScalarProperty Name="Signature" ColumnName="Signature" />
+          <ScalarProperty Name="OtherChargesCost" ColumnName="OtherChargesCost" />
+          <ScalarProperty Name="OtherChargesTax" ColumnName="OtherChargesTax" />
+          <ScalarProperty Name="OtherChargesDescription" ColumnName="OtherChargesDescription" />
+          <ScalarProperty Name="TotalItemCost" ColumnName="TotalItemCost" />
+          <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="SupplierAddress" ColumnName="SupplierAddress" />
+          <ScalarProperty Name="BuyerAddress" ColumnName="BuyerAddress" />
+          <ScalarProperty Name="DocumentNumber" ColumnName="DocumentNumber" />
+          <ScalarProperty Name="DocumentDate" ColumnName="DocumentDate" />
           <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
-          <ScalarProperty Name="OrganisationId" ColumnName="OrganisationId" />
-          <ScalarProperty Name="BranchId" ColumnName="BranchId" />
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-          <ScalarProperty Name="PODate" ColumnName="PODate" />
           <ScalarProperty Name="PONumber" ColumnName="PONumber" />
-          <ScalarProperty Name="DespatchMode" ColumnName="DespatchMode" />
-          <ScalarProperty Name="TransportationMode" ColumnName="TransportationMode" />
           <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-          <ScalarProperty Name="WithComparison" ColumnName="WithComparison" />
-          <ScalarProperty Name="Freight" ColumnName="Freight" />
-          <ScalarProperty Name="ComparisionId" ColumnName="ComparisionId" />
-          <ScalarProperty Name="Total" ColumnName="Total" />
           <ScalarProperty Name="Tax" ColumnName="Tax" />
-          <ScalarProperty Name="OtherCharges" ColumnName="OtherCharges" />
           <ScalarProperty Name="GrandTotal" ColumnName="GrandTotal" />
-          <ScalarProperty Name="PaymentsTerms" ColumnName="PaymentsTerms" />
-          <ScalarProperty Name="PaymentTermsDesc" ColumnName="PaymentTermsDesc" />
-          <ScalarProperty Name="DeliveryTerms" ColumnName="DeliveryTerms" />
-          <ScalarProperty Name="TransitInsurance" ColumnName="TransitInsurance" />
-          <ScalarProperty Name="PackingAndForwarding" ColumnName="PackingAndForwarding" />
-          <ScalarProperty Name="TestToBeOffered" ColumnName="TestToBeOffered" />
-          <ScalarProperty Name="SupervisionTerms" ColumnName="SupervisionTerms" />
-          <ScalarProperty Name="Warranty" ColumnName="Warranty" />
-          <ScalarProperty Name="DeliveryTermsDesc" ColumnName="DeliveryTermsDesc" />
-          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-          <ScalarProperty Name="ApprovalStatus" ColumnName="ApprovalStatus" />
-          <ScalarProperty Name="ApprovalRemarks" ColumnName="ApprovalRemarks" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="ApprovedById" ColumnName="ApprovedById" />
-          <ScalarProperty Name="PreparedById" ColumnName="PreparedById" />
-          <ScalarProperty Name="CheckedById" ColumnName="CheckedById" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
           <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-          <ScalarProperty Name="FreightRs" ColumnName="FreightRs" />
-          <ScalarProperty Name="FreightGSTPercent" ColumnName="FreightGSTPercent" />
-          <ScalarProperty Name="CheckedByDate" ColumnName="CheckedByDate" />
-          <ScalarProperty Name="ApprovedByDate" ColumnName="ApprovedByDate" />
-          <ScalarProperty Name="QuatationNo" ColumnName="QuatationNo" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1221,6 +1220,28 @@
         <MappingFragment StoreEntitySet="YearMaster">
           <ScalarProperty Name="YearID" ColumnName="YearID" />
           <ScalarProperty Name="YearName" ColumnName="YearName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Items">
+      <EntityTypeMapping TypeName="InVanDBModels.Item">
+        <MappingFragment StoreEntitySet="Item">
+          <ScalarProperty Name="ItemTypeID" ColumnName="ItemTypeID" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Current_Stock" ColumnName="Current_Stock" />
+          <ScalarProperty Name="HSN_Code" ColumnName="HSN_Code" />
+          <ScalarProperty Name="UnitOfMeasurement_ID" ColumnName="UnitOfMeasurement_ID" />
+          <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+          <ScalarProperty Name="Item_Code" ColumnName="Item_Code" />
+          <ScalarProperty Name="ItemCategory_ID" ColumnName="ItemCategory_ID" />
+          <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

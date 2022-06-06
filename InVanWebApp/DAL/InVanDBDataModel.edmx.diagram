@@ -89,6 +89,18 @@
         <AssociationConnector Association="InVanDBModels.FK_RoleRights_Users" />
         <AssociationConnector Association="InVanDBModels.FK_ItemCategoryMaster_ItemMaster" />
         <AssociationConnector Association="InVanDBModels.FK_Users_Organisations" />
+        <EntityTypeShape EntityType="InVanDBModels.Item" Width="1.5" PointX="30" PointY="4.625" />
+        <AssociationConnector Association="InVanDBModels.FK_Item_ItemCategoryMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_Item_UnitMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_LocationMaster_CityMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_LocationMaster_CountryMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_LocationMaster_StateMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_PurchaseOrder_Company" />
+        <AssociationConnector Association="InVanDBModels.FK_Item_ItemMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_PurchaseOrder_Item" />
+        <AssociationConnector Association="InVanDBModels.FK_PurchaseOrder_Status" />
+        <AssociationConnector Association="InVanDBModels.FK_PurchaseOrder_Status1" />
+        <AssociationConnector Association="InVanDBModels.FK_PurchaseOrder_TermsAndConditionMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

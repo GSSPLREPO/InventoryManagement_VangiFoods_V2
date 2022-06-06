@@ -1,0 +1,159 @@
+﻿@model InVanWebApp.DAL.PurchaseOrder
+@{
+    ViewBag.Title = "Add Order Confirmation";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @*<div class="form-horizontal">*@
+    <h4 class="card-title">Order Confirmation</h4>
+
+    @Html.ValidationSummary(true)
+    <div class="row">
+        <div class="col-md-12  grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title" style="color:darkcyan">Primary Document Details</h4>
+
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.Label("Title")
+                                @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control", maxlength = "50" })
+                                @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.Label("Document Number")
+                                @Html.TextBoxFor(model => model.DocumentNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DocumentNumber, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.Label("Document Date")
+                                <div id="datepicker-popup" class="input-group date datepicker">
+                                    @Html.TextBoxFor(model => model.DocumentDate, new { @class = "form-control" })
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="far fa-calendar input-group-text"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.DocumentDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.Label("Delivery Date")
+                                <div id="datepicker-popup" class="input-group date datepicker">
+                                    @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control" })
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="far fa-calendar input-group-text"></span>
+                                    </span>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                @Html.Label("Amendment")
+                                @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-6">
+                                @Html.Label("Indendt Number")
+                                @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", type = "text", maxlength = "10" })
+                                @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Buyers Details</h4>
+                    <hr />
+                    <form>
+                        <div class="form-group">
+                            <p>Hello</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Supplier Details</h4>
+                    <hr />
+                    <form>
+                        <div class="form-group">
+                            <p>Hello</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Add Items</h4>
+                    <hr />
+                    <form>
+                        <div class="form-group">
+                            <p>Hello</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Attach Signature</h4>
+                    <hr />
+                    <form>
+                        <input type="file" name="img[]" class="file-upload-default" style="visibility:hidden;position:absolute;">
+                        <div class="input-group col-xs-12">
+                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Signature" />
+                            <span class="input-group-append">
+                                <button type="button" class="file-upload-browse btn btn-primary">Attach</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <hr />
+                    <form>
+                        <p>Total (before tax): </p>
+                        <p>Total tax: </p>
+                        <p>Total (after tax):</p>
+                        <p><b>Grand Total:</b></p>
+                        <p>Advanced To Pay:</p>
+                    </form>
+                    <button type="submit" class="btn btn-light">Save Draft</button>
+                    <button type="submit" class="btn btn-primary mr-2">Save</button>
+                    @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,137 @@
+﻿@model InVanWebApp.DAL.LocationMaster
+@{
+    ViewBag.Title = "Add Location";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            @*<div class="form-horizontal">*@
+            <h4 class="card-title">Add Location</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.Label("Location Name")
+                @*<div class="col-md-10">*@
+                @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", maxlength = "50", style="height:38px" })
+                @Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "error mt-2 text-danger" })
+                @*</div>*@
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Address")
+                @Html.TextAreaFor(model => model.Address, new { @class = "form-control", rows = "4" })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "error mt-2 text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Country")
+                @Html.DropDownList("Country_ID", (IEnumerable<SelectListItem>)ViewData["country"], "--Select Country--",
+               new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Country_ID, "", new { @class = "error mt-2 text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("State")
+                @Html.DropDownList("State_ID", new SelectList(string.Empty, "StateID", "StateName"), "--Select State--",
+               new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.State_ID, "", new { @class = "error mt-2 text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("City")
+                @Html.DropDownList("City_ID", new SelectList(string.Empty, "CityID", "CityName"), "--Select Country--",
+               new { @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.City_ID, "", new { @class = "error mt-2 text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Pincode")
+                @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", type = "text" , maxlength = "10", style = "height:38px" })
+                @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "error mt-2 text-danger" })
+            </div>
+
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
+            @*<div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>*@
+
+            @*</div>*@
+
+
+
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    //Dropdownlist Selectedchange event
+    $("#Country_ID").change(function () {
+        $("#State_ID").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetStates")', // we are calling json method
+
+            dataType: 'json',
+
+            data: { id: $("#Country_ID").val() },
+            // here we are get value of selected country and passing same value
+            //as inputto json method GetStates.
+
+            success: function (states) {
+            // states contains the JSON formatted list
+            // of states passed from the controller
+
+            $.each(states, function (i, state) {
+            $("#State_ID").append('<option value="' + state.Value + '">' +state.Text + '</option>');
+            // here we are Iadding option for States
+
+            });
+            },
+            error: function (ex) {
+            alert('Failed to retrieve states.' + ex);
+            }
+        });
+        return false;
+    });
+
+    $("#State_ID").change(function () {
+        $("#City_ID").empty();
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("GetCity")',
+            dataType: 'json',
+            data: { id: $("#State_ID").val() },
+            success: function (citys) {
+                // states contains the JSON formatted list
+                // of states passed from the controller
+                $.each(citys, function (i, city) {
+                    $("#City_ID").append('<option value="'
+                        + city.Value + '">'
+                        + city.Text + '</option>');
+                });
+            },
+            error: function (ex) {
+                alert('Failed to retrieve city.' + ex);
+            }
+        });
+        return false;
+    });
+});
+</script>

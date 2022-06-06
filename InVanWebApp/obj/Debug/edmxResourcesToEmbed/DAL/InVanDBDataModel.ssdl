@@ -26,8 +26,8 @@
     </Key>
     <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StateID" Type="int" Nullable="false" />
-    <Property Name="CityName" Type="varchar" MaxLength="70" />
     <Property Name="CityCode" Type="int" />
+    <Property Name="CityName" Type="varchar" MaxLength="70" />
     <Property Name="IsDeleted" Type="int" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
@@ -111,10 +111,15 @@
     <Key>
       <PropertyRef Name="Company_ID" />
     </Key>
-    <Property Name="Name" Type="nvarchar" MaxLength="100" />
     <Property Name="Company_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" />
     <Property Name="ContactNo" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="100" />
     <Property Name="Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="CountryID" Type="int" />
+    <Property Name="StateID" Type="int" />
+    <Property Name="CityID" Type="int" />
+    <Property Name="Pincode" Type="int" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
@@ -399,6 +404,27 @@
     <Property Name="LastModifiedDate" Type="datetime" />
     <Property Name="LastModifiedby" Type="int" />
   </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Item_ID" />
+    </Key>
+    <Property Name="Item_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ItemCategory_ID" Type="int" />
+    <Property Name="ItemTypeID" Type="int" />
+    <Property Name="Item_Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="Item_Name" Type="varchar" MaxLength="70" />
+    <Property Name="UnitOfMeasurement_ID" Type="int" />
+    <Property Name="HSN_Code" Type="varchar" MaxLength="50" />
+    <Property Name="Current_Stock" Type="int" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Tax" Type="varchar" MaxLength="50" />
+    <Property Name="Description" Type="varchar" MaxLength="150" />
+    <Property Name="IsDeleted" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
   <EntityType Name="ItemCategoryMaster">
     <Key>
       <PropertyRef Name="ItemCategoryID" />
@@ -447,6 +473,11 @@
     </Key>
     <Property Name="LocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="LocationName" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="150" />
+    <Property Name="Country_ID" Type="int" />
+    <Property Name="State_ID" Type="int" />
+    <Property Name="City_ID" Type="int" />
+    <Property Name="Pincode" Type="int" />
     <Property Name="IsDeleted" Type="int" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
@@ -550,47 +581,36 @@
       <PropertyRef Name="PurchaseOrderId" />
     </Key>
     <Property Name="PurchaseOrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="OrganisationId" Type="int" />
-    <Property Name="BranchId" Type="int" />
-    <Property Name="SupplierId" Type="int" />
-    <Property Name="PODate" Type="date" />
+    <Property Name="Tittle" Type="nvarchar" MaxLength="100" />
     <Property Name="PONumber" Type="varchar" MaxLength="50" />
-    <Property Name="DespatchMode" Type="nvarchar" MaxLength="50" />
-    <Property Name="TransportationMode" Type="varchar" MaxLength="50" />
+    <Property Name="DocumentDate" Type="date" />
     <Property Name="DeliveryDate" Type="datetime" />
-    <Property Name="WithComparison" Type="bit" />
-    <Property Name="Freight" Type="nvarchar" MaxLength="50" />
-    <Property Name="ComparisionId" Type="int" />
-    <Property Name="Total" Type="numeric" Precision="18" Scale="2" />
-    <Property Name="Tax" Type="numeric" Precision="18" Scale="2" />
-    <Property Name="OtherCharges" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="DocumentNumber" Type="nvarchar" MaxLength="100" />
+    <Property Name="BuyerAddress" Type="nvarchar" MaxLength="100" />
+    <Property Name="SupplierAddress" Type="nvarchar" MaxLength="100" />
+    <Property Name="CompanyID" Type="int" />
+    <Property Name="ItemID" Type="int" Nullable="false" />
+    <Property Name="ItemQuantity" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Tax" Type="nvarchar" MaxLength="50" />
+    <Property Name="TotalItemCost" Type="numeric" Precision="18" Scale="2" />
     <Property Name="GrandTotal" Type="numeric" Precision="18" Scale="2" />
-    <Property Name="PaymentsTerms" Type="varchar(max)" />
-    <Property Name="PaymentTermsDesc" Type="varchar(max)" />
-    <Property Name="DeliveryTerms" Type="varchar(max)" />
-    <Property Name="TransitInsurance" Type="varchar(max)" />
-    <Property Name="PackingAndForwarding" Type="varchar(max)" />
-    <Property Name="TestToBeOffered" Type="varchar(max)" />
-    <Property Name="SupervisionTerms" Type="varchar(max)" />
-    <Property Name="Warranty" Type="varchar(max)" />
-    <Property Name="DeliveryTermsDesc" Type="varchar(max)" />
-    <Property Name="Remarks" Type="varchar(max)" />
-    <Property Name="ApprovalStatus" Type="int" />
-    <Property Name="ApprovalRemarks" Type="varchar(max)" />
-    <Property Name="Status" Type="bit" />
-    <Property Name="ApprovedById" Type="int" />
-    <Property Name="PreparedById" Type="int" />
-    <Property Name="CheckedById" Type="int" />
+    <Property Name="OtherChargesDescription" Type="nvarchar" MaxLength="100" />
+    <Property Name="OtherChargesTax" Type="nvarchar" MaxLength="50" />
+    <Property Name="OtherChargesCost" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Signature" Type="nvarchar" MaxLength="200" />
+    <Property Name="TermsAndConditionID" Type="int" />
+    <Property Name="Remark" Type="nvarchar" MaxLength="100" />
+    <Property Name="DraftFlag" Type="bit" />
+    <Property Name="InvoiceStatus" Type="int" />
+    <Property Name="GoodsStatus" Type="int" />
+    <Property Name="WorkOrderNo" Type="nvarchar" MaxLength="50" />
+    <Property Name="Amendment" Type="int" />
+    <Property Name="IndentNumber" Type="nvarchar" MaxLength="50" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="LastModifiedDate" Type="datetime" />
     <Property Name="LastModifiedBy" Type="int" />
-    <Property Name="FreightRs" Type="numeric" Precision="18" Scale="2" />
-    <Property Name="FreightGSTPercent" Type="numeric" Precision="18" Scale="2" />
-    <Property Name="CheckedByDate" Type="datetime" />
-    <Property Name="ApprovedByDate" Type="datetime" />
-    <Property Name="QuatationNo" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="PurchaseOrderAmendment">
     <Key>
@@ -1272,6 +1292,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Item_ItemCategoryMaster">
+    <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="0..1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemCategoryMaster">
+        <PropertyRef Name="ItemCategoryID" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="ItemCategory_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Item_ItemMaster">
+    <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="0..1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ItemMaster">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="ItemTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Item_UnitMaster">
+    <End Role="UnitMaster" Type="Self.UnitMaster" Multiplicity="0..1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitMaster">
+        <PropertyRef Name="UnitID" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="UnitOfMeasurement_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ItemCategoryMaster_ItemMaster">
     <End Role="ItemMaster" Type="Self.ItemMaster" Multiplicity="0..1" />
     <End Role="ItemCategoryMaster" Type="Self.ItemCategoryMaster" Multiplicity="*" />
@@ -1312,6 +1368,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_LocationMaster_CityMaster">
+    <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityMaster">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="LocationMaster">
+        <PropertyRef Name="City_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LocationMaster_CountryMaster">
+    <End Role="CountryMaster" Type="Self.CountryMaster" Multiplicity="0..1" />
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryMaster">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="LocationMaster">
+        <PropertyRef Name="Country_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LocationMaster_StateMaster">
+    <End Role="StateMaster" Type="Self.StateMaster" Multiplicity="0..1" />
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StateMaster">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="LocationMaster">
+        <PropertyRef Name="State_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_MachineMaster_ToLocationMaster">
     <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -1337,6 +1429,66 @@
       </Principal>
       <Dependent Role="Organisations">
         <PropertyRef Name="OrganisationGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Company_ID" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="CompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Item_ID" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Status">
+    <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="InvoiceStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Status1">
+    <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Status">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="GoodsStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_TermsAndConditionMaster">
+    <End Role="TermsAndConditionMaster" Type="Self.TermsAndConditionMaster" Multiplicity="0..1" />
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TermsAndConditionMaster">
+        <PropertyRef Name="TermsConditionID" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="TermsAndConditionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1508,6 +1660,7 @@
     <EntitySet Name="InwardNote" EntityType="Self.InwardNote" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="IssueNote" EntityType="Self.IssueNote" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="IssueNoteDetails" EntityType="Self.IssueNoteDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ItemCategoryMaster" EntityType="Self.ItemCategoryMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ItemMaster" EntityType="Self.ItemMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LabMaster" EntityType="Self.LabMaster" Schema="dbo" store:Type="Tables" />
@@ -1580,6 +1733,18 @@
       <End Role="ItemMaster" EntitySet="ItemMaster" />
       <End Role="InquiryMaster" EntitySet="InquiryMaster" />
     </AssociationSet>
+    <AssociationSet Name="FK_Item_ItemCategoryMaster" Association="Self.FK_Item_ItemCategoryMaster">
+      <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMaster" />
+      <End Role="Item" EntitySet="Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Item_ItemMaster" Association="Self.FK_Item_ItemMaster">
+      <End Role="ItemMaster" EntitySet="ItemMaster" />
+      <End Role="Item" EntitySet="Item" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Item_UnitMaster" Association="Self.FK_Item_UnitMaster">
+      <End Role="UnitMaster" EntitySet="UnitMaster" />
+      <End Role="Item" EntitySet="Item" />
+    </AssociationSet>
     <AssociationSet Name="FK_ItemCategoryMaster_ItemMaster" Association="Self.FK_ItemCategoryMaster_ItemMaster">
       <End Role="ItemMaster" EntitySet="ItemMaster" />
       <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMaster" />
@@ -1592,6 +1757,18 @@
       <End Role="LocationMaster" EntitySet="LocationMaster" />
       <End Role="LabMaster" EntitySet="LabMaster" />
     </AssociationSet>
+    <AssociationSet Name="FK_LocationMaster_CityMaster" Association="Self.FK_LocationMaster_CityMaster">
+      <End Role="CityMaster" EntitySet="CityMaster" />
+      <End Role="LocationMaster" EntitySet="LocationMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LocationMaster_CountryMaster" Association="Self.FK_LocationMaster_CountryMaster">
+      <End Role="CountryMaster" EntitySet="CountryMaster" />
+      <End Role="LocationMaster" EntitySet="LocationMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LocationMaster_StateMaster" Association="Self.FK_LocationMaster_StateMaster">
+      <End Role="StateMaster" EntitySet="StateMaster" />
+      <End Role="LocationMaster" EntitySet="LocationMaster" />
+    </AssociationSet>
     <AssociationSet Name="FK_MachineMaster_ToLocationMaster" Association="Self.FK_MachineMaster_ToLocationMaster">
       <End Role="LocationMaster" EntitySet="LocationMaster" />
       <End Role="MachineMaster" EntitySet="MachineMaster" />
@@ -1599,6 +1776,26 @@
     <AssociationSet Name="FK_Organisations_ToOrganisationGroups" Association="Self.FK_Organisations_ToOrganisationGroups">
       <End Role="OrganisationGroups" EntitySet="OrganisationGroups" />
       <End Role="Organisations" EntitySet="Organisations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Company" Association="Self.FK_PurchaseOrder_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Item" Association="Self.FK_PurchaseOrder_Item">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Status" Association="Self.FK_PurchaseOrder_Status">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Status1" Association="Self.FK_PurchaseOrder_Status1">
+      <End Role="Status" EntitySet="Status" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_TermsAndConditionMaster" Association="Self.FK_PurchaseOrder_TermsAndConditionMaster">
+      <End Role="TermsAndConditionMaster" EntitySet="TermsAndConditionMaster" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
     </AssociationSet>
     <AssociationSet Name="FK_QCProductionSpecificationMaster_ToItemCategoryMaster" Association="Self.FK_QCProductionSpecificationMaster_ToItemCategoryMaster">
       <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMaster" />

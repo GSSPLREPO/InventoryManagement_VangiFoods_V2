@@ -24,7 +24,7 @@ namespace InVanWebApp.Controllers
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
         /// </summary>
-        /// <param name="unitRepository"></param>
+        /// <param name="rolesRepository"></param>
         public RoleController(IRolesRepository rolesRepository)
         {
             _rolesRepository = rolesRepository;

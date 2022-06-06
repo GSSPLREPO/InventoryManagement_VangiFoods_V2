@@ -1,0 +1,77 @@
+﻿@model IEnumerable<InVanWebApp.DAL.ItemCategoryMaster>
+@{
+    ViewBag.Title = "Item Category Master";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Role Master</title>
+</head>
+<body>
+    <div style="margin-top: -18px; margin-left: -20px; background: white;">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="@Url.Action("Index","Dashboard")">Master</a></li>
+            <li class="active">Item Category Master</li>
+        </ul>
+    </div>
+    <div class="box box-primary; panel-body" runat="server" id="divPanel1" style="margin-top: -10px;
+    margin-left: -20px;">
+        <div class="box-header">
+            <h4 class="box-title" style="margin-left: -750px;">Item Category Master</h4>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @Html.ActionLink("Add Item Category", "AddItemCategory")
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.UnitName)*@
+                                        @Html.DisplayName("ItemTypeName")
+                                    </th>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.Description)*@
+                                        @Html.DisplayName("ItemCategoryName")
+                                    </th>
+                                    <th>
+                                        @*@Html.DisplayNameFor(model => model.Description)*@
+                                        @Html.DisplayName("Description")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Edit/Delete")
+                                    </th>
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ItemTypeName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ItemCategoryName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Edit", "EditItemCategory", new { ItemCategoryID = item.ItemCategoryID }) |
+                                            @Html.ActionLink("Delete", "DeleteItemCategory", new { ItemCategoryID = item.ItemCategoryID})
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -19862,7 +19862,8 @@ html {
 
 .content-wrapper {
   background: #f2f2f2;
-  padding: 1.5rem 1.7rem;
+  /*padding: 1.5rem 1.7rem;*/
+  padding: 0.7rem 0.6rem;
   width: 100%;
   -webkit-flex-grow: 1;
   flex-grow: 1;

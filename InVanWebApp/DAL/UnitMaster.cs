@@ -11,22 +11,26 @@ namespace InVanWebApp.DAL
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class UnitMaster
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UnitMaster()
+        {
+            this.Items = new HashSet<Item>();
+        }
+    
         public int UnitID { get; set; }
-
-        [Required(ErrorMessage = "Unit name is required!")]
         public string UnitName { get; set; }
         public string UnitCode { get; set; }
-        
-        [StringLength(50, ErrorMessage = "Description length cannot exceed 50 characters!")]
         public string Description { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item> Items { get; set; }
     }
 }
