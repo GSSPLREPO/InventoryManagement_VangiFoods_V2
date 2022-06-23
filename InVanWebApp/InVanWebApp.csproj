@@ -353,8 +353,11 @@
     <Compile Include="Repository\UnitRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datepicker.min.css" />
+    <Content Include="Content\bootstrap-datepicker3.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-timepicker.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -1203,9 +1206,13 @@
     <Content Include="Views\Location\DeleteLocation.cshtml" />
     <Content Include="Views\TransactionsPOandOC\Index.cshtml" />
     <Content Include="Views\TransactionsPOandOC\AddOrderConfirmation.cshtml" />
+    <Content Include="Views\TransactionsPOandOC\EditOrderConfirmation.cshtml" />
+    <Content Include="Views\TransactionsPOandOC\ViewTransaction.cshtml" />
+    <Content Include="Views\TransactionsPOandOC\DeleteTransactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\SignatureImages\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

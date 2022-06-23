@@ -4,13 +4,14 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 
 }
-@using (Html.BeginForm("AddOrderConfirmation", "TransactionsPOandOC", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @*<div class="form-horizontal">*@
-    <h4 class="card-title">Order Confirmation</h4>
+    <h4 class="card-title">Edit Order Confirmation</h4>
 
     @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.PurchaseOrderId)
 
     <div class="row">
         <div class="col-md-12  grid-margin stretch-card">
@@ -34,19 +35,19 @@
                     <div class="row">
                         <div class="col-md-6 form-group">
                             @Html.Label("Document Number")
-                            @Html.TextBoxFor(model => model.DocumentNumber, new { @class = "form-control", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                            @Html.TextBoxFor(model => model.DocumentNumber, new { @class = "form-control", @readonly = "readonly" })
                             @Html.ValidationMessageFor(model => model.DocumentNumber, "", new { @class = "error mt-2 text-danger" })
                         </div>
                         <div class="col-md-6 form-group">
-                            @*@Html.Label("Document Date")
-                                <div id="datepicker-popup" class="input-group date datepicker">
-                                    @Html.TextBoxFor(model => model.DocumentDate, new { @class = "form-control", type="date" })
+                            @Html.Label("Document Date")
+                            @*<div id="datepicker-popup" class="input-group date datepicker">
+                                    @Html.TextBoxFor(model => model.DocumentDate, new { @class = "form-control"})
                                     <span class="input-group-addon input-group-append border-left">
                                         <span class="far fa-calendar input-group-text"></span>
                                     </span>
                                 </div>*@
-                            @Html.Label("Document Date")
-                            @Html.TextBoxFor(model => model.DocumentDate, new { @class = "form-control", type = "date" })
+
+                            @Html.TextBoxFor(model => model.DocumentDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                             @Html.ValidationMessageFor(model => model.DocumentDate, "", new { @class = "error mt-2 text-danger" })
                         </div>
                     </div>
@@ -54,7 +55,13 @@
                     <dv class="row">
                         <div class="col-md-6 form-group">
                             @Html.Label("Delivery Date")
-                            @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control", type = "date" })
+                            @*<div id="datepicker-popup1" class="input-group date datepicker">
+                                    @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control"})
+                                    <span class="input-group-addon input-group-append border-left">
+                                        <span class="far fa-calendar input-group-text"></span>
+                                    </span>
+                                </div>*@
+                            @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                         </div>
                         <div class="col-md-6 form-group">
@@ -92,8 +99,8 @@
                     <h4 class="card-title" style="color:darkcyan">Supplier Details</h4>
                     <hr />
                     <div class="form-group">
-                        @*@Html.TextAreaFor(model => model.SupplierAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px" })*@
-                        <textarea id="SupplierAddress" name="SupplierAddress" class="form-control" style="height:100px;">@ViewData["companyName"],@ViewData["companyAddress1"],@ViewData["companyAddress2"]</textarea>
+                        @Html.TextAreaFor(model => model.SupplierAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
+                        @*<textarea id="SupplierAddress" name="SupplierAddress" class="form-control" style="height:100px;"></textarea>*@
                     </div>
                 </div>
             </div>
@@ -143,19 +150,19 @@
                                                 @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control", style = "height:30px;width:100px;" })
                                             </td>
                                             <td>
-                                                @Html.TextBox("ItemDescription", "", new { @class = "form-control", style = "height:30px;width:200px;" })
+                                                @Html.TextBoxFor(model => model.ItemDescription, "", new { @class = "form-control", style = "height:30px;width:200px;", id = "ItemDescription" })
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control", style = "height:30px;width:100px;", value = "0" })
+                                                @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control", style = "height:30px;width:100px;" })
                                             </td>
                                             <td>
-                                                @Html.TextBox("ItemUnit", "", new { @class = "form-control", style = "height:30px;width:100px;" })
+                                                @Html.TextBoxFor(model => model.ItemUnit, "", new { @class = "form-control", style = "height:30px;width:100px;", id = "ItemUnit" })
                                             </td>
                                             <td>
-                                                @Html.TextBox("ItemPrice", "", new { @class = "form-control", style = "height:30px;width:100px;" })
+                                                @Html.TextBoxFor(model => model.ItemPrice, "", new { @class = "form-control", style = "height:30px;width:100px;", id = "ItemPrice" })
                                             </td>
                                             <td>
-                                                @Html.TextBox("ItemTax", "", new { @class = "form-control", style = "height:30px;width:80px;" })
+                                                @Html.TextBoxFor(model => model.ItemTax, "", new { @class = "form-control", style = "height:30px;width:80px;", id = "ItemTax" })
                                             </td>
                                             <td>
                                                 @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control", id = "ItemTotalPrice", style = "height:30px;width:200px;" })
@@ -191,18 +198,19 @@
                                 <button type="button" class="file-upload-browse btn btn-primary">Attach</button>
                             </span>
                         </div>*@
-                <div class="form-group">
+
+                    @*@Html.TextBoxFor(model => model.Signature,"",new { @class="form-control",id="file",type="file",onchange= "return fileValidation()"})*@
+                    <br />
                     <input type="file" id="file" name="Signature"
                            onchange="return fileValidation()" />
 
                     <!-- Image preview -->
-                    <span style="color:green">@ViewBag.Message</span>
                     <br />
                     <br />
                     <center>
                         <div id="imagePreview"></div>
                     </center>
-                </div>
+
                 </div>
             </div>
         </div>
@@ -214,23 +222,26 @@
                     <div class="form-group">
                         <div class="row">
                             <label>Total (before tax): </label>
-                            <input class="form-control" id="TotalBeforeTax" name="TotalItemCost" />
+                            @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control", id = "TotalBeforeTax" })
+                            @*<input class="form-control" id="TotalBeforeTax" name="TotalItemCost" />*@
                         </div>
                         <div class="row">
                             <label>Total tax: </label>
-                            <input class="form-control" id="TotalTax" name="Tax" />
+                            @Html.TextBoxFor(model => model.Tax, "", new { @class = "form-control", id = "TotalTax" })
+                            @*<input class="form-control" id="TotalTax" name="Tax" />*@
                         </div>
                         <div class="row">
                             <label>Total (after tax):</label>
-                            <input class="form-control" id="TotalAfterTax" />
+                            @Html.TextBoxFor(model => model.GrandTotal, "", new { @class = "form-control", id = "TotalAfterTax" })
+                            @*<input class="form-control" id="TotalAfterTax" name="GrandTotal" />*@
                         </div>
                         <div class="row">
                             <label><b>Grand Total:</b></label>
-                            <input class="form-control" id="GrandTotal" name="GrandTotal" />
+                            @Html.TextBoxFor(model => model.GrandTotal, "", new { @class = "form-control" })
                         </div>
                         <div class="row">
                             <label>Advanced To Pay:</label>
-                            <input class="form-control" id="AdvancedPayment" name="AdvancedPayment" />
+                            @Html.TextBoxFor(model => model.AdvancedPAyment, "", new { @class = "form-control" })
                         </div>
                     </div>
                     <br />
@@ -366,6 +377,7 @@
             document.getElementById('file');
 
         var filePath = fileInput.value;
+        console.log(fileInput.value);
 
         // Allowing file type
         var allowedExtensions =
@@ -398,10 +410,5 @@
         //var ab=$("#DraftFlag").val();
         //console.log("abc:" + ab);
     });
-
-    //$("#btn_Save").click(function () {
-    //    $("#DraftFlag").val('0');
-    //});
-
 
 </script>

@@ -1,0 +1,217 @@
+﻿@model InVanWebApp.DAL.PurchaseOrder
+@{
+    ViewBag.Title = "Add Order Confirmation";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+    //Layout = null;
+
+}
+
+<div class="row">
+    <div class="col-md-12  grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <h3 class="card-title font-weight-bold" style="font-size: 16pt;">Order Confirmation</h3>
+                </div>
+                <hr />
+
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name and Address of Supplier</th>
+                                <th>Name and Address of Buyer</th>
+                                <th>Shipping Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@Html.DisplayFor(model => model.SupplierAddress)</td>
+                                <td>@Html.DisplayFor(model => model.BuyerAddress)</td>
+                                <td>@Html.DisplayFor(model => model.BuyerAddress)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    @*<div class="col-4 modal-content">
+                        <h4>Name and Address of Supplier</h4>
+                        @Html.DisplayFor(model => model.SupplierAddress)
+                    </div>
+                    <div class="col-4 modal-content">
+                        <h6>Name and Address of Buyer</h6>
+                        @Html.DisplayFor(model => model.BuyerAddress)
+                    </div>
+                    <div class="col-4 modal-content">
+                        <h6>Shipping Details</h6>
+                        @Html.DisplayFor(model => model.BuyerAddress)
+                    </div>*@
+                </div>
+                <br />
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <Center><h5 class="font-weight-bold">OC Details</h5></Center>
+                    <hr />
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <p class="font-weight-bold">OC Number</p>
+                            </div>
+                            <div class="col-lg-4">
+                                @Html.DisplayFor(model => model.DocumentNumber)
+                            </div>
+                            <div class="col-lg-2">
+                                <p class="font-weight-bold">OC Date</p>
+                            </div>
+                            <div class="col-lg-4">
+                                @Html.DisplayFor(model => model.DocumentDate)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <p class="font-weight-bold">Delivery/Dispatch Date</p>
+                            </div>
+                            <div class="col-lg-4">
+                                @Html.DisplayFor(model => model.DeliveryDate)
+                            </div>
+                            <div class="col-lg-2">
+                                <p class="font-weight-bold">OC Amendment</p>
+                            </div>
+                            <div class="col-lg-4">
+                                @Html.DisplayFor(model => model.Amendment)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <p class="font-weight-bold">OC Amount</p>
+                            </div>
+                            <div class="col-lg-4">
+                                @Html.DisplayFor(model => model.GrandTotal)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>HSN Code</th>
+                                    <th>Quantity</th>
+                                    <th>Unit</th>
+                                    <th>Rate</th>
+                                    <th>Taxable Amount</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(model => model.ItemDescription), 
+                                        @Html.DisplayFor(model => model.Item_Code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.Item_HSN_Code)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.ItemQuantity)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.ItemUnit)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.ItemPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.GrandTotal)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.GrandTotal)
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-7"></div>
+                    <div class="col-md-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold">Total (befor tax): </p>
+                            </div>
+                            <div class="col-md-6">
+                                @Html.DisplayFor(model => model.TotalItemCost)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>CGST</th>
+                                            <th>SGST</th>
+                                            <th>IGST</th>
+                                            <th>Cess</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>₹ 0.00</td>
+                                            <td>₹ 0.00</td>
+                                            <td>₹ 0.00</td>
+                                            <td>₹ 0.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold">Total Tax: </p>
+                            </div>
+                            <div class="col-md-6">
+                                @Html.DisplayFor(model => model.Tax)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold">Total (After Tax): </p>
+                            </div>
+                            <div class="col-md-6">
+                                @Html.DisplayFor(model => model.GrandTotal)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold">Grand Total: </p>
+                            </div>
+                            <div class="col-md-6">
+                                @Html.DisplayFor(model => model.GrandTotal)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold">Advanced To Pay: </p>
+                            </div>
+                            <div class="col-md-6">
+                                @Html.DisplayFor(model => model.AdvancedPAyment)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9" "></div>
+                <div class="col-md-3">
+                    @Html.DisplayFor(model => model.Signature)
+                    <p class="font-weight-bold"> Authorized Signature</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

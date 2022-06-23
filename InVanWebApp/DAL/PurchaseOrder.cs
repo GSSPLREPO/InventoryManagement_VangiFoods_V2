@@ -11,50 +11,69 @@ namespace InVanWebApp.DAL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class PurchaseOrder
     {
         public int PurchaseOrderId { get; set; }
+
+        [Required(ErrorMessage = "Enter title!")]
+        public string Tittle { get; set; }
         public string PONumber { get; set; }
-        public Nullable<System.DateTime> DeliveryDate { get; set; }
-        public Nullable<decimal> Tax { get; set; }
-        public Nullable<decimal> GrandTotal { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<int> LastModifiedBy { get; set; }
+
+        //[DataType(DataType.Date)]
         public Nullable<System.DateTime> DocumentDate { get; set; }
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
         public string DocumentNumber { get; set; }
+
+        [Required(ErrorMessage = "Enter buyer address!")]
         public string BuyerAddress { get; set; }
+
+        [Required(ErrorMessage = "Enter supplier address!")]
         public string SupplierAddress { get; set; }
         public Nullable<int> CompanyID { get; set; }
-        public int ItemID { get; set; }
+        public Nullable<int> Item_ID { get; set; }
         public Nullable<decimal> ItemQuantity { get; set; }
+        public string Tax { get; set; }
         public Nullable<decimal> TotalItemCost { get; set; }
+        public Nullable<decimal> GrandTotal { get; set; }
+        public Nullable<decimal> AdvancedPAyment { get; set; }
         public string OtherChargesDescription { get; set; }
         public string OtherChargesTax { get; set; }
         public Nullable<decimal> OtherChargesCost { get; set; }
         public string Signature { get; set; }
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Remark { get; set; }
+        public Nullable<int> TransactionFlag { get; set; }
         public Nullable<bool> DraftFlag { get; set; }
         public Nullable<int> InvoiceStatus { get; set; }
         public Nullable<int> GoodsStatus { get; set; }
         public string WorkOrderNo { get; set; }
         public Nullable<int> Amendment { get; set; }
         public string IndentNumber { get; set; }
-        public string Tittle { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual Item Item { get; set; }
+        public virtual Status Status { get; set; }
         public virtual Status Status1 { get; set; }
-        public virtual Status Status11 { get; set; }
         public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
 
         //Added: Fields added for dropdowns.
-        public string CompanyName { get; set; }
+        public string CountryName { get; set; }
         public string InvoiceStat { get; set; }
         public string GoodsStat { get; set; }
+        public string CompanyName { get; set; }
+        //Below are added for update functionality of OC.
+        public string ItemDescription{ get; set; }
+        public string ItemUnit { get; set; }
+        public decimal ItemPrice { get; set; }
+        public string ItemTax { get; set; }
+        public string Item_Code { get; set; }
+        public string Item_HSN_Code { get; set; }
     }
 }

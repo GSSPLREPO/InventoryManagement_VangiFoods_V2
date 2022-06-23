@@ -22,8 +22,8 @@ namespace InVanWebApp.DAL
     
         public int CityID { get; set; }
         public int StateID { get; set; }
-        public string CityName { get; set; }
         public Nullable<int> CityCode { get; set; }
+        public string CityName { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

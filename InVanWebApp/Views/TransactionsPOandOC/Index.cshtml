@@ -35,8 +35,10 @@
                                     @*<a class="dropdown-item font-weight-medium" href=@Url.Action("AddOrderConfirmation","TransactionsPOandOC")>
                                             Order Confirmation
                                         </a>*@
-                                    @*<button class="btn dropdown-item font-weight-medium" onclick="showSwal('custom-html')">Order Confirmation</button>*@
-                                    <button class="btn dropdown-item font-weight-medium" data-toggle="modal" data-target=".bootstrapmodal">Order Confirmation</button>
+                                    <a class="dropdown-item font-weight-medium" href=@Url.Action("AddOrderConfirmation","TransactionsPOandOC")>
+                                        Order Confirmation
+                                    </a>
+                                    @*<button class="btn dropdown-item font-weight-medium" data-toggle="modal" data-target=".bootstrapmodal">Order Confirmation</button>*@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item font-weight-medium" href=@Url.Action("AddPurchaseOrder","TransactionsPOandOC")>
                                         Purchase Order
@@ -48,9 +50,9 @@
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered">
                                     <tr>
-                                        <th>
+                                        @*<th>
                                             @Html.DisplayName("Company Name")
-                                        </th>
+                                        </th>*@
                                         <th>
                                             @Html.DisplayName("Transaction Name")
                                         </th>
@@ -74,9 +76,9 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>
+                                            @*<td>
                                                 @Html.DisplayFor(modelItem => item.CompanyName)
-                                            </td>
+                                            </td>*@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Tittle)
                                             </td>
@@ -93,12 +95,19 @@
                                                 @Html.DisplayFor(modelItem => item.LastModifiedDate)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "EditTransactions", new { PurchaseOrderId = item.PurchaseOrderId }) |
-                                                @Html.ActionLink("Delete", "DeleteTransactions", new { PurchaseOrderId = item.PurchaseOrderId })
+                                                @if (item.DraftFlag!=false)
+                                                {
+                                                    @Html.ActionLink("Edit", "EditOrderConfirmation", "TransactionsPOandOC", new { PurchaseOrderId = item.PurchaseOrderId, TransactionFlag = item.TransactionFlag }, null)
+                                                }
+                                                else{ 
+                                                    @Html.ActionLink("View", "ViewTransaction", "TransactionsPOandOC", new { PurchaseOrderId = item.PurchaseOrderId, TransactionFlag = item.TransactionFlag }, new { target = "_blank" })
+                                                }
+
+                                               |@Html.ActionLink("Delete", "DeleteTransactions", new { PurchaseOrderId = item.PurchaseOrderId })
                                                 @*<button class="btn btn-outline-primary" onclick="showSwal2('warning-message-and-cancel')">Delete</button>*@
                                             </td>
                                         </tr>
-                                    }
+                                      }
                                 </table>
                             </div>
                         </div>
@@ -109,7 +118,7 @@
     </div>
 </body>
 </html>
-<div class="modal fade bootstrapmodal">
+@*<div class="modal fade bootstrapmodal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header font-weight-medium">
@@ -117,45 +126,23 @@
             </div>
             <div class="modal-body">
                 @Html.DropDownList("CompanyID", (IEnumerable<SelectListItem>)ViewData["company"], "--Select Buyer--",
-            new { @class = "form-control", @onchange="ChangeEventCompanyDd()"})
+            new { @class = "form-control", @onchange = "ChangeEventCompanyDd()" })
             </div>
             <div class="modal-footer"></div>
         </div>
 
     </div>
-</div>
-<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+</div>*@
+@*<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     function ChangeEventCompanyDd() {
         var value = $("#CompanyID").val();
-        @*@Url.Action("AddOrderConfirmation", "TransactionsPOandOC");*@
-        @*$.ajax({
-            url: @Html.Action("AddOrderConfirmation"),
-            type: 'GET',
-            contentType: 'application/json;',
-            //data: JSON.stringify({ id: checkId }),
-            success: function (valid) {
-                if (valid) {
-                    //show that id is valid
-                } else {
-                    alert('Something went wrong')
-                }
-            }
-        });*@
+       
     }
-    @*$(document).ready(function () {
-    //Dropdownlist Selectedchange event
-        $("#CompanyID").change(function () {
-            $.ajax({
-                type:'GET',
-                url: '@Url.Action("AddOrderConfirmation", "TransactionsPOandOC")',
-                dataType:'json',
-                success:{},
-                error: function (ex) {
-                    alert('Something went wrong! ' + ex);
-                }
-            });
-            return false;
-        });*@
+    
+</script>*@
+<script>
+    
+    console.log("abc:")
 </script>

@@ -18,6 +18,7 @@ namespace InVanWebApp.DAL
         public UnitMaster()
         {
             this.Items = new HashSet<Item>();
+            this.RequestForQuotations = new HashSet<RequestForQuotation>();
         }
     
         public int UnitID { get; set; }
@@ -32,5 +33,7 @@ namespace InVanWebApp.DAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Items { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
     }
 }

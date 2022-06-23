@@ -22,8 +22,6 @@ namespace InVanWebApp.DAL
     
         public int Id { get; set; }
         public Nullable<int> OrganisationId { get; set; }
-        public Nullable<int> BranchId { get; set; }
-        public Nullable<int> EmployeeId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public Nullable<int> RoleId { get; set; }
@@ -33,8 +31,8 @@ namespace InVanWebApp.DAL
         public Nullable<int> LastModifiedBy { get; set; }
         public string LastModifiedDate { get; set; }
     
+        public virtual Organisation Organisation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RoleRight> RoleRights { get; set; }
-        public virtual Organisation Organisation { get; set; }
     }
 }

@@ -584,22 +584,24 @@
     <Property Name="Tittle" Type="nvarchar" MaxLength="100" />
     <Property Name="PONumber" Type="varchar" MaxLength="50" />
     <Property Name="DocumentDate" Type="date" />
-    <Property Name="DeliveryDate" Type="datetime" />
+    <Property Name="DeliveryDate" Type="date" />
     <Property Name="DocumentNumber" Type="nvarchar" MaxLength="100" />
     <Property Name="BuyerAddress" Type="nvarchar" MaxLength="100" />
     <Property Name="SupplierAddress" Type="nvarchar" MaxLength="100" />
     <Property Name="CompanyID" Type="int" />
-    <Property Name="ItemID" Type="int" Nullable="false" />
+    <Property Name="Item_ID" Type="int" />
     <Property Name="ItemQuantity" Type="numeric" Precision="18" Scale="2" />
     <Property Name="Tax" Type="nvarchar" MaxLength="50" />
     <Property Name="TotalItemCost" Type="numeric" Precision="18" Scale="2" />
     <Property Name="GrandTotal" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="AdvancedPAyment" Type="numeric" Precision="18" Scale="2" />
     <Property Name="OtherChargesDescription" Type="nvarchar" MaxLength="100" />
     <Property Name="OtherChargesTax" Type="nvarchar" MaxLength="50" />
     <Property Name="OtherChargesCost" Type="numeric" Precision="18" Scale="2" />
     <Property Name="Signature" Type="nvarchar" MaxLength="200" />
     <Property Name="TermsAndConditionID" Type="int" />
     <Property Name="Remark" Type="nvarchar" MaxLength="100" />
+    <Property Name="TransactionFlag" Type="int" />
     <Property Name="DraftFlag" Type="bit" />
     <Property Name="InvoiceStatus" Type="int" />
     <Property Name="GoodsStatus" Type="int" />
@@ -761,18 +763,22 @@
     <Property Name="OrganisationId" Type="int" />
     <Property Name="BranchId" Type="int" />
     <Property Name="RFQNO" Type="varchar" MaxLength="50" />
-    <Property Name="SupplierId" Type="int" />
-    <Property Name="Date" Type="datetime" />
-    <Property Name="RFQYear" Type="varchar" MaxLength="50" />
-    <Property Name="ItemId" Type="varchar(max)" />
-    <Property Name="QuantityS" Type="varchar(max)" />
-    <Property Name="SOIDS" Type="varchar(max)" />
-    <Property Name="PRIDS" Type="varchar(max)" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="LocationId" Type="int" />
+    <Property Name="UnitId" Type="int" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="Date" Type="date" />
+    <Property Name="DeliveryDate" Type="date" />
+    <Property Name="BiddingStartDate" Type="date" />
+    <Property Name="BiddingEndDate" Type="date" />
+    <Property Name="Quantity" Type="numeric" Precision="10" Scale="0" />
+    <Property Name="Signature" Type="varchar(max)" />
+    <Property Name="Remarks" Type="varchar(max)" />
     <Property Name="IsDeleted" Type="bit" />
-    <Property Name="CreatedBy" Type="int" />
-    <Property Name="CreatedDate" Type="datetime" />
-    <Property Name="LastModifiedBy" Type="int" />
-    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="CreatedByID" Type="int" />
+    <Property Name="CreatedByDate" Type="datetime" />
+    <Property Name="LastModifiedByID" Type="int" />
+    <Property Name="LastModifiedByDate" Type="datetime" />
   </EntityType>
   <EntityType Name="RoleRights">
     <Key>
@@ -1445,14 +1451,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_PurchaseOrder_Item">
-    <End Role="Item" Type="Self.Item" Multiplicity="1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
     <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Item">
         <PropertyRef Name="Item_ID" />
       </Principal>
       <Dependent Role="PurchaseOrder">
-        <PropertyRef Name="ItemID" />
+        <PropertyRef Name="Item_ID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1557,6 +1563,78 @@
       </Principal>
       <Dependent Role="RejectionDataSheetMaster">
         <PropertyRef Name="SupplierID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestForQuotation_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="RequestForQuotation" Type="Self.RequestForQuotation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchId" />
+      </Principal>
+      <Dependent Role="RequestForQuotation">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestForQuotation_Company">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="RequestForQuotation" Type="Self.RequestForQuotation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Company_ID" />
+      </Principal>
+      <Dependent Role="RequestForQuotation">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestForQuotation_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+    <End Role="RequestForQuotation" Type="Self.RequestForQuotation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="Item_ID" />
+      </Principal>
+      <Dependent Role="RequestForQuotation">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestForQuotation_LocationMaster">
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="0..1" />
+    <End Role="RequestForQuotation" Type="Self.RequestForQuotation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LocationMaster">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="RequestForQuotation">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestForQuotation_RequestForQuotation1">
+    <End Role="RequestForQuotation" Type="Self.RequestForQuotation" Multiplicity="1" />
+    <End Role="RequestForQuotation1" Type="Self.RequestForQuotation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="RequestForQuotation">
+        <PropertyRef Name="RequestForQuotationId" />
+      </Principal>
+      <Dependent Role="RequestForQuotation1">
+        <PropertyRef Name="RequestForQuotationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RequestForQuotation_UnitMaster">
+    <End Role="UnitMaster" Type="Self.UnitMaster" Multiplicity="0..1" />
+    <End Role="RequestForQuotation" Type="Self.RequestForQuotation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitMaster">
+        <PropertyRef Name="UnitID" />
+      </Principal>
+      <Dependent Role="RequestForQuotation">
+        <PropertyRef Name="UnitId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1816,6 +1894,30 @@
     <AssociationSet Name="FK_RejectionDataSheetMaster_ToSupplierMaster" Association="Self.FK_RejectionDataSheetMaster_ToSupplierMaster">
       <End Role="SupplierMaster" EntitySet="SupplierMaster" />
       <End Role="RejectionDataSheetMaster" EntitySet="RejectionDataSheetMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestForQuotation_Branch" Association="Self.FK_RequestForQuotation_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="RequestForQuotation" EntitySet="RequestForQuotation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestForQuotation_Company" Association="Self.FK_RequestForQuotation_Company">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="RequestForQuotation" EntitySet="RequestForQuotation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestForQuotation_Item" Association="Self.FK_RequestForQuotation_Item">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="RequestForQuotation" EntitySet="RequestForQuotation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestForQuotation_LocationMaster" Association="Self.FK_RequestForQuotation_LocationMaster">
+      <End Role="LocationMaster" EntitySet="LocationMaster" />
+      <End Role="RequestForQuotation" EntitySet="RequestForQuotation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestForQuotation_RequestForQuotation1" Association="Self.FK_RequestForQuotation_RequestForQuotation1">
+      <End Role="RequestForQuotation" EntitySet="RequestForQuotation" />
+      <End Role="RequestForQuotation1" EntitySet="RequestForQuotation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RequestForQuotation_UnitMaster" Association="Self.FK_RequestForQuotation_UnitMaster">
+      <End Role="UnitMaster" EntitySet="UnitMaster" />
+      <End Role="RequestForQuotation" EntitySet="RequestForQuotation" />
     </AssociationSet>
     <AssociationSet Name="FK_RoleRights_ToRoles" Association="Self.FK_RoleRights_ToRoles">
       <End Role="Roles" EntitySet="Roles" />

@@ -44,6 +44,7 @@ namespace InVanWebApp.DAL
         public virtual DbSet<InwardNote> InwardNotes { get; set; }
         public virtual DbSet<IssueNote> IssueNotes { get; set; }
         public virtual DbSet<IssueNoteDetail> IssueNoteDetails { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<ItemCategoryMaster> ItemCategoryMasters { get; set; }
         public virtual DbSet<ItemMaster> ItemMasters { get; set; }
         public virtual DbSet<LabMaster> LabMasters { get; set; }
@@ -84,6 +85,5 @@ namespace InVanWebApp.DAL
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
         public virtual DbSet<WorkOrderDetail> WorkOrderDetails { get; set; }
         public virtual DbSet<YearMaster> YearMasters { get; set; }
-        public virtual DbSet<Item> Items { get; set; }
     }
 }
