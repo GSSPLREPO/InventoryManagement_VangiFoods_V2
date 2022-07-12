@@ -2843,6 +2843,7 @@
           <NavigationProperty Name="Status" Relationship="InVanDBModels.FK_PurchaseOrder_Status" FromRole="PurchaseOrder" ToRole="Status" />
           <NavigationProperty Name="Status1" Relationship="InVanDBModels.FK_PurchaseOrder_Status1" FromRole="PurchaseOrder" ToRole="Status" />
           <NavigationProperty Name="TermsAndConditionMaster" Relationship="InVanDBModels.FK_PurchaseOrder_TermsAndConditionMaster" FromRole="PurchaseOrder" ToRole="TermsAndConditionMaster" />
+          <Property Name="OrderStatus" Type="String" Nullable="false" />
         </EntityType>
         <EntityType Name="PurchaseOrderAmendment">
           <Key>

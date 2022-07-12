@@ -7,6 +7,7 @@ using InVanWebApp.Repository;
 using InVanWebApp.DAL;
 using System.Globalization;
 using System.IO;
+using System.Web.Helpers;
 
 namespace InVanWebApp.Controllers
 {
@@ -191,9 +192,9 @@ namespace InVanWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(int LocationID)
+        public ActionResult Delete(int PurchaseOrderId)
         {
-            _transactionsPOandOC.Delete(LocationID);
+            _transactionsPOandOC.Delete(PurchaseOrderId);
             //_unitRepository.Save();
             return RedirectToAction("Index", "TransactionsPOandOC");
         }
@@ -219,19 +220,59 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        //public void UploadFile(HttpPostedFileBase postedFile)
-        //{
-        //    if (postedFile != null)
-        //    {
-        //        string path = Server.MapPath("~/SignatureImages/");
-        //        if (!Directory.Exists(path))
-        //        {
-        //            Directory.CreateDirectory(path);
-        //        }
+        #region Report for Order confirmation
+        [HttpGet]
+        public ActionResult Report_OC_Index()
+        {
+            return View();
+        }
 
-        //        postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
-        //        //ViewBag.Message = "File uploaded successfully.";
-        //    }
-        //}
+        public JsonResult BindGrid(string fromDate, string toDate)
+        {
+            try
+            {
+                //DateTime dateTime = DateTime.ParseExact(fromDate,"dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dtFromDateTime = DateTime.ParseExact(fromDate + " " + "00:00:00", "dd/MM/yyyy HH:mm:ss",
+                    CultureInfo.InvariantCulture);
+                DateTime dtToDateTime = DateTime.ParseExact(toDate + " " + "23:59:59", "dd/MM/yyyy HH:mm:ss",
+                    CultureInfo.InvariantCulture);
+                if (dtFromDateTime <= dtToDateTime)
+                {
+
+                   // string[] columnNames = typeof(Academics.AcademicAssignment).GetProperties().Select(property => property.Name).ToArray();
+
+                    var objResult = _transactionsPOandOC.Report_OC_GetAll(dtFromDateTime, dtToDateTime);
+                    //string[] columnNames = typeof(PurchaseOrder).GetProperties().Select(p=>p.Name).ToArray();
+
+                    //// string[] columnNames = typeof(Academics.AcademicAssignment).GetProperties().Select(property => property.Name).ToArray();
+
+                    //List<WebGridColumn> columns = new List<WebGridColumn>();
+                    //columns.Add(new WebGridColumn() { ColumnName = columnNames[1], Header = "OrderStatus" });
+                    //columns.Add(new WebGridColumn() { ColumnName = columnNames[2], Header = "Stream" });
+                    //columns.Add(new WebGridColumn() { ColumnName = columnNames[3], Header = "Section" });
+                    //columns.Add(new WebGridColumn() { ColumnName = columnNames[6], Header = "Title" });
+                    //columns.Add(new WebGridColumn() { ColumnName = columnNames[7], Header = "Issue Date" });
+                    //columns.Add(new WebGridColumn() { ColumnName = columnNames[8], Header = "Deadline Date" });
+                    //columns.Add(new WebGridColumn() { ColumnName = columnNames[10], Header = "Description" });
+
+                    //ViewBag.Columns = columns;
+                    //var result = objResult.ToList();
+                    //return Json(result, JsonRequestBehavior.AllowGet);
+
+                    return Json(objResult);
+                }
+                else
+                {
+                    return Json("NoDataFound");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(ex);
+                //throw;
+            }
+        }
+        #endregion
+
     }
 }

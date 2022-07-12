@@ -16,20 +16,15 @@ namespace InVanWebApp.DAL
     public partial class PurchaseOrder
     {
         public int PurchaseOrderId { get; set; }
-
         [Required(ErrorMessage = "Enter title!")]
         public string Tittle { get; set; }
         public string PONumber { get; set; }
-
-        //[DataType(DataType.Date)]
         public Nullable<System.DateTime> DocumentDate { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public string DocumentNumber { get; set; }
-
         [Required(ErrorMessage = "Enter buyer address!")]
         public string BuyerAddress { get; set; }
-
-        [Required(ErrorMessage = "Enter supplier address!")]
+        [Required(ErrorMessage = "Enter supplier address")]
         public string SupplierAddress { get; set; }
         public Nullable<int> CompanyID { get; set; }
         public Nullable<int> Item_ID { get; set; }
@@ -56,6 +51,7 @@ namespace InVanWebApp.DAL
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public string OrderStatus { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual Item Item { get; set; }
@@ -68,12 +64,14 @@ namespace InVanWebApp.DAL
         public string InvoiceStat { get; set; }
         public string GoodsStat { get; set; }
         public string CompanyName { get; set; }
+
         //Below are added for update functionality of OC.
-        public string ItemDescription{ get; set; }
+        public string ItemDescription { get; set; }
         public string ItemUnit { get; set; }
         public decimal ItemPrice { get; set; }
         public string ItemTax { get; set; }
         public string Item_Code { get; set; }
         public string Item_HSN_Code { get; set; }
+
     }
 }

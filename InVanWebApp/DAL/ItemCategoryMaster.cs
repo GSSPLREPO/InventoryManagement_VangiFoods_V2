@@ -11,7 +11,6 @@ namespace InVanWebApp.DAL
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class ItemCategoryMaster
     {
@@ -24,15 +23,8 @@ namespace InVanWebApp.DAL
         }
     
         public int ItemCategoryID { get; set; }
-
-        [Required(ErrorMessage = "Select item type!")]
         public Nullable<int> ItemTypeId { get; set; }
-
-        [Required(ErrorMessage = "Enter category name!")]
-        [StringLength(50, ErrorMessage = "Legth of category name is exceeded!")]
         public string ItemCategoryName { get; set; }
-
-        [StringLength(150, ErrorMessage = "Legth of description is exceeded!")]
         public string Description { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -47,8 +39,9 @@ namespace InVanWebApp.DAL
         public virtual ItemMaster ItemMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QCProductionSpecificationMaster> QCProductionSpecificationMasters { get; set; }
-        
+
         //Below type name is added for dropdown.
         public string ItemTypeName { get; set; }
+
     }
 }

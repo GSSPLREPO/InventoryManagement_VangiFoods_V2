@@ -13,5 +13,10 @@ namespace InVanWebApp.Controllers
         {
             return View();
         }
+
+        public ActionResult SalesOrder()
+        {
+            return View();
+        }
     }
 }

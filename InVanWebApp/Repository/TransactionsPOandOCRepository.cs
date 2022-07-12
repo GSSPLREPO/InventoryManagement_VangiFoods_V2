@@ -35,7 +35,7 @@ namespace InVanWebApp.Repository
 
         #region  Bind grid
         /// <summary>
-        /// Farheen: This function is for fecthing list of item category master's.
+        /// Farheen: This function is for fecthing list of transaction.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<PurchaseOrder> GetAll()
@@ -54,11 +54,13 @@ namespace InVanWebApp.Repository
                     {
                         PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderId"]),
                         TransactionFlag = Convert.ToInt32(reader["TransactionFlag"]),
+                        DraftFlag=Convert.ToBoolean(reader["DraftFlag"]),
                         //CompanyName = reader["CompanyName"].ToString(),
                         Tittle = reader["Tittle"].ToString(),
                         DocumentNumber = reader["DocumentNumber"].ToString(),
                         InvoiceStat = reader["InvoiceStatus"].ToString(),
                         GoodsStat = reader["GoodsStatus"].ToString(),
+                        OrderStatus=reader["OrderStatus"].ToString(),
                         LastModifiedDate = Convert.ToDateTime(reader["LastModifiedDate"])
                     };
                     purchaseOrdersList.Add(PO);
@@ -87,7 +89,7 @@ namespace InVanWebApp.Repository
                 cmd.Parameters.AddWithValue("@DocumentDate", orderConfirmation.DocumentDate);
                 cmd.Parameters.AddWithValue("@DeliveryDate", orderConfirmation.DeliveryDate);
                 cmd.Parameters.AddWithValue("@Amendment", orderConfirmation.Amendment);
-                cmd.Parameters.AddWithValue("@IndentNumber", orderConfirmation.IndentNumber);
+                cmd.Parameters.AddWithValue("@WorkOrderNo", orderConfirmation.WorkOrderNo);
                 cmd.Parameters.AddWithValue("@PONumber", orderConfirmation.PONumber);
                 cmd.Parameters.AddWithValue("@BuyerAdd", orderConfirmation.BuyerAddress);
                 cmd.Parameters.AddWithValue("@SupplierAdd", orderConfirmation.SupplierAddress);
@@ -131,7 +133,7 @@ namespace InVanWebApp.Repository
                         DocumentNumber = reader["DocumentNumber"].ToString(),
                         DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
                         Amendment = Convert.ToInt32(reader["Amendment"]),
-                        IndentNumber = reader["IndentNumber"].ToString(),
+                        WorkOrderNo = reader["WorkOrderNo"].ToString(),
                         BuyerAddress = reader["BuyerAddress"].ToString(),
                         SupplierAddress = reader["SupplierAddress"].ToString(),
                         Item_ID = Convert.ToInt32(reader["Item_ID"]),
@@ -145,9 +147,6 @@ namespace InVanWebApp.Repository
                         Tax = reader["Tax"].ToString(),
                         GrandTotal = Convert.ToDecimal(reader["GrandTotal"]),
                         AdvancedPAyment = Convert.ToDecimal(reader["AdvancedPayment"])
-                        //InvoiceStat = reader["InvoiceStatus"].ToString(),
-                        //GoodsStat = reader["GoodsStatus"].ToString(),
-                        //LastModifiedDate = Convert.ToDateTime(reader["LastModifiedDate"])
                     };
                 }
                 con.Close();
@@ -167,7 +166,7 @@ namespace InVanWebApp.Repository
                 cmd.Parameters.AddWithValue("@DocumentDate", orderConfirmation.DocumentDate);
                 cmd.Parameters.AddWithValue("@DeliveryDate", orderConfirmation.DeliveryDate);
                 cmd.Parameters.AddWithValue("@Amendment", orderConfirmation.Amendment);
-                cmd.Parameters.AddWithValue("@IndentNumber", orderConfirmation.IndentNumber);
+                cmd.Parameters.AddWithValue("@WorkOrderNo", orderConfirmation.WorkOrderNo);
                 cmd.Parameters.AddWithValue("@PONumber", orderConfirmation.PONumber);
                 cmd.Parameters.AddWithValue("@BuyerAdd", orderConfirmation.BuyerAddress);
                 cmd.Parameters.AddWithValue("@SupplierAdd", orderConfirmation.SupplierAddress);
@@ -362,6 +361,7 @@ namespace InVanWebApp.Repository
                         DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
                         Amendment = Convert.ToInt32(reader["Amendment"]),
                         GrandTotal = Convert.ToDecimal(reader["GrandTotal"]),
+                        WorkOrderNo=reader["WorkOrderNo"].ToString(),
                         ItemDescription = reader["Description"].ToString(),
                         Item_Code=reader["ItemCode"].ToString(),
                         Item_HSN_Code=reader["HSN_Code"].ToString(),
@@ -406,6 +406,49 @@ namespace InVanWebApp.Repository
             GC.SuppressFinalize(this);
         }
         #endregion
+
+        #region  Bind grid for Report
+        /// <summary>
+        /// Farheen: This function is for fecthing list of order transaction for report.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PurchaseOrder> Report_OC_GetAll(DateTime FromDate, DateTime ToDate)
+        {
+            List<PurchaseOrder> purchaseOrdersList = new List<PurchaseOrder>();
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                SqlCommand cmd = new SqlCommand("usp_rpt_OrderConfirmation_GetAll", con);
+                cmd.Parameters.AddWithValue("@FromDate", FromDate);
+                cmd.Parameters.AddWithValue("@ToDate", ToDate);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                while (reader.Read())
+                {
+
+                    var PO = new PurchaseOrder()
+                    {
+                        PurchaseOrderId = Convert.ToInt32(reader["SrNo"]),
+                        OrderStatus = reader["OrderStatus"].ToString(),
+                        //CompanyName = reader["CompanyName"].ToString(),
+                        Tittle = reader["Tittle"].ToString(),
+                        DocumentNumber = reader["DocumentNumber"].ToString(),
+                        DocumentDate = Convert.ToDateTime(reader["DocumentDate"]),
+                        DeliveryDate= Convert.ToDateTime(reader["DeliveryDate"]),
+                        GrandTotal=Convert.ToDecimal(reader["GrandTotal"]),
+                        AdvancedPAyment=Convert.ToDecimal(reader["AdvancedPAyment"]),
+                        InvoiceStat = reader["InvoiceStatus"].ToString(),
+                        GoodsStat = reader["GoodsStatus"].ToString()
+                    };
+                    purchaseOrdersList.Add(PO);
+                }
+                con.Close();
+                return purchaseOrdersList;
+            }
+            //return _context.UnitMasters.ToList();
+        }
+        #endregion
+
 
     }
 }

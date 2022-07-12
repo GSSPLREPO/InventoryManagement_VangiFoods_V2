@@ -47,8 +47,7 @@ namespace InVanWebApp.DAL
         public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StorageLocationMaster> StorageLocationMasters { get; set; }
-
-        //Fields for dropdown
+       // added: //Fields for dropdown
         public string CountryName { get; set; }
         public string StateName { get; set; }
         public string CityName { get; set; }

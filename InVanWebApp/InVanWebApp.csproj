@@ -338,15 +338,15 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AddItemRepository.cs" />
-    <Compile Include="Repository\IAddItemRepository.cs" />
-    <Compile Include="Repository\IItemCategoryRepository.cs" />
-    <Compile Include="Repository\IItemRepository.cs" />
-    <Compile Include="Repository\ILocationRepository.cs" />
-    <Compile Include="Repository\IRolesRepository.cs" />
+    <Compile Include="Repository\Interface\IAddItemRepository.cs" />
+    <Compile Include="Repository\Interface\IItemCategoryRepository.cs" />
+    <Compile Include="Repository\Interface\IItemRepository.cs" />
+    <Compile Include="Repository\Interface\ILocationRepository.cs" />
+    <Compile Include="Repository\Interface\IRolesRepository.cs" />
     <Compile Include="Repository\ItemCategoryRepository.cs" />
     <Compile Include="Repository\ItemRepository.cs" />
-    <Compile Include="Repository\ITransactionsPOandOCRepository.cs" />
-    <Compile Include="Repository\IUnitRepository.cs" />
+    <Compile Include="Repository\Interface\ITransactionsPOandOCRepository.cs" />
+    <Compile Include="Repository\Interface\IUnitRepository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\TransactionsPOandOCRepository.cs" />
@@ -1209,6 +1209,8 @@
     <Content Include="Views\TransactionsPOandOC\EditOrderConfirmation.cshtml" />
     <Content Include="Views\TransactionsPOandOC\ViewTransaction.cshtml" />
     <Content Include="Views\TransactionsPOandOC\DeleteTransactions.cshtml" />
+    <Content Include="Views\TransactionsPOandOC\Report_OC_Index.cshtml" />
+    <Content Include="Views\Dashboard\SalesOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
