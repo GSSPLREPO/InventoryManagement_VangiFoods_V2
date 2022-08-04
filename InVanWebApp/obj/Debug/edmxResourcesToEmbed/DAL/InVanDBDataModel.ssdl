@@ -107,25 +107,6 @@
     <Property Name="LastModifiedBy" Type="int" />
     <Property Name="LastModifiedDate" Type="datetime" />
   </EntityType>
-  <EntityType Name="Company">
-    <Key>
-      <PropertyRef Name="Company_ID" />
-    </Key>
-    <Property Name="Company_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="100" />
-    <Property Name="ContactNo" Type="numeric" Precision="18" Scale="0" />
-    <Property Name="EmailId" Type="nvarchar" MaxLength="100" />
-    <Property Name="Address" Type="nvarchar" MaxLength="100" />
-    <Property Name="CountryID" Type="int" />
-    <Property Name="StateID" Type="int" />
-    <Property Name="CityID" Type="int" />
-    <Property Name="Pincode" Type="int" />
-    <Property Name="IsDeleted" Type="bit" />
-    <Property Name="CreatedBy" Type="int" />
-    <Property Name="CreatedDate" Type="datetime" />
-    <Property Name="LastModifiedBy" Type="int" />
-    <Property Name="LastModifiedDate" Type="datetime" />
-  </EntityType>
   <EntityType Name="CountryMaster">
     <Key>
       <PropertyRef Name="CountryID" />
@@ -231,9 +212,6 @@
     </Key>
     <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EmployeeName" Type="varchar" MaxLength="200" />
-    <Property Name="OrganisationGroupId" Type="int" />
-    <Property Name="OrganisationId" Type="int" />
-    <Property Name="BranchID" Type="int" />
     <Property Name="DepartmentID" Type="int" />
     <Property Name="DesignationID" Type="int" />
     <Property Name="EmployeeMobileNo" Type="varchar" MaxLength="12" />
@@ -251,6 +229,9 @@
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="LastModifiedBy" Type="int" />
     <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="Username" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="RoleId" Type="int" />
   </EntityType>
   <EntityType Name="FinishGoodSeries">
     <Key>
@@ -483,6 +464,7 @@
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="LastModifiedBy" Type="int" />
     <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="BranchId" Type="int" />
   </EntityType>
   <EntityType Name="Log">
     <Key>
@@ -613,6 +595,7 @@
     <Property Name="CreatedBy" Type="int" />
     <Property Name="LastModifiedDate" Type="datetime" />
     <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="OrderStatus" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="PurchaseOrderAmendment">
     <Key>
@@ -787,7 +770,6 @@
     <Property Name="RoleRightId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RoleId" Type="int" />
     <Property Name="ScreenId" Type="int" />
-    <Property Name="UserId" Type="int" />
     <Property Name="LastModifiedUserId" Type="int" />
     <Property Name="LastModifiedDate" Type="datetime" />
     <Property Name="IsDeleted" Type="bit" />
@@ -1083,6 +1065,16 @@
     <Property Name="ModifiedDate" Type="datetime" />
     <Property Name="IsDeleted" Type="int" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="TermsAndConditionMaster">
     <Key>
       <PropertyRef Name="TermsConditionID" />
@@ -1109,21 +1101,6 @@
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="LastModifiedBy" Type="int" />
     <Property Name="LastModifiedDate" Type="datetime" />
-  </EntityType>
-  <EntityType Name="Users">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="OrganisationId" Type="int" />
-    <Property Name="Username" Type="varchar" MaxLength="50" />
-    <Property Name="Password" Type="varchar" MaxLength="50" />
-    <Property Name="RoleId" Type="int" />
-    <Property Name="IsDeleted" Type="bit" />
-    <Property Name="CreatedBy" Type="int" />
-    <Property Name="CreatedDate" Type="varchar" MaxLength="50" />
-    <Property Name="LastModifiedBy" Type="int" />
-    <Property Name="LastModifiedDate" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="WorkOrder">
     <Key>
@@ -1246,6 +1223,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_EmployeeMaster_CityMaster">
+    <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
+    <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityMaster">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_CountryMaster">
+    <End Role="CountryMaster" Type="Self.CountryMaster" Multiplicity="0..1" />
+    <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryMaster">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_EmployeeMaster_Department">
     <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
     <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
@@ -1269,6 +1270,30 @@
       </Principal>
       <Dependent Role="EmployeeMaster">
         <PropertyRef Name="DesignationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+    <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_StateMaster">
+    <End Role="StateMaster" Type="Self.StateMaster" Multiplicity="0..1" />
+    <End Role="EmployeeMaster" Type="Self.EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StateMaster">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="StateID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1374,6 +1399,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_LocationMaster_Branch">
+    <End Role="Branch" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchId" />
+      </Principal>
+      <Dependent Role="LocationMaster">
+        <PropertyRef Name="BranchId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_LocationMaster_CityMaster">
     <End Role="CityMaster" Type="Self.CityMaster" Multiplicity="0..1" />
     <End Role="LocationMaster" Type="Self.LocationMaster" Multiplicity="*" />
@@ -1435,18 +1472,6 @@
       </Principal>
       <Dependent Role="Organisations">
         <PropertyRef Name="OrganisationGroupId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PurchaseOrder_Company">
-    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
-    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Company">
-        <PropertyRef Name="Company_ID" />
-      </Principal>
-      <Dependent Role="PurchaseOrder">
-        <PropertyRef Name="CompanyID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1578,18 +1603,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RequestForQuotation_Company">
-    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
-    <End Role="RequestForQuotation" Type="Self.RequestForQuotation" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Company">
-        <PropertyRef Name="Company_ID" />
-      </Principal>
-      <Dependent Role="RequestForQuotation">
-        <PropertyRef Name="CompanyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_RequestForQuotation_Item">
     <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
     <End Role="RequestForQuotation" Type="Self.RequestForQuotation" Multiplicity="*" />
@@ -1666,18 +1679,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RoleRights_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-    <End Role="RoleRights" Type="Self.RoleRights" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="RoleRights">
-        <PropertyRef Name="UserId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_StateMaster_CountryMaster">
     <End Role="CountryMaster" Type="Self.CountryMaster" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -1706,24 +1707,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Users_Organisations">
-    <End Role="Organisations" Type="Self.Organisations" Multiplicity="0..1" />
-    <End Role="Users" Type="Self.Users" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organisations">
-        <PropertyRef Name="OrganisationId" />
-      </Principal>
-      <Dependent Role="Users">
-        <PropertyRef Name="OrganisationId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="InVanDBModelsStoreContainer">
     <EntitySet Name="Branch" EntityType="Self.Branch" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CityMaster" EntityType="Self.CityMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ClientMaster" EntityType="Self.ClientMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="COAMaster" EntityType="Self.COAMaster" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CountryMaster" EntityType="Self.CountryMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="CurrencyMaster" EntityType="Self.CurrencyMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DebitNote" EntityType="Self.DebitNote" Schema="dbo" store:Type="Tables" />
@@ -1773,9 +1761,9 @@
     <EntitySet Name="StorageItemMapping" EntityType="Self.StorageItemMapping" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="StorageLocationMaster" EntityType="Self.StorageLocationMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SupplierMaster" EntityType="Self.SupplierMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TermsAndConditionMaster" EntityType="Self.TermsAndConditionMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UnitMaster" EntityType="Self.UnitMaster" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkOrder" EntityType="Self.WorkOrder" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="WorkOrderDetails" EntityType="Self.WorkOrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="YearMaster" EntityType="Self.YearMaster" Schema="dbo" store:Type="Tables" />
@@ -1795,12 +1783,28 @@
       <End Role="Branch" EntitySet="Branch" />
       <End Role="Department" EntitySet="Department" />
     </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_CityMaster" Association="Self.FK_EmployeeMaster_CityMaster">
+      <End Role="CityMaster" EntitySet="CityMaster" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_CountryMaster" Association="Self.FK_EmployeeMaster_CountryMaster">
+      <End Role="CountryMaster" EntitySet="CountryMaster" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+    </AssociationSet>
     <AssociationSet Name="FK_EmployeeMaster_Department" Association="Self.FK_EmployeeMaster_Department">
       <End Role="Department" EntitySet="Department" />
       <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
     </AssociationSet>
     <AssociationSet Name="FK_EmployeeMaster_EmployeeMaster" Association="Self.FK_EmployeeMaster_EmployeeMaster">
       <End Role="DesignationMaster" EntitySet="DesignationMaster" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_Roles" Association="Self.FK_EmployeeMaster_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_StateMaster" Association="Self.FK_EmployeeMaster_StateMaster">
+      <End Role="StateMaster" EntitySet="StateMaster" />
       <End Role="EmployeeMaster" EntitySet="EmployeeMaster" />
     </AssociationSet>
     <AssociationSet Name="FK_InquiryMaster_ToItemCategoryMaster" Association="Self.FK_InquiryMaster_ToItemCategoryMaster">
@@ -1835,6 +1839,10 @@
       <End Role="LocationMaster" EntitySet="LocationMaster" />
       <End Role="LabMaster" EntitySet="LabMaster" />
     </AssociationSet>
+    <AssociationSet Name="FK_LocationMaster_Branch" Association="Self.FK_LocationMaster_Branch">
+      <End Role="Branch" EntitySet="Branch" />
+      <End Role="LocationMaster" EntitySet="LocationMaster" />
+    </AssociationSet>
     <AssociationSet Name="FK_LocationMaster_CityMaster" Association="Self.FK_LocationMaster_CityMaster">
       <End Role="CityMaster" EntitySet="CityMaster" />
       <End Role="LocationMaster" EntitySet="LocationMaster" />
@@ -1854,10 +1862,6 @@
     <AssociationSet Name="FK_Organisations_ToOrganisationGroups" Association="Self.FK_Organisations_ToOrganisationGroups">
       <End Role="OrganisationGroups" EntitySet="OrganisationGroups" />
       <End Role="Organisations" EntitySet="Organisations" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PurchaseOrder_Company" Association="Self.FK_PurchaseOrder_Company">
-      <End Role="Company" EntitySet="Company" />
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
     </AssociationSet>
     <AssociationSet Name="FK_PurchaseOrder_Item" Association="Self.FK_PurchaseOrder_Item">
       <End Role="Item" EntitySet="Item" />
@@ -1899,10 +1903,6 @@
       <End Role="Branch" EntitySet="Branch" />
       <End Role="RequestForQuotation" EntitySet="RequestForQuotation" />
     </AssociationSet>
-    <AssociationSet Name="FK_RequestForQuotation_Company" Association="Self.FK_RequestForQuotation_Company">
-      <End Role="Company" EntitySet="Company" />
-      <End Role="RequestForQuotation" EntitySet="RequestForQuotation" />
-    </AssociationSet>
     <AssociationSet Name="FK_RequestForQuotation_Item" Association="Self.FK_RequestForQuotation_Item">
       <End Role="Item" EntitySet="Item" />
       <End Role="RequestForQuotation" EntitySet="RequestForQuotation" />
@@ -1927,10 +1927,6 @@
       <End Role="ScreenName" EntitySet="ScreenName" />
       <End Role="RoleRights" EntitySet="RoleRights" />
     </AssociationSet>
-    <AssociationSet Name="FK_RoleRights_Users" Association="Self.FK_RoleRights_Users">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="RoleRights" EntitySet="RoleRights" />
-    </AssociationSet>
     <AssociationSet Name="FK_StateMaster_CountryMaster" Association="Self.FK_StateMaster_CountryMaster">
       <End Role="CountryMaster" EntitySet="CountryMaster" />
       <End Role="StateMaster" EntitySet="StateMaster" />
@@ -1938,10 +1934,6 @@
     <AssociationSet Name="FK_StorageLocationMaster_ToLocationMaster" Association="Self.FK_StorageLocationMaster_ToLocationMaster">
       <End Role="LocationMaster" EntitySet="LocationMaster" />
       <End Role="StorageLocationMaster" EntitySet="StorageLocationMaster" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Users_Organisations" Association="Self.FK_Users_Organisations">
-      <End Role="Organisations" EntitySet="Organisations" />
-      <End Role="Users" EntitySet="Users" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

@@ -17,7 +17,7 @@
             <div class="form-group">
                 @Html.Label("Location Name")
                 @*<div class="col-md-10">*@
-                @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", maxlength = "50", style="height:38px" })
+                @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", maxlength = "50", style = "height:38px" })
                 @Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "error mt-2 text-danger" })
                 @*</div>*@
             </div>
@@ -45,13 +45,13 @@
             <div class="form-group">
                 @Html.Label("City")
                 @Html.DropDownList("City_ID", new SelectList(string.Empty, "CityID", "CityName"), "--Select Country--",
-               new { @class = "form-control"})
+               new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.City_ID, "", new { @class = "error mt-2 text-danger" })
             </div>
 
             <div class="form-group">
                 @Html.Label("Pincode")
-                @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", type = "text" , maxlength = "10", style = "height:38px" })
+                @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control", type = "text", maxlength = "10", style = "height:38px" })
                 @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "error mt-2 text-danger" })
             </div>
 

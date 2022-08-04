@@ -31,6 +31,5 @@ namespace InVanWebApp.DAL
     
         public virtual Role Role { get; set; }
         public virtual ScreenName ScreenName { get; set; }
-        public virtual User User { get; set; }
     }
 }

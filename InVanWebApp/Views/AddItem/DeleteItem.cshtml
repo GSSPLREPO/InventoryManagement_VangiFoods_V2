@@ -8,26 +8,30 @@
     @using (Html.BeginForm("Delete", "AddItem", FormMethod.Post))
     {
         @Html.HiddenFor(r => r.Item_ID)
-        <h4>Delete Item</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Item_Name)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Item_Name)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Item_Code)
-            </dt>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Delete Item</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Item_Name)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Item_Name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Item_Code)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Item_Code)
-            </dd>
-        </dl>
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                    <dd>
+                        @Html.DisplayFor(model => model.Item_Code)
+                    </dd>
+                </dl>
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
         </div>
     }
 </div>

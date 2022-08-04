@@ -7,107 +7,92 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Add Item</h4>
+            <hr />
+            @Html.ValidationSummary(true)
 
-    <div class="form-horizontal">
-        <h5>Add Item</h5>
-        <hr />
-        @Html.ValidationSummary(true)
-
-        <div class="form-group">
-            @Html.Label("Item Category")
-            <div class="col-md-10">
+            <div class="form-group">
+                @Html.Label("Item Category")
                 @Html.DropDownList("ItemCategory_ID", (IEnumerable<SelectListItem>)ViewData["ItemCategory"], "--Select Category--",
                new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ItemCategory_ID, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Item_Code, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Item_Code)
-                @Html.ValidationMessageFor(model => model.Item_Code, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.Item_Code, new { @class = "control-label col-md-2" })*@
+                @Html.Label("Item Code")
+                @Html.EditorFor(model => model.Item_Code, new { @class = "form-control", maxlength = "50" })
+                @Html.ValidationMessageFor(model => model.Item_Code, "", new { @class = "error mt-2 text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Item_Name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Item_Name)
-                @Html.ValidationMessageFor(model => model.Item_Name, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.Label("Item Name")
+                @Html.EditorFor(model => model.Item_Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Item_Name, "", new { @class = "error mt-2 text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UnitOfMeasurement_ID, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("UnitOfMeasurement_ID", (IEnumerable<SelectListItem>)ViewData["Unit"], "--Select Category--",
+            <div class="form-group">
+                @Html.Label("Unit")
+                @Html.DropDownList("UnitOfMeasurement_ID", (IEnumerable<SelectListItem>)ViewData["Unit"], "--Select Unit--",
                new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UnitOfMeasurement_ID, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.UnitOfMeasurement_ID, "", new { @class = "error mt-2 text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.HSN_Code, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HSN_Code)
-                @Html.ValidationMessageFor(model => model.HSN_Code, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.Label("HSN Code")
+                @Html.EditorFor(model => model.HSN_Code, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.HSN_Code, "", new { @class = "error mt-2 text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Current_Stock, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Current_Stock)
-                @Html.ValidationMessageFor(model => model.Current_Stock, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.Label("Current Stock")
+                @Html.EditorFor(model => model.Current_Stock, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Current_Stock, "", new { @class = "error mt-2 text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price)
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.Label("Price")
+                @Html.EditorFor(model => model.Price, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "error mt-2 text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Tax, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-group">
+                @Html.Label("Tax")
                 @Html.DropDownList("Tax", new List<SelectListItem>
                 {
                     new SelectListItem{ Text="Tax: 0%", Value = "0%" },
                     new SelectListItem{ Text="Tax: 5%", Value = "5%" },
-                    new SelectListItem{ Text="Tax: 28%", Value = "28%" },
-                    new SelectListItem{ Text="Tax: 12%", Value = "12%" },
                     new SelectListItem{ Text="Tax: 18%", Value = "18%" },
+                    new SelectListItem{ Text="Tax: 12%", Value = "12%" },
                     new SelectListItem{ Text="Tax: 3%", Value = "3%" },
+                    new SelectListItem{ Text="Tax: 9%", Value = "9%" },
                     new SelectListItem{ Text="Tax: 0.1%", Value = "0.1%" },
                     new SelectListItem{ Text="Tax: 0.25%", Value = "0.25%" }
-                })
-                @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                }, new { @class = "form-control" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description)
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "error mt-2 text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group">
+                @Html.Label("Description")
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
             </div>
+
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
+
+            @*<div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>*@
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

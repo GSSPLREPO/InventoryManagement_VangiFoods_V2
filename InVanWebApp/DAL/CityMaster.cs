@@ -18,6 +18,7 @@ namespace InVanWebApp.DAL
         public CityMaster()
         {
             this.LocationMasters = new HashSet<LocationMaster>();
+            this.EmployeeMasters = new HashSet<EmployeeMaster>();
         }
     
         public int CityID { get; set; }
@@ -33,5 +34,7 @@ namespace InVanWebApp.DAL
         public virtual StateMaster StateMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LocationMaster> LocationMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmployeeMaster> EmployeeMasters { get; set; }
     }
 }

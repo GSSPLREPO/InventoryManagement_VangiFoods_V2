@@ -35,6 +35,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<int> BranchId { get; set; }
     
         public virtual CityMaster CityMaster { get; set; }
         public virtual CountryMaster CountryMaster { get; set; }
@@ -47,7 +48,9 @@ namespace InVanWebApp.DAL
         public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StorageLocationMaster> StorageLocationMasters { get; set; }
-       // added: //Fields for dropdown
+        public virtual Branch Branch { get; set; }
+
+        //Fields for dropdown
         public string CountryName { get; set; }
         public string StateName { get; set; }
         public string CityName { get; set; }

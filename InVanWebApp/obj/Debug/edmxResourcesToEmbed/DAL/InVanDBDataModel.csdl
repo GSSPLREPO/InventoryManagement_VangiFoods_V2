@@ -57,7 +57,6 @@
     <EntitySet Name="SupplierMasters" EntityType="InVanDBModels.SupplierMaster" />
     <EntitySet Name="TermsAndConditionMasters" EntityType="InVanDBModels.TermsAndConditionMaster" />
     <EntitySet Name="UnitMasters" EntityType="InVanDBModels.UnitMaster" />
-    <EntitySet Name="Users" EntityType="InVanDBModels.User" />
     <EntitySet Name="WorkOrders" EntityType="InVanDBModels.WorkOrder" />
     <EntitySet Name="WorkOrderDetails" EntityType="InVanDBModels.WorkOrderDetail" />
     <EntitySet Name="YearMasters" EntityType="InVanDBModels.YearMaster" />
@@ -177,10 +176,6 @@
       <End Role="OrganisationGroup" EntitySet="OrganisationGroups" />
       <End Role="Organisation" EntitySet="Organisations" />
     </AssociationSet>
-    <AssociationSet Name="FK_Users_Organisations" Association="InVanDBModels.FK_Users_Organisations">
-      <End Role="Organisation" EntitySet="Organisations" />
-      <End Role="User" EntitySet="Users" />
-    </AssociationSet>
     <AssociationSet Name="FK_PurchaseOrder_Status" Association="InVanDBModels.FK_PurchaseOrder_Status">
       <End Role="Status" EntitySet="Status" />
       <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
@@ -221,10 +216,27 @@
       <End Role="ScreenName" EntitySet="ScreenNames" />
       <End Role="RoleRight" EntitySet="RoleRights" />
     </AssociationSet>
-    <AssociationSet Name="FK_RoleRights_Users" Association="InVanDBModels.FK_RoleRights_Users">
-      <End Role="User" EntitySet="Users" />
-      <End Role="RoleRight" EntitySet="RoleRights" />
+    <AssociationSet Name="FK_LocationMaster_Branch" Association="InVanDBModels.FK_LocationMaster_Branch">
+      <End Role="Branch" EntitySet="Branches" />
+      <End Role="LocationMaster" EntitySet="LocationMasters" />
     </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_CityMaster" Association="InVanDBModels.FK_EmployeeMaster_CityMaster">
+      <End Role="CityMaster" EntitySet="CityMasters" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_CountryMaster" Association="InVanDBModels.FK_EmployeeMaster_CountryMaster">
+      <End Role="CountryMaster" EntitySet="CountryMasters" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_Roles" Association="InVanDBModels.FK_EmployeeMaster_Roles">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_StateMaster" Association="InVanDBModels.FK_EmployeeMaster_StateMaster">
+      <End Role="StateMaster" EntitySet="StateMasters" />
+      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+    </AssociationSet>
+    <EntitySet Name="sysdiagrams" EntityType="InVanDBModels.sysdiagram" />
   </EntityContainer>
   <EntityType Name="Branch">
     <Key>
@@ -248,6 +260,7 @@
     <NavigationProperty Name="Organisation" Relationship="InVanDBModels.FK_Branch_ToOrganisations" FromRole="Branch" ToRole="Organisation" />
     <NavigationProperty Name="Departments" Relationship="InVanDBModels.FK_Department_ToBranch" FromRole="Branch" ToRole="Department" />
     <NavigationProperty Name="RequestForQuotations" Relationship="InVanDBModels.FK_RequestForQuotation_Branch" FromRole="Branch" ToRole="RequestForQuotation" />
+    <NavigationProperty Name="LocationMasters" Relationship="InVanDBModels.FK_LocationMaster_Branch" FromRole="Branch" ToRole="LocationMaster" />
   </EntityType>
   <EntityType Name="CityMaster">
     <Key>
@@ -264,6 +277,7 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_CityMaster_StateMaster" FromRole="CityMaster" ToRole="StateMaster" />
     <NavigationProperty Name="LocationMasters" Relationship="InVanDBModels.FK_LocationMaster_CityMaster" FromRole="CityMaster" ToRole="LocationMaster" />
+    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_CityMaster" FromRole="CityMaster" ToRole="EmployeeMaster" />
   </EntityType>
   <EntityType Name="ClientMaster">
     <Key>
@@ -374,6 +388,7 @@
     <NavigationProperty Name="CurrencyMasters" Relationship="InVanDBModels.FK_CurrencyMaster_ToCountryMaster" FromRole="CountryMaster" ToRole="CurrencyMaster" />
     <NavigationProperty Name="LocationMasters" Relationship="InVanDBModels.FK_LocationMaster_CountryMaster" FromRole="CountryMaster" ToRole="LocationMaster" />
     <NavigationProperty Name="StateMasters" Relationship="InVanDBModels.FK_StateMaster_CountryMaster" FromRole="CountryMaster" ToRole="StateMaster" />
+    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster" FromRole="CountryMaster" ToRole="EmployeeMaster" />
   </EntityType>
   <EntityType Name="CurrencyMaster">
     <Key>
@@ -493,6 +508,13 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Department" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="EmployeeMaster" ToRole="Department" />
     <NavigationProperty Name="DesignationMaster" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster" FromRole="EmployeeMaster" ToRole="DesignationMaster" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="RoleId" Type="Int32" />
+    <NavigationProperty Name="CityMaster" Relationship="InVanDBModels.FK_EmployeeMaster_CityMaster" FromRole="EmployeeMaster" ToRole="CityMaster" />
+    <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster" FromRole="EmployeeMaster" ToRole="CountryMaster" />
+    <NavigationProperty Name="Role" Relationship="InVanDBModels.FK_EmployeeMaster_Roles" FromRole="EmployeeMaster" ToRole="Role" />
+    <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster" FromRole="EmployeeMaster" ToRole="StateMaster" />
   </EntityType>
   <EntityType Name="FinishGoodSery">
     <Key>
@@ -750,6 +772,8 @@
     <NavigationProperty Name="MachineMasters" Relationship="InVanDBModels.FK_MachineMaster_ToLocationMaster" FromRole="LocationMaster" ToRole="MachineMaster" />
     <NavigationProperty Name="RequestForQuotations" Relationship="InVanDBModels.FK_RequestForQuotation_LocationMaster" FromRole="LocationMaster" ToRole="RequestForQuotation" />
     <NavigationProperty Name="StorageLocationMasters" Relationship="InVanDBModels.FK_StorageLocationMaster_ToLocationMaster" FromRole="LocationMaster" ToRole="StorageLocationMaster" />
+    <Property Name="BranchId" Type="Int32" />
+    <NavigationProperty Name="Branch" Relationship="InVanDBModels.FK_LocationMaster_Branch" FromRole="LocationMaster" ToRole="Branch" />
   </EntityType>
   <EntityType Name="Log">
     <Key>
@@ -833,7 +857,6 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Branches" Relationship="InVanDBModels.FK_Branch_ToOrganisations" FromRole="Organisation" ToRole="Branch" />
     <NavigationProperty Name="OrganisationGroup" Relationship="InVanDBModels.FK_Organisations_ToOrganisationGroups" FromRole="Organisation" ToRole="OrganisationGroup" />
-    <NavigationProperty Name="Users" Relationship="InVanDBModels.FK_Users_Organisations" FromRole="Organisation" ToRole="User" />
   </EntityType>
   <EntityType Name="ProcessMaster">
     <Key>
@@ -891,6 +914,7 @@
     <NavigationProperty Name="Status1" Relationship="InVanDBModels.FK_PurchaseOrder_Status1" FromRole="PurchaseOrder" ToRole="Status" />
     <NavigationProperty Name="TermsAndConditionMaster" Relationship="InVanDBModels.FK_PurchaseOrder_TermsAndConditionMaster" FromRole="PurchaseOrder" ToRole="TermsAndConditionMaster" />
     <Property Name="OrderStatus" Type="String" Nullable="false" />
+    <Property Name="OrderStatus1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="PurchaseOrderAmendment">
     <Key>
@@ -1092,7 +1116,6 @@
     <Property Name="ViewScreen" Type="Boolean" />
     <NavigationProperty Name="Role" Relationship="InVanDBModels.FK_RoleRights_ToRoles" FromRole="RoleRight" ToRole="Role" />
     <NavigationProperty Name="ScreenName" Relationship="InVanDBModels.FK_RoleRights_ToScreenName" FromRole="RoleRight" ToRole="ScreenName" />
-    <NavigationProperty Name="User" Relationship="InVanDBModels.FK_RoleRights_Users" FromRole="RoleRight" ToRole="User" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -1107,6 +1130,7 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedby" Type="Int32" />
     <NavigationProperty Name="RoleRights" Relationship="InVanDBModels.FK_RoleRights_ToRoles" FromRole="Role" ToRole="RoleRight" />
+    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_Roles" FromRole="Role" ToRole="EmployeeMaster" />
   </EntityType>
   <EntityType Name="SalesOrder">
     <Key>
@@ -1221,6 +1245,7 @@
     <NavigationProperty Name="CityMasters" Relationship="InVanDBModels.FK_CityMaster_StateMaster" FromRole="StateMaster" ToRole="CityMaster" />
     <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_StateMaster_CountryMaster" FromRole="StateMaster" ToRole="CountryMaster" />
     <NavigationProperty Name="LocationMasters" Relationship="InVanDBModels.FK_LocationMaster_StateMaster" FromRole="StateMaster" ToRole="LocationMaster" />
+    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster" FromRole="StateMaster" ToRole="EmployeeMaster" />
   </EntityType>
   <EntityType Name="Status">
     <Key>
@@ -1416,23 +1441,6 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Items" Relationship="InVanDBModels.FK_Item_UnitMaster" FromRole="UnitMaster" ToRole="Item" />
     <NavigationProperty Name="RequestForQuotations" Relationship="InVanDBModels.FK_RequestForQuotation_UnitMaster" FromRole="UnitMaster" ToRole="RequestForQuotation" />
-  </EntityType>
-  <EntityType Name="User">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="OrganisationId" Type="Int32" />
-    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="RoleId" Type="Int32" />
-    <Property Name="IsDeleted" Type="Boolean" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Organisation" Relationship="InVanDBModels.FK_Users_Organisations" FromRole="User" ToRole="Organisation" />
-    <NavigationProperty Name="RoleRights" Relationship="InVanDBModels.FK_RoleRights_Users" FromRole="User" ToRole="RoleRight" />
   </EntityType>
   <EntityType Name="WorkOrder">
     <Key>
@@ -1873,18 +1881,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Users_Organisations">
-    <End Type="InVanDBModels.Organisation" Role="Organisation" Multiplicity="0..1" />
-    <End Type="InVanDBModels.User" Role="User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organisation">
-        <PropertyRef Name="OrganisationId" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="OrganisationId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_PurchaseOrder_Status">
     <End Type="InVanDBModels.Status" Role="Status" Multiplicity="0..1" />
     <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
@@ -2015,16 +2011,74 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_RoleRights_Users">
-    <End Type="InVanDBModels.User" Role="User" Multiplicity="0..1" />
-    <End Type="InVanDBModels.RoleRight" Role="RoleRight" Multiplicity="*" />
+  <Association Name="FK_LocationMaster_Branch">
+    <End Type="InVanDBModels.Branch" Role="Branch" Multiplicity="0..1" />
+    <End Type="InVanDBModels.LocationMaster" Role="LocationMaster" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="Id" />
+      <Principal Role="Branch">
+        <PropertyRef Name="BranchId" />
       </Principal>
-      <Dependent Role="RoleRight">
-        <PropertyRef Name="UserId" />
+      <Dependent Role="LocationMaster">
+        <PropertyRef Name="BranchId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_EmployeeMaster_CityMaster">
+    <End Type="InVanDBModels.CityMaster" Role="CityMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityMaster">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_CountryMaster">
+    <End Type="InVanDBModels.CountryMaster" Role="CountryMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryMaster">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_Roles">
+    <End Type="InVanDBModels.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_StateMaster">
+    <End Type="InVanDBModels.StateMaster" Role="StateMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StateMaster">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="EmployeeMaster">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
 </Schema>

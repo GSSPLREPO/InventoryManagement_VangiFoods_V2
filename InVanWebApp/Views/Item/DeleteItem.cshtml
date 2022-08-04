@@ -3,31 +3,35 @@
     ViewBag.Title = "DeleteItem";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
-<h3>Are you sure you want to delete this?</h3>
+@*<h3>Are you sure you want to delete this?</h3>*@
 <div>
     @using (Html.BeginForm("Delete", "Item", FormMethod.Post))
     {
         @Html.HiddenFor(i => i.ItemID)
-        <h4>Delete Role</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.ItemName)
-            </dt>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Delete Item Type</h4>
+                <hr />
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ItemName)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.ItemName)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-        </dl>
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                    <dd>
+                        @Html.DisplayFor(model => model.ItemName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                </dl>
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
         </div>
     }
 </div>

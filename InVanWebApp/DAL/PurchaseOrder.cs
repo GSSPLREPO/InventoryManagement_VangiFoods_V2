@@ -12,18 +12,21 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+
     public partial class PurchaseOrder
     {
         public int PurchaseOrderId { get; set; }
+
         [Required(ErrorMessage = "Enter title!")]
         public string Tittle { get; set; }
         public string PONumber { get; set; }
         public Nullable<System.DateTime> DocumentDate { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public string DocumentNumber { get; set; }
+
         [Required(ErrorMessage = "Enter buyer address!")]
         public string BuyerAddress { get; set; }
+
         [Required(ErrorMessage = "Enter supplier address")]
         public string SupplierAddress { get; set; }
         public Nullable<int> CompanyID { get; set; }
@@ -52,6 +55,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public string OrderStatus { get; set; }
+        public string OrderStatus1 { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual Item Item { get; set; }
@@ -72,6 +76,5 @@ namespace InVanWebApp.DAL
         public string ItemTax { get; set; }
         public string Item_Code { get; set; }
         public string Item_HSN_Code { get; set; }
-
     }
 }

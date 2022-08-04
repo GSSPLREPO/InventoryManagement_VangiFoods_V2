@@ -45,6 +45,7 @@ namespace InVanWebApp.DAL
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
+        
         //Added below fields for dropdowns
         public string ItemCategoryName { get; set; }
         public string UnitName { get; set; }

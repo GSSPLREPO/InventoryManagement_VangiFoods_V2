@@ -61,7 +61,6 @@
         <EntityTypeShape EntityType="InVanDBModels.SupplierMaster" Width="1.5" PointX="13.75" PointY="12.75" />
         <EntityTypeShape EntityType="InVanDBModels.TermsAndConditionMaster" Width="1.5" PointX="11.25" PointY="28.75" />
         <EntityTypeShape EntityType="InVanDBModels.UnitMaster" Width="1.5" PointX="3" PointY="23.125" />
-        <EntityTypeShape EntityType="InVanDBModels.User" Width="1.5" PointX="8.25" PointY="1.25" />
         <EntityTypeShape EntityType="InVanDBModels.WorkOrder" Width="1.5" PointX="23.75" PointY="21.375" />
         <EntityTypeShape EntityType="InVanDBModels.WorkOrderDetail" Width="1.5" PointX="24.75" PointY="2.375" />
         <EntityTypeShape EntityType="InVanDBModels.YearMaster" Width="1.5" PointX="4.75" PointY="2.375" />
@@ -94,7 +93,6 @@
         <AssociationConnector Association="InVanDBModels.FK_RequestForQuotation_LocationMaster" />
         <AssociationConnector Association="InVanDBModels.FK_StorageLocationMaster_ToLocationMaster" />
         <AssociationConnector Association="InVanDBModels.FK_Organisations_ToOrganisationGroups" />
-        <AssociationConnector Association="InVanDBModels.FK_Users_Organisations" />
         <AssociationConnector Association="InVanDBModels.FK_PurchaseOrder_Status" />
         <AssociationConnector Association="InVanDBModels.FK_PurchaseOrder_Status1" />
         <AssociationConnector Association="InVanDBModels.FK_PurchaseOrder_TermsAndConditionMaster" />
@@ -105,7 +103,12 @@
         <AssociationConnector Association="InVanDBModels.FK_RequestForQuotation_UnitMaster" />
         <AssociationConnector Association="InVanDBModels.FK_RoleRights_ToRoles" />
         <AssociationConnector Association="InVanDBModels.FK_RoleRights_ToScreenName" />
-        <AssociationConnector Association="InVanDBModels.FK_RoleRights_Users" />
+        <AssociationConnector Association="InVanDBModels.FK_LocationMaster_Branch" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_CityMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_CountryMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_Roles" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_StateMaster" />
+        <EntityTypeShape EntityType="InVanDBModels.sysdiagram" Width="1.5" PointX="25.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
