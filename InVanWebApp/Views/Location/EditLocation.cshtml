@@ -15,7 +15,7 @@
 
             <div class="form-group">
                 @Html.Label("LocationName")
-                @Html.EditorFor(model => model.LocationName, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "error mt-2 text-danger" })
             </div>
 
@@ -48,7 +48,7 @@
 
             <div class="form-group">
                 @Html.Label("Pincode")
-                @Html.EditorFor(model => model.Pincode, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "error mt-2 text-danger" })
             </div>
 

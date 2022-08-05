@@ -15,19 +15,19 @@
 
             <div class="form-group">
                 @Html.Label("Unit Name")
-                @Html.EditorFor(model => model.UnitName, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.UnitName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "error mt-2 text-danger" })
             </div>
 
             <div class="form-group">
                 @Html.Label("Unit Code")
-                @Html.EditorFor(model => model.UnitCode, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.UnitCode, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.UnitCode, "", new { @class = "error mt-2 text-danger" })
             </div>
 
             <div class="form-group">
                 @Html.Label("Description")
-                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
             </div>
 
