@@ -237,6 +237,15 @@
       <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
     </AssociationSet>
     <EntitySet Name="sysdiagrams" EntityType="InVanDBModels.sysdiagram" />
+    <EntitySet Name="Users" EntityType="InVanDBModels.User" />
+    <AssociationSet Name="FK_Users_EmployeeMaster" Association="InVanDBModels.FK_Users_EmployeeMaster">
+      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="InVanDBModels.FK_Users_Roles">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Branch">
     <Key>
@@ -515,6 +524,7 @@
     <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster" FromRole="EmployeeMaster" ToRole="CountryMaster" />
     <NavigationProperty Name="Role" Relationship="InVanDBModels.FK_EmployeeMaster_Roles" FromRole="EmployeeMaster" ToRole="Role" />
     <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster" FromRole="EmployeeMaster" ToRole="StateMaster" />
+    <NavigationProperty Name="Users" Relationship="InVanDBModels.FK_Users_EmployeeMaster" FromRole="EmployeeMaster" ToRole="User" />
   </EntityType>
   <EntityType Name="FinishGoodSery">
     <Key>
@@ -1131,6 +1141,7 @@
     <Property Name="LastModifiedby" Type="Int32" />
     <NavigationProperty Name="RoleRights" Relationship="InVanDBModels.FK_RoleRights_ToRoles" FromRole="Role" ToRole="RoleRight" />
     <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_Roles" FromRole="Role" ToRole="EmployeeMaster" />
+    <NavigationProperty Name="Users" Relationship="InVanDBModels.FK_Users_Roles" FromRole="Role" ToRole="User" />
   </EntityType>
   <EntityType Name="SalesOrder">
     <Key>
@@ -2081,4 +2092,45 @@
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="EmployeeId" Type="Int32" />
+    <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="EmployeeMaster" Relationship="InVanDBModels.FK_Users_EmployeeMaster" FromRole="User" ToRole="EmployeeMaster" />
+    <NavigationProperty Name="Role" Relationship="InVanDBModels.FK_Users_Roles" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <Association Name="FK_Users_EmployeeMaster">
+    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeMaster">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles">
+    <End Type="InVanDBModels.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="InVanDBModels.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

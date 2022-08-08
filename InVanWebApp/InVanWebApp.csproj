@@ -324,6 +324,9 @@
     <Compile Include="DAL\UnitMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\User.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\WorkOrder.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>

@@ -19,6 +19,7 @@ namespace InVanWebApp.DAL
         {
             this.RoleRights = new HashSet<RoleRight>();
             this.EmployeeMasters = new HashSet<EmployeeMaster>();
+            this.Users = new HashSet<User>();
         }
     
         public int RoleId { get; set; }
@@ -34,5 +35,7 @@ namespace InVanWebApp.DAL
         public virtual ICollection<RoleRight> RoleRights { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeMaster> EmployeeMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

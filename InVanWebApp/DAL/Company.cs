@@ -40,7 +40,7 @@ namespace InVanWebApp.DAL
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
-        
+
         //Added: Below fields are for supplier and buyer address in OC form.
         public string CityName { get; set; }
         public string StateName { get; set; }

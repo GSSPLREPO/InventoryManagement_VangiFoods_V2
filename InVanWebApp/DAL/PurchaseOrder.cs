@@ -12,7 +12,6 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
     public partial class PurchaseOrder
     {
         public int PurchaseOrderId { get; set; }
@@ -76,5 +75,6 @@ namespace InVanWebApp.DAL
         public string ItemTax { get; set; }
         public string Item_Code { get; set; }
         public string Item_HSN_Code { get; set; }
+      
     }
 }

@@ -109,6 +109,9 @@
         <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_Roles" />
         <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_StateMaster" />
         <EntityTypeShape EntityType="InVanDBModels.sysdiagram" Width="1.5" PointX="25.375" PointY="7.75" />
+        <EntityTypeShape EntityType="InVanDBModels.User" Width="1.5" PointX="20" PointY="27.75" />
+        <AssociationConnector Association="InVanDBModels.FK_Users_EmployeeMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_Users_Roles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
