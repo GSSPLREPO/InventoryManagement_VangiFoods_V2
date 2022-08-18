@@ -33,7 +33,7 @@ namespace InVanWebApp_BO
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
-        public virtual ItemCategoryMaster ItemCategoryMaster { get; set; }
-        public virtual ItemMaster ItemMaster { get; set; }
+        public virtual ItemCategoryMasterBO ItemCategoryMaster { get; set; }
+        //public virtual ItemMaster ItemMaster { get; set; }
     }
 }

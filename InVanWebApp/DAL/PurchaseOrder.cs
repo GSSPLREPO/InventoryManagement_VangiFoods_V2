@@ -11,22 +11,23 @@ namespace InVanWebApp.DAL
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+    
     public partial class PurchaseOrder
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PurchaseOrder()
+        {
+            this.DebitNotes = new HashSet<DebitNote>();
+            this.GRN_Master = new HashSet<GRN_Master>();
+        }
+    
         public int PurchaseOrderId { get; set; }
-
-        [Required(ErrorMessage = "Enter title!")]
         public string Tittle { get; set; }
         public string PONumber { get; set; }
         public Nullable<System.DateTime> DocumentDate { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public string DocumentNumber { get; set; }
-
-        [Required(ErrorMessage = "Enter buyer address!")]
         public string BuyerAddress { get; set; }
-
-        [Required(ErrorMessage = "Enter supplier address")]
         public string SupplierAddress { get; set; }
         public Nullable<int> CompanyID { get; set; }
         public Nullable<int> Item_ID { get; set; }
@@ -54,14 +55,15 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public string OrderStatus { get; set; }
-        public string OrderStatus1 { get; set; }
     
-        public virtual Company Company { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DebitNote> DebitNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GRN_Master> GRN_Master { get; set; }
         public virtual Item Item { get; set; }
         public virtual Status Status { get; set; }
         public virtual Status Status1 { get; set; }
         public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
-
         //Added: Fields added for dropdowns.
         public string CountryName { get; set; }
         public string InvoiceStat { get; set; }
@@ -75,6 +77,6 @@ namespace InVanWebApp.DAL
         public string ItemTax { get; set; }
         public string Item_Code { get; set; }
         public string Item_HSN_Code { get; set; }
-      
+        //	public string OrderStatus { get; set; }
     }
 }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InVanWebApp.DAL;
+using InVanWebApp_BO;
+//using InVanWebApp.DAL;
 using InVanWebApp.Repository;
 
 namespace InVanWebApp.Controllers
@@ -11,26 +12,6 @@ namespace InVanWebApp.Controllers
     public class ItemCategoryController : Controller
     {
         private IItemCategoryRepository _itemCategoryRepository;
-
-        #region Initializing constructor
-        /// <summary>
-        /// Farheen: Constructor without parameter
-        /// </summary>
-        public ItemCategoryController()
-        {
-            _itemCategoryRepository = new ItemCategoryRepository(new InVanDBContext());
-        }
-
-        /// <summary>
-        /// Farheen: Constructor with parameters for initializing the interface object.
-        /// </summary>
-        /// <param name="itemCategoryRepository"></param>
-        public ItemCategoryController(IItemCategoryRepository itemCategoryRepository)
-        {
-            _itemCategoryRepository = itemCategoryRepository;
-        }
-
-        #endregion
 
         #region  Bind grid
         /// <summary>
@@ -55,7 +36,7 @@ namespace InVanWebApp.Controllers
         public ActionResult AddItemCategory()
         {
             var model = _itemCategoryRepository.GetItemTypeForDropDown();
-            var dd = new SelectList(model.ToList(),"ItemID","ItemName");
+            var dd = new SelectList(model.ToList(),"ID","ItemType");
             ViewData["ItemType"] = dd;
             return View();
         }
@@ -66,7 +47,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddItemCategory(ItemCategoryMaster model)
+        public ActionResult AddItemCategory(ItemCategoryMasterBO model)
         {
             if (ModelState.IsValid)
             {
@@ -88,9 +69,9 @@ namespace InVanWebApp.Controllers
         public ActionResult EditItemCategory(int ItemCategoryID)
         {
             var ItemType = _itemCategoryRepository.GetItemTypeForDropDown();
-            var dd = new SelectList(ItemType.ToList(), "ItemID", "ItemName");
+            var dd = new SelectList(ItemType.ToList(), "ID", "ItemType");
             ViewData["ItemType"] = dd;
-            ItemCategoryMaster model = _itemCategoryRepository.GetById(ItemCategoryID);
+            ItemCategoryMasterBO model = _itemCategoryRepository.GetById(ItemCategoryID);
             return View(model);
         }
 
@@ -100,7 +81,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditItemCategory(ItemCategoryMaster model)
+        public ActionResult EditItemCategory(ItemCategoryMasterBO model)
         {
             if (ModelState.IsValid)
             {
@@ -122,7 +103,7 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteItemCategory(int ItemCategoryID)
         {
-            ItemCategoryMaster model = _itemCategoryRepository.GetById(ItemCategoryID);
+            ItemCategoryMasterBO model = _itemCategoryRepository.GetById(ItemCategoryID);
             return View(model);
         }
         [HttpPost]

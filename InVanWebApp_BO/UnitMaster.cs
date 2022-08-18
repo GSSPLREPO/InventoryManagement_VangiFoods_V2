@@ -11,7 +11,7 @@ namespace InVanWebApp_BO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UnitMaster()
         {
-            this.Items = new HashSet<Item>();
+            this.Items = new HashSet<ItemBO>();
             this.RequestForQuotations = new HashSet<RequestForQuotation>();
         }
 
@@ -26,7 +26,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<ItemBO> Items { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
     }

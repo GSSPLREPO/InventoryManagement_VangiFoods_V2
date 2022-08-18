@@ -49,7 +49,7 @@ namespace InVanWebApp_BO
         public string OrderStatus { get; set; }
 
         public virtual Company Company { get; set; }
-        public virtual Item Item { get; set; }
+        public virtual ItemBO Item { get; set; }
         public virtual Status Status { get; set; }
         public virtual Status Status1 { get; set; }
         public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }

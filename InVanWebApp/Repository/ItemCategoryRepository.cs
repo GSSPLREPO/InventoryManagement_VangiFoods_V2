@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using InVanWebApp.Repository;
-using InVanWebApp.DAL;
+//using InVanWebApp.DAL;
+using InVanWebApp_BO;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
@@ -12,35 +13,16 @@ namespace InVanWebApp.Repository
 {
     public class ItemCategoryRepository:IItemCategoryRepository
     {
-        private readonly InVanDBContext _context;
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-
-        #region Initializing constructor.
-        /// <summary>
-        /// Farheen: Constructor without parameter
-        /// </summary>
-        public ItemCategoryRepository()
-        {
-            //Define the DbContext object.
-            _context = new InVanDBContext();
-        }
-
-        //Constructor with parameter for initializing the DbContext object.
-        public ItemCategoryRepository(InVanDBContext context)
-        {
-            _context = context;
-        }
-
-        #endregion
-
+               
         #region  Bind grid
         /// <summary>
         /// Farheen: This function is for fecthing list of item category master's.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ItemCategoryMaster> GetAll()
+        public IEnumerable<ItemCategoryMasterBO> GetAll()
         {
-            List<ItemCategoryMaster> ItemCategoryList = new List<ItemCategoryMaster>();
+            List<ItemCategoryMasterBO> ItemCategoryList = new List<ItemCategoryMasterBO>();
             using (SqlConnection con = new SqlConnection(conString))
             {
                 SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_GetAll", con);
@@ -49,7 +31,7 @@ namespace InVanWebApp.Repository
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var ItemCategory = new ItemCategoryMaster()
+                    var ItemCategory = new ItemCategoryMasterBO()
                     {
                         ItemCategoryID = Convert.ToInt32(reader["ItemCategoryID"]),
                         ItemCategoryName = reader["ItemCategoryName"].ToString(),
@@ -70,7 +52,7 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="itemCategoryMaster"></param>
-        public void Insert(ItemCategoryMaster itemCategoryMaster)
+        public void Insert(ItemCategoryMasterBO itemCategoryMaster)
         {
             using (SqlConnection con = new SqlConnection(conString))
             {
@@ -95,9 +77,9 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="ItemCategoryId"></param>
         /// <returns></returns>
-        public ItemCategoryMaster GetById(int ItemCategoryId)
+        public ItemCategoryMasterBO GetById(int ItemCategoryId)
         {
-            var ItemCategory = new ItemCategoryMaster();
+            var ItemCategory = new ItemCategoryMasterBO();
             using (SqlConnection con = new SqlConnection(conString))
             {
                 SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_GetByID", con);
@@ -107,7 +89,7 @@ namespace InVanWebApp.Repository
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    ItemCategory = new ItemCategoryMaster()
+                    ItemCategory = new ItemCategoryMasterBO()
                     {
                         ItemCategoryID = Convert.ToInt32(reader["ItemCategoryID"]),
                         ItemTypeId = Convert.ToInt32(reader["ItemTypeId"]),
@@ -125,7 +107,7 @@ namespace InVanWebApp.Repository
         /// Farheen: Update record
         /// </summary>
         /// <param name="itemCategoryMaster"></param>
-        public void Udate(ItemCategoryMaster itemCategoryMaster)
+        public void Udate(ItemCategoryMasterBO itemCategoryMaster)
         {
             using (SqlConnection con = new SqlConnection(conString))
             {
@@ -163,53 +145,27 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region  Bind drop-down of Item type
-        public IEnumerable<ItemMaster> GetItemTypeForDropDown()
+        public IEnumerable<ItemTypeBO> GetItemTypeForDropDown()
         {
-            List<ItemMaster> ItemMasterList = new List<ItemMaster>();
+            List<ItemTypeBO> ItemMasterList = new List<ItemTypeBO>();
             using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Item_GetAll", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_ItemType_GetAll", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var ItemMaster = new ItemMaster()
+                    var ItemMaster = new ItemTypeBO()
                     {
-                        ItemID = Convert.ToInt32(reader["ItemID"]),
-                        ItemName = reader["ItemName"].ToString()
+                        ID = Convert.ToInt32(reader["ID"]),
+                        ItemType = reader["ItemType"].ToString()
                     };
                     ItemMasterList.Add(ItemMaster);
                 }
                 con.Close();
                 return ItemMasterList;
             }
-        }
-        #endregion
-
-        #region Dispose function
-        private bool disposed = false;
-
-        /// <summary>
-        /// For releasing unmanageable objects and scarce resources,
-        /// like deallocating the controller instance.   
-        ///And it get called when the view is rendered.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                    _context.Dispose();
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
         #endregion
     }

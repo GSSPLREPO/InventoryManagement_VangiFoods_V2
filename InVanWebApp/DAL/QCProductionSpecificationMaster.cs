@@ -33,7 +33,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         public virtual ItemCategoryMaster ItemCategoryMaster { get; set; }
-        public virtual ItemMaster ItemMaster { get; set; }
+        public virtual ItemType ItemType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QCProductioObservationMaste> QCProductioObservationMastes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -12,20 +12,23 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class StockAdjustment_T
+    public partial class StockTransfer
     {
-        public int StockAdjustmentTId { get; set; }
-        public Nullable<int> StockAdjustmentMId { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> FromLocationId { get; set; }
+        public Nullable<int> ToLocationId { get; set; }
         public Nullable<int> ItemId { get; set; }
-        public Nullable<int> UnitId { get; set; }
-        public Nullable<double> Bookstock { get; set; }
-        public Nullable<double> Physicalstock { get; set; }
-        public string Reason { get; set; }
-        public Nullable<int> ShortExcessId { get; set; }
+        public Nullable<double> TransferQuantity { get; set; }
+        public Nullable<double> RequiredQuantity { get; set; }
+        public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> LastModificationDate { get; set; }
-        public Nullable<int> LastModificationBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<int> LastModifiedby { get; set; }
+    
+        public virtual Item Item { get; set; }
+        public virtual LocationMaster LocationMaster { get; set; }
+        public virtual LocationMaster LocationMaster1 { get; set; }
     }
 }

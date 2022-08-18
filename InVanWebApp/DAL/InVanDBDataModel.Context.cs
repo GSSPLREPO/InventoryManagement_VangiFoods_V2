@@ -29,7 +29,6 @@ namespace InVanWebApp.DAL
         public virtual DbSet<CityMaster> CityMasters { get; set; }
         public virtual DbSet<ClientMaster> ClientMasters { get; set; }
         public virtual DbSet<COAMaster> COAMasters { get; set; }
-        public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CountryMaster> CountryMasters { get; set; }
         public virtual DbSet<CurrencyMaster> CurrencyMasters { get; set; }
         public virtual DbSet<DebitNote> DebitNotes { get; set; }
@@ -38,6 +37,8 @@ namespace InVanWebApp.DAL
         public virtual DbSet<DesignationMaster> DesignationMasters { get; set; }
         public virtual DbSet<EmployeeMaster> EmployeeMasters { get; set; }
         public virtual DbSet<FinishGoodSery> FinishGoodSeries { get; set; }
+        public virtual DbSet<GRN_Master> GRN_Master { get; set; }
+        public virtual DbSet<GRNDetail> GRNDetails { get; set; }
         public virtual DbSet<GSTMaster> GSTMasters { get; set; }
         public virtual DbSet<InquiryMaster> InquiryMasters { get; set; }
         public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
@@ -46,9 +47,12 @@ namespace InVanWebApp.DAL
         public virtual DbSet<IssueNoteDetail> IssueNoteDetails { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<ItemCategoryMaster> ItemCategoryMasters { get; set; }
-        public virtual DbSet<ItemMaster> ItemMasters { get; set; }
+        public virtual DbSet<ItemCostMaster> ItemCostMasters { get; set; }
+        public virtual DbSet<ItemTaxMaster> ItemTaxMasters { get; set; }
+        public virtual DbSet<ItemType> ItemTypes { get; set; }
         public virtual DbSet<LabMaster> LabMasters { get; set; }
         public virtual DbSet<LocationMaster> LocationMasters { get; set; }
+        public virtual DbSet<LocationWiseStock> LocationWiseStocks { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<MachineMaster> MachineMasters { get; set; }
         public virtual DbSet<OrganisationGroup> OrganisationGroups { get; set; }
@@ -71,20 +75,17 @@ namespace InVanWebApp.DAL
         public virtual DbSet<SOItemSchedule> SOItemSchedules { get; set; }
         public virtual DbSet<StateMaster> StateMasters { get; set; }
         public virtual DbSet<Status> Status { get; set; }
-        public virtual DbSet<StockAdjustment_M> StockAdjustment_M { get; set; }
-        public virtual DbSet<StockAdjustment_T> StockAdjustment_T { get; set; }
+        public virtual DbSet<StockAdjustment> StockAdjustments { get; set; }
         public virtual DbSet<StockMaster> StockMasters { get; set; }
-        public virtual DbSet<StockTransfer_M> StockTransfer_M { get; set; }
-        public virtual DbSet<StockTransfer_T> StockTransfer_T { get; set; }
-        public virtual DbSet<StorageItemMapping> StorageItemMappings { get; set; }
-        public virtual DbSet<StorageLocationMaster> StorageLocationMasters { get; set; }
+        public virtual DbSet<StockTransfer> StockTransfers { get; set; }
         public virtual DbSet<SupplierMaster> SupplierMasters { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<TaxMaster> TaxMasters { get; set; }
         public virtual DbSet<TermsAndConditionMaster> TermsAndConditionMasters { get; set; }
         public virtual DbSet<UnitMaster> UnitMasters { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
         public virtual DbSet<WorkOrderDetail> WorkOrderDetails { get; set; }
         public virtual DbSet<YearMaster> YearMasters { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<User> Users { get; set; }
     }
 }

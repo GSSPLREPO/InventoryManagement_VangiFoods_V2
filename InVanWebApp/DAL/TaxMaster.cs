@@ -12,28 +12,24 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class UnitMaster
+    public partial class TaxMaster
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UnitMaster()
+        public TaxMaster()
         {
-            this.RequestForQuotations = new HashSet<RequestForQuotation>();
-            this.StockMasters = new HashSet<StockMaster>();
+            this.ItemTaxMasters = new HashSet<ItemTaxMaster>();
         }
     
-        public int UnitID { get; set; }
-        public string UnitName { get; set; }
-        public string UnitCode { get; set; }
+        public int Id { get; set; }
+        public string TaxName { get; set; }
         public string Description { get; set; }
-        public Nullable<int> IsDeleted { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockMaster> StockMasters { get; set; }
+        public virtual ICollection<ItemTaxMaster> ItemTaxMasters { get; set; }
     }
 }

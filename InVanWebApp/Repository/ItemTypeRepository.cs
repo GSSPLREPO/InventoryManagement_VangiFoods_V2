@@ -5,54 +5,37 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using InVanWebApp.DAL;
+using InVanWebApp_BO;
+//using InVanWebApp.DAL;
 using InVanWebApp.Repository;
 
 namespace InVanWebApp.Repository
 {
-    public class ItemRepository : IItemRepository
+    public class ItemTypeRepository : IItemTypeRepository
     {
-        private readonly InVanDBContext _context;
+        //private readonly InVanDBContext _context;
         private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-
-        #region Initializing constructor.
-        /// <summary>
-        /// Farheen: Constructor without parameter
-        /// </summary>
-        public ItemRepository()
-        {
-            //Define the DbContext object.
-            _context = new InVanDBContext();
-        }
-
-        //Constructor with parameter for initializing the DbContext object.
-        public ItemRepository(InVanDBContext context)
-        {
-            _context = context;
-        }
-
-        #endregion
 
         #region  Bind grid
         /// <summary>
         /// Farheen: This function is for fecthing list of item master's.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<ItemMaster> GetAll()
+        public IEnumerable<ItemTypeBO> GetAll()
         {
-            List<ItemMaster> itemMastersList = new List<ItemMaster>();
+            List<ItemTypeBO> itemMastersList = new List<ItemTypeBO>();
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Item_GetAll", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_ItemType_GetAll", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var ItemMasters = new ItemMaster()
+                    var ItemMasters = new ItemTypeBO()
                     {
-                        ItemID = Convert.ToInt32(reader["ItemID"]),
-                        ItemName = reader["ItemName"].ToString(),
+                        ID = Convert.ToInt32(reader["SrNo"]),
+                        ItemType = reader["ItemName"].ToString(),
                         Description = reader["Description"].ToString()
                     };
                     itemMastersList.Add(ItemMasters);
@@ -71,22 +54,22 @@ namespace InVanWebApp.Repository
         /// <param name="ItemId"></param>
         /// <returns></returns>
 
-        public ItemMaster GetById(int ItemId)
+        public ItemTypeBO GetById(int ItemTypeId)
         {
-            var itemMaster = new ItemMaster();
+            var itemMaster = new ItemTypeBO();
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Item_GetByID", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_ItemType_GetByID", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ItemID", ItemId);
+                cmd.Parameters.AddWithValue("@ItemTypeID", ItemTypeId);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    itemMaster = new ItemMaster()
+                    itemMaster = new ItemTypeBO()
                     {
-                        ItemID = Convert.ToInt32(reader["ItemID"]),
-                        ItemName = reader["ItemName"].ToString(),
+                        ID = Convert.ToInt32(reader["ID"]),
+                        ItemType = reader["ItemType"].ToString(),
                         Description = reader["Description"].ToString()
                     };
                 }
@@ -100,14 +83,14 @@ namespace InVanWebApp.Repository
         /// Farheen: Update record
         /// </summary>
         /// <param name="itemMaster"></param>
-        public void Udate(ItemMaster itemMaster)
+        public void Udate(ItemTypeBO itemMaster)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Item_Update", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_ItemType_Update", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ItemID", itemMaster.ItemID);
-                cmd.Parameters.AddWithValue("@ItemName", itemMaster.ItemName);
+                cmd.Parameters.AddWithValue("@ItemTypeId", itemMaster.ID);
+                cmd.Parameters.AddWithValue("@ItemType", itemMaster.ItemType);
                 cmd.Parameters.AddWithValue("@Description", itemMaster.Description);
                 cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
                 cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -125,13 +108,13 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="itemMaster"></param>
-        public void Insert(ItemMaster itemMaster)
+        public void Insert(ItemTypeBO itemMaster)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Item_Insert", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_ItemType_Insert", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ItemName", itemMaster.ItemName);
+                cmd.Parameters.AddWithValue("@ItemType", itemMaster.ItemType);
                 cmd.Parameters.AddWithValue("@Description", itemMaster.Description);
                 cmd.Parameters.AddWithValue("@CreatedBy", 1);
                 cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -148,46 +131,20 @@ namespace InVanWebApp.Repository
         /// <summary>
         /// Delete record by ID
         /// </summary>
-        /// <param name="ItemID"></param>
-        public void Delete(int ItemID)
+        /// <param name="ItemTypeID"></param>
+        public void Delete(int ItemTypeID)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Item_Delete", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_ItemType_Delete", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ItemID", ItemID);
+                cmd.Parameters.AddWithValue("@ItemTypeID", ItemTypeID);
                 cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
                 cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                 con.Open();
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
-        }
-        #endregion
-
-        #region Dispose function
-        private bool disposed = false;
-
-        /// <summary>
-        /// For releasing unmanageable objects and scarce resources,
-        /// like deallocating the controller instance.   
-        ///And it get called when the view is rendered.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                    _context.Dispose();
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
         #endregion
     }

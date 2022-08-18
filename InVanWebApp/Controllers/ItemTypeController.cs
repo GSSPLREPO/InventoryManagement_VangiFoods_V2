@@ -3,30 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InVanWebApp.DAL;
+//using InVanWebApp.DAL;
+using InVanWebApp_BO;
 using InVanWebApp.Repository;
 
 namespace InVanWebApp.Controllers
 {
-    public class ItemController : Controller
+    public class ItemTypeController : Controller
     {
-        private IItemRepository _itemRepository;
+        private IItemTypeRepository _itemTypeRepository;
 
         #region Initializing constructor
         /// <summary>
         /// Farheen: Constructor without parameter
         /// </summary>
-        public ItemController()
+        public ItemTypeController()
         {
-            _itemRepository = new ItemRepository(new InVanDBContext());
+            _itemTypeRepository = new ItemTypeRepository();
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
         /// </summary>
         /// <param name="unitRepository"></param>
-        public ItemController(IItemRepository itemRepository)
+        public ItemTypeController(IItemTypeRepository itemTypeRepository)
         {
-            _itemRepository = itemRepository;
+            _itemTypeRepository = itemTypeRepository;
         }
         #endregion
 
@@ -38,18 +39,18 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _itemRepository.GetAll();
+            var model = _itemTypeRepository.GetAll();
             return View(model);
         }
         #endregion
 
         #region Insert function
         /// <summary>
-        /// Farheen: Rendered the user to the add item master form
+        /// Farheen: Rendered the user to the add item type master form
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddItem()
+        public ActionResult AddItemType()
         {
             return View();
         }
@@ -60,13 +61,13 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddItem(ItemMaster model)
+        public ActionResult AddItemType(ItemTypeBO model)
         {
             if (ModelState.IsValid)
             {
-                _itemRepository.Insert(model);
+                _itemTypeRepository.Insert(model);
                 //_unitRepository.Save();
-                return RedirectToAction("Index", "Item");
+                return RedirectToAction("Index", "ItemType");
             }
             return View();
         }
@@ -76,12 +77,12 @@ namespace InVanWebApp.Controllers
         /// <summary>
         /// Farheen: Rendered the user to the edit page with details of a perticular record.
         /// </summary>
-        /// <param name="ItemID"></param>
+        /// <param name="ID"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditItem(int ItemID)
+        public ActionResult EditItemType(int ID)
         {
-            ItemMaster model = _itemRepository.GetById(ItemID);
+            ItemTypeBO model = _itemTypeRepository.GetById(ID);
             return View(model);
         }
 
@@ -91,12 +92,12 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditItem(ItemMaster model)
+        public ActionResult EditItemType(ItemTypeBO model)
         {
             if (ModelState.IsValid)
             {
-                _itemRepository.Udate(model);
-                return RedirectToAction("Index", "Item");
+                _itemTypeRepository.Udate(model);
+                return RedirectToAction("Index", "ItemType");
             }
             else
                 return View(model);
@@ -109,22 +110,22 @@ namespace InVanWebApp.Controllers
         /// <summary>
         /// Delete the perticular record
         /// </summary>
-        /// <param name="ItemId">record Id</param>
+        /// <param name="ID">record Id</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult DeleteItem(int ItemId)
+        public ActionResult DeleteItem(int ID)
         {
-            ItemMaster model = _itemRepository.GetById(ItemId);
+            ItemTypeBO model = _itemTypeRepository.GetById(ID);
             return View(model);
         }
 
 
         [HttpPost]
-        public ActionResult Delete(int ItemId)
+        public ActionResult Delete(int ID)
         {
-            _itemRepository.Delete(ItemId);
+            _itemTypeRepository.Delete(ID);
             //_unitRepository.Save();
-            return RedirectToAction("Index", "Item");
+            return RedirectToAction("Index", "ItemType");
         }
         #endregion
 

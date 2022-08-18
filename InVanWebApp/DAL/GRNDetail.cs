@@ -12,19 +12,20 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class StorageItemMapping
+    public partial class GRNDetail
     {
-        public int StorageItemMappingID { get; set; }
-        public Nullable<int> StorageLocationID { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> GRN_ID { get; set; }
         public Nullable<int> ItemID { get; set; }
-        public Nullable<double> Quantity { get; set; }
-        public Nullable<int> UnitID { get; set; }
-        public string RowNumber { get; set; }
-        public string Per { get; set; }
-        public Nullable<int> IsDeleted { get; set; }
+        public Nullable<double> OrderQuantity { get; set; }
+        public Nullable<double> ReceivedQuantity { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+    
+        public virtual GRN_Master GRN_Master { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

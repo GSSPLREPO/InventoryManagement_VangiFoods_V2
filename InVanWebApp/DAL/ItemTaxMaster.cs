@@ -12,18 +12,21 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class StockTransfer_T
+    public partial class ItemTaxMaster
     {
-        public int StockTransferTId { get; set; }
-        public Nullable<int> StockTransferMId { get; set; }
+        public int Id { get; set; }
         public Nullable<int> ItemId { get; set; }
-        public Nullable<double> TransferQuantity { get; set; }
-        public Nullable<double> RequiredQuantity { get; set; }
-        public string Remarks { get; set; }
+        public Nullable<int> TaxId { get; set; }
+        public string ItemTaxValue { get; set; }
+        public Nullable<System.DateTime> EffectiveDate { get; set; }
+        public string Remark { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<int> LastModifiedby { get; set; }
+    
+        public virtual Item Item { get; set; }
+        public virtual TaxMaster TaxMaster { get; set; }
     }
 }

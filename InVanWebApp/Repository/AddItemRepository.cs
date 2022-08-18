@@ -51,7 +51,7 @@ namespace InVanWebApp.Repository
                 {
                     var item = new Item()
                     {
-                        Item_ID = Convert.ToInt32(reader["Item_ID"]),
+                        ID = Convert.ToInt32(reader["Item_ID"]),
                         ItemCategoryName = reader["ItemCategoryName"].ToString(),
                         Item_Code = reader["Item_Code"].ToString(),
                         Item_Name = reader["Item_Name"].ToString(),

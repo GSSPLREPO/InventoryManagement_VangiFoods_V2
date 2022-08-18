@@ -1,4 +1,4 @@
-﻿@model IEnumerable<InVanWebApp.DAL.ItemCategoryMaster>
+﻿@model IEnumerable<InVanWebApp_BO.ItemCategoryMasterBO>
 @{
     ViewBag.Title = "Item Category Master";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -34,11 +34,11 @@
                                     <tr>
                                         <th>
                                             @*@Html.DisplayNameFor(model => model.UnitName)*@
-                                            @Html.DisplayName("ItemTypeName")
+                                            @Html.DisplayName("Item Type Name")
                                         </th>
                                         <th>
                                             @*@Html.DisplayNameFor(model => model.Description)*@
-                                            @Html.DisplayName("ItemCategoryName")
+                                            @Html.DisplayName("Item Category Name")
                                         </th>
                                         <th>
                                             @*@Html.DisplayNameFor(model => model.Description)*@

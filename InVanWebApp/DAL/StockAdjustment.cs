@@ -12,18 +12,18 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class StockAdjustment_M
+    public partial class StockAdjustment
     {
-        public int StockAdjustmentMId { get; set; }
-        public string AdjustmentVoucherNo { get; set; }
-        public Nullable<System.DateTime> AdjustmentVoucherDate { get; set; }
-        public Nullable<System.DateTime> AdjustmentVoucherWEF { get; set; }
-        public Nullable<int> CheckedBy { get; set; }
-        public Nullable<int> ApprovedBy { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> ItemId { get; set; }
+        public Nullable<int> QuantityAdjust { get; set; }
+        public string Reason { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<int> LastModifiedby { get; set; }
+        public Nullable<System.DateTime> LastModificationDate { get; set; }
+        public Nullable<int> LastModificationBy { get; set; }
+    
+        public virtual Item Item { get; set; }
     }
 }

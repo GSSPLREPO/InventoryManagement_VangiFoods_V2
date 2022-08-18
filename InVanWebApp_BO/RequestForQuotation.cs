@@ -31,7 +31,7 @@ namespace InVanWebApp_BO
 
         public virtual Branch Branch { get; set; }
         public virtual Company Company { get; set; }
-        public virtual Item Item { get; set; }
+        public virtual ItemBO Item { get; set; }
         public virtual LocationMaster LocationMaster { get; set; }
         public virtual RequestForQuotation RequestForQuotation1 { get; set; }
         public virtual RequestForQuotation RequestForQuotation2 { get; set; }

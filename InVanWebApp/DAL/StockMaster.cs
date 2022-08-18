@@ -14,18 +14,20 @@ namespace InVanWebApp.DAL
     
     public partial class StockMaster
     {
-        public int StockID { get; set; }
-        public int StorageItemMappingID { get; set; }
-        public int ItemCategoryID { get; set; }
+        public int ID { get; set; }
         public int ItemID { get; set; }
-        public string ItemName { get; set; }
         public Nullable<double> StockQuantity { get; set; }
-        public Nullable<double> StockMinLeval { get; set; }
         public Nullable<int> UnitID { get; set; }
-        public Nullable<int> IsDeleted { get; set; }
+        public Nullable<int> InwardNoteId { get; set; }
+        public string Remarks { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+    
+        public virtual InwardNote InwardNote { get; set; }
+        public virtual Item Item { get; set; }
+        public virtual UnitMaster UnitMaster { get; set; }
     }
 }

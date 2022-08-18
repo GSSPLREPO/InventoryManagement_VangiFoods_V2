@@ -12,18 +12,27 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class StorageLocationMaster
+    public partial class LocationWiseStock
     {
-        public int StorageLocationID { get; set; }
-        public int LocationID { get; set; }
-        public string StorageLocationName { get; set; }
-        public string StorageDescription { get; set; }
-        public Nullable<int> IsDeleted { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public LocationWiseStock()
+        {
+            this.InwardNotes = new HashSet<InwardNote>();
+        }
+    
+        public int ID { get; set; }
+        public Nullable<int> LocationID { get; set; }
+        public Nullable<double> Quantity { get; set; }
+        public Nullable<int> ItemCostID { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InwardNote> InwardNotes { get; set; }
+        public virtual ItemCostMaster ItemCostMaster { get; set; }
         public virtual LocationMaster LocationMaster { get; set; }
     }
 }

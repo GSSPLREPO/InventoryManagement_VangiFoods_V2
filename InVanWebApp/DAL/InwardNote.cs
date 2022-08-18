@@ -14,18 +14,33 @@ namespace InVanWebApp.DAL
     
     public partial class InwardNote
     {
-        public int InwardNoteID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public InwardNote()
+        {
+            this.DebitNotes = new HashSet<DebitNote>();
+            this.StockMasters = new HashSet<StockMaster>();
+        }
+    
+        public int ID { get; set; }
         public string InwardNumber { get; set; }
         public Nullable<System.DateTime> InwardDate { get; set; }
-        public Nullable<int> PurchaseOrderId { get; set; }
-        public string PONumber { get; set; }
-        public Nullable<System.DateTime> PODate { get; set; }
-        public Nullable<int> LocationID { get; set; }
-        public string BillingAddress { get; set; }
-        public string ShippingAddress { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<double> InwardQuantity { get; set; }
+        public Nullable<double> RejectedQuantity { get; set; }
+        public Nullable<int> LocationStockID { get; set; }
+        public Nullable<int> ItemId { get; set; }
+        public string Signature { get; set; }
+        public string Remarks { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<int> LastModifiedby { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DebitNote> DebitNotes { get; set; }
+        public virtual Item Item { get; set; }
+        public virtual LocationWiseStock LocationWiseStock { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockMaster> StockMasters { get; set; }
     }
 }

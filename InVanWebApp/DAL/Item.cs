@@ -17,37 +17,53 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Item()
         {
+            this.DebitNoteDetails = new HashSet<DebitNoteDetail>();
+            this.GRNDetails = new HashSet<GRNDetail>();
+            this.InwardNotes = new HashSet<InwardNote>();
+            this.ItemCostMasters = new HashSet<ItemCostMaster>();
+            this.ItemTaxMasters = new HashSet<ItemTaxMaster>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.RequestForQuotations = new HashSet<RequestForQuotation>();
+            this.StockAdjustments = new HashSet<StockAdjustment>();
+            this.StockMasters = new HashSet<StockMaster>();
+            this.StockTransfers = new HashSet<StockTransfer>();
         }
     
-        public int Item_ID { get; set; }
+        public int ID { get; set; }
         public Nullable<int> ItemCategory_ID { get; set; }
         public Nullable<int> ItemTypeID { get; set; }
         public string Item_Code { get; set; }
         public string Item_Name { get; set; }
-        public Nullable<int> UnitOfMeasurement_ID { get; set; }
         public string HSN_Code { get; set; }
-        public Nullable<int> Current_Stock { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public string Tax { get; set; }
+        public Nullable<double> MinStock { get; set; }
         public string Description { get; set; }
-        public Nullable<int> IsDeleted { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DebitNoteDetail> DebitNoteDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GRNDetail> GRNDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InwardNote> InwardNotes { get; set; }
         public virtual ItemCategoryMaster ItemCategoryMaster { get; set; }
-        public virtual ItemMaster ItemMaster { get; set; }
-        public virtual UnitMaster UnitMaster { get; set; }
+        public virtual ItemType ItemType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemCostMaster> ItemCostMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemTaxMaster> ItemTaxMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
-
-        //Added below fields for dropdowns
-        public string ItemCategoryName { get; set; }
-        public string UnitName { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockAdjustment> StockAdjustments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockMaster> StockMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockTransfer> StockTransfers { get; set; }
     }
 }

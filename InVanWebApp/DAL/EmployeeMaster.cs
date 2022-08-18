@@ -22,9 +22,6 @@ namespace InVanWebApp.DAL
     
         public int EmployeeID { get; set; }
         public string EmployeeName { get; set; }
-        public Nullable<int> OrganisationGroupId { get; set; }
-        public Nullable<int> OrganisationId { get; set; }
-        public Nullable<int> BranchID { get; set; }
         public Nullable<int> DepartmentID { get; set; }
         public Nullable<int> DesignationID { get; set; }
         public string EmployeeMobileNo { get; set; }
@@ -42,15 +39,11 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public Nullable<int> RoleId { get; set; }
     
-        public virtual Department Department { get; set; }
-        public virtual DesignationMaster DesignationMaster { get; set; }
         public virtual CityMaster CityMaster { get; set; }
         public virtual CountryMaster CountryMaster { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual DesignationMaster DesignationMaster { get; set; }
         public virtual StateMaster StateMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }

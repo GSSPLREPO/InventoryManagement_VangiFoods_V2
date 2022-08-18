@@ -17,7 +17,6 @@ namespace InVanWebApp.DAL
         public int RoleRightId { get; set; }
         public Nullable<int> RoleId { get; set; }
         public Nullable<int> ScreenId { get; set; }
-        public Nullable<int> UserId { get; set; }
         public Nullable<int> LastModifiedUserId { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

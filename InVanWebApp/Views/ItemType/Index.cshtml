@@ -1,6 +1,7 @@
-﻿@model IEnumerable<InVanWebApp.DAL.ItemMaster>
+﻿@*@model IEnumerable<InVanWebApp.DAL.ItemMaster>*@
+@model IEnumerable<InVanWebApp_BO.ItemTypeBO>
 @{
-    ViewBag.Title = "Item Master";
+    ViewBag.Title = "Item Type";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 
 }
@@ -29,7 +30,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="card-title">@Html.ActionLink("Add Item Type", "AddItem")</h1>
+                            <h1 class="card-title">@Html.ActionLink("Add Item Type", "AddItemType")</h1>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered">
                                     <tr>
@@ -50,14 +51,14 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.ItemName)
+                                                @Html.DisplayFor(modelItem => item.ItemType)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Description)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "EditItem", new { ItemID = item.ItemID }) |
-                                                @Html.ActionLink("Delete", "DeleteItem", new { ItemID = item.ItemID })
+                                                @Html.ActionLink("Edit", "EditItemType", new { ID = item.ID }) |
+                                                @Html.ActionLink("Delete", "DeleteItemType", new { ID = item.ID })
                                             </td>
                                         </tr>
                                     }

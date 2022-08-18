@@ -1,6 +1,6 @@
-﻿@model InVanWebApp.DAL.ItemMaster
+﻿@model InVanWebApp_BO.ItemTypeBO;
 @{
-    ViewBag.Title = "AddItem";
+    ViewBag.Title = "Edit Item Type";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
@@ -10,14 +10,15 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Add Item Type</h4>
+            <h4 class="card-title">Edit Item Type</h4>
             <hr />
             @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ID)
 
             <div class="form-group">
                 @Html.Label("Item Type")
-                @Html.TextBoxFor(model => model.ItemName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "error mt-2 text-danger" })
+                @Html.TextBoxFor(model => model.ItemType, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ItemType, "", new { @class = "error mt-2 text-danger" })
             </div>
 
             <div class="form-group">
@@ -26,7 +27,7 @@
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
             </div>
 
-            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <button type="submit" class="btn btn-primary mr-2">Update</button>
             @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
 
         </div>

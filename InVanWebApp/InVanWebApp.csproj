@@ -132,7 +132,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemCategoryController.cs" />
-    <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\ItemTypeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -148,9 +148,6 @@
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\COAMaster.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\Company.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\CountryMaster.cs">
@@ -175,6 +172,12 @@
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\FinishGoodSery.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GRNDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\GRN_Master.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GSTMaster.cs">
@@ -216,13 +219,22 @@
     <Compile Include="DAL\ItemCategoryMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\ItemMaster.cs">
+    <Compile Include="DAL\ItemCostMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ItemTaxMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ItemType.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\LabMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\LocationMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\LocationWiseStock.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Log.cs">
@@ -291,31 +303,22 @@
     <Compile Include="DAL\Status.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\StockAdjustment_M.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\StockAdjustment_T.cs">
+    <Compile Include="DAL\StockAdjustment.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\StockMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\StockTransfer_M.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\StockTransfer_T.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\StorageItemMapping.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\StorageLocationMaster.cs">
+    <Compile Include="DAL\StockTransfer.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\SupplierMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\sysdiagram.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\TaxMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\TermsAndConditionMaster.cs">
@@ -343,11 +346,11 @@
     <Compile Include="Repository\AddItemRepository.cs" />
     <Compile Include="Repository\Interface\IAddItemRepository.cs" />
     <Compile Include="Repository\Interface\IItemCategoryRepository.cs" />
-    <Compile Include="Repository\Interface\IItemRepository.cs" />
+    <Compile Include="Repository\Interface\IItemTypeRepository.cs" />
     <Compile Include="Repository\Interface\ILocationRepository.cs" />
     <Compile Include="Repository\Interface\IRolesRepository.cs" />
     <Compile Include="Repository\ItemCategoryRepository.cs" />
-    <Compile Include="Repository\ItemRepository.cs" />
+    <Compile Include="Repository\ItemTypeRepository.cs" />
     <Compile Include="Repository\Interface\ITransactionsPOandOCRepository.cs" />
     <Compile Include="Repository\Interface\IUnitRepository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
@@ -1191,10 +1194,10 @@
     <Content Include="Views\Role\AddRole.cshtml" />
     <Content Include="Views\Role\EditRole.cshtml" />
     <Content Include="Views\Role\DeleteRole.cshtml" />
-    <Content Include="Views\Item\Index.cshtml" />
-    <Content Include="Views\Item\AddItem.cshtml" />
-    <Content Include="Views\Item\EditItem.cshtml" />
-    <Content Include="Views\Item\DeleteItem.cshtml" />
+    <Content Include="Views\ItemType\Index.cshtml" />
+    <Content Include="Views\ItemType\AddItemType.cshtml" />
+    <Content Include="Views\ItemType\EditItemType.cshtml" />
+    <Content Include="Views\ItemType\DeleteItemType.cshtml" />
     <Content Include="Views\ItemCategory\Index.cshtml" />
     <Content Include="Views\ItemCategory\AddItemCategory.cshtml" />
     <Content Include="Views\ItemCategory\EditItemCategory.cshtml" />
@@ -1235,6 +1238,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InVanWebApp_BO\InVanWebApp_BO.csproj">
+      <Project>{87bb3b0a-7f55-4780-b403-82d9c0e1a6ff}</Project>
+      <Name>InVanWebApp_BO</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

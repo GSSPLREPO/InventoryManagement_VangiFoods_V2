@@ -14,21 +14,20 @@ namespace InVanWebApp.DAL
     
     public partial class DebitNoteDetail
     {
-        public int DebitNoteDetailsId { get; set; }
+        public int ID { get; set; }
         public Nullable<int> DebitNoteId { get; set; }
         public Nullable<int> ItemId { get; set; }
-        public Nullable<int> UnitId { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public Nullable<decimal> Rate { get; set; }
-        public Nullable<decimal> Discount { get; set; }
-        public Nullable<decimal> SGST { get; set; }
-        public Nullable<decimal> CGST { get; set; }
-        public Nullable<decimal> IGST { get; set; }
-        public Nullable<decimal> Value { get; set; }
+        public Nullable<double> QuantityDebited { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<bool> Status { get; set; }
+        public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
+    
+        public virtual DebitNote DebitNote { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

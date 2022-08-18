@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InVanWebApp.DAL;
+//using InVanWebApp_BO;
 
 namespace InVanWebApp.Repository
 {
@@ -28,8 +29,8 @@ namespace InVanWebApp.Repository
         void Delete(int PurchaseOrderID);
 
         //Function for fetching list of company.
-        IEnumerable<Company> GetCompanyNameForDropDown();
-        IEnumerable<Company> GetCompanyDetailsById(int Id);
+        IEnumerable<InVanWebApp_BO.Company> GetCompanyNameForDropDown();
+        IEnumerable<InVanWebApp_BO.Company> GetCompanyDetailsById(int Id);
         
         //For fetching the document no
         string GetDocumentNo(int DocumentType); //Logic is in SP: Document type=1 for Order Confirmation 

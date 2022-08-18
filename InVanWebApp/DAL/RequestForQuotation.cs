@@ -36,7 +36,6 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedByDate { get; set; }
     
         public virtual Branch Branch { get; set; }
-        public virtual Company Company { get; set; }
         public virtual Item Item { get; set; }
         public virtual LocationMaster LocationMaster { get; set; }
         public virtual RequestForQuotation RequestForQuotation1 { get; set; }

@@ -206,9 +206,9 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region  Bind drop-down of Company
-        public IEnumerable<Company> GetCompanyNameForDropDown()
+        public IEnumerable<InVanWebApp_BO.Company> GetCompanyNameForDropDown()
         {
-            List<Company> CompanyList = new List<Company>();
+            List<InVanWebApp_BO.Company> CompanyList = new List<InVanWebApp_BO.Company>();
             using (SqlConnection con = new SqlConnection(conString))
             {
                 SqlCommand cmd = new SqlCommand("usp_tbl_Company_GetAll", con);
@@ -217,7 +217,7 @@ namespace InVanWebApp.Repository
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var company = new Company()
+                    var company = new InVanWebApp_BO.Company()
                     {
                         Company_ID = Convert.ToInt32(reader["Company_ID"]),
                         Name = reader["Name"].ToString()
@@ -231,9 +231,9 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Get company details by it's ID
-        public IEnumerable<Company> GetCompanyDetailsById(int Id)
+        public IEnumerable<InVanWebApp_BO.Company> GetCompanyDetailsById(int Id)
         {
-            List<Company> CompanyList = new List<Company>();
+            List<InVanWebApp_BO.Company> CompanyList = new List<InVanWebApp_BO.Company>();
             using (SqlConnection con = new SqlConnection(conString))
             {
                 SqlCommand cmd = new SqlCommand("usp_tbl_Company_GetAll", con);
@@ -243,7 +243,7 @@ namespace InVanWebApp.Repository
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var company = new Company()
+                    var company = new InVanWebApp_BO.Company()
                     {
                         Company_ID = Convert.ToInt32(reader["Company_ID"]),
                         Name = reader["Name"].ToString(),
@@ -297,7 +297,7 @@ namespace InVanWebApp.Repository
                 {
                     var item = new Item()
                     {
-                        Item_ID = Convert.ToInt32(reader["Item_ID"]),
+                        ID = Convert.ToInt32(reader["Item_ID"]),
                         Item_Code = reader["Item_Code"].ToString()
                     };
                     ItemList.Add(item);
@@ -325,9 +325,9 @@ namespace InVanWebApp.Repository
                     ItemDetails = new Item()
                     {
                         Item_Name = reader["Item_Name"].ToString(),
-                        UnitName = reader["UnitID"].ToString(),
-                        Price = Convert.ToDecimal(reader["Price"]),
-                        Tax = reader["Tax"].ToString()
+                        //UnitName = reader["UnitID"].ToString(),
+                        //Price = Convert.ToDecimal(reader["Price"]),
+                        //Tax = reader["Tax"].ToString()
                     };
                 }
                 con.Close();

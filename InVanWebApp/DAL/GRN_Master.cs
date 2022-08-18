@@ -12,24 +12,21 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class Company
+    public partial class GRN_Master
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Company()
+        public GRN_Master()
         {
-            this.PurchaseOrders = new HashSet<PurchaseOrder>();
-            this.RequestForQuotations = new HashSet<RequestForQuotation>();
+            this.DebitNotes = new HashSet<DebitNote>();
+            this.GRNDetails = new HashSet<GRNDetail>();
         }
     
-        public int Company_ID { get; set; }
-        public string Name { get; set; }
-        public Nullable<decimal> ContactNo { get; set; }
-        public string EmailId { get; set; }
-        public string Address { get; set; }
-        public Nullable<int> CountryID { get; set; }
-        public Nullable<int> StateID { get; set; }
-        public Nullable<int> CityID { get; set; }
-        public Nullable<int> Pincode { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> PO_ID { get; set; }
+        public string PONumber { get; set; }
+        public string GRNCode { get; set; }
+        public Nullable<System.DateTime> GRNDate { get; set; }
+        public string Remark { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -37,13 +34,9 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual ICollection<DebitNote> DebitNotes { get; set; }
+        public virtual PurchaseOrder PurchaseOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
-
-        //Added: Below fields are for supplier and buyer address in OC form.
-        public string CityName { get; set; }
-        public string StateName { get; set; }
-        public string CountryName { get; set; }
+        public virtual ICollection<GRNDetail> GRNDetails { get; set; }
     }
 }
