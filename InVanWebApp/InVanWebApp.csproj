@@ -128,7 +128,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AddItemController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemCategoryController.cs" />
@@ -136,6 +136,7 @@
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\TaxController.cs" />
     <Compile Include="Controllers\TransactionsPOandOCController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="DAL\Branch.cs">
@@ -343,8 +344,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\AddItemRepository.cs" />
-    <Compile Include="Repository\Interface\IAddItemRepository.cs" />
+    <Compile Include="Repository\Interface\ITaxRepository.cs" />
+    <Compile Include="Repository\ItemRepository.cs" />
+    <Compile Include="Repository\Interface\IItemRepository.cs" />
     <Compile Include="Repository\Interface\IItemCategoryRepository.cs" />
     <Compile Include="Repository\Interface\IItemTypeRepository.cs" />
     <Compile Include="Repository\Interface\ILocationRepository.cs" />
@@ -355,6 +357,7 @@
     <Compile Include="Repository\Interface\IUnitRepository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\TaxRepository.cs" />
     <Compile Include="Repository\TransactionsPOandOCRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
   </ItemGroup>
@@ -1202,10 +1205,10 @@
     <Content Include="Views\ItemCategory\AddItemCategory.cshtml" />
     <Content Include="Views\ItemCategory\EditItemCategory.cshtml" />
     <Content Include="Views\ItemCategory\DeleteItemCategory.cshtml" />
-    <Content Include="Views\AddItem\Index.cshtml" />
-    <Content Include="Views\AddItem\AddItems.cshtml" />
-    <Content Include="Views\AddItem\EditItem.cshtml" />
-    <Content Include="Views\AddItem\DeleteItem.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\AddItems.cshtml" />
+    <Content Include="Views\Item\EditItem.cshtml" />
+    <Content Include="Views\Item\DeleteItem.cshtml" />
     <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\Location\AddLocation.cshtml" />
     <Content Include="Views\Location\EditLocation.cshtml" />
@@ -1217,6 +1220,10 @@
     <Content Include="Views\TransactionsPOandOC\DeleteTransactions.cshtml" />
     <Content Include="Views\TransactionsPOandOC\Report_OC_Index.cshtml" />
     <Content Include="Views\Dashboard\SalesOrder.cshtml" />
+    <Content Include="Views\Tax\Index.cshtml" />
+    <Content Include="Views\Tax\AddTax.cshtml" />
+    <Content Include="Views\Tax\EditTax.cshtml" />
+    <Content Include="Views\Tax\DeleteTax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

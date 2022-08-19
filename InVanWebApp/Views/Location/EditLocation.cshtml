@@ -1,4 +1,4 @@
-﻿@model InVanWebApp.DAL.LocationMaster
+﻿@model InVanWebApp_BO.LocationMasterBO
 @{
     ViewBag.Title = "Edit Location";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -11,45 +11,18 @@
             <h4 class="card-title">Edit Location</h4>
             <hr />
             @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.LocationID)
+            @Html.HiddenFor(model => model.ID)
 
             <div class="form-group">
-                @Html.Label("LocationName")
+                @Html.Label("Location Name")
                 @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "error mt-2 text-danger" })
-            </div>
+            </div>          
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Address)
-                @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "error mt-2 text-danger" })
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Country")
-                @Html.DropDownList("Country_ID", (IEnumerable<SelectListItem>)ViewData["Country"], "--Select Country--",
-               new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Country_ID, "", new { @class = "error mt-2 text-danger" })
-            </div>
-
-            <div class="form-group">
-                @Html.Label("State")
-                @Html.DropDownList("State_ID", (IEnumerable<SelectListItem>)ViewData["State"], "--Select State--",
-              new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.State_ID, "", new { @class = "error mt-2 text-danger" })
-            </div>
-
-            <div class="form-group">
-                @Html.Label("City")
-                @Html.DropDownList("City_ID", (IEnumerable<SelectListItem>)ViewData["City"], "--Select City--",
-               new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.City_ID, "", new { @class = "error mt-2 text-danger" })
-            </div>
-
-            <div class="form-group">
-                @Html.Label("Pincode")
-                @Html.TextBoxFor(model => model.Pincode, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "error mt-2 text-danger" })
+                @Html.Label("Remarks")
+                @Html.TextBoxFor(model => model.Remark, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
             </div>
 
             <button type="submit" class="btn btn-primary mr-2">Update</button>
@@ -71,7 +44,8 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+
+@*<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -128,4 +102,4 @@ $(document).ready(function () {
         return false;
     });
 });
-</script>
+</script>*@

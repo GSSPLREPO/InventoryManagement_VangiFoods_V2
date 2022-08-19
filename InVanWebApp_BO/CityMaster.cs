@@ -11,7 +11,7 @@ namespace InVanWebApp_BO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CityMaster()
         {
-            this.LocationMasters = new HashSet<LocationMaster>();
+            this.LocationMasters = new HashSet<LocationMasterBO>();
         }
         public int CityID { get; set; }
         public int StateID { get; set; }
@@ -25,6 +25,6 @@ namespace InVanWebApp_BO
 
         public virtual StateMaster StateMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LocationMaster> LocationMasters { get; set; }
+        public virtual ICollection<LocationMasterBO> LocationMasters { get; set; }
     }
 }

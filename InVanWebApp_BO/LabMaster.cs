@@ -20,6 +20,6 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
         public virtual FinishGoodSery FinishGoodSery { get; set; }
-        public virtual LocationMaster LocationMaster { get; set; }
+        public virtual LocationMasterBO LocationMaster { get; set; }
     }
 }

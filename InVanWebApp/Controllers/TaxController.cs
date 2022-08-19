@@ -3,76 +3,78 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InVanWebApp_BO;
-//using InVanWebApp.DAL;
 using InVanWebApp.Repository;
+using InVanWebApp.Repository.Interface;
+using InVanWebApp_BO;
 
 namespace InVanWebApp.Controllers
 {
-    public class ItemCategoryController : Controller
+    public class TaxController : Controller
     {
-        private IItemCategoryRepository _itemCategoryRepository;
+        private ITaxRepository _taxRepository;
 
         #region Initializing constructor
         /// <summary>
+        /// Date: 19 Aug'22
         /// Farheen: Constructor without parameter
         /// </summary>
-        public ItemCategoryController()
+        public TaxController()
         {
-            _itemCategoryRepository = new ItemCategoryRepository();
+            _taxRepository = new TaxRepository();
         }
+
         /// <summary>
+        /// Date: 19 Aug'22
         /// Farheen: Constructor with parameters for initializing the interface object.
         /// </summary>
-        /// <param name="unitRepository"></param>
-        public ItemCategoryController(IItemCategoryRepository itemCategoryRepository)
+        /// <param name="taxRepository"></param>
+        public TaxController(ITaxRepository taxRepository)
         {
-            _itemCategoryRepository = itemCategoryRepository;
+            _taxRepository = taxRepository;
         }
-        #endregion
 
+        #endregion
 
         #region  Bind grid
         /// <summary>
+        /// Date: 19 Aug'22
         ///Farheen: Get data and rendered it in it's view. 
         /// </summary>
         /// <returns></returns>
-        // GET: Item category
+        // GET: Item 
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _itemCategoryRepository.GetAll();
+            var model = _taxRepository.GetAll();
             return View(model);
         }
         #endregion
 
         #region Insert function
         /// <summary>
-        /// Farheen: Rendered the user to the add item category master form
+        /// Date: 19 Aug'22
+        /// Farheen: Rendered the user to the add location form
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddItemCategory()
+        public ActionResult AddTax()
         {
-            var model = _itemCategoryRepository.GetItemTypeForDropDown();
-            var dd = new SelectList(model.ToList(),"ID","ItemType");
-            ViewData["ItemType"] = dd;
             return View();
         }
 
         /// <summary>
+        /// Date: 19 Aug'22
         /// Farheen: Pass the data to the repository for insertion from it's view.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddItemCategory(ItemCategoryMasterBO model)
+        public ActionResult AddTax(TaxBO model)
         {
             if (ModelState.IsValid)
             {
-                _itemCategoryRepository.Insert(model);
-                //_unitRepository.Save();
-                return RedirectToAction("Index", "ItemCategory");
+                _taxRepository.Insert(model);
+                return RedirectToAction("Index", "Tax");
             }
             return View();
         }
@@ -80,32 +82,31 @@ namespace InVanWebApp.Controllers
 
         #region  Update function
         /// <summary>
+        /// Date: 19 Aug'22
         ///Farheen: Rendered the user to the edit page with details of a perticular record.
         /// </summary>
-        /// <param name="ItemCategoryID"></param>
+        /// <param name="ID"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditItemCategory(int ItemCategoryID)
+        public ActionResult EditTax(int ID)
         {
-            var ItemType = _itemCategoryRepository.GetItemTypeForDropDown();
-            var dd = new SelectList(ItemType.ToList(), "ID", "ItemType");
-            ViewData["ItemType"] = dd;
-            ItemCategoryMasterBO model = _itemCategoryRepository.GetById(ItemCategoryID);
+            TaxBO model = _taxRepository.GetById(ID);
             return View(model);
         }
 
         /// <summary>
+        /// Date: 19 Aug'22
         /// Farheen:  Pass the data to the repository for updating that record.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditItemCategory(ItemCategoryMasterBO model)
+        public ActionResult EditTax(TaxBO model)
         {
             if (ModelState.IsValid)
             {
-                _itemCategoryRepository.Udate(model);
-                return RedirectToAction("Index", "ItemCategory");
+                _taxRepository.Update(model);
+                return RedirectToAction("Index", "Tax");
             }
             else
                 return View(model);
@@ -115,22 +116,24 @@ namespace InVanWebApp.Controllers
 
         #region Delete function
         /// <summary>
+        /// Date: 19 Aug'22
         /// Farheen: Delete the perticular record
         /// </summary>
-        /// <param name="ItemCategoryID">record Id</param>
+        /// <param name="ID">record Id</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult DeleteItemCategory(int ItemCategoryID)
+        public ActionResult DeleteTax(int ID)
         {
-            ItemCategoryMasterBO model = _itemCategoryRepository.GetById(ItemCategoryID);
+            TaxBO model = _taxRepository.GetById(ID);
             return View(model);
         }
+
         [HttpPost]
-        public ActionResult Delete(int ItemCategoryID)
+        public ActionResult Delete(int ID)
         {
-            _itemCategoryRepository.Delete(ItemCategoryID);
+            _taxRepository.Delete(ID);
             //_unitRepository.Save();
-            return RedirectToAction("Index", "ItemCategory");
+            return RedirectToAction("Index", "Tax");
         }
         #endregion
 

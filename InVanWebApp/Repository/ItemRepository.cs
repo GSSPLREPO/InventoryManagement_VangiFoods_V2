@@ -3,63 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using InVanWebApp.Repository;
-using InVanWebApp.DAL;
+using InVanWebApp_BO;
+//using InVanWebApp.DAL;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 
 namespace InVanWebApp.Repository
 {
-    public class AddItemRepository : IAddItemRepository
+    public class ItemRepository : IItemRepository
     {
-        private readonly InVanDBContext _context;
+        //private readonly InVanDBContext _context;
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-
-        #region Initializing constructor.
-        /// <summary>
-        /// Farheen: Constructor without parameter
-        /// </summary>
-        public AddItemRepository()
-        {
-            //Define the DbContext object.
-            _context = new InVanDBContext();
-        }
-
-        //Constructor with parameter for initializing the DbContext object.
-        public AddItemRepository(InVanDBContext context)
-        {
-            _context = context;
-        }
-
-        #endregion
-
+                
         #region  Bind grid
         /// <summary>
         /// Farheen: This function is for fecthing list of item category master's.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Item> GetAll()
+        public IEnumerable<ItemBO> GetAll()
         {
-            List<Item> ItemList = new List<Item>();
+            List<ItemBO> ItemList = new List<ItemBO>();
             using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_AddItem_GetAll", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_GetAll", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var item = new Item()
+                    var item = new ItemBO()
                     {
-                        ID = Convert.ToInt32(reader["Item_ID"]),
+                        ID = Convert.ToInt32(reader["ID"]),
                         ItemCategoryName = reader["ItemCategoryName"].ToString(),
+                        ItemTypeName = reader["ItemTypeName"].ToString(),
                         Item_Code = reader["Item_Code"].ToString(),
                         Item_Name = reader["Item_Name"].ToString(),
-                        UnitName = reader["UnitName"].ToString(),
                         HSN_Code = reader["HSN_Code"].ToString(),
-                        Current_Stock = Convert.ToInt32(reader["Current_Stock"]),
-                        Price = Convert.ToDecimal(reader["Price"]),
-                        Tax = reader["Tax"].ToString(),
                         Description = reader["Description"].ToString()
                     };
                     ItemList.Add(item);
@@ -77,20 +57,18 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="item"></param>
-        public void Insert(Item item)
+        public void Insert(ItemBO item)
         {
             using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_AddItem_Insert", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_Insert", con);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ItemTypeID", item.ItemTypeID);
                 cmd.Parameters.AddWithValue("@ItemCategory_ID", item.ItemCategory_ID);
                 cmd.Parameters.AddWithValue("@Item_Code", item.Item_Code);
                 cmd.Parameters.AddWithValue("@Item_Name", item.Item_Name);
-                cmd.Parameters.AddWithValue("@UnitOfMeasurement_ID", item.UnitOfMeasurement_ID);
                 cmd.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
-                cmd.Parameters.AddWithValue("@Current_Stock", item.Current_Stock);
-                cmd.Parameters.AddWithValue("@Price", item.Price);
-                cmd.Parameters.AddWithValue("@Tax", item.Tax);
+                cmd.Parameters.AddWithValue("@MinStock", item.MinStock);
                 cmd.Parameters.AddWithValue("@Description", item.Description);
                 cmd.Parameters.AddWithValue("@CreatedBy", 1);
                 cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -106,31 +84,29 @@ namespace InVanWebApp.Repository
         /// <summary>
         /// Farheen: This function is for fetch data for editing by ID
         /// </summary>
-        /// <param name="ItemCategoryId"></param>
+        /// <param name="Item_ID"></param>
         /// <returns></returns>
-        public Item GetById(int Item_ID)
+        public ItemBO GetById(int Item_ID)
         {
-            var item = new Item();
+            var item = new ItemBO();
             using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_AddItem_GetByID", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_GetByID", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Item_ID", Item_ID);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    item = new Item()
+                    item = new ItemBO()
                     {
-                        Item_ID = Convert.ToInt32(reader["Item_ID"]),
+                        ID = Convert.ToInt32(reader["ID"]),
+                        ItemTypeID = Convert.ToInt32(reader["ItemTypeID"]),
                         ItemCategory_ID = Convert.ToInt32(reader["ItemCategory_ID"]),
                         Item_Code = reader["Item_Code"].ToString(),
                         Item_Name = reader["Item_Name"].ToString(),
-                        UnitOfMeasurement_ID = Convert.ToInt32(reader["UnitOfMeasurement_ID"]),
                         HSN_Code = reader["HSN_Code"].ToString(),
-                        Current_Stock = Convert.ToInt32(reader["Current_Stock"]),
-                        Price = Convert.ToDecimal(reader["Price"]),
-                        Tax = reader["Tax"].ToString(),
+                        MinStock = Convert.ToInt32(reader["MinStock"]),
                         Description = reader["Description"].ToString()
                     };
                 }
@@ -144,21 +120,19 @@ namespace InVanWebApp.Repository
         /// Farheen: Update record
         /// </summary>
         /// <param name="item"></param>
-        public void Udate(Item item)
+        public void Udate(ItemBO item)
         {
             using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_AddItem_Update", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_Update", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Item_ID", item.Item_ID);
+                cmd.Parameters.AddWithValue("@Item_ID", item.ID);
+                cmd.Parameters.AddWithValue("@ItemTypeID", item.ItemTypeID);
                 cmd.Parameters.AddWithValue("@ItemCategory_ID", item.ItemCategory_ID);
                 cmd.Parameters.AddWithValue("@Item_Code", item.Item_Code);
                 cmd.Parameters.AddWithValue("@Item_Name", item.Item_Name);
-                cmd.Parameters.AddWithValue("@UnitOfMeasurement_ID", item.UnitOfMeasurement_ID);
                 cmd.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
-                cmd.Parameters.AddWithValue("@Current_Stock", item.Current_Stock);
-                cmd.Parameters.AddWithValue("@Price", item.Price);
-                cmd.Parameters.AddWithValue("@Tax", item.Tax);
+                cmd.Parameters.AddWithValue("@MinStock", item.MinStock);
                 cmd.Parameters.AddWithValue("@Description", item.Description);
                 cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
                 cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -174,7 +148,7 @@ namespace InVanWebApp.Repository
         {
             using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_AddItem_Delete", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_Item_Delete", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Item_ID", Item_ID);
                 cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
@@ -188,9 +162,9 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region  Bind drop-down of Item category
-        public IEnumerable<ItemCategoryMaster> GetItemCategoryForDropDown()
+        public IEnumerable<ItemCategoryMasterBO> GetItemCategoryForDropDown()
         {
-            List<ItemCategoryMaster> ItemCategoryList = new List<ItemCategoryMaster>();
+            List<ItemCategoryMasterBO> ItemCategoryList = new List<ItemCategoryMasterBO>();
             using (SqlConnection con = new SqlConnection(conString))
             {
                 SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_GetAll", con);
@@ -199,7 +173,7 @@ namespace InVanWebApp.Repository
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var ItemCategory = new ItemCategoryMaster()
+                    var ItemCategory = new ItemCategoryMasterBO()
                     {
                         ItemCategoryID = Convert.ToInt32(reader["ItemCategoryID"]),
                         ItemCategoryName = reader["ItemCategoryName"].ToString()
@@ -212,57 +186,30 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-        #region  Bind drop-down of unit list
-        public IEnumerable<UnitMaster> GetUnitForDropdown()
+        #region  Bind drop-down of item type list
+        public IEnumerable<ItemTypeBO> GetItemTypeForDropdown()
         {
-            List<UnitMaster> UnitList = new List<UnitMaster>();
+            List<ItemTypeBO> ItemTypeList = new List<ItemTypeBO>();
             using (SqlConnection con = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Unit_GetAll", con);
+                SqlCommand cmd = new SqlCommand("usp_tbl_ItemType_GetAll", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var unitMaster = new UnitMaster()
+                    var itemType = new ItemTypeBO()
                     {
-                        UnitID = Convert.ToInt32(reader["UnitID"]),
-                        UnitName = reader["UnitName"].ToString()
+                        ID = Convert.ToInt32(reader["ID"]),
+                        ItemType= reader["ItemType"].ToString()
                     };
-                    UnitList.Add(unitMaster);
+                    ItemTypeList.Add(itemType);
                 }
                 con.Close();
-                return UnitList;
+                return ItemTypeList;
             }
         }
         #endregion
-
-        #region Dispose function
-        private bool disposed = false;
-
-        /// <summary>
-        /// For releasing unmanageable objects and scarce resources,
-        /// like deallocating the controller instance.   
-        ///And it get called when the view is rendered.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                    _context.Dispose();
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
-
 
     }
 }

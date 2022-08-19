@@ -35,7 +35,7 @@ namespace InVanWebApp.Repository
                     var ItemMasters = new ItemTypeBO()
                     {
                         ID = Convert.ToInt32(reader["SrNo"]),
-                        ItemType = reader["ItemName"].ToString(),
+                        ItemType = reader["ItemType"].ToString(),
                         Description = reader["Description"].ToString()
                     };
                     itemMastersList.Add(ItemMasters);

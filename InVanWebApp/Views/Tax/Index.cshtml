@@ -1,0 +1,74 @@
+﻿@model IEnumerable<InVanWebApp_BO.TaxBO>
+@{
+    ViewBag.Title = "Tax";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Tax</title>
+</head>
+<body>
+    
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Tax</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i><a href="@Url.Action("Index","Dashboard")">Master</a>
+                    </li>
+                    <li class="breadcrumb-item active">Tax</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="card-title">@Html.ActionLink("Add Tax", "AddTax")</h1>
+                            @*<table class="table">*@
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Tax Name")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Description")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Edit/Delete")
+                                        </th>
+                                    </tr>
+
+                                    @foreach (var item in Model)
+                                    {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.TaxName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "EditTax", new { Id = item.Id }) |
+                                        @Html.ActionLink("Delete", "DeleteTax", new { Id = item.Id })
+                                        @*<button class="btn btn-outline-primary" onclick="showSwal2('warning-message-and-cancel')">Delete</button>*@
+                                    </td>
+                                </tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -12,7 +12,7 @@ namespace InVanWebApp_BO
         public CountryMaster()
         {
             this.CurrencyMasters = new HashSet<CurrencyMaster>();
-            this.LocationMasters = new HashSet<LocationMaster>();
+            this.LocationMasters = new HashSet<LocationMasterBO>();
             this.StateMasters = new HashSet<StateMaster>();
         }
 
@@ -28,7 +28,7 @@ namespace InVanWebApp_BO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CurrencyMaster> CurrencyMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LocationMaster> LocationMasters { get; set; }
+        public virtual ICollection<LocationMasterBO> LocationMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StateMaster> StateMasters { get; set; }
     }

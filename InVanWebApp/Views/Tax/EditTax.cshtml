@@ -1,28 +1,26 @@
-﻿@model InVanWebApp_BO.ItemTypeBO
+﻿@model InVanWebApp_BO.TaxBO
 @{
-    ViewBag.Title = "Edit Item Type";
+    ViewBag.Title = "Edit Tax";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Edit Item Type</h4>
+            <h4 class="card-title">Edit Tax</h4>
             <hr />
             @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.Id)
 
             <div class="form-group">
-                @Html.Label("Item Type")
-                @Html.TextBoxFor(model => model.ItemType, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ItemType, "", new { @class = "error mt-2 text-danger" })
+                @Html.Label("Location Name")
+                @Html.TextBoxFor(model => model.TaxName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TaxName, "", new { @class = "error mt-2 text-danger" })
             </div>
 
             <div class="form-group">
-                @Html.Label("Description")
+                @Html.Label("Remarks")
                 @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
             </div>
@@ -33,7 +31,6 @@
         </div>
     </div>
 }
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

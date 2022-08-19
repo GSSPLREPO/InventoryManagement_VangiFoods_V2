@@ -1,4 +1,4 @@
-﻿@model InVanWebApp.DAL.Item
+﻿@model InVanWebApp_BO.ItemBO
 @{
     ViewBag.Title = "Edit item";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -12,7 +12,14 @@
             <h4 class="card-title">Edit Item</h4>
             <hr />
             @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.Item_ID)
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="form-group">
+                @Html.Label("Item Type")
+                @Html.DropDownList("ItemTypeID", (IEnumerable<SelectListItem>)ViewData["ItemType"], "--Select Type--",
+               new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ItemTypeID, "", new { @class = "error mt-2 text-danger" })
+            </div>
 
             <div class="form-group">
                 @Html.Label("Item Category")
@@ -22,22 +29,15 @@
             </div>
 
             <div class="form-group">
-                @Html.Label("Item Code")
-                @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Item_Code, "", new { @class = "error mt-2 text-danger" })
-            </div>
-
-            <div class="form-group">
                 @Html.Label("Item Name")
                 @Html.TextBoxFor(model => model.Item_Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Item_Name, "", new { @class = "error mt-2 text-danger" })
             </div>
 
             <div class="form-group">
-                @Html.Label("Unit")
-                @Html.DropDownList("UnitOfMeasurement_ID", (IEnumerable<SelectListItem>)ViewData["Unit"], "--Select Category--",
-               new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UnitOfMeasurement_ID, "", new { @class = "error mt-2 text-danger" })
+                @Html.Label("Item Code")
+                @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Item_Code, "", new { @class = "error mt-2 text-danger" })
             </div>
 
             <div class="form-group">
@@ -47,18 +47,12 @@
             </div>
 
             <div class="form-group">
-                @Html.Label("Current Stock")
-                @Html.TextBoxFor(model => model.Current_Stock, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Current_Stock, "", new { @class = "error mt-2 text-danger" })
+                @Html.Label("Minimum Stock")
+                @Html.TextBoxFor(model => model.MinStock, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MinStock, "", new { @class = "error mt-2 text-danger" })
             </div>
 
-            <div class="form-group">
-                @Html.Label("Price")
-                @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "error mt-2 text-danger" })
-            </div>
-
-            <div class="form-group">
+            @*<div class="form-group">
                 @Html.Label("Tax")
                 @Html.DropDownList("Tax", new List<SelectListItem>
                 {
@@ -72,7 +66,7 @@
                     new SelectListItem{ Text="Tax: 0.25%", Value = "0.25%" }
                 }, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "error mt-2 text-danger" })
-            </div>
+            </div>*@
 
             <div class="form-group">
                 @Html.Label("Description")

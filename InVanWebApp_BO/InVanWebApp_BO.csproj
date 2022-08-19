@@ -50,10 +50,10 @@
     <Compile Include="FinishGoodSery.cs" />
     <Compile Include="InquiryMaster.cs" />
     <Compile Include="ItemBO.cs" />
-    <Compile Include="ItemCategoryMaster.cs" />
+    <Compile Include="ItemCategoryMasterBO.cs" />
     <Compile Include="ItemTypeBO.cs" />
     <Compile Include="LabMaster.cs" />
-    <Compile Include="LocationMaster.cs" />
+    <Compile Include="LocationMasterBO.cs" />
     <Compile Include="MachineMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PurchaseOrder.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="StateMaster.cs" />
     <Compile Include="Status.cs" />
     <Compile Include="StorageLocationMaster.cs" />
+    <Compile Include="TaxBO.cs" />
     <Compile Include="TermsAndConditionMaster.cs" />
     <Compile Include="UnitMaster.cs" />
   </ItemGroup>

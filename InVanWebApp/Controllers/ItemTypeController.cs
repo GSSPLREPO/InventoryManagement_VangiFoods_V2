@@ -113,7 +113,7 @@ namespace InVanWebApp.Controllers
         /// <param name="ID">record Id</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult DeleteItem(int ID)
+        public ActionResult DeleteItemType(int ID)
         {
             ItemTypeBO model = _itemTypeRepository.GetById(ID);
             return View(model);

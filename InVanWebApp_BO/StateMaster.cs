@@ -12,7 +12,7 @@ namespace InVanWebApp_BO
         public StateMaster()
         {
             this.CityMasters = new HashSet<CityMaster>();
-            this.LocationMasters = new HashSet<LocationMaster>();
+            this.LocationMasters = new HashSet<LocationMasterBO>();
         }
 
         public int StateID { get; set; }
@@ -29,6 +29,6 @@ namespace InVanWebApp_BO
         public virtual ICollection<CityMaster> CityMasters { get; set; }
         public virtual CountryMaster CountryMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LocationMaster> LocationMasters { get; set; }
+        public virtual ICollection<LocationMasterBO> LocationMasters { get; set; }
     }
 }

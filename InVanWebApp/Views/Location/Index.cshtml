@@ -1,4 +1,4 @@
-﻿@model IEnumerable<InVanWebApp.DAL.LocationMaster>
+﻿@model IEnumerable<InVanWebApp_BO.LocationMasterBO>
 @{
     ViewBag.Title = "Location";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -44,19 +44,7 @@
                                             @Html.DisplayName("Location Name")
                                         </th>
                                         <th>
-                                            @Html.DisplayName("Address")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Country")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("State")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("City")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Pin-code")
+                                            @Html.DisplayName("Remarks")
                                         </th>
                                         <th>
                                             @Html.DisplayName("Edit/Delete")
@@ -70,23 +58,11 @@
                                                 @Html.DisplayFor(modelItem => item.LocationName)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Address)
+                                                @Html.DisplayFor(modelItem => item.Remark)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.CountryName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.StateName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CityName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Pincode)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Edit", "EditLocation", new { LocationID = item.LocationID }) |
-                                                @Html.ActionLink("Delete", "DeleteLocation", new { LocationID = item.LocationID })
+                                                @Html.ActionLink("Edit", "EditLocation", new { LocationID = item.ID }) |
+                                                @Html.ActionLink("Delete", "DeleteLocation", new { LocationID = item.ID})
                                                 @*<button class="btn btn-outline-primary" onclick="showSwal2('warning-message-and-cancel')">Delete</button>*@
                                             </td>
                                         </tr>

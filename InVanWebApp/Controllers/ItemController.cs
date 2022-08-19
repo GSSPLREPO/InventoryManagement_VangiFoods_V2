@@ -4,32 +4,33 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InVanWebApp.Repository;
-using InVanWebApp.DAL;
+using InVanWebApp_BO;
+//using InVanWebApp.DAL;
 
 namespace InVanWebApp.Controllers
 {
-    public class AddItemController : Controller
+    public class ItemController : Controller
     {
-        private IAddItemRepository _iAddItemRepository;
+        private IItemRepository _iItemRepository;
 
         #region Initializing constructor
         /// <summary>
-        /// Date: 25 May 2022
+        /// Date: 26 may'22
         /// Farheen: Constructor without parameter
         /// </summary>
-        public AddItemController()
+        public ItemController()
         {
-            _iAddItemRepository = new AddItemRepository(new InVanDBContext());
+            _iItemRepository = new ItemRepository();
         }
 
         /// <summary>
-        /// Date: 25 May 2022
+        /// Date: 26 may'22
         /// Farheen: Constructor with parameters for initializing the interface object.
         /// </summary>
-        /// <param name="addItemRepository"></param>
-        public AddItemController(IAddItemRepository addItemRepository)
+        /// <param name="itemRepository"></param>
+        public ItemController(ItemRepository itemRepository)
         {
-            _iAddItemRepository = addItemRepository;
+            _iItemRepository = itemRepository;
         }
 
         #endregion
@@ -44,7 +45,7 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _iAddItemRepository.GetAll();
+            var model = _iItemRepository.GetAll();
             return View(model);
         }
         #endregion
@@ -58,12 +59,12 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddItems()
         {
-            var itemCategory = _iAddItemRepository.GetItemCategoryForDropDown();
+            var itemCategory = _iItemRepository.GetItemCategoryForDropDown();
             var dd = new SelectList(itemCategory.ToList(), "ItemCategoryID", "ItemCategoryName");
             ViewData["ItemCategory"] = dd;
-            var unit = _iAddItemRepository.GetUnitForDropdown();
-            var dd1 = new SelectList(unit.ToList(), "UnitID", "UnitName");
-            ViewData["Unit"] = dd1;
+            var itemType = _iItemRepository.GetItemTypeForDropdown();
+            var dd1 = new SelectList(itemType.ToList(), "ID", "ItemType");
+            ViewData["ItemType"] = dd1;
             return View();
         }
 
@@ -74,12 +75,12 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddItems(Item model)
+        public ActionResult AddItems(ItemBO model)
         {
             if (ModelState.IsValid)
             {
-                _iAddItemRepository.Insert(model);
-                return RedirectToAction("Index", "AddItem");
+                _iItemRepository.Insert(model);
+                return RedirectToAction("Index", "Item");
             }
             return View();
         }
@@ -95,13 +96,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditItem(int Item_ID)
         {
-            var itemCategory = _iAddItemRepository.GetItemCategoryForDropDown();
+            var itemCategory = _iItemRepository.GetItemCategoryForDropDown();
             var dd = new SelectList(itemCategory.ToList(), "ItemCategoryID", "ItemCategoryName");
             ViewData["ItemCategory"] = dd;
-            var unit = _iAddItemRepository.GetUnitForDropdown();
-            var dd1 = new SelectList(unit.ToList(), "UnitID", "UnitName");
-            ViewData["Unit"] = dd1;
-            Item model = _iAddItemRepository.GetById(Item_ID);
+            var itemType = _iItemRepository.GetItemTypeForDropdown();
+            var dd1 = new SelectList(itemType.ToList(), "ID", "ItemType");
+            ViewData["ItemType"] = dd1;
+            ItemBO model = _iItemRepository.GetById(Item_ID);
             return View(model);
         }
 
@@ -112,12 +113,12 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditItem(Item model)
+        public ActionResult EditItem(ItemBO model)
         {
             if (ModelState.IsValid)
             {
-                _iAddItemRepository.Udate(model);
-                return RedirectToAction("Index", "AddItem");
+                _iItemRepository.Udate(model);
+                return RedirectToAction("Index", "Item");
             }
             else
                 return View(model);
@@ -135,16 +136,16 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteItem(int Item_ID)
         {
-            Item model = _iAddItemRepository.GetById(Item_ID);
+            ItemBO model = _iItemRepository.GetById(Item_ID);
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Delete(int Item_ID)
+        public ActionResult Delete(int ID)
         {
-            _iAddItemRepository.Delete(Item_ID);
+            _iItemRepository.Delete(ID);
             //_unitRepository.Save();
-            return RedirectToAction("Index", "AddItem");
+            return RedirectToAction("Index", "Item");
         }
         #endregion
 
