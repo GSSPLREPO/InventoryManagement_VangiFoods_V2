@@ -25,6 +25,5 @@ namespace InVanWebApp_BO
         //Added below fields for dropdowns
         public string ItemCategoryName { get; set; }
         public string ItemTypeName { get; set; }
-        public string UnitName { get; set; }
     }
 }
