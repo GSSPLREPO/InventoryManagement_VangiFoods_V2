@@ -74,6 +74,7 @@ namespace InVanWebApp.Controllers
             if (ModelState.IsValid)
             {
                 _taxRepository.Insert(model);
+                TempData["Success"] = "<script>alert('Tax inserted successfully!');</script>";
                 return RedirectToAction("Index", "Tax");
             }
             return View();
@@ -106,6 +107,7 @@ namespace InVanWebApp.Controllers
             if (ModelState.IsValid)
             {
                 _taxRepository.Update(model);
+                TempData["Success"] = "<script>alert('Tax updated successfully!');</script>";
                 return RedirectToAction("Index", "Tax");
             }
             else
@@ -133,6 +135,7 @@ namespace InVanWebApp.Controllers
         {
             _taxRepository.Delete(ID);
             //_unitRepository.Save();
+            TempData["Success"] = "<script>alert('Tax deleted successfully!');</script>";
             return RedirectToAction("Index", "Tax");
         }
         #endregion

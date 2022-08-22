@@ -62,7 +62,7 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Edit", "EditLocation", new { LocationID = item.ID }) |
-                                                @Html.ActionLink("Delete", "DeleteLocation", new { LocationID = item.ID})
+                                                @Html.ActionLink("Delete", "DeleteLocation", new { LocationID = item.ID })
                                                 @*<button class="btn btn-outline-primary" onclick="showSwal2('warning-message-and-cancel')">Delete</button>*@
                                             </td>
                                         </tr>
@@ -76,8 +76,8 @@
         </div>
     </div>
 </body>
-
 </html>
+@Html.Raw(TempData["Success"])
 
 @*<div class="swal2-overlay" tabindex="-1">
         <div class="swal2-modal" role="dialog" aria-modal="true">

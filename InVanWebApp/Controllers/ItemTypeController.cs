@@ -67,6 +67,7 @@ namespace InVanWebApp.Controllers
             {
                 _itemTypeRepository.Insert(model);
                 //_unitRepository.Save();
+                TempData["Success"] = "<script>alert('Item type inserted successfully!');</script>";
                 return RedirectToAction("Index", "ItemType");
             }
             return View();
@@ -97,6 +98,7 @@ namespace InVanWebApp.Controllers
             if (ModelState.IsValid)
             {
                 _itemTypeRepository.Udate(model);
+                TempData["Success"] = "<script>alert('Item type updated successfully!');</script>";
                 return RedirectToAction("Index", "ItemType");
             }
             else
@@ -116,6 +118,7 @@ namespace InVanWebApp.Controllers
         public ActionResult DeleteItemType(int ID)
         {
             ItemTypeBO model = _itemTypeRepository.GetById(ID);
+            TempData["Success"] = "<script>alert('Item type deleted successfully!');</script>";
             return View(model);
         }
 

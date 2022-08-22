@@ -72,6 +72,7 @@ namespace InVanWebApp.Controllers
             {
                 _itemCategoryRepository.Insert(model);
                 //_unitRepository.Save();
+                TempData["Success"] = "<script>alert('Item category inserted successfully!');</script>";
                 return RedirectToAction("Index", "ItemCategory");
             }
             return View();
@@ -105,6 +106,7 @@ namespace InVanWebApp.Controllers
             if (ModelState.IsValid)
             {
                 _itemCategoryRepository.Udate(model);
+                TempData["Success"] = "<script>alert('Item category updated successfully!');</script>";
                 return RedirectToAction("Index", "ItemCategory");
             }
             else
@@ -130,6 +132,7 @@ namespace InVanWebApp.Controllers
         {
             _itemCategoryRepository.Delete(ItemCategoryID);
             //_unitRepository.Save();
+            TempData["Success"] = "<script>alert('Item category deleted successfully!');</script>";
             return RedirectToAction("Index", "ItemCategory");
         }
         #endregion

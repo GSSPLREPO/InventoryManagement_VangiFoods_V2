@@ -65,6 +65,7 @@ namespace InVanWebApp.Controllers
             if (ModelState.IsValid)
             {
                 _unitRepository.Insert(model);
+                TempData["Success"] = "<script>alert('Unit inserted successfully!');</script>";
                 //_unitRepository.Save();
                 return RedirectToAction("Index", "Unit");
             }
@@ -97,6 +98,7 @@ namespace InVanWebApp.Controllers
             {
                 _unitRepository.Udate(model);
                 //_unitRepository.Save();
+                TempData["Success"] = "<script>alert('Unit updated successfully!');</script>";
                 return RedirectToAction("Index", "Unit");
             }
             else
@@ -125,6 +127,7 @@ namespace InVanWebApp.Controllers
         {
             _unitRepository.Delete(UnitId);
             //_unitRepository.Save();
+            TempData["Success"] = "<script>alert('Unit deleted successfully!');</script>";
             return RedirectToAction("Index", "Unit");
         }
         #endregion

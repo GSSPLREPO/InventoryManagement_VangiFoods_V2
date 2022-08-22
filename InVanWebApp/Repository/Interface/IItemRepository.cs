@@ -17,7 +17,9 @@ namespace InVanWebApp.Repository
         ItemBO GetById(int Item_ID);
 
         //Function define for: Insert record.
-        void Insert(ItemBO item);
+        ResponseMessageBO Insert(ItemBO item);
+
+        List<ResponseMessageBO> SaveItemData(List<ItemBO> items);
 
         //Function define for: Update master record.
         void Udate(ItemBO item);

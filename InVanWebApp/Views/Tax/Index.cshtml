@@ -10,7 +10,7 @@
     <title>Tax</title>
 </head>
 <body>
-    
+
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
             <h4 class="page-title">Tax</h4>
@@ -47,19 +47,19 @@
 
                                     @foreach (var item in Model)
                                     {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.TaxName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "EditTax", new { Id = item.Id }) |
-                                        @Html.ActionLink("Delete", "DeleteTax", new { Id = item.Id })
-                                        @*<button class="btn btn-outline-primary" onclick="showSwal2('warning-message-and-cancel')">Delete</button>*@
-                                    </td>
-                                </tr>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TaxName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Description)
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink("Edit", "EditTax", new { Id = item.Id }) |
+                                                @Html.ActionLink("Delete", "DeleteTax", new { Id = item.Id })
+                                                @*<button class="btn btn-outline-primary" onclick="showSwal2('warning-message-and-cancel')">Delete</button>*@
+                                            </td>
+                                        </tr>
                                     }
                                 </table>
                             </div>
@@ -72,3 +72,4 @@
 </body>
 
 </html>
+@Html.Raw(TempData["Success"])

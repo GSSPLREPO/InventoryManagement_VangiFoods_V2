@@ -73,6 +73,7 @@ namespace InVanWebApp.Controllers
             if (ModelState.IsValid)
             {
                 _locationRepository.Insert(model);
+                TempData["Success"] = "<script>alert('Location inserted successfully!');</script>";
                 return RedirectToAction("Index", "Location");
             }
             return View();
@@ -105,6 +106,7 @@ namespace InVanWebApp.Controllers
             if (ModelState.IsValid)
             {
                 _locationRepository.Update(model);
+                TempData["Success"] = "<script>alert('Location updated successfully!');</script>";
                 return RedirectToAction("Index", "Location");
             }
             else
@@ -132,6 +134,7 @@ namespace InVanWebApp.Controllers
         {
             _locationRepository.Delete(ID);
             //_unitRepository.Save();
+            TempData["Success"] = "<script>alert('Location deleted successfully!');</script>";
             return RedirectToAction("Index", "Location");
         }
         #endregion

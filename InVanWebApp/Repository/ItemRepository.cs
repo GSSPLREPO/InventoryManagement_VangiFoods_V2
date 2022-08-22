@@ -15,7 +15,7 @@ namespace InVanWebApp.Repository
     {
         //private readonly InVanDBContext _context;
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-                
+
         #region  Bind grid
         /// <summary>
         /// Farheen: This function is for fecthing list of item category master's.
@@ -57,14 +57,17 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="item"></param>
-        public void Insert(ItemBO item)
+        public ResponseMessageBO Insert(ItemBO item)
         {
+            ResponseMessageBO response = new ResponseMessageBO();
             using (SqlConnection con = new SqlConnection(conString))
             {
                 SqlCommand cmd = new SqlCommand("usp_tbl_Item_Insert", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ItemTypeID", item.ItemTypeID);
                 cmd.Parameters.AddWithValue("@ItemCategory_ID", item.ItemCategory_ID);
+                cmd.Parameters.AddWithValue("@ItemTypeName", null);
+                cmd.Parameters.AddWithValue("@ItemCategory_Name", null);
                 cmd.Parameters.AddWithValue("@Item_Code", item.Item_Code);
                 cmd.Parameters.AddWithValue("@Item_Name", item.Item_Name);
                 cmd.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
@@ -73,10 +76,99 @@ namespace InVanWebApp.Repository
                 cmd.Parameters.AddWithValue("@CreatedBy", 1);
                 cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                 con.Open();
-                cmd.ExecuteNonQuery();
+                //cmd.ExecuteNonQuery();
+                SqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    response.ItemName= dataReader["ItemName"].ToString();
+                    response.ItemCode= dataReader["ItemCode"].ToString();
+                    response.Status = Convert.ToBoolean(dataReader["Status"]);
+                }
                 con.Close();
             };
+
+            return response;
         }
+
+        /// <summary>
+        /// Date: 22 Aug 2022
+        /// Farheen: This function is for uploading item list (Bulk upload)
+        /// </summary>
+        /// <param name="model"></param>
+        public List<ResponseMessageBO> SaveItemData(List<ItemBO> model)
+        {
+            try
+            {
+                //var success = false;
+                int cnt = 0;
+                List<ResponseMessageBO> responsesList = new List<ResponseMessageBO>();
+                if (model != null && model.Count > 0)
+                {
+
+                    for (int i = 0; i < model.Count; i++)
+                    {
+                        ItemBO material = new ItemBO();                        
+
+                        material.Item_Name = model[i].Item_Name;
+                        material.ItemTypeName= model[i].ItemTypeName;
+                        material.ItemCategoryName = model[i].ItemCategoryName;
+                        material.Item_Code = model[i].Item_Code;
+                        material.HSN_Code= model[i].HSN_Code;
+                        material.MinStock = model[i].MinStock;
+                        material.Description= model[i].Description;
+                        
+                        material.IsDeleted = false;
+                        material.CreatedBy = model[i].CreatedBy;
+                        material.CreatedDate = Convert.ToDateTime(model[i].CreatedDate);
+
+                        using (SqlConnection con = new SqlConnection(conString))
+                        {
+                            SqlCommand cmd = new SqlCommand("usp_tbl_Item_Insert", con);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            //cmd.Parameters.AddWithValue("@ItemTypeID", 0);
+                            //cmd.Parameters.AddWithValue("@ItemCategory_ID", 0);
+                            cmd.Parameters.AddWithValue("@ItemTypeName", material.ItemTypeName);
+                            cmd.Parameters.AddWithValue("@ItemCategory_Name", material.ItemCategoryName);
+                            cmd.Parameters.AddWithValue("@Item_Code", material.Item_Code);
+                            cmd.Parameters.AddWithValue("@Item_Name", material.Item_Name);
+                            cmd.Parameters.AddWithValue("@HSN_Code", material.HSN_Code);
+                            cmd.Parameters.AddWithValue("@MinStock", material.MinStock);
+                            cmd.Parameters.AddWithValue("@Description", material.Description);
+                            cmd.Parameters.AddWithValue("@CreatedBy", material.CreatedBy);
+                            cmd.Parameters.AddWithValue("@CreatedDate", material.CreatedDate);
+                            con.Open();
+                            //cmd.ExecuteNonQuery();
+                            SqlDataReader dataReader = cmd.ExecuteReader();
+
+                            while (dataReader.Read())
+                            {
+                                ResponseMessageBO response = new ResponseMessageBO();
+
+                                response.ItemName = dataReader["ItemName"].ToString();
+                                response.ItemCode = dataReader["ItemCode"].ToString();
+                                response.Status = Convert.ToBoolean(dataReader["Status"]);
+
+                                responsesList.Add(response);
+                            }
+                            con.Close();
+                        };
+
+                        //success = true;
+
+                        cnt += 1;
+                    }
+                }
+                //return success;
+                return responsesList;
+            }
+            catch (Exception ex)
+            {
+                //dbContextTransaction.Dispose();
+                throw ex;
+            }
+        }
+
         #endregion
 
         #region Update functions
@@ -201,7 +293,7 @@ namespace InVanWebApp.Repository
                     var itemType = new ItemTypeBO()
                     {
                         ID = Convert.ToInt32(reader["ID"]),
-                        ItemType= reader["ItemType"].ToString()
+                        ItemType = reader["ItemType"].ToString()
                     };
                     ItemTypeList.Add(itemType);
                 }
