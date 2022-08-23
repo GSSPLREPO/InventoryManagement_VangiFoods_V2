@@ -22,7 +22,7 @@ namespace InVanWebApp.Repository
         List<ResponseMessageBO> SaveItemData(List<ItemBO> items);
 
         //Function define for: Update master record.
-        void Udate(ItemBO item);
+        ResponseMessageBO Udate(ItemBO item);
 
         //Function define for: Delete record of item using it's ID
         void Delete(int Item_Id);

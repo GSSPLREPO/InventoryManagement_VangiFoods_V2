@@ -6,12 +6,14 @@ using System.Web.Mvc;
 //using InVanWebApp.DAL;
 using InVanWebApp_BO;
 using InVanWebApp.Repository;
+using log4net;
 
 namespace InVanWebApp.Controllers
 {
     public class ItemTypeController : Controller
     {
         private IItemTypeRepository _itemTypeRepository;
+        private static ILog log = LogManager.GetLogger(typeof(ItemTypeController));
 
         #region Initializing constructor
         /// <summary>
@@ -63,14 +65,29 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddItemType(ItemTypeBO model)
         {
-            if (ModelState.IsValid)
+            var flag = false;
+            try
             {
-                _itemTypeRepository.Insert(model);
-                //_unitRepository.Save();
-                TempData["Success"] = "<script>alert('Item type inserted successfully!');</script>";
+                if (ModelState.IsValid)
+                {
+                    flag = _itemTypeRepository.Insert(model);
+                    //_unitRepository.Save();
+                    if (flag)
+                        TempData["Success"] = "<script>alert('Item type inserted successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+
+                    return RedirectToAction("Index", "ItemType");
+                }
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error", ex);
+                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
                 return RedirectToAction("Index", "ItemType");
             }
-            return View();
         }
         #endregion
 
@@ -95,14 +112,29 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditItemType(ItemTypeBO model)
         {
-            if (ModelState.IsValid)
+            var flag = false;
+            try
             {
-                _itemTypeRepository.Udate(model);
-                TempData["Success"] = "<script>alert('Item type updated successfully!');</script>";
+                if (ModelState.IsValid)
+                {
+                    flag = _itemTypeRepository.Udate(model);
+                    if (flag)
+                        TempData["Success"] = "<script>alert('Item type updated successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Error while update!');</script>";
+
+                    return RedirectToAction("Index", "ItemType");
+                }
+                else
+                    return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
                 return RedirectToAction("Index", "ItemType");
             }
-            else
-                return View(model);
         }
 
         #endregion
@@ -118,7 +150,6 @@ namespace InVanWebApp.Controllers
         public ActionResult DeleteItemType(int ID)
         {
             ItemTypeBO model = _itemTypeRepository.GetById(ID);
-            TempData["Success"] = "<script>alert('Item type deleted successfully!');</script>";
             return View(model);
         }
 
@@ -128,6 +159,7 @@ namespace InVanWebApp.Controllers
         {
             _itemTypeRepository.Delete(ID);
             //_unitRepository.Save();
+            TempData["Success"] = "<script>alert('Item type deleted successfully!');</script>";
             return RedirectToAction("Index", "ItemType");
         }
         #endregion

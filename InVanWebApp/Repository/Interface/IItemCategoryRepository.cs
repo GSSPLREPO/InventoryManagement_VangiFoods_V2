@@ -17,10 +17,10 @@ namespace InVanWebApp.Repository
         ItemCategoryMasterBO GetById(int ItemCategoryId);
 
         //Function define for: Insert record.
-        void Insert(ItemCategoryMasterBO itemCategory);
+        bool Insert(ItemCategoryMasterBO itemCategory);
 
         //Function define for: Update master record.
-        void Udate(ItemCategoryMasterBO itemCategory);
+        bool Udate(ItemCategoryMasterBO itemCategory);
 
         //Function define for: Delete record of item using it's ID
         void Delete(int ItemCategoryId);

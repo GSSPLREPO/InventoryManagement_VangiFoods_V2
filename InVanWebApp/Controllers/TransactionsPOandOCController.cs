@@ -66,7 +66,7 @@ namespace InVanWebApp.Controllers
         {
             //Supplier address for OC
             var companyList = _transactionsPOandOC.GetCompanyDetailsById(2);
-            ViewData["companyName"] = (companyList.ToList())[0].Name;
+            ViewData["companyName"] = (companyList.ToList())[0].CompanyName;
             ViewData["companyAddress1"] = (companyList.ToList())[0].Address;
             ViewData["companyAddress2"] = (companyList.ToList())[0].CityName + " " + (companyList.ToList())[0].StateName + ", " + (companyList.ToList())[0].CountryName;
 

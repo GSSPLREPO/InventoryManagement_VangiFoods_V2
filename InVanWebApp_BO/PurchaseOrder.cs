@@ -48,7 +48,7 @@ namespace InVanWebApp_BO
         public Nullable<int> LastModifiedBy { get; set; }
         public string OrderStatus { get; set; }
 
-        public virtual Company Company { get; set; }
+        public virtual CompanyBO Company { get; set; }
         public virtual ItemBO Item { get; set; }
         public virtual Status Status { get; set; }
         public virtual Status Status1 { get; set; }

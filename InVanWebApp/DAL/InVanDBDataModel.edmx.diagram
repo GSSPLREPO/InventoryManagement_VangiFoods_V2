@@ -126,6 +126,10 @@
         <AssociationConnector Association="InVanDBModels.FK_RoleRights_ToScreenName" />
         <AssociationConnector Association="InVanDBModels.FK_Users_Roles" />
         <AssociationConnector Association="InVanDBModels.FK_StockMaster_UnitMaster" />
+        <EntityTypeShape EntityType="InVanDBModels.Company" Width="1.5" PointX="7.5" PointY="0.75" />
+        <AssociationConnector Association="InVanDBModels.FK_Company_CityMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_Company_CountryMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_Company_StateMaster" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

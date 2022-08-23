@@ -206,9 +206,9 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region  Bind drop-down of Company
-        public IEnumerable<InVanWebApp_BO.Company> GetCompanyNameForDropDown()
+        public IEnumerable<InVanWebApp_BO.CompanyBO> GetCompanyNameForDropDown()
         {
-            List<InVanWebApp_BO.Company> CompanyList = new List<InVanWebApp_BO.Company>();
+            List<InVanWebApp_BO.CompanyBO> CompanyList = new List<InVanWebApp_BO.CompanyBO>();
             using (SqlConnection con = new SqlConnection(conString))
             {
                 SqlCommand cmd = new SqlCommand("usp_tbl_Company_GetAll", con);
@@ -217,10 +217,10 @@ namespace InVanWebApp.Repository
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var company = new InVanWebApp_BO.Company()
+                    var company = new InVanWebApp_BO.CompanyBO()
                     {
-                        Company_ID = Convert.ToInt32(reader["Company_ID"]),
-                        Name = reader["Name"].ToString()
+                        ID = Convert.ToInt32(reader["Company_ID"]),
+                        CompanyName = reader["Name"].ToString()
                     };
                     CompanyList.Add(company);
                 }
@@ -231,9 +231,9 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Get company details by it's ID
-        public IEnumerable<InVanWebApp_BO.Company> GetCompanyDetailsById(int Id)
+        public IEnumerable<InVanWebApp_BO.CompanyBO> GetCompanyDetailsById(int Id)
         {
-            List<InVanWebApp_BO.Company> CompanyList = new List<InVanWebApp_BO.Company>();
+            List<InVanWebApp_BO.CompanyBO> CompanyList = new List<InVanWebApp_BO.CompanyBO>();
             using (SqlConnection con = new SqlConnection(conString))
             {
                 SqlCommand cmd = new SqlCommand("usp_tbl_Company_GetAll", con);
@@ -243,10 +243,10 @@ namespace InVanWebApp.Repository
                 SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                 while (reader.Read())
                 {
-                    var company = new InVanWebApp_BO.Company()
+                    var company = new InVanWebApp_BO.CompanyBO()
                     {
-                        Company_ID = Convert.ToInt32(reader["Company_ID"]),
-                        Name = reader["Name"].ToString(),
+                        ID = Convert.ToInt32(reader["Company_ID"]),
+                        CompanyName = reader["Name"].ToString(),
                         Address = reader["Address"].ToString(),
                         CityName = reader["City"].ToString(),
                         StateName = reader["State"].ToString(),

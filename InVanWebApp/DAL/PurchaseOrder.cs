@@ -64,6 +64,7 @@ namespace InVanWebApp.DAL
         public virtual Status Status { get; set; }
         public virtual Status Status1 { get; set; }
         public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
+
         //Added: Fields added for dropdowns.
         public string CountryName { get; set; }
         public string InvoiceStat { get; set; }
@@ -77,6 +78,5 @@ namespace InVanWebApp.DAL
         public string ItemTax { get; set; }
         public string Item_Code { get; set; }
         public string Item_HSN_Code { get; set; }
-        //	public string OrderStatus { get; set; }
     }
 }

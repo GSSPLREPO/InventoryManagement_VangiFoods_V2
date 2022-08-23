@@ -8,13 +8,15 @@ using InVanWebApp_BO;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using log4net;
 
 namespace InVanWebApp.Repository
 {
-    public class ItemCategoryRepository:IItemCategoryRepository
+    public class ItemCategoryRepository : IItemCategoryRepository
     {
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-               
+        private static ILog log = LogManager.GetLogger(typeof(ItemCategoryRepository));
+
         #region  Bind grid
         /// <summary>
         /// Farheen: This function is for fecthing list of item category master's.
@@ -23,26 +25,34 @@ namespace InVanWebApp.Repository
         public IEnumerable<ItemCategoryMasterBO> GetAll()
         {
             List<ItemCategoryMasterBO> ItemCategoryList = new List<ItemCategoryMasterBO>();
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_GetAll", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                while (reader.Read())
+                using (SqlConnection con = new SqlConnection(conString))
                 {
-                    var ItemCategory = new ItemCategoryMasterBO()
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
                     {
-                        ItemCategoryID = Convert.ToInt32(reader["ItemCategoryID"]),
-                        ItemCategoryName = reader["ItemCategoryName"].ToString(),
-                        ItemTypeName = reader["ItemTypeName"].ToString(),
-                        Description = reader["Description"].ToString()
-                    };
-                    ItemCategoryList.Add(ItemCategory);
+                        var ItemCategory = new ItemCategoryMasterBO()
+                        {
+                            ItemCategoryID = Convert.ToInt32(reader["ItemCategoryID"]),
+                            ItemCategoryName = reader["ItemCategoryName"].ToString(),
+                            ItemTypeName = reader["ItemTypeName"].ToString(),
+                            Description = reader["Description"].ToString()
+                        };
+                        ItemCategoryList.Add(ItemCategory);
+                    }
+                    con.Close();
                 }
-                con.Close();
-                return ItemCategoryList;
+
             }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return ItemCategoryList;
             //return _context.UnitMasters.ToList();
         }
         #endregion
@@ -52,21 +62,33 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="itemCategoryMaster"></param>
-        public void Insert(ItemCategoryMasterBO itemCategoryMaster)
+        public bool Insert(ItemCategoryMasterBO itemCategoryMaster)
         {
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_Insert", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ItemTypeId", itemCategoryMaster.ItemTypeId);
-                cmd.Parameters.AddWithValue("@ItemCategoryName", itemCategoryMaster.ItemCategoryName);
-                cmd.Parameters.AddWithValue("@Description", itemCategoryMaster.Description);
-                cmd.Parameters.AddWithValue("@CreatedBy", 1);
-                cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            };
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_Insert", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ItemTypeId", itemCategoryMaster.ItemTypeId);
+                    cmd.Parameters.AddWithValue("@ItemCategoryName", itemCategoryMaster.ItemCategoryName);
+                    cmd.Parameters.AddWithValue("@Description", itemCategoryMaster.Description);
+                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                };
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
+                //Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
+                // throw;
+            }
+
         }
         #endregion
 
@@ -80,48 +102,67 @@ namespace InVanWebApp.Repository
         public ItemCategoryMasterBO GetById(int ItemCategoryId)
         {
             var ItemCategory = new ItemCategoryMasterBO();
-            using (SqlConnection con = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_GetByID", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ItemCategoryID", ItemCategoryId);
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    ItemCategory = new ItemCategoryMasterBO()
-                    {
-                        ItemCategoryID = Convert.ToInt32(reader["ItemCategoryID"]),
-                        ItemTypeId = Convert.ToInt32(reader["ItemTypeId"]),
-                        ItemCategoryName = reader["ItemCategoryName"].ToString(),
-                        Description = reader["Description"].ToString()
-                    };
-                }
-                con.Close();
-                return ItemCategory;
-            }
 
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_GetByID", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ItemCategoryID", ItemCategoryId);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        ItemCategory = new ItemCategoryMasterBO()
+                        {
+                            ItemCategoryID = Convert.ToInt32(reader["ItemCategoryID"]),
+                            ItemTypeId = Convert.ToInt32(reader["ItemTypeId"]),
+                            ItemCategoryName = reader["ItemCategoryName"].ToString(),
+                            Description = reader["Description"].ToString()
+                        };
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return ItemCategory;
         }
 
         /// <summary>
         /// Farheen: Update record
         /// </summary>
         /// <param name="itemCategoryMaster"></param>
-        public void Udate(ItemCategoryMasterBO itemCategoryMaster)
+        public bool Udate(ItemCategoryMasterBO itemCategoryMaster)
         {
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_Update", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ItemCategoryId", itemCategoryMaster.ItemCategoryID);
-                cmd.Parameters.AddWithValue("@ItemTypeId", itemCategoryMaster.ItemTypeId);
-                cmd.Parameters.AddWithValue("@ItemCategoryName", itemCategoryMaster.ItemCategoryName);
-                cmd.Parameters.AddWithValue("@Description", itemCategoryMaster.Description);
-                cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
-                cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_Update", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ItemCategoryId", itemCategoryMaster.ItemCategoryID);
+                    cmd.Parameters.AddWithValue("@ItemTypeId", itemCategoryMaster.ItemTypeId);
+                    cmd.Parameters.AddWithValue("@ItemCategoryName", itemCategoryMaster.ItemCategoryName);
+                    cmd.Parameters.AddWithValue("@Description", itemCategoryMaster.Description);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+
+                    return true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
             }
         }
         #endregion
@@ -129,17 +170,24 @@ namespace InVanWebApp.Repository
         #region Delete function
         public void Delete(int ItemCategoryId)
         {
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_Delete", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ItemCategoryID", ItemCategoryId);
-                cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
-                cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            };
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_Delete", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ItemCategoryID", ItemCategoryId);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         #endregion
@@ -148,24 +196,32 @@ namespace InVanWebApp.Repository
         public IEnumerable<ItemTypeBO> GetItemTypeForDropDown()
         {
             List<ItemTypeBO> ItemMasterList = new List<ItemTypeBO>();
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_ItemType_GetAll", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                while (reader.Read())
+                using (SqlConnection con = new SqlConnection(conString))
                 {
-                    var ItemMaster = new ItemTypeBO()
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ItemType_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        ItemType = reader["ItemType"].ToString()
-                    };
-                    ItemMasterList.Add(ItemMaster);
+                        var ItemMaster = new ItemTypeBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            ItemType = reader["ItemType"].ToString()
+                        };
+                        ItemMasterList.Add(ItemMaster);
+                    }
+                    con.Close();
                 }
-                con.Close();
-                return ItemMasterList;
+
             }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return ItemMasterList;
         }
         #endregion
     }

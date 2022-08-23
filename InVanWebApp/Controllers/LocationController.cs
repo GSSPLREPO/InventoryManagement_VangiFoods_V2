@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using InVanWebApp.Repository;
 using InVanWebApp_BO;
+using log4net;
 //using InVanWebApp.DAL;
 
 namespace InVanWebApp.Controllers
@@ -12,6 +13,7 @@ namespace InVanWebApp.Controllers
     public class LocationController : Controller
     {
         private ILocationRepository _locationRepository;
+        private static ILog log = LogManager.GetLogger(typeof(LocationController));
 
         #region Initializing constructor
         /// <summary>
@@ -70,13 +72,28 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddLocation(LocationMasterBO model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _locationRepository.Insert(model);
-                TempData["Success"] = "<script>alert('Location inserted successfully!');</script>";
+                var flag = false;
+                if (ModelState.IsValid)
+                {
+                    flag = _locationRepository.Insert(model);
+                    if (flag)
+                        TempData["Success"] = "<script>alert('Location inserted successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+
+                    return RedirectToAction("Index", "Location");
+                }
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error", ex);
+                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
                 return RedirectToAction("Index", "Location");
             }
-            return View();
         }
         #endregion
 
@@ -103,14 +120,29 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditLocation(LocationMasterBO model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _locationRepository.Update(model);
-                TempData["Success"] = "<script>alert('Location updated successfully!');</script>";
+                var flag = false;
+                if (ModelState.IsValid)
+                {
+                    flag = _locationRepository.Update(model);
+                    if (flag)
+                        TempData["Success"] = "<script>alert('Location updated successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Error while update!');</script>";
+
+                    return RedirectToAction("Index", "Location");
+                }
+                else
+                    return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
                 return RedirectToAction("Index", "Location");
             }
-            else
-                return View(model);
         }
 
         #endregion

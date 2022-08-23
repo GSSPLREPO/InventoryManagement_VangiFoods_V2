@@ -63,6 +63,9 @@
     <Reference Include="Excel, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Excel.1.0.0\lib\dotnet\Excel.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.15\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
@@ -157,6 +160,7 @@
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SupplierCustomerMasterController.cs" />
     <Compile Include="Controllers\TaxController.cs" />
     <Compile Include="Controllers\TransactionsPOandOCController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
@@ -170,6 +174,9 @@
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\COAMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Company.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\CountryMaster.cs">
@@ -365,6 +372,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Interface\ISupplierCustomerRepository.cs" />
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
     <Compile Include="Repository\ItemRepository.cs" />
     <Compile Include="Repository\Interface\IItemRepository.cs" />
@@ -378,6 +386,7 @@
     <Compile Include="Repository\Interface\IUnitRepository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\SupplierCustomerRepository.cs" />
     <Compile Include="Repository\TaxRepository.cs" />
     <Compile Include="Repository\TransactionsPOandOCRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
@@ -1246,6 +1255,8 @@
     <Content Include="Views\Tax\AddTax.cshtml" />
     <Content Include="Views\Tax\EditTax.cshtml" />
     <Content Include="Views\Tax\DeleteTax.cshtml" />
+    <Content Include="Views\SupplierCustomerMaster\Index.cshtml" />
+    <Content Include="Views\SupplierCustomerMaster\DeleteSupplierCustomer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

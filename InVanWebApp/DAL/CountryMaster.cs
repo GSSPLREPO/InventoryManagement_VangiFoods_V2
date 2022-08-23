@@ -20,6 +20,7 @@ namespace InVanWebApp.DAL
             this.CurrencyMasters = new HashSet<CurrencyMaster>();
             this.EmployeeMasters = new HashSet<EmployeeMaster>();
             this.StateMasters = new HashSet<StateMaster>();
+            this.Companies = new HashSet<Company>();
         }
     
         public int CountryID { get; set; }
@@ -37,5 +38,7 @@ namespace InVanWebApp.DAL
         public virtual ICollection<EmployeeMaster> EmployeeMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StateMaster> StateMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Company> Companies { get; set; }
     }
 }

@@ -17,10 +17,10 @@ namespace InVanWebApp.Repository
         LocationMasterBO GetById(int Location_ID);
 
         //Function define for: Insert record.
-        void Insert(LocationMasterBO locationMaster);
+        bool Insert(LocationMasterBO locationMaster);
 
         //Function define for: Update master record.
-        void Update(LocationMasterBO locationMaster);
+        bool Update(LocationMasterBO locationMaster);
 
         //Function define for: Delete record of location using it's ID
         void Delete(int Location_Id);

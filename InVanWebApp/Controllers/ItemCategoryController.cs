@@ -6,12 +6,14 @@ using System.Web.Mvc;
 using InVanWebApp_BO;
 //using InVanWebApp.DAL;
 using InVanWebApp.Repository;
+using log4net;
 
 namespace InVanWebApp.Controllers
 {
     public class ItemCategoryController : Controller
     {
         private IItemCategoryRepository _itemCategoryRepository;
+        private static ILog log = LogManager.GetLogger(typeof(ItemCategoryController));
 
         #region Initializing constructor
         /// <summary>
@@ -30,7 +32,6 @@ namespace InVanWebApp.Controllers
             _itemCategoryRepository = itemCategoryRepository;
         }
         #endregion
-
 
         #region  Bind grid
         /// <summary>
@@ -55,7 +56,7 @@ namespace InVanWebApp.Controllers
         public ActionResult AddItemCategory()
         {
             var model = _itemCategoryRepository.GetItemTypeForDropDown();
-            var dd = new SelectList(model.ToList(),"ID","ItemType");
+            var dd = new SelectList(model.ToList(), "ID", "ItemType");
             ViewData["ItemType"] = dd;
             return View();
         }
@@ -68,14 +69,29 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddItemCategory(ItemCategoryMasterBO model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _itemCategoryRepository.Insert(model);
-                //_unitRepository.Save();
-                TempData["Success"] = "<script>alert('Item category inserted successfully!');</script>";
+                var flag = false;
+                if (ModelState.IsValid)
+                {
+                    flag = _itemCategoryRepository.Insert(model);
+                    //_unitRepository.Save();
+                    if (flag)
+                        TempData["Success"] = "<script>alert('Item category inserted successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+
+                    return RedirectToAction("Index", "ItemCategory");
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error", ex);
+                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
                 return RedirectToAction("Index", "ItemCategory");
             }
-            return View();
         }
         #endregion
 
@@ -103,14 +119,29 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditItemCategory(ItemCategoryMasterBO model)
         {
-            if (ModelState.IsValid)
+            var flag = false;
+            try
             {
-                _itemCategoryRepository.Udate(model);
-                TempData["Success"] = "<script>alert('Item category updated successfully!');</script>";
+                if (ModelState.IsValid)
+                {
+                    flag = _itemCategoryRepository.Udate(model);
+                    if (flag)
+                        TempData["Success"] = "<script>alert('Item category updated successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Error while update!');</script>";
+
+                    return RedirectToAction("Index", "ItemCategory");
+                }
+                else
+                    return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
                 return RedirectToAction("Index", "ItemCategory");
             }
-            else
-                return View(model);
         }
 
         #endregion
@@ -127,6 +158,7 @@ namespace InVanWebApp.Controllers
             ItemCategoryMasterBO model = _itemCategoryRepository.GetById(ItemCategoryID);
             return View(model);
         }
+
         [HttpPost]
         public ActionResult Delete(int ItemCategoryID)
         {

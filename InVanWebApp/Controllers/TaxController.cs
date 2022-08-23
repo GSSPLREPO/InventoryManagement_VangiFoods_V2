@@ -6,12 +6,14 @@ using System.Web.Mvc;
 using InVanWebApp.Repository;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
+using log4net;
 
 namespace InVanWebApp.Controllers
 {
     public class TaxController : Controller
     {
         private ITaxRepository _taxRepository;
+        private static ILog log = LogManager.GetLogger(typeof(TaxController));
 
         #region Initializing constructor
         /// <summary>
@@ -71,13 +73,27 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddTax(TaxBO model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _taxRepository.Insert(model);
-                TempData["Success"] = "<script>alert('Tax inserted successfully!');</script>";
+                var flag = false;
+                if (ModelState.IsValid)
+                {
+                    flag = _taxRepository.Insert(model);
+                    if (flag)
+                        TempData["Success"] = "<script>alert('Tax inserted successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+
+                    return RedirectToAction("Index", "Tax");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error", ex);
+                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
                 return RedirectToAction("Index", "Tax");
             }
-            return View();
         }
         #endregion
 
@@ -104,14 +120,29 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditTax(TaxBO model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _taxRepository.Update(model);
-                TempData["Success"] = "<script>alert('Tax updated successfully!');</script>";
+                var flag = false;
+                if (ModelState.IsValid)
+                {
+                    flag = _taxRepository.Update(model);
+                    if (flag)
+                        TempData["Success"] = "<script>alert('Tax updated successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Error while update!');</script>";
+
+                    return RedirectToAction("Index", "Tax");
+                }
+                else
+                    return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
                 return RedirectToAction("Index", "Tax");
             }
-            else
-                return View(model);
         }
 
         #endregion

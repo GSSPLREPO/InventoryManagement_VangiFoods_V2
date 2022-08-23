@@ -29,8 +29,8 @@ namespace InVanWebApp.Repository
         void Delete(int PurchaseOrderID);
 
         //Function for fetching list of company.
-        IEnumerable<InVanWebApp_BO.Company> GetCompanyNameForDropDown();
-        IEnumerable<InVanWebApp_BO.Company> GetCompanyDetailsById(int Id);
+        IEnumerable<InVanWebApp_BO.CompanyBO> GetCompanyNameForDropDown();
+        IEnumerable<InVanWebApp_BO.CompanyBO> GetCompanyDetailsById(int Id);
         
         //For fetching the document no
         string GetDocumentNo(int DocumentType); //Logic is in SP: Document type=1 for Order Confirmation 

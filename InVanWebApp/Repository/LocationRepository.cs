@@ -8,6 +8,7 @@ using InVanWebApp_BO;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using log4net;
 
 namespace InVanWebApp.Repository
 {
@@ -15,6 +16,7 @@ namespace InVanWebApp.Repository
     {
         //private readonly InVanDBContext _context;
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private static ILog log = LogManager.GetLogger(typeof(LocationRepository));
 
         #region  Bind grid
         /// <summary>
@@ -25,26 +27,34 @@ namespace InVanWebApp.Repository
         public IEnumerable<LocationMasterBO> GetAll()
         {
             List<LocationMasterBO> LocationList = new List<LocationMasterBO>();
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_GetAll", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                while (reader.Read())
+                using (SqlConnection con = new SqlConnection(conString))
                 {
-                    var location = new LocationMasterBO()
+                    SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        LocationName = reader["LocationName"].ToString(),
-                        Remark = reader["Remark"].ToString()
-                    };
-                    LocationList.Add(location);
+                        var location = new LocationMasterBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            LocationName = reader["LocationName"].ToString(),
+                            Remark = reader["Remark"].ToString()
+                        };
+                        LocationList.Add(location);
+
+                    }
+                    con.Close();
 
                 }
-                con.Close();
-                return LocationList;
             }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return LocationList;
             //return _context.UnitMasters.ToList();
         }
         #endregion
@@ -55,20 +65,29 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="locationMaster"></param>
-        public void Insert(LocationMasterBO locationMaster)
+        public bool Insert(LocationMasterBO locationMaster)
         {
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_Insert", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@LocationName", locationMaster.LocationName);
-                cmd.Parameters.AddWithValue("@Remark", locationMaster.Remark);
-                cmd.Parameters.AddWithValue("@CreatedBy", 1);
-                cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            };
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_Insert", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@LocationName", locationMaster.LocationName);
+                    cmd.Parameters.AddWithValue("@Remark", locationMaster.Remark);
+                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                };
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
+            }
         }
         #endregion
 
@@ -83,26 +102,34 @@ namespace InVanWebApp.Repository
         public LocationMasterBO GetById(int Location_ID)
         {
             var location = new LocationMasterBO();
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_GetByID", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@LocationID", Location_ID);
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (SqlConnection con = new SqlConnection(conString))
                 {
-                    location = new LocationMasterBO()
+                    SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_GetByID", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@LocationID", Location_ID);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
                     {
-                        ID = Convert.ToInt32(reader["ID"]),
-                        LocationName = reader["LocationName"].ToString(),
-                        Remark = reader["Remark"].ToString()
-                    };
+                        location = new LocationMasterBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            LocationName = reader["LocationName"].ToString(),
+                            Remark = reader["Remark"].ToString()
+                        };
+                    }
+                    con.Close();
+
                 }
-                con.Close();
-                return location;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
             }
 
+            return location;
         }
 
         /// <summary>
@@ -110,20 +137,29 @@ namespace InVanWebApp.Repository
         /// Farheen: Update record
         /// </summary>
         /// <param name="locationMaster"></param>
-        public void Update(LocationMasterBO locationMaster)
+        public bool Update(LocationMasterBO locationMaster)
         {
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_Update", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@LocationID", locationMaster.ID);
-                cmd.Parameters.AddWithValue("@LocationName", locationMaster.LocationName);
-                cmd.Parameters.AddWithValue("@Remark", locationMaster.Remark);
-                cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
-                cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_Update", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@LocationID", locationMaster.ID);
+                    cmd.Parameters.AddWithValue("@LocationName", locationMaster.LocationName);
+                    cmd.Parameters.AddWithValue("@Remark", locationMaster.Remark);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
             }
         }
         #endregion
@@ -131,17 +167,25 @@ namespace InVanWebApp.Repository
         #region Delete function
         public void Delete(int Location_ID)
         {
-            using (SqlConnection con = new SqlConnection(conString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_Delete", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@LocationID", Location_ID);
-                cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
-                cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            };
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_Delete", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@LocationID", Location_ID);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                };
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
 
         #endregion

@@ -8,6 +8,7 @@ using InVanWebApp.Repository;
 using InVanWebApp_BO;
 using Excel = Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
+using log4net;
 //using InVanWebApp.DAL;
 
 namespace InVanWebApp.Controllers
@@ -15,6 +16,7 @@ namespace InVanWebApp.Controllers
     public class ItemController : Controller
     {
         private IItemRepository _iItemRepository;
+        private static ILog log = LogManager.GetLogger(typeof(ItemController));
 
         #region Initializing constructor
         /// <summary>
@@ -80,17 +82,24 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddItems(ItemBO model)
         {
-            ResponseMessageBO response = new ResponseMessageBO();
-            if (ModelState.IsValid)
+            try
             {
-                response=_iItemRepository.Insert(model);
-                if(response.Status)
-                    TempData["Success"] = "<script>alert('Item Inserted Successfully!');</script>";
-                else
-                    TempData["Success"] = "<script>alert('Duplicate Item! Can not be inserted!');</script>";
+                ResponseMessageBO response = new ResponseMessageBO();
+                if (ModelState.IsValid)
+                {
+                    response = _iItemRepository.Insert(model);
+                    if (response.Status)
+                        TempData["Success"] = "<script>alert('Item Inserted Successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Duplicate Item! Can not be inserted!');</script>";
 
-                return RedirectToAction("Index", "Item");
-                
+                    return RedirectToAction("Index", "Item");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
             }
             return View();
         }
@@ -161,11 +170,11 @@ namespace InVanWebApp.Controllers
                 //    return Json("Data Uploaded Successfully", JsonRequestBehavior.AllowGet);
                 //}
                 //return Json("", JsonRequestBehavior.AllowGet);
-                int i = 0,flag=0;
+                int i = 0, flag = 0;
                 int count = responsesList.Count;
                 string ItemList = "";
 
-                while (i<count)
+                while (i < count)
                 {
                     if (responsesList[i].Status == false)
                         ItemList = ItemList + responsesList[i].ItemName + ", ";
@@ -175,7 +184,7 @@ namespace InVanWebApp.Controllers
                 }
                 if (ItemList != "")
                 {
-                    if(flag==1)
+                    if (flag == 1)
                         return Json("Few items are uploaded successfully! And following items are duplicate: " + ItemList, JsonRequestBehavior.AllowGet);
                     else
                         return Json("No item inserted! And list of duplicate items: " + ItemList, JsonRequestBehavior.AllowGet);
@@ -219,15 +228,31 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditItem(ItemBO model)
         {
-            if (ModelState.IsValid)
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
             {
-                _iItemRepository.Udate(model);
-                TempData["Success"] = "<script>alert('Item updated successfully!');</script>";
+                if (ModelState.IsValid)
+                {
+                    response = _iItemRepository.Udate(model);
+                    if (response.Status)
+                        TempData["Success"] = "<script>alert('Item updated successfully!');</script>";
 
+                    else
+                        TempData["Success"] = "<script>alert('Duplicate Item! Can not be updated!');</script>";
+
+
+                    return RedirectToAction("Index", "Item");
+                }
+                else
+                    return View(model);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
                 return RedirectToAction("Index", "Item");
             }
-            else
-                return View(model);
+
         }
 
         #endregion
