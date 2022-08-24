@@ -160,7 +160,7 @@
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\SupplierCustomerMasterController.cs" />
+    <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\TaxController.cs" />
     <Compile Include="Controllers\TransactionsPOandOCController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
@@ -372,7 +372,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Interface\ISupplierCustomerRepository.cs" />
+    <Compile Include="Repository\Interface\ICompanyRepository.cs" />
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
     <Compile Include="Repository\ItemRepository.cs" />
     <Compile Include="Repository\Interface\IItemRepository.cs" />
@@ -386,7 +386,7 @@
     <Compile Include="Repository\Interface\IUnitRepository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
-    <Compile Include="Repository\SupplierCustomerRepository.cs" />
+    <Compile Include="Repository\CompanyRepository.cs" />
     <Compile Include="Repository\TaxRepository.cs" />
     <Compile Include="Repository\TransactionsPOandOCRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
@@ -1255,8 +1255,8 @@
     <Content Include="Views\Tax\AddTax.cshtml" />
     <Content Include="Views\Tax\EditTax.cshtml" />
     <Content Include="Views\Tax\DeleteTax.cshtml" />
-    <Content Include="Views\SupplierCustomerMaster\Index.cshtml" />
-    <Content Include="Views\SupplierCustomerMaster\DeleteSupplierCustomer.cshtml" />
+    <Content Include="Views\Company\Index.cshtml" />
+    <Content Include="Views\Company\AddCompany.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

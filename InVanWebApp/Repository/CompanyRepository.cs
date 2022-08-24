@@ -11,10 +11,10 @@ using System.Data;
 
 namespace InVanWebApp.Repository
 {
-    public class SupplierCustomerRepository:ISupplierCustomerRepository
+    public class CompanyRepository:ICompanyRepository
     {
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-        private static ILog log = LogManager.GetLogger(typeof(SupplierCustomerRepository));
+        private static ILog log = LogManager.GetLogger(typeof(CompanyRepository));
 
         #region  Bind grid
         /// <summary>
@@ -37,11 +37,11 @@ namespace InVanWebApp.Repository
                         var company = new CompanyBO()
                         {
                             ID = Convert.ToInt32(reader["ID"]),
-                            CompanyType = reader["CompanyType"].ToString(),
                             CompanyName = reader["CompanyName"].ToString(),
                             ContactPersonName = reader["ContactPersonName"].ToString(),
                             EmailId = reader["EmailId"].ToString(),
-                            Remarks = reader["Remarks"].ToString()
+                            ContactPersonNo = Convert.ToInt32(reader["ContactPersonNo"]),
+                            CityName = reader["CityName"].ToString()
                         };
                         companyList.Add(company);
 
@@ -56,6 +56,41 @@ namespace InVanWebApp.Repository
             return companyList;
 
             //return _context.UnitMasters.ToList();
+        }
+        #endregion
+
+        #region Insert function
+        /// <summary>
+        /// Farheen: Insert record.
+        /// </summary>
+        /// <param name="model"></param>
+        public bool Insert(CompanyBO model)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_Insert", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ItemTypeId", model.CompanyName);
+                    cmd.Parameters.AddWithValue("@ItemCategoryName", model.CompanyType);
+                    cmd.Parameters.AddWithValue("@Description", model.Remarks);
+                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                };
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return false;
+                //Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
+                // throw;
+            }
+
         }
         #endregion
 

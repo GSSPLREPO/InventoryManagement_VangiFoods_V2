@@ -7,7 +7,7 @@ using InVanWebApp_BO;
 
 namespace InVanWebApp.Repository.Interface
 {
-    public interface ISupplierCustomerRepository
+    public interface ICompanyRepository
     {
         //Define function for fetching details of Item master.
         IEnumerable<CompanyBO> GetAll();
@@ -15,7 +15,8 @@ namespace InVanWebApp.Repository.Interface
         //Define function for fetching details of company master by ID.
         CompanyBO GetById(int ID);
 
-
+        //Function define for: Insert record.
+        bool Insert(CompanyBO model);
         //Function define for: Delete record of company using it's ID
         void Delete(int ID);
 
