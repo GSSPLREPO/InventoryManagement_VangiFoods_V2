@@ -62,8 +62,9 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="itemCategoryMaster"></param>
-        public bool Insert(ItemCategoryMasterBO itemCategoryMaster)
+        public ResponseMessageBO Insert(ItemCategoryMasterBO itemCategoryMaster)
         {
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
@@ -76,19 +77,22 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@CreatedBy", 1);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.ItemCategory = dataReader["ItemCategory"].ToString();
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
                     con.Close();
                 };
-                return true;
             }
             catch (Exception ex)
             {
+                response.Status = false;
                 log.Error(ex.Message, ex);
-                return false;
-                //Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
-                // throw;
             }
-
+            return response;
         }
         #endregion
 
@@ -137,8 +141,9 @@ namespace InVanWebApp.Repository
         /// Farheen: Update record
         /// </summary>
         /// <param name="itemCategoryMaster"></param>
-        public bool Udate(ItemCategoryMasterBO itemCategoryMaster)
+        public ResponseMessageBO Update(ItemCategoryMasterBO itemCategoryMaster)
         {
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
@@ -152,17 +157,22 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
 
-                    return true;
+                    while (dataReader.Read())
+                    {
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
+                    con.Close();
+                    return response;
                 }
 
             }
             catch (Exception ex)
             {
+                response.Status = false;
                 log.Error(ex.Message, ex);
-                return false;
+                return response;
             }
         }
         #endregion

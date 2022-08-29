@@ -1,4 +1,4 @@
-﻿using InVanWebApp.DAL;
+﻿using InVanWebApp_BO;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,61 +6,49 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using log4net;
 
 namespace InVanWebApp.Repository
 {
     public class RoleRepository : IRolesRepository
     {
-        private readonly InVanDBContext _context;
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-
-        #region Initializing constructor.
-        /// <summary>
-        /// Farheen: Constructor without parameter
-        /// </summary>
-        public RoleRepository()
-        {
-            //Define the DbContext object.
-            _context = new InVanDBContext();
-        }
-
-        //Constructor with parameter for initializing the DbContext object.
-        public RoleRepository(InVanDBContext context)
-        {
-            _context = context;
-
-        }
-
-        #endregion
+        private static ILog log = LogManager.GetLogger(typeof(RoleRepository));
 
         #region  Bind grid
         /// <summary>
         /// Farheen: This function is for fecthing list of role master's.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Role> GetAll()
+        public IEnumerable<RoleBO> GetAll()
         {
-            List<Role> RoleMastersList = new List<Role>();
-            using (SqlConnection con = new SqlConnection(conString))
+            List<RoleBO> RoleMastersList = new List<RoleBO>();
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Role_GetAll", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                while (reader.Read())
+                using (SqlConnection con = new SqlConnection(conString))
                 {
-                    var RoleMaster = new Role()
+                    SqlCommand cmd = new SqlCommand("usp_tbl_Role_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
                     {
-                        RoleId = Convert.ToInt32(reader["RoleId"]),
-                        RoleName = reader["RoleName"].ToString(),
-                        Description = reader["Description"].ToString()
-                    };
-                    RoleMastersList.Add(RoleMaster);
+                        var RoleMaster = new RoleBO()
+                        {
+                            RoleId = Convert.ToInt32(reader["RoleId"]),
+                            RoleName = reader["RoleName"].ToString(),
+                            Description = reader["Description"].ToString()
+                        };
+                        RoleMastersList.Add(RoleMaster);
+                    }
+                    con.Close();
                 }
-                con.Close();
-                return RoleMastersList;
             }
-            //return _context.UnitMasters.ToList();
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return RoleMastersList;
         }
         #endregion
 
@@ -71,49 +59,71 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="RoleId"></param>
         /// <returns></returns>
-        public Role GetById(int RoleId)
+        public RoleBO GetById(int RoleId)
         {
-            var roleMaster= new Role();
-            using (SqlConnection con = new SqlConnection(conString))
+            var roleMaster = new RoleBO();
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Role_GetByID", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@RoleId", RoleId);
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using (SqlConnection con = new SqlConnection(conString))
                 {
-                    roleMaster = new Role()
+                    SqlCommand cmd = new SqlCommand("usp_tbl_Role_GetByID", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleId", RoleId);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
                     {
-                        RoleId = Convert.ToInt32(reader["RoleId"]),
-                        RoleName=reader["RoleName"].ToString(),
-                        Description=reader["Description"].ToString()
-                    };
+                        roleMaster = new RoleBO()
+                        {
+                            RoleId = Convert.ToInt32(reader["RoleId"]),
+                            RoleName = reader["RoleName"].ToString(),
+                            Description = reader["Description"].ToString()
+                        };
+                    }
+                    con.Close();
                 }
-                con.Close();
-                return roleMaster;
             }
-
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return roleMaster;
         }
 
         /// <summary>
         /// Farheen: Update record
         /// </summary>
         /// <param name="roleMaster"></param>
-        public void Udate(Role roleMaster)
+        public ResponseMessageBO Update(RoleBO roleMaster)
         {
-            using (SqlConnection con = new SqlConnection(conString))
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Role_Update", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@RoleId",roleMaster.RoleId);
-                cmd.Parameters.AddWithValue("@RoleName",roleMaster.RoleName);
-                cmd.Parameters.AddWithValue("@Description", roleMaster.Description);
-                cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
-                cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_Role_Update", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleId", roleMaster.RoleId);
+                    cmd.Parameters.AddWithValue("@RoleName", roleMaster.RoleName);
+                    cmd.Parameters.AddWithValue("@Description", roleMaster.Description);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
+                    con.Close();
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                log.Error(ex.Message, ex);
+                return response;
             }
         }
         #endregion
@@ -123,20 +133,36 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="roleMaster"></param>
-        public void Insert(Role roleMaster)
+        public ResponseMessageBO Insert(RoleBO roleMaster)
         {
-            using (SqlConnection con = new SqlConnection(conString))
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_Role_Insert", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@RoleName", roleMaster.RoleName);
-                cmd.Parameters.AddWithValue("@Description", roleMaster.Description);
-                cmd.Parameters.AddWithValue("@CreatedBy", 1);
-                cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-                con.Open();
-                cmd.ExecuteNonQuery();
-                con.Close();
-            };
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_Role_Insert", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleName", roleMaster.RoleName);
+                    cmd.Parameters.AddWithValue("@Description", roleMaster.Description);
+                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.RoleName = dataReader["RoleName"].ToString();
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                log.Error(ex.Message, ex);
+            }
+            return response;
         }
         #endregion
 
@@ -158,30 +184,5 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region Dispose function
-        private bool disposed = false;
-
-        /// <summary>
-        /// For releasing unmanageable objects and scarce resources,
-        /// like deallocating the controller instance.   
-        ///And it get called when the view is rendered.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                    _context.Dispose();
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

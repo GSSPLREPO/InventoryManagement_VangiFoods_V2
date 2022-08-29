@@ -65,29 +65,27 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddItemType(ItemTypeBO model)
         {
-            var flag = false;
             try
             {
+                ResponseMessageBO response = new ResponseMessageBO();
                 if (ModelState.IsValid)
                 {
-                    flag = _itemTypeRepository.Insert(model);
-                    //_unitRepository.Save();
-                    if (flag)
-                        TempData["Success"] = "<script>alert('Item type inserted successfully!');</script>";
+                    response = _itemTypeRepository.Insert(model);
+                    if (response.Status)
+                        TempData["Success"] = "<script>alert('Item type Inserted Successfully!');</script>";
                     else
-                        TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                        TempData["Success"] = "<script>alert('Duplicate Item type! Can not be inserted!');</script>";
 
                     return RedirectToAction("Index", "ItemType");
+
                 }
-                return View();
 
             }
             catch (Exception ex)
             {
                 log.Error("Error", ex);
-                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-                return RedirectToAction("Index", "ItemType");
             }
+            return View();
         }
         #endregion
 
@@ -112,16 +110,18 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditItemType(ItemTypeBO model)
         {
-            var flag = false;
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    flag = _itemTypeRepository.Udate(model);
-                    if (flag)
+                    response = _itemTypeRepository.Update(model);
+                    if (response.Status)
                         TempData["Success"] = "<script>alert('Item type updated successfully!');</script>";
+
                     else
-                        TempData["Success"] = "<script>alert('Error while update!');</script>";
+                        TempData["Success"] = "<script>alert('Duplicate Item type! Can not be updated!');</script>";
+
 
                     return RedirectToAction("Index", "ItemType");
                 }

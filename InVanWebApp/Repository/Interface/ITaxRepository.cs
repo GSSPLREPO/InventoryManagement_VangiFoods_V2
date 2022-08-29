@@ -16,10 +16,10 @@ namespace InVanWebApp.Repository.Interface
         TaxBO GetById(int ID);
 
         //Function define for: Insert record.
-        bool Insert(TaxBO taxMaster);
+        ResponseMessageBO Insert(TaxBO taxMaster);
 
         //Function define for: Update master record.
-        bool Update(TaxBO taxMaster);
+        ResponseMessageBO Update(TaxBO taxMaster);
 
         //Function define for: Delete record of location using it's ID
         void Delete(int taxId);

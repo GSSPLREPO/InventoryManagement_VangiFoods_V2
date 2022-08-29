@@ -75,25 +75,25 @@ namespace InVanWebApp.Controllers
         {
             try
             {
-                var flag = false;
+                ResponseMessageBO response = new ResponseMessageBO();
                 if (ModelState.IsValid)
                 {
-                    flag = _taxRepository.Insert(model);
-                    if (flag)
+                    response = _taxRepository.Insert(model);
+                    if (response.Status)
                         TempData["Success"] = "<script>alert('Tax inserted successfully!');</script>";
                     else
-                        TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                        TempData["Success"] = "<script>alert('Duplicate insertion!');</script>";
 
                     return RedirectToAction("Index", "Tax");
                 }
-                return View();
             }
             catch (Exception ex)
             {
                 log.Error("Error", ex);
-                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-                return RedirectToAction("Index", "Tax");
+                //TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                //return RedirectToAction("Index", "Tax");
             }
+            return View();
         }
         #endregion
 
@@ -120,16 +120,16 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditTax(TaxBO model)
         {
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
-                var flag = false;
                 if (ModelState.IsValid)
                 {
-                    flag = _taxRepository.Update(model);
-                    if (flag)
+                    response = _taxRepository.Update(model);
+                    if (response.Status)
                         TempData["Success"] = "<script>alert('Tax updated successfully!');</script>";
                     else
-                        TempData["Success"] = "<script>alert('Error while update!');</script>";
+                        TempData["Success"] = "<script>alert('Duplicate tax name!');</script>";
 
                     return RedirectToAction("Index", "Tax");
                 }
@@ -170,6 +170,5 @@ namespace InVanWebApp.Controllers
             return RedirectToAction("Index", "Tax");
         }
         #endregion
-
     }
 }

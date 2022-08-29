@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InVanWebApp.DAL;
+using InVanWebApp_BO;
 
 namespace InVanWebApp.Repository
 {
@@ -16,10 +16,10 @@ namespace InVanWebApp.Repository
         UnitMaster GetById(int UnitID);
 
         //Function define for: Insert record.
-        void Insert(UnitMaster unitMaster);
+        ResponseMessageBO Insert(UnitMaster unitMaster);
 
         //Function define for: Update master record.
-        void Udate(UnitMaster unitMaster);
+        ResponseMessageBO Update(UnitMaster unitMaster);
 
         //Function define for: Delete record of unit using it's ID
         void Delete(int UnitID);

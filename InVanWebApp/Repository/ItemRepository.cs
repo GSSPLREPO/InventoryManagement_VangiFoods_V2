@@ -239,7 +239,7 @@ namespace InVanWebApp.Repository
         /// Farheen: Update record
         /// </summary>
         /// <param name="item"></param>
-        public ResponseMessageBO Udate(ItemBO item)
+        public ResponseMessageBO Update(ItemBO item)
         {
             ResponseMessageBO response = new ResponseMessageBO();
             try

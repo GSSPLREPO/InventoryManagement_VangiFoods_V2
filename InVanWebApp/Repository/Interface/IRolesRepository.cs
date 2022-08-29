@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InVanWebApp.DAL;
+using InVanWebApp_BO;
 
 namespace InVanWebApp.Repository
 {
     public interface IRolesRepository
     {
         //Define function for fetching details of Role master.
-        IEnumerable<Role> GetAll();
+        IEnumerable<RoleBO> GetAll();
 
         //Define function for fetching details of Role master by ID.
-        Role GetById(int RoleId);
+        RoleBO GetById(int RoleId);
 
         //Function define for: Insert record.
-        void Insert(Role roleMaster);
+        ResponseMessageBO Insert(RoleBO roleMaster);
 
         //Function define for: Update master record.
-        void Udate(Role roleMaster);
+        ResponseMessageBO Update(RoleBO roleMaster);
 
         //Function define for: Delete record of role using it's ID
         void Delete(int RoleId);

@@ -10,32 +10,45 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Add Item Category</h4>
+            <h4>Add Item Category</h4>
             <hr />
             @Html.ValidationSummary(true)
 
-            <div class="form-group">
-                @Html.Label("Item Type")
-                @Html.DropDownList("ItemTypeId", (IEnumerable<SelectListItem>)ViewData["ItemType"], "--Select Type--",
-               new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ItemTypeId, "", new { @class = "error mt-2 text-danger" })
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Item Type")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("ItemTypeId", (IEnumerable<SelectListItem>)ViewData["ItemType"], "--Select--",
+                   new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.ItemTypeId, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-
-            <div class="form-group">
-                @Html.Label("Item Category Name")
-                @Html.TextBoxFor(model => model.ItemCategoryName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ItemCategoryName, "", new { @class = "error mt-2 text-danger" })
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Item Category Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ItemCategoryName, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.ItemCategoryName, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-
-            <div class="form-group">
-                @Html.Label("Description")
-                @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Description")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-
+            <br />
             <button type="submit" class="btn btn-primary mr-2">Submit</button>
             @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
-
         </div>
     </div>
 }

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InVanWebApp.DAL;
+using InVanWebApp_BO;
 using InVanWebApp.Repository;
+using log4net;
 
 namespace InVanWebApp.Controllers
 {
     public class UnitController : Controller
     {
         private IUnitRepository _unitRepository;
+        private static ILog log = LogManager.GetLogger(typeof(UnitController));
 
         #region Initializing constructor
         /// <summary>
@@ -18,7 +20,7 @@ namespace InVanWebApp.Controllers
         /// </summary>
         public UnitController()
         {
-            _unitRepository = new UnitRepository(new InVanDBContext());
+            _unitRepository = new UnitRepository();
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
@@ -62,12 +64,25 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddUnit(UnitMaster model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _unitRepository.Insert(model);
-                TempData["Success"] = "<script>alert('Unit inserted successfully!');</script>";
-                //_unitRepository.Save();
-                return RedirectToAction("Index", "Unit");
+                ResponseMessageBO response = new ResponseMessageBO();
+                if (ModelState.IsValid)
+                {
+                    response = _unitRepository.Insert(model);
+                    if (response.Status)
+                        TempData["Success"] = "<script>alert('Unit inserted successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Duplicate unit!');</script>";
+
+                    return RedirectToAction("Index", "Unit");
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                //TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                //return RedirectToAction("Index", "Unit");
             }
             return View();
         }
@@ -94,15 +109,29 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditUnit(UnitMaster model)
         {
-            if (ModelState.IsValid)
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
             {
-                _unitRepository.Udate(model);
-                //_unitRepository.Save();
-                TempData["Success"] = "<script>alert('Unit updated successfully!');</script>";
+                if (ModelState.IsValid)
+                {
+                    response = _unitRepository.Update(model);
+                    if (response.Status)
+                        TempData["Success"] = "<script>alert('Unit updated successfully!');</script>";
+
+                    else
+                        TempData["Success"] = "<script>alert('Duplicate unit!');</script>";
+
+                    return RedirectToAction("Index", "Unit");
+                }
+                else
+                    return View(model);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
                 return RedirectToAction("Index", "Unit");
             }
-            else
-                return View(model);
         }
 
         #endregion

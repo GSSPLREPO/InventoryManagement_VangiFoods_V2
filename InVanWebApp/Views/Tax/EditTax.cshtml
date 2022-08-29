@@ -8,23 +8,32 @@
     @Html.AntiForgeryToken()
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Edit Tax</h4>
+            <h4>Edit Tax</h4>
             <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Id)
 
-            <div class="form-group">
-                @Html.Label("Location Name")
-                @Html.TextBoxFor(model => model.TaxName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TaxName, "", new { @class = "error mt-2 text-danger" })
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Tax Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TaxName, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.TaxName, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-
-            <div class="form-group">
-                @Html.Label("Remarks")
-                @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-
+            <br />
             <button type="submit" class="btn btn-primary mr-2">Update</button>
             @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
 

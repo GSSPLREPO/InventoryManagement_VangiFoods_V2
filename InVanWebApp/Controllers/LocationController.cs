@@ -74,26 +74,25 @@ namespace InVanWebApp.Controllers
         {
             try
             {
-                var flag = false;
+                ResponseMessageBO response = new ResponseMessageBO();
                 if (ModelState.IsValid)
                 {
-                    flag = _locationRepository.Insert(model);
-                    if (flag)
+                    response = _locationRepository.Insert(model);
+                    if (response.Status)
                         TempData["Success"] = "<script>alert('Location inserted successfully!');</script>";
                     else
-                        TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                        TempData["Success"] = "<script>alert('Duplicate location name!');</script>";
 
                     return RedirectToAction("Index", "Location");
                 }
-                return View();
-
             }
             catch (Exception ex)
             {
                 log.Error("Error", ex);
-                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-                return RedirectToAction("Index", "Location");
+                //TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                //return RedirectToAction("Index", "Location");
             }
+            return View();
         }
         #endregion
 
@@ -122,14 +121,14 @@ namespace InVanWebApp.Controllers
         {
             try
             {
-                var flag = false;
+                ResponseMessageBO response = new ResponseMessageBO();
                 if (ModelState.IsValid)
                 {
-                    flag = _locationRepository.Update(model);
-                    if (flag)
+                    response = _locationRepository.Update(model);
+                    if (response.Status)
                         TempData["Success"] = "<script>alert('Location updated successfully!');</script>";
                     else
-                        TempData["Success"] = "<script>alert('Error while update!');</script>";
+                        TempData["Success"] = "<script>alert('Duplicate location name!');</script>";
 
                     return RedirectToAction("Index", "Location");
                 }

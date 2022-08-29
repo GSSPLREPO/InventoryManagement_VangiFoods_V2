@@ -233,7 +233,7 @@ namespace InVanWebApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    response = _iItemRepository.Udate(model);
+                    response = _iItemRepository.Update(model);
                     if (response.Status)
                         TempData["Success"] = "<script>alert('Item updated successfully!');</script>";
 

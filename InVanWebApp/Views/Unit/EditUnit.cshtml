@@ -1,4 +1,4 @@
-﻿@model InVanWebApp.DAL.UnitMaster
+﻿@model InVanWebApp_BO.UnitMaster
 @{
     ViewBag.Title = "EditUnit";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -10,29 +10,43 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Edit Unit</h4>
+            <h4>Edit Unit</h4>
             <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.UnitID)
 
-            <div class="form-group">
-                @Html.Label("Unit Name")
-                @Html.TextBoxFor(model => model.UnitName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "error mt-2 text-danger" })
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Unit Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.UnitName, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-
-            <div class="form-group">
-                @Html.Label("Unit Code")
-                @Html.TextBoxFor(model => model.UnitCode, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UnitCode, "", new { @class = "error mt-2 text-danger" })
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Unit Code")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.UnitCode, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.UnitCode, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-
-            <div class="form-group">
-                @Html.Label("Description")
-                @Html.TextBoxFor(model => model.Description, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Description")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-
+            <br />
             <button type="submit" class="btn btn-primary mr-2">Update</button>
             @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<InVanWebApp.DAL.Role>
+﻿@model IEnumerable<InVanWebApp_BO.RoleBO>
 @{
     ViewBag.Title = "Role Master";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -29,8 +29,11 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="card-title">@Html.ActionLink("Add Role", "AddRole")</h1>
-                            <div class="table-responsive">
+                            @*<h1 class="card-title">@Html.ActionLink("Add Role", "AddRole")</h1>*@
+                            <a href="@Url.Action("AddRole","Role")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span>  Add Role
+                            </a>
+                            <div class="table-responsive" style="padding-top:3px;">
                                 <table class="table table-striped table-bordered">
                                     <tr>
                                         <th>
@@ -72,3 +75,4 @@
 </body>
 
 </html>
+@Html.Raw(TempData["Success"])

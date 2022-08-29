@@ -101,8 +101,9 @@ namespace InVanWebApp.Repository
         /// Farheen: Update record
         /// </summary>
         /// <param name="itemMaster"></param>
-        public bool Udate(ItemTypeBO itemMaster)
+        public ResponseMessageBO Update(ItemTypeBO itemMaster)
         {
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
@@ -115,15 +116,21 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
                     con.Close();
+                    return response;
                 }
-                return true;
             }
             catch (Exception ex)
             {
+                response.Status = false;
                 log.Error(ex.Message, ex);
-                return false;
+                return response;
             }
 
             //_context.Entry(unitMaster).State = EntityState.Modified;
@@ -136,8 +143,9 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="itemMaster"></param>
-        public bool Insert(ItemTypeBO itemMaster)
+        public ResponseMessageBO Insert(ItemTypeBO itemMaster)
         {
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
@@ -149,17 +157,26 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@CreatedBy", 1);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
-                    cmd.ExecuteNonQuery();
+                    //cmd.ExecuteNonQuery();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.ItemType = dataReader["ItemType"].ToString();
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
                     con.Close();
                 }
-                return true;
+                //return true;
 
             }
             catch (Exception ex)
             {
+                response.Status = false;
                 log.Error(ex.Message, ex);
-                return false;
+               // return false;
             }
+            return response;
         }
 
         #endregion

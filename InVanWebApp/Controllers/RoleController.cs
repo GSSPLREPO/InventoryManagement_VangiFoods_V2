@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using InVanWebApp.DAL;
+using InVanWebApp_BO;
 using InVanWebApp.Repository;
+using log4net;
 
 namespace InVanWebApp.Controllers
 {
     public class RoleController : Controller
     {
         private IRolesRepository _rolesRepository;
+        private static ILog log = LogManager.GetLogger(typeof(RoleController));
 
         #region Initializing constructor
         /// <summary>
@@ -18,7 +20,7 @@ namespace InVanWebApp.Controllers
         /// </summary>
         public RoleController()
         {
-            _rolesRepository = new RoleRepository(new InVanDBContext());
+            _rolesRepository = new RoleRepository();
         }
 
         /// <summary>
@@ -63,13 +65,26 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddRole(Role model)
+        public ActionResult AddRole(RoleBO model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _rolesRepository.Insert(model);
-                //_unitRepository.Save();
-                return RedirectToAction("Index", "Role");
+                ResponseMessageBO response = new ResponseMessageBO();
+                if (ModelState.IsValid)
+                {
+                    response = _rolesRepository.Insert(model);
+                    if (response.Status)
+                        TempData["Success"] = "<script>alert('Role Inserted Successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Duplicate role! Can not be inserted!');</script>";
+
+                    return RedirectToAction("Index", "Role");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
             }
             return View();
         }
@@ -84,7 +99,7 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditRole(int RoleId)
         {
-            Role model = _rolesRepository.GetById(RoleId);
+            RoleBO model = _rolesRepository.GetById(RoleId);
             return View(model);
         }
 
@@ -94,15 +109,32 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditRole(Role model)
+        public ActionResult EditRole(RoleBO model)
         {
-            if (ModelState.IsValid)
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
             {
-                _rolesRepository.Udate(model);
+                if (ModelState.IsValid)
+                {
+                    response = _rolesRepository.Update(model);
+                    if (response.Status)
+                        TempData["Success"] = "<script>alert('Role updated successfully!');</script>";
+
+                    else
+                        TempData["Success"] = "<script>alert('Duplicate role! Can not be updated!');</script>";
+
+
+                    return RedirectToAction("Index", "Role");
+                }
+                else
+                    return View(model);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
                 return RedirectToAction("Index", "Role");
             }
-            else
-                return View(model);
         }
 
         #endregion
@@ -116,7 +148,7 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteRole(int RoleId)
         {
-            Role model = _rolesRepository.GetById(RoleId);
+            RoleBO model = _rolesRepository.GetById(RoleId);
             return View(model);
         }
         [HttpPost]
@@ -124,6 +156,7 @@ namespace InVanWebApp.Controllers
         {
             _rolesRepository.Delete(RoleId);
             //_unitRepository.Save();
+            TempData["Success"] = "<script>alert('Role deleted successfully!');</script>";
             return RedirectToAction("Index", "Role");
         }
         #endregion

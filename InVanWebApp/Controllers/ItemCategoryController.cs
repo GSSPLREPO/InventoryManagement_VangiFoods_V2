@@ -71,27 +71,26 @@ namespace InVanWebApp.Controllers
         {
             try
             {
-                var flag = false;
+                ResponseMessageBO response = new ResponseMessageBO();
                 if (ModelState.IsValid)
                 {
-                    flag = _itemCategoryRepository.Insert(model);
+                    response = _itemCategoryRepository.Insert(model);
                     //_unitRepository.Save();
-                    if (flag)
+                    if (response.Status)
                         TempData["Success"] = "<script>alert('Item category inserted successfully!');</script>";
                     else
-                        TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                        TempData["Success"] = "<script>alert('Duplicate category!');</script>";
 
                     return RedirectToAction("Index", "ItemCategory");
                 }
-
-                return View();
             }
             catch (Exception ex)
             {
                 log.Error("Error", ex);
-                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-                return RedirectToAction("Index", "ItemCategory");
+                //TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                //return RedirectToAction("Index", "ItemCategory");
             }
+            return View();
         }
         #endregion
 
@@ -119,16 +118,16 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditItemCategory(ItemCategoryMasterBO model)
         {
-            var flag = false;
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    flag = _itemCategoryRepository.Udate(model);
-                    if (flag)
+                    response = _itemCategoryRepository.Update(model);
+                    if (response.Status)
                         TempData["Success"] = "<script>alert('Item category updated successfully!');</script>";
                     else
-                        TempData["Success"] = "<script>alert('Error while update!');</script>";
+                        TempData["Success"] = "<script>alert('Duplicate category!');</script>";
 
                     return RedirectToAction("Index", "ItemCategory");
                 }

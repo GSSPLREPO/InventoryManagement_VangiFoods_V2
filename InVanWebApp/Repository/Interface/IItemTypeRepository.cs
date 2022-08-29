@@ -17,10 +17,10 @@ namespace InVanWebApp.Repository
         ItemTypeBO GetById(int ItemTypeId);
 
         //Function define for: Insert record.
-        bool Insert(ItemTypeBO itemTypeMaster);
+        ResponseMessageBO Insert(ItemTypeBO itemTypeMaster);
 
         //Function define for: Update master record.
-        bool Udate(ItemTypeBO itemTypeMaster);
+        ResponseMessageBO Update(ItemTypeBO itemTypeMaster);
 
         //Function define for: Delete record of item type using it's ID
         void Delete(int ItemTypeId);
