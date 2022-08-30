@@ -152,6 +152,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\UserDetailsController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -359,6 +360,9 @@
     <Compile Include="DAL\User.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\UserDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\WorkOrder.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -374,6 +378,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
+    <Compile Include="Repository\Interface\IUserDetailsRepository.cs" />
     <Compile Include="Repository\ItemRepository.cs" />
     <Compile Include="Repository\Interface\IItemRepository.cs" />
     <Compile Include="Repository\Interface\IItemCategoryRepository.cs" />
@@ -390,6 +395,7 @@
     <Compile Include="Repository\TaxRepository.cs" />
     <Compile Include="Repository\TransactionsPOandOCRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
+    <Compile Include="Repository\UserDetailsRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker.min.css" />
@@ -1257,12 +1263,15 @@
     <Content Include="Views\Tax\DeleteTax.cshtml" />
     <Content Include="Views\Company\Index.cshtml" />
     <Content Include="Views\Company\AddCompany.cshtml" />
+    <Content Include="Views\UserDetails\Index.cshtml" />
+    <Content Include="Views\UserDetails\AddUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\SignatureImages\" />
     <Folder Include="ExcelUploads\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Employee\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

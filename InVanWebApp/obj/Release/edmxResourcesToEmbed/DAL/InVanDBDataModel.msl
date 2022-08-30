@@ -112,26 +112,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Companies">
-      <EntityTypeMapping TypeName="InVanDBModels.Company">
-        <MappingFragment StoreEntitySet="Company">
-          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
-          <ScalarProperty Name="CityID" ColumnName="CityID" />
-          <ScalarProperty Name="StateID" ColumnName="StateID" />
-          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
-          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
-          <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Company_ID" ColumnName="Company_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="CountryMasters">
       <EntityTypeMapping TypeName="InVanDBModels.CountryMaster">
         <MappingFragment StoreEntitySet="CountryMaster">
@@ -170,17 +150,15 @@
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="CheckedBy" ColumnName="CheckedBy" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="GeneralRemarks" ColumnName="GeneralRemarks" />
-          <ScalarProperty Name="Grandtotal" ColumnName="Grandtotal" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="DebitNoteNo" ColumnName="DebitNoteNo" />
-          <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+          <ScalarProperty Name="Signature" ColumnName="Signature" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="PONumber" ColumnName="PONumber" />
+          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
+          <ScalarProperty Name="InwardNoteId" ColumnName="InwardNoteId" />
           <ScalarProperty Name="GRNId" ColumnName="GRNId" />
-          <ScalarProperty Name="RejectionNoteId" ColumnName="RejectionNoteId" />
-          <ScalarProperty Name="DebitNoteId" ColumnName="DebitNoteId" />
+          <ScalarProperty Name="DebitNoteDate" ColumnName="DebitNoteDate" />
+          <ScalarProperty Name="DebitNoteNo" ColumnName="DebitNoteNo" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -192,17 +170,13 @@
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="Value" ColumnName="Value" />
-          <ScalarProperty Name="IGST" ColumnName="IGST" />
-          <ScalarProperty Name="CGST" ColumnName="CGST" />
-          <ScalarProperty Name="SGST" ColumnName="SGST" />
-          <ScalarProperty Name="Discount" ColumnName="Discount" />
-          <ScalarProperty Name="Rate" ColumnName="Rate" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="QuantityDebited" ColumnName="QuantityDebited" />
           <ScalarProperty Name="ItemId" ColumnName="ItemId" />
           <ScalarProperty Name="DebitNoteId" ColumnName="DebitNoteId" />
-          <ScalarProperty Name="DebitNoteDetailsId" ColumnName="DebitNoteDetailsId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -257,9 +231,6 @@
           <ScalarProperty Name="EmployeeMobileNo" ColumnName="EmployeeMobileNo" />
           <ScalarProperty Name="DesignationID" ColumnName="DesignationID" />
           <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
-          <ScalarProperty Name="OrganisationId" ColumnName="OrganisationId" />
-          <ScalarProperty Name="OrganisationGroupId" ColumnName="OrganisationGroupId" />
           <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
           <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
         </MappingFragment>
@@ -286,6 +257,39 @@
           <ScalarProperty Name="PackageSize" ColumnName="PackageSize" />
           <ScalarProperty Name="ProductName" ColumnName="ProductName" />
           <ScalarProperty Name="FGSID" ColumnName="FGSID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GRN_Master">
+      <EntityTypeMapping TypeName="InVanDBModels.GRN_Master">
+        <MappingFragment StoreEntitySet="GRN_Master">
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="GRNDate" ColumnName="GRNDate" />
+          <ScalarProperty Name="GRNCode" ColumnName="GRNCode" />
+          <ScalarProperty Name="PONumber" ColumnName="PONumber" />
+          <ScalarProperty Name="PO_ID" ColumnName="PO_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GRNDetails">
+      <EntityTypeMapping TypeName="InVanDBModels.GRNDetail">
+        <MappingFragment StoreEntitySet="GRNDetails">
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ReceivedQuantity" ColumnName="ReceivedQuantity" />
+          <ScalarProperty Name="OrderQuantity" ColumnName="OrderQuantity" />
+          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="GRN_ID" ColumnName="GRN_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -363,19 +367,20 @@
     <EntitySetMapping Name="InwardNotes">
       <EntityTypeMapping TypeName="InVanDBModels.InwardNote">
         <MappingFragment StoreEntitySet="InwardNote">
-          <ScalarProperty Name="LastModifiedby" ColumnName="LastModifiedby" />
           <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="ShippingAddress" ColumnName="ShippingAddress" />
-          <ScalarProperty Name="BillingAddress" ColumnName="BillingAddress" />
-          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-          <ScalarProperty Name="PODate" ColumnName="PODate" />
-          <ScalarProperty Name="PONumber" ColumnName="PONumber" />
-          <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="Signature" ColumnName="Signature" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="LocationStockID" ColumnName="LocationStockID" />
+          <ScalarProperty Name="RejectedQuantity" ColumnName="RejectedQuantity" />
+          <ScalarProperty Name="InwardQuantity" ColumnName="InwardQuantity" />
           <ScalarProperty Name="InwardDate" ColumnName="InwardDate" />
           <ScalarProperty Name="InwardNumber" ColumnName="InwardNumber" />
-          <ScalarProperty Name="InwardNoteID" ColumnName="InwardNoteID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -433,16 +438,13 @@
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Tax" ColumnName="Tax" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Current_Stock" ColumnName="Current_Stock" />
+          <ScalarProperty Name="MinStock" ColumnName="MinStock" />
           <ScalarProperty Name="HSN_Code" ColumnName="HSN_Code" />
-          <ScalarProperty Name="UnitOfMeasurement_ID" ColumnName="UnitOfMeasurement_ID" />
           <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
           <ScalarProperty Name="Item_Code" ColumnName="Item_Code" />
           <ScalarProperty Name="ItemTypeID" ColumnName="ItemTypeID" />
           <ScalarProperty Name="ItemCategory_ID" ColumnName="ItemCategory_ID" />
-          <ScalarProperty Name="Item_ID" ColumnName="Item_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -461,17 +463,50 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ItemMasters">
-      <EntityTypeMapping TypeName="InVanDBModels.ItemMaster">
-        <MappingFragment StoreEntitySet="ItemMaster">
+    <EntitySetMapping Name="ItemCostMasters">
+      <EntityTypeMapping TypeName="InVanDBModels.ItemCostMaster">
+        <MappingFragment StoreEntitySet="ItemCostMaster">
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="EffectiveRateDate" ColumnName="EffectiveRateDate" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemTaxMasters">
+      <EntityTypeMapping TypeName="InVanDBModels.ItemTaxMaster">
+        <MappingFragment StoreEntitySet="ItemTaxMaster">
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+          <ScalarProperty Name="ItemTaxValue" ColumnName="ItemTaxValue" />
+          <ScalarProperty Name="TaxId" ColumnName="TaxId" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ItemTypes">
+      <EntityTypeMapping TypeName="InVanDBModels.ItemType">
+        <MappingFragment StoreEntitySet="ItemType">
           <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
           <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
-          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+          <ScalarProperty Name="ItemType1" ColumnName="ItemType" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -499,13 +534,26 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
-          <ScalarProperty Name="City_ID" ColumnName="City_ID" />
-          <ScalarProperty Name="State_ID" ColumnName="State_ID" />
-          <ScalarProperty Name="Country_ID" ColumnName="Country_ID" />
-          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="Levels" ColumnName="Levels" />
           <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LocationWiseStocks">
+      <EntityTypeMapping TypeName="InVanDBModels.LocationWiseStock">
+        <MappingFragment StoreEntitySet="LocationWiseStock">
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="ItemCostID" ColumnName="ItemCostID" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -609,6 +657,7 @@
     <EntitySetMapping Name="PurchaseOrders">
       <EntityTypeMapping TypeName="InVanDBModels.PurchaseOrder">
         <MappingFragment StoreEntitySet="PurchaseOrder">
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
           <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
           <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -832,7 +881,6 @@
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
           <ScalarProperty Name="LastModifiedUserId" ColumnName="LastModifiedUserId" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="ScreenId" ColumnName="ScreenId" />
           <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="RoleRightId" ColumnName="RoleRightId" />
@@ -981,39 +1029,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StockAdjustment_M">
-      <EntityTypeMapping TypeName="InVanDBModels.StockAdjustment_M">
-        <MappingFragment StoreEntitySet="StockAdjustment_M">
-          <ScalarProperty Name="LastModifiedby" ColumnName="LastModifiedby" />
-          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="CheckedBy" ColumnName="CheckedBy" />
-          <ScalarProperty Name="AdjustmentVoucherWEF" ColumnName="AdjustmentVoucherWEF" />
-          <ScalarProperty Name="AdjustmentVoucherDate" ColumnName="AdjustmentVoucherDate" />
-          <ScalarProperty Name="AdjustmentVoucherNo" ColumnName="AdjustmentVoucherNo" />
-          <ScalarProperty Name="StockAdjustmentMId" ColumnName="StockAdjustmentMId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="StockAdjustment_T">
-      <EntityTypeMapping TypeName="InVanDBModels.StockAdjustment_T">
-        <MappingFragment StoreEntitySet="StockAdjustment_T">
+    <EntitySetMapping Name="StockAdjustments">
+      <EntityTypeMapping TypeName="InVanDBModels.StockAdjustment">
+        <MappingFragment StoreEntitySet="StockAdjustment">
           <ScalarProperty Name="LastModificationBy" ColumnName="LastModificationBy" />
           <ScalarProperty Name="LastModificationDate" ColumnName="LastModificationDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="ShortExcessId" ColumnName="ShortExcessId" />
           <ScalarProperty Name="Reason" ColumnName="Reason" />
-          <ScalarProperty Name="Physicalstock" ColumnName="Physicalstock" />
-          <ScalarProperty Name="Bookstock" ColumnName="Bookstock" />
-          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+          <ScalarProperty Name="QuantityAdjust" ColumnName="QuantityAdjust" />
           <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-          <ScalarProperty Name="StockAdjustmentMId" ColumnName="StockAdjustmentMId" />
-          <ScalarProperty Name="StockAdjustmentTId" ColumnName="StockAdjustmentTId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1025,42 +1052,18 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="InwardNoteId" ColumnName="InwardNoteId" />
           <ScalarProperty Name="UnitID" ColumnName="UnitID" />
-          <ScalarProperty Name="StockMinLeval" ColumnName="StockMinLeval" />
           <ScalarProperty Name="StockQuantity" ColumnName="StockQuantity" />
-          <ScalarProperty Name="ItemName" ColumnName="ItemName" />
           <ScalarProperty Name="ItemID" ColumnName="ItemID" />
-          <ScalarProperty Name="ItemCategoryID" ColumnName="ItemCategoryID" />
-          <ScalarProperty Name="StorageItemMappingID" ColumnName="StorageItemMappingID" />
-          <ScalarProperty Name="StockID" ColumnName="StockID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StockTransfer_M">
-      <EntityTypeMapping TypeName="InVanDBModels.StockTransfer_M">
-        <MappingFragment StoreEntitySet="StockTransfer_M">
-          <ScalarProperty Name="LastModifiedby" ColumnName="LastModifiedby" />
-          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="AuthorisedBy" ColumnName="AuthorisedBy" />
-          <ScalarProperty Name="ApprovedBy" ColumnName="ApprovedBy" />
-          <ScalarProperty Name="PreparedBy" ColumnName="PreparedBy" />
-          <ScalarProperty Name="ToSite" ColumnName="ToSite" />
-          <ScalarProperty Name="FromSite" ColumnName="FromSite" />
-          <ScalarProperty Name="Date" ColumnName="Date" />
-          <ScalarProperty Name="TransferType" ColumnName="TransferType" />
-          <ScalarProperty Name="TransferNo" ColumnName="TransferNo" />
-          <ScalarProperty Name="SalesOrderId" ColumnName="SalesOrderId" />
-          <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
-          <ScalarProperty Name="StockTransferMId" ColumnName="StockTransferMId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="StockTransfer_T">
-      <EntityTypeMapping TypeName="InVanDBModels.StockTransfer_T">
-        <MappingFragment StoreEntitySet="StockTransfer_T">
+    <EntitySetMapping Name="StockTransfers">
+      <EntityTypeMapping TypeName="InVanDBModels.StockTransfer">
+        <MappingFragment StoreEntitySet="StockTransfer">
           <ScalarProperty Name="LastModifiedby" ColumnName="LastModifiedby" />
           <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -1070,41 +1073,9 @@
           <ScalarProperty Name="RequiredQuantity" ColumnName="RequiredQuantity" />
           <ScalarProperty Name="TransferQuantity" ColumnName="TransferQuantity" />
           <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-          <ScalarProperty Name="StockTransferMId" ColumnName="StockTransferMId" />
-          <ScalarProperty Name="StockTransferTId" ColumnName="StockTransferTId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="StorageItemMappings">
-      <EntityTypeMapping TypeName="InVanDBModels.StorageItemMapping">
-        <MappingFragment StoreEntitySet="StorageItemMapping">
-          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="Per" ColumnName="Per" />
-          <ScalarProperty Name="RowNumber" ColumnName="RowNumber" />
-          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="ItemID" ColumnName="ItemID" />
-          <ScalarProperty Name="StorageLocationID" ColumnName="StorageLocationID" />
-          <ScalarProperty Name="StorageItemMappingID" ColumnName="StorageItemMappingID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="StorageLocationMasters">
-      <EntityTypeMapping TypeName="InVanDBModels.StorageLocationMaster">
-        <MappingFragment StoreEntitySet="StorageLocationMaster">
-          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="StorageDescription" ColumnName="StorageDescription" />
-          <ScalarProperty Name="StorageLocationName" ColumnName="StorageLocationName" />
-          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-          <ScalarProperty Name="StorageLocationID" ColumnName="StorageLocationID" />
+          <ScalarProperty Name="ToLocationId" ColumnName="ToLocationId" />
+          <ScalarProperty Name="FromLocationId" ColumnName="FromLocationId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1135,6 +1106,31 @@
           <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
           <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
           <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="InVanDBModels.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaxMasters">
+      <EntityTypeMapping TypeName="InVanDBModels.TaxMaster">
+        <MappingFragment StoreEntitySet="TaxMaster">
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TaxName" ColumnName="TaxName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1175,11 +1171,11 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="OrganisationId" ColumnName="OrganisationId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -1248,6 +1244,31 @@
         <MappingFragment StoreEntitySet="YearMaster">
           <ScalarProperty Name="YearName" ColumnName="YearName" />
           <ScalarProperty Name="YearID" ColumnName="YearID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="InVanDBModels.Company">
+        <MappingFragment StoreEntitySet="Company">
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="IsBlackListed" ColumnName="IsBlackListed" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="ContactPersonNo" ColumnName="ContactPersonNo" />
+          <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="CompanyType" ColumnName="CompanyType" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

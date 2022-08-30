@@ -88,5 +88,6 @@ namespace InVanWebApp.DAL
         public virtual DbSet<WorkOrderDetail> WorkOrderDetails { get; set; }
         public virtual DbSet<YearMaster> YearMasters { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
     }
 }

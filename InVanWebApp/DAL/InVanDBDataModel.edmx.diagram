@@ -130,6 +130,13 @@
         <AssociationConnector Association="InVanDBModels.FK_Company_CityMaster" />
         <AssociationConnector Association="InVanDBModels.FK_Company_CountryMaster" />
         <AssociationConnector Association="InVanDBModels.FK_Company_StateMaster" />
+        <EntityTypeShape EntityType="InVanDBModels.UserDetail" Width="1.5" PointX="12.5" PointY="0.75" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_CityMaster1" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_CountryMaster1" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_Department1" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_EmployeeMaster1" />
+        <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_StateMaster1" />
+        <AssociationConnector Association="InVanDBModels.FK_Users_EmployeeMaster1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

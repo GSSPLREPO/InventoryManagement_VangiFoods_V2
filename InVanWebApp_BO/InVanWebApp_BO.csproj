@@ -65,6 +65,9 @@
     <Compile Include="CompanyBO.cs" />
     <Compile Include="CountryMaster.cs" />
     <Compile Include="CurrencyMaster.cs" />
+    <Compile Include="DesignationBO.cs" />
+    <Compile Include="OrganisationsBO.cs" />
+    <Compile Include="UserDetailsBO.cs" />
     <Compile Include="FinishGoodSery.cs" />
     <Compile Include="InquiryMaster.cs" />
     <Compile Include="ItemBO.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="TaxBO.cs" />
     <Compile Include="TermsAndConditionMaster.cs" />
     <Compile Include="UnitMaster.cs" />
+    <Compile Include="UsersBO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -18,6 +18,7 @@ namespace InVanWebApp.DAL
         public Department()
         {
             this.EmployeeMasters = new HashSet<EmployeeMaster>();
+            this.UserDetails = new HashSet<UserDetail>();
         }
     
         public int DepartmentID { get; set; }
@@ -35,5 +36,7 @@ namespace InVanWebApp.DAL
         public virtual Branch Branch { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmployeeMaster> EmployeeMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserDetail> UserDetails { get; set; }
     }
 }

@@ -1,34 +1,39 @@
-﻿@model InVanWebApp.DAL.Role
+﻿@model InVanWebApp_BO.RoleBO
 @{
     ViewBag.Title = "DeleteRole";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
-<h3>Are you sure you want to delete this?</h3>
+
 <div>
     @using (Html.BeginForm("Delete", "Role", FormMethod.Post))
     {
         @Html.HiddenFor(r => r.RoleId)
-        <h4>Delete Role</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.RoleName)
-            </dt>
+        <div class="card">
+            <div class="card-body">
+                <h4>Delete Role</h4>
+                <hr />
 
-            <dd>
-                @Html.DisplayFor(model => model.RoleName)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RoleName)
+                    </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-        </dl>
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                    <dd>
+                        @Html.DisplayFor(model => model.RoleName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                </dl>
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
         </div>
     }
 </div>

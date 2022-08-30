@@ -1,0 +1,45 @@
+﻿@model InVanWebApp_BO.TaxBO
+@{
+    ViewBag.Title = "Edit Tax";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Tax</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Tax Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TaxName, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.TaxName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary mr-2">Update</button>
+            @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
+
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

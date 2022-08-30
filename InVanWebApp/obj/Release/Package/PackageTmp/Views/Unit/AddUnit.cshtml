@@ -1,4 +1,4 @@
-﻿@model InVanWebApp.DAL.UnitMaster
+﻿@model InVanWebApp_BO.UnitMaster
 @{
     ViewBag.Title = "AddUnit";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -7,48 +7,51 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h5>Add Unit</h5>
-        <hr />
-        @Html.ValidationSummary(true)
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Add Unit</h4>
+            <hr />
+            @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UnitName, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UnitName)
-                @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Unit Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.UnitName, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-        </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Unit Code")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.UnitCode, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.UnitCode, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Description")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.UnitCode, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UnitCode)
-                @Html.ValidationMessageFor(model => model.UnitCode)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description)
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to Unit List", "Index")
-</div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-

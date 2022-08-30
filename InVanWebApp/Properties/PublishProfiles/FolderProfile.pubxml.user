@@ -5,6 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Publish</_PublishTargetUrl>
+    <History>True|2022-08-29T07:47:45.6195138Z;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -19,14 +20,38 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>10/23/2017 13:15:20</publishTime>
     </File>
+    <File Include="bin/EPPlus.Core.dll">
+      <publishTime>11/30/2017 15:21:24</publishTime>
+    </File>
+    <File Include="bin/EPPlus.Interfaces.dll">
+      <publishTime>03/07/2022 20:19:54</publishTime>
+    </File>
+    <File Include="bin/EPPlus.System.Drawing.dll">
+      <publishTime>03/07/2022 20:19:56</publishTime>
+    </File>
+    <File Include="bin/Excel.dll">
+      <publishTime>01/30/2018 16:59:26</publishTime>
+    </File>
     <File Include="bin/InVanWebApp.dll">
-      <publishTime>06/25/2022 10:58:00</publishTime>
+      <publishTime>08/29/2022 13:51:22</publishTime>
     </File>
     <File Include="bin/InVanWebApp.pdb">
-      <publishTime>06/25/2022 10:58:00</publishTime>
+      <publishTime>08/29/2022 13:51:22</publishTime>
+    </File>
+    <File Include="bin/InVanWebApp_BO.dll">
+      <publishTime>08/29/2022 13:17:39</publishTime>
+    </File>
+    <File Include="bin/InVanWebApp_BO.pdb">
+      <publishTime>08/29/2022 13:17:39</publishTime>
+    </File>
+    <File Include="bin/log4net.dll">
+      <publishTime>07/25/2022 13:10:06</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
       <publishTime>09/05/2018 16:10:50</publishTime>
+    </File>
+    <File Include="bin/Microsoft.IO.RecyclableMemoryStream.dll">
+      <publishTime>03/11/2021 05:18:48</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>07/25/2012 11:48:56</publishTime>
@@ -371,7 +396,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/10/2022 10:02:48</publishTime>
     </File>
     <File Include="DAL/InVanDBDataModel.edmx.diagram">
-      <publishTime>06/24/2022 21:15:11</publishTime>
+      <publishTime>08/23/2022 16:10:37</publishTime>
+    </File>
+    <File Include="ExcelFileFormat/Download-Format-Item.xlsx">
+      <publishTime>08/22/2022 11:48:27</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>04/21/2022 11:53:50</publishTime>
@@ -2617,6 +2645,12 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/AddItem/Index.cshtml">
       <publishTime>05/25/2022 17:51:18</publishTime>
     </File>
+    <File Include="Views/Company/AddCompany.cshtml">
+      <publishTime>08/24/2022 15:07:51</publishTime>
+    </File>
+    <File Include="Views/Company/Index.cshtml">
+      <publishTime>08/24/2022 13:52:07</publishTime>
+    </File>
     <File Include="Views/Dashboard/Index.cshtml">
       <publishTime>06/25/2022 10:16:15</publishTime>
     </File>
@@ -2635,53 +2669,68 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/Item/AddItem.cshtml">
       <publishTime>05/23/2022 18:29:54</publishTime>
     </File>
+    <File Include="Views/Item/AddItems.cshtml">
+      <publishTime>08/26/2022 16:44:52</publishTime>
+    </File>
     <File Include="Views/Item/DeleteItem.cshtml">
-      <publishTime>05/23/2022 17:18:18</publishTime>
+      <publishTime>08/29/2022 10:53:55</publishTime>
     </File>
     <File Include="Views/Item/EditItem.cshtml">
-      <publishTime>05/23/2022 18:30:07</publishTime>
+      <publishTime>08/26/2022 15:11:13</publishTime>
     </File>
     <File Include="Views/Item/Index.cshtml">
-      <publishTime>05/23/2022 17:02:34</publishTime>
+      <publishTime>08/26/2022 16:25:06</publishTime>
     </File>
     <File Include="Views/ItemCategory/AddItemCategory.cshtml">
-      <publishTime>05/24/2022 18:36:05</publishTime>
+      <publishTime>08/26/2022 16:45:22</publishTime>
     </File>
     <File Include="Views/ItemCategory/DeleteItemCategory.cshtml">
-      <publishTime>05/25/2022 17:04:15</publishTime>
+      <publishTime>08/29/2022 10:54:13</publishTime>
     </File>
     <File Include="Views/ItemCategory/EditItemCategory.cshtml">
-      <publishTime>05/24/2022 18:15:11</publishTime>
+      <publishTime>08/26/2022 16:52:19</publishTime>
     </File>
     <File Include="Views/ItemCategory/Index.cshtml">
-      <publishTime>05/24/2022 16:11:33</publishTime>
+      <publishTime>08/26/2022 16:54:36</publishTime>
+    </File>
+    <File Include="Views/ItemType/AddItemType.cshtml">
+      <publishTime>08/26/2022 16:59:21</publishTime>
+    </File>
+    <File Include="Views/ItemType/DeleteItemType.cshtml">
+      <publishTime>08/29/2022 10:54:46</publishTime>
+    </File>
+    <File Include="Views/ItemType/EditItemType.cshtml">
+      <publishTime>08/29/2022 10:13:02</publishTime>
+    </File>
+    <File Include="Views/ItemType/Index.cshtml">
+      <publishTime>08/26/2022 16:55:47</publishTime>
     </File>
     <File Include="Views/Location/AddLocation.cshtml">
-      <publishTime>06/06/2022 12:44:08</publishTime>
+      <publishTime>08/29/2022 10:15:42</publishTime>
     </File>
     <File Include="Views/Location/DeleteLocation.cshtml">
-      <publishTime>06/22/2022 17:19:07</publishTime>
+      <publishTime>08/29/2022 10:54:52</publishTime>
     </File>
     <File Include="Views/Location/EditLocation.cshtml">
-      <publishTime>06/18/2022 17:18:31</publishTime>
+      <publishTime>08/29/2022 10:15:48</publishTime>
     </File>
     <File Include="Views/Location/Index.cshtml">
-      <publishTime>06/23/2022 12:01:45</publishTime>
+      <publishTime>08/29/2022 10:15:36</publishTime>
     </File>
     <File Include="Views/Login/Index.cshtml">
       <publishTime>06/24/2022 18:49:04</publishTime>
     </File>
     <File Include="Views/Role/AddRole.cshtml">
-      <publishTime>05/23/2022 18:30:48</publishTime>
+      <publishTime>08/29/2022 13:10:14</publishTime>
     </File>
     <File Include="Views/Role/DeleteRole.cshtml">
-      <publishTime>05/23/2022 15:24:02</publishTime>
+      <publishTime>08/29/2022 13:11:32</publishTime>
     </File>
     <File Include="Views/Role/EditRole.cshtml">
-      <publishTime>05/23/2022 18:30:56</publishTime>
+      <publishTime>08/29/2022 13:09:51</publishTime>
     </File>
     <File Include="Views/Role/Index.cshtml">
-      <publishTime>05/23/2022 14:24:04</publishTime>
+      <publishTime>08/29/2022 13:09:40</publishTime>
     </File>
     <File Include="Views/Shared/Dashboard.cshtml">
       <publishTime>06/25/2022 10:09:54</publishTime>
@@ -2693,10 +2742,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/24/2022 17:45:45</publishTime>
     </File>
     <File Include="Views/Shared/SideNavBar.cshtml">
-      <publishTime>06/25/2022 10:17:20</publishTime>
+      <publishTime>08/26/2022 15:20:56</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>04/21/2022 11:53:50</publishTime>
+    </File>
+    <File Include="Views/Tax/AddTax.cshtml">
+      <publishTime>08/29/2022 10:28:04</publishTime>
+    </File>
+    <File Include="Views/Tax/DeleteTax.cshtml">
+      <publishTime>08/29/2022 10:55:08</publishTime>
+    </File>
+    <File Include="Views/Tax/EditTax.cshtml">
+      <publishTime>08/29/2022 10:28:44</publishTime>
+    </File>
+    <File Include="Views/Tax/Index.cshtml">
+      <publishTime>08/29/2022 10:25:01</publishTime>
     </File>
     <File Include="Views/TransactionsPOandOC/AddOrderConfirmation.cshtml">
       <publishTime>06/24/2022 21:36:58</publishTime>
@@ -2717,16 +2778,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/24/2022 21:38:00</publishTime>
     </File>
     <File Include="Views/Unit/AddUnit.cshtml">
-      <publishTime>05/23/2022 18:30:26</publishTime>
+      <publishTime>08/29/2022 10:36:15</publishTime>
     </File>
     <File Include="Views/Unit/DeleteUnit.cshtml">
-      <publishTime>05/23/2022 14:38:58</publishTime>
+      <publishTime>08/29/2022 10:55:12</publishTime>
     </File>
     <File Include="Views/Unit/EditUnit.cshtml">
-      <publishTime>05/23/2022 18:30:35</publishTime>
+      <publishTime>08/29/2022 10:38:55</publishTime>
     </File>
     <File Include="Views/Unit/Index.cshtml">
-      <publishTime>05/20/2022 15:22:17</publishTime>
+      <publishTime>08/29/2022 10:35:16</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>04/21/2022 11:53:50</publishTime>
@@ -2735,7 +2796,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/21/2022 11:53:50</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>06/25/2022 10:58:00</publishTime>
+      <publishTime>08/29/2022 13:17:42</publishTime>
     </File>
   </ItemGroup>
 </Project>
