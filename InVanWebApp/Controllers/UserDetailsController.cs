@@ -92,6 +92,80 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region  Update function
+        /// <summary>
+        ///Farheen: Rendered the user to the edit page with details of a perticular record.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditUser(int userId)
+        {
+            BindOrganizations();
+            BindDesignations();
+            BindRoles();
+            UserDetailsBO model = _userDetailsRepository.GetById(userId);
+            return View(model);
+        }
+
+        /// <summary>
+        /// Farheen:  Pass the data to the repository for updating that record.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditUser(UserDetailsBO model)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    response = _userDetailsRepository.Update(model);
+                    if (response.Status)
+                        TempData["Success"] = "<script>alert('User updated successfully!');</script>";
+                    else
+                        TempData["Success"] = "<script>alert('Duplicate category!');</script>";
+
+                    return RedirectToAction("Index", "UserDetails");
+                }
+                else
+                    return View(model);
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
+                return RedirectToAction("Index", "UserDetails");
+            }
+        }
+
+        #endregion
+
+        #region Delete function
+        /// <summary>
+        /// Farheen: Delete the perticular record
+        /// </summary>
+        /// <param name="unitId">record Id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteItemCategory(int unitId)
+        {
+            UserDetailsBO model = _userDetailsRepository.GetById(unitId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int unitId)
+        {
+            _userDetailsRepository.Delete(unitId);
+            //_unitRepository.Save();
+            TempData["Success"] = "<script>alert('User deleted successfully!');</script>";
+            return RedirectToAction("Index", "UserDetails");
+        }
+        #endregion
+
         #region Functions for binding dropdowns
         public void BindOrganizations()
         {

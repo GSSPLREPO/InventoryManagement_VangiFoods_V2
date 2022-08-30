@@ -105,6 +105,129 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Update functions
+
+        /// <summary>
+        /// Farheen: This function is for fetch data for editing by ID
+        /// </summary>
+        /// <param name="unitId"></param>
+        /// <returns></returns>
+        public UserDetailsBO GetById(int unitId)
+        {
+            var userDetails = new UserDetailsBO();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_UserDetails_GetByID", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@EmployeeID", unitId);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        userDetails = new UserDetailsBO()
+                        {
+                            EmployeeID = Convert.ToInt32(reader["EmployeeID"]),
+                            EmployeeName = (reader["EmployeeName"]).ToString(),
+                            RoleId = Convert.ToInt32(reader["RoleId"]),
+                            DesignationID = Convert.ToInt32(reader["DesignationID"]),
+                            OrganizationID = Convert.ToInt32(reader["OrganizationID"]),
+                            UserName = reader["UserName"].ToString(),
+                            Password = reader["Password"].ToString(),
+                            EmployeeMobileNo = reader["EmployeeMobileNo"].ToString(),
+                            EmailId = reader["EmailId"].ToString(),
+                            EmployeeGender = reader["EmployeeGender"].ToString(),
+                            EmployeeJoingDate = Convert.ToDateTime(reader["EmployeeJoingDate"]),
+                            EmployeeAddress = reader["EmployeeAddress"].ToString(),
+                            IsActive=Convert.ToBoolean(reader["IsActive"]),
+                        };
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return userDetails;
+        }
+
+        /// <summary>
+        /// Farheen: Update record
+        /// </summary>
+        /// <param name="model"></param>
+        public ResponseMessageBO Update(UserDetailsBO model)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_UserDetails_Update", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@EmployeeName", model.EmployeeName);
+                    cmd.Parameters.AddWithValue("@RoleId", model.RoleId);
+                    cmd.Parameters.AddWithValue("@OrganisationID", model.OrganizationID);
+                    cmd.Parameters.AddWithValue("@DesignationID", model.DesignationID);
+                    cmd.Parameters.AddWithValue("@UserName", model.UserName);
+                    cmd.Parameters.AddWithValue("@Password", model.Password);
+                    cmd.Parameters.AddWithValue("@EmployeeMobileNo", model.EmployeeMobileNo);
+                    cmd.Parameters.AddWithValue("@EmailId", model.EmailId);
+                    cmd.Parameters.AddWithValue("@EmployeeGender", model.EmployeeGender);
+                    cmd.Parameters.AddWithValue("@EmployeeJoingDate", model.EmployeeJoingDate);
+                    cmd.Parameters.AddWithValue("@EmployeeAddress", model.EmployeeAddress);
+                    cmd.Parameters.AddWithValue("@IsActive", model.IsActive);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
+                    con.Close();
+                    return response;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                log.Error(ex.Message, ex);
+                return response;
+            }
+        }
+        #endregion
+
+        #region Delete function
+        public void Delete(int userId)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_UserDetails_Delete", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@EmployeeID", userId);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+        }
+
+        #endregion
+
         #region Functions for dropdown binding
         public IEnumerable<OrganisationsBO> GetOrganisationForDropDown()
         {
