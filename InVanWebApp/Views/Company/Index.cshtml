@@ -17,7 +17,7 @@
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <i class="fa fa-home"></i><a href="@Url.Action("Index","Dashboard")">Master</a>
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
                     </li>
                     <li class="breadcrumb-item active">Supplier or Customer</li>
                 </ol>
@@ -29,9 +29,9 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <button class="btn btn-primary" style="float:right">Add</button>
-                            @*<h1 class="card-title">@Html.ActionLink("Add Supplier/Customer", "AddSupplierCustomer")</h1>*@
-                            @*<div class="table-responsive">*@
+                            <a href="@Url.Action("AddCompany","Company")" class="btn btn-primary  pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span> Add Company
+                            </a>
                             <div id="js-grid-static" class="jsgrid" style="position: relative; height: 500px; width: 100%;">
                                 <br />
                                 <div class="jsgrid-grid-header jsgrid-header-scrollbar">

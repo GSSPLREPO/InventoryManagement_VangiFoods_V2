@@ -168,6 +168,8 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_UserDetails_Update", con);
                     cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@EmployeeID", model.EmployeeID);
                     cmd.Parameters.AddWithValue("@EmployeeName", model.EmployeeName);
                     cmd.Parameters.AddWithValue("@RoleId", model.RoleId);
                     cmd.Parameters.AddWithValue("@OrganisationID", model.OrganizationID);

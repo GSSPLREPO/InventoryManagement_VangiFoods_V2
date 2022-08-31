@@ -20,6 +20,7 @@ namespace InVanWebApp_BO
         public Nullable<int> DesignationID { get; set; }
 
         [Required(ErrorMessage = "Enter Contact number!")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         public string EmployeeMobileNo { get; set; }
         public Nullable<System.DateTime> EmployeeBirthDate { get; set; }
 

@@ -77,7 +77,13 @@ namespace InVanWebApp.Controllers
                     if (response.Status)
                         TempData["Success"] = "<script>alert('User details Inserted Successfully!');</script>";
                     else
+                    {
                         TempData["Success"] = "<script>alert('Duplicate user! Can not be inserted!');</script>";
+                        BindOrganizations();
+                        BindDesignations();
+                        BindRoles();
+                        return View();
+                    }
 
                     return RedirectToAction("Index", "UserDetails");
 
@@ -96,15 +102,15 @@ namespace InVanWebApp.Controllers
         /// <summary>
         ///Farheen: Rendered the user to the edit page with details of a perticular record.
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="ID"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditUser(int userId)
+        public ActionResult EditUser(int ID)
         {
             BindOrganizations();
             BindDesignations();
             BindRoles();
-            UserDetailsBO model = _userDetailsRepository.GetById(userId);
+            UserDetailsBO model = _userDetailsRepository.GetById(ID);
             return View(model);
         }
 
@@ -125,7 +131,13 @@ namespace InVanWebApp.Controllers
                     if (response.Status)
                         TempData["Success"] = "<script>alert('User updated successfully!');</script>";
                     else
+                    { 
                         TempData["Success"] = "<script>alert('Duplicate category!');</script>";
+                        BindOrganizations();
+                        BindDesignations();
+                        BindRoles();
+                        return View();
+                    }
 
                     return RedirectToAction("Index", "UserDetails");
                 }
@@ -147,19 +159,19 @@ namespace InVanWebApp.Controllers
         /// <summary>
         /// Farheen: Delete the perticular record
         /// </summary>
-        /// <param name="unitId">record Id</param>
+        /// <param name="ID">record Id</param>
         /// <returns></returns>
-        [HttpGet]
-        public ActionResult DeleteItemCategory(int unitId)
-        {
-            UserDetailsBO model = _userDetailsRepository.GetById(unitId);
-            return View(model);
-        }
+        //[HttpGet]
+        //public ActionResult DeleteUser(int ID)
+        //{
+        //    UserDetailsBO model = _userDetailsRepository.GetById(ID);
+        //    return View(model);
+        //}
 
-        [HttpPost]
-        public ActionResult Delete(int unitId)
+        [HttpGet]
+        public ActionResult DeleteUser(int ID)
         {
-            _userDetailsRepository.Delete(unitId);
+            _userDetailsRepository.Delete(ID);
             //_unitRepository.Save();
             TempData["Success"] = "<script>alert('User deleted successfully!');</script>";
             return RedirectToAction("Index", "UserDetails");

@@ -28,8 +28,8 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("Roles", (IEnumerable<SelectListItem>)ViewData["Roles"], "--Select--",
-                   new { @class = "form-control form-control-sm" })
+                    @Html.DropDownListFor(model => model.RoleId, (IEnumerable<SelectListItem>)ViewData["Roles"], "--Select--",
+                   new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -40,8 +40,8 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("Organization", (IEnumerable<SelectListItem>)ViewData["Organizations"], "--Select--",
-                   new { @class = "form-control form-control-sm" })
+                    @Html.DropDownListFor(model => model.OrganizationID, (IEnumerable<SelectListItem>)ViewData["Organizations"], "--Select--",
+                   new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.OrganizationID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -49,8 +49,8 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("Designation", (IEnumerable<SelectListItem>)ViewData["Designations"], "--Select--",
-                   new { @class = "form-control form-control-sm" })
+                    @Html.DropDownListFor(model => model.DesignationID, (IEnumerable<SelectListItem>)ViewData["Designations"], "--Select--",
+                   new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.DesignationID, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.EmployeeMobileNo, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(model => model.EmployeeMobileNo, new { @class = "form-control form-control-sm", @onkeypress = "return customValidation(event);" })
                     @Html.ValidationMessageFor(model => model.EmployeeMobileNo, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -100,17 +100,17 @@
                 </div>
                 <div class="col-md-4">
                     Male
-                    @Html.RadioButtonFor(model => model.EmployeeGender, new { @class = "form-control form-control-sm" })
-                    &nbsp; Female
-                    @Html.RadioButtonFor(model => model.EmployeeGender, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.EmployeeMobileNo, "", new { @class = "error mt-2 text-danger" })
+                    @Html.RadioButtonFor(model => model.EmployeeGender, "Male", new { @class = "form-control form-control-sm", @Value = "Male" })
+                    Female
+                    @Html.RadioButtonFor(model => model.EmployeeGender, "Female", new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.EmployeeGender, "", new { @class = "error mt-2 text-danger", @Value = "Female" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("DOJ")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.EmployeeJoingDate, new { @class = "form-control", type = "date" })
+                    @Html.TextBoxFor(model => model.EmployeeJoingDate, new { @class = "form-control  form-control-sm", type = "date" })
                     @Html.ValidationMessageFor(model => model.EmployeeJoingDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -139,8 +139,23 @@
         </div>
     </div>
 }
-
+@Html.Raw(TempData["Success"])
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 
+<script type="text/javascript">
+
+    //Custom validation for only numeric, decimal and NA/na character.
+    function customValidation(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
+            || unicode == 46) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>
