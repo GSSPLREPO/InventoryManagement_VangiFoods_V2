@@ -9,7 +9,10 @@ using InVanWebApp_BO;
 using Excel = Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
 using log4net;
-//using InVanWebApp.DAL;
+//using iTextSharp.text;
+//using iTextSharp.text.pdf;
+//using iTextSharp.tool.xml;
+//using iTextSharp.text.html.simpleparser;
 
 namespace InVanWebApp.Controllers
 {
@@ -279,6 +282,24 @@ namespace InVanWebApp.Controllers
             TempData["Success"] = "<script>alert('Item deleted successfully!');</script>";
             return RedirectToAction("Index", "Item");
         }
+        #endregion
+
+        #region Export table in pdf 
+        //[HttpPost]
+        //[ValidateInput(false)]
+        //public FileResult ExportHTML(string ExportData)
+        //{
+        //    using (MemoryStream stream = new System.IO.MemoryStream())
+        //    {
+        //        StringReader reader = new StringReader(ExportData);
+        //        Document PdfFile = new Document(PageSize.A4);
+        //        PdfWriter writer = PdfWriter.GetInstance(PdfFile, stream);
+        //        PdfFile.Open();
+        //        XMLWorkerHelper.GetInstance().ParseXHtml(writer, PdfFile, reader);
+        //        PdfFile.Close();
+        //        return File(stream.ToArray(), "application/pdf", "ExportData.pdf");
+        //    }
+        //}
         #endregion
 
     }

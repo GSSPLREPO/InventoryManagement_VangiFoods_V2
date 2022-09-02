@@ -11,7 +11,7 @@ using System.Data;
 
 namespace InVanWebApp.Repository
 {
-    public class CompanyRepository:ICompanyRepository
+    public class CompanyRepository : ICompanyRepository
     {
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private static ILog log = LogManager.GetLogger(typeof(CompanyRepository));
@@ -28,7 +28,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_SupplierCustomer_GetAll", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_CompanyDetails_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
@@ -40,8 +40,8 @@ namespace InVanWebApp.Repository
                             CompanyName = reader["CompanyName"].ToString(),
                             ContactPersonName = reader["ContactPersonName"].ToString(),
                             EmailId = reader["EmailId"].ToString(),
-                            ContactPersonNo = Convert.ToInt32(reader["ContactPersonNo"]),
-                            CityName = reader["CityName"].ToString()
+                            ContactPersonNo = reader["ContactPersonNo"].ToString(),
+                            IsActive =Convert.ToBoolean(reader["IsActive"])
                         };
                         companyList.Add(company);
 
@@ -64,34 +64,127 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="model"></param>
-        public bool Insert(CompanyBO model)
+        public ResponseMessageBO Insert(CompanyBO model)
         {
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_ItemCategory_Insert", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_CompanyDetails_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ItemTypeId", model.CompanyName);
-                    cmd.Parameters.AddWithValue("@ItemCategoryName", model.CompanyType);
-                    cmd.Parameters.AddWithValue("@Description", model.Remarks);
+                    cmd.Parameters.AddWithValue("@CompanyType", model.CompanyType);
+                    cmd.Parameters.AddWithValue("@CompanyName", model.CompanyName);
+                    cmd.Parameters.AddWithValue("@EmailId", model.EmailId);
+                    cmd.Parameters.AddWithValue("@ContactPersonName", model.ContactPersonName);
+                    cmd.Parameters.AddWithValue("@ContactPersonNo", model.ContactPersonNo);
+                    cmd.Parameters.AddWithValue("@Address", model.Address);
+                    cmd.Parameters.AddWithValue("@GSTNumber", model.GSTNumber);
+                    cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@IsActive", model.IsActive);
+                    cmd.Parameters.AddWithValue("@IsBlackListed", model.IsBlackListed);
                     cmd.Parameters.AddWithValue("@CreatedBy", 1);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
-                    cmd.ExecuteNonQuery();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.CompanyName = dataReader["CompanyName"].ToString();
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
                     con.Close();
                 };
-                return true;
             }
             catch (Exception ex)
             {
+                response.Status = false;
                 log.Error(ex.Message, ex);
-                return false;
-                //Content("<script language='javascript' type='text/javascript'>alert('Thanks for Feedback!');</script>");
-                // throw;
             }
-
+            return response;
         }
+
+        /// <summary>
+        /// Date: 02 Sept 2022
+        /// Farheen: This function is for uploading companies list (Bulk upload)
+        /// </summary>
+        /// <param name="model"></param>
+        public List<ResponseMessageBO> SaveCompanyData(List<CompanyBO> model)
+        {
+            try
+            {
+                //var success = false;
+                int cnt = 0;
+                List<ResponseMessageBO> responsesList = new List<ResponseMessageBO>();
+                if (model != null && model.Count > 0)
+                {
+
+                    for (int i = 0; i < model.Count; i++)
+                    {
+                        CompanyBO material = new CompanyBO();
+
+                        material.CompanyName = model[i].CompanyName;
+                        material.CompanyType = model[i].CompanyType;
+                        material.ContactPersonName = model[i].ContactPersonName;
+                        material.ContactPersonNo = model[i].ContactPersonNo;
+                        material.EmailId = model[i].EmailId;
+                        material.Address= model[i].Address;
+                        material.GSTNumber = model[i].GSTNumber;
+                        material.Remarks = model[i].Remarks;
+                        material.IsActive = model[i].IsActive;
+                        material.IsBlackListed = model[i].IsBlackListed;
+
+                        material.IsDeleted = false;
+                        material.CreatedBy = model[i].CreatedBy;
+                        material.CreatedDate = Convert.ToDateTime(model[i].CreatedDate);
+
+                        using (SqlConnection con = new SqlConnection(conString))
+                        {
+                            SqlCommand cmd = new SqlCommand("usp_tbl_CompanyDetails_Insert", con);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.AddWithValue("@CompanyType", material.CompanyType);
+                            cmd.Parameters.AddWithValue("@CompanyName", material.CompanyName);
+                            cmd.Parameters.AddWithValue("@EmailId", material.EmailId);
+                            cmd.Parameters.AddWithValue("@ContactPersonName", material.ContactPersonName);
+                            cmd.Parameters.AddWithValue("@ContactPersonNo", material.ContactPersonNo);
+                            cmd.Parameters.AddWithValue("@Address", material.Address);
+                            cmd.Parameters.AddWithValue("@GSTNumber", material.GSTNumber);
+                            cmd.Parameters.AddWithValue("@Remarks", material.Remarks);
+                            cmd.Parameters.AddWithValue("@IsActive", material.IsActive);
+                            cmd.Parameters.AddWithValue("@IsBlackListed", material.IsBlackListed);
+                            cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                            cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                            con.Open();
+                            SqlDataReader dataReader = cmd.ExecuteReader();
+
+
+                            while (dataReader.Read())
+                            {
+                                ResponseMessageBO response = new ResponseMessageBO();
+
+                                response.CompanyName = dataReader["CompanyName"].ToString();
+                                response.Status = Convert.ToBoolean(dataReader["Status"]);
+
+                                responsesList.Add(response);
+                            }
+                            con.Close();
+                        };
+
+                        //success = true;
+
+                        cnt += 1;
+                    }
+                }
+                //return success;
+                return responsesList;
+            }
+            catch (Exception ex)
+            {
+                //dbContextTransaction.Dispose();
+                throw ex;
+            }
+        }
+
         #endregion
 
         #region Update functions
@@ -108,7 +201,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_SupplierCustomer_GetByID", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_CompanyDetails_GetByID", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", ID);
                     con.Open();
@@ -118,13 +211,16 @@ namespace InVanWebApp.Repository
                         company = new CompanyBO()
                         {
                             ID = Convert.ToInt32(reader["ID"]),
-                            CompanyName = reader["CompanyName"].ToString()
-                            //ItemCategory_ID = Convert.ToInt32(reader["ItemCategory_ID"]),
-                            //Item_Code = reader["Item_Code"].ToString(),
-                            //Item_Name = reader["Item_Name"].ToString(),
-                            //HSN_Code = reader["HSN_Code"].ToString(),
-                            //MinStock = Convert.ToInt32(reader["MinStock"]),
-                            //Description = reader["Description"].ToString()
+                            CompanyName = reader["CompanyName"].ToString(),
+                            CompanyType = reader["CompanyType"].ToString(),
+                            EmailId = reader["EmailId"].ToString(),
+                            ContactPersonName = reader["ContactPersonName"].ToString(),
+                            ContactPersonNo = reader["ContactPersonNo"].ToString(),
+                            Address=reader["Address"].ToString(),
+                            GSTNumber=reader["GSTNumber"].ToString(),
+                            Remarks=reader["Remarks"].ToString(),
+                            IsActive=Convert.ToBoolean(reader["IsActive"]),
+                            IsBlackListed=Convert.ToBoolean(reader["IsBlackListed"])
                         };
                     }
                     con.Close();
@@ -141,45 +237,48 @@ namespace InVanWebApp.Repository
         /// <summary>
         /// Farheen: Update record
         /// </summary>
-        /// <param name="item"></param>
-        //public ResponseMessageBO Udate(ItemBO item)
-        //{
-        //    ResponseMessageBO response = new ResponseMessageBO();
-        //    try
-        //    {
-        //        using (SqlConnection con = new SqlConnection(conString))
-        //        {
-        //            SqlCommand cmd = new SqlCommand("usp_tbl_Item_Update", con);
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@Item_ID", item.ID);
-        //            cmd.Parameters.AddWithValue("@ItemTypeID", item.ItemTypeID);
-        //            cmd.Parameters.AddWithValue("@ItemCategory_ID", item.ItemCategory_ID);
-        //            cmd.Parameters.AddWithValue("@Item_Code", item.Item_Code);
-        //            cmd.Parameters.AddWithValue("@Item_Name", item.Item_Name);
-        //            cmd.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
-        //            cmd.Parameters.AddWithValue("@MinStock", item.MinStock);
-        //            cmd.Parameters.AddWithValue("@Description", item.Description);
-        //            cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
-        //            cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-        //            con.Open();
-        //            //cmd.ExecuteNonQuery();
-        //            SqlDataReader dataReader = cmd.ExecuteReader();
+        /// <param name="model"></param>
+        public ResponseMessageBO Update(CompanyBO model)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_CompanyDetails_Update", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-        //            while (dataReader.Read())
-        //            {
-        //                response.Status = Convert.ToBoolean(dataReader["Status"]);
-        //            }
-        //            con.Close();
-        //            return response;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.Status = false;
-        //        log.Error(ex.Message, ex);
-        //        return response;
-        //    }
-        //}
+                    cmd.Parameters.AddWithValue("@ID", model.ID);
+                    cmd.Parameters.AddWithValue("@CompanyType", model.CompanyType);
+                    cmd.Parameters.AddWithValue("@CompanyName", model.CompanyName);
+                    cmd.Parameters.AddWithValue("@EmailId", model.EmailId);
+                    cmd.Parameters.AddWithValue("@ContactPersonName", model.ContactPersonName);
+                    cmd.Parameters.AddWithValue("@ContactPersonNo", model.ContactPersonNo);
+                    cmd.Parameters.AddWithValue("@Address", model.Address);
+                    cmd.Parameters.AddWithValue("@GSTNumber", model.GSTNumber);
+                    cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@IsActive", model.IsActive);
+                    cmd.Parameters.AddWithValue("@IsBlackListed", model.IsBlackListed);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                log.Error(ex.Message, ex);
+            }
+            return response;
+        }
         #endregion
 
         #region Delete function
@@ -189,7 +288,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_SupplierCustomer_Delete", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_CompanyDetails_Delete", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", ID);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", 1);

@@ -19,6 +19,7 @@ namespace InVanWebApp_BO
         public string TaxName{ get; set; }
         public string UnitName{ get; set; }
         public string EmployeeName { get; set; }
+        public string CompanyName{ get; set; }
 
     }
 }

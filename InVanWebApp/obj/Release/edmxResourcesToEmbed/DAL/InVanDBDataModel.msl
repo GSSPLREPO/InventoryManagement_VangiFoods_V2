@@ -211,31 +211,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="EmployeeMasters">
-      <EntityTypeMapping TypeName="InVanDBModels.EmployeeMaster">
-        <MappingFragment StoreEntitySet="EmployeeMaster">
-          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="EmployeePic" ColumnName="EmployeePic" />
-          <ScalarProperty Name="PinNumber" ColumnName="PinNumber" />
-          <ScalarProperty Name="EmployeeAddress" ColumnName="EmployeeAddress" />
-          <ScalarProperty Name="CityID" ColumnName="CityID" />
-          <ScalarProperty Name="StateID" ColumnName="StateID" />
-          <ScalarProperty Name="CountryID" ColumnName="CountryID" />
-          <ScalarProperty Name="EmployeeGender" ColumnName="EmployeeGender" />
-          <ScalarProperty Name="EmployeeJoingDate" ColumnName="EmployeeJoingDate" />
-          <ScalarProperty Name="EmployeeBirthDate" ColumnName="EmployeeBirthDate" />
-          <ScalarProperty Name="EmployeeMobileNo" ColumnName="EmployeeMobileNo" />
-          <ScalarProperty Name="DesignationID" ColumnName="DesignationID" />
-          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
-          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="FinishGoodSeries">
       <EntityTypeMapping TypeName="InVanDBModels.FinishGoodSery">
         <MappingFragment StoreEntitySet="FinishGoodSeries">
@@ -1269,6 +1244,29 @@
           <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
           <ScalarProperty Name="CompanyType" ColumnName="CompanyType" />
           <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserDetails">
+      <EntityTypeMapping TypeName="InVanDBModels.UserDetail">
+        <MappingFragment StoreEntitySet="UserDetails">
+          <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="EmployeePic" ColumnName="EmployeePic" />
+          <ScalarProperty Name="PinNumber" ColumnName="PinNumber" />
+          <ScalarProperty Name="EmployeeAddress" ColumnName="EmployeeAddress" />
+          <ScalarProperty Name="EmployeeGender" ColumnName="EmployeeGender" />
+          <ScalarProperty Name="EmployeeJoingDate" ColumnName="EmployeeJoingDate" />
+          <ScalarProperty Name="EmployeeBirthDate" ColumnName="EmployeeBirthDate" />
+          <ScalarProperty Name="EmployeeMobileNo" ColumnName="EmployeeMobileNo" />
+          <ScalarProperty Name="DesignationID" ColumnName="DesignationID" />
+          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+          <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

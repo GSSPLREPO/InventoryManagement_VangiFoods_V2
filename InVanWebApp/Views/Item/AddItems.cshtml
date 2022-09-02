@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-4">
                         @Html.DropDownList("ItemTypeID", (IEnumerable<SelectListItem>)ViewData["ItemType"], "---Select---",
-                       new { @class = "form-control form-control-sm"})
+                       new { @class = "form-control form-control-sm" })
                         @Html.ValidationMessageFor(model => model.ItemTypeID, "", new { @class = "error mt-2 text-danger" })
                     </div>
                     <div class="col-md-2">
@@ -116,7 +116,10 @@
             </fieldset>
         </div>
 
-        <br /><u>@Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })</u>
+        @*<br /><u>@Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })</u>*@
+        <a href="@Url.Action("Index", "Item")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+            Back To List
+        </a>
 
     </div>
 </div>

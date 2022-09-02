@@ -16,9 +16,16 @@ namespace InVanWebApp.Repository.Interface
         CompanyBO GetById(int ID);
 
         //Function define for: Insert record.
-        bool Insert(CompanyBO model);
+        ResponseMessageBO Insert(CompanyBO model);
+
+        //Function define for: Update master record.
+        ResponseMessageBO Update(CompanyBO model);
+
         //Function define for: Delete record of company using it's ID
         void Delete(int ID);
+        
+        //Function define for: Uploading the bulk companies
+        List<ResponseMessageBO> SaveCompanyData(List<CompanyBO> model);
 
     }
 }

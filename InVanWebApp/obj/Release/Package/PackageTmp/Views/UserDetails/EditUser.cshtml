@@ -1,0 +1,162 @@
+﻿@model InVanWebApp_BO.UserDetailsBO
+@{
+    ViewBag.Title = "Edit User";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit User</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.EmployeeID)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.EmployeeName, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.EmployeeName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Role")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.RoleId, (IEnumerable<SelectListItem>)ViewData["Roles"], "--Select--",
+                   new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Organisation")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.OrganizationID, (IEnumerable<SelectListItem>)ViewData["Organizations"], "--Select--",
+                   new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.OrganizationID, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Designation")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.DesignationID, (IEnumerable<SelectListItem>)ViewData["Designations"], "--Select--",
+                   new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DesignationID, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("User Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Password")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Contact Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.EmployeeMobileNo, new { @class = "form-control form-control-sm", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.EmployeeMobileNo, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Email Id")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Gender")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    Male
+                    @Html.RadioButtonFor(model => model.EmployeeGender, "Male", new { @class = "form-control form-control-sm", @Value = "Male" })
+                    Female
+                    @Html.RadioButtonFor(model => model.EmployeeGender, "Female", new { @class = "form-control form-control-sm", @Value = "Female" })
+                    @Html.ValidationMessageFor(model => model.EmployeeGender, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("DOJ")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.EmployeeJoingDate, "{0:yyyy-MM-dd}", new { @class = "form-control  form-control-sm", type = "date" })
+                    @Html.ValidationMessageFor(model => model.EmployeeJoingDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Address")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.EmployeeAddress, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.EmployeeAddress, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Is Active")
+                </div>
+                <div class="col-md-4">
+                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control form-control-sm" })
+                </div>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Submit</button>
+            <a href="@Url.Action("Index","UserDetails")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+                Back To List
+            </a>
+        </div>
+    </div>
+}
+@Html.Raw(TempData["Success"])
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+
+    //Custom validation for only numeric, decimal and NA/na character.
+    function customValidation(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
+            || unicode == 46) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+</script>

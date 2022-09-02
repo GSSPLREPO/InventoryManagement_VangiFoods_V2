@@ -312,6 +312,31 @@
       <End Role="StateMaster" EntitySet="StateMasters" />
       <End Role="Company" EntitySet="Companies" />
     </AssociationSet>
+    <EntitySet Name="UserDetails" EntityType="InVanDBModels.UserDetail" />
+    <AssociationSet Name="FK_EmployeeMaster_CityMaster1" Association="InVanDBModels.FK_EmployeeMaster_CityMaster1">
+      <End Role="CityMaster" EntitySet="CityMasters" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_CountryMaster1" Association="InVanDBModels.FK_EmployeeMaster_CountryMaster1">
+      <End Role="CountryMaster" EntitySet="CountryMasters" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_Department1" Association="InVanDBModels.FK_EmployeeMaster_Department1">
+      <End Role="Department" EntitySet="Departments" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_EmployeeMaster1" Association="InVanDBModels.FK_EmployeeMaster_EmployeeMaster1">
+      <End Role="DesignationMaster" EntitySet="DesignationMasters" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EmployeeMaster_StateMaster1" Association="InVanDBModels.FK_EmployeeMaster_StateMaster1">
+      <End Role="StateMaster" EntitySet="StateMasters" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_EmployeeMaster1" Association="InVanDBModels.FK_Users_EmployeeMaster1">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Branch">
     <Key>
@@ -352,6 +377,7 @@
     <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_CityMaster_StateMaster" FromRole="CityMaster" ToRole="StateMaster" />
     <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_CityMaster" FromRole="CityMaster" ToRole="EmployeeMaster" />
     <NavigationProperty Name="Companies" Relationship="InVanDBModels.FK_Company_CityMaster" FromRole="CityMaster" ToRole="Company" />
+    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_CityMaster1" FromRole="CityMaster" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="ClientMaster">
     <Key>
@@ -442,6 +468,7 @@
     <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster" FromRole="CountryMaster" ToRole="EmployeeMaster" />
     <NavigationProperty Name="StateMasters" Relationship="InVanDBModels.FK_StateMaster_CountryMaster" FromRole="CountryMaster" ToRole="StateMaster" />
     <NavigationProperty Name="Companies" Relationship="InVanDBModels.FK_Company_CountryMaster" FromRole="CountryMaster" ToRole="Company" />
+    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster1" FromRole="CountryMaster" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="CurrencyMaster">
     <Key>
@@ -518,6 +545,7 @@
     <Property Name="LastModifiedby" Type="Int32" />
     <NavigationProperty Name="Branch" Relationship="InVanDBModels.FK_Department_ToBranch" FromRole="Department" ToRole="Branch" />
     <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="Department" ToRole="EmployeeMaster" />
+    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_Department1" FromRole="Department" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="DesignationMaster">
     <Key>
@@ -532,6 +560,7 @@
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster" FromRole="DesignationMaster" ToRole="EmployeeMaster" />
+    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster1" FromRole="DesignationMaster" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="EmployeeMaster">
     <Key>
@@ -1383,6 +1412,7 @@
     <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_StateMaster_CountryMaster" FromRole="StateMaster" ToRole="CountryMaster" />
     <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster" FromRole="StateMaster" ToRole="EmployeeMaster" />
     <NavigationProperty Name="Companies" Relationship="InVanDBModels.FK_Company_StateMaster" FromRole="StateMaster" ToRole="Company" />
+    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster1" FromRole="StateMaster" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="Status">
     <Key>
@@ -1552,6 +1582,7 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="EmployeeMaster" Relationship="InVanDBModels.FK_Users_EmployeeMaster" FromRole="User" ToRole="EmployeeMaster" />
     <NavigationProperty Name="Role" Relationship="InVanDBModels.FK_Users_Roles" FromRole="User" ToRole="Role" />
+    <NavigationProperty Name="UserDetail" Relationship="InVanDBModels.FK_Users_EmployeeMaster1" FromRole="User" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="WorkOrder">
     <Key>
@@ -2420,6 +2451,111 @@
       </Principal>
       <Dependent Role="Company">
         <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentID" Type="Int32" />
+    <Property Name="DesignationID" Type="Int32" />
+    <Property Name="EmployeeMobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeBirthDate" Type="DateTime" Precision="0" />
+    <Property Name="EmployeeJoingDate" Type="DateTime" Precision="0" />
+    <Property Name="EmployeeGender" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="CountryID" Type="Int32" />
+    <Property Name="StateID" Type="Int32" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="EmployeeAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PinNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeePic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CityMaster" Relationship="InVanDBModels.FK_EmployeeMaster_CityMaster1" FromRole="UserDetail" ToRole="CityMaster" />
+    <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster1" FromRole="UserDetail" ToRole="CountryMaster" />
+    <NavigationProperty Name="Department" Relationship="InVanDBModels.FK_EmployeeMaster_Department1" FromRole="UserDetail" ToRole="Department" />
+    <NavigationProperty Name="DesignationMaster" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster1" FromRole="UserDetail" ToRole="DesignationMaster" />
+    <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster1" FromRole="UserDetail" ToRole="StateMaster" />
+    <NavigationProperty Name="Users" Relationship="InVanDBModels.FK_Users_EmployeeMaster1" FromRole="UserDetail" ToRole="User" />
+    <Property Name="OrganizationID" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_EmployeeMaster_CityMaster1">
+    <End Type="InVanDBModels.CityMaster" Role="CityMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CityMaster">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_CountryMaster1">
+    <End Type="InVanDBModels.CountryMaster" Role="CountryMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryMaster">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_Department1">
+    <End Type="InVanDBModels.Department" Role="Department" Multiplicity="0..1" />
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="DepartmentID" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="DepartmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_EmployeeMaster1">
+    <End Type="InVanDBModels.DesignationMaster" Role="DesignationMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DesignationMaster">
+        <PropertyRef Name="DesignationID" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="DesignationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EmployeeMaster_StateMaster1">
+    <End Type="InVanDBModels.StateMaster" Role="StateMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StateMaster">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_EmployeeMaster1">
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="0..1" />
+    <End Type="InVanDBModels.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="EmployeeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

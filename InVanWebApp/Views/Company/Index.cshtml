@@ -13,13 +13,13 @@
 
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Supplier or Customer</h4>
+            <h4 class="page-title">Company</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
                     </li>
-                    <li class="breadcrumb-item active">Supplier or Customer</li>
+                    <li class="breadcrumb-item active">Company</li>
                 </ol>
             </nav>
         </div>
@@ -32,7 +32,7 @@
                             <a href="@Url.Action("AddCompany","Company")" class="btn btn-primary  pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
                                 <span class="fa fa-plus"></span> Add Company
                             </a>
-                            <div id="js-grid-static" class="jsgrid" style="position: relative; height: 500px; width: 100%;">
+                            <div id="js-grid-static" class="jsgrid" style="padding-bottom:15px; position: relative; height: 500px; width: 100%;">
                                 <br />
                                 <div class="jsgrid-grid-header jsgrid-header-scrollbar">
                                     <table class="jsgrid-table">
@@ -50,7 +50,7 @@
                                                 @Html.DisplayName("Contact Number")
                                             </th>
                                             <th class="jsgrid-header-cell jsgrid-header-sortable jsgrid-header-sort jsgrid-header-sort-asc" style="width: 150px;">
-                                                @Html.DisplayName("City Name")
+                                                @Html.DisplayName("Is Active")
                                             </th>
                                             <th class="jsgrid-header-cell jsgrid-header-sortable jsgrid-header-sort jsgrid-header-sort-asc" style="width: 150px;">
                                                 @Html.DisplayName("Edit/Delete")
@@ -73,10 +73,10 @@
                                                     @Html.DisplayFor(modelItem => item.ContactPersonNo)
                                                 </td>
                                                 <td class="jsgrid-cell" style="width: 150px;">
-                                                    @Html.DisplayFor(modelItem => item.CityName)
+                                                    @Html.DisplayFor(modelItem => item.IsActive)
                                                 </td>
                                                 <td class="jsgrid-cell" style="width: 150px;">
-                                                    @Html.ActionLink("Edit", "AddSupplierCustomerMaster", new { ID = item.ID }) |
+                                                    @Html.ActionLink("Edit", "EditCompany", new { ID = item.ID }) |
                                                     @Html.ActionLink("Delete", "DeleteSupplierCustomer", new { ID = item.ID, },
                                                     new { onclick = "return confirm('Are you sure, you wants to delete?');" })
 
