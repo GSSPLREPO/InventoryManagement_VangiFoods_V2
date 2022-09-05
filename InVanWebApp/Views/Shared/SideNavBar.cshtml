@@ -17,18 +17,11 @@
         </div>
     </li>
     <li class="nav-item">
-        @*<a class="nav-link" href="~/Home/MainMaster">*@
         <a class="nav-link" href="~/Dashboard/Index">
             <i class="fa fa-home menu-icon"></i>
             <span class="menu-title">Home</span>
         </a>
     </li>
-    @*<li class="nav-item">
-            <a class="nav-link" href="#">
-                <i class="fa fa-puzzle-piece menu-icon"></i>
-                <span class="menu-title">Summery</span>
-            </a>
-        </li>*@
     <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
             <i class="fab fa-trello menu-icon"></i>
@@ -78,18 +71,9 @@
                 <li class="nav-item"> <a class="nav-link" href="~/Material/CreditNote">CreditNote</a></li>
                 <li class="nav-item"> <a class="nav-link" href="~/Material/PRequestForQuotation">Request Quatation</a></li>
                 <li class="nav-item"> <a class="nav-link" href="~/Material/QuatationComparision">QuatationComparision</a></li>
-                @*<li class="nav-item"> <a class="nav-link" href="~/Material/PurchaseOrder">Pruchase Order</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="~/Material/OrderConfirmation">Order Confirmation</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="~/Material/PurchaseOrderfromclient">PO from client</a></li>*@
                 <li class="nav-item"> <a class="nav-link" href="~/Material/UpdateStock">UpdateStock</a></li>
 
-                @*<li class="nav-item"> <a class="nav-link" href="#">PurchaseOrderAmendment</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">PurchaseOrderAmendmentDetails</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">PRItemSchedule</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">SOItemSchedule</a></li>*@
                 <li class="nav-item"> <a class="nav-link" href="#">RequestForQuotation</a></li>
-                @*  <li class="nav-item"> <a class="nav-link" href="#">POItemSchedule</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">InvoiceMaster</a></li>*@
                 <li class="nav-item"> <a class="nav-link" href="~/Material/RejectionNote">Rejection Note</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#">Delivery Challan</a></li>
 
@@ -104,15 +88,7 @@
         </a>
         <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
-                @*<li class="nav-item"> <a class="nav-link" href="#">StockMaster</a></li>
-
-                    <li class="nav-item"> <a class="nav-link" href="#">StockAdjustmentMaster</a></li>*@
-
-                @*<li class="nav-item"> <a class="nav-link" href="#">StorageItemMapping</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">StorageLocationMaster</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="#">StockAdjustmentTransaction</a></li>*@
                 <li class="nav-item"> <a class="nav-link" href="~/Inventory/StockTransfer">StockTransferMaster</a></li>
-                @*<li class="nav-item"> <a class="nav-link" href="#">StockTransferTransaction</a></li>*@
             </ul>
         </div>
     </li>
@@ -158,10 +134,6 @@
         </a>
         <div class="collapse" id="editors">
             <ul class="nav flex-column sub-menu">
-                @*<li class="nav-item"><a class="nav-link" href="~/Master/AddEditBranch">Branch</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/Master/CurrencyMaster">CurrencyMaster</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/Master/Department">Department</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/Master/DesignationMaster">Designation Master</a></li>*@
                 <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Company")">Company Master</a></li>
                 <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Item")">Item</a></li>
                 <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","ItemCategory")">Item Category</a></li>
@@ -169,51 +141,27 @@
                 @*<li class="nav-item"><a class="nav-link" href="~/Master/UserMaster">User Master</a></li>*@
                 @*<li class="nav-item"><a class="nav-link" href="#">RoleRights</a></li>*@
                 <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Location")">Location</a></li>
-                <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Role")">Roles</a></li>
                 <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Tax")">Tax</a></li>
                 <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Unit")">Unit</a></li>
-                <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","UserDetails")">Users</a></li>
-                @*<li class="nav-item"><a class="nav-link" href="~/Master/ActivityLog">ActivityLog</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">SystemLog</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">InquiryMaster</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">OrganisationGroups</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Organisations</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/Master/ProcessTypeMaster">ProcessTypeMaster</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/Master/ProcessMaster">ProcessMaster</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">RecipeMaster</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">ScreenName</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/Master/SupplierMaster">SupplierMaster</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">TermsAndConditionMaster</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Status</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">YearMaster</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/Master/MaterialReturnNote">MaterialReturnNote</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/Master/QCProductSpecificationMaster">QCProductSpecification</a></li>
-        <li class="nav-item"> <a class="nav-link" href="~/Master/UnitMaster">UnitMaster</a></li>
-        <li class="nav-item"> <a class="nav-link" href="~/Master/MonitoringParametersMaster">MonitoringParametersMaster</a></li>
-        <li class="nav-item"> <a class="nav-link" href="~/Master/MachineMaster">MachineMaster</a></li>
-        <li class="nav-item"> <a class="nav-link" href="~/Master/DocumentNumberFormatMaster">Document Format</a></li>*@
             </ul>
         </div>
     </li>
-    @*<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">
-                <i class="fas fa-chart-pie menu-icon"></i>
-                <span class="menu-title">Charts</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="charts">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartjs.html">ChartJs</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/morris.html">Morris</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/flot-chart.html">Flot</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/google-charts.html">Google charts</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/sparkline.html">Sparkline js</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/c3.html">C3 charts</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/chartist.html">Chartists</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/charts/justGage.html">JustGage</a></li>
-                </ul>
-            </div>
-        </li>*@
+
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" href="#security" aria-expanded="false" aria-controls="editors">
+            <i class="fa fa-unlock-alt menu-icon"></i>
+            <span class="menu-title">Security</span>
+            <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="security">
+            <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Role")">Roles</a></li>
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","RoleRights")">Roles Rights</a></li>
+                <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","UserDetails")">Users</a></li>
+            </ul>
+        </div>
+    </li>
+    
     <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
             <i class="fas fa-table menu-icon"></i>
@@ -232,129 +180,4 @@
             </ul>
         </div>
     </li>
-    @*<li class="nav-item">
-            <a class="nav-link" href="pages/ui-features/popups.html">
-                <i class="fas fa-minus-square menu-icon"></i>
-                <span class="menu-title">Popups</span>
-            </a>
-        </li>*@
-    @*<li class="nav-item">
-            <a class="nav-link" href="pages/ui-features/notifications.html">
-                <i class="fas fa-bell menu-icon"></i>
-                <span class="menu-title">Notifications</span>
-            </a>
-        </li>*@
-    @*<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-                <i class="fa fa-stop-circle menu-icon"></i>
-                <span class="menu-title">Icons</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="icons">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/flag-icons.html">Flag icons</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/font-awesome.html">Font Awesome</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/simple-line-icon.html">Simple line icons</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/icons/themify.html">Themify icons</a></li>
-                </ul>
-            </div>
-        </li>*@
-    @*<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#maps" aria-expanded="false" aria-controls="maps">
-                <i class="fas fa-map-marker-alt menu-icon"></i>
-                <span class="menu-title">Maps</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="maps">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/maps/mapeal.html">Mapeal</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/maps/vector-map.html">Vector Map</a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/maps/google-maps.html">Google Map</a></li>
-                </ul>
-            </div>
-        </li>*@
-    @*<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-                <i class="fas fa-window-restore menu-icon"></i>
-                <span class="menu-title">User Pages</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="auth">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/login-2.html"> Login 2 </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/register-2.html"> Register 2 </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/lock-screen.html"> Lockscreen </a></li>
-                </ul>
-            </div>
-        </li>*@
-    @*<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-                <i class="fas fa-exclamation-circle menu-icon"></i>
-                <span class="menu-title">Error pages</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="error">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-                </ul>
-            </div>
-        </li>*@
-    @*<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#general-pages" aria-expanded="false" aria-controls="general-pages">
-                <i class="fas fa-file menu-icon"></i>
-                <span class="menu-title">General Pages</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="general-pages">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/profile.html"> Profile </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/faq.html"> FAQ </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/faq-2.html"> FAQ 2 </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/news-grid.html"> News grid </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/timeline.html"> Timeline </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/search-results.html"> Search Results </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/portfolio.html"> Portfolio </a></li>
-                </ul>
-            </div>
-        </li>*@
-    @*<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#apps" aria-expanded="false" aria-controls="apps">
-                <i class="fas fa-briefcase menu-icon"></i>
-                <span class="menu-title">Apps</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="apps">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/apps/email.html"> Email </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/apps/calendar.html"> Calendar </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/apps/todo.html"> Todo </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/apps/gallery.html"> Gallery </a></li>
-                </ul>`
-            </div>
-        </li>*@
-    @*<li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#e-commerce" aria-expanded="false" aria-controls="e-commerce">
-                <i class="fas fa-shopping-cart menu-icon"></i>
-                <span class="menu-title">E-commerce</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="e-commerce">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/invoice.html"> Invoice </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/pricing-table.html"> Pricing Table </a></li>
-                    <li class="nav-item"> <a class="nav-link" href="pages/samples/orders.html"> Orders </a></li>
-                </ul>
-            </div>
-        </li>*@
-    @*<li class="nav-item">
-            <a class="nav-link" href="pages/documentation.html">
-                <i class="far fa-file-alt menu-icon"></i>
-                <span class="menu-title">Documentation</span>
-            </a>
-        </li>*@
 </ul>
-@*</nav>*@

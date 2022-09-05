@@ -1,4 +1,4 @@
-﻿
+﻿@model InVanWebApp_BO.UsersBO
 @{
     ViewBag.Title = "Index";
     Layout = null;
@@ -15,9 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Vangi Foods</title>
     <!-- plugins:css -->
-    <link href="~/Theme/MainContent/vendors/iconfonts/font-awesome/css/all.min.css" rel="stylesheet" />
-    <link href="~/Theme/MainContent/vendors/css/vendor.bundle.addons.css" rel="stylesheet" />
-    <link href="~/Theme/MainContent/vendors/css/vendor.bundle.base.css" rel="stylesheet" />
+    @*<link href="~/Theme/MainContent/vendors/iconfonts/font-awesome/css/all.min.css" rel="stylesheet" />
+        <link href="~/Theme/MainContent/vendors/css/vendor.bundle.addons.css" rel="stylesheet" />
+        <link href="~/Theme/MainContent/vendors/css/vendor.bundle.base.css" rel="stylesheet" />*@
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -36,61 +36,51 @@
                     <div class="col-md-7 d-flex align-items-center justify-content-center">
                         <div class="auth-form-transparent text-left p-3">
                             <div class="brand-logo">
-                                @*<img src="~/Theme/MainContent/images/logo.png"  alt="Vangi Foods"/>*@
                                 <img src="~/Theme/MainContent/images/Logo.svg" alt="Vangi Foods" />
-                                @*<h4>Welcome!</h4>*@
-                                <!-- <h6 class="font-weight-light">Happy to see you again!</h6> -->
                             </div>
-                            <form class="pt-3">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail">Username</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend bg-transparent">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fa fa-user text-primary"></i>
-                                            </span>
+                            @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                <form class="pt-3">
+                                    <div class="form-group">
+                                        <h5>Username</h5>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend bg-transparent">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fa fa-user text-primary"></i>
+                                                </span>
+                                            </div>
+                                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control form-control-lg border-left-0", placeholder = "Username", type = "text" })
+                                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "error mt-2 text-danger" })
                                         </div>
-                                        <input type="text" class="form-control form-control-lg border-left-0" id="exampleInputEmail" placeholder="Username">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword">Password</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend bg-transparent">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fa fa-lock text-primary"></i>
-                                            </span>
+                                    <div class="form-group">
+                                        <h5>Password</h5>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend bg-transparent">
+                                                <span class="input-group-text bg-transparent border-right-0">
+                                                    <i class="fa fa-lock text-primary"></i>
+                                                </span>
+                                            </div>
+                                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control form-control-lg border-left-0", placeholder = "Password", type = "password" })
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error mt-2 text-danger" })
                                         </div>
-                                        <input type="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">
                                     </div>
-                                </div>
-                                @*<div class="my-2 d-flex justify-content-between align-items-center">
-                                    <div class="form-check">
-                                        <label class="form-check-label text-muted">
-                                            <input type="checkbox" class="form-check-input">
-                                            Keep me signed in
-                                        </label>
+                                    @*<div class="my-2 d-flex justify-content-between align-items-center">
+                                            <div class="form-check">
+                                                <label class="form-check-label text-muted">
+                                                    <input type="checkbox" class="form-check-input">
+                                                    Keep me signed in
+                                                </label>
+                                            </div>
+                                            <a href="#" class="auth-link text-black">Forgot password?</a>
+                                        </div>*@
+                                    <div class="my-3">
+                                        <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style="background: linear-gradient(85deg, #392c70, #6a005b);">Login</button>
+                                        @*<a href="@Url.Action("Index","Dashboard")" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</a>*@
                                     </div>
-                                    <a href="#" class="auth-link text-black">Forgot password?</a>
-                                </div>*@
-                                <div class="my-3">
-                                    @*<a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index-2.html">LOGIN</a>*@
-                                    @*<a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">LOGIN</a>*@
-                                    <a href="@Url.Action("Index","Dashboard")" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</a>
-                                </div>
-                                <!-- <div class="mb-2 d-flex">
-                                  <button type="button" class="btn btn-facebook auth-form-btn flex-grow mr-1">
-                                    <i class="fab fa-facebook-f mr-2"></i>Facebook
-                                  </button>
-                                  <button type="button" class="btn btn-google auth-form-btn flex-grow ml-1">
-                                    <i class="fab fa-google mr-2"></i>Google
-                                  </button>
-                                </div>
-                                <div class="text-center mt-4 font-weight-light">
-                                  Don't have an account? <a href="register-2.html" class="text-primary">Create</a>
-                                </div>
-                                 -->
-                            </form>
+                                </form>
+                            }
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -108,16 +98,16 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="~/Theme/MainContent/vendors/js/vendor.bundle.addons.js"></script>
-    <script src="~/Theme/MainContent/vendors/js/vendor.bundle.base.js"></script>
+    @*<script src="~/Theme/MainContent/vendors/js/vendor.bundle.addons.js"></script>
+    <script src="~/Theme/MainContent/vendors/js/vendor.bundle.base.js"></script>*@
 
     <!-- endinject -->
     <!-- inject:js -->
-    <script src="~/Theme/MainContent/js/off-canvas.js"></script>
+    @*<script src="~/Theme/MainContent/js/off-canvas.js"></script>
     <script src="~/Theme/MainContent/js/hoverable-collapse.js"></script>
     <script src="~/Theme/MainContent/js/misc.js"></script>
     <script src="~/Theme/MainContent/js/settings.js"></script>
-    <script src="~/Theme/MainContent/js/todolist.js"></script>
+    <script src="~/Theme/MainContent/js/todolist.js"></script>*@
     <!-- endinject -->
 </body>
 
@@ -125,3 +115,20 @@
 <!-- Mirrored from www.urbanui.com/melody/template/pages/samples/login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Sep 2018 06:08:53 GMT -->
 </html>
 
+<script src="~/Theme/MainContent/js/jquery.min.js"></script>
+<script src="~/Theme/MainContent/js/popper.js"></script>
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<script src="~/Theme/MainContent/js/main.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+@if (ViewBag.Login != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert('@ViewBag.Login');
+                //console.log('hi');
+            }
+    </script>
+}

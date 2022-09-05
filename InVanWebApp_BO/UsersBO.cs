@@ -12,7 +12,11 @@ namespace InVanWebApp_BO
         public int UserId { get; set; }
         public Nullable<int> RoleId { get; set; }
         public Nullable<int> EmployeeId { get; set; }
+
+        [Required(ErrorMessage ="Enter username!")]
         public string Username { get; set; }
+
+        [Required(ErrorMessage ="Enter the password!")]
         public string Password { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

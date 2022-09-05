@@ -76,11 +76,16 @@ namespace InVanWebApp.Controllers
                     if (response.Status)
                         TempData["Success"] = "<script>alert('Role Inserted Successfully!');</script>";
                     else
+                    {
                         TempData["Success"] = "<script>alert('Duplicate role! Can not be inserted!');</script>";
+                        return View();
+                    }
 
                     return RedirectToAction("Index", "Role");
 
                 }
+                else
+                    TempData["Success"] = "<script>alert('Data is not inserted cirrectly!');</script>";
             }
             catch (Exception ex)
             {
@@ -121,13 +126,19 @@ namespace InVanWebApp.Controllers
                         TempData["Success"] = "<script>alert('Role updated successfully!');</script>";
 
                     else
+                    {
                         TempData["Success"] = "<script>alert('Duplicate role! Can not be updated!');</script>";
+                        return View();
+                    }
 
 
                     return RedirectToAction("Index", "Role");
                 }
                 else
+                {
+                    TempData["Success"] = "<script>alert('Data is not inserted cirrectly!');</script>";
                     return View(model);
+                }
             }
             catch (Exception ex)
             {

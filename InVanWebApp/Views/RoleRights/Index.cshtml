@@ -1,0 +1,114 @@
+﻿@model  IEnumerable<InVanWebApp_BO.RoleRightBO>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Role Rights Master</title>
+</head>
+<body>
+
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Role Rights</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
+                    </li>
+                    <li class="breadcrumb-item active">Role Rights</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @using (Html.BeginForm("AddRoleRights", "RoleRights", FormMethod.Post))
+                            {
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        @Html.Label("Roles")
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewData["Roles"], "--Select--",
+                                        new { @Id = "role", @class = "form-control" })
+                                        @*@Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "error mt-2 text-danger" })*@
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a href="@Url.Action("AddRoleRights","Role")" class="btn btn-info add-new fa fa-plus" onclick="updatemark()">
+
+                                            Add
+                                        </a>
+                                        <a href="@Url.Action("Index","RoleRights")" class="btn btn-info add-new fa fa-plus">
+                                            Save
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h5>Screen Name</h5>
+                                </div>
+                            </div>
+                            <hr />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-10">
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <div class=" form-group row">
+                                            <div class="col-md-1">
+                                                @*@Html.CheckBoxFor(modelItem => item.IsSelected, new { @checked = "checked" })*@
+                                                <input id="@item.ScreensForRole" type="checkbox" name="skill" value="@item.ScreensForRole" />
+                                            </div>
+                                            <div class="col-md-8">
+                                                @Html.HiddenFor(modelItem => item.RoleId)
+                                                @Html.HiddenFor(modelItem => item.ScreenId)
+                                                @Html.DisplayFor(modelItem => item.ScreenName)
+                                            </div>
+                                            <div class="col-md-3">
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    function updatemark(arg) {
+        var abc = ""
+        //Iterating the collection of checkboxes which checked marked
+        $('input[type=checkbox]').each(function () {
+            if (this.checked) {
+                abc = abc + $(this).val() + ","
+                //assign set value to hidden field
+                $('#ScreensForRole').val(abc);
+            }
+        });
+
+    }
+</script>
+
+@Html.Raw(TempData["Success"])
+

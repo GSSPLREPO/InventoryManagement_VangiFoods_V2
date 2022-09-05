@@ -23,5 +23,10 @@ namespace InVanWebApp.Repository
 
         //Function define for: Delete record of role using it's ID
         void Delete(int RoleId);
+
+        //---------------Below functions are for Role and Right module---------------//
+
+        //Get screens list
+        IEnumerable<RoleRightBO> GetAllScreens();
     }
 }

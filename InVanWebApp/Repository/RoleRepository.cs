@@ -184,5 +184,43 @@ namespace InVanWebApp.Repository
 
         #endregion
 
+        #region Role Rights functions
+        #region Bind Screen list
+        public IEnumerable<RoleRightBO> GetAllScreens()
+        {
+            List<RoleRightBO> resultList = new List<RoleRightBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_Screens_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new RoleRightBO()
+                        {
+                            ScreenId = Convert.ToInt32(dataReader["ScreenId"]),
+                            ScreenName = dataReader["ScreenName"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+
+
+        #endregion
     }
 }
