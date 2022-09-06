@@ -34,8 +34,10 @@
                 </div>
             </div>
             <br />
-            <button type="submit" class="btn btn-primary mr-2">Update</button>
-            @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
+            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Update</button>
+            <a href="@Url.Action("Index", "Tax")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+                Back To List
+            </a>
 
         </div>
     </div>

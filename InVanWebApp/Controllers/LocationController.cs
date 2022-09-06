@@ -156,14 +156,7 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteLocation(int LocationID)
         {
-            LocationMasterBO model = _locationRepository.GetById(LocationID);
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int ID)
-        {
-            _locationRepository.Delete(ID);
+            _locationRepository.Delete(LocationID);
             //_unitRepository.Save();
             TempData["Success"] = "<script>alert('Location deleted successfully!');</script>";
             return RedirectToAction("Index", "Location");

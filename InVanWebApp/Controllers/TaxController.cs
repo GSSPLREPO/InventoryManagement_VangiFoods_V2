@@ -157,13 +157,6 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteTax(int ID)
         {
-            TaxBO model = _taxRepository.GetById(ID);
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int ID)
-        {
             _taxRepository.Delete(ID);
             //_unitRepository.Save();
             TempData["Success"] = "<script>alert('Tax deleted successfully!');</script>";

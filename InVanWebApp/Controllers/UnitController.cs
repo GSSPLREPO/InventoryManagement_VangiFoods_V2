@@ -146,14 +146,6 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteUnit(int UnitId)
         {
-            UnitMaster model = _unitRepository.GetById(UnitId);
-            return View(model);
-        }
-
-
-        [HttpPost]
-        public ActionResult Delete(int UnitId)
-        {
             _unitRepository.Delete(UnitId);
             //_unitRepository.Save();
             TempData["Success"] = "<script>alert('Unit deleted successfully!');</script>";

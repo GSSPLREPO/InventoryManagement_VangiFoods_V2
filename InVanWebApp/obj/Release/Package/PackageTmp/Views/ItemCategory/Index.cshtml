@@ -67,7 +67,9 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Edit", "EditItemCategory", new { ItemCategoryID = item.ItemCategoryID }) |
-                                                @Html.ActionLink("Delete", "DeleteItemCategory", new { ItemCategoryID = item.ItemCategoryID })
+                                                @Html.ActionLink("Delete", "DeleteItemCategory", new { ItemCategoryID = item.ItemCategoryID, },
+                                                    new { onclick = "return confirm('Are you sure, you wants to delete?');" })
+                                                @*@Html.ActionLink("Delete", "DeleteItemCategory", new { ItemCategoryID = item.ItemCategoryID })*@
                                             </td>
                                         </tr>
                                     }

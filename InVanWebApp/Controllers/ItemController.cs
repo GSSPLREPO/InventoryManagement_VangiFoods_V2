@@ -265,20 +265,19 @@ namespace InVanWebApp.Controllers
         /// Date: 25 May 2022
         /// Farheen: Delete the perticular record
         /// </summary>
-        /// <param name="Item_ID">record Id</param>
+        /// <param name="ID">record Id</param>
         /// <returns></returns>
+        //[HttpGet]
+        //public ActionResult DeleteItem(int Item_ID)
+        //{
+        //    ItemBO model = _iItemRepository.GetById(Item_ID);
+        //    return View(model);
+        //}
+
         [HttpGet]
         public ActionResult DeleteItem(int Item_ID)
         {
-            ItemBO model = _iItemRepository.GetById(Item_ID);
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int ID)
-        {
-            _iItemRepository.Delete(ID);
-            //_unitRepository.Save();
+            _iItemRepository.Delete(Item_ID);
             TempData["Success"] = "<script>alert('Item deleted successfully!');</script>";
             return RedirectToAction("Index", "Item");
         }

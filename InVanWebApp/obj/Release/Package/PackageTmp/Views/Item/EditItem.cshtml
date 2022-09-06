@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("ItemTypeID", (IEnumerable<SelectListItem>)ViewData["ItemType"], "--Select Type--",
-                   new { @class = "form-control form-control-sm" })
+                   new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ItemTypeID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("ItemCategory_ID", (IEnumerable<SelectListItem>)ViewData["ItemCategory"], "--Select Category--",
-                   new { @class = "form-control form-control-sm" })
+                   new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ItemCategory_ID, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -98,8 +98,10 @@
                 </div>
             </div>
             <br />
-            <button type="submit" class="btn btn-primary mr-2">Update</button>
-            @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
+            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Update</button>
+            <a href="@Url.Action("Index", "Item")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+                Back To List
+            </a>
 
         </div>
     </div>

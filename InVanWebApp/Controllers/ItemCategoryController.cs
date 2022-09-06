@@ -151,15 +151,15 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <param name="ItemCategoryID">record Id</param>
         /// <returns></returns>
+        //[HttpGet]
+        //public ActionResult DeleteItemCategory(int ItemCategoryID)
+        //{
+        //    ItemCategoryMasterBO model = _itemCategoryRepository.GetById(ItemCategoryID);
+        //    return View(model);
+        //}
+
         [HttpGet]
         public ActionResult DeleteItemCategory(int ItemCategoryID)
-        {
-            ItemCategoryMasterBO model = _itemCategoryRepository.GetById(ItemCategoryID);
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int ItemCategoryID)
         {
             _itemCategoryRepository.Delete(ItemCategoryID);
             //_unitRepository.Save();

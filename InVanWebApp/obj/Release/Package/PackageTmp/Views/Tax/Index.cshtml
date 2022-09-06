@@ -58,8 +58,8 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Edit", "EditTax", new { Id = item.Id }) |
-                                                @Html.ActionLink("Delete", "DeleteTax", new { Id = item.Id })
-                                                @*<button class="btn btn-outline-primary" onclick="showSwal2('warning-message-and-cancel')">Delete</button>*@
+                                                @Html.ActionLink("Delete", "DeleteTax", new { ID = item.Id, },
+                                                    new { onclick = "return confirm('Are you sure, you wants to delete?');" })
                                             </td>
                                         </tr>
                                     }

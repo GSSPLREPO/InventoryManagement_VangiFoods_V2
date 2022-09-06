@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("ItemTypeId", (IEnumerable<SelectListItem>)ViewData["ItemType"], "--Select--",
-                   new { @class = "form-control form-control-sm" })
+                   new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ItemTypeId, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -47,8 +47,11 @@
                 </div>
             </div>
             <br />
-            <button type="submit" class="btn btn-primary mr-2">Submit</button>
-            @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
+            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Submit</button>
+            @*@Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })*@
+            <a href="@Url.Action("Index", "ItemCategory")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+                Back To List
+            </a>
         </div>
     </div>
 }

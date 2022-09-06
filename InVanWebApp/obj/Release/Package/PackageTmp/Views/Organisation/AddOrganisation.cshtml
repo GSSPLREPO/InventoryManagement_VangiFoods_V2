@@ -1,0 +1,114 @@
+﻿@model InVanWebApp_BO.OrganisationsBO
+@{
+    ViewBag.Title = "Add Organisation";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Add Organisation</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Organisation Group")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("OrganisationGroupId", (IEnumerable<SelectListItem>)ViewData["OrganisationGroup"], "--Select--",
+                   new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.OrganisationGroupId, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Organisation Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Abbreviation")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Abbreviation, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Abbreviation, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Contact Person")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ContactPerson, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.ContactPerson, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Contact Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Address")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.Address, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Email Id")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("GSTIN No")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GSTINNo, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.GSTINNo, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Description")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary mr-2"  style="background: linear-gradient(85deg, #392c70, #6a005b);">Submit</button>
+            <a href="@Url.Action("Index", "Organisation")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+                Back To List
+            </a>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@Html.Raw(TempData["Success"])

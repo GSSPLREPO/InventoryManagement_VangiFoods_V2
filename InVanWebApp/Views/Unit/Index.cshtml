@@ -67,7 +67,8 @@
                                             </td>
                                             <td>
                                                 @Html.ActionLink("Edit", "EditUnit", new { UnitID = item.UnitID }) |
-                                                @Html.ActionLink("Delete", "DeleteUnit", new { UnitId = item.UnitID })
+                                                @Html.ActionLink("Delete", "DeleteUnit", new { UnitId = item.UnitID, },
+                                                   new { onclick = "return confirm('Are you sure, you wants to delete?');" })
                                             </td>
                                         </tr>
                                     }

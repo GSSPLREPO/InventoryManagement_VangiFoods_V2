@@ -149,14 +149,6 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteItemType(int ID)
         {
-            ItemTypeBO model = _itemTypeRepository.GetById(ID);
-            return View(model);
-        }
-
-
-        [HttpPost]
-        public ActionResult Delete(int ID)
-        {
             _itemTypeRepository.Delete(ID);
             //_unitRepository.Save();
             TempData["Success"] = "<script>alert('Item type deleted successfully!');</script>";

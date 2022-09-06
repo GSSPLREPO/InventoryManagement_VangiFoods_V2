@@ -159,12 +159,6 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteRole(int RoleId)
         {
-            RoleBO model = _rolesRepository.GetById(RoleId);
-            return View(model);
-        }
-        [HttpPost]
-        public ActionResult Delete(int RoleId)
-        {
             _rolesRepository.Delete(RoleId);
             //_unitRepository.Save();
             TempData["Success"] = "<script>alert('Role deleted successfully!');</script>";

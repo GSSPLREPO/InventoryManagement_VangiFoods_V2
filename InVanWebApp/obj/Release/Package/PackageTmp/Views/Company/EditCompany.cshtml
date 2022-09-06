@@ -1,0 +1,145 @@
+﻿@model InVanWebApp_BO.CompanyBO
+@{
+    ViewBag.Title = "Edit Company";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Company</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="row">
+                <div class="col-md-1">
+                    @Html.Label("Buyer")
+                </div>
+                <div class="col-md-2">
+                    @Html.RadioButtonFor(model => model.CompanyType, "Buyer", new { @class = "form-control form-control-sm", @Value = "Buyer" })
+                </div>
+                <div class="col-md-1">
+                    @Html.Label("Supplier")
+                </div>
+                <div class="col-md-2">
+                    @Html.RadioButtonFor(model => model.CompanyType, "Supplier", new { @class = "form-control form-control-sm", @Value = "Supplier" })
+
+                </div>
+                <div class="col-md-1">
+                    @Html.Label("Both")
+                </div>
+                <div class="col-md-2">
+                    @Html.RadioButtonFor(model => model.CompanyType, "Both", new { @class = "form-control form-control-sm", @Value = "Both" })
+                    @*<div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" name="CompanyType" value="Both" class="form-check-input" />
+
+                            </label>
+                        </div>*@
+                </div>
+                @Html.ValidationMessageFor(model => model.CompanyType, "", new { @class = "error mt-2 text-danger" })
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Company Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control form-control-sm", placeholder = "Company name" })
+                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Email ID")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control form-control-sm", type = "text", placeholder = "Email Id" })
+                    @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Contact Person")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ContactPersonName, new { @class = "form-control form-control-sm", placeholder = "Contact person name" })
+                    @Html.ValidationMessageFor(model => model.ContactPersonName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Contact Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ContactPersonNo, new { @class = "form-control form-control-sm", placeholder = "Contact person number" })
+                    @Html.ValidationMessageFor(model => model.ContactPersonNo, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Address")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.Address, new { @class = "form-control form-control-sm", placeholder = "Address" })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("GST Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GSTNumber, new { @class = "form-control form-control-sm", type = "text", maxlength = "50", placeholder = "GST Number" })
+                    @Html.ValidationMessageFor(model => model.GSTNumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", placeholder = "Remark" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-1">
+                    @Html.Label("Is Active")
+                </div>
+                <div class="col-md-2">
+                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control form-control-sm" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Is Black Listed")
+                </div>
+                <div class="col-md-2">
+                    @Html.CheckBoxFor(model => model.IsBlackListed, new { @class = "form-control form-control-sm" })
+                </div>
+                @*<div class="col-md-2">
+                        @Html.Label("Is Black Listed")
+                    </div>
+                    <div class="col-md-2">
+                        <input type="checkbox" name="IsBlackListed" id="IsBlackListed" class="form-check-input" value="true" />
+                        <input name="IsBlackListed" type="hidden" checked value="false" />
+                    </div>*@
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Submit</button>
+            <a href="@Url.Action("Index","Company")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+                Back To List
+            </a>
+        </div>
+    </div>
+}
+@Html.Raw(TempData["Success"])
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

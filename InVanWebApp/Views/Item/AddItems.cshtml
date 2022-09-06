@@ -29,7 +29,7 @@
                     </div>
                     <div class="col-md-4">
                         @Html.DropDownList("ItemTypeID", (IEnumerable<SelectListItem>)ViewData["ItemType"], "---Select---",
-                       new { @class = "form-control form-control-sm" })
+                       new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ItemTypeID, "", new { @class = "error mt-2 text-danger" })
                     </div>
                     <div class="col-md-2">
@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-md-4">
                         @Html.DropDownList("ItemCategory_ID", (IEnumerable<SelectListItem>)ViewData["ItemCategory"], "---Select---",
-                       new { @class = "form-control form-control-sm" })
+                       new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.ItemCategory_ID, "", new { @class = "text-danger" })
                     </div>
                 </div>
