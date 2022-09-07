@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using InVanWebApp_BO;
 using InVanWebApp.Repository;
 using log4net;
+using InVanWebApp.Common;
+using System.Web.Services;
 
 namespace InVanWebApp.Controllers
 {
@@ -70,19 +72,78 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Bind rights of perticular selected role.
         /// <summary>
-        /// Date: 05 Sept 2022
-        /// Created by: Farheen 
-        ///Description: To add Rights of a screens to a role
+        /// Date: 06 Sep'22
+        /// Created by: Farheen
+        /// Description: To get role rights of selected role and display
         /// </summary>
+        /// <param name="roleId"></param>
         /// <returns></returns>
-        [HttpPost]
-        public ActionResult Index(RoleRightBO roleRights)
+
+        public JsonResult GetRoleRightsJSon(int roleId)
         {
-            //bind roles to dropdownlist
-            BindRoles();
-            var Screens = _rolesRepository.GetAllScreens();
-            return View(roleRights);
+
+            RoleRightBO roles = new RoleRightBO();
+            Session["roleIdRights"] = roleId;
+            List<RoleRightBO> roleRights = new List<RoleRightBO>();
+            roleRights = _rolesRepository.GetRightsOfScreenRole(roleId);
+            return Json(roleRights, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Save role's rights
+
+       // [WebMethod]
+        public JsonResult AddRoleRights(string[] roleRights)
+        {
+            //if (Session[ApplicationSession.USERID] == null)
+            //    return RedirectToAction("Index", "Login");
+            int roleId = 1;
+            if (Session["roleIdRights"] == null)
+                roleId = 1;
+            else
+                roleId = Convert.ToInt32(Session["roleIdRights"]);
+
+            //var roleRightsScreen = _rolesRepository.InsertRoleRights(roleRights, roleId);
+            BindRoles();
+            //if (roleRightsScreen == true)
+            if (true)
+            {
+                ViewBag.roleRights += "Successfully Rights assigned";
+            }
+            else
+            {
+                ViewBag.roleRights += "Some error occurred! Please try again";
+            }
+
+            //List<SelectListItem> roleRights = GetRoleRightsJSon(0);
+
+            //return View(items);
+            return Json(roleRights, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        ///// <summary>
+        ///// Date: 05 Sept 2022
+        ///// Created by: Farheen 
+        /////Description: To add Rights of a screens to a role
+        ///// </summary>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public ActionResult Index(RoleRightBO roleRights)
+        //{
+        //    if (Session[ApplicationSession.USERID] == null)
+        //        return RedirectToAction("Index", "Login");
+        //    else
+        //    {
+        //        //bind roles to dropdownlist
+        //        BindRoles();
+        //        var Screens = _rolesRepository.GetAllScreens();
+        //        return View(roleRights);
+        //    }
+        //}
     }
 }

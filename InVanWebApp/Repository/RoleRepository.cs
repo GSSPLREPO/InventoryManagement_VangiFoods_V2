@@ -184,7 +184,9 @@ namespace InVanWebApp.Repository
 
         #endregion
 
+        //==============================Role rights functions===================================//
         #region Role Rights functions
+
         #region Bind Screen list
         public IEnumerable<RoleRightBO> GetAllScreens()
         {
@@ -219,7 +221,57 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Bind rights of perticular selected role.
+        /// <summary>
+        /// Date: 06 Sep'22
+        /// Created By: Farheen
+        /// Description: To get whether list of screens for a perticular role id.
+        /// </summary>
+        /// <param name="roleId"></param>
+        /// <param name="screenId"></param>
+        /// <returns></returns>
+        public List<RoleRightBO> GetRightsOfScreenRole(int roleId)
+        {
+            List<RoleRightBO> resultList = new List<RoleRightBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_GetScreenNamesByRoleId", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleId", roleId);
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
 
+                    while (dataReader.Read())
+                    {
+                        var result = new RoleRightBO()
+                        {
+                            RoleId = Convert.ToInt32(dataReader["RoleId"]),
+                            ScreenName = dataReader["ScreenName"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                resultList = null;
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Save role's rights
+        public bool InsertRoleRights(List<RoleRightBO> roles, int roleId)
+        {
+            return true;
+        }
+
+        #endregion
 
         #endregion
     }
