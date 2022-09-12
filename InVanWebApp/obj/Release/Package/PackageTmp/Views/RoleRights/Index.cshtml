@@ -29,8 +29,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            @using (Html.BeginForm("AddRoleRights", "RoleRights", FormMethod.Post))
-                            {
+                            @*@using (Html.BeginForm("AddRoleRights", "RoleRights", FormMethod.Post))*@
+                            
                                 <div class="row">
                                     <div class="col-md-2">
                                         @Html.Label("Roles")
@@ -39,51 +39,53 @@
                                     <div class="col-md-4">
                                         @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewData["Roles"], "--Select--",
                                         new { @Id = "role", @class = "form-control" })
-                                        @*@Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "error mt-2 text-danger" })*@
                                     </div>
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <a href="@Url.Action("AddRoleRights","Role")" class="btn btn-info add-new fa fa-plus" onclick="updatemark()">
-
-                                            Add
-                                        </a>
-                                        <a href="@Url.Action("Index","RoleRights")" class="btn btn-info add-new fa fa-plus">
-                                            Save
-                                        </a>
+                                        <button id="btnSave" type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Save</button>
+                                        @*<a href="@Url.Action("AddRoleRights","RoleRights")" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+                                                Save
+                                            </a>*@
                                     </div>
                                 </div>
-                            }
-                            <br />
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <h5>Screen Name</h5>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <h5><u><i>Screen Names</i></u></h5>
+                                    </div>
                                 </div>
-                            </div>
-                            <hr />
-                            <br />
-                            <div class="row">
-                                <div class="col-md-10">
-                                    @foreach (var item in Model)
-                                    {
-
-                                        <div class=" form-group row">
+                                <hr />
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="row">
                                             <div class="col-md-1">
-                                                @*@Html.CheckBoxFor(modelItem => item.IsSelected, new { @checked = "checked" })*@
-                                                <input id="@item.ScreensForRole" type="checkbox" name="skill" value="@item.ScreensForRole" />
+                                                @Html.CheckBox("checkAll", new { @id = "checkAll" })
                                             </div>
-                                            <div class="col-md-8">
-                                                @Html.HiddenFor(modelItem => item.RoleId)
-                                                @Html.HiddenFor(modelItem => item.ScreenId)
-                                                @Html.DisplayFor(modelItem => item.ScreenName)
-                                            </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-2">
+                                                <h5>Select All</h5>
                                             </div>
                                         </div>
-                                    }
+                                        <br />
+                                        @foreach (var item in Model)
+                                        {
+                                            <div class=" form-group row">
+                                                <div class="col-md-1">
+                                                    @*@Html.CheckBoxFor(item => item[i].Selected, new { @checked = "checked" })*@
+                                                    <input id="@item.ScreenName" class="removeLater" type="checkbox" name="skill" value="@item.ScreenName" />
+                                                </div>
+                                                <div class="col-md-8">
+                                                    @Html.HiddenFor(modelItem => item.RoleId)
+                                                    @Html.HiddenFor(modelItem => item.ScreenId)
+                                                    @Html.DisplayFor(modelItem => item.ScreenName)
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -94,21 +96,118 @@
 
 </html>
 
-<script>
-
-    function updatemark(arg) {
-        var abc = ""
-        //Iterating the collection of checkboxes which checked marked
-        $('input[type=checkbox]').each(function () {
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    //if checked header check box then check all and if unselected the nunselect all
+    $('#checkAll').click(function () {
+        var role = $("#role").val();
+        if (role != '' && role != null) {
             if (this.checked) {
-                abc = abc + $(this).val() + ","
-                //assign set value to hidden field
-                $('#ScreensForRole').val(abc);
+                $(':checkbox').each(function () {
+                    this.checked = true;
+                });
+                document.getElementById("btnSave").disabled = false;
             }
+            else {
+                $(':checkbox').each(function () {
+                    this.checked = false;
+                });
+                document.getElementById("btnSave").disabled = true;
+            }
+        }
+        else {
+            $("#checkAll").prop("checked", false);
+            alert("Please select the role first!");
+            document.getElementById("btnSave").disabled = true;
+        }
+    });
+
+    document.getElementById("role").addEventListener("change", function () {
+
+        //to uncheck all checkboxes
+        $(':checkbox').each(function () {
+            this.checked = false;
         });
 
-    }
+        var checkbox;
+        var roleId = document.getElementById("role").value;
+        //to check based on rights
+
+        $.ajax({
+            type: "POST",
+            url: `/RoleRights/GetRoleRightsJSon?roleId=${roleId}`,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                $.each(result, function (key, item) {
+
+                    $(':checkbox').each(function () {
+                        if (this.id == item.ScreenName) {
+                            this.checked = true;
+                        }
+                    });
+                    document.getElementById("btnSave").disabled = false;
+                });
+            }
+        });
+    })
 </script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById("btnSave").disabled = true;
+    });
+
+    $("#btnSave").click(function (e) {
+        if (confirm("Do you want to save?")) {
+            var checkboxValues = [];
+            var roleId = document.getElementById("role").value;
+            checkboxValues.push(roleId);
+            $('input.removeLater:checked').map(function () {
+                //checkboxValues.push($("input:checked").val());
+                checkboxValues.push($(this).val());
+            });
+            
+            //alert(checkboxValues);
+            //return true;
+            $.ajax({
+                type: "POST",
+                url: `/RoleRights/AddRoleRights/`,
+                data: JSON.stringify(checkboxValues),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                async: true,
+                success: function (result) {
+                    $.each(result, function (key, item) {
+
+                        $(':checkbox').each(function () {
+                            if (this.id == item.ScreenName) {
+                                this.checked = true;
+                            }
+                        });
+                        document.getElementById("btnSave").disabled = false;
+                    });
+                }
+            });
+        } else {
+            return false;
+        }
+    });
+
+
+</script>
+
+@if (ViewBag.roleRights != null)
+{
+    <script type="text/javascript">
+             window.onload = function () {
+                //console.log('hi');
+                alert('@ViewBag.roleRights');
+             }
+    </script>
+}
 
 @Html.Raw(TempData["Success"])
 

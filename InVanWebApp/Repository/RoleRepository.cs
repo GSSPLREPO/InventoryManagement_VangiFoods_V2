@@ -266,9 +266,61 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Save role's rights
-        public bool InsertRoleRights(List<RoleRightBO> roles, int roleId)
+        /// <summary>
+        /// Date: 08 Sep'22
+        /// Created by: Farheen
+        /// Description: Insert role and rights but before insertion delete that role's rights then 
+        /// insert command execute.
+        /// </summary>
+        /// <param name="screenNames"></param>
+        /// <param name="roleId"></param>
+        /// <param name="LastModifiedBy"></param>
+        /// <returns></returns>
+        public bool InsertRoleRights(string[] screenNames, int roleId, int LastModifiedBy)
         {
-            return true;
+            ResponseMessageBO result = new ResponseMessageBO();
+            bool flagReesult = false;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd1 = new SqlCommand("usp_tbl_RoleRights_Delete", con);
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    cmd1.Parameters.AddWithValue("@RoleId", roleId);
+                    con.Open();
+                    cmd1.ExecuteNonQuery();
+                    con.Close();
+
+                    for (int i =1 ; i < screenNames.Length; i++)
+                    {
+                        SqlCommand cmd = new SqlCommand("usp_tbl_RoleRights_Save", con);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@RoleId", roleId);
+                        cmd.Parameters.AddWithValue("@screenName", screenNames[i]);
+                        cmd.Parameters.AddWithValue("@LastModifiedUserId", LastModifiedBy);
+                        cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            result.Status = Convert.ToBoolean(reader["Status"]);
+                            if (result.Status)
+                                flagReesult = true;
+                            else
+                                flagReesult = false;
+
+                        }
+                        con.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                flagReesult = false;
+                log.Error(ex.Message, ex);
+            }
+            return flagReesult;
         }
 
         #endregion

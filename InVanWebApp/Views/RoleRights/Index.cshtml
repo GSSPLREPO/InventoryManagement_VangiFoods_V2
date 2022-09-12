@@ -29,8 +29,8 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            @using (Html.BeginForm("AddRoleRights", "RoleRights", FormMethod.Post))
-                            {
+                            @*@using (Html.BeginForm("AddRoleRights", "RoleRights", FormMethod.Post))*@
+                            
                                 <div class="row">
                                     <div class="col-md-2">
                                         @Html.Label("Roles")
@@ -85,7 +85,7 @@
                                         }
                                     </div>
                                 </div>
-                            }
+                            
                         </div>
                     </div>
                 </div>
@@ -163,11 +163,13 @@
     $("#btnSave").click(function (e) {
         if (confirm("Do you want to save?")) {
             var checkboxValues = [];
+            var roleId = document.getElementById("role").value;
+            checkboxValues.push(roleId);
             $('input.removeLater:checked').map(function () {
                 //checkboxValues.push($("input:checked").val());
                 checkboxValues.push($(this).val());
             });
-            var roleId = document.getElementById("role").value;
+            
             //alert(checkboxValues);
             //return true;
             $.ajax({

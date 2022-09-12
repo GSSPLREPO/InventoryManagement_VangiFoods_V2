@@ -59,7 +59,13 @@
                                                 @Html.DisplayFor(modelItem => item.Description)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "EditRole", new { RoleId = item.RoleId }) |
+                                                @*@Html.ActionLink("Edit", "EditRole", new { RoleId = item.RoleId }) |*@
+                                                <a href="@Url.Action("EditRole","Role")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                                    <span class="fa fa-edit"></span>
+                                                </a>
+                                                <a href="@Url.Action("DeleteRole","Role")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                                    <span class="fa fa-edit"></span>
+                                                </a>
                                                 @Html.ActionLink("Delete", "DeleteRole", new { RoleId = item.RoleId, },
                                                     new { onclick = "return confirm('Are you sure, you wants to delete?');" })
 

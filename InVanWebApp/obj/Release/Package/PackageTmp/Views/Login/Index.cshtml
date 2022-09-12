@@ -15,9 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Vangi Foods</title>
     <!-- plugins:css -->
-    @*<link href="~/Theme/MainContent/vendors/iconfonts/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/Theme/MainContent/vendors/iconfonts/font-awesome/css/all.min.css" rel="stylesheet" />
         <link href="~/Theme/MainContent/vendors/css/vendor.bundle.addons.css" rel="stylesheet" />
-        <link href="~/Theme/MainContent/vendors/css/vendor.bundle.base.css" rel="stylesheet" />*@
+        <link href="~/Theme/MainContent/vendors/css/vendor.bundle.base.css" rel="stylesheet" />
     <!-- endinject -->
     <!-- plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -36,51 +36,53 @@
                     <div class="col-md-7 d-flex align-items-center justify-content-center">
                         <div class="auth-form-transparent text-left p-3">
                             <div class="brand-logo">
-                                <img src="~/Theme/MainContent/images/Logo.svg" alt="Vangi Foods" />
+                                <img src="~/Theme/MainContent/images/Logo.svg" alt="Vangi Foods" class="d-none"/>
                             </div>
-                            @using (Html.BeginForm("Index", "Login", FormMethod.Post))
-                            {
-                                @Html.AntiForgeryToken()
-                                <form class="pt-3">
-                                    <div class="form-group">
-                                        <h5>Username</h5>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend bg-transparent">
-                                                <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fa fa-user text-primary"></i>
-                                                </span>
+                            <div class="shadow p-3 mb-5 bg-white rounded">
+                                @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <form class="pt-3">
+                                        <div class="form-group">
+                                            <h5>Username</h5>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend bg-transparent">
+                                                    <span class="input-group-text bg-transparent border-right-0">
+                                                        <i class="fa fa-user text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Username, new { @class = "form-control form-control-lg border-left-0", type = "text" })
+                                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "error mt-2 text-danger" })
                                             </div>
-                                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control form-control-lg border-left-0", placeholder = "Username", type = "text" })
-                                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "error mt-2 text-danger" })
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <h5>Password</h5>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend bg-transparent">
-                                                <span class="input-group-text bg-transparent border-right-0">
-                                                    <i class="fa fa-lock text-primary"></i>
-                                                </span>
+                                        <div class="form-group">
+                                            <h5>Password</h5>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend bg-transparent">
+                                                    <span class="input-group-text bg-transparent border-right-0">
+                                                        <i class="fa fa-lock text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control form-control-lg border-left-0", type = "password" })
+                                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error mt-2 text-danger" })
                                             </div>
-                                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control form-control-lg border-left-0", placeholder = "Password", type = "password" })
-                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error mt-2 text-danger" })
                                         </div>
-                                    </div>
-                                    @*<div class="my-2 d-flex justify-content-between align-items-center">
-                                            <div class="form-check">
-                                                <label class="form-check-label text-muted">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    Keep me signed in
-                                                </label>
-                                            </div>
-                                            <a href="#" class="auth-link text-black">Forgot password?</a>
-                                        </div>*@
-                                    <div class="my-3">
-                                        <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style="background: linear-gradient(85deg, #392c70, #6a005b);">Login</button>
-                                        @*<a href="@Url.Action("Index","Dashboard")" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</a>*@
-                                    </div>
-                                </form>
-                            }
+                                        @*<div class="my-2 d-flex justify-content-between align-items-center">
+                        <div class="form-check">
+                            <label class="form-check-label text-muted">
+                                <input type="checkbox" class="form-check-input">
+                                Keep me signed in
+                            </label>
+                        </div>
+                        <a href="#" class="auth-link text-black">Forgot password?</a>
+                    </div>*@
+                                        <div class="my-3">
+                                            <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style="background: linear-gradient(85deg, #392c70, #6a005b);">Login</button>
+                                            @*<a href="@Url.Action("Index","Dashboard")" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</a>*@
+                                        </div>
+                                    </form>
+                                }
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-5">

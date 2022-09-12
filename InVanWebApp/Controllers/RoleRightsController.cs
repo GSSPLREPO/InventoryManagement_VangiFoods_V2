@@ -94,22 +94,14 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Save role's rights
-
-       // [WebMethod]
-        public JsonResult AddRoleRights(string[] roleRights)
+        public JsonResult AddRoleRights(string[] screenNames)
         {
-            //if (Session[ApplicationSession.USERID] == null)
-            //    return RedirectToAction("Index", "Login");
-            int roleId = 1;
-            if (Session["roleIdRights"] == null)
-                roleId = 1;
-            else
-                roleId = Convert.ToInt32(Session["roleIdRights"]);
-
-            //var roleRightsScreen = _rolesRepository.InsertRoleRights(roleRights, roleId);
+            var roleId = Convert.ToInt32(screenNames[0]);
+            var userId = Convert.ToInt32(Session[ApplicationSession.USERID]);
             BindRoles();
-            //if (roleRightsScreen == true)
-            if (true)
+            var roleRightsScreen = _rolesRepository.InsertRoleRights(screenNames, roleId,userId);
+
+            if (roleRightsScreen)
             {
                 ViewBag.roleRights += "Successfully Rights assigned";
             }
@@ -118,32 +110,11 @@ namespace InVanWebApp.Controllers
                 ViewBag.roleRights += "Some error occurred! Please try again";
             }
 
-            //List<SelectListItem> roleRights = GetRoleRightsJSon(0);
-
-            //return View(items);
-            return Json(roleRights, JsonRequestBehavior.AllowGet);
+            var result = GetRoleRightsJSon(roleId);
+            return result;
         }
 
         #endregion
 
-        ///// <summary>
-        ///// Date: 05 Sept 2022
-        ///// Created by: Farheen 
-        /////Description: To add Rights of a screens to a role
-        ///// </summary>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public ActionResult Index(RoleRightBO roleRights)
-        //{
-        //    if (Session[ApplicationSession.USERID] == null)
-        //        return RedirectToAction("Index", "Login");
-        //    else
-        //    {
-        //        //bind roles to dropdownlist
-        //        BindRoles();
-        //        var Screens = _rolesRepository.GetAllScreens();
-        //        return View(roleRights);
-        //    }
-        //}
     }
 }

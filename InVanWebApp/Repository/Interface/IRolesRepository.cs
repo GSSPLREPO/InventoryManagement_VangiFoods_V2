@@ -29,6 +29,6 @@ namespace InVanWebApp.Repository
         //Get screens list
         IEnumerable<RoleRightBO> GetAllScreens();
         List<RoleRightBO> GetRightsOfScreenRole(int roleId);
-        bool InsertRoleRights(List<RoleRightBO> roles,int roleId);
+        bool InsertRoleRights(string[] screenNames,int roleId, int LastModifiedBy);
     }
 }
