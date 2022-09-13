@@ -29,7 +29,7 @@
                     <div class="card">
                         <div class="card-body">
                             @*<h1 class="card-title">@Html.ActionLink("Add Item Category", "AddItemCategory")</h1>*@
-                           
+
                             <a href="@Url.Action("AddItemCategory","ItemCategory")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
                                 <span class="fa fa-plus"></span>  Add Category
                             </a>
@@ -66,10 +66,16 @@
                                                 @Html.DisplayFor(modelItem => item.Description)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "EditItemCategory", new { ItemCategoryID = item.ItemCategoryID }) |
-                                                @Html.ActionLink("Delete", "DeleteItemCategory", new { ItemCategoryID = item.ItemCategoryID, },
-                                                    new { onclick = "return confirm('Are you sure, you wants to delete?');" })
-                                                @*@Html.ActionLink("Delete", "DeleteItemCategory", new { ItemCategoryID = item.ItemCategoryID })*@
+                                                <a href=@Url.Action("EditItemCategory", "ItemCategory", new { ItemCategoryID = item.ItemCategoryID })>
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("DeleteItemCategory", "ItemCategory", new { ItemCategoryID = item.ItemCategoryID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
+                                                @*@Html.ActionLink("Edit", "EditItemCategory", new { ItemCategoryID = item.ItemCategoryID }) |
+                                                    @Html.ActionLink("Delete", "DeleteItemCategory", new { ItemCategoryID = item.ItemCategoryID, },
+                                                        new { onclick = "return confirm('Are you sure, you wants to delete?');" })*@
+
                                             </td>
                                         </tr>
                                     }

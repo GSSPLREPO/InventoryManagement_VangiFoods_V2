@@ -175,7 +175,6 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\TaxController.cs" />
-    <Compile Include="Controllers\TransactionsPOandOCController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="DAL\Branch.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
@@ -401,7 +400,6 @@
     <Compile Include="Repository\Interface\IRolesRepository.cs" />
     <Compile Include="Repository\ItemCategoryRepository.cs" />
     <Compile Include="Repository\ItemTypeRepository.cs" />
-    <Compile Include="Repository\Interface\ITransactionsPOandOCRepository.cs" />
     <Compile Include="Repository\Interface\IUnitRepository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />
@@ -409,7 +407,6 @@
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
     <Compile Include="Repository\TaxRepository.cs" />
-    <Compile Include="Repository\TransactionsPOandOCRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
     <Compile Include="Repository\UserDetailsRepository.cs" />
   </ItemGroup>

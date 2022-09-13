@@ -64,9 +64,15 @@
                                                 @Html.DisplayFor(modelItem => item.Remark)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "EditLocation", new { LocationID = item.ID }) |
-                                                @Html.ActionLink("Delete", "DeleteLocation", new { LocationID = item.ID, },
-                                                   new { onclick = "return confirm('Are you sure, you wants to delete?');" })
+                                                <a href=@Url.Action("EditLocation", "Location", new { LocationID = item.ID })>
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("DeleteLocation", "Location", new { LocationID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
+                                                @*@Html.ActionLink("Edit", "EditLocation", new { LocationID = item.ID }) |
+                                                    @Html.ActionLink("Delete", "DeleteLocation", new { LocationID = item.ID, },
+                                                       new { onclick = "return confirm('Are you sure, you wants to delete?');" })*@
                                             </td>
                                         </tr>
                                     }
