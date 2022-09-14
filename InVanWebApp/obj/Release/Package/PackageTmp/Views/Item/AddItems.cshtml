@@ -91,37 +91,37 @@
                     </div>
                 </div>
                 <br />
-                <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Submit</button>
+                @*<button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Submit</button>*@
             </div>
+
+            <div id="AddMultipleDiv" style="display:none;">
+                <fieldset>
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <label>Add Multiple Items</label>
+                            <input type="file" name="UploadedFile" id="fileupload" class="file-drop-zone" required>
+                            <span id="sfileupload" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @*<button type="button" class="btn btn-info" id="btnViewExcel"><i class="icon-eye2"></i> View Excel</button>*@ @*uploadexcel*@
+                            <a href="~/ExcelFileFormat/Download-Format-Item.xlsx" class="btn btn-primary mr-2" download style="background: linear-gradient(85deg, #392c70, #6a005b);"><i class="icon-cloud-download2"></i> Download Excel File Format</a>
+                            <span> </span>
+                            <button type="submit" class="btn btn-primary mr-2" id="uploadexcel" style="display: none; background: linear-gradient(85deg, #392c70, #6a005b);"> Upload</button>
+                            <input type="hidden" id="hdnExcelRecord" name="hdnExcelRecord" />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            @*<br /><u>@Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })</u>*@
+            <br />
+            <a href="@Url.Action("Index", "Item")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
+                Back To List
+            </a>
+            <button id="btnSave" type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right; display: none;">Submit</button>
         }
-
-        <div id="AddMultipleDiv" style="display:none;">
-            <fieldset>
-                <div class="row">
-                    <div class="col-lg-7">
-                        <label>Add Multiple Items</label>
-                        <input type="file" name="UploadedFile" id="fileupload" class="file-drop-zone" required>
-                        <span id="sfileupload" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        @*<button type="button" class="btn btn-info" id="btnViewExcel"><i class="icon-eye2"></i> View Excel</button>*@ @*uploadexcel*@
-                        <a href="~/ExcelFileFormat/Download-Format-Item.xlsx" class="btn btn-primary mr-2" download style="background: linear-gradient(85deg, #392c70, #6a005b);"><i class="icon-cloud-download2"></i> Download Excel File Format</a>
-                        <span> </span>
-                        <button type="submit" class="btn btn-primary mr-2" id="uploadexcel" style="display: none; background: linear-gradient(85deg, #392c70, #6a005b);"> Upload</button>
-                        <input type="hidden" id="hdnExcelRecord" name="hdnExcelRecord" />
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-
-        @*<br /><u>@Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })</u>*@
-        <br />
-        <a href="@Url.Action("Index", "Item")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
-            Back To List
-        </a>
-
     </div>
 </div>
 
@@ -135,6 +135,7 @@
     $("#btnAdd").click(function () {
         $("#AddMultipleDiv").hide();
         $("#AddDiv").show();
+        $("#btnSave").show();
         $("#btnAdd").hide();
         $("#btnAddMultiple").hide();
     });
@@ -144,6 +145,7 @@
         $("#AddDiv").hide();
         $("#btnAdd").hide();
         $("#btnAddMultiple").hide();
+        $("#btnSave").hide();
         //ViewBag.Edit = true;
         //window.location.href = '/Project/Index';
     });

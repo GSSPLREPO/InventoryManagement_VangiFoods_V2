@@ -7,19 +7,19 @@
 
 <html>
 <head>
-    <title>Role Master</title>
+    <title>Roles</title>
 </head>
 <body>
 
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Role Master</h4>
+            <h4 class="page-title">Roles</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
                     </li>
-                    <li class="breadcrumb-item active">Role</li>
+                    <li class="breadcrumb-item active">Roles</li>
                 </ol>
             </nav>
         </div>
@@ -59,15 +59,15 @@
                                                 @Html.DisplayFor(modelItem => item.Description)
                                             </td>
                                             <td>
+                                                <a href=@Url.Action("EditRole", "Role", new { RoleId = item.RoleId })>
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("DeleteRole", "Role", new { RoleId = item.RoleId }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
                                                 @*@Html.ActionLink("Edit", "EditRole", new { RoleId = item.RoleId }) |*@
-                                                <a href="@Url.Action("EditRole","Role")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                                    <span class="fa fa-edit"></span>
-                                                </a>
-                                                <a href="@Url.Action("DeleteRole","Role")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                                    <span class="fa fa-edit"></span>
-                                                </a>
-                                                @Html.ActionLink("Delete", "DeleteRole", new { RoleId = item.RoleId, },
-                                                    new { onclick = "return confirm('Are you sure, you wants to delete?');" })
+                                                @*@Html.ActionLink("Delete", "DeleteRole", new { RoleId = item.RoleId, },
+                                                    new { onclick = "return confirm('Are you sure, you wants to delete?');" })*@
 
                                             </td>
                                         </tr>

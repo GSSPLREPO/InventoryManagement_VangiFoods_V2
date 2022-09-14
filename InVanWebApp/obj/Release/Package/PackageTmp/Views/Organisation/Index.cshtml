@@ -52,8 +52,8 @@
                                             @Html.DisplayName("Contact No")
                                         </th>
                                         @*<th>
-                                            @Html.DisplayName("City")
-                                        </th>*@
+                                                @Html.DisplayName("City")
+                                            </th>*@
                                         <th>
                                             @Html.DisplayName("Description")
                                         </th>
@@ -81,15 +81,21 @@
                                                 @Html.DisplayFor(modelItem => item.ContactNo)
                                             </td>
                                             @*<td>
-                                                @Html.DisplayFor(modelItem => item.CityName)
-                                            </td>*@
+                                                    @Html.DisplayFor(modelItem => item.CityName)
+                                                </td>*@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Description)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "EditOrganisation", new { OrganisationId = item.OrganisationId }) |
-                                                @Html.ActionLink("Delete", "DeleteOrganisation", new { OrganisationId = item.OrganisationId, },
-                                                     new { onclick = "return confirm('Are you sure, you wants to delete?');" })
+                                                <a href=@Url.Action("EditOrganisation", "Organisation", new { OrganisationId = item.OrganisationId })>
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("DeleteOrganisation", "Organisation", new { OrganisationId = item.OrganisationId }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
+                                                @*@Html.ActionLink("Edit", "EditOrganisation", new { OrganisationId = item.OrganisationId }) |
+                                                    @Html.ActionLink("Delete", "DeleteOrganisation", new { OrganisationId = item.OrganisationId, },
+                                                         new { onclick = "return confirm('Are you sure, you wants to delete?');" })*@
                                             </td>
                                         </tr>
                                     }

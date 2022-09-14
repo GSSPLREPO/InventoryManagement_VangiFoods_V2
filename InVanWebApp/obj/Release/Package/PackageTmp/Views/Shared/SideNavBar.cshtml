@@ -1,5 +1,6 @@
 ﻿@*<nav class="sidebar sidebar-offcanvas" id="sidebar">*@
-<ul class="nav" style=" overflow-x: auto; overflow-y: scroll; height: 452px; -webkit-overflow-scrolling: touch;">
+@*<ul class="nav" style=" overflow-x: auto; overflow-y: scroll; height: 452px; -webkit-overflow-scrolling: touch;">*@
+<ul class="nav">
     @*<li class="nav-item nav-profile">
         <div class="nav-link">
             <div class="profile-image">
@@ -55,7 +56,8 @@
         <div class="collapse" id="sidebar-layouts">
             <ul class="nav flex-column sub-menu">
 
-                <li class="nav-item"> <a class="nav-link" href="@Url.Action("Index","TransactionsPOandOC")">PO and OC</a></li>
+                @*<li class="nav-item"> <a class="nav-link" href="@Url.Action("Index","TransactionsPOandOC")">PO and OC</a></li>*@
+                <li class="nav-item"> <a class="nav-link" href="~/Material/InwardNote">Purchase Order</a></li>
                 <li class="nav-item"> <a class="nav-link" href="~/Material/InwardNote">Inward Note</a></li>
                 <li class="nav-item"> <a class="nav-link" href="~/Material/OutwardNote">Outward Note</a></li>
                 <li class="nav-item"> <a class="nav-link" href="~/Material/IssueNote">IssueNote</a></li>
