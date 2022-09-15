@@ -18,11 +18,11 @@ namespace InVanWebApp_BO
         [StringLength(100, ErrorMessage = "Legth of name is exceeded!")]
         public string Name { get; set; }
 
-        [StringLength(50, ErrorMessage = "Legth of abbrevation is exceeded!")]
+        [StringLength(20, ErrorMessage = "Legth of abbrevation is exceeded!")]
         public string Abbreviation { get; set; }
         public string Logo { get; set; }
 
-        [StringLength(50, ErrorMessage = "Legth of name is exceeded!")]
+        [StringLength(30, ErrorMessage = "Legth of name is exceeded!")]
         public string ContactPerson { get; set; }
 
         [Required(ErrorMessage = "Enter Contact number!")]
@@ -47,7 +47,9 @@ namespace InVanWebApp_BO
         public string CINNo { get; set; }
 
         [Required(ErrorMessage = "Enter GST number!")]
-        [StringLength(50, ErrorMessage = "Legth of GST is exceeded!")]
+        [StringLength(15, ErrorMessage = "Legth of GST is exceeded!")]
+        [RegularExpression("^[a-zA-Z0-9]*$",
+            ErrorMessage = "Invalid GST No. !")]
         public string GSTINNo { get; set; }
 
         [StringLength(100, ErrorMessage = "Legth of description is exceeded!")]

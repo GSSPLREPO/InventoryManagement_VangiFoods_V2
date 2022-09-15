@@ -66,9 +66,15 @@
                                                 @Html.DisplayFor(modelItem => item.Description)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "EditUnit", new { UnitID = item.UnitID }) |
-                                                @Html.ActionLink("Delete", "DeleteUnit", new { UnitId = item.UnitID, },
-                                                   new { onclick = "return confirm('Are you sure, you wants to delete?');" })
+                                                <a href=@Url.Action("EditUnit", "Unit", new { UnitID = item.UnitID})>
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("DeleteUnit", "Unit", new { UnitId = item.UnitID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
+                                                @*@Html.ActionLink("Edit", "EditUnit", new { UnitID = item.UnitID }) |
+                                                    @Html.ActionLink("Delete", "DeleteUnit", new { UnitId = item.UnitID, },
+                                                       new { onclick = "return confirm('Are you sure, you wants to delete?');" })*@
                                             </td>
                                         </tr>
                                     }

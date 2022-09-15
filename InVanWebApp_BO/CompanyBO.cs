@@ -13,11 +13,11 @@ namespace InVanWebApp_BO
         public string CompanyType { get; set; }
 
         [Required(ErrorMessage = "Enter name of company!")]
-        [StringLength(200, ErrorMessage = "Legth of name is exceeded!")]
+        [StringLength(100, ErrorMessage = "Legth of name is exceeded!")]
         public string CompanyName { get; set; }
 
         [Required(ErrorMessage = "Enter name of contact person!")]
-        [StringLength(100, ErrorMessage = "Legth of name is exceeded!")]
+        [StringLength(30, ErrorMessage = "Legth of name is exceeded!")]
         public string ContactPersonName { get; set; }
 
         [Required(ErrorMessage = "Enter Contact number!")]
@@ -39,7 +39,9 @@ namespace InVanWebApp_BO
         public Nullable<int> PinCode { get; set; }
 
         [Required(ErrorMessage = "Enter GST number!")]
-        [StringLength(50, ErrorMessage = "Legth of GST is exceeded!")]
+        [StringLength(15, ErrorMessage = "Legth of GST is exceeded!")]
+        [RegularExpression("^[a-zA-Z0-9]*$",
+            ErrorMessage = "Invalid GST No. !")]
         public string GSTNumber{ get; set; }
         public string Remarks { get; set; }
         public bool IsActive { get; set; }
