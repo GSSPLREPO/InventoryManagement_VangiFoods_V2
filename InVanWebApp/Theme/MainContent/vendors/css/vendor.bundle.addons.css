@@ -1109,7 +1109,7 @@ margin-right:5px;
 }
 
 .editableform-loading {
-    background: url('http://www.urbanui.com/') center center no-repeat;  
+   /* background: url('http://www.urbanui.com/') center center no-repeat; */ 
     height: 25px;
     width: auto; 
     min-width: 25px; 
@@ -1177,7 +1177,7 @@ margin-right:5px;
 
 /* IOS-style clear button for text inputs */
 .editable-clear-x {
-   background: url('http://www.urbanui.com/') center center no-repeat;
+   /*background: url('http://www.urbanui.com/') center center no-repeat;*/
    display: block;
    width: 13px;    
    height: 13px;
