@@ -26,6 +26,8 @@ namespace InVanWebApp.DAL
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
+        public string Item_Name { get; set; }
+        public string Item_Code { get; set; }
     
         public virtual Item Item { get; set; }
         public virtual LocationMaster LocationMaster { get; set; }

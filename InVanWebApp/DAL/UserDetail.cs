@@ -40,6 +40,9 @@ namespace InVanWebApp.DAL
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> OrganizationID { get; set; }
+        public string EmailId { get; set; }
+        public string UserName { get; set; }
+        public string Signature { get; set; }
     
         public virtual CityMaster CityMaster { get; set; }
         public virtual CountryMaster CountryMaster { get; set; }
@@ -48,5 +51,6 @@ namespace InVanWebApp.DAL
         public virtual StateMaster StateMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
+        public virtual Organisation Organisation { get; set; }
     }
 }

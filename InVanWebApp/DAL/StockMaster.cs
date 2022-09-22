@@ -25,9 +25,18 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<int> Unit { get; set; }
+        public Nullable<int> GRNId { get; set; }
+        public Nullable<int> PO_Id { get; set; }
+        public string PO_Number { get; set; }
+        public string SaledOrder_Number { get; set; }
+        public Nullable<int> SO_Id { get; set; }
     
         public virtual InwardNote InwardNote { get; set; }
         public virtual Item Item { get; set; }
         public virtual UnitMaster UnitMaster { get; set; }
+        public virtual GRN_Master GRN_Master { get; set; }
+        public virtual PurchaseOrder PurchaseOrder { get; set; }
+        public virtual SalesOrder SalesOrder { get; set; }
     }
 }

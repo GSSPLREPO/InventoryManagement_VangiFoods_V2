@@ -14,6 +14,14 @@ namespace InVanWebApp.DAL
     
     public partial class SalesOrder
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SalesOrder()
+        {
+            this.SalesOrderItemsDetails = new HashSet<SalesOrderItemsDetail>();
+            this.SalesOrderPaymentDetails = new HashSet<SalesOrderPaymentDetail>();
+            this.StockMasters = new HashSet<StockMaster>();
+        }
+    
         public int SalesOrderId { get; set; }
         public Nullable<int> OrganisationId { get; set; }
         public Nullable<int> BranchId { get; set; }
@@ -58,5 +66,12 @@ namespace InVanWebApp.DAL
         public Nullable<decimal> FreightGSTPercent { get; set; }
         public Nullable<bool> IsOpen { get; set; }
         public string SpecialRemarks { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalesOrderItemsDetail> SalesOrderItemsDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalesOrderPaymentDetail> SalesOrderPaymentDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockMaster> StockMasters { get; set; }
     }
 }

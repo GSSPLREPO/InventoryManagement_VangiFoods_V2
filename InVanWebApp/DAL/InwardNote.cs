@@ -19,6 +19,7 @@ namespace InVanWebApp.DAL
         {
             this.DebitNotes = new HashSet<DebitNote>();
             this.StockMasters = new HashSet<StockMaster>();
+            this.GRN_Master = new HashSet<GRN_Master>();
         }
     
         public int ID { get; set; }
@@ -35,6 +36,8 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<int> PO_Id { get; set; }
+        public string PONumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DebitNote> DebitNotes { get; set; }
@@ -42,5 +45,8 @@ namespace InVanWebApp.DAL
         public virtual LocationWiseStock LocationWiseStock { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockMaster> StockMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GRN_Master> GRN_Master { get; set; }
+        public virtual PurchaseOrder PurchaseOrder { get; set; }
     }
 }

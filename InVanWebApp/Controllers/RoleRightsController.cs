@@ -99,7 +99,7 @@ namespace InVanWebApp.Controllers
             var roleId = Convert.ToInt32(screenNames[0]);
             var userId = Convert.ToInt32(Session[ApplicationSession.USERID]);
             BindRoles();
-            var roleRightsScreen = _rolesRepository.InsertRoleRights(screenNames, roleId,userId);
+            var roleRightsScreen = _rolesRepository.InsertRoleRights(screenNames, roleId, userId);
 
             if (roleRightsScreen)
             {
@@ -116,5 +116,44 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Get Role Rights list by role id.
+        /// <summary>
+        /// to get all role rights
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetRoleRightList()
+        {
+            try
+            {
+                int roleId = Convert.ToInt32(Session[ApplicationSession.ROLEID]);
+                List<ScreenNameBO> resultList = new List<ScreenNameBO>();
+                resultList = _rolesRepository.GetRoleRightList(roleId);
+
+                if (resultList != null)
+                {
+                    List<string[]> screensList = new List<string[]>();
+                    
+                    foreach (var itemScreenRights in resultList)
+                    {
+                        string[] screens = new string[3];
+                        screens[0] = roleId.ToString();
+                        screens[1] = itemScreenRights.ScreenId.ToString();
+                        screens[2] = itemScreenRights.ScreenName;
+                        screensList.Add(screens);
+                    }
+                    return Json(screensList, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                return null;
+            }
+        }
+        #endregion
     }
 }

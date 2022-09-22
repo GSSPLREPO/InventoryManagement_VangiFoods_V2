@@ -33,6 +33,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public string GSTNumber { get; set; }
     
         public virtual CityMaster CityMaster { get; set; }
         public virtual CountryMaster CountryMaster { get; set; }

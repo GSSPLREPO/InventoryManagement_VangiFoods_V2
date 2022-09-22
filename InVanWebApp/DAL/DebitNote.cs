@@ -34,6 +34,12 @@ namespace InVanWebApp.DAL
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
+        public string DebitRejectionNoteNo { get; set; }
+        public Nullable<System.DateTime> DebitRejectionNoteDate { get; set; }
+        public string GRNCode { get; set; }
+        public Nullable<System.DateTime> GRNDate { get; set; }
+        public string FlagDebitRejectionNotes { get; set; }
+        public string Attachment { get; set; }
     
         public virtual GRN_Master GRN_Master { get; set; }
         public virtual InwardNote InwardNote { get; set; }

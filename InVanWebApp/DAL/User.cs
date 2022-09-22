@@ -24,6 +24,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<bool> IsActive { get; set; }
     
         public virtual EmployeeMaster EmployeeMaster { get; set; }
         public virtual Role Role { get; set; }

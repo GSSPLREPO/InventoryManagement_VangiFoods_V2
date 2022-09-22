@@ -19,6 +19,10 @@ namespace InVanWebApp.DAL
         {
             this.DebitNotes = new HashSet<DebitNote>();
             this.GRN_Master = new HashSet<GRN_Master>();
+            this.InwardNotes = new HashSet<InwardNote>();
+            this.PurchaseOrderItemsDetails = new HashSet<PurchaseOrderItemsDetail>();
+            this.PurchaseOrderPaymentDetails = new HashSet<PurchaseOrderPaymentDetail>();
+            this.StockMasters = new HashSet<StockMaster>();
         }
     
         public int PurchaseOrderId { get; set; }
@@ -55,6 +59,20 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public string OrderStatus { get; set; }
+        public Nullable<double> DiscountValue { get; set; }
+        public Nullable<double> CGST { get; set; }
+        public Nullable<double> SGST { get; set; }
+        public Nullable<double> IGST { get; set; }
+        public string Terms { get; set; }
+        public Nullable<int> Cancelled { get; set; }
+        public string ReasonForCancellation { get; set; }
+        public Nullable<double> TotalAmount { get; set; }
+        public string Attachment { get; set; }
+        public string Remarks { get; set; }
+        public Nullable<int> ApprovedBy { get; set; }
+        public Nullable<System.DateTime> ApprovedDate { get; set; }
+        public Nullable<int> CheckedBy { get; set; }
+        public Nullable<System.DateTime> CheckedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DebitNote> DebitNotes { get; set; }
@@ -64,19 +82,13 @@ namespace InVanWebApp.DAL
         public virtual Status Status { get; set; }
         public virtual Status Status1 { get; set; }
         public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
-
-        //Added: Fields added for dropdowns.
-        public string CountryName { get; set; }
-        public string InvoiceStat { get; set; }
-        public string GoodsStat { get; set; }
-        public string CompanyName { get; set; }
-
-        //Below are added for update functionality of OC.
-        public string ItemDescription { get; set; }
-        public string ItemUnit { get; set; }
-        public decimal ItemPrice { get; set; }
-        public string ItemTax { get; set; }
-        public string Item_Code { get; set; }
-        public string Item_HSN_Code { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InwardNote> InwardNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrderPaymentDetail> PurchaseOrderPaymentDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockMaster> StockMasters { get; set; }
     }
 }

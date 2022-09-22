@@ -27,6 +27,9 @@ namespace InVanWebApp.DAL
             this.StockAdjustments = new HashSet<StockAdjustment>();
             this.StockMasters = new HashSet<StockMaster>();
             this.StockTransfers = new HashSet<StockTransfer>();
+            this.InwardQCs = new HashSet<InwardQC>();
+            this.PurchaseOrderItemsDetails = new HashSet<PurchaseOrderItemsDetail>();
+            this.SalesOrderItemsDetails = new HashSet<SalesOrderItemsDetail>();
         }
     
         public int ID { get; set; }
@@ -65,5 +68,11 @@ namespace InVanWebApp.DAL
         public virtual ICollection<StockMaster> StockMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockTransfer> StockTransfers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InwardQC> InwardQCs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalesOrderItemsDetail> SalesOrderItemsDetails { get; set; }
     }
 }

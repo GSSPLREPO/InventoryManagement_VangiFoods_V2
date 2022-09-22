@@ -291,7 +291,7 @@ namespace InVanWebApp.Repository
                     cmd1.ExecuteNonQuery();
                     con.Close();
 
-                    for (int i =1 ; i < screenNames.Length; i++)
+                    for (int i = 1; i < screenNames.Length; i++)
                     {
                         SqlCommand cmd = new SqlCommand("usp_tbl_RoleRights_Save", con);
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -323,6 +323,42 @@ namespace InVanWebApp.Repository
             return flagReesult;
         }
 
+        #endregion
+
+        #region Get Role Rights list by role id.
+        public List<ScreenNameBO> GetRoleRightList(int roleId)
+        {
+            List<ScreenNameBO> resultList = new List<ScreenNameBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_GetScreensNotInRoleRightsById", con);
+                    cmd.Parameters.AddWithValue("@RoleId",roleId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new ScreenNameBO()
+                        {
+                            ScreenId = Convert.ToInt32(dataReader["ScreenId"]),
+                            ScreenName = dataReader["ScreenName"].ToString(),
+                            DisplayName=dataReader["DisplayName"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
         #endregion
 
         #endregion
