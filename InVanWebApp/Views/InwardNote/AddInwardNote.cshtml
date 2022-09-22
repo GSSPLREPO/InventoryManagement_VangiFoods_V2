@@ -1,0 +1,136 @@
+﻿@model InVanWebApp_BO.InwardNoteBO
+@{
+    ViewBag.Title = "AddInwardNote";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Add Inward Note</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Inward Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.InwardNumber, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.InwardNumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Inward Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.InwardDate, new { @class = "form-control form-control-sm", type = "date" })
+                    @Html.ValidationMessageFor(model => model.InwardDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("PO Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("PO Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PODate, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Shipping Details")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ShippingDetails, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.ShippingDetails, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Supplier Details")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextAreaFor(model => model.SupplierDetails, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.SupplierDetails, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Item Details")
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                        </tr>
+                        <tr>
+                            <td>Tomato</td>
+                            <td>012</td>
+                            <td>40 kg</td>
+                            <td>80/-</td>
+                        </tr>
+                        @*@foreach (var item in ViewBag["ItemList"])
+                        {*@
+                            @*<tr>
+                                <td>@Html.Display(ViewBag["ItemList"][item].Item_Name)</td>
+                                <td>@Html.Display(item.InwardDate)</td>
+                                <td>@Html.Display(item.PONumber)</td>
+                            </tr>
+                        }*@
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Signature")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Signature, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Signature, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <a href="@Url.Action("Index", "InwardNote")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                Back To List
+            </a>
+            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Save</button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@Html.Raw(TempData["Success"])

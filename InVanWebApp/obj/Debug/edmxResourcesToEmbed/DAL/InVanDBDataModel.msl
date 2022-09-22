@@ -355,6 +355,10 @@
     <EntitySetMapping Name="InwardNotes">
       <EntityTypeMapping TypeName="InVanDBModels.InwardNote">
         <MappingFragment StoreEntitySet="InwardNote">
+          <ScalarProperty Name="ItemUnitPrice" ColumnName="ItemUnitPrice" />
+          <ScalarProperty Name="InwardQuantity1" ColumnName="InwardQuantity" />
+          <ScalarProperty Name="Item_Code" ColumnName="Item_Code" />
+          <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
           <ScalarProperty Name="PONumber" ColumnName="PONumber" />
           <ScalarProperty Name="PO_Id" ColumnName="PO_Id" />
           <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
@@ -1292,6 +1296,7 @@
     <EntitySetMapping Name="InwardQCs">
       <EntityTypeMapping TypeName="InVanDBModels.InwardQC">
         <MappingFragment StoreEntitySet="InwardQC">
+          <ScalarProperty Name="ItemUnitPrice" ColumnName="ItemUnitPrice" />
           <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
           <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -1299,7 +1304,6 @@
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Remarks" ColumnName="Remarks" />
           <ScalarProperty Name="ItemTaxValue" ColumnName="ItemTaxValue" />
-          <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
           <ScalarProperty Name="RejectedQuantity" ColumnName="RejectedQuantity" />
           <ScalarProperty Name="InwardQuantity" ColumnName="InwardQuantity" />
           <ScalarProperty Name="Item_Code" ColumnName="Item_Code" />

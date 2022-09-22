@@ -822,6 +822,10 @@
     <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="GRN_Master" Relationship="InVanDBModels.FK_GRN_Master_InwardNote" FromRole="InwardNote" ToRole="GRN_Master" />
     <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_InwardNote_PurchaseOrder" FromRole="InwardNote" ToRole="PurchaseOrder" />
+    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="InwardQuantity1" Type="Double" />
+    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="IssueNote">
     <Key>
@@ -2703,6 +2707,7 @@
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_InwardQC_Item" FromRole="InwardQC" ToRole="Item" />
+    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
   </EntityType>
   <EntityType Name="PurchaseOrderItemsDetail">
     <Key>

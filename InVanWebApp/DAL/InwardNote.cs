@@ -38,6 +38,10 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> PO_Id { get; set; }
         public string PONumber { get; set; }
+        public string Item_Name { get; set; }
+        public string Item_Code { get; set; }
+        public Nullable<double> InwardQuantity1 { get; set; }
+        public Nullable<decimal> ItemUnitPrice { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DebitNote> DebitNotes { get; set; }

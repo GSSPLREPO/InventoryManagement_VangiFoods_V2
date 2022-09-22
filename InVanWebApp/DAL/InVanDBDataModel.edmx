@@ -376,6 +376,10 @@
           <Property Name="InwardDate" Type="datetime" />
           <Property Name="LocationStockID" Type="int" />
           <Property Name="ItemId" Type="int" />
+          <Property Name="Item_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="Item_Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="InwardQuantity" Type="float" />
+          <Property Name="ItemUnitPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Signature" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="varchar" MaxLength="100" />
           <Property Name="IsDeleted" Type="bit" />
@@ -396,7 +400,7 @@
           <Property Name="Item_Code" Type="nvarchar" MaxLength="50" />
           <Property Name="InwardQuantity" Type="float" />
           <Property Name="RejectedQuantity" Type="float" />
-          <Property Name="ItemPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ItemUnitPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ItemTaxValue" Type="nvarchar" MaxLength="20" />
           <Property Name="Remarks" Type="varchar" MaxLength="100" />
           <Property Name="IsDeleted" Type="bit" />
@@ -1579,6 +1583,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_InwardNote_Item">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="InwardNote" Type="Self.InwardNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InwardNote">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_InwardNote_LocationWiseStock">
           <End Role="LocationWiseStock" Type="Self.LocationWiseStock" Multiplicity="0..1" />
           <End Role="InwardNote" Type="Self.InwardNote" Multiplicity="*" />
@@ -2301,6 +2317,10 @@
           <AssociationSet Name="FK_InquiryMaster_ToItemMaster" Association="Self.FK_InquiryMaster_ToItemMaster">
             <End Role="ItemType" EntitySet="ItemType" />
             <End Role="InquiryMaster" EntitySet="InquiryMaster" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InwardNote_Item" Association="Self.FK_InwardNote_Item">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="InwardNote" EntitySet="InwardNote" />
           </AssociationSet>
           <AssociationSet Name="FK_InwardNote_LocationWiseStock" Association="Self.FK_InwardNote_LocationWiseStock">
             <End Role="LocationWiseStock" EntitySet="LocationWiseStock" />
@@ -3313,6 +3333,10 @@
           <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="GRN_Master" Relationship="InVanDBModels.FK_GRN_Master_InwardNote" FromRole="InwardNote" ToRole="GRN_Master" />
           <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_InwardNote_PurchaseOrder" FromRole="InwardNote" ToRole="PurchaseOrder" />
+          <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InwardQuantity1" Type="Double" />
+          <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="IssueNote">
           <Key>
@@ -5194,6 +5218,7 @@
           <Property Name="LastModifiedBy" Type="Int32" />
           <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_InwardQC_Item" FromRole="InwardQC" ToRole="Item" />
+          <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PurchaseOrderItemsDetail">
           <Key>
@@ -5793,6 +5818,10 @@
           <EntitySetMapping Name="InwardNotes">
             <EntityTypeMapping TypeName="InVanDBModels.InwardNote">
               <MappingFragment StoreEntitySet="InwardNote">
+                <ScalarProperty Name="ItemUnitPrice" ColumnName="ItemUnitPrice" />
+                <ScalarProperty Name="InwardQuantity1" ColumnName="InwardQuantity" />
+                <ScalarProperty Name="Item_Code" ColumnName="Item_Code" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
                 <ScalarProperty Name="PONumber" ColumnName="PONumber" />
                 <ScalarProperty Name="PO_Id" ColumnName="PO_Id" />
                 <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
@@ -6730,6 +6759,7 @@
           <EntitySetMapping Name="InwardQCs">
             <EntityTypeMapping TypeName="InVanDBModels.InwardQC">
               <MappingFragment StoreEntitySet="InwardQC">
+                <ScalarProperty Name="ItemUnitPrice" ColumnName="ItemUnitPrice" />
                 <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -6737,7 +6767,6 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="ItemTaxValue" ColumnName="ItemTaxValue" />
-                <ScalarProperty Name="ItemPrice" ColumnName="ItemPrice" />
                 <ScalarProperty Name="RejectedQuantity" ColumnName="RejectedQuantity" />
                 <ScalarProperty Name="InwardQuantity" ColumnName="InwardQuantity" />
                 <ScalarProperty Name="Item_Code" ColumnName="Item_Code" />

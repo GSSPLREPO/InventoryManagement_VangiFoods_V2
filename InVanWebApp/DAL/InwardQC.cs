@@ -30,6 +30,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<decimal> ItemUnitPrice { get; set; }
     
         public virtual Item Item { get; set; }
     }

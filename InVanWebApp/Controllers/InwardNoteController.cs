@@ -52,5 +52,71 @@ namespace InVanWebApp.Controllers
         }
 
         #endregion
+
+        #region Insert function
+        /// <summary>
+        /// Farheen: Rendered the user to the add organisation master form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult AddInwardNote()
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                //BindOrganisationGroup();
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+        /// <summary>
+        /// Farheen: Pass the data to the repository for insertion from it's view.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddInwardNote(InwardNoteBO model)
+        {
+            try
+            {
+                if (Session[ApplicationSession.USERID] != null)
+                {
+                    ResponseMessageBO response = new ResponseMessageBO();
+                    if (ModelState.IsValid)
+                    {
+                       // model.UserId = Convert.ToInt32(Session[ApplicationSession.USERID]);
+
+                        //response = _organisationRepository.Insert(model);
+                        //if (response.Status)
+                        //    TempData["Success"] = "<script>alert('Organisation inserted successfully!');</script>";
+                        //else
+                        //{
+                        //    TempData["Success"] = "<script>alert('Duplicate organisation! Can not be inserted!');</script>";
+                        //    BindOrganisationGroup();
+                        //    return View(model);
+                        //}
+
+                        return RedirectToAction("Index", "Organisation");
+
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        return View();
+                    }
+                }
+                else
+                    return RedirectToAction("Index", "Login");
+
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error", ex);
+            }
+            return View();
+        }
+        #endregion
+
     }
 }
