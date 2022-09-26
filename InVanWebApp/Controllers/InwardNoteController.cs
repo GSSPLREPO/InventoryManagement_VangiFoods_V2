@@ -55,7 +55,7 @@ namespace InVanWebApp.Controllers
 
         #region Insert function
         /// <summary>
-        /// Farheen: Rendered the user to the add organisation master form
+        /// Farheen: Rendered the user to the add inward master form
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -63,8 +63,18 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                //BindOrganisationGroup();
-                return View();
+                BindPONumber();
+
+                InwardNoteBO model = new InwardNoteBO();
+                model.InwardDate = DateTime.Today;
+                //==========Document number for Inward note============//
+                GetDocumentNumber objDocNo = new GetDocumentNumber();
+
+                //=========here document type=3 i.e. for generating the Inward note (logic is in SP).====//
+                var DocumentNumber = objDocNo.GetDocumentNo(3); 
+                ViewData["DocumentNo"] = DocumentNumber;
+                
+                return View(model);
             }
             else
                 return RedirectToAction("Index", "Login");
@@ -97,7 +107,7 @@ namespace InVanWebApp.Controllers
                         //    return View(model);
                         //}
 
-                        return RedirectToAction("Index", "Organisation");
+                        return RedirectToAction("Index", "InwardNote");
 
                     }
                     else
@@ -118,5 +128,22 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Bind dropdown of PO Number
+        public void BindPONumber()
+        {
+            var result = _repository.GetPONumberForDropdown();
+            var resultList = new SelectList(result.ToList(), "PurchaseOrderId", "PONumber");
+            ViewData["PONumberAndId"] = resultList;
+        }
+        #endregion
+
+        #region Bind all PO details 
+        public JsonResult BindPODetails(string id)
+        {
+            var POId = Convert.ToInt32(id);
+            var result = _repository.GetPODetailsById(POId);
+            return Json(result);
+        }
+        #endregion
     }
 }

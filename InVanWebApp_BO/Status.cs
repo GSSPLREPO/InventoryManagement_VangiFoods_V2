@@ -13,8 +13,8 @@ namespace InVanWebApp_BO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Status()
         {
-            this.PurchaseOrders = new HashSet<PurchaseOrder>();
-            this.PurchaseOrders1 = new HashSet<PurchaseOrder>();
+            this.PurchaseOrders = new HashSet<PurchaseOrderBO>();
+            this.PurchaseOrders1 = new HashSet<PurchaseOrderBO>();
         }
 
         public int StatusId { get; set; }
@@ -26,8 +26,8 @@ namespace InVanWebApp_BO
         public Nullable<int> LastModifiedById { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual ICollection<PurchaseOrderBO> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrder> PurchaseOrders1 { get; set; }
+        public virtual ICollection<PurchaseOrderBO> PurchaseOrders1 { get; set; }
     }
 }

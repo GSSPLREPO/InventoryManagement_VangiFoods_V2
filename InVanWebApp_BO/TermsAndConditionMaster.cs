@@ -13,7 +13,7 @@ namespace InVanWebApp_BO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TermsAndConditionMaster()
         {
-            this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.PurchaseOrders = new HashSet<PurchaseOrderBO>();
         }
 
         public int TermsConditionID { get; set; }
@@ -26,6 +26,6 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        public virtual ICollection<PurchaseOrderBO> PurchaseOrders { get; set; }
     }
 }
