@@ -153,5 +153,176 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
+
+        #region Update functions
+        /// <summary>
+        /// Farheen: This function is for fetch data for editing by ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+
+        public InwardNoteBO GetById(int ID)
+        {
+            var result = new InwardNoteBO();
+            //try
+            //{
+            //    using (SqlConnection con = new SqlConnection(connString))
+            //    {
+            //        SqlCommand cmd = new SqlCommand("usp_tbl_Organisation_GetByID", con);
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.AddWithValue("@ID", ID);
+            //        con.Open();
+            //        SqlDataReader reader = cmd.ExecuteReader();
+            //        while (reader.Read())
+            //        {
+            //            result = new OrganisationsBO()
+            //            {
+            //                OrganisationId = Convert.ToInt32(reader["OrganisationId"]),
+            //                OrganisationGroupId = Convert.ToInt32(reader["OrganisationGroupId"]),
+            //                Name = reader["Name"].ToString(),
+            //                Abbreviation = reader["Abbreviation"].ToString(),
+            //                Address = reader["Address"].ToString(),
+            //                ContactPerson = reader["ContactPerson"].ToString(),
+            //                ContactNo = reader["ContactNo"].ToString(),
+            //                Email = reader["Email"].ToString(),
+            //                GSTINNo = reader["GSTINNo"].ToString(),
+            //                Description = reader["Description"].ToString()
+            //            };
+            //        }
+            //        con.Close();
+
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    log.Error(ex.Message, ex);
+            //}
+            return result;
+            //return _context.UnitMasters.Find(UnitID);
+        }
+
+        /// <summary>
+        /// Farheen: Update record
+        /// </summary>
+        /// <param name="model"></param>
+        public ResponseMessageBO Update(InwardNoteBO model)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+            //try
+            //{
+            //    using (SqlConnection con = new SqlConnection(connString))
+            //    {
+            //        SqlCommand cmd = new SqlCommand("usp_tbl_Organisation_Update", con);
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.Parameters.AddWithValue("@OrganisationId", model.OrganisationId);
+            //        cmd.Parameters.AddWithValue("@OrganisationGroupId", model.OrganisationGroupId);
+            //        cmd.Parameters.AddWithValue("@Name", model.Name);
+            //        cmd.Parameters.AddWithValue("@Abbreviation", model.Abbreviation);
+            //        cmd.Parameters.AddWithValue("@Address", model.Address);
+            //        cmd.Parameters.AddWithValue("@ContactPerson", model.ContactPerson);
+            //        cmd.Parameters.AddWithValue("@ContactNo", model.ContactNo);
+            //        cmd.Parameters.AddWithValue("@Email", model.Email);
+            //        cmd.Parameters.AddWithValue("@GSTINNo", model.GSTINNo);
+            //        cmd.Parameters.AddWithValue("@Description", model.Description);
+            //        cmd.Parameters.AddWithValue("@LastModifiedBy", model.UserId);
+            //        cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+            //        con.Open();
+            //        SqlDataReader dataReader = cmd.ExecuteReader();
+
+            //        while (dataReader.Read())
+            //        {
+            //            response.Status = Convert.ToBoolean(dataReader["Status"]);
+            //        }
+            //        con.Close();
+            //        return response;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    response.Status = false;
+            //    log.Error(ex.Message, ex);
+            //    return response;
+            //}
+            return response;
+
+        }
+
+        #endregion
+
+        #region Insert function
+        /// <summary>
+        /// Farheen: Insert record.
+        /// </summary>
+        /// <param name="model"></param>
+        public ResponseMessageBO Insert(InwardNoteBO model)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
+            {
+                //var userId = Session[ApplicationSession.USERID];
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_InwardNote_Insert", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PO_Id", model.PO_Id);
+                    //cmd.Parameters.AddWithValue("@PONumber", model.PONumber);
+                    cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
+                    cmd.Parameters.AddWithValue("@InwardDate", model.InwardDate);
+                    cmd.Parameters.AddWithValue("@Signature", model.Signature);
+                    cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
+                    cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    //cmd.ExecuteNonQuery();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
+                    con.Close();
+                }
+                //return true;
+
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                log.Error(ex.Message, ex);
+                // return false;
+            }
+            return response;
+        }
+
+        #endregion
+
+        #region Delete function
+
+        /// <summary>
+        /// Delete record by ID
+        /// </summary>
+        /// <param name="ID"></param>
+        public void Delete(int ID, int userId)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_Organisation_Delete", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+        }
+        #endregion
     }
 }

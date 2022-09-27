@@ -8,6 +8,7 @@ using InVanWebApp_BO;
 using InVanWebApp.Repository;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp.Common;
+using System.IO;
 
 namespace InVanWebApp.Controllers
 {
@@ -71,9 +72,9 @@ namespace InVanWebApp.Controllers
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
 
                 //=========here document type=3 i.e. for generating the Inward note (logic is in SP).====//
-                var DocumentNumber = objDocNo.GetDocumentNo(3); 
+                var DocumentNumber = objDocNo.GetDocumentNo(3);
                 ViewData["DocumentNo"] = DocumentNumber;
-                
+
                 return View(model);
             }
             else
@@ -86,7 +87,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddInwardNote(InwardNoteBO model)
+        public ActionResult AddInwardNote(InwardNoteBO model, HttpPostedFileBase Signature)
         {
             try
             {
@@ -95,17 +96,37 @@ namespace InVanWebApp.Controllers
                     ResponseMessageBO response = new ResponseMessageBO();
                     if (ModelState.IsValid)
                     {
-                       // model.UserId = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        //string materialExcelFilename = model.Signature;
+                        if (Signature != null)
+                        {
+                            string path = Server.MapPath("~/Signatures/");
 
-                        //response = _organisationRepository.Insert(model);
-                        //if (response.Status)
-                        //    TempData["Success"] = "<script>alert('Organisation inserted successfully!');</script>";
-                        //else
-                        //{
-                        //    TempData["Success"] = "<script>alert('Duplicate organisation! Can not be inserted!');</script>";
-                        //    BindOrganisationGroup();
-                        //    return View(model);
-                        //}
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+
+                            Signature.SaveAs(path + Path.GetFileName(Signature.FileName));
+                            model.Signature = Signature.FileName.ToString();
+                        }
+
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+
+                        response = _repository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Inward note created successfully!');</script>";
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Duplicate Inward note! Can not be inserted!');</script>";
+                            BindPONumber();
+                            model.InwardDate = DateTime.Today;
+
+                            GetDocumentNumber objDocNo = new GetDocumentNumber();
+                            var DocumentNumber = objDocNo.GetDocumentNo(3);
+                            ViewData["DocumentNo"] = DocumentNumber;
+
+                            return View(model);
+                        }
 
                         return RedirectToAction("Index", "InwardNote");
 
@@ -113,7 +134,14 @@ namespace InVanWebApp.Controllers
                     else
                     {
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-                        return View();
+                        BindPONumber();
+                        model.InwardDate = DateTime.Today;
+
+                        GetDocumentNumber objDocNo = new GetDocumentNumber();
+                        var DocumentNumber = objDocNo.GetDocumentNo(3);
+                        ViewData["DocumentNo"] = DocumentNumber;
+
+                        return View(model);
                     }
                 }
                 else
@@ -123,8 +151,17 @@ namespace InVanWebApp.Controllers
             catch (Exception ex)
             {
                 log.Error("Error", ex);
+                TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+
+                BindPONumber();
+                model.InwardDate = DateTime.Today;
+
+                GetDocumentNumber objDocNo = new GetDocumentNumber();
+                var DocumentNumber = objDocNo.GetDocumentNo(3);
+                ViewData["DocumentNo"] = DocumentNumber;
+                return View(model);
             }
-            return View();
+            //return View();
         }
         #endregion
 

@@ -17,5 +17,15 @@ namespace InVanWebApp.Repository.Interface
 
         //Get purchase order details by ID.
         IEnumerable<PurchaseOrderBO> GetPODetailsById(int PO_Id);
+
+        //Function define for: Insert record.
+        ResponseMessageBO Insert(InwardNoteBO model);
+
+        //Function define for: Update master record.
+        ResponseMessageBO Update(InwardNoteBO model);
+
+        //Function define for: Delete record of item type using it's ID
+        void Delete(int ID, int userId);
+
     }
 }

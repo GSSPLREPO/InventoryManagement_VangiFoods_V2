@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddInwardNote", "InwardNote", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -43,14 +43,14 @@
                    new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
                     @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <div class="col-md-2">
+                @*<div class="col-md-2">
                     @Html.Label("PO Date")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
                     @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
-                </div>
+                </div>*@
             </div>
             <br />
             <div class="row">
@@ -87,13 +87,8 @@
                             <th>Quantity</th>
                             <th>Tax</th>
                             <th>Unit Price</th>
+                            @*<th>Inward Quantity</th>*@
                         </tr>
-                        @*<tr>
-                                <td>Tomato</td>
-                                <td>012</td>
-                                <td>40 kg</td>
-                                <td>80/-</td>
-                            </tr>*@
                     </table>
                 </div>
             </div>
@@ -103,8 +98,10 @@
                     @Html.Label("Signature")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Signature, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.Signature, "", new { @class = "error mt-2 text-danger" })
+                    <input type="file" name="Signature" id="fileupload" class="file-drop-zone" onchange="return fileValidation()">
+                    <span id="sfileupload" class="text-danger"></span>
+                    @*@Html.TextBoxFor(model => model.Signature, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Signature, "", new { @class = "error mt-2 text-danger" })*@
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Remarks")
@@ -153,11 +150,12 @@
             dataType: "json",
             success: function (result) {
                 console.log(result);
-                $('#PODate').val(result[0].PODate);
+                //$('#PODate').val(result[0].PODate);
                 $('#ShippingDetails').val(result[0].BuyerAddress);
                 $('#SupplierDetails').val(result[0].SupplierAddress);
                 var ColCount = result.length
-                //===================Create dynamic table====================//
+
+                //===================Create dynamic table for binding Item details====================//
                 var table = document.getElementById('ItemTable');
                 for (var j = 1; j < result.length; j++) {
                     var rowCount = table.rows.length;
@@ -181,50 +179,50 @@
                         else if (i == 4) {
                             cell.innerHTML = result[j].ItemUnitPrice+" Rs";
                         }
-                        //$('PODate').val(result[1].ItemName);
-                //$('PODate').val(result[1].Item_Code);
-                //$('PODate').val(result[1].ItemUnitPrice);
-                //$('PODate').val(result[1].ItemUnit);
-                //$('PODate').val(result[1].ItemTaxValue);
-                //$('PODate').val(result[1].ItemQuantity);
+                        //else if (i == 5) {
+                        //    var div = $("<div />");
+
+                        //    var textBox = $("<input />").attr("type", "textbox").attr("name", "DynamicTextBox");
+                        //    cell.append(textBox);
+                        //}
                     }
 
                 }
-
-                //const ItemDiv = document.querySelector("div.ItemDetails")
-                //const ItemDiv = document.getElementById('ItemDetails')
-                //let tableHeaders = ["Item", "Item Code", "Unit Price", "Tax", "Quantity"]
-                //const createItemDetailsTable = () => {
-                //    while (ItemDiv.firstChild) ItemDiv.removeChild(ItemDiv.firstChild)
-                //    let ItemTable = document.createElement('table')
-                //    ItemTable.className = 'ItemTable'
-
-                //    let ItemTableHead = document.createElement('thead')
-                //    ItemTable.className = 'ItemTableHead'
-
-                //    let ItemTableHeaderRow = document.createElement('tr')
-                //    ItemTableHeaderRow.className ='ItemTableHeaderRow'
-
-                //    tableHeaders.forEach(header => {
-                //        let ItemHeader = document.createElement('th')
-                //        ItemHeader.innerText = header
-                //        ItemTableHeaderRow.append(ItemHeader)
-                //    })
-
-                //    ItemTableHead.append(ItemTableHeaderRow)
-                //    ItemTable.append(ItemTableHead)
-
-                //    let ItemTableBody = document.createElement('tbody')
-                //    ItemTableBody.className = 'ItemTable-Body'
-                //    ItemTable.append(ItemTableBody)
-
-                //    ItemDiv.append(ItemTable)
-                //}
-
-                
-
             }
         });
     }
+
+    function fileValidation() {
+        var fileInput =
+            document.getElementById('fileupload');
+
+        var filePath = fileInput.value;
+
+        // Allowing file type
+        var allowedExtensions =
+            /(\.jpg|\.jpeg|\.png)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Invalid file type');
+            fileInput.value = '';
+            return false;
+        }
+        else {
+
+            // Image preview
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(
+                        'imagePreview').innerHTML =
+                        '<img src="' + e.target.result
+                        + '" style="height:50%;width:50%" />';
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    }
+
 </script>
 @Html.Raw(TempData["Success"])
