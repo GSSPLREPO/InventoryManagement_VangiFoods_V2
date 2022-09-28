@@ -24,6 +24,9 @@ namespace InVanWebApp.Repository.Interface
         //Function define for: Update master record.
         ResponseMessageBO Update(InwardNoteBO model);
 
+        //Function define for: Get inward record by it's ID.
+        InwardNoteBO GetById(int ID);
+
         //Function define for: Delete record of item type using it's ID
         void Delete(int ID, int userId);
 

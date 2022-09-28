@@ -44,13 +44,13 @@
                     @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 @*<div class="col-md-2">
-                    @Html.Label("PO Date")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-                    @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
-                </div>*@
+                        @Html.Label("PO Date")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                        @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
+                    </div>*@
             </div>
             <br />
             <div class="row">
@@ -101,7 +101,7 @@
                     <input type="file" name="Signature" id="fileupload" class="file-drop-zone" onchange="return fileValidation()">
                     <span id="sfileupload" class="text-danger"></span>
                     @*@Html.TextBoxFor(model => model.Signature, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.Signature, "", new { @class = "error mt-2 text-danger" })*@
+                        @Html.ValidationMessageFor(model => model.Signature, "", new { @class = "error mt-2 text-danger" })*@
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Remarks")
@@ -138,10 +138,10 @@
         var rowCount = table.rows.length;
         console.log(rowCount)
         while (rowCount != '1') {
-            var row = table.deleteRow(rowCount-1);
+            var row = table.deleteRow(rowCount - 1);
             rowCount--;
         }
-       
+
         $.ajax({
             type: "POST",
             url: `/InwardNote/BindPODetails?id=` + id,
@@ -171,19 +171,17 @@
                             cell.innerHTML = result[j].Item_Code;
                         }
                         else if (i == 2) {
-                            cell.innerHTML = result[j].ItemQuantity +" "+ result[j].ItemUnit;
+                            cell.innerHTML = result[j].ItemQuantity + " " + result[j].ItemUnit;
                         }
                         else if (i == 3) {
-                            cell.innerHTML = result[j].ItemTaxValue+" %";
+                            cell.innerHTML = result[j].ItemTaxValue + " %";
                         }
                         else if (i == 4) {
-                            cell.innerHTML = result[j].ItemUnitPrice+" Rs";
+                            cell.innerHTML = result[j].ItemUnitPrice + " Rs";
                         }
                         //else if (i == 5) {
-                        //    var div = $("<div />");
-
-                        //    var textBox = $("<input />").attr("type", "textbox").attr("name", "DynamicTextBox");
-                        //    cell.append(textBox);
+                        //    var trow = '<input type="text"  name="TextBox'+i+'" value="TextBox'+i+'" >';
+                        //    cell.append(trow);
                         //}
                     }
 

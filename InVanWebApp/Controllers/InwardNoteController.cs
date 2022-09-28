@@ -96,17 +96,19 @@ namespace InVanWebApp.Controllers
                     ResponseMessageBO response = new ResponseMessageBO();
                     if (ModelState.IsValid)
                     {
-                        //string materialExcelFilename = model.Signature;
                         if (Signature != null)
                         {
-                            string path = Server.MapPath("~/Signatures/");
+                            string SignFilename = model.Signature;
+                            SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
+                            Signature.SaveAs(SignFilename);
+                            //string path = Server.MapPath("~/Signatures/");
 
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
+                            //if (!Directory.Exists(path))
+                            //{
+                            //    Directory.CreateDirectory(path);
+                            //}
 
-                            Signature.SaveAs(path + Path.GetFileName(Signature.FileName));
+                            //Signature.SaveAs(path + Path.GetFileName(Signature.FileName));
                             model.Signature = Signature.FileName.ToString();
                         }
 
@@ -164,6 +166,99 @@ namespace InVanWebApp.Controllers
             //return View();
         }
         #endregion
+
+        #region  Update function
+        /// <summary>28 Sep'22
+        ///Farheen: Rendered the user to the edit page with details of a perticular record.
+        /// </summary>
+        /// <param name="InwardID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditInwardNote(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+
+                BindPONumber();
+                InwardNoteBO model = _repository.GetById(ID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+        /// <summary>
+        /// Date: 25 May 2022
+        /// Farheen:  Pass the data to the repository for updating that record.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditInwardNote(InwardNoteBO model)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
+            {
+                if (Session[ApplicationSession.USERID] != null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _repository.Update(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Inward note updated successfully!');</script>";
+
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Duplicate organisation! Can not be updated!');</script>";
+                            BindPONumber();
+                            return View(model);
+                        }
+
+
+
+                        return RedirectToAction("Index", "InwardNote");
+                    }
+                    else
+                        return View(model);
+                }
+                else
+                    return RedirectToAction("Index", "Login");
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
+                return RedirectToAction("Index", "InwardNote");
+            }
+        }
+
+        #endregion
+
+        #region Delete function
+        /// <summary>
+        /// Date: 28 Sep'22
+        /// Farheen: Delete the perticular record
+        /// </summary>
+        /// <param name="ID">record Id</param>
+        /// <returns></returns>
+        
+        [HttpGet]
+        public ActionResult DeleteItem(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                _repository.Delete(ID, userID);
+                TempData["Success"] = "<script>alert('Inward note deleted successfully!');</script>";
+                return RedirectToAction("Index", "InwardNote");
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+        #endregion
+
 
         #region Bind dropdown of PO Number
         public void BindPONumber()
