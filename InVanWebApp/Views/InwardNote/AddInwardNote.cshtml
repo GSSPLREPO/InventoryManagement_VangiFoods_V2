@@ -205,21 +205,6 @@
             fileInput.value = '';
             return false;
         }
-        else {
-
-            // Image preview
-            if (fileInput.files && fileInput.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById(
-                        'imagePreview').innerHTML =
-                        '<img src="' + e.target.result
-                        + '" style="height:50%;width:50%" />';
-                };
-
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-        }
     }
 
 </script>

@@ -156,7 +156,7 @@ namespace InVanWebApp.Repository
 
         #region Update functions
         /// <summary>
-        /// Farheen: This function is for fetch data for editing by ID
+        /// Farheen: This function is for fetch data for editing by ID and for downloading pdf
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
@@ -180,6 +180,7 @@ namespace InVanWebApp.Repository
                             ID = Convert.ToInt32(reader["ID"]),
                             InwardNumber = reader["InwardNumber"].ToString(),
                             InwardDate= Convert.ToDateTime(reader["InwardDate"]),
+                            PODate= Convert.ToDateTime(reader["PODate"]),
                             PO_Id= Convert.ToInt32(reader["PO_Id"]),
                             PONumber= reader["PONumber"].ToString(),
                             Signature= reader["Signature"].ToString(),
@@ -315,5 +316,6 @@ namespace InVanWebApp.Repository
             }
         }
         #endregion
+
     }
 }

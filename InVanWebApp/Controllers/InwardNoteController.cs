@@ -98,7 +98,7 @@ namespace InVanWebApp.Controllers
                     {
                         if (Signature != null)
                         {
-                            string SignFilename = model.Signature;
+                            string SignFilename = Signature.FileName;
                             SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
                             Signature.SaveAs(SignFilename);
                             //string path = Server.MapPath("~/Signatures/");
@@ -171,7 +171,7 @@ namespace InVanWebApp.Controllers
         /// <summary>28 Sep'22
         ///Farheen: Rendered the user to the edit page with details of a perticular record.
         /// </summary>
-        /// <param name="InwardID"></param>
+        /// <param name="ID"></param>
         /// <returns></returns>
         [HttpGet]
         public ActionResult EditInwardNote(int ID)
@@ -181,6 +181,10 @@ namespace InVanWebApp.Controllers
 
                 BindPONumber();
                 InwardNoteBO model = _repository.GetById(ID);
+                string SignFilename = model.Signature;
+                SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
+                ViewData["Signature"] = SignFilename;
+
                 return View(model);
             }
             else
@@ -194,7 +198,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditInwardNote(InwardNoteBO model)
+        public ActionResult EditInwardNote(InwardNoteBO model, HttpPostedFileBase Signature)
         {
             ResponseMessageBO response = new ResponseMessageBO();
             try
@@ -203,6 +207,22 @@ namespace InVanWebApp.Controllers
                 {
                     if (ModelState.IsValid)
                     {
+                        if (Signature != null)
+                        {
+                            string SignFilename = model.Signature;
+                            SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
+                            Signature.SaveAs(SignFilename);
+                            //string path = Server.MapPath("~/Signatures/");
+
+                            //if (!Directory.Exists(path))
+                            //{
+                            //    Directory.CreateDirectory(path);
+                            //}
+
+                            //Signature.SaveAs(path + Path.GetFileName(Signature.FileName));
+                            model.Signature = Signature.FileName.ToString();
+                        }
+
                         model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _repository.Update(model);
                         if (response.Status)
@@ -214,9 +234,6 @@ namespace InVanWebApp.Controllers
                             BindPONumber();
                             return View(model);
                         }
-
-
-
                         return RedirectToAction("Index", "InwardNote");
                     }
                     else
@@ -243,9 +260,9 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <param name="ID">record Id</param>
         /// <returns></returns>
-        
+
         [HttpGet]
-        public ActionResult DeleteItem(int ID)
+        public ActionResult DeleteInwardNote(int ID)
         {
             if (Session[ApplicationSession.USERID] != null)
             {
@@ -258,7 +275,6 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
         #endregion
-
 
         #region Bind dropdown of PO Number
         public void BindPONumber()
@@ -277,5 +293,15 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
         #endregion
+
+        #region This method is for View the Inward note
+        [HttpGet]
+        public ActionResult ViewInwardNote(int ID)
+        {
+            InwardNoteBO model = _repository.GetById(ID);
+            return View(model);
+        }
+        #endregion
+
     }
 }

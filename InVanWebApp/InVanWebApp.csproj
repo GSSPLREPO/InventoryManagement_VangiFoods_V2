@@ -695,6 +695,7 @@
     <Content Include="Theme\MainContent\images\logo.png" />
     <Content Include="Theme\MainContent\images\Logo.svg" />
     <Content Include="Theme\MainContent\images\logoForLogin.png" />
+    <Content Include="Theme\MainContent\images\pdf.png" />
     <Content Include="Theme\MainContent\images\samples\120x768\1.jpg" />
     <Content Include="Theme\MainContent\images\samples\120x768\10.jpg" />
     <Content Include="Theme\MainContent\images\samples\120x768\11.jpg" />
@@ -724,6 +725,9 @@
     <Content Include="Theme\MainContent\images\samples\300x300\9.jpg" />
     <Content Include="Theme\MainContent\images\sprites\jsgrid-icons.png" />
     <Content Include="Theme\MainContent\images\vlogo.svg" />
+    <Content Include="Theme\MainContent\jspdf.min.js_1.5.3\cdnjs\jspdf.min.js" />
+    <Content Include="Theme\MainContent\jspdf.min.js_1.5.3\unpkg\html2canvas.js" />
+    <Content Include="Theme\MainContent\jspdf.min.js_1.5.3\unpkg\jspdf.min.js" />
     <Content Include="Theme\MainContent\js\alerts.js" />
     <Content Include="Theme\MainContent\js\avgrund.js" />
     <Content Include="Theme\MainContent\js\bt-maxLength.js" />
@@ -1429,6 +1433,8 @@
     <Content Include="Views\Organisation\EditOrganisation.cshtml" />
     <Content Include="Views\InwardNote\Index.cshtml" />
     <Content Include="Views\InwardNote\AddInwardNote.cshtml" />
+    <Content Include="Views\InwardNote\EditInwardNote.cshtml" />
+    <Content Include="Views\InwardNote\ViewInwardNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
