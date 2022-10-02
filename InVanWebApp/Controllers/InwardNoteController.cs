@@ -298,8 +298,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult ViewInwardNote(int ID)
         {
-            InwardNoteBO model = _repository.GetById(ID);
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                InwardNoteBO model = _repository.GetById(ID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 
