@@ -57,6 +57,7 @@ namespace InVanWebApp_BO
         public decimal ItemQuantity { get; set; }
         public string ItemUnit { get; set; }
         public string ItemTaxValue { get; set; }
+        public decimal InwardQuantity { get; set; }
 
     }
 }

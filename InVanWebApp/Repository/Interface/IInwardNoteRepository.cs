@@ -16,7 +16,7 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<PurchaseOrderBO> GetPONumberForDropdown();
 
         //Get purchase order details by ID.
-        IEnumerable<PurchaseOrderBO> GetPODetailsById(int PO_Id);
+        IEnumerable<PurchaseOrderBO> GetPODetailsById(int PO_Id, int InwId);
 
         //Function define for: Insert record.
         ResponseMessageBO Insert(InwardNoteBO model);

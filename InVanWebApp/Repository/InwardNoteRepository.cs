@@ -92,7 +92,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Bind all PO details 
-        public IEnumerable<PurchaseOrderBO> GetPODetailsById(int PO_Id)
+        public IEnumerable<PurchaseOrderBO> GetPODetailsById(int PO_Id, int InwId)
         {
             List<PurchaseOrderBO> resultList = new List<PurchaseOrderBO>();
             try
@@ -113,36 +113,59 @@ namespace InVanWebApp.Repository
                             PODate = Convert.ToDateTime(dataReader["PODate"]),
                             BuyerAddress = dataReader["BuyerAddress"].ToString(),
                             SupplierAddress = dataReader["SupplierAddress"].ToString()
-                            //ItemName = dataReader["ItemName"].ToString(),
-                            //Item_Code= dataReader["Item_Code"].ToString(),
-                            //ItemUnitPrice =(dataReader["ItemUnitPrice"]!=null)? (float.Parse((string)dataReader["ItemUnitPrice"])):0,
-                            //ItemUnit = dataReader["ItemUnit"].ToString(),
-                            //ItemQuantity = (dataReader["ItemQuantity"] != null) ? (float.Parse((string)dataReader["ItemQuantity"])) : 0
                         };
                         resultList.Add(result);
                     }
                     con.Close();
 
-                    SqlCommand cmd1 = new SqlCommand("usp_tbl_POItemsDetails_GetByID", con);
-                    cmd1.Parameters.AddWithValue("@ID", PO_Id);
-                    cmd1.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    SqlDataReader dataReader1 = cmd1.ExecuteReader();
-
-                    while (dataReader1.Read())
+                    if (InwId == 0)
                     {
-                        var result = new PurchaseOrderBO()
+                        SqlCommand cmd2 = new SqlCommand("usp_tbl_POItemsDetails_GetByID", con);
+                        cmd2.Parameters.AddWithValue("@ID", PO_Id);
+                        cmd2.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+                        SqlDataReader dataReader2 = cmd2.ExecuteReader();
+
+                        while (dataReader2.Read())
                         {
-                            ItemName = dataReader1["ItemName"].ToString(),
-                            Item_Code = dataReader1["Item_Code"].ToString(),
-                            ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
-                            ItemUnit = dataReader1["ItemUnit"].ToString(),
-                            ItemQuantity = Convert.ToDecimal(dataReader1["ItemQuantity"]),
-                            ItemTaxValue = dataReader1["ItemTaxValue"].ToString()
-                        };
-                        resultList.Add(result);
+                            var result = new PurchaseOrderBO()
+                            {
+                                ItemName = dataReader2["ItemName"].ToString(),
+                                Item_Code = dataReader2["Item_Code"].ToString(),
+                                ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                                ItemUnit = dataReader2["ItemUnit"].ToString(),
+                                ItemQuantity = Convert.ToDecimal(dataReader2["ItemQuantity"]),
+                                ItemTaxValue = dataReader2["ItemTaxValue"].ToString()
+                            };
+                            resultList.Add(result);
+                        }
+                        con.Close();
                     }
-                    con.Close();
+
+                    else
+                    {
+                        SqlCommand cmd1 = new SqlCommand("usp_tbl_InwardItemDetails_GetByID", con);
+                        cmd1.Parameters.AddWithValue("@ID", InwId);
+                        cmd1.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+                        SqlDataReader dataReader1 = cmd1.ExecuteReader();
+
+                        while (dataReader1.Read())
+                        {
+                            var result = new PurchaseOrderBO()
+                            {
+                                ItemName = dataReader1["ItemName"].ToString(),
+                                Item_Code = dataReader1["Item_Code"].ToString(),
+                                ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
+                                ItemUnit = dataReader1["ItemUnit"].ToString(),
+                                ItemQuantity = Convert.ToDecimal(dataReader1["ItemQuantity"]),
+                                ItemTaxValue = dataReader1["ItemTaxValue"].ToString(),
+                                InwardQuantity = Convert.ToDecimal(dataReader1["InwardQuantity"])
+                            };
+                            resultList.Add(result);
+                        }
+                        con.Close();
+                    }
                 };
             }
             catch (Exception ex)
@@ -179,12 +202,12 @@ namespace InVanWebApp.Repository
                         {
                             ID = Convert.ToInt32(reader["ID"]),
                             InwardNumber = reader["InwardNumber"].ToString(),
-                            InwardDate= Convert.ToDateTime(reader["InwardDate"]),
-                            PODate= Convert.ToDateTime(reader["PODate"]),
-                            PO_Id= Convert.ToInt32(reader["PO_Id"]),
-                            PONumber= reader["PONumber"].ToString(),
-                            Signature= reader["Signature"].ToString(),
-                            Remarks= reader["Remarks"].ToString()
+                            InwardDate = Convert.ToDateTime(reader["InwardDate"]),
+                            PODate = Convert.ToDateTime(reader["PODate"]),
+                            PO_Id = Convert.ToInt32(reader["PO_Id"]),
+                            PONumber = reader["PONumber"].ToString(),
+                            Signature = reader["Signature"].ToString(),
+                            Remarks = reader["Remarks"].ToString()
                         };
                     }
                     con.Close();
@@ -217,7 +240,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
                     cmd.Parameters.AddWithValue("@InwardDate", model.InwardDate);
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
-                    cmd.Parameters.AddWithValue("@Remarks", model.Remarks); 
+                    cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
@@ -260,6 +283,7 @@ namespace InVanWebApp.Repository
                     //cmd.Parameters.AddWithValue("@PONumber", model.PONumber);
                     cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
                     cmd.Parameters.AddWithValue("@InwardDate", model.InwardDate);
+                    cmd.Parameters.AddWithValue("@InwardQuantities", model.InwardQuantities);
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);

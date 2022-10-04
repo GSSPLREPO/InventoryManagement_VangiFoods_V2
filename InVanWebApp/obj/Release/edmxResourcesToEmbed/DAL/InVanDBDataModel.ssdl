@@ -115,13 +115,14 @@
     <Property Name="CompanyType" Type="varchar" MaxLength="50" />
     <Property Name="CompanyName" Type="varchar" MaxLength="200" />
     <Property Name="ContactPersonName" Type="varchar" MaxLength="100" />
-    <Property Name="ContactPersonNo" Type="int" />
+    <Property Name="ContactPersonNo" Type="varchar" MaxLength="15" />
     <Property Name="EmailId" Type="varchar" MaxLength="100" />
     <Property Name="Address" Type="varchar" MaxLength="150" />
     <Property Name="CityID" Type="int" />
     <Property Name="StateID" Type="int" />
     <Property Name="CountryID" Type="int" />
     <Property Name="PinCode" Type="int" />
+    <Property Name="GSTNumber" Type="varchar" MaxLength="50" />
     <Property Name="Remarks" Type="varchar" MaxLength="50" />
     <Property Name="IsActive" Type="bit" />
     <Property Name="IsBlackListed" Type="bit" />
@@ -164,14 +165,18 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="DebitNoteNo" Type="varchar" MaxLength="50" />
-    <Property Name="DebitNoteDate" Type="datetime" />
+    <Property Name="DebitRejectionNoteNo" Type="varchar" MaxLength="50" />
+    <Property Name="DebitRejectionNoteDate" Type="datetime" />
     <Property Name="GRNId" Type="int" />
     <Property Name="InwardNoteId" Type="int" />
     <Property Name="PO_ID" Type="int" />
     <Property Name="PONumber" Type="varchar" MaxLength="50" />
-    <Property Name="Remarks" Type="varchar" MaxLength="50" />
+    <Property Name="GRNCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="GRNDate" Type="datetime" />
+    <Property Name="FlagDebitRejectionNotes" Type="varchar" MaxLength="100" />
+    <Property Name="Attachment" Type="nvarchar(max)" />
     <Property Name="Signature" Type="nvarchar" MaxLength="100" />
+    <Property Name="Remarks" Type="varchar" MaxLength="50" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
@@ -185,6 +190,9 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="DebitNoteId" Type="int" />
     <Property Name="ItemId" Type="int" />
+    <Property Name="Item_Name" Type="varchar" MaxLength="100" />
+    <Property Name="Item_Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="ItemTaxValue" Type="nvarchar" MaxLength="20" />
     <Property Name="QuantityDebited" Type="float" />
     <Property Name="Price" Type="decimal" Precision="8" Scale="2" />
     <Property Name="Status" Type="bit" />
@@ -252,6 +260,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InwardNoteId" Type="int" />
+    <Property Name="InwardNoteNumber" Type="varchar" MaxLength="50" />
     <Property Name="PO_ID" Type="int" />
     <Property Name="PONumber" Type="varchar" MaxLength="50" />
     <Property Name="GRNCode" Type="nvarchar" MaxLength="50" />
@@ -272,6 +282,10 @@
     <Property Name="ItemID" Type="int" />
     <Property Name="OrderQuantity" Type="float" />
     <Property Name="ReceivedQuantity" Type="float" />
+    <Property Name="Item_Name" Type="varchar" MaxLength="100" />
+    <Property Name="Item_Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="ItemPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemTaxValue" Type="nvarchar" MaxLength="20" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
@@ -351,13 +365,38 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PO_Id" Type="int" />
+    <Property Name="PONumber" Type="varchar" MaxLength="50" />
     <Property Name="InwardNumber" Type="varchar" MaxLength="50" />
     <Property Name="InwardDate" Type="datetime" />
-    <Property Name="InwardQuantity" Type="float" />
-    <Property Name="RejectedQuantity" Type="float" />
     <Property Name="LocationStockID" Type="int" />
     <Property Name="ItemId" Type="int" />
+    <Property Name="Item_Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Item_Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="InwardQuantity" Type="float" />
+    <Property Name="ItemUnitPrice" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Signature" Type="nvarchar" MaxLength="100" />
+    <Property Name="Remarks" Type="varchar" MaxLength="100" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="InwardQC">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InwardNote_Id" Type="int" />
+    <Property Name="InwardQCNo" Type="nvarchar" MaxLength="70" />
+    <Property Name="ItemId" Type="int" />
+    <Property Name="Item_Name" Type="nvarchar" MaxLength="100" />
+    <Property Name="Item_Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="InwardQuantity" Type="float" />
+    <Property Name="RejectedQuantity" Type="float" />
+    <Property Name="ItemUnitPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ItemTaxValue" Type="nvarchar" MaxLength="20" />
     <Property Name="Remarks" Type="varchar" MaxLength="100" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="CreatedBy" Type="int" />
@@ -582,21 +621,17 @@
     </Key>
     <Property Name="OrganisationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OrganisationGroupId" Type="int" Nullable="false" />
-    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Name" Type="varchar" MaxLength="100" />
     <Property Name="Abbreviation" Type="varchar" MaxLength="50" />
     <Property Name="Logo" Type="varchar" MaxLength="100" />
     <Property Name="ContactPerson" Type="varchar" MaxLength="50" />
     <Property Name="ContactNo" Type="varchar" MaxLength="50" />
-    <Property Name="Address" Type="varchar" MaxLength="100" />
-    <Property Name="Range" Type="varchar" MaxLength="50" />
-    <Property Name="Division" Type="varchar" MaxLength="50" />
-    <Property Name="Commisionerate" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="varchar" MaxLength="150" />
     <Property Name="Email" Type="varchar" MaxLength="50" />
     <Property Name="Website" Type="varchar" MaxLength="50" />
-    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="CityId" Type="int" />
     <Property Name="StateId" Type="int" />
-    <Property Name="StateCode" Type="int" />
-    <Property Name="Country" Type="varchar" MaxLength="50" />
+    <Property Name="Country" Type="int" />
     <Property Name="PANNo" Type="varchar" MaxLength="50" />
     <Property Name="CINNo" Type="varchar" MaxLength="50" />
     <Property Name="GSTINNo" Type="varchar" MaxLength="50" />
@@ -630,34 +665,34 @@
     <Property Name="DocumentDate" Type="date" />
     <Property Name="DeliveryDate" Type="date" />
     <Property Name="DocumentNumber" Type="nvarchar" MaxLength="100" />
+    <Property Name="CompanyID" Type="int" />
+    <Property Name="DiscountValue" Type="float" />
+    <Property Name="CGST" Type="float" />
+    <Property Name="SGST" Type="float" />
+    <Property Name="IGST" Type="float" />
+    <Property Name="Terms" Type="nvarchar(max)" />
+    <Property Name="TermsAndConditionID" Type="int" />
+    <Property Name="OrderStatus" Type="nvarchar" MaxLength="50" />
+    <Property Name="Cancelled" Type="int" />
+    <Property Name="ReasonForCancellation" Type="varchar(max)" />
+    <Property Name="TotalAmount" Type="float" />
+    <Property Name="DraftFlag" Type="bit" />
+    <Property Name="Amendment" Type="int" />
     <Property Name="BuyerAddress" Type="nvarchar" MaxLength="100" />
     <Property Name="SupplierAddress" Type="nvarchar" MaxLength="100" />
-    <Property Name="CompanyID" Type="int" />
-    <Property Name="Item_ID" Type="int" />
-    <Property Name="ItemQuantity" Type="numeric" Precision="18" Scale="2" />
-    <Property Name="Tax" Type="nvarchar" MaxLength="50" />
-    <Property Name="TotalItemCost" Type="numeric" Precision="18" Scale="2" />
-    <Property Name="GrandTotal" Type="numeric" Precision="18" Scale="2" />
-    <Property Name="AdvancedPAyment" Type="numeric" Precision="18" Scale="2" />
-    <Property Name="OtherChargesDescription" Type="nvarchar" MaxLength="100" />
-    <Property Name="OtherChargesTax" Type="nvarchar" MaxLength="50" />
-    <Property Name="OtherChargesCost" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="Attachment" Type="nvarchar(max)" />
     <Property Name="Signature" Type="nvarchar" MaxLength="200" />
-    <Property Name="TermsAndConditionID" Type="int" />
-    <Property Name="Remark" Type="nvarchar" MaxLength="100" />
-    <Property Name="TransactionFlag" Type="int" />
-    <Property Name="DraftFlag" Type="bit" />
-    <Property Name="InvoiceStatus" Type="int" />
-    <Property Name="GoodsStatus" Type="int" />
-    <Property Name="WorkOrderNo" Type="nvarchar" MaxLength="50" />
-    <Property Name="Amendment" Type="int" />
     <Property Name="IndentNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+    <Property Name="ApprovedBy" Type="int" />
+    <Property Name="ApprovedDate" Type="datetime" />
+    <Property Name="CheckedBy" Type="int" />
+    <Property Name="CheckedDate" Type="datetime" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="LastModifiedDate" Type="datetime" />
     <Property Name="LastModifiedBy" Type="int" />
-    <Property Name="OrderStatus" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="PurchaseOrderAmendment">
     <Key>
@@ -665,11 +700,8 @@
     </Key>
     <Property Name="PurchaseOrderAmendmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PurchaseOrderId" Type="int" />
-    <Property Name="SupplierId" Type="int" />
-    <Property Name="PONo" Type="varchar" MaxLength="50" />
     <Property Name="POAmendNo" Type="varchar" MaxLength="50" />
     <Property Name="POAmendDate" Type="datetime" />
-    <Property Name="PODate" Type="datetime" />
     <Property Name="Total" Type="numeric" Precision="18" Scale="2" />
     <Property Name="PaymentsTerms" Type="varchar(max)" />
     <Property Name="DeliveryTerms" Type="nvarchar(max)" />
@@ -718,6 +750,44 @@
     <Property Name="CreatedBy" Type="int" />
     <Property Name="LastModifiedDate" Type="datetime" />
     <Property Name="LastModifiedBy" Type="int" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderItemsDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PurchaseOrderId" Type="int" />
+    <Property Name="Item_ID" Type="int" />
+    <Property Name="ItemQuantity" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="ItemUnitPrice" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="ItemTaxValue" Type="nvarchar" MaxLength="20" />
+    <Property Name="ItemUnit" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderPaymentDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PurchaseOrderId" Type="int" />
+    <Property Name="InvoiceNo" Type="varchar" MaxLength="50" />
+    <Property Name="InvoiceAmount" Type="float" />
+    <Property Name="AmountPaid" Type="float" />
+    <Property Name="BalancePay" Type="float" />
+    <Property Name="AdvancedPayment" Type="float" />
+    <Property Name="PaymentDate" Type="date" />
+    <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+    <Property Name="PaymentDetails" Type="varchar" MaxLength="5000" />
+    <Property Name="PaymentStatus" Type="varchar" MaxLength="10" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
   </EntityType>
   <EntityType Name="QCProductionSpecificationMaster">
     <Key>
@@ -905,6 +975,44 @@
     <Property Name="IsOpen" Type="bit" />
     <Property Name="SpecialRemarks" Type="varchar(max)" />
   </EntityType>
+  <EntityType Name="SalesOrderItemsDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="SalesOrderId" Type="int" />
+    <Property Name="Item_ID" Type="int" />
+    <Property Name="ItemQuantity" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="ItemUnitPrice" Type="numeric" Precision="18" Scale="2" />
+    <Property Name="ItemTaxValue" Type="nvarchar" MaxLength="20" />
+    <Property Name="ItemUnit" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="SalesOrderPaymentDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SalesOrderId" Type="int" />
+    <Property Name="InvoiceNo" Type="varchar" MaxLength="50" />
+    <Property Name="InvoiceAmount" Type="float" />
+    <Property Name="AmountPaid" Type="float" />
+    <Property Name="BalancePay" Type="float" />
+    <Property Name="AdvancedPayment" Type="float" />
+    <Property Name="PaymentDate" Type="date" />
+    <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+    <Property Name="PaymentDetails" Type="varchar" MaxLength="5000" />
+    <Property Name="PaymentStatus" Type="varchar" MaxLength="10" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="LastModifiedBy" Type="int" />
+    <Property Name="LastModifiedDate" Type="datetime" />
+  </EntityType>
   <EntityType Name="ScreenName">
     <Key>
       <PropertyRef Name="ScreenId" />
@@ -984,6 +1092,8 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ItemId" Type="int" />
+    <Property Name="Item_Name" Type="varchar" MaxLength="100" />
+    <Property Name="Item_Code" Type="varchar" MaxLength="100" />
     <Property Name="QuantityAdjust" Type="int" />
     <Property Name="Reason" Type="varchar" MaxLength="50" />
     <Property Name="IsDeleted" Type="bit" />
@@ -999,8 +1109,12 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ItemID" Type="int" Nullable="false" />
     <Property Name="StockQuantity" Type="float" />
-    <Property Name="UnitID" Type="int" />
-    <Property Name="InwardNoteId" Type="int" />
+    <Property Name="Unit" Type="int" />
+    <Property Name="GRNId" Type="int" />
+    <Property Name="PO_Id" Type="int" />
+    <Property Name="PO_Number" Type="varchar" MaxLength="100" />
+    <Property Name="SaledOrder_Number" Type="varchar" MaxLength="100" />
+    <Property Name="SO_Id" Type="int" />
     <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="CreatedBy" Type="int" />
@@ -1016,6 +1130,8 @@
     <Property Name="FromLocationId" Type="int" />
     <Property Name="ToLocationId" Type="int" />
     <Property Name="ItemId" Type="int" />
+    <Property Name="Item_Name" Type="varchar" MaxLength="100" />
+    <Property Name="Item_Code" Type="varchar" MaxLength="100" />
     <Property Name="TransferQuantity" Type="float" />
     <Property Name="RequiredQuantity" Type="float" />
     <Property Name="Remarks" Type="varchar" MaxLength="100" />
@@ -1117,9 +1233,12 @@
     <Property Name="EmployeeBirthDate" Type="date" />
     <Property Name="EmployeeJoingDate" Type="date" />
     <Property Name="EmployeeGender" Type="varchar" MaxLength="6" />
+    <Property Name="EmailId" Type="nvarchar" MaxLength="100" />
     <Property Name="EmployeeAddress" Type="varchar(max)" />
     <Property Name="PinNumber" Type="varchar" MaxLength="10" />
     <Property Name="EmployeePic" Type="varchar(max)" />
+    <Property Name="UserName" Type="varchar" MaxLength="100" />
+    <Property Name="Signature" Type="nvarchar" MaxLength="200" />
     <Property Name="IsDeleted" Type="int" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
@@ -1135,6 +1254,7 @@
     <Property Name="EmployeeId" Type="int" />
     <Property Name="Username" Type="varchar" MaxLength="100" />
     <Property Name="Password" Type="varchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
@@ -1384,6 +1504,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_GRN_Master_InwardNote">
+    <End Role="InwardNote" Type="Self.InwardNote" Multiplicity="0..1" />
+    <End Role="GRN_Master" Type="Self.GRN_Master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InwardNote">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GRN_Master">
+        <PropertyRef Name="InwardNoteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_GRN_Master_PurchaseOrder">
     <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
     <End Role="GRN_Master" Type="Self.GRN_Master" Multiplicity="*" />
@@ -1467,6 +1599,30 @@
       </Principal>
       <Dependent Role="InwardNote">
         <PropertyRef Name="LocationStockID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InwardNote_PurchaseOrder">
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+    <End Role="InwardNote" Type="Self.InwardNote" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Principal>
+      <Dependent Role="InwardNote">
+        <PropertyRef Name="PO_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InwardQC_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+    <End Role="InwardQC" Type="Self.InwardQC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="InwardQC">
+        <PropertyRef Name="ItemId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1608,6 +1764,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_OrderItemsDetails_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+    <End Role="PurchaseOrderItemsDetails" Type="Self.PurchaseOrderItemsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItemsDetails">
+        <PropertyRef Name="Item_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItemsDetails_PurchaseOrder">
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+    <End Role="PurchaseOrderItemsDetails" Type="Self.PurchaseOrderItemsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Principal>
+      <Dependent Role="PurchaseOrderItemsDetails">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderPaymentDetails_PurchaseOrder">
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
+    <End Role="PurchaseOrderPaymentDetails" Type="Self.PurchaseOrderPaymentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Principal>
+      <Dependent Role="PurchaseOrderPaymentDetails">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Organisations_ToOrganisationGroups">
     <End Role="OrganisationGroups" Type="Self.OrganisationGroups" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -1619,42 +1811,6 @@
       </Principal>
       <Dependent Role="Organisations">
         <PropertyRef Name="OrganisationGroupId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PurchaseOrder_Item">
-    <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
-    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Item">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="PurchaseOrder">
-        <PropertyRef Name="Item_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PurchaseOrder_Status">
-    <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
-    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Status">
-        <PropertyRef Name="StatusId" />
-      </Principal>
-      <Dependent Role="PurchaseOrder">
-        <PropertyRef Name="InvoiceStatus" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PurchaseOrder_Status1">
-    <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
-    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Status">
-        <PropertyRef Name="StatusId" />
-      </Principal>
-      <Dependent Role="PurchaseOrder">
-        <PropertyRef Name="GoodsStatus" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1826,6 +1982,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SalesOrderItemsDetails_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+    <End Role="SalesOrderItemsDetails" Type="Self.SalesOrderItemsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SalesOrderItemsDetails">
+        <PropertyRef Name="Item_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesOrderItemsDetails_SalesOrder">
+    <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="0..1" />
+    <End Role="SalesOrderItemsDetails" Type="Self.SalesOrderItemsDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesOrder">
+        <PropertyRef Name="SalesOrderId" />
+      </Principal>
+      <Dependent Role="SalesOrderItemsDetails">
+        <PropertyRef Name="SalesOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesOrderPaymentDetails_SalesOrder">
+    <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="0..1" />
+    <End Role="SalesOrderPaymentDetails" Type="Self.SalesOrderPaymentDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesOrder">
+        <PropertyRef Name="SalesOrderId" />
+      </Principal>
+      <Dependent Role="SalesOrderPaymentDetails">
+        <PropertyRef Name="SalesOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_StateMaster_CountryMaster">
     <End Role="CountryMaster" Type="Self.CountryMaster" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -1852,15 +2044,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_StockMaster_InwardNote">
-    <End Role="InwardNote" Type="Self.InwardNote" Multiplicity="0..1" />
+  <Association Name="FK_StockMaster_GRN_Master">
+    <End Role="GRN_Master" Type="Self.GRN_Master" Multiplicity="0..1" />
     <End Role="StockMaster" Type="Self.StockMaster" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="InwardNote">
+      <Principal Role="GRN_Master">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="StockMaster">
-        <PropertyRef Name="InwardNoteId" />
+        <PropertyRef Name="GRNId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1876,15 +2068,27 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_StockMaster_UnitMaster">
-    <End Role="UnitMaster" Type="Self.UnitMaster" Multiplicity="0..1" />
+  <Association Name="FK_StockMaster_PurchaseOrder">
+    <End Role="PurchaseOrder" Type="Self.PurchaseOrder" Multiplicity="0..1" />
     <End Role="StockMaster" Type="Self.StockMaster" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="UnitMaster">
-        <PropertyRef Name="UnitID" />
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="PurchaseOrderId" />
       </Principal>
       <Dependent Role="StockMaster">
-        <PropertyRef Name="UnitID" />
+        <PropertyRef Name="PO_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockMaster_SalesOrder">
+    <End Role="SalesOrder" Type="Self.SalesOrder" Multiplicity="0..1" />
+    <End Role="StockMaster" Type="Self.StockMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SalesOrder">
+        <PropertyRef Name="SalesOrderId" />
+      </Principal>
+      <Dependent Role="StockMaster">
+        <PropertyRef Name="SO_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1921,6 +2125,18 @@
       </Principal>
       <Dependent Role="StockTransfer">
         <PropertyRef Name="ToLocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserDetails_Organisations">
+    <End Role="Organisations" Type="Self.Organisations" Multiplicity="0..1" />
+    <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organisations">
+        <PropertyRef Name="OrganisationId" />
+      </Principal>
+      <Dependent Role="UserDetails">
+        <PropertyRef Name="OrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1967,6 +2183,7 @@
     <EntitySet Name="InquiryMaster" EntityType="Self.InquiryMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InvoiceMaster" EntityType="Self.InvoiceMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="InwardNote" EntityType="Self.InwardNote" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InwardQC" EntityType="Self.InwardQC" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="IssueNote" EntityType="Self.IssueNote" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="IssueNoteDetails" EntityType="Self.IssueNoteDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
@@ -1985,6 +2202,8 @@
     <EntitySet Name="PurchaseOrder" EntityType="Self.PurchaseOrder" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PurchaseOrderAmendment" EntityType="Self.PurchaseOrderAmendment" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PurchaseOrderAmendmentDetails" EntityType="Self.PurchaseOrderAmendmentDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOrderItemsDetails" EntityType="Self.PurchaseOrderItemsDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseOrderPaymentDetails" EntityType="Self.PurchaseOrderPaymentDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QCProductionSpecificationMaster" EntityType="Self.QCProductionSpecificationMaster" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QCProductioObservationMaste" EntityType="Self.QCProductioObservationMaste" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="QCProductioObservationMaster" EntityType="Self.QCProductioObservationMaster" Schema="dbo" store:Type="Tables" />
@@ -1994,6 +2213,8 @@
     <EntitySet Name="RoleRights" EntityType="Self.RoleRights" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SalesOrder" EntityType="Self.SalesOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SalesOrderItemsDetails" EntityType="Self.SalesOrderItemsDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SalesOrderPaymentDetails" EntityType="Self.SalesOrderPaymentDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ScreenName" EntityType="Self.ScreenName" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SOItem" EntityType="Self.SOItem" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SOItemSchedule" EntityType="Self.SOItemSchedule" Schema="dbo" store:Type="Tables" />
@@ -2068,6 +2289,10 @@
       <End Role="DesignationMaster" EntitySet="DesignationMaster" />
       <End Role="UserDetails" EntitySet="UserDetails" />
     </AssociationSet>
+    <AssociationSet Name="FK_GRN_Master_InwardNote" Association="Self.FK_GRN_Master_InwardNote">
+      <End Role="InwardNote" EntitySet="InwardNote" />
+      <End Role="GRN_Master" EntitySet="GRN_Master" />
+    </AssociationSet>
     <AssociationSet Name="FK_GRN_Master_PurchaseOrder" Association="Self.FK_GRN_Master_PurchaseOrder">
       <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
       <End Role="GRN_Master" EntitySet="GRN_Master" />
@@ -2095,6 +2320,14 @@
     <AssociationSet Name="FK_InwardNote_LocationWiseStock" Association="Self.FK_InwardNote_LocationWiseStock">
       <End Role="LocationWiseStock" EntitySet="LocationWiseStock" />
       <End Role="InwardNote" EntitySet="InwardNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InwardNote_PurchaseOrder" Association="Self.FK_InwardNote_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+      <End Role="InwardNote" EntitySet="InwardNote" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InwardQC_Item" Association="Self.FK_InwardQC_Item">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="InwardQC" EntitySet="InwardQC" />
     </AssociationSet>
     <AssociationSet Name="FK_Item_ItemCategoryMaster" Association="Self.FK_Item_ItemCategoryMaster">
       <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMaster" />
@@ -2140,21 +2373,21 @@
       <End Role="LocationMaster" EntitySet="LocationMaster" />
       <End Role="MachineMaster" EntitySet="MachineMaster" />
     </AssociationSet>
+    <AssociationSet Name="FK_OrderItemsDetails_Item" Association="Self.FK_OrderItemsDetails_Item">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="PurchaseOrderItemsDetails" EntitySet="PurchaseOrderItemsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItemsDetails_PurchaseOrder" Association="Self.FK_OrderItemsDetails_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+      <End Role="PurchaseOrderItemsDetails" EntitySet="PurchaseOrderItemsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderPaymentDetails_PurchaseOrder" Association="Self.FK_OrderPaymentDetails_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+      <End Role="PurchaseOrderPaymentDetails" EntitySet="PurchaseOrderPaymentDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK_Organisations_ToOrganisationGroups" Association="Self.FK_Organisations_ToOrganisationGroups">
       <End Role="OrganisationGroups" EntitySet="OrganisationGroups" />
       <End Role="Organisations" EntitySet="Organisations" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PurchaseOrder_Item" Association="Self.FK_PurchaseOrder_Item">
-      <End Role="Item" EntitySet="Item" />
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PurchaseOrder_Status" Association="Self.FK_PurchaseOrder_Status">
-      <End Role="Status" EntitySet="Status" />
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PurchaseOrder_Status1" Association="Self.FK_PurchaseOrder_Status1">
-      <End Role="Status" EntitySet="Status" />
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
     </AssociationSet>
     <AssociationSet Name="FK_PurchaseOrder_TermsAndConditionMaster" Association="Self.FK_PurchaseOrder_TermsAndConditionMaster">
       <End Role="TermsAndConditionMaster" EntitySet="TermsAndConditionMaster" />
@@ -2208,6 +2441,18 @@
       <End Role="ScreenName" EntitySet="ScreenName" />
       <End Role="RoleRights" EntitySet="RoleRights" />
     </AssociationSet>
+    <AssociationSet Name="FK_SalesOrderItemsDetails_Item" Association="Self.FK_SalesOrderItemsDetails_Item">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="SalesOrderItemsDetails" EntitySet="SalesOrderItemsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesOrderItemsDetails_SalesOrder" Association="Self.FK_SalesOrderItemsDetails_SalesOrder">
+      <End Role="SalesOrder" EntitySet="SalesOrder" />
+      <End Role="SalesOrderItemsDetails" EntitySet="SalesOrderItemsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesOrderPaymentDetails_SalesOrder" Association="Self.FK_SalesOrderPaymentDetails_SalesOrder">
+      <End Role="SalesOrder" EntitySet="SalesOrder" />
+      <End Role="SalesOrderPaymentDetails" EntitySet="SalesOrderPaymentDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK_StateMaster_CountryMaster" Association="Self.FK_StateMaster_CountryMaster">
       <End Role="CountryMaster" EntitySet="CountryMaster" />
       <End Role="StateMaster" EntitySet="StateMaster" />
@@ -2216,16 +2461,20 @@
       <End Role="Item" EntitySet="Item" />
       <End Role="StockAdjustment" EntitySet="StockAdjustment" />
     </AssociationSet>
-    <AssociationSet Name="FK_StockMaster_InwardNote" Association="Self.FK_StockMaster_InwardNote">
-      <End Role="InwardNote" EntitySet="InwardNote" />
+    <AssociationSet Name="FK_StockMaster_GRN_Master" Association="Self.FK_StockMaster_GRN_Master">
+      <End Role="GRN_Master" EntitySet="GRN_Master" />
       <End Role="StockMaster" EntitySet="StockMaster" />
     </AssociationSet>
     <AssociationSet Name="FK_StockMaster_Item" Association="Self.FK_StockMaster_Item">
       <End Role="Item" EntitySet="Item" />
       <End Role="StockMaster" EntitySet="StockMaster" />
     </AssociationSet>
-    <AssociationSet Name="FK_StockMaster_UnitMaster" Association="Self.FK_StockMaster_UnitMaster">
-      <End Role="UnitMaster" EntitySet="UnitMaster" />
+    <AssociationSet Name="FK_StockMaster_PurchaseOrder" Association="Self.FK_StockMaster_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrder" />
+      <End Role="StockMaster" EntitySet="StockMaster" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockMaster_SalesOrder" Association="Self.FK_StockMaster_SalesOrder">
+      <End Role="SalesOrder" EntitySet="SalesOrder" />
       <End Role="StockMaster" EntitySet="StockMaster" />
     </AssociationSet>
     <AssociationSet Name="FK_StockTransfer_T_Item" Association="Self.FK_StockTransfer_T_Item">
@@ -2239,6 +2488,10 @@
     <AssociationSet Name="FK_StockTransfer_T_LocationMaster1" Association="Self.FK_StockTransfer_T_LocationMaster1">
       <End Role="LocationMaster" EntitySet="LocationMaster" />
       <End Role="StockTransfer" EntitySet="StockTransfer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserDetails_Organisations" Association="Self.FK_UserDetails_Organisations">
+      <End Role="Organisations" EntitySet="Organisations" />
+      <End Role="UserDetails" EntitySet="UserDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_Users_EmployeeMaster" Association="Self.FK_Users_EmployeeMaster">
       <End Role="UserDetails" EntitySet="UserDetails" />

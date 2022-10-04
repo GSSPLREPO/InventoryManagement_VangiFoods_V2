@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
     public class InwardNoteBO
     {
         public int ID { get; set; }
+
+        [Required(ErrorMessage = "Select PO number!")]
         public int PO_Id { get; set; }
+
         public string PONumber{ get; set; }
         public Nullable<System.DateTime> PODate { get; set; }
+
+        [Required(ErrorMessage = "Please enter Inward number!")]
         public string InwardNumber { get; set; }
+
+        [Required(ErrorMessage = "Select Inward date!")]
         public Nullable<System.DateTime> InwardDate { get; set; }
         public Nullable<int> LocationStockID { get; set; }
         public Nullable<int> ItemId { get; set; }
@@ -29,8 +37,14 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
         //Additional fields for Po details.
+
+        [Required(ErrorMessage = "Enter shipping details!")]
         public string ShippingDetails { get; set; }
+
+        [Required(ErrorMessage = "Enter supplier details!")]
         public string SupplierDetails { get; set; }
+
+        public string InwardQuantities { get; set; }
 
 
     }

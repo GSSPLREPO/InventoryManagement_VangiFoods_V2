@@ -286,10 +286,16 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind all PO details 
-        public JsonResult BindPODetails(string id)
+        public JsonResult BindPODetails(string id,string InwId=null)
         {
-            var POId = Convert.ToInt32(id);
-            var result = _repository.GetPODetailsById(POId);
+            int POId = 0;
+            int InwdId = 0;
+            if (id != "" && id != null)
+                POId= Convert.ToInt32(id);
+            if (InwId != "" && InwId != null)
+                InwdId = Convert.ToInt32(InwId);
+            
+            var result = _repository.GetPODetailsById(POId,InwdId);
             return Json(result);
         }
         #endregion
