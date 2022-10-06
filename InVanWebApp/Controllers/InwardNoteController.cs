@@ -101,14 +101,6 @@ namespace InVanWebApp.Controllers
                             string SignFilename = Signature.FileName;
                             SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
                             Signature.SaveAs(SignFilename);
-                            //string path = Server.MapPath("~/Signatures/");
-
-                            //if (!Directory.Exists(path))
-                            //{
-                            //    Directory.CreateDirectory(path);
-                            //}
-
-                            //Signature.SaveAs(path + Path.GetFileName(Signature.FileName));
                             model.Signature = Signature.FileName.ToString();
                         }
 

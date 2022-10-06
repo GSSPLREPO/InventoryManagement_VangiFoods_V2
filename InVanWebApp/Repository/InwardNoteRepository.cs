@@ -118,10 +118,12 @@ namespace InVanWebApp.Repository
                     }
                     con.Close();
 
+                    //==========This condition is for edit functionality "InwId == 0".===========///
                     if (InwId == 0)
                     {
-                        SqlCommand cmd2 = new SqlCommand("usp_tbl_POItemsDetails_GetByID", con);
-                        cmd2.Parameters.AddWithValue("@ID", PO_Id);
+                        //SqlCommand cmd2 = new SqlCommand("usp_tbl_POItemsDetails_GetByID", con);
+                        SqlCommand cmd2 = new SqlCommand("usp_tbl_InwardItemDetails_GetByID", con);
+                        cmd2.Parameters.AddWithValue("@PO_Id", PO_Id);
                         cmd2.CommandType = CommandType.StoredProcedure;
                         con.Open();
                         SqlDataReader dataReader2 = cmd2.ExecuteReader();
@@ -135,14 +137,16 @@ namespace InVanWebApp.Repository
                                 ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
                                 ItemUnit = dataReader2["ItemUnit"].ToString(),
                                 ItemQuantity = Convert.ToDecimal(dataReader2["ItemQuantity"]),
-                                ItemTaxValue = dataReader2["ItemTaxValue"].ToString()
+                                ItemTaxValue = dataReader2["ItemTaxValue"].ToString(),
+                                InwardQuantity = ((dataReader2["InwardQuantity"] != null) ? Convert.ToDecimal(dataReader2["InwardQuantity"]) : 0),
+                                BalanceQuantity = ((dataReader2["BalanceQuantity"] != null) ? Convert.ToDecimal(dataReader2["BalanceQuantity"]) : 0)
                             };
                             resultList.Add(result);
                         }
                         con.Close();
                     }
 
-                    else
+                    else //==========This else will never execute===============//
                     {
                         SqlCommand cmd1 = new SqlCommand("usp_tbl_InwardItemDetails_GetByID", con);
                         cmd1.Parameters.AddWithValue("@ID", InwId);
@@ -158,9 +162,9 @@ namespace InVanWebApp.Repository
                                 Item_Code = dataReader1["Item_Code"].ToString(),
                                 ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
                                 ItemUnit = dataReader1["ItemUnit"].ToString(),
-                                ItemQuantity = Convert.ToDecimal(dataReader1["ItemQuantity"]),
+                                ItemQuantity = (dataReader1["ItemQuantity"]!=null?Convert.ToDecimal(dataReader1["ItemQuantity"]):0),
                                 ItemTaxValue = dataReader1["ItemTaxValue"].ToString(),
-                                InwardQuantity = Convert.ToDecimal(dataReader1["InwardQuantity"])
+                                InwardQuantity = ((dataReader1["InwardQuantity"]!=null)?Convert.ToDecimal(dataReader1["InwardQuantity"]):0)
                             };
                             resultList.Add(result);
                         }
@@ -284,6 +288,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
                     cmd.Parameters.AddWithValue("@InwardDate", model.InwardDate);
                     cmd.Parameters.AddWithValue("@InwardQuantities", model.InwardQuantities);
+                    cmd.Parameters.AddWithValue("@BalanceQuantities", model.BalanceQuantities);
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);

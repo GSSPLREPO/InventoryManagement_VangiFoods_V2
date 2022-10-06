@@ -40,7 +40,7 @@
                                             <th>@Html.Label("Inward Number")</th>
                                             <th>@Html.Label("Inward Date")</th>
                                             <th>@Html.Label("PO Number")</th>
-                                            <th>@Html.Label("VIew/Edit/Delete")</th>
+                                            <th>@Html.Label("VIew/Delete")</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,9 +54,9 @@
                                                     <a href=@Url.Action("ViewInwardNote", "InwardNote", new { ID = item.ID })>
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
-                                                    <a href=@Url.Action("EditInwardNote", "InwardNote", new { ID = item.ID })>
+                                                    @*<a href=@Url.Action("EditInwardNote", "InwardNote", new { ID = item.ID })>
                                                         <i class="fa fa-edit text-primary"></i>
-                                                    </a> &emsp;
+                                                    </a> &emsp;*@
                                                     <a href=@Url.Action("DeleteInwardNote", "InwardNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>

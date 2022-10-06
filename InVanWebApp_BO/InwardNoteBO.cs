@@ -45,7 +45,7 @@ namespace InVanWebApp_BO
         public string SupplierDetails { get; set; }
 
         public string InwardQuantities { get; set; }
-
+        public string BalanceQuantities { get; set; }
 
     }
 }

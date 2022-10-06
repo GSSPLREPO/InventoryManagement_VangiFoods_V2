@@ -87,7 +87,9 @@
                             <th>Quantity</th>
                             <th>Tax</th>
                             <th>Unit Price</th>
-                            <th>Inward Quantity (Kg)</th>
+                            <th>Delivered</th>
+                            <th>Delivered Now (Kg)</th>
+                            <th>Balance (Kg)</th>
                         </tr>
                     </table>
                 </div>
@@ -119,6 +121,7 @@
         </div>
     </div>
     @Html.TextBoxFor(model => model.InwardQuantities, new { style = "display:none" })
+    @Html.TextBoxFor(model => model.BalanceQuantities, new { style = "display:none" })
 }
 
 @*@section Scripts {
@@ -131,7 +134,7 @@
 <script type="text/javascript">
 
     var InwardQuantities = "";
-
+    var BalanceQuantities = "";
     function SelectedIndexChanged(id) {
 
         //For deleting the rows of Item table if exist.
@@ -187,12 +190,37 @@
                         }
                         else if (i == 5) {
 
-                            var t5 = document.createElement("input");
-                            t5.id = "txtInwardQty" + j;
-                            t5.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
-                            t5.setAttribute("type", "number");
-                            // t5.onchange ="OnChangeIWQty($(this).val())"
-                            cell.appendChild(t5);
+                            cell.innerHTML = result[j].InwardQuantity;
+                            cell.setAttribute("id", "DeliveredQty" + j);
+                        }
+                        else if (i == 6) {
+
+                            var t6 = document.createElement("input");
+                            t6.id = "txtInwardQty" + j;
+                            t6.removeAttribute("disabled", "false");
+                            t6.removeAttribute("disabled", "true");
+
+                            var cellData = document.getElementById("ItemQty" + j);
+                            var temp_itemQty = cellData.innerHTML.split(' ');
+                            cellData = document.getElementById("DeliveredQty" + j);
+                            var deliveredQty = cellData.innerHTML;
+                            if (parseFloat(temp_itemQty[0]) == parseFloat(deliveredQty)) {
+                                t6.setAttribute("disabled", "true");
+                            }
+                            else {
+                                t6.removeAttribute("disabled", "false");
+                                t6.removeAttribute("disabled", "true");
+                                t6.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
+                            }
+                            t6.setAttribute("type", "number");
+                            cell.appendChild(t6);
+                        }
+                        else if (i == 7) {
+                            var t7 = document.createElement("input");
+                            t7.id = "txtBalanceQty" + j;
+                            t7.setAttribute("disabled", "true");
+                            t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
+                            cell.appendChild(t7);
                         }
                     }
 
@@ -206,17 +234,26 @@
         var rowNo = id.split('y')[1];
         var cell = document.getElementById("ItemQty" + rowNo);
         var temp_itemQty = cell.innerHTML.split(' ');
-        var itemQty = parseFloat(temp_itemQty[0]);
+        cell= document.getElementById("DeliveredQty" + rowNo);
+        var deliveredQty = cell.innerHTML;
+        //console.log(deliveredQty);
+        var itemQty = parseFloat(temp_itemQty[0])-parseFloat(deliveredQty);
         value = parseFloat(value);
 
         if (value > itemQty) {
-            alert("Inward quantity cannot be greater then order quantity!");
+            alert("Inwarding quantity cannot be greater then balanced quantity!");
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
             return;
         }
         else {
-            InwardQuantities = "txtInwardQty"+rowNo+"*"+InwardQuantities + value + ",";
+            var tempInwQty = document.getElementById("txtInwardQty" + rowNo).value;
+            console.log(tempInwQty + " " + temp_itemQty[0] + " " + deliveredQty);
+            document.getElementById("txtBalanceQty" + rowNo).value = parseFloat(temp_itemQty[0])-(parseFloat(deliveredQty) + parseFloat(tempInwQty));
+            InwardQuantities = InwardQuantities + "txtInwardQty" + rowNo + "*" + value + ",";
+
+            var BalQty=document.getElementById("txtBalanceQty" + rowNo).value;
+            BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" +BalQty+",";
             document.getElementById(id).setAttribute("style", "border-color:none;");
         }
     }
@@ -238,14 +275,13 @@
             return false;
         }
     }
-    //console.log("das" + InwardQuantities);
 
     function SetInwardQty() {
         $('#InwardQuantities').val(InwardQuantities);
-        //alert($('#InwardQuantities').val());
+        $('#BalanceQuantities').val(BalanceQuantities);
+        alert($('#InwardQuantities').val());
+        alert($('#BalanceQuantities').val());
     }
-
-@*@Html.HiddenFor(model=>model.InwardQuantities, new { value= InwardQuantities})*@
 
 </script>
 @Html.Raw(TempData["Success"])

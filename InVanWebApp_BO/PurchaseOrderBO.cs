@@ -58,6 +58,7 @@ namespace InVanWebApp_BO
         public string ItemUnit { get; set; }
         public string ItemTaxValue { get; set; }
         public decimal InwardQuantity { get; set; }
+        public decimal BalanceQuantity { get; set; }
 
     }
 }
