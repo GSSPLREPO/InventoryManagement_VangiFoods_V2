@@ -164,6 +164,7 @@
     <Compile Include="Common\ApplicationSession.cs" />
     <Compile Include="Common\GetDocumentNumber.cs" />
     <Compile Include="Controllers\InwardNoteController.cs" />
+    <Compile Include="Controllers\InwardQCSortingController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
     <Compile Include="Controllers\UserDetailsController.cs" />
@@ -408,11 +409,13 @@
     <Compile Include="Repository\Interface\ICommonFunctions.cs" />
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
+    <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
     <Compile Include="Repository\Interface\IOrganisationRepository.cs" />
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
     <Compile Include="Repository\Interface\IUserDetailsRepository.cs" />
     <Compile Include="Repository\InwardNoteRepository.cs" />
+    <Compile Include="Repository\InwardQCSortingRepository.cs" />
     <Compile Include="Repository\ItemRepository.cs" />
     <Compile Include="Repository\Interface\IItemRepository.cs" />
     <Compile Include="Repository\Interface\IItemCategoryRepository.cs" />
@@ -644,6 +647,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Script\AddInwardNote.js" />
+    <Content Include="Signatures\aaron-burden-wPy71r8Hi_s-unsplash.jpg" />
+    <Content Include="Signatures\johannes-plenio-hvrpOmuMrAI-unsplash.jpg" />
     <Content Include="Theme\MainContent\css\style.css" />
     <Content Include="Theme\MainContent\fonts\PT_Sans\PTSans-Bold.html" />
     <Content Include="Theme\MainContent\images\auth\Landingpage.jpg" />
@@ -1435,13 +1441,13 @@
     <Content Include="Views\InwardNote\AddInwardNote.cshtml" />
     <Content Include="Views\InwardNote\EditInwardNote.cshtml" />
     <Content Include="Views\InwardNote\ViewInwardNote.cshtml" />
+    <Content Include="Views\InwardQCSorting\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\SignatureImages\" />
     <Folder Include="ExcelUploads\" />
     <Folder Include="Models\" />
-    <Folder Include="Signatures\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

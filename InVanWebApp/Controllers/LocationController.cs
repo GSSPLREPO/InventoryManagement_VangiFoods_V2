@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using InVanWebApp.Common;
 using InVanWebApp.Repository;
 using InVanWebApp_BO;
 using log4net;
@@ -47,8 +48,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _locationRepository.GetAll();
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var model = _locationRepository.GetAll();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 
@@ -61,7 +67,12 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddLocation()
         {
-            return View();
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
@@ -74,23 +85,36 @@ namespace InVanWebApp.Controllers
         {
             try
             {
-                ResponseMessageBO response = new ResponseMessageBO();
-                if (ModelState.IsValid)
+                if (Session[ApplicationSession.USERID] != null)
                 {
-                    response = _locationRepository.Insert(model);
-                    if (response.Status)
-                        TempData["Success"] = "<script>alert('Location inserted successfully!');</script>";
-                    else
-                        TempData["Success"] = "<script>alert('Duplicate location name!');</script>";
+                    ResponseMessageBO response = new ResponseMessageBO();
+                    if (ModelState.IsValid)
+                    {
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _locationRepository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Location inserted successfully!');</script>";
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Duplicate location name!');</script>";
+                            return View(model);
+                        }
 
-                    return RedirectToAction("Index", "Location");
+                        return RedirectToAction("Index", "Location");
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        return View();
+                    }
                 }
+                else
+                    return RedirectToAction("Index", "Login");
+
             }
             catch (Exception ex)
             {
                 log.Error("Error", ex);
-                //TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-                //return RedirectToAction("Index", "Location");
             }
             return View();
         }
@@ -106,8 +130,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditLocation(int LocationID)
         {
-            LocationMasterBO model = _locationRepository.GetById(LocationID);
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                LocationMasterBO model = _locationRepository.GetById(LocationID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
@@ -119,22 +148,30 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditLocation(LocationMasterBO model)
         {
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
-                ResponseMessageBO response = new ResponseMessageBO();
-                if (ModelState.IsValid)
+                if (Session[ApplicationSession.USERID] != null)
                 {
-                    response = _locationRepository.Update(model);
-                    if (response.Status)
-                        TempData["Success"] = "<script>alert('Location updated successfully!');</script>";
-                    else
-                        TempData["Success"] = "<script>alert('Duplicate location name!');</script>";
+                    if (ModelState.IsValid)
+                    {
+                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _locationRepository.Update(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Location updated successfully!');</script>";
+                        else
+                        { 
+                            TempData["Success"] = "<script>alert('Duplicate location name!');</script>";
+                            return View(model);
+                        }
 
-                    return RedirectToAction("Index", "Location");
+                        return RedirectToAction("Index", "Location");
+                    }
+                    else
+                        return View(model);
                 }
                 else
-                    return View(model);
-
+                    return RedirectToAction("Index", "Login");
             }
             catch (Exception ex)
             {
@@ -156,10 +193,15 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteLocation(int LocationID)
         {
-            _locationRepository.Delete(LocationID);
-            //_unitRepository.Save();
-            TempData["Success"] = "<script>alert('Location deleted successfully!');</script>";
-            return RedirectToAction("Index", "Location");
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                _locationRepository.Delete(LocationID);
+                //_unitRepository.Save();
+                TempData["Success"] = "<script>alert('Location deleted successfully!');</script>";
+                return RedirectToAction("Index", "Location");
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 

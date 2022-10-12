@@ -99,10 +99,10 @@
                                             <tr>
                                                 <th>Item</th>
                                                 <th>Code</th>
-                                                <th>Quantity</th>
+                                                <th>PO Total Quantity</th>
                                                 <th>Tax</th>
                                                 <th>Unit Price</th>
-                                                @*<th>Inward Quantity</th>*@
+                                                <th>Inward Quantity</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -116,6 +116,8 @@
                                 <div class="col-md-9"></div>
                                 <div class="col-md-3">
                                     @*@Html.DisplayFor(model => model.Signature)*@
+                                    <div id="imagePreview"></div>
+                                    @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
                                     <p class="font-weight-bold"> Authorized Signature</p>
                                 </div>
                             </div>
@@ -139,6 +141,19 @@
     <script type="text/javascript">
         $(document).ready(function () {
             BindItemDetails();
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById(
+                    'imagePreview').innerHTML =
+                    '<img src="' + @ViewBag.ImageURL
+                    + '" style="height:50%;width:50%" />';
+            };
+
+            reader.readAsDataURL(@ViewBag.ImageURL);
+
+            @*document.getElementById('imagePreview').innerHTML =
+                '<img src="' + @ViewBag.ImageURL
+                + '" style="height:50%;width:50%" />';*@
         });
 
         $('#btnExport').click(function () {
@@ -194,6 +209,7 @@
 
         function BindItemDetails() {
             var id = $('#PO_Id').val();
+            var InwardId = $('#ID').val();
             //For deleting the rows of Item table if exist.
 
             var table = document.getElementById('ItemTable');
@@ -206,7 +222,7 @@
 
             $.ajax({
                 type: "POST",
-                url: `/InwardNote/BindPODetails?id=` + id,
+                url: `/InwardNote/BindPODetails?id=` + id + "&InwId=" + InwardId,
                 data: "{}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -241,10 +257,9 @@
                             else if (i == 4) {
                                 cell.innerHTML = result[j].ItemUnitPrice + " Rs";
                             }
-                            //else if (i == 5) {
-                            //    var trow = '<input type="text"  name="TextBox'+i+'" value="TextBox'+i+'" >';
-                            //    cell.append(trow);
-                            //}
+                            else if (i == 5) {
+                                cell.innerHTML = result[j].InwardQuantity;
+                            }
                         }
 
                     }

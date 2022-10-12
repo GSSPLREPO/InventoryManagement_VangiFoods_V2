@@ -10,11 +10,14 @@ namespace InVanWebApp_BO
     {
         public int ID { get; set; }
         public int InwardNote_Id { get; set; }
+        public string InwardNumber { get; set; }
         public string InwardQCNo { get; set; }
+
+        public DateTime InwardQCDate { get; set; }
         public Nullable<int> ItemId { get; set; }
         public string Item_Name { get; set; }
         public string Item_Code { get; set; }
-        public decimal ItemPrice { get; set; }
+        public decimal ItemUnitPrice { get; set; }
         public string ItemTaxValue { get; set; }
         public Nullable<float> InwardQuantity { get; set; }
         public Nullable<float> RejectedQuantity { get; set; }

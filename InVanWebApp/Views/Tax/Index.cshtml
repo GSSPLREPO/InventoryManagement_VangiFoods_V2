@@ -39,9 +39,12 @@
                                         <th>
                                             @Html.DisplayName("Tax Name")
                                         </th>
-                                        <th>
-                                            @Html.DisplayName("Description")
+                                         <th>
+                                            @Html.DisplayName("Tax Value")
                                         </th>
+                                        @*<th>
+                                            @Html.DisplayName("Description")
+                                        </th>*@
                                         <th>
                                             @Html.DisplayName("Edit/Delete")
                                         </th>
@@ -54,8 +57,11 @@
                                                 @Html.DisplayFor(modelItem => item.TaxName)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Description)
+                                                @Html.DisplayFor(modelItem => item.TaxValue)
                                             </td>
+                                            @*<td>
+                                                @Html.DisplayFor(modelItem => item.Description)
+                                            </td>*@
                                             <td>
                                                 <a href=@Url.Action("EditTax", "Tax", new { Id = item.Id })>
                                                     <i class="fa fa-edit text-primary"></i>

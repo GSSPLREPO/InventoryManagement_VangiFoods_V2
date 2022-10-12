@@ -15,6 +15,9 @@ namespace InVanWebApp_BO
         [StringLength(50, ErrorMessage = "Legth of tax name is exceeded!")]
         public string TaxName { get; set; }
 
+        [Required(ErrorMessage = "Enter tax value!")]
+        public decimal TaxValue { get; set; }
+
         [StringLength(150, ErrorMessage = "Legth of description is exceeded!")]
         public string Description { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

@@ -146,9 +146,9 @@ namespace InVanWebApp.Repository
                         con.Close();
                     }
 
-                    else //==========This else will never execute===============//
+                    else //==========This else will execute for generating view.===============//
                     {
-                        SqlCommand cmd1 = new SqlCommand("usp_tbl_InwardItemDetails_GetByID", con);
+                        SqlCommand cmd1 = new SqlCommand("usp_tbl_InwardItemDetailsForView_GetByID", con);
                         cmd1.Parameters.AddWithValue("@ID", InwId);
                         cmd1.CommandType = CommandType.StoredProcedure;
                         con.Open();

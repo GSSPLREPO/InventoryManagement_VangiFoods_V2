@@ -26,6 +26,17 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
+                    @Html.Label("Tax Value")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TaxValue, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.TaxValue, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
@@ -45,3 +56,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+@Html.Raw(TempData["Success"])

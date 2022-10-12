@@ -75,8 +75,9 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@LocationName", locationMaster.LocationName);
+                    cmd.Parameters.AddWithValue("@Address", locationMaster.Address);
                     cmd.Parameters.AddWithValue("@Remark", locationMaster.Remark);
-                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedBy", locationMaster.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -124,6 +125,7 @@ namespace InVanWebApp.Repository
                         {
                             ID = Convert.ToInt32(reader["ID"]),
                             LocationName = reader["LocationName"].ToString(),
+                            Address=reader["Address"].ToString(),
                             Remark = reader["Remark"].ToString()
                         };
                     }
@@ -155,8 +157,9 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@LocationID", locationMaster.ID);
                     cmd.Parameters.AddWithValue("@LocationName", locationMaster.LocationName);
+                    cmd.Parameters.AddWithValue("@Address", locationMaster.Address);
                     cmd.Parameters.AddWithValue("@Remark", locationMaster.Remark);
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", locationMaster.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();

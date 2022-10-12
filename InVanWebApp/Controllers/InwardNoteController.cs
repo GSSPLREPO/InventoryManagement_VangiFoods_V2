@@ -299,6 +299,11 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 InwardNoteBO model = _repository.GetById(ID);
+                string filename = System.IO.Path.GetFileName(model.Signature);
+                //string filepathtosave = "Signatures/" + filename;
+                string filepathtosave = Server.MapPath("~/Signatures/" + filename);
+                /*Storing image path to show preview*/
+                ViewBag.ImageURL = filepathtosave;
                 return View(model);
             }
             else

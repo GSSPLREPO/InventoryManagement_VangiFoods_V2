@@ -40,7 +40,8 @@ namespace InVanWebApp.Repository
                         {
                             Id = Convert.ToInt32(reader["ID"]),
                             TaxName = reader["TaxName"].ToString(),
-                            Description = reader["Description"].ToString()
+                            TaxValue = Convert.ToDecimal(reader["TaxValue"])
+                            //Description = reader["Description"].ToString()
                         };
                         TaxList.Add(tax);
 
@@ -73,8 +74,9 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_TaxMaster_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@TaxName", tax.TaxName);
+                    cmd.Parameters.AddWithValue("@TaxValue", tax.TaxValue);
                     cmd.Parameters.AddWithValue("@Description", tax.Description);
-                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedBy", tax.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -122,6 +124,7 @@ namespace InVanWebApp.Repository
                         {
                             Id = Convert.ToInt32(reader["ID"]),
                             TaxName = reader["TaxName"].ToString(),
+                            TaxValue = Convert.ToDecimal(reader["TaxValue"]),
                             Description = reader["Description"].ToString()
                         };
                     }
@@ -152,8 +155,9 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", tax.Id);
                     cmd.Parameters.AddWithValue("@TaxName", tax.TaxName);
+                    cmd.Parameters.AddWithValue("@TaxValue", tax.TaxValue);
                     cmd.Parameters.AddWithValue("@Description", tax.Description);
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", tax.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();

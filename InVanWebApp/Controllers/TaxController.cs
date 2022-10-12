@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using InVanWebApp.Common;
 using InVanWebApp.Repository;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
@@ -47,8 +48,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _taxRepository.GetAll();
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var model = _taxRepository.GetAll();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 
@@ -61,7 +67,12 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddTax()
         {
-            return View();
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
@@ -73,19 +84,33 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddTax(TaxBO model)
         {
+            ResponseMessageBO response = new ResponseMessageBO();
             try
             {
-                ResponseMessageBO response = new ResponseMessageBO();
-                if (ModelState.IsValid)
+                if (Session[ApplicationSession.USERID] != null)
                 {
-                    response = _taxRepository.Insert(model);
-                    if (response.Status)
-                        TempData["Success"] = "<script>alert('Tax inserted successfully!');</script>";
-                    else
-                        TempData["Success"] = "<script>alert('Duplicate insertion!');</script>";
+                    if (ModelState.IsValid)
+                    {
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _taxRepository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Tax inserted successfully!');</script>";
+                        else
+                        { 
+                            TempData["Success"] = "<script>alert('Duplicate insertion!');</script>";
+                            return View(model);
+                        }
 
-                    return RedirectToAction("Index", "Tax");
+                        return RedirectToAction("Index", "Tax");
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        return View();
+                    }
                 }
+                else
+                    return RedirectToAction("Index", "Login");
             }
             catch (Exception ex)
             {
@@ -107,8 +132,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditTax(int ID)
         {
-            TaxBO model = _taxRepository.GetById(ID);
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                TaxBO model = _taxRepository.GetById(ID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
@@ -123,18 +153,27 @@ namespace InVanWebApp.Controllers
             ResponseMessageBO response = new ResponseMessageBO();
             try
             {
-                if (ModelState.IsValid)
+                if (Session[ApplicationSession.USERID] != null)
                 {
-                    response = _taxRepository.Update(model);
-                    if (response.Status)
-                        TempData["Success"] = "<script>alert('Tax updated successfully!');</script>";
-                    else
-                        TempData["Success"] = "<script>alert('Duplicate tax name!');</script>";
+                    if (ModelState.IsValid)
+                    {
+                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _taxRepository.Update(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Tax updated successfully!');</script>";
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Duplicate tax name!');</script>";
+                            return View(model);
+                        }
 
-                    return RedirectToAction("Index", "Tax");
+                        return RedirectToAction("Index", "Tax");
+                    }
+                    else
+                        return View(model);
                 }
                 else
-                    return View(model);
+                    return RedirectToAction("Index", "Login");
 
             }
             catch (Exception ex)
@@ -157,10 +196,15 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteTax(int ID)
         {
-            _taxRepository.Delete(ID);
-            //_unitRepository.Save();
-            TempData["Success"] = "<script>alert('Tax deleted successfully!');</script>";
-            return RedirectToAction("Index", "Tax");
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                _taxRepository.Delete(ID);
+                //_unitRepository.Save();
+                TempData["Success"] = "<script>alert('Tax deleted successfully!');</script>";
+                return RedirectToAction("Index", "Tax");
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
     }
