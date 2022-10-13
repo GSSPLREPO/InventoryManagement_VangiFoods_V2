@@ -11,5 +11,16 @@ namespace InVanWebApp.Repository.Interface
     {
         //Define function for fetching details of Item type.
         IEnumerable<InwardQCBO> GetAll();
+       
+        //Get inward note list for dropdown.
+        IEnumerable<InwardNoteBO> GetInwNumberForDropdown();
+        
+        //Function define for: Insert record.
+        ResponseMessageBO Insert(InwardQCBO model);
+
+        //Get purchase order details by ID.
+        IEnumerable<InwardNoteBO> GetInwDetailsById(int InwId);
+
+
     }
 }

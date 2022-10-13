@@ -12,20 +12,23 @@ namespace InVanWebApp_BO
         public int InwardNote_Id { get; set; }
         public string InwardNumber { get; set; }
         public string InwardQCNo { get; set; }
-
         public DateTime InwardQCDate { get; set; }
-        public Nullable<int> ItemId { get; set; }
-        public string Item_Name { get; set; }
-        public string Item_Code { get; set; }
-        public decimal ItemUnitPrice { get; set; }
-        public string ItemTaxValue { get; set; }
-        public Nullable<float> InwardQuantity { get; set; }
-        public Nullable<float> RejectedQuantity { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        
+        //Fields name in Inward QC details table.
+        public string SupplierName { get; set; }
+        public Nullable<float> InwardQuantity { get; set; }
+        public Nullable<float> RejectedQuantity { get; set; }
+        public float BalanceQuantity { get; set; }
+        public Nullable<int> ItemId { get; set; }
+        public string Item_Name { get; set; }
+        public string Item_Code { get; set; }
+        public decimal ItemUnitPrice { get; set; }
+        public string ItemTaxValue { get; set; }
     }
 }
