@@ -111,7 +111,7 @@ namespace InVanWebApp.Repository
                         {
                             PurchaseOrderId = Convert.ToInt32(dataReader["PurchaseOrderId"]),
                             PODate = Convert.ToDateTime(dataReader["PODate"]),
-                            BuyerAddress = dataReader["BuyerAddress"].ToString(),
+                            DeliveryAddress = dataReader["DeliveryAddress"].ToString(),
                             SupplierAddress = dataReader["SupplierAddress"].ToString()
                         };
                         resultList.Add(result);

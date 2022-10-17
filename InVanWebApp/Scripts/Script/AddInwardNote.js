@@ -27,7 +27,7 @@
     success: function (result) {
         //console.log(result);
         //$('#PODate').val(result[0].PODate);
-        $('#ShippingDetails').val(result[0].BuyerAddress);
+        $('#ShippingDetails').val(result[0].DeliveryAddress);
     $('#SupplierDetails').val(result[0].SupplierAddress);
     var ColCount = result.length
 

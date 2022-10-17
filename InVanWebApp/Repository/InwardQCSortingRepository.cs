@@ -41,9 +41,9 @@ namespace InVanWebApp.Repository
                             InwardNumber = reader["InwardNumber"].ToString(),
                             InwardQCDate = Convert.ToDateTime(reader["InwardQCDate"]),
                             InwardQCNo = reader["InwardQCNo"].ToString(),
-                            Item_Name = reader["Item_Name"].ToString(),
-                            Item_Code = reader["Item_Code"].ToString(),
-                            ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
+                            //Item_Name = reader["Item_Name"].ToString(),
+                            //Item_Code = reader["Item_Code"].ToString(),
+                            //ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
                             InwardQuantity = Convert.ToInt32(reader["InwardQuantity"]),
                             RejectedQuantity = Convert.ToInt32(reader["RejectedQuantity"])
                         };

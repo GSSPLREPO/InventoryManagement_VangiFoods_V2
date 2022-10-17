@@ -16,25 +16,29 @@ namespace InVanWebApp_BO
         public string PONumber { get; set; }
         public DateTime PODate { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
-        public Nullable<int> CompanyID { get; set; }
+        //public Nullable<int> CompanyID { get; set; }
+        public Nullable<int> VendorsID { get; set; }
         public float DiscountValue { get; set; }
         public float CGST { get; set; }
         public float SGST { get; set; }
         public float IGST { get; set; }
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
-        public string OrderStatus { get; set; }
+        public string PurchaseOrderStatus { get; set; }
         public Nullable<int> Cancelled { get; set; }
         public string ReasonForCancellation { get; set; }
         public Nullable<float> TotalAmount { get; set; }
         public Nullable<bool> DraftFlag { get; set; }
         public Nullable<int> Amendment { get; set; }
 
-        [Required(ErrorMessage = "Enter buyer address!")]
-        public string BuyerAddress { get; set; }
+        [Required(ErrorMessage = "Enter delivery address!")]
+        //public string BuyerAddress { get; set; }
+        public string DeliveryAddress { get; set; }
         
         [Required(ErrorMessage = "Enter supplier address")]
         public string SupplierAddress { get; set; }
+        public float TotalPOAmount { get; set; }
+        public float AdvancedPayment { get; set; }
         public string Attachment { get; set; }
         public string Signature { get; set; }
         public string IndentNumber { get; set; }

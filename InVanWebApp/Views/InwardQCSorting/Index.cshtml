@@ -37,12 +37,12 @@
                                 <table class="table table-striped table-bordered hover table-sm" id="tblInward">
                                     <thead>
                                         <tr>
-                                            <th>@Html.Label("Inward Number")</th>
                                             <th>@Html.Label("Inward QC Number")</th>
+                                            <th>@Html.Label("Inward Number")</th>
                                             <th>@Html.Label("Inward QC Date")</th>
-                                            <th>@Html.Label("Item Name")</th>
+                                            @*<th>@Html.Label("Item Name")</th>
                                             <th>@Html.Label("Item Code")</th>
-                                            <th>@Html.Label("Item Unit Price")</th>
+                                            <th>@Html.Label("Item Unit Price")</th>*@
                                             <th>@Html.Label("Inward Quantity")</th>
                                             <th>@Html.Label("Rejected Quantity")</th>
                                             <th>@Html.Label("View/Delete")</th>
@@ -52,12 +52,12 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.InwardNote_Id)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.InwardQCNo)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.InwardNumber)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.InwardQCDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Item_Name)</td>
+                                                @*<td>@Html.DisplayFor(modelItem => item.Item_Name)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Item_Code)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ItemUnitPrice)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ItemUnitPrice)</td>*@
                                                 <td>@Html.DisplayFor(modelItem => item.InwardQuantity)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.RejectedQuantity)</td>
                                                 <td>

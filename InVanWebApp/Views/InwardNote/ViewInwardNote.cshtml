@@ -141,7 +141,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             BindItemDetails();
-            var reader = new FileReader();
+            @*var reader = new FileReader();
             reader.onload = function (e) {
                 document.getElementById(
                     'imagePreview').innerHTML =
@@ -149,7 +149,7 @@
                     + '" style="height:50%;width:50%" />';
             };
 
-            reader.readAsDataURL(@ViewBag.ImageURL);
+            reader.readAsDataURL(@ViewBag.ImageURL);*@
 
             @*document.getElementById('imagePreview').innerHTML =
                 '<img src="' + @ViewBag.ImageURL
@@ -229,7 +229,7 @@
                 success: function (result) {
                     console.log(result);
                     //$('#PODate').val(result[0].PODate);
-                    $('#ShippingDetails').val(result[0].BuyerAddress);
+                    $('#ShippingDetails').val(result[0].DeliveryAddress);
                     $('#SupplierDetails').val(result[0].SupplierAddress);
                     var ColCount = result.length
 
