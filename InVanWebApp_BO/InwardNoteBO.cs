@@ -47,5 +47,10 @@ namespace InVanWebApp_BO
         public string InwardQuantities { get; set; }
         public string BalanceQuantities { get; set; }
 
+
+        //Additional fields for Inward QC
+        public double QuantityTookForSorting { get; set; }
+        public double BalanceQuantity { get; set; }
+
     }
 }

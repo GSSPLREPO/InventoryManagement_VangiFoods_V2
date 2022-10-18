@@ -150,7 +150,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-
         #region Bind dropdown of Inward Number
         public void BindInwardNoNumber()
         {

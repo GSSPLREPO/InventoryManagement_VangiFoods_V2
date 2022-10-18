@@ -162,6 +162,7 @@ namespace InVanWebApp.Repository
                         {
                             ID = Convert.ToInt32(dataReader["ID"]),
                             InwardDate = Convert.ToDateTime(dataReader["InwardDate"]),
+                            PONumber = dataReader["PONumber"].ToString(),
                             SupplierDetails = dataReader["SupplierDetails"].ToString()
                         };
                         resultList.Add(result);
@@ -183,7 +184,10 @@ namespace InVanWebApp.Repository
                             Item_Name = dataReader2["Item_Name"].ToString(),
                             Item_Code = dataReader2["Item_Code"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
-                            InwardQuantity = Convert.ToDouble(dataReader2["InwardQuantity"])
+                            InwardQuantity = Convert.ToDouble(dataReader2["InwardQuantity"]),
+                            QuantityTookForSorting = Convert.ToDouble(dataReader2["QuantityTookForSorting"]),
+                            BalanceQuantity = Convert.ToDouble(dataReader2["BalanceQuantity"])
+                            
                         };
                         resultList.Add(result);
                     }
