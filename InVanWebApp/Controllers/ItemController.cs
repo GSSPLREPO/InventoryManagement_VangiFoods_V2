@@ -67,12 +67,7 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddItems()
         {
-            var itemCategory = _iItemRepository.GetItemCategoryForDropDown();
-            var dd = new SelectList(itemCategory.ToList(), "ItemCategoryID", "ItemCategoryName");
-            ViewData["ItemCategory"] = dd;
-            var itemType = _iItemRepository.GetItemTypeForDropdown();
-            var dd1 = new SelectList(itemType.ToList(), "ID", "ItemType");
-            ViewData["ItemType"] = dd1;
+            BindItemTypeCategory();
             return View();
         }
 
@@ -104,8 +99,12 @@ namespace InVanWebApp.Controllers
             {
                 log.Error(ex.Message, ex);
             }
+
+            BindItemTypeCategory();
             return View();
         }
+
+       
 
         /// <summary>
         /// Date: 22 Aug 2022
@@ -212,12 +211,7 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditItem(int Item_ID)
         {
-            var itemCategory = _iItemRepository.GetItemCategoryForDropDown();
-            var dd = new SelectList(itemCategory.ToList(), "ItemCategoryID", "ItemCategoryName");
-            ViewData["ItemCategory"] = dd;
-            var itemType = _iItemRepository.GetItemTypeForDropdown();
-            var dd1 = new SelectList(itemType.ToList(), "ID", "ItemType");
-            ViewData["ItemType"] = dd1;
+            BindItemTypeCategory();
             ItemBO model = _iItemRepository.GetById(Item_ID);
             return View(model);
         }
@@ -299,6 +293,19 @@ namespace InVanWebApp.Controllers
         //        return File(stream.ToArray(), "application/pdf", "ExportData.pdf");
         //    }
         //}
+        #endregion
+        
+        #region For binding the dropdown of Item type and category.
+        public void BindItemTypeCategory()
+        {
+            var itemCategory = _iItemRepository.GetItemCategoryForDropDown();
+            var dd = new SelectList(itemCategory.ToList(), "ItemCategoryID", "ItemCategoryName");
+            ViewData["ItemCategory"] = dd;
+            var itemType = _iItemRepository.GetItemTypeForDropdown();
+            var dd1 = new SelectList(itemType.ToList(), "ID", "ItemType");
+            ViewData["ItemType"] = dd1;
+        }
+
         #endregion
 
     }

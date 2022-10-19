@@ -51,6 +51,7 @@ namespace InVanWebApp_BO
         //Additional fields for Inward QC
         public double QuantityTookForSorting { get; set; }
         public double BalanceQuantity { get; set; }
+        public double RejectedQuantity { get; set; }
 
     }
 }

@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Publish</_PublishTargetUrl>
-    <History>True|2022-10-04T08:18:35.4775758Z;True|2022-09-21T15:12:30.1879555+05:30;True|2022-09-15T10:49:51.1594340+05:30;True|2022-09-14T09:43:46.5409547+05:30;True|2022-09-01T18:46:07.7408237+05:30;True|2022-09-01T18:39:08.7086894+05:30;True|2022-09-01T18:36:55.5337681+05:30;True|2022-09-01T18:36:48.1483535+05:30;True|2022-08-29T13:17:45.6195138+05:30;</History>
+    <History>True|2022-10-19T08:30:32.5598453Z;True|2022-10-19T13:59:48.3950409+05:30;True|2022-10-19T11:16:10.6040609+05:30;True|2022-10-04T13:48:35.4775758+05:30;True|2022-09-21T15:12:30.1879555+05:30;True|2022-09-15T10:49:51.1594340+05:30;True|2022-09-14T09:43:46.5409547+05:30;True|2022-09-01T18:46:07.7408237+05:30;True|2022-09-01T18:39:08.7086894+05:30;True|2022-09-01T18:36:55.5337681+05:30;True|2022-09-01T18:36:48.1483535+05:30;True|2022-08-29T13:17:45.6195138+05:30;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -36,16 +36,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/21/2022 11:34:39</publishTime>
     </File>
     <File Include="bin/InVanWebApp.dll">
-      <publishTime>10/04/2022 13:48:31</publishTime>
+      <publishTime>10/19/2022 11:16:08</publishTime>
     </File>
     <File Include="bin/InVanWebApp.pdb">
-      <publishTime>10/04/2022 13:48:31</publishTime>
+      <publishTime>10/19/2022 11:16:08</publishTime>
     </File>
     <File Include="bin/InVanWebApp_BO.dll">
-      <publishTime>10/04/2022 13:48:30</publishTime>
+      <publishTime>10/19/2022 11:16:07</publishTime>
     </File>
     <File Include="bin/InVanWebApp_BO.pdb">
-      <publishTime>10/04/2022 13:48:30</publishTime>
+      <publishTime>10/19/2022 11:16:07</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>09/21/2022 11:34:40</publishTime>
@@ -853,6 +853,15 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Scripts/modernizr-2.8.3.js">
       <publishTime>09/21/2022 11:34:36</publishTime>
+    </File>
+    <File Include="Scripts/Script/AddInwardNote.js">
+      <publishTime>10/17/2022 12:58:33</publishTime>
+    </File>
+    <File Include="Signatures/aaron-burden-wPy71r8Hi_s-unsplash.jpg">
+      <publishTime>10/07/2022 10:00:55</publishTime>
+    </File>
+    <File Include="Signatures/johannes-plenio-hvrpOmuMrAI-unsplash.jpg">
+      <publishTime>10/06/2022 18:29:01</publishTime>
     </File>
     <File Include="Theme/MainContent/css/style.css">
       <publishTime>09/21/2022 11:34:36</publishTime>
@@ -3078,16 +3087,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/21/2022 11:34:37</publishTime>
     </File>
     <File Include="Views/InwardNote/AddInwardNote.cshtml">
-      <publishTime>10/04/2022 13:36:56</publishTime>
+      <publishTime>10/19/2022 10:38:17</publishTime>
     </File>
     <File Include="Views/InwardNote/EditInwardNote.cshtml">
-      <publishTime>10/04/2022 10:51:16</publishTime>
+      <publishTime>10/06/2022 13:54:49</publishTime>
     </File>
     <File Include="Views/InwardNote/Index.cshtml">
-      <publishTime>09/29/2022 17:09:33</publishTime>
+      <publishTime>10/12/2022 16:29:14</publishTime>
     </File>
     <File Include="Views/InwardNote/ViewInwardNote.cshtml">
-      <publishTime>10/02/2022 20:39:04</publishTime>
+      <publishTime>10/19/2022 10:55:28</publishTime>
+    </File>
+    <File Include="Views/InwardQCSorting/AddInwardQC.cshtml">
+      <publishTime>10/18/2022 18:22:16</publishTime>
+    </File>
+    <File Include="Views/InwardQCSorting/Index.cshtml">
+      <publishTime>10/14/2022 13:07:41</publishTime>
     </File>
     <File Include="Views/Item/AddItem.cshtml">
       <publishTime>05/23/2022 18:29:54</publishTime>
@@ -3129,19 +3144,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/21/2022 11:34:37</publishTime>
     </File>
     <File Include="Views/Location/AddLocation.cshtml">
-      <publishTime>09/21/2022 11:34:37</publishTime>
+      <publishTime>10/09/2022 20:07:45</publishTime>
     </File>
     <File Include="Views/Location/DeleteLocation.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>
     </File>
     <File Include="Views/Location/EditLocation.cshtml">
-      <publishTime>09/21/2022 11:34:37</publishTime>
+      <publishTime>10/09/2022 20:11:09</publishTime>
     </File>
     <File Include="Views/Location/Index.cshtml">
-      <publishTime>09/21/2022 11:34:37</publishTime>
+      <publishTime>10/09/2022 19:05:15</publishTime>
     </File>
     <File Include="Views/Login/Index.cshtml">
-      <publishTime>09/21/2022 11:34:37</publishTime>
+      <publishTime>10/06/2022 10:16:29</publishTime>
     </File>
     <File Include="Views/Organisation/AddOrganisation.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>
@@ -3177,22 +3192,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/21/2022 11:34:37</publishTime>
     </File>
     <File Include="Views/Shared/SideNavBar.cshtml">
-      <publishTime>09/21/2022 17:53:19</publishTime>
+      <publishTime>10/12/2022 16:37:24</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>
     </File>
     <File Include="Views/Tax/AddTax.cshtml">
-      <publishTime>09/21/2022 11:34:37</publishTime>
+      <publishTime>10/09/2022 20:25:49</publishTime>
     </File>
     <File Include="Views/Tax/DeleteTax.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>
     </File>
     <File Include="Views/Tax/EditTax.cshtml">
-      <publishTime>09/21/2022 11:34:37</publishTime>
+      <publishTime>10/09/2022 20:25:30</publishTime>
     </File>
     <File Include="Views/Tax/Index.cshtml">
-      <publishTime>09/21/2022 11:34:37</publishTime>
+      <publishTime>10/09/2022 20:27:41</publishTime>
     </File>
     <File Include="Views/TransactionsPOandOC/AddOrderConfirmation.cshtml">
       <publishTime>06/24/2022 21:36:58</publishTime>

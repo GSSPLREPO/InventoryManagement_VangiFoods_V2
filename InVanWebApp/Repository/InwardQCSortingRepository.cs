@@ -186,7 +186,8 @@ namespace InVanWebApp.Repository
                             ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
                             InwardQuantity = Convert.ToDouble(dataReader2["InwardQuantity"]),
                             QuantityTookForSorting = Convert.ToDouble(dataReader2["QuantityTookForSorting"]),
-                            BalanceQuantity = Convert.ToDouble(dataReader2["BalanceQuantity"])
+                            BalanceQuantity = Convert.ToDouble(dataReader2["BalanceQuantity"]),
+                            RejectedQuantity = Convert.ToDouble(dataReader2["RejectedQuantity"])
                             
                         };
                         resultList.Add(result);

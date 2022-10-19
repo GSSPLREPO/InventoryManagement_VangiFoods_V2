@@ -40,5 +40,11 @@ namespace InVanWebApp_BO
         //Added below fields for dropdowns
         public string ItemCategoryName { get; set; }
         public string ItemTypeName { get; set; }
+
+        //Added below fields for Grid dropdowns (Added by Rahul)
+        public Nullable<int> UnitOfMeasurement_ID { get; set; }
+        public string Price { get; set; }
+        public string Tax { get; set; }
+        public string UnitCode { get; set; }
     }
 }

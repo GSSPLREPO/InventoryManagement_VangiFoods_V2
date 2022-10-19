@@ -14,7 +14,7 @@
             <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.ID)
-            @Html.TextBoxFor(model => model.ID,new { style="display:none;"})
+            @Html.TextBoxFor(model => model.ID, new { style = "display:none;" })
 
             <div class="row">
                 <div class="col-md-2">
@@ -42,17 +42,9 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("PO_Id", (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "--Select--",
-                   new { @class = "form-control", onchange = "SelectedIndexChanged()" })
+                   new { @class = "form-control", onchange = "SelectedIndexChanged()", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                @*<div class="col-md-2">
-                        @Html.Label("PO Date")
-                        <span style="color:red">*</span>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-                        @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
-                    </div>*@
             </div>
             <br />
             <div class="row">
@@ -101,10 +93,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Signature, new { @class = "file-drop-zone", type = "file", onchange = "return fileValidation()", value = ViewData["Signature"] })
-                    @*<input type="file" name="Signature" id="Signature" class="file-drop-zone" onchange="return fileValidation()">*@
                     <span id="sfileupload" class="text-danger"></span>
-                    @*@Html.TextBoxFor(model => model.Signature, new { @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.Signature, "", new { @class = "error mt-2 text-danger" })*@
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Remarks")
@@ -145,7 +134,7 @@
 
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
-        console.log(rowCount)
+        //console.log(rowCount)
         while (rowCount != '1') {
             var row = table.deleteRow(rowCount - 1);
             rowCount--;
@@ -157,7 +146,7 @@
 
         $.ajax({
             type: "POST",
-            url: `/InwardNote/BindPODetails?id=` + id +"&InwId="+InwardId,
+            url: `/InwardNote/BindPODetails?id=` + id + "&InwId=" + InwardId,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -199,7 +188,7 @@
                             t5.id = "txtInwardQty" + j;
                             t5.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
                             t5.setAttribute("type", "number");
-                            t5.setAttribute("value", result[j].InwardQuantity);
+                            t5.setAttribute("value", result[j].InwardQuantity != 0 ? result[j].InwardQuantity : '0');
                             cell.appendChild(t5);
                         }
                     }
@@ -228,7 +217,7 @@
             return;
         }
         else {
-            InwardQuantities = InwardQuantities + value + ",";
+            InwardQuantities = InwardQuantities + "txtInwardQty" + rowNo + "*" + value + ",";
             document.getElementById(id).setAttribute("style", "border-color:none;");
         }
     }

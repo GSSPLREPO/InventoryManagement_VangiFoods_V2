@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
-@using (Html.BeginForm("AddInwardNote", "InwardNote", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@*@using (Html.BeginForm("AddInwardNote", "InwardNote", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
+@using (Html.BeginForm("AddInwardNote", "InwardNote"))
 {
     @Html.AntiForgeryToken()
 
@@ -96,15 +97,13 @@
             </div>
             <br />
             <div class="row">
-                <div class="col-md-2">
+                @*<div class="col-md-2">
                     @Html.Label("Signature")
                 </div>
                 <div class="col-md-4">
                     <input type="file" name="Signature" id="fileupload" class="file-drop-zone" onchange="return fileValidation()">
                     <span id="sfileupload" class="text-danger"></span>
-                    @*@Html.TextBoxFor(model => model.Signature, new { @class = "form-control form-control-sm" })
-                        @Html.ValidationMessageFor(model => model.Signature, "", new { @class = "error mt-2 text-danger" })*@
-                </div>
+                </div>*@
                 <div class="col-md-2">
                     @Html.Label("Remarks")
                 </div>

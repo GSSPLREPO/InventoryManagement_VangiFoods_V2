@@ -37,7 +37,7 @@ namespace InVanWebApp_BO
         
         [Required(ErrorMessage = "Enter supplier address")]
         public string SupplierAddress { get; set; }
-        public float TotalPOAmount { get; set; }
+        //public float TotalPOAmount { get; set; }
         public float AdvancedPayment { get; set; }
         public string Attachment { get; set; }
         public string Signature { get; set; }
@@ -63,6 +63,15 @@ namespace InVanWebApp_BO
         public string ItemTaxValue { get; set; }
         public decimal InwardQuantity { get; set; }
         public decimal BalanceQuantity { get; set; }
+
+        //==============These fields are added by Rahul for PO==============//
+        public string CompanyName { get; set; }
+        public Nullable<decimal> TotalItemCost { get; set; }
+        public Nullable<decimal> TotalAfterTax { get; set; }
+        public Nullable<decimal> GrandTotal { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public string LocationName { get; set; }
+        public int UserId { get; set; }
 
     }
 }

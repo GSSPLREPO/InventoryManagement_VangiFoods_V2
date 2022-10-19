@@ -121,12 +121,17 @@
                                     <p class="font-weight-bold"> Authorized Signature</p>
                                 </div>
                             </div>
+                            <br />
+                            <a href="@Url.Action("Index", "InwardNote")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                Back To List
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
 
         }
+
     </div>
 
 
@@ -159,6 +164,7 @@
         $('#btnExport').click(function () {
             var printD = document.getElementById("printV");
             $("#btnExport").hide();
+            $("#btnBack").hide();
             // $("#btnPrint").hide();
             html2canvas(printD).then(function (canvas) {
 
@@ -186,6 +192,7 @@
                 var today = formatDate(currentDate);
                 doc.save('InwardNote' + today + '_'+time+'.pdf');
                 $("#btnExport").show();
+                $("#btnBack").show();
                 //$("#btnPrint").show();
             });
             //window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);

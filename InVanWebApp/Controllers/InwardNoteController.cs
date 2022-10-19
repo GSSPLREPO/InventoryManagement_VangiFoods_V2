@@ -87,7 +87,8 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddInwardNote(InwardNoteBO model, HttpPostedFileBase Signature)
+        //public ActionResult AddInwardNote(InwardNoteBO model, HttpPostedFileBase Signature)
+        public ActionResult AddInwardNote(InwardNoteBO model)
         {
             try
             {
@@ -96,13 +97,13 @@ namespace InVanWebApp.Controllers
                     ResponseMessageBO response = new ResponseMessageBO();
                     if (ModelState.IsValid)
                     {
-                        if (Signature != null)
-                        {
-                            string SignFilename = Signature.FileName;
-                            SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
-                            Signature.SaveAs(SignFilename);
-                            model.Signature = Signature.FileName.ToString();
-                        }
+                        //if (Signature != null)
+                        //{
+                        //    string SignFilename = Signature.FileName;
+                        //    SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
+                        //    Signature.SaveAs(SignFilename);
+                        //    model.Signature = Signature.FileName.ToString();
+                        //}
 
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
 
