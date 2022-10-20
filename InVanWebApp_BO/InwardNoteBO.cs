@@ -49,9 +49,10 @@ namespace InVanWebApp_BO
 
 
         //Additional fields for Inward QC
-        public double QuantityTookForSorting { get; set; }
-        public double BalanceQuantity { get; set; }
-        public double RejectedQuantity { get; set; }
+        public float QuantityTookForSorting { get; set; }
+        public float BalanceQuantity { get; set; }
+        public float RejectedQuantity { get; set; }
+        public float WastageQuantityInPercentage { get; set; }
 
     }
 }

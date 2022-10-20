@@ -30,5 +30,14 @@ namespace InVanWebApp_BO
         public string Item_Code { get; set; }
         public decimal ItemUnitPrice { get; set; }
         public string ItemTaxValue { get; set; }
+        public float WastageQuantityInPercentage { get; set; }
+        public float QuantityTookForSorting { get; set; }
+
+        //Additional fields for Inward QC
+        public string QuantitiesForSorting { get; set; }
+        public string BalanceQuantities { get; set; }
+        public string RejectedQuantities { get; set; }
+        public string WastageQuantities { get; set; }
+        public string ReasonsForRejection { get; set; }
     }
 }

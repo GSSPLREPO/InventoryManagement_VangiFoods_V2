@@ -105,30 +105,31 @@ namespace InVanWebApp.Repository
             ResponseMessageBO response = new ResponseMessageBO();
             try
             {
-                //using (SqlConnection con = new SqlConnection(connString))
-                //{
-                //    SqlCommand cmd = new SqlCommand("usp_tbl_InwardNote_Insert", con);
-                //    cmd.CommandType = CommandType.StoredProcedure;
-                //    cmd.Parameters.AddWithValue("@PO_Id", model.PO_Id);
-                //    //cmd.Parameters.AddWithValue("@PONumber", model.PONumber);
-                //    cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
-                //    cmd.Parameters.AddWithValue("@InwardDate", model.InwardDate);
-                //    cmd.Parameters.AddWithValue("@InwardQuantities", model.InwardQuantities);
-                //    cmd.Parameters.AddWithValue("@BalanceQuantities", model.BalanceQuantities);
-                //    cmd.Parameters.AddWithValue("@Signature", model.Signature);
-                //    cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
-                //    cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
-                //    cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-                //    con.Open();
-                //    //cmd.ExecuteNonQuery();
-                //    SqlDataReader dataReader = cmd.ExecuteReader();
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_InwardQCSorting_Insert", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@InwardQCNo", model.InwardQCNo);
+                    cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
+                    cmd.Parameters.AddWithValue("@InwardQCDate", model.InwardQCDate);
+                    cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@QuantitiesForSorting", model.QuantitiesForSorting);
+                    cmd.Parameters.AddWithValue("@BalanceQuantities", model.BalanceQuantities);
+                    cmd.Parameters.AddWithValue("@RejectedQuantities", model.RejectedQuantities);
+                    cmd.Parameters.AddWithValue("@WastageQuantities", model.WastageQuantities);
+                    cmd.Parameters.AddWithValue("@ReasonsForRejection", model.ReasonsForRejection);
+                    cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
+                    cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
 
-                //    while (dataReader.Read())
-                //    {
-                //        response.Status = Convert.ToBoolean(dataReader["Status"]);
-                //    }
-                //    con.Close();
-                //}
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
+                    con.Close();
+                }
 
             }
             catch (Exception ex)
@@ -185,9 +186,11 @@ namespace InVanWebApp.Repository
                             Item_Code = dataReader2["Item_Code"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
                             InwardQuantity = Convert.ToDouble(dataReader2["InwardQuantity"]),
-                            QuantityTookForSorting = Convert.ToDouble(dataReader2["QuantityTookForSorting"]),
-                            BalanceQuantity = Convert.ToDouble(dataReader2["BalanceQuantity"]),
-                            RejectedQuantity = Convert.ToDouble(dataReader2["RejectedQuantity"])
+                            QuantityTookForSorting = float.Parse(dataReader2["QuantityTookForSorting"].ToString()),
+                            BalanceQuantity = float.Parse(dataReader2["BalanceQuantity"].ToString()),
+                            RejectedQuantity = float.Parse(dataReader2["RejectedQuantity"].ToString()),
+                            WastageQuantityInPercentage = float.Parse(dataReader2["WastageQuantityInPercentage"].ToString()),
+                            Remarks=dataReader2["Remarks"].ToString()
                             
                         };
                         resultList.Add(result);
