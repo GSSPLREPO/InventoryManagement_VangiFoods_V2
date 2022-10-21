@@ -171,5 +171,29 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Delete function
+        /// <summary>
+        /// Date: 21 Oct'22
+        /// Farheen: Delete the perticular record
+        /// </summary>
+        /// <param name="ID">record Id</param>
+        /// <returns></returns>
+
+        [HttpGet]
+        public ActionResult DeleteInwardQC(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                _repository.Delete(ID, userID);
+                TempData["Success"] = "<script>alert('Inward QC deleted successfully!');</script>";
+                return RedirectToAction("Index", "InwardQCSorting");
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+        #endregion
+
+
     }
 }

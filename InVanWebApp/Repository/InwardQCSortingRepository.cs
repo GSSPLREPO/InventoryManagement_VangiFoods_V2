@@ -110,8 +110,10 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_InwardQCSorting_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@InwardQCNo", model.InwardQCNo);
-                    cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
+                    cmd.Parameters.AddWithValue("@InwardNote_Id", model.InwardNote_Id);
+                    //cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
                     cmd.Parameters.AddWithValue("@InwardQCDate", model.InwardQCDate);
+                    cmd.Parameters.AddWithValue("@SupplierName", model.SupplierName);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@QuantitiesForSorting", model.QuantitiesForSorting);
                     cmd.Parameters.AddWithValue("@BalanceQuantities", model.BalanceQuantities);
@@ -204,6 +206,35 @@ namespace InVanWebApp.Repository
                 log.Error(ex.Message, ex);
             }
             return resultList;
+        }
+        #endregion
+
+        #region Delete function
+
+        /// <summary>
+        /// Delete record by ID
+        /// </summary>
+        /// <param name="ID"></param>
+        public void Delete(int ID, int userId)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_InwardQC_Delete", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", ID);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
         #endregion
 

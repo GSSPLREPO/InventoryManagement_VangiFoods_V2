@@ -21,6 +21,7 @@ namespace InVanWebApp.Repository.Interface
         //Get purchase order details by ID.
         IEnumerable<InwardNoteBO> GetInwDetailsById(int InwId);
 
-
+        //Function define for: Delete record of item type using it's ID
+        void Delete(int ID, int userId);
     }
 }

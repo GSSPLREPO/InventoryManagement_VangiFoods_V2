@@ -228,7 +228,7 @@
                         }
                         else if (i == 9) {
                             var t7 = document.createElement("input");
-                            t7.id = "txtRemarks" + j;
+                            t7.id = "txtRemarks_" + j;
                             if (result[j].QuantityTookForSorting == deliveredQty) {
                                 t7.setAttribute("value", result[j].Remarks);
                                 t7.setAttribute("disabled", "true");
@@ -295,7 +295,7 @@
                 document.getElementById("txtWastagePer" + rowNo).value = ((rejectedQty / sortingQty) * 100).toFixed(2);
                 var wastageVal = $('#txtWastagePer' + rowNo).val();
                 WastagePercentages = WastagePercentages + "txtWastagePer" + rowNo + "*" + wastageVal + ",";
-                document.getElementById("txtRemarks" + rowNo).focus();
+                document.getElementById("txtRemarks_" + rowNo).focus();
             }
 
         }
