@@ -1,0 +1,264 @@
+﻿@model InVanWebApp_BO.InwardQCBO
+@{
+    ViewBag.Title = "ViewInwardQC";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Inward QC</title>
+    <style>
+        html2canvas-container {
+            width: 3000px !important;
+            height: 3000px !important;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.InwardNote_Id)
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="row" id="printV" width="1000px">
+                <div class="row" style="margin-bottom: 1%;">
+                    <div class="col-md-12" style="margin-left: 1560%;">
+                        <img src="~/Theme/MainContent/images/pdf.png" id="btnExport" style="width:45px;height:45px" />
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-12  grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" style="width:50px;height:50px;">
+                                &nbsp;&nbsp;&nbsp;<h3 class="card-title font-weight-bold" style="font-size: 16pt;">QC Details</h3>
+
+                            </div>
+                            @*<hr />
+                            <div class="col-md-12">
+                                <div class="row">
+
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold">Goods Received By</label>
+                                        @Html.TextAreaFor(model => model.ShippingDetails, new { style = "border:none; width:100%" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="font-weight-bold">Goods Send By</label>
+                                        @Html.TextAreaFor(model => model.SupplierDetails, new { style = "border:none; width:100%" })
+                                    </div>
+                                </div>
+                            </div>
+                            <br />*@
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <Center><h5 class="font-weight-bold">QC Details</h5></Center>
+                                    <hr />
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <p class="font-weight-bold">Inward QC Number</p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.DisplayFor(model => model.InwardQCNo)
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <p class="font-weight-bold">Inward QC Date</p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.TextBoxFor(model => model.InwardQCDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <p class="font-weight-bold">Inward Number</p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.DisplayFor(model => model.InwardNumber)
+                                        </div>
+                                        @*<div class="col-lg-2">
+                                            <p class="font-weight-bold">Inward Quantity</p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
+                                        </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped" id="ItemTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Code</th>
+                                                <th>Inward Total Quantity</th>
+                                                <th>Unit Price</th>
+                                                <th>Quantity Took For Sorting</th>
+                                                <th>Rejected Quantity</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">
+                                    <p class="font-weight-bold"> Authorized Signature</p>
+                                </div>
+                            </div>
+                            <br />
+                            <a href="@Url.Action("Index", "InwardQCSorting")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                Back To List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+
+
+    <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+    <script src="~/Theme/MainContent/js/jquery.min.js"></script>
+    <script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/jspdf.min.js"></script>
+    <script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/html2canvas.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            BindItemDetails();
+        });
+
+        $('#btnExport').click(function () {
+            var printD = document.getElementById("printV");
+            $("#btnExport").hide();
+            $("#btnBack").hide();
+            // $("#btnPrint").hide();
+            html2canvas(printD).then(function (canvas) {
+
+                var img = canvas.toDataURL("image/png", 1.0);
+
+                var doc = new jsPDF('p', 'pt', 'a3');
+
+                var specialElementHandlers = {
+                    '#editor': function (element, renderer) {
+                        return true;
+                    }
+                };
+
+                doc.addImage(img, 'JPEG', 5, 5);
+                doc.fromHTML(printD, 15, 15, {
+                    'width': 200,
+                    // 'margin':[10,60,40,20],
+                    'elementHandlers': specialElementHandlers
+                });
+                var currentDate = new Date();
+                //var time = getTime();
+                var today = new Date();
+                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                console.log(time);
+                var today = formatDate(currentDate);
+                doc.save('InwardQC_' + today + '_'+time+'.pdf');
+                $("#btnExport").show();
+                $("#btnBack").show();
+                //$("#btnPrint").show();
+            });
+            //window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+
+        });
+
+        function formatDate(date) {
+            // alert(date);
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+            return [day, month, year].join('-');
+            //return [year, month, day].join('-');
+        }
+
+        function BindItemDetails() {
+            var InwardNote_Id = $('#InwardNote_Id').val();
+            var InwardQC_Id = $('#ID').val();
+
+            //For deleting the rows of Item table if exist.
+
+            var table = document.getElementById('ItemTable');
+            var rowCount = table.rows.length;
+            console.log(rowCount)
+            while (rowCount != '1') {
+                var row = table.deleteRow(rowCount - 1);
+                rowCount--;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: `/InwardQCSorting/BindInwDetails?id=` + InwardQC_Id + "&InwNote_Id=" + InwardNote_Id ,
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    
+                    //===================Create dynamic table for binding Item details====================//
+                    var table = document.getElementById('ItemTable');
+                    for (var j = 0; j < result.length; j++) {
+                        var rowCount = table.rows.length;
+                        var cellCount = table.rows[0].cells.length;
+                        var row = table.insertRow(rowCount);
+                        for (var i = 0; i < cellCount; i++) {
+                            var cell = 'cell' + i;
+                            cell = row.insertCell(i);
+                            if (i == 0) {
+                                cell.innerHTML = result[j].ItemName;
+                            }
+                            else if (i == 1) {
+                                cell.innerHTML = result[j].Item_Code;
+                            }
+                            else if (i == 2) {
+                                cell.innerHTML = result[j].InwardQuantity+" Kg";
+                            }
+                            else if (i == 3) {
+                                cell.innerHTML = result[j].ItemUnitPrice + " Rs";
+                            }
+                            else if (i == 4) {
+                                cell.innerHTML = result[j].QuantityTookForSorting + " Kg";
+                            }
+                            else if (i == 5) {
+                                cell.innerHTML = result[j].RejectedQuantity+" Kg";
+                            }
+                            else if (i == 6) {
+                                cell.innerHTML = result[j].Remarks;
+                            }
+                        }
+
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
+

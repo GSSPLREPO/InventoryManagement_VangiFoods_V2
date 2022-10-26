@@ -160,13 +160,16 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind all Inward note and it's details including which item inward
-        public JsonResult BindInwDetails(string id)
+        public JsonResult BindInwDetails(string id, string InwNote_Id = null)
         {
-            int InwdId = 0;
+            int InwdQCId = 0;
+            int InwdNote_Id = 0;
             if (id != "" && id != null)
-                InwdId = Convert.ToInt32(id);
-                
-            var result = _repository.GetInwDetailsById(InwdId);
+                InwdQCId = Convert.ToInt32(id);
+            if (InwNote_Id != "" && InwNote_Id != null)
+                InwdNote_Id = Convert.ToInt32(InwNote_Id);
+
+            var result = _repository.GetInwDetailsById(InwdQCId, InwdNote_Id);
             return Json(result);
         }
         #endregion
@@ -194,6 +197,18 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-
+        #region This method is for View the Inward note
+        [HttpGet]
+        public ActionResult ViewInwardQC(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                InwardQCBO model = _repository.GetById(ID);
+               return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+        #endregion
     }
 }

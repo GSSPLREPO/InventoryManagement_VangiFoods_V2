@@ -114,7 +114,7 @@
     var BalanceQuantities = "";
     var RejectedQuantities = "";
     var WastagePercentages = "";
-    var Reasons= "";
+    var Reasons = "";
 
     function SelectedIndexChanged(id) {
 
@@ -256,14 +256,39 @@
     function OnKeyRemark(value, id) {
 
         var RemarkLen = value.length;
-        if (value == null || value == "" || RemarkLen == 0)
-            alert("Remarks cannot be empty!");
-        else {
-            if (RemarkLen > 150)
-                alert("Exceeding the remark length!");
+        var rowNo = id.split('_');
+        rowNo = rowNo[1];
+        //----Check if Remark with rejected quantity is empty or not.---------------//
+        //var table = document.getElementById('ItemTable');
+        //var rowCount = table.rows.length;
+
+        //var i = 1;
+        //while (i <= rowCount - 1) {
+        //    var RejQty = $("#txtRejectedQty" + i).val();
+        //    var remark = $("#txtRemarks_" + i).val().length;
+
+        //    if (RejQty != null && RejQty != 0 && RejQty != '') {
+        //        if (remark <= 0) {
+        //            alert("Remarks cannot be empty!");
+        //            var remId = "txtRemarks_" + i;
+        //            document.getElementById(remId).focus();
+        //            return false;
+        //        }
+        //    }
+        //    i = i + 1;
+        //}
+
+        var RejQty = $("#txtRejectedQty" + rowNo).val();
+        if (RejQty != null && RejQty != 0 && RejQty != '') {
+            if (RemarkLen <= 0) {
+                alert("Remarks cannot be empty!");
+                document.getElementById(id).focus();
+                //return false;
+            }
+
         }
-
-
+        if (RemarkLen > 150)
+            alert("Exceeding the remark length!");
     }
 
     function OnChangeRejQty(value, id) {
@@ -292,7 +317,14 @@
             else {
                 document.getElementById(id).setAttribute("style", "border-color:none;");
                 RejectedQuantities = RejectedQuantities + "txtRejectedQty" + rowNo + "*" + rejectedQty + ",";
-                document.getElementById("txtWastagePer" + rowNo).value = ((rejectedQty / sortingQty) * 100).toFixed(2);
+                if (rejectedQty == 0 && sortingQty == 0) {
+                    document.getElementById("txtWastagePer" + rowNo).value = 0;
+                }
+                else {
+                    document.getElementById("txtWastagePer" + rowNo).value = ((rejectedQty / sortingQty) * 100).toFixed(2);
+                }
+
+
                 var wastageVal = $('#txtWastagePer' + rowNo).val();
                 WastagePercentages = WastagePercentages + "txtWastagePer" + rowNo + "*" + wastageVal + ",";
                 document.getElementById("txtRemarks_" + rowNo).focus();
@@ -330,16 +362,12 @@
         }
     }
 
-
     function SetInwardQty() {
         $('#QuantitiesForSorting').val(QuantitiesForSorting);
         $('#BalanceQuantities').val(BalanceQuantities);
         $('#RejectedQuantities').val(RejectedQuantities);
         $('#WastageQuantities').val(WastagePercentages);
         $('#ReasonsForRejection').val(Reasons);
-        console.log(QuantitiesForSorting + " " + BalanceQuantities + " " + RejectedQuantities + " " + WastagePercentages + " " + Reasons)
-        //alert($('#InwardQuantities').val());
-        //alert($('#BalanceQuantities').val());
     }
 
 </script>

@@ -19,7 +19,11 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Insert(InwardQCBO model);
 
         //Get purchase order details by ID.
-        IEnumerable<InwardNoteBO> GetInwDetailsById(int InwId);
+        IEnumerable<InwardNoteBO> GetInwDetailsById(int InwQCId, int InwdNote_Id);
+
+
+        //Function define for: Get inward record by it's ID.
+        InwardQCBO GetById(int ID);
 
         //Function define for: Delete record of item type using it's ID
         void Delete(int ID, int userId);
