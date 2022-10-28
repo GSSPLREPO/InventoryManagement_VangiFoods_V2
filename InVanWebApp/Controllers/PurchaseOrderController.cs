@@ -174,7 +174,7 @@ namespace InVanWebApp.Controllers
                     model.Signature = Signature.FileName.ToString();
                     if (ModelState.IsValid)
                     {
-                        model.UserId = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _purchaseOrderRepository.Insert(model);
                         if (response.Status)
                             TempData["Success"] = "<script>alert('Purchase Order inserted successfully!');</script>";

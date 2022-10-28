@@ -66,12 +66,15 @@
     <Compile Include="CountryMaster.cs" />
     <Compile Include="CurrencyMaster.cs" />
     <Compile Include="DesignationBO.cs" />
+    <Compile Include="GRN_BO.cs" />
     <Compile Include="InwardNoteBO.cs" />
     <Compile Include="InwardQCBO.cs" />
     <Compile Include="OrganisationGroupBO.cs" />
     <Compile Include="OrganisationsBO.cs" />
+    <Compile Include="POPaymentBO.cs" />
     <Compile Include="RoleRightBO.cs" />
     <Compile Include="ScreenNameBO.cs" />
+    <Compile Include="StockReportBO.cs" />
     <Compile Include="UserDetailsBO.cs" />
     <Compile Include="FinishGoodSery.cs" />
     <Compile Include="InquiryMaster.cs" />

@@ -21,6 +21,7 @@ namespace InVanWebApp_BO
         public string InwardNumber { get; set; }
 
         [Required(ErrorMessage = "Select Inward date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> InwardDate { get; set; }
         public Nullable<int> LocationStockID { get; set; }
         public Nullable<int> ItemId { get; set; }

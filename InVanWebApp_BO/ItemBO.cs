@@ -46,5 +46,9 @@ namespace InVanWebApp_BO
         public string Price { get; set; }
         public string Tax { get; set; }
         public string UnitCode { get; set; }
+
+        //Added below fields for Grid dropdowns
+        public double UnitPrice { get; set; }
+        public float ItemTaxValue { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace InVanWebApp.Repository.Interface
 {
     public interface IInwardNoteRepository
     {
-        //Define function for fetching details of Item type.
+        //Define function for fetching details of Inward note.
         IEnumerable<InwardNoteBO> GetAll();
 
         //Get purchase order list for dropdown.

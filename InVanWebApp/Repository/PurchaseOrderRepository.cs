@@ -10,6 +10,7 @@ using System.Web;
 using InVanWebApp.Common;
 using InVanWebApp.DAL;
 using System.Globalization;
+using System.Data.Entity.Validation;
 
 namespace InVanWebApp.Repository
 {
@@ -457,7 +458,7 @@ namespace InVanWebApp.Repository
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     //SqlCommand cmd = new SqlCommand("usp_tbl_Organisations_GetAll", con);
-                    SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_GetAll", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_LocationMaster_GetAll_DeliveryAddress", con);
                     cmd.Parameters.AddWithValue("@ID", id);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -517,27 +518,47 @@ namespace InVanWebApp.Repository
         #region Get details of Items by ID
         public ItemBO GetItemDetails(int itemID)
         {
-            ItemBO ItemDetails = new ItemBO();
-            using (SqlConnection con = new SqlConnection(connString))
+            try
             {
-                SqlCommand cmd = new SqlCommand("usp_tbl_GetItemDetailsByIdForPOandOC", con);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ItemId", itemID);
-                con.Open();
-                SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                while (reader.Read())
+                ItemBO ItemDetails = new ItemBO();
+                //ItemCostMasterBO ItemCostDetails = new ItemCostMasterBO();
+                //ItemTaxMasterBO ItemTaxDetails = new ItemTaxMasterBO();
+                using (SqlConnection con = new SqlConnection(connString))
                 {
-                    ItemDetails = new ItemBO()
+                    SqlCommand cmd = new SqlCommand("usp_tbl_GetItemDetailsByIdForPOandOC", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ItemId", itemID);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
                     {
-                        Item_Name = reader["Item_Name"].ToString(),
-                        UnitCode = reader["UnitID"].ToString(),
-                        Price = Convert.ToDecimal(reader["Price"]).ToString(),
-                        Tax = reader["Tax"].ToString()
-                    };
+                        ItemDetails = new ItemBO()
+                        {
+                            Item_Name = reader["Item_Name"].ToString(),
+                            UnitCode = reader["UnitID"].ToString(),
+                            UnitPrice = Convert.ToDouble(reader["UnitPrice"]),
+                            ItemTaxValue = float.Parse(reader["ItemTaxValue"].ToString())
+                        };
+                    }
+                    con.Close();
+                    return ItemDetails;
                 }
-                con.Close();
-                return ItemDetails;
             }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+
         }
 
         #endregion

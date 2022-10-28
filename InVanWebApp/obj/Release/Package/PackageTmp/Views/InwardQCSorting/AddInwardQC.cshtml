@@ -74,8 +74,7 @@
                             <th>Quantity taken for Sorting (Kg)</th>
                             <th>Balance Quantity (Kg)</th>
                             <th>Total Waste Quantity (Kg)</th>
-                            <th>Post Sorting (Kg)</th>
-                            <th>Wastage in Percentage (%)</th>
+                            <th>Wastage (%) (Wastage Quantity/Sorting Quantity*100)</th>
                             <th>Remarks</th>
                         </tr>
                     </table>
@@ -98,8 +97,11 @@
             <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SetInwardQty()">Save</button>
         </div>
     </div>
-    @*@Html.TextBoxFor(model => model.InwardQuantities, new { style = "display:none" })
-        @Html.TextBoxFor(model => model.BalanceQuantities, new { style = "display:none" })*@
+    @Html.TextBoxFor(model => model.QuantitiesForSorting, new { style = "display:none" })
+    @Html.TextBoxFor(model => model.BalanceQuantities, new { style = "display:none" })
+    @Html.TextBoxFor(model => model.RejectedQuantities, new { style = "display:none" })
+    @Html.TextBoxFor(model => model.WastageQuantities, new { style = "display:none" })
+    @Html.TextBoxFor(model => model.ReasonsForRejection, new { style = "display:none" })
 }
 
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
@@ -108,8 +110,12 @@
 
 <script type="text/javascript">
 
-    var QC_Quantities = "";
+    var QuantitiesForSorting = "";
     var BalanceQuantities = "";
+    var RejectedQuantities = "";
+    var WastagePercentages = "";
+    var Reasons = "";
+
     function SelectedIndexChanged(id) {
 
         //For deleting the rows of Item table if exist.
@@ -123,7 +129,7 @@
 
         //Clearing the address textarea
         $('#SupplierName').val(' ');
-       // $('#SupplierDetails').val(' ');
+        // $('#SupplierDetails').val(' ');
 
         $.ajax({
             type: "POST",
@@ -154,37 +160,31 @@
                         }
                         else if (i == 2) {
                             cell.innerHTML = result[j].ItemUnitPrice;
-                            cell.setAttribute("id", "ItemQty" + j);
+                            //cell.setAttribute("id", "ItemQty" + j);
                         }
                         else if (i == 3) {
 
-                            cell.innerHTML = result[j].InwardQuantity+" Kg";
+                            cell.innerHTML = result[j].InwardQuantity + " Kg";
                             cell.setAttribute("id", "DeliveredQty" + j);
                         }
                         else if (i == 4) {
 
-                            cell.innerHTML = result[j].QuantityTookForSorting+" Kg";
+                            cell.innerHTML = result[j].QuantityTookForSorting + " Kg";
                             cell.setAttribute("id", "txtSortedQty" + j);
                         }
                         else if (i == 5) {
 
                             var t6 = document.createElement("input");
                             t6.id = "txtQCQty" + j;
-                           // t6.setAttribute("onchange", "OnChangeQCQty($(this).val(),id)");
-                            //t6.removeAttribute("disabled", "false");
-                            //t6.removeAttribute("disabled", "true");
 
                             var cellData = document.getElementById("DeliveredQty" + j);
                             var temp_itemQty = cellData.innerHTML.split(' ');
-                            //cellData = document.getElementById("DeliveredQty" + j);
                             var deliveredQty = parseFloat(temp_itemQty[0]);
-                            
+
                             if (result[j].QuantityTookForSorting == deliveredQty) {
-                                //t6.setAttribute("value", result[j].QuantityTookForSorting != 0 ? result[j].QuantityTookForSorting : '0');
                                 t6.setAttribute("disabled", "true");
                             }
                             else {
-                                //var QtyTookForSorting = result[j].QuantityTookForSorting;
                                 t6.removeAttribute("disabled", "false");
                                 t6.removeAttribute("disabled", "true");
                                 t6.setAttribute("onchange", "OnChangeQCQty($(this).val(),id)");
@@ -202,38 +202,46 @@
                         else if (i == 7) {
                             var t7 = document.createElement("input");
                             t7.id = "txtRejectedQty" + j;
+                            if (result[j].QuantityTookForSorting == deliveredQty) {
+                                t7.setAttribute("value", result[j].RejectedQuantity != 0 ? result[j].RejectedQuantity : '0');
+                                t7.setAttribute("disabled", "true");
+                            }
+                            else {
+                                //var QtyTookForSorting = result[j].QuantityTookForSorting;
+                                t7.removeAttribute("disabled", "false");
+                                t7.removeAttribute("disabled", "true");
+                                t7.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
+                            }
                             //t7.setAttribute("disabled", "true");
-                            //t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
+                            //t7.setAttribute("value", result[j].RejectedQuantity != 0 ? result[j].RejectedQuantity : '0');
+                            t7.setAttribute("type", "number");
                             cell.appendChild(t7);
                         }
                         else if (i == 8) {
                             var t7 = document.createElement("input");
-                            t7.id = "txtBalancQty" + j;
+                            t7.id = "txtWastagePer" + j;
                             t7.setAttribute("disabled", "true");
-                           // t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
+                            if (result[j].QuantityTookForSorting == deliveredQty) {
+                                t7.setAttribute("value", result[j].WastageQuantityInPercentage != 0 ? result[j].WastageQuantityInPercentage : '0');
+                            }
                             cell.appendChild(t7);
                         }
                         else if (i == 9) {
                             var t7 = document.createElement("input");
-                            t7.id = "txtBalancQty" + j;
-                            t7.setAttribute("disabled", "true");
-                            //t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
+                            t7.id = "txtRemarks_" + j;
+                            if (result[j].QuantityTookForSorting == deliveredQty) {
+                                t7.setAttribute("value", result[j].Remarks);
+                                t7.setAttribute("disabled", "true");
+                            }
+                            else {
+                                //t7.removeAttribute("disabled", "false");
+                                t7.removeAttribute("disabled", "true");
+                                t7.setAttribute("onkeyup", "OnKeyRemark($(this).val(),id)");
+                                t7.setAttribute("onchange", "OnChangeRemarkQty($(this).val(),id)");
+                            }
                             cell.appendChild(t7);
                         }
-                        else if (i == 10) {
-                            var t7 = document.createElement("input");
-                            t7.id = "txtBalancQty" + j;
-                            t7.setAttribute("disabled", "true");
-                           // t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
-                            cell.appendChild(t7);
-                        }
-                        else if (i == 11) {
-                            var t7 = document.createElement("input");
-                            t7.id = "txtBalancQty" + j;
-                            t7.setAttribute("disabled", "true");
-                           // t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
-                            cell.appendChild(t7);
-                        }
+
                     }
 
                 }
@@ -241,8 +249,92 @@
         });
     }
 
+    function OnChangeRemarkQty(value, id) {
+        Reasons = Reasons + id + "*" + value + ",";
+    }
+
+    function OnKeyRemark(value, id) {
+
+        var RemarkLen = value.length;
+        var rowNo = id.split('_');
+        rowNo = rowNo[1];
+        //----Check if Remark with rejected quantity is empty or not.---------------//
+        //var table = document.getElementById('ItemTable');
+        //var rowCount = table.rows.length;
+
+        //var i = 1;
+        //while (i <= rowCount - 1) {
+        //    var RejQty = $("#txtRejectedQty" + i).val();
+        //    var remark = $("#txtRemarks_" + i).val().length;
+
+        //    if (RejQty != null && RejQty != 0 && RejQty != '') {
+        //        if (remark <= 0) {
+        //            alert("Remarks cannot be empty!");
+        //            var remId = "txtRemarks_" + i;
+        //            document.getElementById(remId).focus();
+        //            return false;
+        //        }
+        //    }
+        //    i = i + 1;
+        //}
+
+        var RejQty = $("#txtRejectedQty" + rowNo).val();
+        if (RejQty != null && RejQty != 0 && RejQty != '') {
+            if (RemarkLen <= 0) {
+                alert("Remarks cannot be empty!");
+                document.getElementById(id).focus();
+                //return false;
+            }
+
+        }
+        if (RemarkLen > 150)
+            alert("Exceeding the remark length!");
+    }
+
+    function OnChangeRejQty(value, id) {
+
+        //-------For finding the table row-----------//
+        var rowNo = id.split('y')[1];
+        var cell = document.getElementById("txtQCQty" + rowNo);
+        var sortingQty = cell.value;
+        //---Check the sorting textbox is empty or not---//
+        if (sortingQty == '' || sortingQty == null) {
+            alert("First enter the quantity for sorting!");
+            $('#txtRejectedQty' + rowNo).val('')
+            document.getElementById("txtQCQty" + rowNo).focus();
+        }
+
+        else {
+            sortingQty = parseFloat(sortingQty);
+            var rejectedQty = parseFloat(value);
+            //console.log(sortingQty+" "+rejectedQty);
+            if (rejectedQty > sortingQty) {
+                alert("Rejected quantity cannot be greater then sorting quantity!");
+                document.getElementById(id).focus();
+                document.getElementById(id).setAttribute("style", "border-color:red;");
+                return;
+            }
+            else {
+                document.getElementById(id).setAttribute("style", "border-color:none;");
+                RejectedQuantities = RejectedQuantities + "txtRejectedQty" + rowNo + "*" + rejectedQty + ",";
+                if (rejectedQty == 0 && sortingQty == 0) {
+                    document.getElementById("txtWastagePer" + rowNo).value = 0;
+                }
+                else {
+                    document.getElementById("txtWastagePer" + rowNo).value = ((rejectedQty / sortingQty) * 100).toFixed(2);
+                }
+
+
+                var wastageVal = $('#txtWastagePer' + rowNo).val();
+                WastagePercentages = WastagePercentages + "txtWastagePer" + rowNo + "*" + wastageVal + ",";
+                document.getElementById("txtRemarks_" + rowNo).focus();
+            }
+
+        }
+    }
+
     function OnChangeQCQty(value, id) {
-        
+
         var rowNo = id.split('y')[1];
         var cell = document.getElementById("DeliveredQty" + rowNo);
         var temp_itemQty = cell.innerHTML.split(' ');
@@ -252,7 +344,7 @@
         var balQty = cell.innerHTML;
         balQty = parseFloat(balQty);
         console.log(balQty);
-        if (value > (InwQty-balQty)) {
+        if (value > (InwQty - balQty)) {
             alert("QC quantity cannot be greater then Inward quantity!");
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
@@ -260,9 +352,9 @@
         }
         else {
             var tempInwQty = document.getElementById("txtQCQty" + rowNo).value;
-            console.log(tempInwQty + " " + InwQty );
+            //console.log(tempInwQty + " " + InwQty);
             document.getElementById("txtBalanceQty" + rowNo).value = ((parseFloat(temp_itemQty[0]) - (parseFloat(balQty))) - parseFloat(tempInwQty));
-            QC_Quantities = QC_Quantities + "txtQCQty" + rowNo + "*" + value + ",";
+            QuantitiesForSorting = QuantitiesForSorting + "txtQCQty" + rowNo + "*" + value + ",";
 
             var BalQty = document.getElementById("txtBalanceQty" + rowNo).value;
             BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" + BalQty + ",";
@@ -270,12 +362,12 @@
         }
     }
 
-
     function SetInwardQty() {
-        $('#InwardQuantities').val(QC_Quantities);
+        $('#QuantitiesForSorting').val(QuantitiesForSorting);
         $('#BalanceQuantities').val(BalanceQuantities);
-        //alert($('#InwardQuantities').val());
-        //alert($('#BalanceQuantities').val());
+        $('#RejectedQuantities').val(RejectedQuantities);
+        $('#WastageQuantities').val(WastagePercentages);
+        $('#ReasonsForRejection').val(Reasons);
     }
 
 </script>
