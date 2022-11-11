@@ -17,6 +17,7 @@ namespace InVanWebApp.Repository
         //Define function for fetching details of Purchase Order by PurchaseOrderId.
         //PurchaseOrderBO GetById(int PurchaseOrderId);
         //Function define for: Insert record.
+        //ResponseMessageBO Insert(PurchaseOrderBO purchaseOrderMaster, string json);
         ResponseMessageBO Insert(PurchaseOrderBO purchaseOrderMaster);
 
         //Function define for: Update master record.
@@ -44,7 +45,10 @@ namespace InVanWebApp.Repository
         //Fetch the details of Item by it's ID
         ItemBO GetItemDetails(int itemID);
 
+        //Function define for: Delete record of item type using it's PurchaseOrderId 
+        void Delete(int PurchaseOrderId, int userId);
 
+        PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId);
 
     }
 }

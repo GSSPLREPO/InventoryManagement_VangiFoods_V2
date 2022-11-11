@@ -137,7 +137,8 @@ namespace InVanWebApp.Repository
                                 ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
                                 ItemUnit = dataReader2["ItemUnit"].ToString(),
                                 ItemQuantity = Convert.ToDecimal(dataReader2["ItemQuantity"]),
-                                ItemTaxValue = dataReader2["ItemTaxValue"].ToString(),
+                                //ItemTaxValue = dataReader2["ItemTaxValue"].ToString(), rahul updated String to Decimal
+                                ItemTaxValue = Convert.ToDecimal(dataReader2["ItemTaxValue"]),
                                 InwardQuantity = ((dataReader2["InwardQuantity"] != null) ? Convert.ToDecimal(dataReader2["InwardQuantity"]) : 0),
                                 BalanceQuantity = ((dataReader2["BalanceQuantity"] != null) ? Convert.ToDecimal(dataReader2["BalanceQuantity"]) : 0)
                             };
@@ -163,7 +164,8 @@ namespace InVanWebApp.Repository
                                 ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
                                 ItemUnit = dataReader1["ItemUnit"].ToString(),
                                 ItemQuantity = (dataReader1["ItemQuantity"]!=null?Convert.ToDecimal(dataReader1["ItemQuantity"]):0),
-                                ItemTaxValue = dataReader1["ItemTaxValue"].ToString(),
+                                //ItemTaxValue = dataReader1["ItemTaxValue"].ToString(),  rahul updated String to Decimal 
+                                ItemTaxValue = Convert.ToDecimal(dataReader1["ItemTaxValue"]),
                                 InwardQuantity = ((dataReader1["InwardQuantity"]!=null)?Convert.ToDecimal(dataReader1["InwardQuantity"]):0)
                             };
                             resultList.Add(result);

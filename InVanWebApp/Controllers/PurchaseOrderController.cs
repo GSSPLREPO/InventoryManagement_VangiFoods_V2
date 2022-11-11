@@ -278,8 +278,6 @@ namespace InVanWebApp.Controllers
             }
             return View();
         }
-
-
         #endregion
 
         /// <summary>
@@ -321,7 +319,8 @@ namespace InVanWebApp.Controllers
                 var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 ViewData["itemListForDD"] = dd;
-                PurchaseOrderBO model = _purchaseOrderRepository.GetById(PurchaseOrderId);
+                //PurchaseOrderBO model = _purchaseOrderRepository.GetById(PurchaseOrderId);
+                PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId); 
                 return View(model);
                 //  return View();
             }
@@ -378,6 +377,28 @@ namespace InVanWebApp.Controllers
             return Json(itemDetails);
         }
         #endregion
+
+        #region Delete function
+        /// <summary>
+        /// Date: 07 Nov'22
+        /// Rahul: Delete the perticular record Purchase Order 
+        /// </summary>
+        /// <param name="PurchaseOrderId">record Id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeletePurchaseOrder(int PurchaseOrderId)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                _purchaseOrderRepository.Delete(PurchaseOrderId, userID);
+                TempData["Success"] = "<script>alert('Purchase Order deleted successfully!');</script>"; 
+                return RedirectToAction("Index", "PurchaseOrder"); 
+            }
+            else
+                return RedirectToAction("Index", "Login"); 
+        }
+        #endregion 
 
     }
 }
