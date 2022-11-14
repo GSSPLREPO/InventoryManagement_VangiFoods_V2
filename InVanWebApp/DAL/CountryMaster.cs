@@ -17,11 +17,9 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CountryMaster()
         {
-            this.CurrencyMasters = new HashSet<CurrencyMaster>();
-            this.EmployeeMasters = new HashSet<EmployeeMaster>();
-            this.StateMasters = new HashSet<StateMaster>();
             this.Companies = new HashSet<Company>();
-            this.UserDetails = new HashSet<UserDetail>();
+            this.CurrencyMasters = new HashSet<CurrencyMaster>();
+            this.StateMasters = new HashSet<StateMaster>();
         }
     
         public int CountryID { get; set; }
@@ -34,14 +32,10 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CurrencyMaster> CurrencyMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EmployeeMaster> EmployeeMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StateMaster> StateMasters { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Company> Companies { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserDetail> UserDetails { get; set; }
+        public virtual ICollection<CurrencyMaster> CurrencyMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StateMaster> StateMasters { get; set; }
     }
 }

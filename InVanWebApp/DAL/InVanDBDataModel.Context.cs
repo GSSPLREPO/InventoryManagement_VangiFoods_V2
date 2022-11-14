@@ -29,13 +29,13 @@ namespace InVanWebApp.DAL
         public virtual DbSet<CityMaster> CityMasters { get; set; }
         public virtual DbSet<ClientMaster> ClientMasters { get; set; }
         public virtual DbSet<COAMaster> COAMasters { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CountryMaster> CountryMasters { get; set; }
         public virtual DbSet<CurrencyMaster> CurrencyMasters { get; set; }
         public virtual DbSet<DebitNote> DebitNotes { get; set; }
         public virtual DbSet<DebitNoteDetail> DebitNoteDetails { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DesignationMaster> DesignationMasters { get; set; }
-        public virtual DbSet<EmployeeMaster> EmployeeMasters { get; set; }
         public virtual DbSet<FinishGoodSery> FinishGoodSeries { get; set; }
         public virtual DbSet<GRN_Master> GRN_Master { get; set; }
         public virtual DbSet<GRNDetail> GRNDetails { get; set; }
@@ -43,6 +43,9 @@ namespace InVanWebApp.DAL
         public virtual DbSet<InquiryMaster> InquiryMasters { get; set; }
         public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
         public virtual DbSet<InwardNote> InwardNotes { get; set; }
+        public virtual DbSet<InwardNoteDetail> InwardNoteDetails { get; set; }
+        public virtual DbSet<InwardQC> InwardQCs { get; set; }
+        public virtual DbSet<InwardQCDetail> InwardQCDetails { get; set; }
         public virtual DbSet<IssueNote> IssueNotes { get; set; }
         public virtual DbSet<IssueNoteDetail> IssueNoteDetails { get; set; }
         public virtual DbSet<Item> Items { get; set; }
@@ -61,6 +64,8 @@ namespace InVanWebApp.DAL
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<PurchaseOrderAmendment> PurchaseOrderAmendments { get; set; }
         public virtual DbSet<PurchaseOrderAmendmentDetail> PurchaseOrderAmendmentDetails { get; set; }
+        public virtual DbSet<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
+        public virtual DbSet<PurchaseOrderPaymentDetails> PurchaseOrderPaymentDetails1 { get; set; }
         public virtual DbSet<QCProductionSpecificationMaster> QCProductionSpecificationMasters { get; set; }
         public virtual DbSet<QCProductioObservationMaste> QCProductioObservationMastes { get; set; }
         public virtual DbSet<QCProductioObservationMaster> QCProductioObservationMasters { get; set; }
@@ -70,6 +75,8 @@ namespace InVanWebApp.DAL
         public virtual DbSet<RoleRight> RoleRights { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SalesOrder> SalesOrders { get; set; }
+        public virtual DbSet<SalesOrderItemsDetail> SalesOrderItemsDetails { get; set; }
+        public virtual DbSet<SalesOrderPaymentDetail> SalesOrderPaymentDetails { get; set; }
         public virtual DbSet<ScreenName> ScreenNames { get; set; }
         public virtual DbSet<SOItem> SOItems { get; set; }
         public virtual DbSet<SOItemSchedule> SOItemSchedules { get; set; }
@@ -83,16 +90,10 @@ namespace InVanWebApp.DAL
         public virtual DbSet<TaxMaster> TaxMasters { get; set; }
         public virtual DbSet<TermsAndConditionMaster> TermsAndConditionMasters { get; set; }
         public virtual DbSet<UnitMaster> UnitMasters { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
         public virtual DbSet<WorkOrderDetail> WorkOrderDetails { get; set; }
         public virtual DbSet<YearMaster> YearMasters { get; set; }
-        public virtual DbSet<Company> Companies { get; set; }
-        public virtual DbSet<UserDetail> UserDetails { get; set; }
-        public virtual DbSet<InwardQC> InwardQCs { get; set; }
-        public virtual DbSet<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
-        public virtual DbSet<PurchaseOrderPaymentDetail> PurchaseOrderPaymentDetails { get; set; }
-        public virtual DbSet<SalesOrderItemsDetail> SalesOrderItemsDetails { get; set; }
-        public virtual DbSet<SalesOrderPaymentDetail> SalesOrderPaymentDetails { get; set; }
     }
 }

@@ -12,25 +12,28 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class PurchaseOrderPaymentDetail
+    public partial class InwardQCDetail
     {
         public int ID { get; set; }
-        public Nullable<int> PurchaseOrderId { get; set; }
-        public string InvoiceNo { get; set; }
-        public Nullable<double> InvoiceAmount { get; set; }
-        public Nullable<double> AmountPaid { get; set; }
-        public Nullable<double> BalancePay { get; set; }
-        public Nullable<double> AdvancedPayment { get; set; }
-        public Nullable<System.DateTime> PaymentDate { get; set; }
-        public string PaymentMode { get; set; }
-        public string PaymentDetails { get; set; }
-        public string PaymentStatus { get; set; }
+        public Nullable<int> InwardQC_Id { get; set; }
+        public string SupplierName { get; set; }
+        public Nullable<int> ItemId { get; set; }
+        public string Item_Name { get; set; }
+        public string Item_Code { get; set; }
+        public Nullable<decimal> ItemUnitPrice { get; set; }
+        public string ItemTaxValue { get; set; }
+        public Nullable<double> InwardQuantity { get; set; }
+        public Nullable<double> RejectedQuantity { get; set; }
+        public Nullable<double> BalanceQuantity { get; set; }
+        public Nullable<double> QuantityTookForSorting { get; set; }
+        public Nullable<double> WastageQuantityInPercentage { get; set; }
+        public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
-        public virtual PurchaseOrder PurchaseOrder { get; set; }
+        public virtual InwardQC InwardQC { get; set; }
     }
 }

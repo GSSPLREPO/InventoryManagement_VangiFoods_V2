@@ -278,8 +278,6 @@ namespace InVanWebApp.Controllers
             }
             return View();
         }
-
-
         #endregion
 
         /// <summary>
@@ -321,7 +319,8 @@ namespace InVanWebApp.Controllers
                 var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 ViewData["itemListForDD"] = dd;
-                PurchaseOrderBO model = _purchaseOrderRepository.GetById(PurchaseOrderId);
+                //PurchaseOrderBO model = _purchaseOrderRepository.GetById(PurchaseOrderId);
+                PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId); 
                 return View(model);
                 //  return View();
             }
@@ -376,6 +375,117 @@ namespace InVanWebApp.Controllers
             //var finalDetials = itemDetails.Item_Name +"#"+ itemDetails.UnitName +"#"+ itemDetails.Price+"#"+itemDetails.Tax;
             //return Json(finalDetials);
             return Json(itemDetails);
+        }
+        #endregion
+
+        #region Delete function
+        /// <summary>
+        /// Date: 07 Nov'22
+        /// Rahul: Delete the perticular record Purchase Order 
+        /// </summary>
+        /// <param name="PurchaseOrderId">record Id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeletePurchaseOrder(int PurchaseOrderId)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                _purchaseOrderRepository.Delete(PurchaseOrderId, userID);
+                TempData["Success"] = "<script>alert('Purchase Order deleted successfully!');</script>"; 
+                return RedirectToAction("Index", "PurchaseOrder"); 
+            }
+            else
+                return RedirectToAction("Index", "Login"); 
+        }
+        #endregion
+
+        #region Amendment Operation
+        /// <summary>
+        /// Created By : Raj
+        /// Created Date : 11-11-2022
+        /// Description : Get Purchase Order Details and bind all Purchase Order for Amendment process.
+        /// </summary>
+        /// <param name="PurchaseOrderId">paramenter contrains purchase order Id.</param>
+        /// <returns></returns>
+        public ActionResult POAmendment(int PurchaseOrderId)
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            BindCompany();
+            //BindCompanyAddress();
+            BindTermsAndCondition();
+            //BindOrganisations();
+            BindLocationName();
+
+            //Binding item grid with sell type item.
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+            ViewData["itemListForDD"] = dd;
+            PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
+            model.Amendment = model.Amendment + 1;
+            return View(model);
+        }
+
+        /// <summary>
+        /// Created By: Raj
+        /// Created Date: 11-11-2022
+        /// Description: Insert Amendment Details of Purchase Order.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult POAmendment(PurchaseOrderBO model)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            if (ModelState.IsValid)
+            {
+                model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                response = _purchaseOrderRepository.SaveAmendment(model);
+                if (response.Status)
+                    TempData["Success"] = "<script>alert('Amendment Details Added successfully!');</script>";
+                else
+                {
+                    TempData["Success"] = "<script>alert('Duplicate category!');</script>";
+                    return View(model);
+                }
+                return RedirectToAction("Index");
+            }
+            else
+                return View(model);
+        }
+
+        #endregion
+
+        #region View Purchase Order
+        /// <summary>
+        /// Created By: Raj
+        /// Created Date : 12-11-2022
+        /// Description: This method responsible for View of Purchase Order details.
+        /// </summary>
+        /// <param name="PurchaseOrderId"></param>
+        /// <returns></returns>
+        public ActionResult ViewPurchaseOrder(int ID)
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            BindCompany();
+            BindTermsAndCondition();
+            BindLocationName();
+
+            //Binding item grid with sell type item.
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+            ViewData["itemListForDD"] = dd;
+            PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID);
+            return View(model);
+
         }
         #endregion
 

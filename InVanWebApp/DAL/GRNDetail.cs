@@ -17,6 +17,10 @@ namespace InVanWebApp.DAL
         public int ID { get; set; }
         public Nullable<int> GRN_ID { get; set; }
         public Nullable<int> ItemID { get; set; }
+        public string Item_Name { get; set; }
+        public string Item_Code { get; set; }
+        public Nullable<decimal> ItemUnitPrice { get; set; }
+        public string ItemTaxValue { get; set; }
         public Nullable<double> OrderQuantity { get; set; }
         public Nullable<double> ReceivedQuantity { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
@@ -24,10 +28,6 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public string Item_Name { get; set; }
-        public string Item_Code { get; set; }
-        public Nullable<decimal> ItemPrice { get; set; }
-        public string ItemTaxValue { get; set; }
     
         public virtual GRN_Master GRN_Master { get; set; }
         public virtual Item Item { get; set; }

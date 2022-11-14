@@ -19,75 +19,60 @@ namespace InVanWebApp.DAL
         {
             this.DebitNotes = new HashSet<DebitNote>();
             this.GRN_Master = new HashSet<GRN_Master>();
-            this.InwardNotes = new HashSet<InwardNote>();
             this.PurchaseOrderItemsDetails = new HashSet<PurchaseOrderItemsDetail>();
-            this.PurchaseOrderPaymentDetails = new HashSet<PurchaseOrderPaymentDetail>();
+            this.PurchaseOrderPaymentDetails = new HashSet<PurchaseOrderPaymentDetails>();
             this.StockMasters = new HashSet<StockMaster>();
         }
     
         public int PurchaseOrderId { get; set; }
         public string Tittle { get; set; }
         public string PONumber { get; set; }
-        public Nullable<System.DateTime> DocumentDate { get; set; }
+        public Nullable<System.DateTime> PODate { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
-        public string DocumentNumber { get; set; }
-        public string BuyerAddress { get; set; }
-        public string SupplierAddress { get; set; }
-        public Nullable<int> CompanyID { get; set; }
-        public Nullable<int> Item_ID { get; set; }
-        public Nullable<decimal> ItemQuantity { get; set; }
-        public string Tax { get; set; }
-        public Nullable<decimal> TotalItemCost { get; set; }
-        public Nullable<decimal> GrandTotal { get; set; }
-        public Nullable<decimal> AdvancedPAyment { get; set; }
-        public string OtherChargesDescription { get; set; }
-        public string OtherChargesTax { get; set; }
-        public Nullable<decimal> OtherChargesCost { get; set; }
-        public string Signature { get; set; }
-        public Nullable<int> TermsAndConditionID { get; set; }
-        public string Remark { get; set; }
-        public Nullable<int> TransactionFlag { get; set; }
-        public Nullable<bool> DraftFlag { get; set; }
-        public Nullable<int> InvoiceStatus { get; set; }
-        public Nullable<int> GoodsStatus { get; set; }
-        public string WorkOrderNo { get; set; }
-        public Nullable<int> Amendment { get; set; }
-        public string IndentNumber { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<int> LastModifiedBy { get; set; }
-        public string OrderStatus { get; set; }
+        public Nullable<int> VendorsID { get; set; }
+        public string CompanyName { get; set; }
         public Nullable<double> DiscountValue { get; set; }
         public Nullable<double> CGST { get; set; }
         public Nullable<double> SGST { get; set; }
         public Nullable<double> IGST { get; set; }
+        public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
+        public string PurchaseOrderStatus { get; set; }
         public Nullable<int> Cancelled { get; set; }
         public string ReasonForCancellation { get; set; }
-        public Nullable<double> TotalAmount { get; set; }
+        public Nullable<bool> DraftFlag { get; set; }
+        public Nullable<int> Amendment { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string SupplierAddress { get; set; }
+        public Nullable<double> AdvancedPayment { get; set; }
+        public Nullable<double> GrandTotal { get; set; }
+        public Nullable<double> TotalAfterTax { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public string LocationName { get; set; }
         public string Attachment { get; set; }
+        public string Signature { get; set; }
+        public string IndentNumber { get; set; }
         public string Remarks { get; set; }
         public Nullable<int> ApprovedBy { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public Nullable<int> CheckedBy { get; set; }
         public Nullable<System.DateTime> CheckedDate { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
     
+        public virtual Company Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DebitNote> DebitNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GRN_Master> GRN_Master { get; set; }
-        public virtual Item Item { get; set; }
-        public virtual Status Status { get; set; }
-        public virtual Status Status1 { get; set; }
-        public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InwardNote> InwardNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrderPaymentDetail> PurchaseOrderPaymentDetails { get; set; }
+        public virtual ICollection<PurchaseOrderPaymentDetails> PurchaseOrderPaymentDetails { get; set; }
+        public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockMaster> StockMasters { get; set; }
     }

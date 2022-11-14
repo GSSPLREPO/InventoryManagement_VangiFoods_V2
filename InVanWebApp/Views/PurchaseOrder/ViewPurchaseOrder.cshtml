@@ -1,0 +1,340 @@
+﻿@model InVanWebApp_BO.PurchaseOrderBO
+
+@{
+    ViewBag.Title = "ViewPurchaseOrder";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Purchase Order</title>
+    <style>
+        html2canvas-container {
+            width: 3000px !important;
+            height: 3000px !important;
+        }
+    </style>
+</head>
+<body>
+    @Html.HiddenFor(model => model.PurchaseOrderId)
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row" id="printV" width="1000px">
+            <div class="row" style="margin-bottom: 1%;">
+                <div class="col-md-12" style="margin-left: 1560%;">
+                    <img src="~/Theme/MainContent/images/pdf.png" id="btnExport" style="width:45px;height:45px" />
+                </div>
+            </div>
+            <br />
+            <div class="col-md-12  grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" style="width:50px;height:50px;">
+                            &nbsp;&nbsp;&nbsp;<h3 class="card-title font-weight-bold" style="font-size: 16pt;">Purchase Order</h3>
+
+                        </div>
+                        <hr />
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <p class="font-weight-bold">Title</p>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", placeholder = "Purchase Order For Vangi Foods", type = "text", @readonly = "readonly" })
+                                </div>
+                                <br />
+                                <div class="col-md-2">
+                                    <p class="font-weight-bold">PO Number</p>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control", style = "border:none", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <p class="font-weight-bold">PO Document Date</p>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="font-weight-bold">Delivery Date</p>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @readonly = "readonly"  })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.Label("Terms And Condition")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["Terms"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
+                                    @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-4 d-none">
+                                    @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.Label("Location Name")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val())" })
+                                </div>
+                                <div class="col-md-4 d-none">
+                                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <br />
+                                <div class="col-md-2">
+                                    @Html.Label("Venders Name")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownListFor(model => model.VendorsID, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
+                                    @Html.ValidationMessageFor(model => model.VendorsID, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-4 d-none">
+                                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title" style="color:darkcyan">Delivery Details</h4>
+                                            <hr />
+                                            <div class="form-group">
+                                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px" })
+                                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title" style="color:darkcyan">Supplier Details</h4>
+                                            <hr />
+                                            <div class="form-group">
+                                                @Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
+                                                @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "error mt-2 text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 mb-1">
+                                    @Html.Label("Amendment Number")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control", Value = "0", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                                <br />
+                                <br />
+                                <div class="col-md-2 mb-1">
+                                    @Html.Label("Indent Number")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm" })
+                                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2 mb-1">
+                                    @Html.Label("Remarks")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
+                                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <div class="col-md-12 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                    <table class="table table-striped" id="submissionTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="sortStyle">
+                                                                    Id
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Item Code
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Item Description
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Quantity
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Units
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Price
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Tax
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Total before tax
+                                                                    <i class="fa fa-angle-down"></i>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="myTableBody">
+                                                            @{ int c = 1;
+                                                                foreach (var item in Model.itemDetails)
+                                                                {
+                                                                    <tr id="tablerow_@c">
+                                                                        <td>
+                                                                            @Html.TextBoxFor(x => item.Item_ID, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })
+                                                                        </td>
+                                                                        <td class="col-md-4">
+                                                                            @Html.TextBoxFor(x => item.Item_Code, new { @class = "form-control", @readonly = "readonly", style = "height:30px;width:110px;" })
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBoxFor(x => item.ItemName, "", new { @class = "form-control", style = "height:30px;width:200px;", @readOnly = "readOnly" })
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBox("ItemQuantity_" + c, item.ItemQuantity, new
+                                                                            {
+                                                                                @class = "form-control",
+                                                                                style = "height:30px;width:100px;",
+                                                                                value = "0",
+                                                                                onkeypress = "return isNumberKey(event)",
+                                                                           onchange = "CalItemTotalPrice($(this).val(),id)"
+                                                                            })
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control", style = "height:30px;width:100px;" })
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, "", new { @class = "form-control", style = "height:30px;width:100px;" })
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBox("itemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control", style = "height:30px;width:80px;" })
+                                                                        </td>
+                                                                        <td>
+                                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control", style = "height:30px;width:200px;" })
+                                                                        </td>
+                                                                    </tr>
+                                                                    { c++; }
+                                                                }
+
+                                                            }
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <br />
+                            <div class="col-md-12 grid-margin stretch-card">
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card h-75">
+                                        <div class="card-body">
+                                            <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
+                                            <hr />
+                                            <div class="form-group">
+                                                <input type="file" id="file" name="Signature"
+                                                       onchange="return fileValidation()" />
+                                                <!-- Image preview -->
+                                                <span style="color:green">@ViewBag.Message</span>
+                                                <br />
+                                                <br />
+                                                <center>
+                                                    <div id="imagePreview">
+                                                        <img src="/Signatures/@Model.Signature" style="height:10%;width:20%" />
+                                                        @Html.HiddenFor(x => x.Signature)
+                                                    </div>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="col-md-6 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <hr />
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <label>Total (before tax): </label>
+                                                    <input class="form-control" id="TotalBeforeTax" name="TotalItemCost" />
+                                                </div>
+                                                <div class="row">
+                                                    <label>Total tax: </label>
+                                                    <input class="form-control" id="TotalTax" name="TotalTax" />
+                                                </div>
+                                                <div class="row">
+                                                    <label>Total (after tax):</label>
+                                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control" })
+                                                </div>
+                                                <div class="row">
+                                                    <label><b>Grand Total:</b></label>
+                                                    @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control" })
+                                                </div>
+                                                <div class="row">
+                                                    <label>Advanced To Pay:</label>
+                                                    @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control", onkeypress = "return isNumberKey(event)" })
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+

@@ -27,5 +27,7 @@ namespace InVanWebApp.DAL
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
+    
+        public virtual IssueNote IssueNote { get; set; }
     }
 }

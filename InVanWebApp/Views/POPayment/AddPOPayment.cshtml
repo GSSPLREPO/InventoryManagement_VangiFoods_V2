@@ -1,153 +1,158 @@
-﻿@model InVanWebApp_BO.POPaymentBO
+﻿
 @{
     ViewBag.Title = "Purchase Order Payment";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
 
-@using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <div class="card">
-        <div class="card-body">
-            <h4>Add Purchase Order Payment</h4>
-            <hr />
-            <div class="row">
-                <div class="col-md-1">
-                    @Html.Label("PO Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    <select class="form-control"></select>
-                </div>
+<div class="card">
+    <div class="card-body">
+        <h4>Add Purchase Order Payment</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-1">
+                @Html.Label("PO Number")
+                <span style="color:red">*</span>
             </div>
-            <hr />
-            <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Invoice Details</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <label>Vandor</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" class="form-control" placeholder="Vandor Name" />
-                                </div>
-                                <div class="col-md-1">
-                                    <label>Invoice Number</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" placeholder="Enter Invoice Number" class="form-control" />
-                                </div>
-                                <div class="col-md-1">
-                                    <label>Payment Due Date</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" placeholder="dd-MM-yyyy" class="form-control" />
-                                </div>
-                                <div class="col-md-1">
-                                    <label>Payment Amount</label>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text" placeholder="Enter payment Amount" class="form-control" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-2">
+                @Html.DropDownList("PONumber", new SelectList((System.Collections.IEnumerable)ViewData["PONumbers"], "Value", "Text"), "-- Select Purchase Number -- ", new { @class = "form-control" })
+                <span id="ddValidPONumber" class="error mt-2 text-danger"></span>
             </div>
-            <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Item Details</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                <table class="table table-striped" id="submissionTable">
-                                    <thead>
-                                        <tr>
-                                            <th class="sortStyle">
-                                                Item Name
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Item Code
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Quantity
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Units
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Unit Price
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Total Payable
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr id="tablerow">
-                                            <td>
-                                                <input type="text" />
-                                            </td>
-                                            <td>
-                                                <input type="text" />
-                                            </td>
-                                            <td>
-                                                <input type="text" />
-                                            </td>
-                                            <td>
-                                                <input type="text" />
-                                            </td>
-                                            <td>
-                                                <input type="text" />
-                                            </td>
-                                            <td>
-                                                <input type="text" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Payment Details</h5>
-                        </div>
-                        <div class="card-body">
-                            <div>
-                                <div class="col-md-1">
-                                    @Html.Label("Payment Mode")
-                                    <span style="color:red">*</span>
-                                </div>
-                                <div class="col-md-5">
-                                    <select class="form-control">
-                                        <option>Cheque</option>
-                                        <option>Cash</option>
-                                        <option>Online</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="rData"></div>
         </div>
     </div>
+</div>
+
+@Html.Raw(TempData["Success"])
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    
+    $('#PONumber').change(function () {
+        var Id = $('#PONumber option:selected').attr('value');
+
+        if (Id > 1) {
+            var url = "/POPayment/PurchaseOrderDetails?purchaseOrderId=" + Id;
+            $.get(url, function (data) {
+                $("#rData").html(data);
+            });
+        }
+        else {
+            $('#dvPaymentDetails').hide();
+        }
+    });
+
+</script>
+
+<script>
+    $('#PaymentMode').change(function () {
+        var mode = $('#PaymentMode option:selected').attr('value');
+        if (mode == 'Cheque') {
+            $('#dvBankName').show();
+            $('#dvCheque').show();
+            $('#dvAccountNo').hide();
+        }
+        else if (mode == 'Online') {
+            $('#dvBankName').show();
+            $('#dvCheque').hide();
+            $('#dvAccountNo').show();
+        }
+        else {
+            $('#dvBankName').hide();
+            $('#dvCheque').hide();
+            $('#dvAccountNo').hide();
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#frmPaymentDetails').submit(function (e) {
+            e.preventDefault();
+            var VendorName = $('#VendorName').val();
+            var InvoiceNumber = $('#InvoiceNumber').val();
+            var PaymentDueDate = $('#PaymentDueDate').val();
+            var PaymentAmount = $('#PaymentAmount').val();
+            ////var paymentMode = $('#PaymentMode option:selected').attr('value');
+            var TotalPOAmount = $('#TotalPOAmount').val();
+            var TotalPaybleAmount = $('#TotalPaybleAmount').val();
+            var BalanceAmount = $('#BalanceAmount').val();
+            var PaymentDate = $('#PaymentDate').val();
+            ////var IsPaid = $('#IsPaid option:selected').attr('value');
+            $(".error").remove();
+
+            if (VendorName.length < 1) {
+                $('#VendorName').after('<span class="error">Enter Vendor Name!</span>');
+            }
+            if (InvoiceNumber.length < 1) {
+                $('#InvoiceNumber').after('<span class="error">Enter Invoice Number!</span>');
+            }
+            if (PaymentDueDate.length < 1) {
+                $('#PaymentDueDate').after('<span class="error">Select Payment Due Date!</span>');
+            }
+            if (PaymentAmount.length < 1) {
+                $('#PaymentAmount').after('<span class="error">Enter Payment Amount!</span>');
+            }
+
+            //if (paymentMode.length < 1) {
+            //    $('#PaymentMode').after('<span class="error">Select Payment Mode!</span>');
+            //}
+
+            //if (paymentMode == 'Cheque') {
+            //    var BankName = $('#BankName').val();
+            //    var ChequeNumber = $('#ChequeNumber').val();
+
+            //    if (BankName.length < 1) {
+            //        $('#BankName').after('<span class="error">Enter Bank Name!</span>');
+            //    }
+            //    if (ChequeNumber.length < 1) {
+            //        $('#ChequeNumber').after('<span class="error">Enter Cheque Number!</span>');
+            //    }
+            //}
+            //if (paymentMode == 'Online') {
+            //    var BankName = $('#BankName').val();
+            //    var AccountNumber = $('#AccountNumber').val();
+
+            //    if (BankName.length < 1) {
+            //        $('#BankName').after('<span class="error">Enter Bank Name!</span>');
+            //    }
+            //    if (AccountNumber.length < 1) {
+            //        $('#AccountNumber').after('<span class="error">Enter Account Number Number!</span>');
+            //    }
+            //}
+
+            if (TotalPOAmount.length < 1) {
+                $('#TotalPOAmount').after('<span class="error">Enter Total PO Payment Amount!</span>');
+            }
+            if (TotalPaybleAmount.length < 1) {
+                $('#TotalPaybleAmount').after('<span class="error">Enter Total Payable Amount!</span>');
+            }
+            if (BalanceAmount.length < 1) {
+                $('#BalanceAmount').after('<span class="error">Enter Payment Amount!</span>');
+            }
+            if (PaymentDate.length < 1) {
+                $('#PaymentDate').after('<span class="error">Enter Payment Amount!</span>');
+            }
+            //if (IsPaid.length < 1) {
+            //    $('#IsPaid').after('<span class="error">Enter Payment Amount!</span>');
+            //}
+        });
+    });
+
+    function calculateBalancePay() {
+        var totalPayment = $('#TotalPOAmount').val();
+        var paybleAmount = $('#TotalPaybleAmount').val();
+        console.log(paybleAmount);
+        var balanceAmt = parseInt(totalPayment) - parseInt(paybleAmount);
+        $('#BalanceAmount').val(balanceAmt)
+
+    }
+</script>
+
+
+

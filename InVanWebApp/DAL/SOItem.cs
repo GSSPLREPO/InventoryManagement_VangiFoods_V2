@@ -32,5 +32,7 @@ namespace InVanWebApp.DAL
         public Nullable<int> LastModifiedById { get; set; }
         public string Remarks { get; set; }
         public string JoNo { get; set; }
+    
+        public virtual Item Item { get; set; }
     }
 }

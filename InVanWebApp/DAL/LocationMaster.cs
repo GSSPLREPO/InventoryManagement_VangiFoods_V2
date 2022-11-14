@@ -29,6 +29,7 @@ namespace InVanWebApp.DAL
         public string LocationName { get; set; }
         public Nullable<int> Levels { get; set; }
         public Nullable<int> ParentId { get; set; }
+        public string Address { get; set; }
         public string Remark { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

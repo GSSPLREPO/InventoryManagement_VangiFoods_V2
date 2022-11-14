@@ -55,7 +55,10 @@
                                             @Html.DisplayName("Supplier Name")
                                         </th>
                                         <th>
-                                            @Html.DisplayName("Edit/Delete")
+                                            @Html.DisplayName("Amendment")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("View/Edit/Delete")
                                         </th>
                                     </tr>
 
@@ -78,14 +81,30 @@
                                                 @Html.DisplayFor(modelItem => item.SupplierAddress)
                                             </td>
                                             <td>
-                                                @*@Html.ActionLink("Edit", "EditPurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId }) |*@
-                                                <a href=@Url.Action("EditPurchaseOrder", "PurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId })>
-                                                    <i class="fa fa-edit text-primary"></i>
-                                                </a> &emsp;
-                                                <a href=@Url.Action("DeleteItem", "PurchaseOrder", new { PurchaseOrder_Id = item.PurchaseOrderId }) onclick="return confirm('Are you sure want to delete?');">
+                                                @if (item.InwardCount <= 0 & item.DraftFlag == false)
+                                                {
+                                                    <a href="@Url.Action("POAmendment", new { PurchaseOrderId = item.PurchaseOrderId })" title="Amendment Purchase Order">
+                                                        <i class="fa fa-file-alt text-primary"></i>
+                                                    </a>
+                                                }
+                                            </td>
+                                            <td>
+
+                                                @if (item.DraftFlag == true)
+                                                {
+                                                    <a href=@Url.Action("EditPurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId }) title="Edit Purchase Order">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
+                                                }
+                                                @if (item.DraftFlag == false)
+                                                {
+                                                    <a href=@Url.Action("ViewPurchaseOrder", new { ID = item.PurchaseOrderId })>
+                                                        <i class="fa fa-eye text-primary"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
+                                                }
+                                                <a href=@Url.Action("DeletePurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId, }) onclick="return confirm('Are you sure want to delete?');" title="Remove Purchse Order">
                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                 </a>
-
                                             </td>
                                         </tr>
                                     }

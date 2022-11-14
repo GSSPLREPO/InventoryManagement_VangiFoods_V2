@@ -34,7 +34,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Enter delivery address!")]
         //public string BuyerAddress { get; set; }
         public string DeliveryAddress { get; set; }
-        
+
         [Required(ErrorMessage = "Enter supplier address")]
         public string SupplierAddress { get; set; }
         //public float TotalPOAmount { get; set; }
@@ -71,7 +71,32 @@ namespace InVanWebApp_BO
         public Nullable<decimal> GrandTotal { get; set; }
         public Nullable<int> LocationId { get; set; }
         public string LocationName { get; set; }
-        public int UserId { get; set; }
+        // public int UserId { get; set; }
+        public string TxtItemDetails { get; set; }
+        public List<PurchaseOrderItemsDetails> itemDetails { get; set; }
+
+        //===The below field is add by Raj ======
+        public int InwardCount { get; set; }
+
+    }
+
+    public class PurchaseOrderItemsDetails
+    {
+        public int ID { get; set; }
+        public Nullable<int> PurchaseOrderId { get; set; }
+        public Nullable<int> Item_ID { get; set; }
+        public string ItemName { get; set; }
+        public string Item_Code { get; set; }
+        public Nullable<decimal> ItemUnitPrice { get; set; }
+        public Nullable<decimal> ItemQuantity { get; set; }
+        public string ItemTaxValue { get; set; }
+        public string ItemUnit { get; set; }
+        public Nullable<double> TotalItemCost { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
     }
 }

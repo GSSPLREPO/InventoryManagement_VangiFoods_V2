@@ -43,5 +43,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+    
+        public virtual WorkOrder WorkOrder { get; set; }
     }
 }

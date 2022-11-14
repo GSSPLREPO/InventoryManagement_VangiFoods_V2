@@ -14,6 +14,13 @@ namespace InVanWebApp.DAL
     
     public partial class WorkOrder
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public WorkOrder()
+        {
+            this.COAMasters = new HashSet<COAMaster>();
+            this.WorkOrderDetails = new HashSet<WorkOrderDetail>();
+        }
+    
         public int WorkOrderId { get; set; }
         public Nullable<int> OrganisationId { get; set; }
         public Nullable<int> BranchId { get; set; }
@@ -44,5 +51,10 @@ namespace InVanWebApp.DAL
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<decimal> FreightRs { get; set; }
         public Nullable<decimal> FreightGSTPercent { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COAMaster> COAMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkOrderDetail> WorkOrderDetails { get; set; }
     }
 }

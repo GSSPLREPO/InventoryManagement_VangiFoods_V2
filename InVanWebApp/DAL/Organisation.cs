@@ -29,15 +29,11 @@ namespace InVanWebApp.DAL
         public string ContactPerson { get; set; }
         public string ContactNo { get; set; }
         public string Address { get; set; }
-        public string Range { get; set; }
-        public string Division { get; set; }
-        public string Commisionerate { get; set; }
         public string Email { get; set; }
         public string Website { get; set; }
-        public string City { get; set; }
+        public Nullable<int> CityId { get; set; }
         public Nullable<int> StateId { get; set; }
-        public Nullable<int> StateCode { get; set; }
-        public string Country { get; set; }
+        public Nullable<int> Country { get; set; }
         public string PANNo { get; set; }
         public string CINNo { get; set; }
         public string GSTINNo { get; set; }
@@ -47,7 +43,6 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<int> CityId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Branch> Branches { get; set; }

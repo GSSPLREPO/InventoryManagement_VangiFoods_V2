@@ -14,33 +14,33 @@ namespace InVanWebApp.DAL
     
     public partial class PurchaseOrderAmendment
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public PurchaseOrderAmendment()
+        {
+            this.PurchaseOrderAmendmentDetails = new HashSet<PurchaseOrderAmendmentDetail>();
+        }
+    
         public int PurchaseOrderAmendmentId { get; set; }
         public Nullable<int> PurchaseOrderId { get; set; }
-        public Nullable<int> SupplierId { get; set; }
-        public string PONo { get; set; }
         public string POAmendNo { get; set; }
         public Nullable<System.DateTime> POAmendDate { get; set; }
-        public Nullable<System.DateTime> PODate { get; set; }
-        public Nullable<decimal> Total { get; set; }
+        public Nullable<double> TotalAmount { get; set; }
         public string PaymentsTerms { get; set; }
         public string DeliveryTerms { get; set; }
-        public string TransitInsurance { get; set; }
-        public string PackingAndForwarding { get; set; }
-        public string TestToBeOffered { get; set; }
-        public string SupervisionTerms { get; set; }
-        public string Warranty { get; set; }
         public Nullable<int> ApprovalStatus { get; set; }
         public string ApprovalRemarks { get; set; }
-        public string Remarks { get; set; }
         public Nullable<int> ApprovedById { get; set; }
-        public Nullable<int> PreparedById { get; set; }
+        public Nullable<System.DateTime> ApprovedByDate { get; set; }
         public Nullable<int> CheckedById { get; set; }
+        public Nullable<System.DateTime> CheckedByDate { get; set; }
+        public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<System.DateTime> CheckedByDate { get; set; }
-        public Nullable<System.DateTime> ApprovedByDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrderAmendmentDetail> PurchaseOrderAmendmentDetails { get; set; }
     }
 }

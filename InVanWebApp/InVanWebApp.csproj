@@ -166,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\ApplicationSession.cs" />
     <Compile Include="Common\GetDocumentNumber.cs" />
+    <Compile Include="Controllers\DebitNoteController.cs" />
     <Compile Include="Controllers\GRNController.cs" />
     <Compile Include="Controllers\InwardNoteController.cs" />
     <Compile Include="Controllers\InwardQCSortingController.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
     <Compile Include="Controllers\StockReportController.cs" />
+    <Compile Include="Controllers\StockTransferController.cs" />
     <Compile Include="Controllers\UserDetailsController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -219,9 +221,6 @@
     <Compile Include="DAL\DesignationMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\EmployeeMaster.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DAL\FinishGoodSery.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -258,7 +257,13 @@
     <Compile Include="DAL\InwardNote.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\InwardNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\InwardQC.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\InwardQCDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\IssueNote.cs">
@@ -318,7 +323,7 @@
     <Compile Include="DAL\PurchaseOrderItemsDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PurchaseOrderPaymentDetail.cs">
+    <Compile Include="DAL\PurchaseOrderPaymentDetails.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\QCProductionSpecificationMaster.cs">
@@ -413,9 +418,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CommonFunctions.cs" />
+    <Compile Include="Repository\DebitNoteRepository.cs" />
     <Compile Include="Repository\GRNRepository.cs" />
     <Compile Include="Repository\Interface\ICommonFunctions.cs" />
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
+    <Compile Include="Repository\Interface\IDebitNoteRepository.cs" />
     <Compile Include="Repository\Interface\IGRNRepository.cs" />
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
@@ -424,6 +431,7 @@
     <Compile Include="Repository\Interface\IPOPaymentRepository.cs" />
     <Compile Include="Repository\Interface\IPurchaseOrderRepository.cs" />
     <Compile Include="Repository\Interface\IStockMasterRepository.cs" />
+    <Compile Include="Repository\Interface\IStockTransferRepository.cs" />
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
     <Compile Include="Repository\Interface\IUserDetailsRepository.cs" />
     <Compile Include="Repository\InwardNoteRepository.cs" />
@@ -445,6 +453,7 @@
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
     <Compile Include="Repository\StockMasterRepository.cs" />
+    <Compile Include="Repository\StockTransferRepository.cs" />
     <Compile Include="Repository\TaxRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
     <Compile Include="Repository\UserDetailsRepository.cs" />
@@ -1460,12 +1469,20 @@
     <Content Include="Views\InwardQCSorting\AddInwardQC.cshtml" />
     <Content Include="Views\InwardQCSorting\ViewInwardQC.cshtml" />
     <Content Include="Views\GRN\Index.cshtml" />
-    <Content Include="Views\PurchaseOrder\AddPurchaseOrder.cshtml" />
-    <Content Include="Views\PurchaseOrder\EditPurchaseOrder.cshtml" />
-    <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\StockReport\Index.cshtml" />
+    <Content Include="Views\DebitNote\AddDebitNote.cshtml" />
+    <Content Include="Views\DebitNote\Index.cshtml" />
     <Content Include="Views\POPayment\AddPOPayment.cshtml" />
+    <Content Include="Views\POPayment\EditPOPayment.cshtml" />
     <Content Include="Views\POPayment\Index.cshtml" />
+    <Content Include="Views\POPayment\_POPaymentDetails.cshtml" />
+    <Content Include="Views\PurchaseOrder\AddPurchaseOrder.cshtml" />
+    <Content Include="Views\PurchaseOrder\Index.cshtml" />
+    <Content Include="Views\StockTransfer\AddStockTransfer.cshtml" />
+    <Content Include="Views\StockTransfer\Index.cshtml" />
+    <Content Include="Views\PurchaseOrder\POAmendment.cshtml" />
+    <Content Include="Views\PurchaseOrder\ViewPurchaseOrder.cshtml" />
+    <Content Include="Views\PurchaseOrder\EditPurchaseOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

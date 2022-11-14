@@ -218,6 +218,10 @@
                                                     Item Code
                                                     <i class="fa fa-angle-down"></i>
                                                 </th>
+                                                <th class="sortStyle d-n">
+                                                    Selected Item Code
+                                                    <i class="fa fa-angle-down"></i>
+                                                </th>
                                                 <th class="sortStyle">
                                                     Item Description
                                                     <i class="fa fa-angle-down"></i>
@@ -249,8 +253,8 @@
                                                 <td>
                                                     @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control", style = "height:30px;width:100px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
                                                 </td>
-                                                <td class="col-md-4 d-none">
-                                                    @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                                                <td class="col-md-4">
+                                                    @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                 </td>
                                                 <td>
                                                     @Html.TextBox("ItemName", "", new { @class = "form-control", style = "height:30px;width:200px;" })
@@ -284,6 +288,10 @@
                                     + Add Item
                                 </button>
                             </div>
+                        </div>
+                        <div class="col-md-4">
+                            @*<input class="form-control text-right" id="TxtItemDetails" name="TxtItemDetails" value="" />*@
+                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
                         </div>
                     </div>
                 </div>
@@ -352,12 +360,8 @@
                             </div>
                             <br />
                             <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="SaveDraft">Save Draft</button>
-                            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="AddPurchaseOrder">Save</button>
-                           
-                            <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
-                                Back To List
-                            </a>                        
-    @*@Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })*@
+                            <button type="submit" id="btnSave"class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="AddPurchaseOrder">Save</button>
+                            @Html.ActionLink("Back to List", "Index", new { @class = "font-weight-light" })
                         </div>
                     </div>
                 </div>
@@ -398,6 +402,7 @@
 
 <script type="text/javascript">
 
+    var TxtItemDetails = ""; 
 
     $("#btnAdd").click(function () {
         $("#AddMultipleDiv").hide();
@@ -476,10 +481,10 @@
 
     function SelectedIndexChangedItemList(id) {
         debugger
-        var selectedOptionTerms, termsName;
+        var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
-        termsName = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
-        document.getElementById("Item_Code").value = termsName;
+        itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
+        document.getElementById("Item_Code").value = itemCode;
     }
 
     function SelectedIndexChangedTerms(id) {
@@ -588,13 +593,14 @@
     }
 
     $("#Item_ID").change(function () {
-        debugger
+        debugger        
         getitemDetails();
     });
 
     function getitemDetailsJSTbl(count) {
         debugger
         console.log(count);
+        //SelectedIndexChangedItemList();
        // var itemId = "ItemID['" + counter + "']";
         //var itemId = "Item_ID['" + counter + "']";
         var itemId = "ItemID_" + count;
@@ -623,6 +629,7 @@
                             console.log(description);
                     // var item = description.split("#");
                             //alert('hh' + itemDescription.Item_Name + "  " +itemDescription.UnitName+" "+itemDescription.Price);
+                            $("#itemCode_" + count).val(itemDescription.Item_Code);
                             $("#itemDescription_" + count).val(itemDescription.Item_Name);
                             $("#itemUnit_" + count).val(itemDescription.UnitCode);
                             $("#itemPrice_" + count).val(itemDescription.UnitPrice);
@@ -682,6 +689,7 @@
         //'<select id="ItemID" class="form-control" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
         //var nameItem = "Item_ID['" + counter + "']";
         var itemId = "ItemID_"+counter;
+        var itemCode = "itemCode_" + counter;
         var itemDescription = "itemDescription_" + counter;
         var itemQuantity = "itemQuantity_" + counter;
         var itemUnit = "itemUnit_" + counter;
@@ -691,7 +699,10 @@
         $('<tr id="tablerow' + counter + '">' + '<td>'+
             //'<select id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" required="required" /></select>' +
             //'<input type="text" id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" value="" required="required" />' +
-            '<select id="'+itemId+'" onchange="getitemDetailsJSTbl('+counter+')"; class="form-control" data-val="true" data-val-number="The field Item_ID must be a number." name="Item_ID[' + counter + ']" style="height:30px;width:100px;" aria-describedby="Item_ID-error" aria-invalid="false">'+$('#Item_ID').html()+'</select>' +
+            '<select id="'+itemId+'" onchange="getitemDetailsJSTbl('+counter+')"; class="form-control" data-val="true" data-val-number="The field Item_ID must be a number." name="'+itemId+' " style="height:30px;width:100px;" aria-describedby="Item_ID-error" aria-invalid="false">'+$('#Item_ID').html()+'</select>' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" id="' + itemCode + '" class="form-control" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '" value="" required="required" />' +
@@ -772,7 +783,77 @@
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
         console.log(res);
+        var TxtItemDetails = JSON.stringify(res);
+        console.log(TxtItemDetails);
+        $('#TxtItemDetails').val(TxtItemDetails); 
     }
+
+    //$("#btnSave").click(function () {
+    //    debugger
+    //        var $form = $(this).closest('form');  
+    //        var dataPO = $form.serializeArray();  
+  
+    //        console.log(dataPO);  
+  
+    //        var arrIdPO = [];  
+    //        var arrQtePO = [];  
+  
+    //        for( i = 0; i < dataPO.length; i++)  
+    //        {
+    //            debugger
+    //            if (dataPO[i].name == 'product.Item_ID')
+    //            {  
+    //                arrIdPO.push(dataPO[i].value);  
+    //            }  
+    //            else if (dataPO[i].name == 'product.Item_Code')
+    //            {  
+    //                arrQtePO.push(dataPO[i].value);    
+    //            }    
+    //            else if (dataPO[i].name == 'product.ItemName')
+    //            {  
+    //                arrQtePO.push(dataPO[i].value);    
+    //            }    
+    //            else if (dataPO[i].name == 'product.ItemQuantity')
+    //            {  
+    //                arrQtePO.push(dataPO[i].value);    
+    //            }    
+    //            else if (dataPO[i].name == 'product.ItemUnit')
+    //            {  
+    //                arrQtePO.push(dataPO[i].value);    
+    //            }      
+    //            else if (dataPO[i].name == 'product.ItemUnitPrice')
+    //            {  
+    //                arrQtePO.push(dataPO[i].value);    
+    //            }       
+    //            else if (dataPO[i].name == 'product.ItemTaxValue')
+    //            {  
+    //                arrQtePO.push(dataPO[i].value);    
+    //            }     
+    //            else if (dataPO[i].name == 'product.TotalItemCost')
+    //            {  
+    //                arrQtePO.push(dataPO[i].value);    
+    //            }  
+    //        }  
+  
+
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/Home/PurchaseOrder/AddPurchaseOrder",
+    //        data: { res, arrIdPO, arrQtePO}, 
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (response) {
+    //            alert("Hello: " + response.Name + " .\nCurrent Date and Time: " + response.DateTime);
+    //        },
+    //        failure: function (response) {
+    //            alert(response.responseText);
+    //        },
+    //        error: function (response) {
+    //            alert(response.responseText);
+    //        }
+    //    });
+    //});
+
 
     $("#ItemQuantity").change(function () {
         debugger
@@ -792,7 +873,6 @@
         $("#TotalAfterTax").val(totalPriceAfterTax);
         $("#GrandTotal").val(totalPriceAfterTax);
     });
-
 
 
     function removeTr(index) {
