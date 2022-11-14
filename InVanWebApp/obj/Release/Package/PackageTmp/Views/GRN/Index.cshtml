@@ -1,4 +1,4 @@
-﻿@model IEnumerable<InVanWebApp_BO.InwardNoteBO>
+﻿@model IEnumerable<InVanWebApp_BO.GRN_BO>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -7,18 +7,18 @@
 
 <html>
 <head>
-    <title>Inward Note</title>
+    <title>GRN</title>
 </head>
 <body>
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Inward Note</h4>
+            <h4 class="page-title">GRN</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
                     </li>
-                    <li class="breadcrumb-item active">Inward Note</li>
+                    <li class="breadcrumb-item active">Goods Receipt Note</li>
                 </ol>
             </nav>
         </div>
@@ -29,21 +29,18 @@
                     <div class="card">
                         <div class="card-body">
                             @*<h1 class="card-title">@Html.ActionLink("Add Item Type", "AddItemType")</h1>*@
-                            @*<a href="@Url.Action("AddInwardNote","InwardNote")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                    <span class="fa fa-plus"></span>  Add Inward Note
-                                </a>*@
+                            <a href="@Url.Action("AddGRN","GRN")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span>  Add GRN
+                            </a>
                             <div class="table-responsive" style="padding-top:15px;">
-                                @*/*Rahul : Add anchor tag on 07 Nov 2022.*/*@
-                                <a href="@Url.Action("AddInwardNote","InwardNote")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                    <span class="fa fa-plus"></span>  Add Inward Note
-                                </a>
                                 @*<table class="table table-striped table-bordered" id="tblInward">*@
                                 <table class="table table-striped table-bordered hover table-sm" id="tblInward">
                                     <thead>
                                         <tr>
+                                            <th>@Html.Label("GRN Number")</th>
+                                            <th>@Html.Label("GRN Date")</th>
                                             <th>@Html.Label("Inward Number")</th>
-                                            <th>@Html.Label("Inward Date")</th>
-                                            <th>@Html.Label("PO Number")</th>
+                                            @*<th>@Html.Label("PO Number")</th>*@
                                             <th>@Html.Label("View/Delete")</th>
                                         </tr>
                                     </thead>
@@ -51,9 +48,9 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.InwardNumber)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.InwardDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.PONumber)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.GRNCode)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.GRNDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.InwardNoteNumber)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewInwardNote", "InwardNote", new { ID = item.ID })>
                                                         <i class="fa fa-eye text-primary"></i>
@@ -109,10 +106,3 @@
         });
     </script>
 }
-
-@*/*Rahul : Added style on 07 Nov 2022.*/*@
-<style>
-    div#tblInward_filter {
-        float: left !important;
-    }
-</style>

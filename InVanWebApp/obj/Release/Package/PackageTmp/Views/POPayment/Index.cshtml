@@ -1,0 +1,25 @@
+﻿@model InVanWebApp_BO.POPaymentBO
+@{
+    ViewBag.Title = "Purchase Order Payment";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Add Purchase Order Payment</h4>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="@Url.Action("AddPOPayment","POPayment")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                        <span class="fa fa-plus"></span>  Add Purchase Order
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

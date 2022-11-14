@@ -1,0 +1,153 @@
+﻿@model InVanWebApp_BO.POPaymentBO
+@{
+    ViewBag.Title = "Purchase Order Payment";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+
+@using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Add Purchase Order Payment</h4>
+            <hr />
+            <div class="row">
+                <div class="col-md-1">
+                    @Html.Label("PO Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control"></select>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Invoice Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label>Vandor</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="Vandor Name" />
+                                </div>
+                                <div class="col-md-1">
+                                    <label>Invoice Number</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" placeholder="Enter Invoice Number" class="form-control" />
+                                </div>
+                                <div class="col-md-1">
+                                    <label>Payment Due Date</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" placeholder="dd-MM-yyyy" class="form-control" />
+                                </div>
+                                <div class="col-md-1">
+                                    <label>Payment Amount</label>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" placeholder="Enter payment Amount" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Item Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                <table class="table table-striped" id="submissionTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortStyle">
+                                                Item Name
+                                                <i class="fa fa-angle-down"></i>
+                                            </th>
+                                            <th class="sortStyle">
+                                                Item Code
+                                                <i class="fa fa-angle-down"></i>
+                                            </th>
+                                            <th class="sortStyle">
+                                                Quantity
+                                                <i class="fa fa-angle-down"></i>
+                                            </th>
+                                            <th class="sortStyle">
+                                                Units
+                                                <i class="fa fa-angle-down"></i>
+                                            </th>
+                                            <th class="sortStyle">
+                                                Unit Price
+                                                <i class="fa fa-angle-down"></i>
+                                            </th>
+                                            <th class="sortStyle">
+                                                Total Payable
+                                                <i class="fa fa-angle-down"></i>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="tablerow">
+                                            <td>
+                                                <input type="text" />
+                                            </td>
+                                            <td>
+                                                <input type="text" />
+                                            </td>
+                                            <td>
+                                                <input type="text" />
+                                            </td>
+                                            <td>
+                                                <input type="text" />
+                                            </td>
+                                            <td>
+                                                <input type="text" />
+                                            </td>
+                                            <td>
+                                                <input type="text" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Payment Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <div class="col-md-1">
+                                    @Html.Label("Payment Mode")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-5">
+                                    <select class="form-control">
+                                        <option>Cheque</option>
+                                        <option>Cash</option>
+                                        <option>Online</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
