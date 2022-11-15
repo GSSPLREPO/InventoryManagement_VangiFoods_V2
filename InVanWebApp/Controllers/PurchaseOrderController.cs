@@ -26,7 +26,7 @@ namespace InVanWebApp.Controllers
         {
             _purchaseOrderRepository = new PurchaseOrderRepository();
 
-            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
             ViewData["itemListForDD"] = dd;
         }
@@ -146,11 +146,15 @@ namespace InVanWebApp.Controllers
                 ViewData["DocumentNo"] = DocumentNumber;
 
                 //Binding item grid with sell type item.
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                   ViewData["itemListForDD"] = dd;
 
-                return View();
+                PurchaseOrderBO model = new PurchaseOrderBO();
+                model.PODate = DateTime.Today;
+                model.DeliveryDate = DateTime.Today;
+                
+                return View(model);
             }
             else
                 return RedirectToAction("Index", "Login");
@@ -200,7 +204,7 @@ namespace InVanWebApp.Controllers
                         //BindOrganisations();
                         BindLocationName();
                         UploadSignature(Signature);
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                         var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                         ViewData["itemListForDD"] = dd;
                         return View(model);                      
@@ -248,7 +252,7 @@ namespace InVanWebApp.Controllers
                             //BindOrganisations();
                             BindLocationName();
                             UploadSignature(Signature);
-                            return View(model);
+                            return RedirectToAction("AddPurchaseOrder", "PurchaseOrder",model);
                         }
 
                         return RedirectToAction("Index", "PurchaseOrder");
@@ -262,7 +266,7 @@ namespace InVanWebApp.Controllers
                         //BindOrganisations();
                         BindLocationName();
                         UploadSignature(Signature);
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                         var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                         ViewData["itemListForDD"] = dd;
                         return View(model);
@@ -316,7 +320,7 @@ namespace InVanWebApp.Controllers
                 BindLocationName();
 
                 //Binding item grid with sell type item.
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 ViewData["itemListForDD"] = dd;
                 //PurchaseOrderBO model = _purchaseOrderRepository.GetById(PurchaseOrderId);
@@ -420,7 +424,7 @@ namespace InVanWebApp.Controllers
             BindLocationName();
 
             //Binding item grid with sell type item.
-            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
             ViewData["itemListForDD"] = dd;
             PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
@@ -480,7 +484,7 @@ namespace InVanWebApp.Controllers
             BindLocationName();
 
             //Binding item grid with sell type item.
-            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
             ViewData["itemListForDD"] = dd;
             PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID);

@@ -13,8 +13,11 @@ namespace InVanWebApp_BO
         public int PurchaseOrderId { get; set; }
         [Required(ErrorMessage = "Enter title!")]
         public string Tittle { get; set; }
+        //[Required]
         public string PONumber { get; set; }
+        //[Required]
         public DateTime PODate { get; set; }
+        //[Required]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         //public Nullable<int> CompanyID { get; set; }
         public Nullable<int> VendorsID { get; set; }
@@ -22,6 +25,7 @@ namespace InVanWebApp_BO
         public float CGST { get; set; }
         public float SGST { get; set; }
         public float IGST { get; set; }
+        //[Required]
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
         public string PurchaseOrderStatus { get; set; }
@@ -29,6 +33,7 @@ namespace InVanWebApp_BO
         public string ReasonForCancellation { get; set; }
         public Nullable<float> TotalAmount { get; set; }
         public Nullable<bool> DraftFlag { get; set; }
+       // [Required]
         public Nullable<int> Amendment { get; set; }
 
         [Required(ErrorMessage = "Enter delivery address!")]
@@ -60,7 +65,7 @@ namespace InVanWebApp_BO
         public decimal ItemUnitPrice { get; set; }
         public decimal ItemQuantity { get; set; }
         public string ItemUnit { get; set; }
-        public string ItemTaxValue { get; set; }
+        public Nullable<decimal> ItemTaxValue { get; set; }
         public decimal InwardQuantity { get; set; }
         public decimal BalanceQuantity { get; set; }
 
