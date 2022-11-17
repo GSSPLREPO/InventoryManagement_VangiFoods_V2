@@ -52,8 +52,8 @@ namespace InVanWebApp.Repository
                             SupplierAddress = reader["SupplierAddress"].ToString(),
                             LastModifiedBy = Convert.ToInt32(reader["LastModifiedBy"]),
                             LastModifiedDate = Convert.ToDateTime(reader["LastModifiedDate"]),
-                            DraftFlag=Convert.ToBoolean(reader["DraftFlag"]),
-                            InwardCount=Convert.ToInt32(reader["InwardCount"])
+                            DraftFlag = Convert.ToBoolean(reader["DraftFlag"]),
+                            InwardCount = Convert.ToInt32(reader["InwardCount"])
                         };
                         purchaseOrderMastersList.Add(PurchaseOrderMasters);
                     }
@@ -77,13 +77,13 @@ namespace InVanWebApp.Repository
         /// <param name="purchaseOrderMaster"></param>                
         public ResponseMessageBO Insert(PurchaseOrderBO purchaseOrderMaster)
         {
-          
+
             ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    
+
                     SqlCommand cmd = new SqlCommand("usp_tbl_PurchaseOrder_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -102,11 +102,11 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@TermsAndConditionID", purchaseOrderMaster.TermsAndConditionID);
                     cmd.Parameters.AddWithValue("@Terms", purchaseOrderMaster.Terms);
                     //cmd.Parameters.AddWithValue("@PurchaseOrderStatus", purchaseOrderMaster.PurchaseOrderStatus);
-                    cmd.Parameters.AddWithValue("@PurchaseOrderStatus", "In Progress");
+                    cmd.Parameters.AddWithValue("@PurchaseOrderStatus", "Open");
                     cmd.Parameters.AddWithValue("@Cancelled", purchaseOrderMaster.Cancelled);
-                    cmd.Parameters.AddWithValue("@ReasonForCancellation", purchaseOrderMaster.ReasonForCancellation);                    
-                    cmd.Parameters.AddWithValue("@DraftFlag", 0);
-                    cmd.Parameters.AddWithValue("@Amendment", 0);
+                    cmd.Parameters.AddWithValue("@ReasonForCancellation", purchaseOrderMaster.ReasonForCancellation);
+                    cmd.Parameters.AddWithValue("@DraftFlag", purchaseOrderMaster.DraftFlag);
+                    cmd.Parameters.AddWithValue("@Amendment", purchaseOrderMaster.Amendment);
                     cmd.Parameters.AddWithValue("@DeliveryAddress", purchaseOrderMaster.DeliveryAddress);
                     cmd.Parameters.AddWithValue("@SupplierAddress", purchaseOrderMaster.SupplierAddress);
                     cmd.Parameters.AddWithValue("@AdvancedPayment", purchaseOrderMaster.AdvancedPayment);
@@ -114,18 +114,18 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Signature", purchaseOrderMaster.Signature);
                     cmd.Parameters.AddWithValue("@IndentNumber", purchaseOrderMaster.IndentNumber);
                     cmd.Parameters.AddWithValue("@Remarks", purchaseOrderMaster.Remarks);
-                    cmd.Parameters.AddWithValue("@ApprovedBy", 1);
+                    cmd.Parameters.AddWithValue("@ApprovedBy", purchaseOrderMaster.CreatedBy);
                     cmd.Parameters.AddWithValue("@ApprovedDate", Convert.ToDateTime(System.DateTime.Now));
-                    cmd.Parameters.AddWithValue("@CheckedBy", 1);
+                    cmd.Parameters.AddWithValue("@CheckedBy", purchaseOrderMaster.CreatedBy);
                     cmd.Parameters.AddWithValue("@CheckedDate", Convert.ToDateTime(System.DateTime.Now));
-                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedBy", purchaseOrderMaster.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", purchaseOrderMaster.CreatedBy);
                     cmd.Parameters.AddWithValue("@LocationId", purchaseOrderMaster.LocationId);
                     cmd.Parameters.AddWithValue("@LocationName", purchaseOrderMaster.LocationName);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", purchaseOrderMaster.TotalAfterTax);
-                    cmd.Parameters.AddWithValue("@GrandTotal", purchaseOrderMaster.GrandTotal);                   
+                    cmd.Parameters.AddWithValue("@GrandTotal", purchaseOrderMaster.GrandTotal);
 
                     //con.Open();
 
@@ -143,7 +143,7 @@ namespace InVanWebApp.Repository
                     var data = json.Deserialize<Dictionary<string, string>[]>(purchaseOrderMaster.TxtItemDetails);
 
                     List<PurchaseOrderItemsDetail> itemDetails = new List<PurchaseOrderItemsDetail>();
-                    
+
                     foreach (var item in data)
                     {
                         PurchaseOrderItemsDetail objItemDetails = new PurchaseOrderItemsDetail();
@@ -156,9 +156,10 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
                         objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
                         objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
+                        objItemDetails.CreatedBy = purchaseOrderMaster.CreatedBy;
                         itemDetails.Add(objItemDetails);
-                    }                                      
-                    
+                    }
+
                     foreach (var item in itemDetails)
                     {
                         con.Open();
@@ -174,23 +175,23 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
                         cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
                         cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
-                        cmdNew.Parameters.AddWithValue("@CreatedBy", 1);
+                        cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-                        cmdNew.Parameters.AddWithValue("@LastModifiedBy", 1);
-                        cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));    
+                        //cmdNew.Parameters.AddWithValue("@LastModifiedBy", 1);
+                        //cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));    
 
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
-                       
+
                         while (dataReaderNew.Read())
-                        {                            
-                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);                            
+                        {
+                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
                         }
                         con.Close();
-                    }                    
+                    }
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 log.Error(ex.Message, ex);
             }
             return response;
@@ -221,7 +222,7 @@ namespace InVanWebApp.Repository
                     {
                         result = new PurchaseOrderBO()
                         {
-                            PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderId"]),                            
+                            PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderId"]),
                             Tittle = string.IsNullOrEmpty(reader["Tittle"].ToString()) ? "" : reader["Tittle"].ToString(),
                             PONumber = string.IsNullOrEmpty(reader["PONumber"].ToString()) ? "" : reader["PONumber"].ToString(),
                             //PODate = reader["PODate"].ToString()==null ? null : Convert.ToDateTime(reader["PODate"].ToString()),
@@ -297,44 +298,94 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@PONumber", model.PONumber);
                     cmd.Parameters.AddWithValue("@PODate", model.PODate);
                     cmd.Parameters.AddWithValue("@DeliveryDate", model.DeliveryDate);
-                    //cmd.Parameters.AddWithValue("@DocumentNumber", model.DocumentNumber);
+                    cmd.Parameters.AddWithValue("@DraftFlag", model.DraftFlag);
                     cmd.Parameters.AddWithValue("@VendorsID", model.VendorsID);
                     cmd.Parameters.AddWithValue("@CompanyName", model.CompanyName);
                     cmd.Parameters.AddWithValue("@TermsAndConditionID", model.TermsAndConditionID);
                     cmd.Parameters.AddWithValue("@Terms", model.Terms);
                     cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
                     cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
-                    //cmd.Parameters.AddWithValue("@PurchaseOrderStatus", model.PurchaseOrderStatus);
                     cmd.Parameters.AddWithValue("@DeliveryAddress", model.DeliveryAddress);
                     cmd.Parameters.AddWithValue("@SupplierAddress", model.SupplierAddress);
-                    //cmd.Parameters.AddWithValue("@WorkOrderNo", model.WorkOrderNo);
                     cmd.Parameters.AddWithValue("@Amendment", model.Amendment);
                     cmd.Parameters.AddWithValue("@AdvancedPayment", model.AdvancedPayment);
                     cmd.Parameters.AddWithValue("@Attachment", model.Attachment);
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@IndentNumber", model.IndentNumber);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
-                    cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-                    cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
-                    //cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                    //cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
-
                     while (dataReader.Read())
                     {
                         response.Status = Convert.ToBoolean(dataReader["Status"]);
                     }
                     con.Close();
-                    return response;
+
+                    var json = new JavaScriptSerializer();
+                    var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
+
+                    List<PurchaseOrderItemsDetail> itemDetails = new List<PurchaseOrderItemsDetail>();
+
+                    foreach (var item in data)
+                    {
+                        PurchaseOrderItemsDetail objItemDetails = new PurchaseOrderItemsDetail();
+                        objItemDetails.PurchaseOrderId = model.PurchaseOrderId;
+                        objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
+                        objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
+                        objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                        objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
+                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
+                        objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
+                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
+                        objItemDetails.CreatedBy = model.LastModifiedBy;
+                        itemDetails.Add(objItemDetails);
+                    }
+
+                    var count = itemDetails.Count;
+
+                    foreach (var item in itemDetails)
+                    {
+                        con.Open();
+                        SqlCommand cmdNew = new SqlCommand("usp_tbl_PurchaseOrderItemsDetails_Update", con);
+                        cmdNew.CommandType = CommandType.StoredProcedure;
+
+                        cmdNew.Parameters.AddWithValue("@PurchaseOrderId", item.PurchaseOrderId);
+                        cmdNew.Parameters.AddWithValue("@Item_ID", item.Item_ID);
+                        cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
+                        cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                        cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
+                        cmdNew.Parameters.AddWithValue("@ItemQuantity", item.ItemQuantity);
+                        cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
+                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                        cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
+                        cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                        cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                        cmdNew.Parameters.AddWithValue("@LastModifiedBy", item.CreatedBy);
+                        cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                        if (count == 1)
+                            cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
+                        else
+                            cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 0);
+
+                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                        while (dataReaderNew.Read())
+                        {
+                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                        }
+                        con.Close();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 response.Status = false;
                 log.Error(ex.Message, ex);
-                return response;
             }
+            return response;
 
             //_context.Entry(unitMaster).State = EntityState.Modified;
         }

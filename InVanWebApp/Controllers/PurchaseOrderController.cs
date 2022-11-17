@@ -102,7 +102,7 @@ namespace InVanWebApp.Controllers
             ViewData["LocationName"] = resultList;
         }
         #endregion
-         
+
         #region Bind dropdowns Location Master  
         //public void BindOrganisations() 
         public JsonResult BindLocationMaster(string id)
@@ -148,12 +148,12 @@ namespace InVanWebApp.Controllers
                 //Binding item grid with sell type item.
                 var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                  ViewData["itemListForDD"] = dd;
+                ViewData["itemListForDD"] = dd;
 
                 PurchaseOrderBO model = new PurchaseOrderBO();
                 model.PODate = DateTime.Today;
                 model.DeliveryDate = DateTime.Today;
-                
+
                 return View(model);
             }
             else
@@ -165,7 +165,7 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost] 
+        [HttpPost]
         public ActionResult AddPurchaseOrder(PurchaseOrderBO model, HttpPostedFileBase Signature)
         {
             try
@@ -174,8 +174,14 @@ namespace InVanWebApp.Controllers
                 {
                     ResponseMessageBO response = new ResponseMessageBO();
 
-                    UploadSignature(Signature);
-                    model.Signature = Signature.FileName.ToString();
+                    if (Signature != null)
+                    {
+                        UploadSignature(Signature);
+                        model.Signature = Signature.FileName.ToString();
+                    }
+                    else
+                        model.Signature = null;
+
                     if (ModelState.IsValid)
                     {
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
@@ -190,7 +196,7 @@ namespace InVanWebApp.Controllers
                             //BindOrganisations();
                             BindLocationName();
                             UploadSignature(Signature);
-                            return View(model); 
+                            return View(model);
                         }
 
                         return RedirectToAction("Index", "PurchaseOrder");
@@ -207,7 +213,7 @@ namespace InVanWebApp.Controllers
                         var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                         var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                         ViewData["itemListForDD"] = dd;
-                        return View(model);                      
+                        return View(model);
                     }
                 }
                 else
@@ -227,8 +233,8 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <param name="modelpoItemsDetail"></param> 
         /// <returns></returns>
-        [HttpPost] 
-        public ActionResult SaveDraft(PurchaseOrderBO model, HttpPostedFileBase Signature) 
+        [HttpPost]
+        public ActionResult SaveDraft(PurchaseOrderBO model, HttpPostedFileBase Signature)
         {
             try
             {
@@ -236,11 +242,17 @@ namespace InVanWebApp.Controllers
                 {
                     ResponseMessageBO response = new ResponseMessageBO();
 
-                    UploadSignature(Signature);
-                    model.Signature = Signature.FileName.ToString();
+                    if (Signature != null)
+                    {
+                        UploadSignature(Signature);
+                        model.Signature = Signature.FileName.ToString();
+                    }
+                    else
+                        model.Signature = null;
+
                     if (ModelState.IsValid)
                     {
-
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _purchaseOrderRepository.Insert(model);
                         if (response.Status)
                             TempData["Success"] = "<script>alert('Purchase Order details saved as draft.!');</script>";
@@ -252,7 +264,7 @@ namespace InVanWebApp.Controllers
                             //BindOrganisations();
                             BindLocationName();
                             UploadSignature(Signature);
-                            return RedirectToAction("AddPurchaseOrder", "PurchaseOrder",model);
+                            return RedirectToAction("AddPurchaseOrder", "PurchaseOrder", model);
                         }
 
                         return RedirectToAction("Index", "PurchaseOrder");
@@ -284,6 +296,7 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Function for uploading the signature
         /// <summary>
         /// Date: 04 Oct 2022
         /// Farheen: Upload Signature File items.
@@ -298,9 +311,10 @@ namespace InVanWebApp.Controllers
                 SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
                 Signature.SaveAs(SignFilename);
 
-            }                   
+            }
         }
 
+        #endregion
 
         #region  Update function
         /// <summary>
@@ -310,7 +324,7 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
         [HttpGet]
         public ActionResult EditPurchaseOrder(int PurchaseOrderId)
-        {         
+        {
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindCompany();
@@ -319,12 +333,33 @@ namespace InVanWebApp.Controllers
                 //BindOrganisations();
                 BindLocationName();
 
+
+                //ViewData["itemListForDD"] = dd;
+
+                //PurchaseOrderBO model = _purchaseOrderRepository.GetById(PurchaseOrderId);
+                PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
                 //Binding item grid with sell type item.
                 var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                ViewData["itemListForDD"] = dd;
-                //PurchaseOrderBO model = _purchaseOrderRepository.GetById(PurchaseOrderId);
-                PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId); 
+                string itemListForDD = "itemListForDD";
+
+                if (model != null)
+                {
+                    var ItemCount = model.itemDetails.Count;
+                    var i = 0;
+                    while (i < ItemCount)
+                    {
+                        itemListForDD = "itemListForDD";
+                        itemListForDD = itemListForDD + i;
+                        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.itemDetails[i].Item_ID);
+                        ViewData[itemListForDD] = dd;
+                        i++;
+                    }
+
+                }
+
+                ViewData[itemListForDD] = dd;
+
                 return View(model);
                 //  return View();
             }
@@ -339,26 +374,73 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditPurchaseOrder(PurchaseOrderBO model)
+        public ActionResult EditPurchaseOrder(PurchaseOrderBO model, HttpPostedFileBase Signature)
         {
             ResponseMessageBO response = new ResponseMessageBO();
+
             try
             {
-                if (ModelState.IsValid)
+                if (Session[ApplicationSession.USERID] != null)
                 {
-                    response = _purchaseOrderRepository.Update(model);
-                    if (response.Status)
-                        TempData["Success"] = "<script>alert('User updated successfully!');</script>";
-                    else
+                    if (Signature != null)
                     {
-                        TempData["Success"] = "<script>alert('Duplicate category!');</script>";
-                        return View();
+                        UploadSignature(Signature);
+                        model.Signature = Signature.FileName.ToString();
                     }
+                    else
+                        model.Signature = null;
 
-                    return RedirectToAction("Index", "PurchaseOrder");
+                    if (ModelState.IsValid)
+                    {
+                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _purchaseOrderRepository.Update(model);
+                        if (response.Status)
+                        {
+                            if (model.DraftFlag == true)
+                                TempData["Success"] = "<script>alert('Purchase order updated as draft successfully!');</script>";
+                            else
+                                TempData["Success"] = "<script>alert('Purchase order updated successfully!');</script>";
+
+                        }
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                            BindCompany();
+                            BindTermsAndCondition();
+                            BindLocationName();
+                            PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
+                            //Binding item grid with sell type item.
+                            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                            string itemListForDD = "itemListForDD";
+
+                            if (model1 != null)
+                            {
+                                var ItemCount = model1.itemDetails.Count;
+                                var i = 0;
+                                while (i < ItemCount)
+                                {
+                                    itemListForDD = "itemListForDD";
+                                    itemListForDD = itemListForDD + i;
+                                    dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
+                                    ViewData[itemListForDD] = dd;
+                                    i++;
+                                }
+
+                            }
+
+                            ViewData[itemListForDD] = dd;
+
+                            return View(model1);
+                        }
+
+                        return RedirectToAction("Index", "PurchaseOrder");
+                    }
+                    else
+                        return View(model);
                 }
                 else
-                    return View(model);
+                    return RedirectToAction("Index", "Login");
 
             }
             catch (Exception ex)
@@ -396,11 +478,11 @@ namespace InVanWebApp.Controllers
             {
                 var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
                 _purchaseOrderRepository.Delete(PurchaseOrderId, userID);
-                TempData["Success"] = "<script>alert('Purchase Order deleted successfully!');</script>"; 
-                return RedirectToAction("Index", "PurchaseOrder"); 
+                TempData["Success"] = "<script>alert('Purchase Order deleted successfully!');</script>";
+                return RedirectToAction("Index", "PurchaseOrder");
             }
             else
-                return RedirectToAction("Index", "Login"); 
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 
