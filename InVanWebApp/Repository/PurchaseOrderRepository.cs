@@ -677,7 +677,6 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-
         public PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId)
         {
             string purchaseOrderQuery = "SELECT * FROM PurchaseOrder WITH(NOLOCK) WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
@@ -692,6 +691,12 @@ namespace InVanWebApp.Repository
         }
 
         #region Amendment
+        /// <summary>
+        /// Created by : Raj
+        /// Description: This is for saving the amendment values, but currently not in use.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public ResponseMessageBO SaveAmendment(PurchaseOrderBO model)
         {
             ResponseMessageBO response = new ResponseMessageBO();
@@ -703,24 +708,25 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_PurchaseOrderAmendment_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
+                    //Fields for amendment table
                     cmd.Parameters.AddWithValue("@PurchaseOrderId", model.PurchaseOrderId);
                     cmd.Parameters.AddWithValue("@POAmendNo", model.PONumber);
                     cmd.Parameters.AddWithValue("@POAmendDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@TotalAmount", model.GrandTotal);
-                    cmd.Parameters.AddWithValue("@PaymentsTerms", null);
-                    cmd.Parameters.AddWithValue("@DeliveryTerms", null);
-                    cmd.Parameters.AddWithValue("@ApprovalStatus", 0);
-                    cmd.Parameters.AddWithValue("@ApprovalRemarks", null);
-                    cmd.Parameters.AddWithValue("@ApprovedById", 1);
-                    cmd.Parameters.AddWithValue("@ApprovedByDate", Convert.ToDateTime(System.DateTime.Now));
-                    cmd.Parameters.AddWithValue("@CheckedById", 1);
+                    cmd.Parameters.AddWithValue("@PaymentsTerms", model.Terms);
+                    //cmd.Parameters.AddWithValue("@DeliveryTerms", null);
+                    //cmd.Parameters.AddWithValue("@ApprovalStatus", 0);
+                    //cmd.Parameters.AddWithValue("@ApprovalRemarks", null);
+                    //cmd.Parameters.AddWithValue("@ApprovedById", 1);
+                    //cmd.Parameters.AddWithValue("@ApprovedByDate", Convert.ToDateTime(System.DateTime.Now));
+                    cmd.Parameters.AddWithValue("@CheckedById", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CheckedByDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@IsDeleted", 0);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
-                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
+                    //cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    //cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@Amendment", model.Amendment);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
@@ -736,8 +742,6 @@ namespace InVanWebApp.Repository
 
                     if (AmendmenrId > 0)
                     {
-
-
                         var json = new JavaScriptSerializer();
                         var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
 

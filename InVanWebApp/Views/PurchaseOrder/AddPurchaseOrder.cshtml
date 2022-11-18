@@ -33,7 +33,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
@@ -45,7 +45,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
                     @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
@@ -56,7 +56,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
                     @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
@@ -146,7 +146,7 @@
                 </div>
                 <div class="col-md-4">
 
-                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control", Value = "0", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", Value = "0", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <br />
@@ -295,25 +295,25 @@
                             <div class="form-group">
                                 <div class="row mb-2">
                                     <label id="lblTotalBeforeTax">Total (before tax): </label>
-                                    <input class="form-control text-right" id="TotalBeforeTax" name="TotalItemCost" value="" />
+                                    <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="" />
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total tax: </label>
                                     @*<input class="form-control" id="TotalTax" name="Tax" />*@
-                                    <input class="form-control text-right" id="TotalTax" name="TotalTax" />
+                                    <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" />
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total (after tax):</label>
                                     @*<input class="form-control" id="TotalAfterTax" />*@
-                                    <input class="form-control text-right" id="TotalAfterTax" name="TotalAfterTax" />
+                                    <input class="form-control text-right form-control-sm" id="TotalAfterTax" name="TotalAfterTax" />
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Grand Total:</b></label>
-                                    <input class="form-control text-right" id="GrandTotal" name="GrandTotal" />
+                                    <input class="form-control text-right form-control-sm" id="GrandTotal" name="GrandTotal" />
                                 </div>
                                 <div class="row mb-2">
                                     <label>Advanced To Pay:</label>
-                                    <input class="form-control text-right" id="AdvancedPayment" name="AdvancedPayment" value="0" onkeypress="return isNumberKey(event)" />
+                                    <input class="form-control text-right form-control-sm" id="AdvancedPayment" name="AdvancedPayment" value="0" onkeypress="return isNumberKey(event)" />
                                 </div>
                             </div>
                             <br />

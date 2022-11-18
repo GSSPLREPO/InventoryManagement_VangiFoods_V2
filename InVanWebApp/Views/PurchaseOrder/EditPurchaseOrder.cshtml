@@ -29,7 +29,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -39,16 +39,16 @@
                     @Html.Label("PO Document Date")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @readonly = "readonly" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Delivery Date")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
                     @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -67,7 +67,6 @@
                 </div>
             </div>
             <br />
-            <br />
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Location Name")
@@ -81,7 +80,7 @@
                 </div>
                 <br />
                 <div class="col-md-2">
-                    @Html.Label("Venders Name")
+                    @Html.Label("Vendors Name")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -121,18 +120,19 @@
                 <br />
                 <br />
             </div>
+            <br />
             <div class="row">
-                <div class="col-md-2 mb-1">
+                <div class="col-md-2">
                     @Html.Label("Amendment Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control", Value = "0", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", Value = "0", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <br />
                 <br />
-                <div class="col-md-2 mb-1">
+                <div class="col-md-2">
                     @Html.Label("Indent Number")
                     <span style="color:red">*</span>
                 </div>
@@ -143,7 +143,7 @@
             </div>
             <br />
             <div class="row">
-                <div class="col-md-2 mb-1">
+                <div class="col-md-2">
                     @Html.Label("Remarks")
                     <span style="color:red">*</span>
                 </div>
@@ -152,7 +152,6 @@
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
-            <br />
             <br />
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -288,33 +287,32 @@
                             <div class="form-group">
                                 <div class="row">
                                     <label>Total (before tax): </label>
-                                    <input class="form-control" id="TotalBeforeTax" name="TotalItemCost" />
+                                    <input class="form-control form-control-sm text-right" id="TotalBeforeTax" name="TotalItemCost" />
                                     @*@Html.TextBoxFor(x=>x.TotalItemCost, new { @class = "form-control"})*@
                                 </div>
                                 <div class="row">
                                     <label>Total tax: </label>
-                                    <input class="form-control" id="TotalTax" name="TotalTax" />
+                                    <input class="form-control form-control-sm text-right" id="TotalTax" name="TotalTax" />
                                 </div>
                                 <div class="row">
                                     <label>Total (after tax):</label>
                                     @*<input class="form-control" id="TotalAfterTax" name="TotalAfterTax" />*@
-                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control" })
+                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right" })
                                 </div>
                                 <div class="row">
                                     <label><b>Grand Total:</b></label>
                                     @*<input class="form-control" id="GrandTotal" name="GrandTotal" />*@
-                                    @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control" })
+                                    @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control form-control-sm text-right" })
                                 </div>
                                 <div class="row">
                                     <label>Advanced To Pay:</label>
-                                    @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control", onkeypress = "return isNumberKey(event)" })
+                                    @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control  form-control-sm text-right", onkeypress = "return isNumberKey(event)" })
                                 </div>
                             </div>
                             <br />
                         </div>
                     </div>
                 </div>
-                <br />
                 <br />
             </div>
 
@@ -410,18 +408,7 @@
                 //as inputto json method GetitemDetails.
 
                 success: function (itemDescription) {
-                    debugger
-                    // states contains the JSON formatted list
-                    // of states passed from the controller
-                    //rahul added $(itemDescription).each(function ()
-                    //$(itemDescription).each(function () {
-                    //    debugger
-                    //    $("#Item_ID").append($("<option></option>").val(this.ID).html(this.Item_Code));
-                    //});
-
                     var description = JSON.stringify(itemDescription);
-                    // var item = description.split("#");
-                    //alert('hh' + itemDescription.Item_Name + "  " +itemDescription.UnitName+" "+itemDescription.Price);
                     $("#ItemName").val(itemDescription.Item_Name);
                     $("#ItemUnit").val(itemDescription.UnitCode);
                     $("#ItemUnitPrice").val(itemDescription.UnitPrice);
@@ -457,7 +444,7 @@
                 dataType: 'json',
                 data: { id: selectedItemId },
                 // here we are get value of selected item and passing same value
-                //as inputto json method GetitemDetails.
+                //as input to json method GetitemDetails.
 
                         success: function (itemDescription) {
 
@@ -469,13 +456,6 @@
                             $("#itemTax_" + count).val(itemDescription.ItemTaxValue);
                             $("#ItemQuantity_" + count).val('0');
                             $("#totalItemCost_" + count).val('0');
-
-                    //$("#ItemTotalPrice").val('');
-                    //$("#TotalBeforeTax").val('');
-                    //$("#TotalTax").val('');
-                    //$("#TotalAfterTax").val('');
-                    //$("#GrandTotal").val('');
-                    //$("#AdvancedPAyment").val('');
                 },
                 failure: function () {
                     alert('Failed to retrieved item detals!');
@@ -484,17 +464,10 @@
                     alert('Failed to retrieve Item description.' + ex);
                 }
             });
-
-
-       // $("#itemDescription" + count).val(count.Item_Name);
-
     }
 
     function calcTax(cnt, e) {
-        alert("calcTax");
-        debugger;
         if (isNumberKey(e)) {
-            debugger;
         var itemQuantity = $("#itemQuantity_" + cnt).val();
        // console.log(itemQuantity);
         var itemPrice = $("#itemPrice_" + cnt).val();
@@ -539,7 +512,6 @@
             '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            /*'<input type="text" id="' + itemQuantity + '" onkeyup="calcTax(' + counter + ',' + this.value + ')"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
             '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +
             '</td>' +
             '<td>' +
@@ -563,7 +535,6 @@
         document.getElementById('Item_ID_' + counter).selectedIndex = 0;
         /////////////////////end.../////////////////
         counter++;
-        //debugger;
         return false;
     });
 
@@ -622,7 +593,6 @@
 
 
     $("#ItemQuantity").change(function () {
-        debugger
         var quantity = $("#ItemQuantity").val();
         var price = $("#ItemUnitPrice").val();
         var tempTax = $("#ItemTaxValue").val().split("%")

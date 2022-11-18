@@ -328,16 +328,11 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindCompany();
-                //BindCompanyAddress();
                 BindTermsAndCondition();
-                //BindOrganisations();
                 BindLocationName();
 
-
-                //ViewData["itemListForDD"] = dd;
-
-                //PurchaseOrderBO model = _purchaseOrderRepository.GetById(PurchaseOrderId);
                 PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
+
                 //Binding item grid with sell type item.
                 var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
@@ -490,60 +485,137 @@ namespace InVanWebApp.Controllers
         /// <summary>
         /// Created By : Raj
         /// Created Date : 11-11-2022
+        /// Edited by: Farheen (17 Nov'22)
         /// Description : Get Purchase Order Details and bind all Purchase Order for Amendment process.
         /// </summary>
         /// <param name="PurchaseOrderId">paramenter contrains purchase order Id.</param>
         /// <returns></returns>
         public ActionResult POAmendment(int PurchaseOrderId)
         {
-            if (Session[ApplicationSession.USERID] == null)
-                return RedirectToAction("Index", "Login");
+            try
+            {
+                if (Session[ApplicationSession.USERID] == null)
+                    return RedirectToAction("Index", "Login");
+                else
+                {
+                    BindCompany();
+                    BindTermsAndCondition();
+                    BindLocationName();
 
-            BindCompany();
-            //BindCompanyAddress();
-            BindTermsAndCondition();
-            //BindOrganisations();
-            BindLocationName();
+                    PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
+                    //Binding item grid with sell type item.
+                    var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                    var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                    string itemListForDD = "itemListForDD";
 
-            //Binding item grid with sell type item.
-            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-            ViewData["itemListForDD"] = dd;
-            PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
-            model.Amendment = model.Amendment + 1;
-            return View(model);
+                    if (model != null)
+                    {
+                        var ItemCount = model.itemDetails.Count;
+                        var i = 0;
+                        while (i < ItemCount)
+                        {
+                            itemListForDD = "itemListForDD";
+                            itemListForDD = itemListForDD + i;
+                            dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.itemDetails[i].Item_ID);
+                            ViewData[itemListForDD] = dd;
+                            i++;
+                        }
+
+                    }
+
+                    ViewData[itemListForDD] = dd;
+
+                    model.Amendment = model.Amendment + 1;
+
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while amending the PO!');</script>";
+                return RedirectToAction("Index", "PurchaseOrder");
+            }
+           
         }
 
         /// <summary>
         /// Created By: Raj
         /// Created Date: 11-11-2022
+        /// Edited by: Farheen (17 Nov'22)
         /// Description: Insert Amendment Details of Purchase Order.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult POAmendment(PurchaseOrderBO model)
+        public ActionResult POAmendment(PurchaseOrderBO model,HttpPostedFileBase Signature)
         {
             ResponseMessageBO response = new ResponseMessageBO();
-
-            if (Session[ApplicationSession.USERID] == null)
-                return RedirectToAction("Index", "Login");
-
-            if (ModelState.IsValid)
+            try
             {
-                model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                response = _purchaseOrderRepository.SaveAmendment(model);
-                if (response.Status)
-                    TempData["Success"] = "<script>alert('Amendment Details Added successfully!');</script>";
+                if (Session[ApplicationSession.USERID] == null)
+                    return RedirectToAction("Index", "Login");
                 else
                 {
-                    TempData["Success"] = "<script>alert('Duplicate category!');</script>";
-                    return View(model);
+                    if (ModelState.IsValid)
+                    {
+                        if (Signature != null)
+                        {
+                            UploadSignature(Signature);
+                            model.Signature = Signature.FileName.ToString();
+                        }
+                        else
+                            model.Signature = null;
+
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                       // response = _purchaseOrderRepository.SaveAmendment(model);
+                        response = _purchaseOrderRepository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Amendment Details Added successfully!');</script>";
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Duplicate category!');</script>";
+                            BindCompany();
+                            BindTermsAndCondition();
+                            BindLocationName();
+                            PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
+                            //Binding item grid with sell type item.
+                            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                            string itemListForDD = "itemListForDD";
+
+                            if (model1 != null)
+                            {
+                                var ItemCount = model1.itemDetails.Count;
+                                var i = 0;
+                                while (i < ItemCount)
+                                {
+                                    itemListForDD = "itemListForDD";
+                                    itemListForDD = itemListForDD + i;
+                                    dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
+                                    ViewData[itemListForDD] = dd;
+                                    i++;
+                                }
+
+                            }
+
+                            ViewData[itemListForDD] = dd;
+
+                            return View(model1);
+                        }
+                        return RedirectToAction("Index");
+                    }
+                    else
+                        return View(model);
                 }
-                return RedirectToAction("Index");
             }
-            else
-                return View(model);
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while amendment of PO!');</script>";
+                return RedirectToAction("Index", "PurchaseOrder");
+            }
+            
         }
 
         #endregion
