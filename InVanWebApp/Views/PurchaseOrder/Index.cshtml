@@ -120,9 +120,12 @@
                                                 }
                                                 @if (item.InwardCount <= 0 & item.DraftFlag == false)
                                                 {
-                                                    <a href=@Url.Action("POAmendment", new { PurchaseOrderId = item.PurchaseOrderId }) title="Amend PO">
-                                                        <i class="fa fa-file-alt text-primary"></i>
-                                                    </a><span>&nbsp;&nbsp;</span>
+                                                    if (item.Amendment != 2)
+                                                    {
+                                                        <a href=@Url.Action("POAmendment", new { PurchaseOrderId = item.PurchaseOrderId }) title="Amend PO">
+                                                            <i class="fa fa-file-alt text-primary"></i>
+                                                        </a><span>&nbsp;&nbsp;</span>
+                                                    }
                                                     <a href=@Url.Action("DeletePurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId, }) onclick="return confirm('Are you sure want to delete the PO?');" title="Delete PO">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a><span>&nbsp;&nbsp;</span>

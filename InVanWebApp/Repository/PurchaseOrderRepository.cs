@@ -46,6 +46,7 @@ namespace InVanWebApp.Repository
                         var PurchaseOrderMasters = new PurchaseOrderBO()
                         {
                             PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderId"]),
+                            Amendment=Convert.ToInt32(reader["Amendment"]),
                             Tittle = reader["Tittle"].ToString(),
                             PONumber = reader["PONumber"].ToString(),
                             PurchaseOrderStatus = reader["PurchaseOrderStatus"].ToString(),
