@@ -12,7 +12,7 @@
     <style>
         html2canvas-container {
             width: 3000px !important;
-            height: 3000px !important;
+            height: 2000px !important;
         }
     </style>
 </head>
@@ -32,7 +32,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" style="width:50px;height:50px;">
+                            <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" style="width:80px;height:50px;">
                             &nbsp;&nbsp;&nbsp;<h3 class="card-title font-weight-bold" style="font-size: 16pt;">Purchase Order</h3>
 
                         </div>
@@ -140,16 +140,16 @@
                                                             Item Description
                                                         </th>
                                                         <th class="sortStyle">
-                                                            Quantity
+                                                            Quantity (Kg)
                                                         </th>
                                                         <th class="sortStyle">
                                                             Units
                                                         </th>
                                                         <th class="sortStyle">
-                                                            Price
+                                                            Price (Rs)
                                                         </th>
                                                         <th class="sortStyle">
-                                                            Tax
+                                                            Tax (%)
                                                         </th>
                                                         <th class="sortStyle">
                                                             Total before tax
@@ -206,7 +206,7 @@
                                 <div class="col-md-5"></div>
                                 <div class="col-md-7">
                                     <hr />
-                                    <Center><h5 class="font-weight-bold"><u>Payment Details</u></h5></Center>
+                                    <Center><h5 class="font-weight-bold">Payment Details</h5></Center>
                                     <hr />
                                 </div>
                             </div>
@@ -219,6 +219,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <input class="text-right" id="TotalBeforeTax" name="TotalBeforeTax" style="border:none;" />
+                                            <b>Rs.</b>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -227,6 +228,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <input class="text-right" id="TotalTax" name="TotalTax" style="border:none;" />
+                                            <b>Rs.</b>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -235,6 +237,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             @Html.TextBoxFor(model => model.TotalAfterTax, new { @class = "text-right", style = "border:none" })
+                                            <b>Rs.</b>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -243,6 +246,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             @Html.TextBoxFor(model => model.GrandTotal, new { @class = "text-right", style = "border:none" })
+                                            <b>Rs.</b>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -251,6 +255,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             @Html.TextBoxFor(model => model.AdvancedPayment, new { @class = "text-right", style = "border:none" })
+                                            <b>Rs.</b>
                                         </div>
                                     </div>
 
@@ -258,8 +263,8 @@
                             </div>
                             <br />
                             <div class="row">
-                                <div class="col-md-9"></div>
-                                <div class="col-md-3">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
 
                                     <div id="imagePreview">
                                         <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
