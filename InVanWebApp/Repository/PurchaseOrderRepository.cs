@@ -316,6 +316,9 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
+                    cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
+                    cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
+
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
                     while (dataReader.Read())

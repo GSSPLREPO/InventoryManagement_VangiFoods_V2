@@ -82,7 +82,8 @@
                                                     <i class=""></i>
                                                 </th>
                                                 <th class="sortStyle">
-                                                    Remarks
+                                                    Remarks 
+                                                    <span style="color:red">*</span>
                                                     <i class=""></i>
                                                 </th>
                                             </tr>
@@ -112,6 +113,7 @@
                                                 </td>
                                                 <td>
                                                     @Html.TextBoxFor(model => model.Remarks, "", new { @class = "form-control text-right", style = "height:30px;width:200px;" })
+                                                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" }) 
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
@@ -308,7 +310,7 @@
             '<input type="text" id="' + finalQuantity + '" class="form-control text-right" style = "height:30px;width:80px;" name="' + finalQuantity + ' " value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + remarks + '" class="form-control text-right" style = "height:30px;width:200px;" name="' + remarks + '" value="" required="required" />' + 
+            '<input type="text" id="' + remarks + '" class="form-control text-right" style = "height:30px;width:200px;" name="' + remarks + '" value="ok" required="required" />' + 
             '</td>' +
             '<td>' +
             '<button type="button" class="btn btn-primary" onclick="removeTr(' + counter + ');">Delete</button>' +
@@ -383,6 +385,7 @@
                             //$("#itemTax_" + count).val(itemDescription.ItemTaxValue);
                             $("#transferQuantity_" + count).val('0');
                             $("#finalQuantity_").val('0');
+                            $("#remarks_").val('ok');
                             //$("#totalItemCost_" + count).val('0'); 
                     
                 },

@@ -13,19 +13,20 @@ namespace InVanWebApp_BO
         public int PurchaseOrderId { get; set; }
         [Required(ErrorMessage = "Enter title!")]
         public string Tittle { get; set; }
-        //[Required]
+        [Required(ErrorMessage = "Please enter the PO number!")]
         public string PONumber { get; set; }
-        //[Required]
+        [Required(ErrorMessage = "Please select the PO date!")]
         public DateTime PODate { get; set; }
-        //[Required]
+        [Required(ErrorMessage = "Please select the Delivery date!")]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         //public Nullable<int> CompanyID { get; set; }
+        [Required(ErrorMessage = "Select vendors name!")]
         public Nullable<int> VendorsID { get; set; }
         public float DiscountValue { get; set; }
         public float CGST { get; set; }
         public float SGST { get; set; }
         public float IGST { get; set; }
-        //[Required]
+        [Required(ErrorMessage = "Select terms and condition!")]
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
         public string PurchaseOrderStatus { get; set; }
@@ -33,14 +34,14 @@ namespace InVanWebApp_BO
         public string ReasonForCancellation { get; set; }
         public Nullable<float> TotalAmount { get; set; }
         public Nullable<bool> DraftFlag { get; set; }
-       // [Required]
+        [Required(ErrorMessage = "Enter the amendment number!")]
         public Nullable<int> Amendment { get; set; }
 
         [Required(ErrorMessage = "Enter delivery address!")]
         //public string BuyerAddress { get; set; }
         public string DeliveryAddress { get; set; }
 
-        [Required(ErrorMessage = "Enter supplier address")]
+        [Required(ErrorMessage = "Enter supplier address!")]
         public string SupplierAddress { get; set; }
         //public float TotalPOAmount { get; set; }
         public float AdvancedPayment { get; set; }
@@ -74,6 +75,8 @@ namespace InVanWebApp_BO
         public Nullable<decimal> TotalItemCost { get; set; }
         public Nullable<decimal> TotalAfterTax { get; set; }
         public Nullable<decimal> GrandTotal { get; set; }
+
+        [Required(ErrorMessage = "Select the location name!")]
         public Nullable<int> LocationId { get; set; }
         public string LocationName { get; set; }
         // public int UserId { get; set; }

@@ -377,11 +377,13 @@ namespace InVanWebApp.Controllers
             {
                 if (Session[ApplicationSession.USERID] != null)
                 {
-                    if (Signature != null)
+                    if (Signature != null && Signature.ContentLength > 1000)
                     {
                         UploadSignature(Signature);
                         model.Signature = Signature.FileName.ToString();
                     }
+                    else if (Signature.ContentLength < 1000 && Signature!=null)
+                        model.Signature = Signature.FileName.ToString();
                     else
                         model.Signature = null;
 
@@ -559,11 +561,13 @@ namespace InVanWebApp.Controllers
                 {
                     if (ModelState.IsValid)
                     {
-                        if (Signature != null)
+                        if (Signature != null && Signature.ContentLength > 1000)
                         {
                             UploadSignature(Signature);
                             model.Signature = Signature.FileName.ToString();
                         }
+                        else if (Signature.ContentLength < 1000 && Signature != null)
+                            model.Signature = Signature.FileName.ToString();
                         else
                             model.Signature = null;
 

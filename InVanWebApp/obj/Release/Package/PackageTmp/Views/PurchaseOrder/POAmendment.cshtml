@@ -1,15 +1,15 @@
 ﻿@model InVanWebApp_BO.PurchaseOrderBO
 @{
-    ViewBag.Title = "EditPurchaseOrder";
+    ViewBag.Title = "Purchase Order Amendment";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
-@using (Html.BeginForm("EditPurchaseOrder", "PurchaseOrder", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("POAmendment", "PurchaseOrder", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="card">
         <div class="card-body">
-            <h4>Edit Purchase Order</h4>
+            <h4>Purchase Order Amendment</h4>
             <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.PurchaseOrderId)
@@ -20,7 +20,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", placeholder = "Purchase Order For Vangi Foods", type = "text" })
+                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", placeholder = "Purchase Order For Vangi Foods", type = "text", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <br />
@@ -50,6 +50,26 @@
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
                     @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Amendment Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <br />
+                <br />
+                <div class="col-md-2">
+                    @Html.Label("Indent Number")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
             <br />
@@ -118,41 +138,8 @@
                     </div>
                 </div>
                 <br />
-                <br />
             </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Amendment Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", Value = "0", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <br />
-                <br />
-                <div class="col-md-2">
-                    @Html.Label("Indent Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Remarks")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
+
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
@@ -236,7 +223,6 @@
                                                 }
 
                                             }
-
                                         </tbody>
                                     </table>
                                     <br />
@@ -262,9 +248,8 @@
                             <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextBoxFor(x=>x.Signature, new { id="file", type="file", onchange= "return fileValidation()"})
-                                @*<input type="file" id="file" name="Signature"
-                                       onchange="return fileValidation()"/>*@
+                                <input type="file" id="file" name="Signature"
+                                       onchange="return fileValidation()" />
                                 <!-- Image preview -->
                                 <span style="color:green">@ViewBag.Message</span>
                                 <br />
@@ -272,7 +257,7 @@
                                 <center>
                                     <div id="imagePreview">
                                         <img src="/Signatures/@Model.Signature" style="height:10%;width:20%" />
-                                        @Html.HiddenFor(x => x.Signature, new{id="tempSign"})
+                                        @Html.HiddenFor(x => x.Signature, new { id = "tempSign" })
                                     </div>
                                 </center>
                             </div>
@@ -289,7 +274,6 @@
                                 <div class="row">
                                     <label>Total (before tax): </label>
                                     <input class="form-control form-control-sm text-right" id="TotalBeforeTax" name="TotalItemCost" />
-                                    @*@Html.TextBoxFor(x=>x.TotalItemCost, new { @class = "form-control"})*@
                                 </div>
                                 <div class="row">
                                     <label>Total tax: </label>
@@ -297,12 +281,10 @@
                                 </div>
                                 <div class="row">
                                     <label>Total (after tax):</label>
-                                    @*<input class="form-control" id="TotalAfterTax" name="TotalAfterTax" />*@
-                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right" })
+                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control form-control-sm text-right" })
                                 </div>
                                 <div class="row">
                                     <label><b>Grand Total:</b></label>
-                                    @*<input class="form-control" id="GrandTotal" name="GrandTotal" />*@
                                     @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control form-control-sm text-right" })
                                 </div>
                                 <div class="row">
@@ -316,16 +298,13 @@
                 </div>
                 <br />
             </div>
-
+            <br />
             <a href="@Url.Action("Index","PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
                 Back To List
             </a>
-            <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
-            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Update</button>
+            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">Submit</button>
         </div>
     </div>
-
-    @Html.HiddenFor(model => model.DraftFlag, new { @Value = "false" })
 }
 @Html.Raw(TempData["Success"])
 @section Scripts {
@@ -333,22 +312,15 @@
 }
 
 <script type="text/javascript">
-
-//===========The below function is for updating the draft flag value if user clicked it as save the PO as draft====//
-    $("#btn_SaveDraft").click(function () {
-        $("#DraftFlag").val('true');
-    });
-    //=======end=============//
-
     //=======The below function is for fetching the files value in the textbox of file type============//
     $(document).ready(function () {
         CalculateTotalBeforeTax();
 
         var fileName = $('#tempSign').val();
-
+        
         //Get a reference to our file input
         const fileInput = document.querySelector('input[type="file"]');
-        var filePath = '/Signatures/'+fileName;
+        var filePath = '/Signatures/' + fileName;
 
         // Create a new File object
         const myFile = new File([filePath], fileName, {
@@ -359,7 +331,6 @@
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(myFile);
         fileInput.files = dataTransfer.files;
-
     });
     //===================end=======================//
 
@@ -432,6 +403,7 @@
                 //as inputto json method GetitemDetails.
 
                 success: function (itemDescription) {
+
                     var description = JSON.stringify(itemDescription);
                     $("#ItemName").val(itemDescription.Item_Name);
                     $("#ItemUnit").val(itemDescription.UnitCode);
@@ -460,40 +432,40 @@
     function getitemDetailsJSTbl(count) {
         var itemId = "Item_ID_" + count;
         var selectedItemId = $("#" + itemId).val();
-                    $.ajax({
-                type: 'POST',
-                //url: '@Url.Action("GetitemDetails?id='+${itemId}+'")', // we are calling json method
-                url: '@Url.Action("GetitemDetails")', // we are calling json method
+        $.ajax({
+            type: 'POST',
+            //url: '@Url.Action("GetitemDetails?id='+${itemId}+'")', // we are calling json method
+            url: '@Url.Action("GetitemDetails")', // we are calling json method
 
-                dataType: 'json',
-                data: { id: selectedItemId },
-                // here we are get value of selected item and passing same value
-                //as input to json method GetitemDetails.
+            dataType: 'json',
+            data: { id: selectedItemId },
+            // here we are get value of selected item and passing same value
+            //as inputto json method GetitemDetails.
 
-                        success: function (itemDescription) {
+            success: function (itemDescription) {
 
-                            var description = JSON.stringify(itemDescription);
-                            $("#Item_Code_" + count).val(itemDescription.Item_Code);
-                            $("#ItemName_" + count).val(itemDescription.Item_Name);
-                            $("#ItemUnit_" + count).val(itemDescription.UnitCode);
-                            $("#ItemUnitPrice_" + count).val(itemDescription.UnitPrice);
-                            $("#itemTax_" + count).val(itemDescription.ItemTaxValue);
-                            $("#ItemQuantity_" + count).val('0');
-                            $("#totalItemCost_" + count).val('0');
-                },
-                failure: function () {
-                    alert('Failed to retrieved item detals!');
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve Item description.' + ex);
-                }
-            });
+                var description = JSON.stringify(itemDescription);
+                $("#Item_Code_" + count).val(itemDescription.Item_Code);
+                $("#ItemName_" + count).val(itemDescription.Item_Name);
+                $("#ItemUnit_" + count).val(itemDescription.UnitCode);
+                $("#ItemUnitPrice_" + count).val(itemDescription.UnitPrice);
+                $("#itemTax_" + count).val(itemDescription.ItemTaxValue);
+                $("#ItemQuantity_" + count).val('0');
+                $("#totalItemCost_" + count).val('0');
+            },
+            failure: function () {
+                alert('Failed to retrieved item detals!');
+            },
+            error: function (ex) {
+                alert('Failed to retrieve Item description.' + ex);
+            }
+        });
     }
 
     function calcTax(cnt, e) {
         if (isNumberKey(e)) {
         var itemQuantity = $("#itemQuantity_" + cnt).val();
-       // console.log(itemQuantity);
+        console.log(itemQuantity);
         var itemPrice = $("#itemPrice_" + cnt).val();
         //var tempTax = $("#itemTax_").val().split("%");
         var tax = $("#itemTax_").val();
@@ -516,8 +488,10 @@
     var table = document.getElementById('submissionTable');
     var counter = table.rows.length;
 
-    //=======This below click function is for adding row in the table dynamically=====/////
     $("#AddItem").click(function () {
+        debugger
+        //'<select id="ItemID" class="form-control" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
+        //var nameItem = "Item_ID['" + counter + "']";
         var itemId = "Item_ID_"+counter;
         var itemCode = "Item_Code_" + counter;
         var itemDescription = "ItemName_" + counter;
@@ -536,6 +510,7 @@
             '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
+            /*'<input type="text" id="' + itemQuantity + '" onkeyup="calcTax(' + counter + ',' + this.value + ')"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
             '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +
             '</td>' +
             '<td>' +
@@ -545,7 +520,7 @@
             '<input type="text" id="' + itemPrice + '" class="form-control" style = "height:30px;width:100px;" name="' + itemPrice + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemTax + '" class="form-control " style = "height:30px;width:80px;" name="' + itemTax+ ' " value="" required="required" />' +
+            '<input type="text" id="' + itemTax + '" class="form-control" style = "height:30px;width:80px;" name="' + itemTax+ ' " value="" required="required" />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + totalItemCost + '" class="form-control" style = "height:30px;width:200px;" name="' + totalItemCost + '" value="" required="required" />' +
@@ -561,8 +536,6 @@
         counter++;
         return false;
     });
-
-    //=================end============================//
 
     function CalItemTotalPrice(value, id) {
         //alert(value + " " + id);
@@ -615,7 +588,6 @@
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
-
     $("#ItemQuantity").change(function () {
         var quantity = $("#ItemQuantity").val();
         var price = $("#ItemUnitPrice").val();
@@ -637,8 +609,10 @@
 
     function removeTr(index) {
         ///Finding the length of existing table
+        debugger;
         var table = document.getElementById('submissionTable');
         var tableRows = table.rows.length;
+
         if (tableRows > 2) {
             if (counter => index) {
                 $('#tablerow_' + index).remove();
@@ -681,12 +655,6 @@
         }
     }
 
-    $("#btn_SaveDraft").click(function () {
-        $("#DraftFlag").val('true');
-        //var ab=$("#DraftFlag").val();
-        //console.log("abc:" + ab);
-    });
-
     /*Rahul : Add Javascript validation on 12 Oct 2022.*/
         function isNumberKey(evt) {
             var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -694,6 +662,5 @@
                 return false;
             return true;
         }
-
 
 </script>

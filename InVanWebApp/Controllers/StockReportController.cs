@@ -36,12 +36,13 @@ namespace InVanWebApp.Controllers
         }
         #endregion
         // GET: StockReport
+        
+        #region Bind the grid
         public ActionResult Index()
         {
             return View();
         }
 
-        #region Bind the grid
         /// <summary>
         /// Bind grid by fetvching the stock details
         /// </summary>
@@ -61,7 +62,7 @@ namespace InVanWebApp.Controllers
         /// Export report to pdf
         /// </summary>
         /// <returns></returns>
-        [Obsolete]
+      //  [Obsolete]
         public ActionResult ExprotAsPDF()
         {
             var stockDetails = _StockMasterRepository.GetAllStock();
@@ -102,12 +103,12 @@ namespace InVanWebApp.Controllers
 
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Stock Quantity</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Inventory Value</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price (Rs)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Stock Quantity (Kg)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Inventory Value (Rs)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder Level</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Reorder Quantity</th>");
             sb.Append("</tr>");
@@ -117,13 +118,13 @@ namespace InVanWebApp.Controllers
             {
 
                 sb.Append("<tr style='text-align:center;padding: 10px;'>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Reorder + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RowNumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Code + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemUnitPrice + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.StockQuantity + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InventoryValue + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RowNumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Reorder + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ReOrderLevel + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemReOrderQuantity + "</td>");
                 sb.Append("</tr>");

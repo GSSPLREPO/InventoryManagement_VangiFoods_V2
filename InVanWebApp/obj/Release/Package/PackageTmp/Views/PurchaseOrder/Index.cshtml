@@ -55,7 +55,7 @@
                                             @Html.DisplayName("Supplier Name")
                                         </th>
                                         <th>
-                                            @Html.DisplayName("Edit/Delete")
+                                            @Html.DisplayName("Actions")
                                         </th>
                                     </tr>
 
@@ -69,7 +69,35 @@
                                                 @Html.DisplayFor(modelItem => item.PONumber)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.PurchaseOrderStatus)
+                                                @*@Html.DisplayFor(modelItem => item.PurchaseOrderStatus)*@
+                                                @if (item.PurchaseOrderStatus == "Closed")
+                                                {
+                                                    <p style="color: #17d317;font-weight:bold">
+
+                                                        @Html.DisplayFor(modelItem => item.PurchaseOrderStatus, new { style = "color:green" })
+                                                    </p>
+                                                }
+                                                else if (item.PurchaseOrderStatus == "Open")
+                                                {
+                                                    <p style="color: darkorange; font-weight: bold">
+
+                                                        @Html.DisplayFor(modelItem => item.PurchaseOrderStatus, new { style = "color:#c900e1" })
+                                                    </p>
+                                                }
+                                                else if (item.PurchaseOrderStatus == "Cancelled")
+                                                {
+                                                    <p style="color:red;font-weight:bold">
+
+                                                        @Html.DisplayFor(modelItem => item.PurchaseOrderStatus, new { style = "color:red" })
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <p style="color: yellow; font-weight: bold">
+
+                                                        @Html.DisplayFor(modelItem => item.PurchaseOrderStatus, new { style = "color:#ffbc00" })
+                                                    </p>
+                                                }
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.LastModifiedDate)
@@ -78,12 +106,36 @@
                                                 @Html.DisplayFor(modelItem => item.SupplierAddress)
                                             </td>
                                             <td>
-                                                @*@Html.ActionLink("Edit", "EditPurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId }, new { @class = "fa fa-eye text-primary" }) |*@
-                                                @Html.ActionLink("Edit", "EditPurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId }) |
-                                                @Html.ActionLink("Delete", "DeletePurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId, },
-                                                    new { onclick = "return confirm('Are you sure, you wants to delete?');" }) 
 
-                                                @*@Html.ActionLink("Delete", "DeleteItem", new { PurchaseOrder_Id = item.PurchaseOrderId })*@
+                                                @if (item.DraftFlag == true)
+                                                {
+                                                    <a href=@Url.Action("EditPurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId }) title="Edit PO">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a>
+                                                    <span>&nbsp;&nbsp;</span>
+                                                    <a href=@Url.Action("DeletePurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId, }) onclick="return confirm('Are you sure want to delete the PO?');" title="Delete PO">
+                                                        @*<i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>*@
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
+                                                }
+                                                @if (item.InwardCount <= 0 & item.DraftFlag == false)
+                                                {
+                                                    if (item.Amendment != 2)
+                                                    {
+                                                        <a href=@Url.Action("POAmendment", new { PurchaseOrderId = item.PurchaseOrderId }) title="Amend PO">
+                                                            <i class="fa fa-file-alt text-primary"></i>
+                                                        </a><span>&nbsp;&nbsp;</span>
+                                                    }
+                                                    <a href=@Url.Action("DeletePurchaseOrder", new { PurchaseOrderId = item.PurchaseOrderId, }) onclick="return confirm('Are you sure want to delete the PO?');" title="Delete PO">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
+                                                }
+                                                @if (item.DraftFlag == false)
+                                                {
+                                                    <a href=@Url.Action("ViewPurchaseOrder", new { ID = item.PurchaseOrderId }) title="View PO">
+                                                        <i class="fa fa-eye text-primary"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
+                                                }
                                             </td>
                                         </tr>
                                     }
