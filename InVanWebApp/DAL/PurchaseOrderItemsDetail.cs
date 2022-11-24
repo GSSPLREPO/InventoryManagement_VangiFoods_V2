@@ -17,17 +17,13 @@ namespace InVanWebApp.DAL
         public int ID { get; set; }
         public Nullable<int> PurchaseOrderId { get; set; }
         public Nullable<int> Item_ID { get; set; }
-        public string ItemName { get; set; } // rahul added 
-        public string Item_Code { get; set; } // rahul added 
-        public Nullable<decimal> ItemQuantity { get; set; }
+        public string ItemName { get; set; }
+        public string Item_Code { get; set; }
         public Nullable<decimal> ItemUnitPrice { get; set; }
-        //public string ItemTaxValue { get; set; }
-        // rahul updated ItemTaxValue string to Nullable<decimal> 
-        public Nullable<decimal> ItemTaxValue { get; set; }
-        //public Nullable<int> ItemUnit { get; set; }
-        // rahul updated ItemUnit Nullable<int> to string
+        public Nullable<decimal> ItemQuantity { get; set; }
+        public string ItemTaxValue { get; set; }
         public string ItemUnit { get; set; }
-        public Nullable<decimal> TotalItemCost { get; set; } // rahul added 
+        public Nullable<double> TotalItemCost { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

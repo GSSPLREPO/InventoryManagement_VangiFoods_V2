@@ -17,7 +17,7 @@ namespace InVanWebApp.DAL
         public int Id { get; set; }
         public Nullable<int> ItemId { get; set; }
         public Nullable<int> TaxId { get; set; }
-        public string ItemTaxValue { get; set; }
+        public Nullable<double> ItemTaxValue { get; set; }
         public Nullable<System.DateTime> EffectiveDate { get; set; }
         public string Remark { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

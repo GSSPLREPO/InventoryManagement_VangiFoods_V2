@@ -38,8 +38,6 @@ namespace InVanWebApp.DAL
         public virtual Branch Branch { get; set; }
         public virtual Item Item { get; set; }
         public virtual LocationMaster LocationMaster { get; set; }
-        public virtual RequestForQuotation RequestForQuotation1 { get; set; }
-        public virtual RequestForQuotation RequestForQuotation2 { get; set; }
         public virtual UnitMaster UnitMaster { get; set; }
     }
 }

@@ -7,21 +7,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
+
     public class PurchaseOrderBO
-    {  
+    {
         public int PurchaseOrderId { get; set; }
         [Required(ErrorMessage = "Enter title!")]
         public string Tittle { get; set; }
+        //[Required]
         public string PONumber { get; set; }
-        public Nullable<System.DateTime> PODate { get; set; }
+        //[Required]
+        public DateTime PODate { get; set; }
+        //[Required]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         //public Nullable<int> CompanyID { get; set; }
         public Nullable<int> VendorsID { get; set; }
-        public string CompanyName { get; set; } 
         public float DiscountValue { get; set; }
         public float CGST { get; set; }
         public float SGST { get; set; }
         public float IGST { get; set; }
+        //[Required]
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
         public string PurchaseOrderStatus { get; set; }
@@ -29,12 +33,13 @@ namespace InVanWebApp_BO
         public string ReasonForCancellation { get; set; }
         public Nullable<float> TotalAmount { get; set; }
         public Nullable<bool> DraftFlag { get; set; }
+       // [Required]
         public Nullable<int> Amendment { get; set; }
 
         [Required(ErrorMessage = "Enter delivery address!")]
         //public string BuyerAddress { get; set; }
         public string DeliveryAddress { get; set; }
-        
+
         [Required(ErrorMessage = "Enter supplier address")]
         public string SupplierAddress { get; set; }
         //public float TotalPOAmount { get; set; }
@@ -53,25 +58,30 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
 
-        //==============These fields are for PO item details==============//        
+        //==============These fields are for PO item details==============//
         public Nullable<int> Item_ID { get; set; }
         public string ItemName { get; set; }
         public string Item_Code { get; set; }
-        public Nullable<decimal> ItemUnitPrice { get; set; }
-        public Nullable<decimal> ItemQuantity { get; set; }
+        public decimal ItemUnitPrice { get; set; }
+        public decimal ItemQuantity { get; set; }
         public string ItemUnit { get; set; }
         public Nullable<decimal> ItemTaxValue { get; set; }
         public decimal InwardQuantity { get; set; }
         public decimal BalanceQuantity { get; set; }
+
+        //==============These fields are added by Rahul for PO==============//
+        public string CompanyName { get; set; }
         public Nullable<decimal> TotalItemCost { get; set; }
         public Nullable<decimal> TotalAfterTax { get; set; }
-        public Nullable<decimal> GrandTotal { get; set; } 
+        public Nullable<decimal> GrandTotal { get; set; }
         public Nullable<int> LocationId { get; set; }
         public string LocationName { get; set; }
-        public string TxtItemDetails { get; set; } 
-
+        // public int UserId { get; set; }
+        public string TxtItemDetails { get; set; }
         public List<PurchaseOrderItemsDetails> itemDetails { get; set; }
 
+        //===The below field is add by Raj ======
+        public int InwardCount { get; set; }
 
     }
 

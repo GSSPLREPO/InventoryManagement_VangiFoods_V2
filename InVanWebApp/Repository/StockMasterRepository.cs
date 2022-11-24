@@ -19,6 +19,7 @@ namespace InVanWebApp.Repository
             using (SqlConnection con = new SqlConnection(conStr))
             {
                 var stockList = con.Query<StockReportBO>("usp_rpt_stock_report", commandType: System.Data.CommandType.StoredProcedure).ToList();
+
                 return stockList;
             }
         }

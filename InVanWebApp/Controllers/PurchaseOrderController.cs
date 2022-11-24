@@ -26,7 +26,7 @@ namespace InVanWebApp.Controllers
         {
             _purchaseOrderRepository = new PurchaseOrderRepository();
 
-            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
             ViewData["itemListForDD"] = dd;
         }
@@ -146,11 +146,15 @@ namespace InVanWebApp.Controllers
                 ViewData["DocumentNo"] = DocumentNumber;
 
                 //Binding item grid with sell type item.
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                   ViewData["itemListForDD"] = dd;
 
-                return View();
+                PurchaseOrderBO model = new PurchaseOrderBO();
+                model.PODate = DateTime.Today;
+                model.DeliveryDate = DateTime.Today;
+                
+                return View(model);
             }
             else
                 return RedirectToAction("Index", "Login");
@@ -200,7 +204,7 @@ namespace InVanWebApp.Controllers
                         //BindOrganisations();
                         BindLocationName();
                         UploadSignature(Signature);
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                         var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                         ViewData["itemListForDD"] = dd;
                         return View(model);                      
@@ -248,7 +252,7 @@ namespace InVanWebApp.Controllers
                             //BindOrganisations();
                             BindLocationName();
                             UploadSignature(Signature);
-                            return View(model);
+                            return RedirectToAction("AddPurchaseOrder", "PurchaseOrder",model);
                         }
 
                         return RedirectToAction("Index", "PurchaseOrder");
@@ -262,7 +266,7 @@ namespace InVanWebApp.Controllers
                         //BindOrganisations();
                         BindLocationName();
                         UploadSignature(Signature);
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                         var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                         ViewData["itemListForDD"] = dd;
                         return View(model);
@@ -316,7 +320,7 @@ namespace InVanWebApp.Controllers
                 BindLocationName();
 
                 //Binding item grid with sell type item.
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 ViewData["itemListForDD"] = dd;
                 //PurchaseOrderBO model = _purchaseOrderRepository.GetById(PurchaseOrderId);
@@ -398,7 +402,96 @@ namespace InVanWebApp.Controllers
             else
                 return RedirectToAction("Index", "Login"); 
         }
-        #endregion 
+        #endregion
+
+        #region Amendment Operation
+        /// <summary>
+        /// Created By : Raj
+        /// Created Date : 11-11-2022
+        /// Description : Get Purchase Order Details and bind all Purchase Order for Amendment process.
+        /// </summary>
+        /// <param name="PurchaseOrderId">paramenter contrains purchase order Id.</param>
+        /// <returns></returns>
+        public ActionResult POAmendment(int PurchaseOrderId)
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            BindCompany();
+            //BindCompanyAddress();
+            BindTermsAndCondition();
+            //BindOrganisations();
+            BindLocationName();
+
+            //Binding item grid with sell type item.
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+            ViewData["itemListForDD"] = dd;
+            PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
+            model.Amendment = model.Amendment + 1;
+            return View(model);
+        }
+
+        /// <summary>
+        /// Created By: Raj
+        /// Created Date: 11-11-2022
+        /// Description: Insert Amendment Details of Purchase Order.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult POAmendment(PurchaseOrderBO model)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            if (ModelState.IsValid)
+            {
+                model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                response = _purchaseOrderRepository.SaveAmendment(model);
+                if (response.Status)
+                    TempData["Success"] = "<script>alert('Amendment Details Added successfully!');</script>";
+                else
+                {
+                    TempData["Success"] = "<script>alert('Duplicate category!');</script>";
+                    return View(model);
+                }
+                return RedirectToAction("Index");
+            }
+            else
+                return View(model);
+        }
+
+        #endregion
+
+        #region View Purchase Order
+        /// <summary>
+        /// Created By: Raj
+        /// Created Date : 12-11-2022
+        /// Description: This method responsible for View of Purchase Order details.
+        /// </summary>
+        /// <param name="PurchaseOrderId"></param>
+        /// <returns></returns>
+        public ActionResult ViewPurchaseOrder(int ID)
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            BindCompany();
+            BindTermsAndCondition();
+            BindLocationName();
+
+            //Binding item grid with sell type item.
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+            ViewData["itemListForDD"] = dd;
+            PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID);
+            return View(model);
+
+        }
+        #endregion
 
     }
 }

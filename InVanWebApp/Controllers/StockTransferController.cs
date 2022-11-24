@@ -30,7 +30,7 @@ namespace InVanWebApp.Controllers
         /// <summary>
         /// Rahul: Constructor with parameters for initializing the interface object.
         /// </summary>
-        /// <param name="unitRepository"></param>
+        /// <param name="unitRepository"></param> 
         public StockTransferController(IStockTransferRepository stockTransferRepository)
         {
             _stockTransferRepository = stockTransferRepository;
@@ -82,22 +82,33 @@ namespace InVanWebApp.Controllers
             ViewData["FromLocationName"] = resultList; 
         }
         #endregion
+
+        #region Bind dropdowns Location Master          
+        public JsonResult BindFromLocationMaster(string id)
+        {   
+            int Id = 0;
+            if (id != null && id != "")
+                Id = Convert.ToInt32(id);
+            var result = _stockTransferRepository.GetFromLocationMasterList(Id); 
+            return Json(result);
+        }
+        #endregion 
+
         #region Bind dropdowns From Location Name 
         public void BindToLocationName() 
         {
             var result = _stockTransferRepository.GetToLocationNameList();  
-            var resultList = new SelectList(result.ToList(), "FromLocationId", "ToLocationName");
+            var resultList = new SelectList(result.ToList(), "ToLocationId", "ToLocationName");
             ViewData["ToLocationName"] = resultList;
         }
         #endregion
 
         #region Function for get item details
-        public JsonResult GetitemDetails(string id)
+        public JsonResult GetitemDetails(string id, string locationId)
         {
-            var itemId = Convert.ToInt32(id);
-            var itemDetails = _stockTransferRepository.GetItemDetails(itemId);
-            //var finalDetials = itemDetails.Item_Name +"#"+ itemDetails.UnitName +"#"+ itemDetails.Price+"#"+itemDetails.Tax;
-            //return Json(finalDetials);
+            var itemId = Convert.ToInt32(id);           
+            var locationID = Convert.ToInt32(locationId);            
+            var itemDetails = _stockTransferRepository.GetItemDetails(itemId, locationID);              
             return Json(itemDetails);
         }
         #endregion
@@ -130,8 +141,7 @@ namespace InVanWebApp.Controllers
                             BindToLocationName();
                             return View(model); 
                         }
-                        return RedirectToAction("Index", "StockTransfer");  
-
+                        return RedirectToAction("Index", "StockTransfer");                          
                     }
                     else
                     {

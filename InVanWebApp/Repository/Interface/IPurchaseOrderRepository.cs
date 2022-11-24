@@ -50,5 +50,8 @@ namespace InVanWebApp.Repository
 
         PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId);
 
+        //Function Define For: Save the Amendment details againts Purchase Order.
+        ResponseMessageBO SaveAmendment(PurchaseOrderBO model);
+
     }
 }

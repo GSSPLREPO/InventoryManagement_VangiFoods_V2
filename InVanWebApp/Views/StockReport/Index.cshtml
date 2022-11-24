@@ -31,23 +31,32 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="col-md-12 mb-2" style="float:right">
-                                @using (Html.BeginForm("ExprotAsPDF", "StockReport", FormMethod.Post, new { @style = "float:right" }))
-                                {
-                                <button class="btn btn-danger" style="float:right;"><i class="fas fa-file-pdf"></i> Export To PDF</button>
-                                }
-                                </div>
+                               @* <a style="font-size: 50px; float: right; color:#6a005b; " href="@Url.Action("ExprotAsPDF", "StockReport")" class="far fa-file-pdf">*@
+                                <a style="font-size: 50px;" href="@Url.Action("ExprotAsPDF", "StockReport")" class="far fa-file-pdf float-right text-danger">
+
+                                </a>
+                                @*   @using (Html.BeginForm("ExprotAsPDF", "StockReport", FormMethod.Post, new { @style = "float:right" }))
+                                     {
+                                     @* <button  style="background:white;"><i style="height: 70px; width: 70px;"class="far fa-file-pdf" ></i></button>; *@
+                                   @* <button @*class="btn btn-danger" style="float:right;"><i class="fa-sharp fa-solid fa-file-pdf" ></i></button> /*<i class="fa-sharp fa-solid fa-file-pdf"></i> 
+                                }*@
+                            </div>
                             <br />
-                            <table id="tblStockReport" class="ui celled table">
-                                <thead class="text-center">
+                           
+
+                            <table id="tblStockReport" class="ui celled table table-striped table-bordered hover table-sm">
+                                <thead class="text-center" style="text-align:center">
                                     <tr>
                                         @*<th>ID</th>*@
-                                        <th>Item Code</th>
-                                        <th>Item Name</th>
-                                        <th>Item Unit Price</th>
-                                        <th>Stock Quantity</th>
-                                        <th>Inventory Value</th>
-                                        <th>ReOrder Level</th>
-                                        <th>Item ReOrder Quantity</th>
+                                        <th style="text-align:center">Sr. No.</th>
+                                        <th style="text-align:center">Reorder</th>
+                                        <th style="text-align:center">Item Code</th>
+                                        <th style="text-align:center">Item Name</th>
+                                        <th style="text-align:center">Item Unit Price</th>
+                                        <th style="text-align:center">Stock Quantity</th>
+                                        <th style="text-align:center">Inventory Value</th>
+                                        <th style="text-align:center">Reorder Level</th>
+                                        <th style="text-align:center">Item Reorder Quantity</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center"></tbody>
@@ -75,20 +84,24 @@
     <script>
         $(document).ready(function () {
             BindStockReport();
+
+
         });
 
         function BindStockReport() {
             $('#tblStockReport').dataTable().fnDestroy();
-            $('#tblStockReport').DataTable({
+          var t=  $('#tblStockReport').DataTable({
                 "processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "sAjaxSource": "/StockReport/GetStock",
 
-                "pageLength": 5,
+                "pageLength": 20,
 
                 "columns": [
-                   /* { "data": "ID", "autoWidth": true },*/
+                    /* { "data": "ID", "autoWidth": true },*/
+                    { "data": "ID", "autoWidth": true },
+                    { "data": "Reorder", "autoWidth": true },
                     { "data": "Item_Code", "autoWidth": true },
                     { "data": "ItemName", "autoWidth": true },
                     { "data": "ItemUnitPrice", "autoWidth": true },
@@ -97,7 +110,14 @@
                     { "data": "ReOrderLevel", "autoWidth": true },
                     { "data": "ItemReOrderQuantity", "autoWidth": true },
                 ]
-            });
+          });
+            t.on('order.dt search.dt', function () {
+                let i = 1;
+
+                t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
         }
 
         function RemoveCompany(id) {

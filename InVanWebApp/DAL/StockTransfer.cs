@@ -18,6 +18,8 @@ namespace InVanWebApp.DAL
         public Nullable<int> FromLocationId { get; set; }
         public Nullable<int> ToLocationId { get; set; }
         public Nullable<int> ItemId { get; set; }
+        public string Item_Name { get; set; }
+        public string Item_Code { get; set; }
         public Nullable<double> TransferQuantity { get; set; }
         public Nullable<double> RequiredQuantity { get; set; }
         public string Remarks { get; set; }
@@ -26,8 +28,6 @@ namespace InVanWebApp.DAL
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
-        public string Item_Name { get; set; }
-        public string Item_Code { get; set; }
     
         public virtual Item Item { get; set; }
         public virtual LocationMaster LocationMaster { get; set; }

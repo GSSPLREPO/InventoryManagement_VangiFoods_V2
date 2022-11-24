@@ -19,7 +19,7 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Insert(InwardQCBO model);
 
         //Get purchase order details by ID.
-        IEnumerable<InwardNoteBO> GetInwDetailsById(int InwQCId, int InwdNote_Id);
+        IEnumerable<InwardNoteBO> GetInwDetailsById(int InwQCId, int InwdNote_Id=0);
 
 
         //Function define for: Get inward record by it's ID.

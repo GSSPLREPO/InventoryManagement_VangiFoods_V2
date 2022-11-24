@@ -24,33 +24,27 @@ namespace InVanWebApp.DAL
         public string EmployeeName { get; set; }
         public Nullable<int> DepartmentID { get; set; }
         public Nullable<int> DesignationID { get; set; }
+        public Nullable<int> OrganizationID { get; set; }
         public string EmployeeMobileNo { get; set; }
         public Nullable<System.DateTime> EmployeeBirthDate { get; set; }
         public Nullable<System.DateTime> EmployeeJoingDate { get; set; }
         public string EmployeeGender { get; set; }
-        public Nullable<int> CountryID { get; set; }
-        public Nullable<int> StateID { get; set; }
-        public Nullable<int> CityID { get; set; }
+        public string EmailId { get; set; }
         public string EmployeeAddress { get; set; }
         public string PinNumber { get; set; }
         public string EmployeePic { get; set; }
+        public string UserName { get; set; }
+        public string Signature { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<int> OrganizationID { get; set; }
-        public string EmailId { get; set; }
-        public string UserName { get; set; }
-        public string Signature { get; set; }
     
-        public virtual CityMaster CityMaster { get; set; }
-        public virtual CountryMaster CountryMaster { get; set; }
         public virtual Department Department { get; set; }
         public virtual DesignationMaster DesignationMaster { get; set; }
-        public virtual StateMaster StateMaster { get; set; }
+        public virtual Organisation Organisation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
-        public virtual Organisation Organisation { get; set; }
     }
 }

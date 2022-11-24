@@ -1,0 +1,273 @@
+﻿@model InVanWebApp_BO.POPaymentBO
+
+
+<style>
+    .error {
+        color: red;
+        margin-left: 5px;
+    }
+
+    label.error {
+        display: inline;
+    }
+</style>
+
+@using (Html.BeginForm("AddPOPayment", "POPayment", FormMethod.Post, new { enctype = "multipart/form-data", Id = "frmPaymentDetails" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.PurchaseOrderId)
+    @Html.HiddenFor(model => model.PONumber)
+    <hr />
+    <div id="dvPaymentDetails">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">INVOICE DETAILS</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Vendor <span style="color:red">*</span></label>
+                                
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control", @placeholder = "Enter Vendor Name" , @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.VendorName, "", new { @class = "error mt-2 text-danger" })
+                                @Html.HiddenFor(x => x.VendorID)
+                            </div>
+                            <div class="col-md-2">
+                                <label>Invoice Number <span style="color:red">*</span></label>
+                                
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.InvoiceNumber, new { @class = "form-control", @placeholder = "Enter Invoice Number" })
+                                @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                <label>Payment Due Date <span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.PaymentDueDate, new { @class = "form-control", type = "date" })
+                                @Html.ValidationMessageFor(model => model.PaymentDueDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                <label>Invoice Amount <span style="color:red">*</span></label>
+                                
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(x => x.PaymentAmount, new { @class = "form-control", @placeholder = "Enter Payment Amount" })
+                                @Html.ValidationMessageFor(model => model.PaymentAmount, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">ITEM DETAILS</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                            <table class="table table-striped" id="submissionTable">
+                                <thead>
+                                    <tr>
+                                        <th class="sortStyle">
+                                            Item Name
+                                            <i class="fa fa-angle-down"></i>
+                                        </th>
+                                        <th class="sortStyle">
+                                            Item Code
+                                            <i class="fa fa-angle-down"></i>
+                                        </th>
+                                        <th class="sortStyle">
+                                            Quantity
+                                            <i class="fa fa-angle-down"></i>
+                                        </th>
+                                        <th class="sortStyle">
+                                            Units
+                                            <i class="fa fa-angle-down"></i>
+                                        </th>
+                                        <th class="sortStyle">
+                                            Unit Price
+                                            <i class="fa fa-angle-down"></i>
+                                        </th>
+                                        <th class="sortStyle">
+                                            Total Payable
+                                            <i class="fa fa-angle-down"></i>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.PurchaseOrderItems)
+                                    {
+                                        <tr id="tablerow">
+                                            <td>
+                                                @Html.DisplayFor(x => item.ItemName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => item.Item_Code)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => item.ItemQuantity)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => item.ItemUnit)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => item.ItemUnitPrice)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(x => item.TotalItemCost)
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">PAYMENT MODE</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Label("Payment Mode")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-9">
+                                <select class="form-control" id="PaymentMode" name="PaymentMode">
+                                    <option value="Cash">Cash</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="Online">Online</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.PaymentMode, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" id="dvBankName" style="display:none;">
+                            <div class="col-md-3">
+                                @Html.Label("Bank Name")
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.BankName, new { @class = "form-control", @placeholder = "Enter Bank Name" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" id="dvCheque" style="display:none;">
+                            <div class="col-md-3">
+                                @Html.Label("Cheque Number")
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.ChequeNumber, new { @class = "form-control", @placeholder = "Enter Cheque Number" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" id="dvAccountNo" style="display:none;">
+                            <div class="col-md-3">
+                                @Html.Label("Account Number")
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.AccountNumber, new { @class = "form-control", @placeholder = "Enter Account Number" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">PAYMENT DETAILS</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Label("Total PO Amount")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.TotalPOAmount, new { @class = "form-control", @placeholder = "Total PO Amount", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.TotalPOAmount, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Label("Payble Amount")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.TotalPaybleAmount, new { @class = "form-control", @placeholder = "Total Payble Amount", @onblur = "calculateBalancePay()" })
+                                @Html.ValidationMessageFor(model => model.TotalPaybleAmount, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Label("Balance Amount")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.BalanceAmount, new { @class = "form-control", @placeholder = "Enter Balance Amount", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.BalanceAmount, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title"></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-1">
+                                @Html.Label("Paid/Un Paid")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-control" id="IsPaid" name="IsPaid">
+                                    <option value="Paid">Paid</option>
+                                    <option value="UnPaid">UnPaid</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.IsPaid, "", new { @class = "error mt-2 text-danger" })
+
+                            </div>
+                            <div class="col-md-1">
+                                @Html.Label("Payment Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-3">
+                                @Html.TextBoxFor(model => model.PaymentDate, new { @class = "form-control", type = "date" })
+                                @Html.ValidationMessageFor(model => model.PaymentDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-1">
+                                @Html.Label("Remarks")
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Save</button>
+            </div>
+        </div>
+    </div>
+}
+

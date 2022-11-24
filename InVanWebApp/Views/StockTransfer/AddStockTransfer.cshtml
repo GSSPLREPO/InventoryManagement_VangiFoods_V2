@@ -14,19 +14,18 @@
         <div class="card-body">
             <h4>Stock Transfer</h4>
             <hr />
-            @Html.ValidationSummary(true)
-
+            @Html.ValidationSummary(true)            
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("From Location")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.FromLocationId, (IEnumerable<SelectListItem>)ViewData["FromLocationName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedFromLocation($(this).val())" })
+                    @Html.DropDownListFor(model => model.FromLocationId, (IEnumerable<SelectListItem>)ViewData["FromLocationName"], "---Select---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedFromLocation($(this).val())" })
                     @*@Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })*@
                 </div>
                 <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.FromLocationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.FromLocationName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
                 </div>
                 <br />
                 <div class="col-md-2">
@@ -34,11 +33,11 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.ToLocationId, (IEnumerable<SelectListItem>)ViewData["ToLocationName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedToLocation($(this).val())" })
+                    @Html.DropDownListFor(model => model.ToLocationId, (IEnumerable<SelectListItem>)ViewData["ToLocationName"], "---Select---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedToLocation($(this).val())" })
                     @*@Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })*@
                 </div>
                 <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.ToLocationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.ToLocationName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
                 </div>
             </div>
             <br />
@@ -47,7 +46,7 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div class="form-group">
+                        <div class="form-group mb-0">
                             <div class="row">
                                 <div class="table-sorter-wrapper col-lg-12 table-responsive">
                                     <table class="table table-striped" id="submissionTable">
@@ -83,6 +82,7 @@
                                                 </th>
                                                 <th class="sortStyle">
                                                     Remarks
+                                                    <span style="color:red">*</span>
                                                     <i class=""></i>
                                                 </th>
                                             </tr>
@@ -90,31 +90,32 @@
                                         <tbody id="myTableBody">
                                             <tr id="tablerow">
                                                 <td>
-                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control", style = "height:30px;width:100px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
                                                 </td>
                                                 <td class="col-2">
-                                                    @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                    @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBox("ItemName", "", new { @class = "form-control", style = "height:30px;width:200px;" })
+                                                    @Html.TextBox("Item_Name", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(model => model.RequiredQuantity, new { @class = "form-control text-right", style = "height:30px;width:100px;" })
+                                                    @Html.TextBoxFor(model => model.RequiredQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control", style = "height:30px;width:100px;" })
+                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(model => model.TransferQuantity, new { @class = "form-control text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)" })
+                                                    @Html.TextBoxFor(model => model.TransferQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBox("FinalQuantity", "", new { @class = "form-control text-right", style = "height:30px;width:80px;" })
+                                                    @Html.TextBox("FinalQuantity", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(model => model.Remarks, "", new { @class = "form-control text-right", style = "height:30px;width:200px;" })
+                                                    @Html.TextBoxFor(model => model.Remarks, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;" })
+                                                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
+                                                    <button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(0);" disabled>Delete</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -123,31 +124,44 @@
                             </div>
                             <br />
                             <div class="row">
-                                <button type="button" class="btn btn-info shadow" id="AddItem">
-                                    + Add Item 
+                                @*<button type="button" class="btn btn-info shadow" id="AddItem">
+                                + Add Item
+                            </button>*@
+                                <button type="button" class="btn btn-primary shadow" id="AddItem" style="background: linear-gradient(85deg, #392c70, #6a005b); margin-left: 1rem;">
+                                    + Add Item
                                 </button>
                             </div>
                         </div>
-                        <div class="col-md-4">                            
-                            @*@Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })*@ 
-                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:block" }) 
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                            @*@Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:block" })*@
                         </div>
                     </div>
                 </div>
             </div>
             <br />
-            <button type="submit" id="btnSave" class="btn btn-primary mr-2 float-right" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="AddStockTransfer">Save</button>
-            <br />
-            <!--<div class="row text-right">
-            <div class="col">
-                <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Save</button>
+            <div class="row float-right">
+                <div>
+                    <button type="submit" id="btnSave" class="btn btn-primary mr-2 float-right" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="AddStockTransfer" onclick="createJson()">Submit</button>
+                </div>
+                <div>
+                    <button type="button" id="btnBack" class="btn btn-primary mr-2 float-right text-white" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+                        @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-primary mr-2 float-right font-weight-light text-white" }, new { style = "background: linear-gradient(85deg, #392c70, #6a005b); color: white;" })
+                    </button>
+                </div>
             </div>
+            <br />
 
-            <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Back To List</a>-->
+            <!--<div class="row text-right">
+    <div class="col">
+        <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Save</button>
+    </div>
+
+    <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Back To List</a>-->
             @*<button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Submit</button>
-                <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
-                    Back To List
-                </a>*@
+        <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+            Back To List
+        </a>*@
 
             <!--</div>-->
 
@@ -175,19 +189,32 @@
         locationName = document.getElementById("FromLocationId").options[selectedOptionLocationName].innerText;
         document.getElementById("FromLocationName").value = locationName;
 
-        //$.ajax({
-        //    type: "POST",
-        //    url: `/PurchaseOrder/BindLocationMaster?id=` + id,
-        //    data: "{}",
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "json",
-        //    success: function (result) {
-        //        debugger;
-        //        //console.log(result);
-        //        var deliveryAdd = result[0].DeliveryAddress;
-        //        $("#DeliveryAddress").val(deliveryAdd);
-        //    }
-        //});
+    //    $.ajax({
+    //        type: "POST",
+    //        url: `/StockTransfer/BindFromLocationMaster?id=` + id,
+    //        data: "{}",
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (result) {
+    //            debugger;
+    //            console.log(result);
+    //            var requiredQuantity = result[0].Quantity;
+    //            $("#RequiredQuantity").val(requiredQuantity);
+    //            var itemQty = result[0].Quantity;
+    //            var tempCount = counter;
+    //            $("#itemQuantity_" + counter).val(itemQty);                
+    //            if (counter == 2) {
+    //                tempCount--;
+    //                $("#itemQuantity_" + tempCount).val(itemQty);
+    //            } else {
+    //                tempCount = counter;
+    //                tempCount--;
+    //                $("#itemQuantity_" + tempCount).val(itemQty);                    
+    //            }
+                     
+                               
+    //        }
+    //    });
     }
 
     function SelectedIndexChangedToLocation(id) {
@@ -207,22 +234,55 @@
         //    success: function (result) {
         //        debugger;
         //        //console.log(result);
-        //        var deliveryAdd = result[0].DeliveryAddress;
-        //        $("#DeliveryAddress").val(deliveryAdd);
+        //        var requiredQuantity = result[0].RequiredQuantity;
+        //        $("#RequiredQuantity").val(requiredQuantity);
         //    }
         //});
     }
 
     function SelectedIndexChangedItemList(id) {
         debugger
-        var selectedOptionTerms, itemCode;
-        selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
-        itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
-        document.getElementById("Item_Code").value = itemCode;
+        var FromLocationCheck = $('#FromLocationId').val();
+        var ToLocationCheck = $('#ToLocationId').val();
+
+        if (FromLocationCheck == '' || FromLocationCheck == null) {
+            debugger
+            $('#FromLocationId').focus();
+            document.getElementById('Item_ID').selectedIndex = 0;
+            return;
+        }
+        else if (ToLocationCheck == '' || ToLocationCheck == null) {
+            debugger
+            $('#ToLocationId').focus();
+            document.getElementById('Item_ID').selectedIndex = 0;
+            return;
+        }
+        else {
+            var selectedOptionTerms, itemCode;
+            selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
+            itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
+            document.getElementById("Item_Code").value = itemCode;
+        }
+
     }
     $("#Item_ID").change(function () {
         debugger
-        getitemDetails();
+        var FromLocationCheck = $('#FromLocationId').val();
+        var ToLocationCheck = $('#ToLocationId').val();
+
+        if (FromLocationCheck == '' || FromLocationCheck == null) {
+            debugger
+            $('#FromLocationId').focus();
+            document.getElementById('Item_ID').selectedIndex = 0;
+            return;
+        }
+        else if (ToLocationCheck == '' || ToLocationCheck == null) {
+            debugger
+            $('#ToLocationId').focus();
+            document.getElementById('Item_ID').selectedIndex = 0;
+            return;
+        } else { getitemDetails();}
+
     });
     //Dropdownlist Selectedchange event
     function getitemDetails() {
@@ -233,7 +293,7 @@
 
                 dataType: 'json',
 
-                data: { id: $("#Item_ID").val() },
+                data: { id: $("#Item_ID").val(), locationId: $("#FromLocationId").val() },
                 // here we are get value of selected item and passing same value
                 //as inputto json method GetitemDetails.
 
@@ -241,10 +301,10 @@
                 debugger
                 // states contains the JSON formatted list
                 // of states passed from the controller
-                var description = JSON.stringify(itemDescription);
-                $("#ItemName").val(itemDescription.ItemName);
-                $("#ItemUnit").val(itemDescription.ItemUnit);
-                    $("#RequiredQuantity").val(itemDescription.StockQuantity);
+                    var description = JSON.stringify(itemDescription);
+                    $("#Item_Name").val(itemDescription.Item_Name);
+                    $("#ItemUnit").val(itemDescription.UnitCode);
+                    $("#RequiredQuantity").val(itemDescription.RequiredQuantity);
                     $("#TransferQuantity").val('0');
                     $("#FinalQuantity").val('0');
                 },
@@ -271,50 +331,51 @@
 
     $("#AddItem").click(function () {
         debugger
-        //'<select id="ItemID" class="form-control" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
+        //'<select id="ItemID" class="form-control form-control-sm" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
         //var nameItem = "Item_ID['" + counter + "']";
         var itemId = "ItemID_" + counter;
         var itemCode = "itemCode_" + counter;
         var itemDescription = "itemDescription_" + counter;
         var itemQuantity = "itemQuantity_" + counter;
         var itemUnit = "itemUnit_" + counter;
-        var transferQuantity = "transferQuantity_" + counter; 
-        var finalQuantity = "finalQuantity_" + counter; 
+        var transferQuantity = "transferQuantity_" + counter;
+        var finalQuantity = "finalQuantity_" + counter;
         var remarks = "remarks_" + counter;
         $('<tr id="tablerow' + counter + '">' + '<td>' +
-            //'<select id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" required="required" /></select>' +
-            //'<input type="text" id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" value="" required="required" />' +
-            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:100px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
+            //'<select id="ItemID" class="form-control form-control-sm" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" required="required" /></select>' +
+            //'<input type="text" id="ItemID" class="form-control form-control-sm" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" value="" required="required" />' +
+            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:100px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemCode + '" class="form-control" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
+            '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '" value="" required="required" />' +
+            '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemDescription + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            /*'<input type="text" id="' + itemQuantity + '" onkeyup="calcTax(' + counter + ',' + this.value + ')"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
-        /*'<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
-            '<input type="text" id="' + itemQuantity + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="" required="required" />' +
+            /*'<input type="text" id="' + itemQuantity + '" onkeyup="calcTax(' + counter + ',' + this.value + ')"; class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
+        /*'<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
+            '<input type="text" id="' + itemQuantity + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '" value="" required="required" />' +
+            '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + itemUnit + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            /*'<input type="text" id="' + transferQuantity + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="" required="required" />' +*/
-            '<input type="text" id="' + transferQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control text-right" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="0"     required="required" />' +
+            /*'<input type="text" id="' + transferQuantity + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="" required="required" />' +*/
+            '<input type="text" id="' + transferQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="0"     required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + finalQuantity + '" class="form-control text-right" style = "height:30px;width:80px;" name="' + finalQuantity + ' " value="" required="required" />' +
+            '<input type="text" id="' + finalQuantity + '" class="form-control form-control-sm text-right" style = "height:30px;width:80px;" name="' + finalQuantity + ' " value="0" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + remarks + '" class="form-control text-right" style = "height:30px;width:200px;" name="' + remarks + '" value="" required="required" />' + 
+            '<input type="text" id="' + remarks + '" class="form-control form-control-sm text-right" style = "height:30px;width:200px;" name="' + remarks + '" value="ok" required="required" />' +
             '</td>' +
             '<td>' +
-            '<button type="button" class="btn btn-primary" onclick="removeTr(' + counter + ');">Delete</button>' +
+            '<button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
             '</td>' +
             '</tr>').appendTo('#submissionTable');
-
+        var id = $('#FromLocationId').val(); 
+        SelectedIndexChangedFromLocation(id);
         counter++;
         return false;
     });
@@ -328,15 +389,15 @@
         if (value != 0) {
             var transferQuantity = $("#transferQuantity_" + rowNo).val();
             transferQuantity = parseFloat(transferQuantity);
-            var requiredQuantity = $("#itemQuantity_" + rowNo).val(); 
+            var requiredQuantity = $("#itemQuantity_" + rowNo).val();
             requiredQuantity = parseFloat(requiredQuantity);
-            var finalQuantity = requiredQuantity - transferQuantity; 
+            var finalQuantity = requiredQuantity - transferQuantity;
             $("#finalQuantity_" + rowNo).val(finalQuantity);
         }
         createJson();
     }
 
-    var TxtItemDetails = ""; 
+    var TxtItemDetails = "";
 
     function createJson() {
         debugger
@@ -354,7 +415,7 @@
 
         function getitemDetailsJSTbl(count) {
         debugger
-        console.log(count);        
+        console.log(count);
         var itemId = "ItemID_" + count;
         var selectedItemId = $("#" + itemId).val();
                     $.ajax({
@@ -363,28 +424,29 @@
                 url: '@Url.Action("GetitemDetails")', // we are calling json method
 
                 dataType: 'json',
-                data: { id: selectedItemId },
+                        data: { id: selectedItemId, locationId: $("#FromLocationId").val() },
                 // here we are get value of selected item and passing same value
                 //as inputto json method GetitemDetails.
 
                         success: function (itemDescription) {
                     debugger
                     // states contains the JSON formatted list
-                    // of states passed from the controller                  
+                    // of states passed from the controller
 
                             var description = JSON.stringify(itemDescription);
                             console.log(description);
-                    // var item = description.split("#"); 
+                    // var item = description.split("#");
                             //alert('hh' + itemDescription.Item_Name + "  " +itemDescription.UnitName+" "+itemDescription.Price);
                             $("#itemCode_" + count).val(itemDescription.Item_Code);
-                            $("#itemDescription_" + count).val(itemDescription.ItemName);
-                            $("#itemUnit_" + count).val(itemDescription.ItemUnit);
-                            $("#itemQuantity_" + count).val(itemDescription.StockQuantity);
+                            $("#itemDescription_" + count).val(itemDescription.Item_Name);
+                            $("#itemUnit_" + count).val(itemDescription.UnitCode);
+                            $("#itemQuantity_" + count).val(itemDescription.RequiredQuantity);
                             //$("#itemTax_" + count).val(itemDescription.ItemTaxValue);
                             $("#transferQuantity_" + count).val('0');
                             $("#finalQuantity_").val('0');
-                            //$("#totalItemCost_" + count).val('0'); 
-                    
+                            $("#remarks_").val('ok');
+                            //$("#totalItemCost_" + count).val('0');
+
                 },
                 failure: function () {
                     alert('Failed to retrieved item detals!');
@@ -401,9 +463,15 @@
 
 
     function removeTr(index) {
-        if (counter > 1) {
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        //console.log("Length: " + length + counter);
+        if (counter > 1 & length == index) {
             $('#tablerow' + index).remove();
             counter--;
+        }
+        else {
+            $('#tablerow' + index).remove();
         }
         return false;
     }

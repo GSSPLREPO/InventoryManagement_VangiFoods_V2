@@ -28,6 +28,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage ="Enter minimum stock value!")]
         [Range(0, double.MaxValue, ErrorMessage = "Please enter valid stock value!")]
         public Nullable<double> MinStock { get; set; }
+        public Nullable<double> RequiredQuantity { get; set; } //Rahul added 23 Nov 2022 
 
         [StringLength(150, ErrorMessage = "Legth of description is exceeded!")]
         public string Description { get; set; }

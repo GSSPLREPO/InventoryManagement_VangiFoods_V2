@@ -14,6 +14,12 @@ namespace InVanWebApp.DAL
     
     public partial class IssueNote
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public IssueNote()
+        {
+            this.IssueNoteDetails = new HashSet<IssueNoteDetail>();
+        }
+    
         public int IssueNoteId { get; set; }
         public Nullable<int> DepartmentId { get; set; }
         public string IssueNoteNo { get; set; }
@@ -34,5 +40,8 @@ namespace InVanWebApp.DAL
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IssueNoteDetail> IssueNoteDetails { get; set; }
     }
 }

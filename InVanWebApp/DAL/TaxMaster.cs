@@ -22,6 +22,7 @@ namespace InVanWebApp.DAL
     
         public int Id { get; set; }
         public string TaxName { get; set; }
+        public Nullable<decimal> TaxValue { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

@@ -19,14 +19,13 @@ namespace InVanWebApp.DAL
         public Nullable<int> EmployeeId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<bool> IsActive { get; set; }
     
-        public virtual EmployeeMaster EmployeeMaster { get; set; }
         public virtual Role Role { get; set; }
         public virtual UserDetail UserDetail { get; set; }
     }

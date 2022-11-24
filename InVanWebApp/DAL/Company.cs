@@ -14,17 +14,24 @@ namespace InVanWebApp.DAL
     
     public partial class Company
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Company()
+        {
+            this.PurchaseOrders = new HashSet<PurchaseOrder>();
+        }
+    
         public int ID { get; set; }
         public string CompanyType { get; set; }
         public string CompanyName { get; set; }
         public string ContactPersonName { get; set; }
-        public Nullable<int> ContactPersonNo { get; set; }
+        public string ContactPersonNo { get; set; }
         public string EmailId { get; set; }
         public string Address { get; set; }
         public Nullable<int> CityID { get; set; }
         public Nullable<int> StateID { get; set; }
         public Nullable<int> CountryID { get; set; }
         public Nullable<int> PinCode { get; set; }
+        public string GSTNumber { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<bool> IsBlackListed { get; set; }
@@ -33,10 +40,11 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public string GSTNumber { get; set; }
     
         public virtual CityMaster CityMaster { get; set; }
         public virtual CountryMaster CountryMaster { get; set; }
         public virtual StateMaster StateMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
     }
 }

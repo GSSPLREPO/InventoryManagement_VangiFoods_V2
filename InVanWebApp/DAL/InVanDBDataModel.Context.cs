@@ -12,6 +12,8 @@ namespace InVanWebApp.DAL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class InVanDBContext : DbContext
     {
@@ -29,13 +31,13 @@ namespace InVanWebApp.DAL
         public virtual DbSet<CityMaster> CityMasters { get; set; }
         public virtual DbSet<ClientMaster> ClientMasters { get; set; }
         public virtual DbSet<COAMaster> COAMasters { get; set; }
+        public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CountryMaster> CountryMasters { get; set; }
         public virtual DbSet<CurrencyMaster> CurrencyMasters { get; set; }
         public virtual DbSet<DebitNote> DebitNotes { get; set; }
         public virtual DbSet<DebitNoteDetail> DebitNoteDetails { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DesignationMaster> DesignationMasters { get; set; }
-        public virtual DbSet<EmployeeMaster> EmployeeMasters { get; set; }
         public virtual DbSet<FinishGoodSery> FinishGoodSeries { get; set; }
         public virtual DbSet<GRN_Master> GRN_Master { get; set; }
         public virtual DbSet<GRNDetail> GRNDetails { get; set; }
@@ -43,6 +45,9 @@ namespace InVanWebApp.DAL
         public virtual DbSet<InquiryMaster> InquiryMasters { get; set; }
         public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
         public virtual DbSet<InwardNote> InwardNotes { get; set; }
+        public virtual DbSet<InwardNoteDetail> InwardNoteDetails { get; set; }
+        public virtual DbSet<InwardQC> InwardQCs { get; set; }
+        public virtual DbSet<InwardQCDetail> InwardQCDetails { get; set; }
         public virtual DbSet<IssueNote> IssueNotes { get; set; }
         public virtual DbSet<IssueNoteDetail> IssueNoteDetails { get; set; }
         public virtual DbSet<Item> Items { get; set; }
@@ -61,6 +66,8 @@ namespace InVanWebApp.DAL
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual DbSet<PurchaseOrderAmendment> PurchaseOrderAmendments { get; set; }
         public virtual DbSet<PurchaseOrderAmendmentDetail> PurchaseOrderAmendmentDetails { get; set; }
+        public virtual DbSet<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
+        public virtual DbSet<PurchaseOrderPaymentDetails> PurchaseOrderPaymentDetails1 { get; set; }
         public virtual DbSet<QCProductionSpecificationMaster> QCProductionSpecificationMasters { get; set; }
         public virtual DbSet<QCProductioObservationMaste> QCProductioObservationMastes { get; set; }
         public virtual DbSet<QCProductioObservationMaster> QCProductioObservationMasters { get; set; }
@@ -70,6 +77,8 @@ namespace InVanWebApp.DAL
         public virtual DbSet<RoleRight> RoleRights { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SalesOrder> SalesOrders { get; set; }
+        public virtual DbSet<SalesOrderItemsDetail> SalesOrderItemsDetails { get; set; }
+        public virtual DbSet<SalesOrderPaymentDetail> SalesOrderPaymentDetails { get; set; }
         public virtual DbSet<ScreenName> ScreenNames { get; set; }
         public virtual DbSet<SOItem> SOItems { get; set; }
         public virtual DbSet<SOItemSchedule> SOItemSchedules { get; set; }
@@ -83,16 +92,3140 @@ namespace InVanWebApp.DAL
         public virtual DbSet<TaxMaster> TaxMasters { get; set; }
         public virtual DbSet<TermsAndConditionMaster> TermsAndConditionMasters { get; set; }
         public virtual DbSet<UnitMaster> UnitMasters { get; set; }
+        public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
         public virtual DbSet<WorkOrderDetail> WorkOrderDetails { get; set; }
         public virtual DbSet<YearMaster> YearMasters { get; set; }
-        public virtual DbSet<Company> Companies { get; set; }
-        public virtual DbSet<UserDetail> UserDetails { get; set; }
-        public virtual DbSet<InwardQC> InwardQCs { get; set; }
-        public virtual DbSet<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
-        public virtual DbSet<PurchaseOrderPaymentDetail> PurchaseOrderPaymentDetails { get; set; }
-        public virtual DbSet<SalesOrderItemsDetail> SalesOrderItemsDetails { get; set; }
-        public virtual DbSet<SalesOrderPaymentDetail> SalesOrderPaymentDetails { get; set; }
+        public virtual DbSet<Tbl_Customers_M> Tbl_Customers_M { get; set; }
+        public virtual DbSet<Tbl_Designation_M> Tbl_Designation_M { get; set; }
+        public virtual DbSet<Tbl_Notes_M> Tbl_Notes_M { get; set; }
+        public virtual DbSet<Tbl_Organization_M> Tbl_Organization_M { get; set; }
+        public virtual DbSet<Tbl_PressureClass_M> Tbl_PressureClass_M { get; set; }
+        public virtual DbSet<Tbl_PressureValues_T> Tbl_PressureValues_T { get; set; }
+        public virtual DbSet<Tbl_RoleRights_M> Tbl_RoleRights_M { get; set; }
+        public virtual DbSet<Tbl_Roles_M> Tbl_Roles_M { get; set; }
+        public virtual DbSet<Tbl_Screens_M> Tbl_Screens_M { get; set; }
+        public virtual DbSet<Tbl_Sealing_M> Tbl_Sealing_M { get; set; }
+        public virtual DbSet<Tbl_Section_M> Tbl_Section_M { get; set; }
+        public virtual DbSet<Tbl_SubTestCategory_M> Tbl_SubTestCategory_M { get; set; }
+        public virtual DbSet<Tbl_TemperatureValues_T> Tbl_TemperatureValues_T { get; set; }
+        public virtual DbSet<Tbl_TestCategory_M> Tbl_TestCategory_M { get; set; }
+        public virtual DbSet<Tbl_TestComponent_M> Tbl_TestComponent_M { get; set; }
+        public virtual DbSet<Tbl_TestComponentCategory_M> Tbl_TestComponentCategory_M { get; set; }
+        public virtual DbSet<Tbl_TestConfiguration_M> Tbl_TestConfiguration_M { get; set; }
+        public virtual DbSet<Tbl_Units_M> Tbl_Units_M { get; set; }
+        public virtual DbSet<Tbl_UnitType_M> Tbl_UnitType_M { get; set; }
+        public virtual DbSet<Tbl_User_M> Tbl_User_M { get; set; }
+        public virtual DbSet<Tbl_UserDetails_M> Tbl_UserDetails_M { get; set; }
+        public virtual DbSet<Tbl_ValveModel_M> Tbl_ValveModel_M { get; set; }
+        public virtual DbSet<Tbl_ValveSize_M> Tbl_ValveSize_M { get; set; }
+        public virtual DbSet<Tbl_ValveTestRecordsEntry_M> Tbl_ValveTestRecordsEntry_M { get; set; }
+        public virtual DbSet<Tbl_ValveTestRecordsold_M> Tbl_ValveTestRecordsold_M { get; set; }
+        public virtual DbSet<Tbl_ValveTypes_M> Tbl_ValveTypes_M { get; set; }
+        public virtual DbSet<Tbl_Valves_M> Tbl_Valves_M { get; set; }
+    
+        public virtual int upl_Tbl_InsertSubTestCategories(Nullable<int> testCategoryId, string subTestCategoryName, string remarks, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            var subTestCategoryNameParameter = subTestCategoryName != null ?
+                new ObjectParameter("SubTestCategoryName", subTestCategoryName) :
+                new ObjectParameter("SubTestCategoryName", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upl_Tbl_InsertSubTestCategories", testCategoryIdParameter, subTestCategoryNameParameter, remarksParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int upl_Tbl_InsertTestCategories(string testCategoryName, string testCategoryDescription, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testCategoryNameParameter = testCategoryName != null ?
+                new ObjectParameter("TestCategoryName", testCategoryName) :
+                new ObjectParameter("TestCategoryName", typeof(string));
+    
+            var testCategoryDescriptionParameter = testCategoryDescription != null ?
+                new ObjectParameter("TestCategoryDescription", testCategoryDescription) :
+                new ObjectParameter("TestCategoryDescription", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upl_Tbl_InsertTestCategories", testCategoryNameParameter, testCategoryDescriptionParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int upl_tbl_InsertUsers(string userName, string password)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("upl_tbl_InsertUsers", userNameParameter, passwordParameter);
+        }
+    
+        public virtual int usp_rpt_GetAllTestDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetAllTestDetails");
+        }
+    
+        public virtual int usp_rpt_GetAllTestDetails_N()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetAllTestDetails_N");
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetAllValveTestRecords_T_Result> usp_rpt_GetAllValveTestRecords_T(string customerName, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var customerNameParameter = customerName != null ?
+                new ObjectParameter("CustomerName", customerName) :
+                new ObjectParameter("CustomerName", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetAllValveTestRecords_T_Result>("usp_rpt_GetAllValveTestRecords_T", customerNameParameter, fromDateParameter, toDateParameter);
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetAllValveTestRecordsDates_T_Result> usp_rpt_GetAllValveTestRecordsDates_T(Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetAllValveTestRecordsDates_T_Result>("usp_rpt_GetAllValveTestRecordsDates_T", fromDateParameter, toDateParameter);
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetAllValveTestRecordsforExcel_T_Result> usp_rpt_GetAllValveTestRecordsforExcel_T()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetAllValveTestRecordsforExcel_T_Result>("usp_rpt_GetAllValveTestRecordsforExcel_T");
+        }
+    
+        public virtual int usp_rpt_GetAverageTemperature(Nullable<int> recordId, ObjectParameter avgTemp)
+        {
+            var recordIdParameter = recordId.HasValue ?
+                new ObjectParameter("RecordId", recordId) :
+                new ObjectParameter("RecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetAverageTemperature", recordIdParameter, avgTemp);
+        }
+    
+        public virtual int usp_rpt_GetAvgTemperature(Nullable<int> testRecordId, ObjectParameter avgTemp)
+        {
+            var testRecordIdParameter = testRecordId.HasValue ?
+                new ObjectParameter("TestRecordId", testRecordId) :
+                new ObjectParameter("TestRecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetAvgTemperature", testRecordIdParameter, avgTemp);
+        }
+    
+        public virtual int usp_rpt_GetMinMaxPressure(Nullable<int> testRecordId, ObjectParameter minPressure, ObjectParameter maxPressure)
+        {
+            var testRecordIdParameter = testRecordId.HasValue ?
+                new ObjectParameter("TestRecordId", testRecordId) :
+                new ObjectParameter("TestRecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetMinMaxPressure", testRecordIdParameter, minPressure, maxPressure);
+        }
+    
+        public virtual int usp_rpt_GetMinMaxPressureValue(Nullable<int> recordId, ObjectParameter minPressure, ObjectParameter maxPressure)
+        {
+            var recordIdParameter = recordId.HasValue ?
+                new ObjectParameter("RecordId", recordId) :
+                new ObjectParameter("RecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetMinMaxPressureValue", recordIdParameter, minPressure, maxPressure);
+        }
+    
+        public virtual int usp_rpt_GetMinMaxPressureValuesById(Nullable<int> recordId, ObjectParameter minPressure, ObjectParameter maxPressure)
+        {
+            var recordIdParameter = recordId.HasValue ?
+                new ObjectParameter("RecordId", recordId) :
+                new ObjectParameter("RecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetMinMaxPressureValuesById", recordIdParameter, minPressure, maxPressure);
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetPressureandTemperatureValues_Result> usp_rpt_GetPressureandTemperatureValues(Nullable<int> testRecordId)
+        {
+            var testRecordIdParameter = testRecordId.HasValue ?
+                new ObjectParameter("TestRecordId", testRecordId) :
+                new ObjectParameter("TestRecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetPressureandTemperatureValues_Result>("usp_rpt_GetPressureandTemperatureValues", testRecordIdParameter);
+        }
+    
+        public virtual int usp_rpt_GetPressureTemperatureValues(Nullable<int> recordId)
+        {
+            var recordIdParameter = recordId.HasValue ?
+                new ObjectParameter("RecordId", recordId) :
+                new ObjectParameter("RecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetPressureTemperatureValues", recordIdParameter);
+        }
+    
+        public virtual int usp_rpt_GetPressureTemperatureValuesById(Nullable<int> recordId)
+        {
+            var recordIdParameter = recordId.HasValue ?
+                new ObjectParameter("RecordId", recordId) :
+                new ObjectParameter("RecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetPressureTemperatureValuesById", recordIdParameter);
+        }
+    
+        public virtual int usp_rpt_GetPressureTemperatureValuesN(Nullable<int> recordId)
+        {
+            var recordIdParameter = recordId.HasValue ?
+                new ObjectParameter("RecordId", recordId) :
+                new ObjectParameter("RecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetPressureTemperatureValuesN", recordIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetPressureTemperatureValueswithSetPressure_Result> usp_rpt_GetPressureTemperatureValueswithSetPressure(Nullable<int> testRecordId)
+        {
+            var testRecordIdParameter = testRecordId.HasValue ?
+                new ObjectParameter("TestRecordId", testRecordId) :
+                new ObjectParameter("TestRecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetPressureTemperatureValueswithSetPressure_Result>("usp_rpt_GetPressureTemperatureValueswithSetPressure", testRecordIdParameter);
+        }
+    
+        public virtual int usp_rpt_GetStartEndTime(Nullable<int> recordId, ObjectParameter startTime, ObjectParameter endTime)
+        {
+            var recordIdParameter = recordId.HasValue ?
+                new ObjectParameter("RecordId", recordId) :
+                new ObjectParameter("RecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetStartEndTime", recordIdParameter, startTime, endTime);
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetValveTestDetailById_Result> usp_rpt_GetValveTestDetailById(Nullable<int> recordId)
+        {
+            var recordIdParameter = recordId.HasValue ?
+                new ObjectParameter("RecordId", recordId) :
+                new ObjectParameter("RecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetValveTestDetailById_Result>("usp_rpt_GetValveTestDetailById", recordIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetValveTestDetailByRecordId_Result> usp_rpt_GetValveTestDetailByRecordId(Nullable<int> recordId)
+        {
+            var recordIdParameter = recordId.HasValue ?
+                new ObjectParameter("RecordId", recordId) :
+                new ObjectParameter("RecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetValveTestDetailByRecordId_Result>("usp_rpt_GetValveTestDetailByRecordId", recordIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetValveTestDetailByRecordNumber_Result> usp_rpt_GetValveTestDetailByRecordNumber(string recordNumber)
+        {
+            var recordNumberParameter = recordNumber != null ?
+                new ObjectParameter("RecordNumber", recordNumber) :
+                new ObjectParameter("RecordNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetValveTestDetailByRecordNumber_Result>("usp_rpt_GetValveTestDetailByRecordNumber", recordNumberParameter);
+        }
+    
+        public virtual int usp_rpt_GetValveTestDetailsById(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetValveTestDetailsById", idParameter);
+        }
+    
+        public virtual int usp_rpt_GetValveTestDetailsByIdN(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetValveTestDetailsByIdN", idParameter);
+        }
+    
+        public virtual int usp_rpt_GetValveTestRecords()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetValveTestRecords");
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetValveTestRecords_T_Result> usp_rpt_GetValveTestRecords_T()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetValveTestRecords_T_Result>("usp_rpt_GetValveTestRecords_T");
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetValveTestRecordsDates_T_Result> usp_rpt_GetValveTestRecordsDates_T(Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("fromDate", fromDate) :
+                new ObjectParameter("fromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("toDate", toDate) :
+                new ObjectParameter("toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetValveTestRecordsDates_T_Result>("usp_rpt_GetValveTestRecordsDates_T", fromDateParameter, toDateParameter);
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetValveTestRecordsforExcel_T_Result> usp_rpt_GetValveTestRecordsforExcel_T()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetValveTestRecordsforExcel_T_Result>("usp_rpt_GetValveTestRecordsforExcel_T");
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetValveTestRecordsForSearch_T_Result> usp_rpt_GetValveTestRecordsForSearch_T(string value)
+        {
+            var valueParameter = value != null ?
+                new ObjectParameter("value", value) :
+                new ObjectParameter("value", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetValveTestRecordsForSearch_T_Result>("usp_rpt_GetValveTestRecordsForSearch_T", valueParameter);
+        }
+    
+        public virtual ObjectResult<usp_rpt_GetValveTestRecordsSearch_T_Result> usp_rpt_GetValveTestRecordsSearch_T(string prefix)
+        {
+            var prefixParameter = prefix != null ?
+                new ObjectParameter("prefix", prefix) :
+                new ObjectParameter("prefix", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_rpt_GetValveTestRecordsSearch_T_Result>("usp_rpt_GetValveTestRecordsSearch_T", prefixParameter);
+        }
+    
+        public virtual int usp_rpt_GetValveTestValuesById(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_rpt_GetValveTestValuesById", idParameter);
+        }
+    
+        public virtual int usp_Tbl_CheckCustomers(Nullable<int> customerId, ObjectParameter count)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckCustomers", customerIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_CheckRoles(Nullable<int> roleId, ObjectParameter count)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckRoles", roleIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_CheckTestCategory(Nullable<int> testCategoryId, ObjectParameter count)
+        {
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckTestCategory", testCategoryIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_CheckTestComponent(Nullable<int> testComponentId, ObjectParameter count)
+        {
+            var testComponentIdParameter = testComponentId.HasValue ?
+                new ObjectParameter("TestComponentId", testComponentId) :
+                new ObjectParameter("TestComponentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckTestComponent", testComponentIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_CheckTestComponentCategory(Nullable<int> testComponentCategroyId, ObjectParameter count)
+        {
+            var testComponentCategroyIdParameter = testComponentCategroyId.HasValue ?
+                new ObjectParameter("TestComponentCategroyId", testComponentCategroyId) :
+                new ObjectParameter("TestComponentCategroyId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckTestComponentCategory", testComponentCategroyIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_CheckTestConfiguration(Nullable<int> testConfigurationId, ObjectParameter count)
+        {
+            var testConfigurationIdParameter = testConfigurationId.HasValue ?
+                new ObjectParameter("TestConfigurationId", testConfigurationId) :
+                new ObjectParameter("TestConfigurationId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckTestConfiguration", testConfigurationIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_CheckTestSubCategory(Nullable<int> testSubCategoryId, ObjectParameter count)
+        {
+            var testSubCategoryIdParameter = testSubCategoryId.HasValue ?
+                new ObjectParameter("TestSubCategoryId", testSubCategoryId) :
+                new ObjectParameter("TestSubCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckTestSubCategory", testSubCategoryIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_CheckValveModel(Nullable<int> valveModelId, ObjectParameter count)
+        {
+            var valveModelIdParameter = valveModelId.HasValue ?
+                new ObjectParameter("ValveModelId", valveModelId) :
+                new ObjectParameter("ValveModelId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckValveModel", valveModelIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_CheckValveSize(Nullable<int> valveSizeId, ObjectParameter count)
+        {
+            var valveSizeIdParameter = valveSizeId.HasValue ?
+                new ObjectParameter("ValveSizeId", valveSizeId) :
+                new ObjectParameter("ValveSizeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckValveSize", valveSizeIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_CheckValveType(Nullable<int> valveTypeId, ObjectParameter count)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CheckValveType", valveTypeIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_Customerexists(string name, string emailId, string mobileNumber, ObjectParameter userExists)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var emailIdParameter = emailId != null ?
+                new ObjectParameter("EmailId", emailId) :
+                new ObjectParameter("EmailId", typeof(string));
+    
+            var mobileNumberParameter = mobileNumber != null ?
+                new ObjectParameter("MobileNumber", mobileNumber) :
+                new ObjectParameter("MobileNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_Customerexists", nameParameter, emailIdParameter, mobileNumberParameter, userExists);
+        }
+    
+        public virtual int usp_Tbl_CustomerexistsId(Nullable<int> id, string name, string emailId, string mobileNumber, ObjectParameter userExists)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var emailIdParameter = emailId != null ?
+                new ObjectParameter("EmailId", emailId) :
+                new ObjectParameter("EmailId", typeof(string));
+    
+            var mobileNumberParameter = mobileNumber != null ?
+                new ObjectParameter("MobileNumber", mobileNumber) :
+                new ObjectParameter("MobileNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_CustomerexistsId", idParameter, nameParameter, emailIdParameter, mobileNumberParameter, userExists);
+        }
+    
+        public virtual int usp_Tbl_DeleetUser(Nullable<int> userId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_DeleetUser", userIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_DeleeValveSize(Nullable<int> sizeId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var sizeIdParameter = sizeId.HasValue ?
+                new ObjectParameter("SizeId", sizeId) :
+                new ObjectParameter("SizeId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_DeleeValveSize", sizeIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_DeleteCustomers(Nullable<int> customerId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_DeleteCustomers", customerIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_DeletePressureClass(Nullable<int> pressureClassId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var pressureClassIdParameter = pressureClassId.HasValue ?
+                new ObjectParameter("PressureClassId", pressureClassId) :
+                new ObjectParameter("PressureClassId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_DeletePressureClass", pressureClassIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_DeleteRoleRightScreens(Nullable<int> roleId)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_DeleteRoleRightScreens", roleIdParameter);
+        }
+    
+        public virtual int usp_tbl_DeleteRoles(Nullable<int> roleId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_DeleteRoles", roleIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_DeleteSubTestCategories(Nullable<int> subTestCategoryId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var subTestCategoryIdParameter = subTestCategoryId.HasValue ?
+                new ObjectParameter("SubTestCategoryId", subTestCategoryId) :
+                new ObjectParameter("SubTestCategoryId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_DeleteSubTestCategories", subTestCategoryIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_DeleteTestCategories(Nullable<int> testCategoryId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_DeleteTestCategories", testCategoryIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_DeleteTestComponent(Nullable<int> testComponentId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testComponentIdParameter = testComponentId.HasValue ?
+                new ObjectParameter("TestComponentId", testComponentId) :
+                new ObjectParameter("TestComponentId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_DeleteTestComponent", testComponentIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_DeleteTestComponentCategory(Nullable<int> testComponentCategoryId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testComponentCategoryIdParameter = testComponentCategoryId.HasValue ?
+                new ObjectParameter("TestComponentCategoryId", testComponentCategoryId) :
+                new ObjectParameter("TestComponentCategoryId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_DeleteTestComponentCategory", testComponentCategoryIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_DeleteTestConfiguration(Nullable<int> testConfigurationId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testConfigurationIdParameter = testConfigurationId.HasValue ?
+                new ObjectParameter("TestConfigurationId", testConfigurationId) :
+                new ObjectParameter("TestConfigurationId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_DeleteTestConfiguration", testConfigurationIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_DeleteTestRecord(Nullable<int> testRecordId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testRecordIdParameter = testRecordId.HasValue ?
+                new ObjectParameter("testRecordId", testRecordId) :
+                new ObjectParameter("testRecordId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_DeleteTestRecord", testRecordIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_DeleteUnitDetails(Nullable<int> unitId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var unitIdParameter = unitId.HasValue ?
+                new ObjectParameter("UnitId", unitId) :
+                new ObjectParameter("UnitId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_DeleteUnitDetails", unitIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_DeleteValveModelById(Nullable<int> valveModelId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var valveModelIdParameter = valveModelId.HasValue ?
+                new ObjectParameter("ValveModelId", valveModelId) :
+                new ObjectParameter("ValveModelId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_DeleteValveModelById", valveModelIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_DeleteValveTypeDetails(Nullable<int> valveTypeId)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_DeleteValveTypeDetails", valveTypeIdParameter);
+        }
+    
+        public virtual int usp_tbl_DeleteValveTypeDetailsById(Nullable<int> valveTypeId, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_DeleteValveTypeDetailsById", valveTypeIdParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GeAllTestComponents_Result> usp_tbl_GeAllTestComponents()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GeAllTestComponents_Result>("usp_tbl_GeAllTestComponents");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GeCustomerDetailsById_Result> usp_tbl_GeCustomerDetailsById(Nullable<int> customerId)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GeCustomerDetailsById_Result>("usp_tbl_GeCustomerDetailsById", customerIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllCustomers_Result> usp_tbl_GetAllCustomers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllCustomers_Result>("usp_tbl_GetAllCustomers");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllCustomersList_Result> usp_tbl_GetAllCustomersList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllCustomersList_Result>("usp_tbl_GetAllCustomersList");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllCustomersListName_Result> usp_tbl_GetAllCustomersListName(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllCustomersListName_Result>("usp_tbl_GetAllCustomersListName", nameParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllDesignations_Result> usp_tbl_GetAllDesignations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllDesignations_Result>("usp_tbl_GetAllDesignations");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllOrganizations_Result> usp_tbl_GetAllOrganizations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllOrganizations_Result>("usp_tbl_GetAllOrganizations");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllPressureClass_Result> usp_tbl_GetAllPressureClass()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllPressureClass_Result>("usp_tbl_GetAllPressureClass");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllPressureClasses_Result> usp_tbl_GetAllPressureClasses()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllPressureClasses_Result>("usp_tbl_GetAllPressureClasses");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllPressureGauges_Result> usp_tbl_GetAllPressureGauges()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllPressureGauges_Result>("usp_tbl_GetAllPressureGauges");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllPressureTransmitters_Result> usp_tbl_GetAllPressureTransmitters()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllPressureTransmitters_Result>("usp_tbl_GetAllPressureTransmitters");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllPressureUnitTypes_Result> usp_tbl_GetAllPressureUnitTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllPressureUnitTypes_Result>("usp_tbl_GetAllPressureUnitTypes");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllRoles_Result> usp_tbl_GetAllRoles()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllRoles_Result>("usp_tbl_GetAllRoles");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllScreens_Result> usp_tbl_GetAllScreens()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllScreens_Result>("usp_tbl_GetAllScreens");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllSealingStatus_Result> usp_tbl_GetAllSealingStatus()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllSealingStatus_Result>("usp_tbl_GetAllSealingStatus");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllSections_Result> usp_tbl_GetAllSections()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllSections_Result>("usp_tbl_GetAllSections");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllSubTestCategories_Result> usp_tbl_GetAllSubTestCategories()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllSubTestCategories_Result>("usp_tbl_GetAllSubTestCategories");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllSubTestCategoriesList_Result> usp_tbl_GetAllSubTestCategoriesList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllSubTestCategoriesList_Result>("usp_tbl_GetAllSubTestCategoriesList");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllTemperatureUnitTypes_Result> usp_tbl_GetAllTemperatureUnitTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllTemperatureUnitTypes_Result>("usp_tbl_GetAllTemperatureUnitTypes");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllTestCategories_Result> usp_tbl_GetAllTestCategories()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllTestCategories_Result>("usp_tbl_GetAllTestCategories");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllTestComponentCategories_Result> usp_tbl_GetAllTestComponentCategories()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllTestComponentCategories_Result>("usp_tbl_GetAllTestComponentCategories");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllTestComponentCategoryById_Result> usp_tbl_GetAllTestComponentCategoryById(Nullable<int> testComponentCategoryId)
+        {
+            var testComponentCategoryIdParameter = testComponentCategoryId.HasValue ?
+                new ObjectParameter("TestComponentCategoryId", testComponentCategoryId) :
+                new ObjectParameter("TestComponentCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllTestComponentCategoryById_Result>("usp_tbl_GetAllTestComponentCategoryById", testComponentCategoryIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllTestComponentDetails_Result> usp_tbl_GetAllTestComponentDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllTestComponentDetails_Result>("usp_tbl_GetAllTestComponentDetails");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllTestComponents_Result> usp_tbl_GetAllTestComponents()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllTestComponents_Result>("usp_tbl_GetAllTestComponents");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllTestConfigurations_Result> usp_tbl_GetAllTestConfigurations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllTestConfigurations_Result>("usp_tbl_GetAllTestConfigurations");
+        }
+    
+        public virtual int usp_tbl_GetAllUnitTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_GetAllUnitTypes");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllUserDetails_Result> usp_tbl_GetAllUserDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllUserDetails_Result>("usp_tbl_GetAllUserDetails");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllUsers_Result> usp_tbl_GetAllUsers()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllUsers_Result>("usp_tbl_GetAllUsers");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllUsersDetails_Result> usp_tbl_GetAllUsersDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllUsersDetails_Result>("usp_tbl_GetAllUsersDetails");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllValveIds_Result> usp_tbl_GetAllValveIds()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllValveIds_Result>("usp_tbl_GetAllValveIds");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllValveModels_Result> usp_tbl_GetAllValveModels()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllValveModels_Result>("usp_tbl_GetAllValveModels");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllValveSizes_Result> usp_tbl_GetAllValveSizes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllValveSizes_Result>("usp_tbl_GetAllValveSizes");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllValveSizesSetails_Result> usp_tbl_GetAllValveSizesSetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllValveSizesSetails_Result>("usp_tbl_GetAllValveSizesSetails");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetAllValveTypes_Result> usp_tbl_GetAllValveTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetAllValveTypes_Result>("usp_tbl_GetAllValveTypes");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetCustomerDetailsByCustomerId_Result> usp_tbl_GetCustomerDetailsByCustomerId(Nullable<int> customerId)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetCustomerDetailsByCustomerId_Result>("usp_tbl_GetCustomerDetailsByCustomerId", customerIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetCustomerDetailsById_Result> usp_tbl_GetCustomerDetailsById(Nullable<int> customerId)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetCustomerDetailsById_Result>("usp_tbl_GetCustomerDetailsById", customerIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetDetailsByUserId_Result> usp_tbl_GetDetailsByUserId(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetDetailsByUserId_Result>("usp_tbl_GetDetailsByUserId", userIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GeTestComponentDetails_Result> usp_tbl_GeTestComponentDetails()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GeTestComponentDetails_Result>("usp_tbl_GeTestComponentDetails");
+        }
+    
+        public virtual int usp_tbl_GetLoginInfo(string userName, string password)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_GetLoginInfo", userNameParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<usp_Tbl_GetPressureClassById_Result> usp_Tbl_GetPressureClassById(Nullable<int> pressureClassId)
+        {
+            var pressureClassIdParameter = pressureClassId.HasValue ?
+                new ObjectParameter("PressureClassId", pressureClassId) :
+                new ObjectParameter("PressureClassId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_Tbl_GetPressureClassById_Result>("usp_Tbl_GetPressureClassById", pressureClassIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> usp_tbl_GetRightsOFScreenId(Nullable<int> roleId, Nullable<int> screenId)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var screenIdParameter = screenId.HasValue ?
+                new ObjectParameter("ScreenId", screenId) :
+                new ObjectParameter("ScreenId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("usp_tbl_GetRightsOFScreenId", roleIdParameter, screenIdParameter);
+        }
+    
+        public virtual int usp_tbl_GetRightsScreenId(Nullable<int> roleId, Nullable<int> screenId, ObjectParameter count)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var screenIdParameter = screenId.HasValue ?
+                new ObjectParameter("ScreenId", screenId) :
+                new ObjectParameter("ScreenId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_GetRightsScreenId", roleIdParameter, screenIdParameter, count);
+        }
+    
+        public virtual int usp_tbl_GetRoleByIdName(string roleName, Nullable<int> id, ObjectParameter count)
+        {
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_GetRoleByIdName", roleNameParameter, idParameter, count);
+        }
+    
+        public virtual int usp_tbl_GetRoleByName(string roleName, ObjectParameter count)
+        {
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_GetRoleByName", roleNameParameter, count);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetRoleDetailsById_Result> usp_tbl_GetRoleDetailsById(Nullable<int> roleId)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetRoleDetailsById_Result>("usp_tbl_GetRoleDetailsById", roleIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetRoleRightsDetailsById_Result> usp_tbl_GetRoleRightsDetailsById(Nullable<int> roleId)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetRoleRightsDetailsById_Result>("usp_tbl_GetRoleRightsDetailsById", roleIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetScreensNotInRoleRightsById_Result> usp_tbl_GetScreensNotInRoleRightsById(Nullable<int> roleId)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetScreensNotInRoleRightsById_Result>("usp_tbl_GetScreensNotInRoleRightsById", roleIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetSubTestCategories_Result> usp_tbl_GetSubTestCategories(Nullable<int> testCategoryId)
+        {
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetSubTestCategories_Result>("usp_tbl_GetSubTestCategories", testCategoryIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetSubTestCategoryDetailsById_Result> usp_tbl_GetSubTestCategoryDetailsById(Nullable<int> subTestCategoryId)
+        {
+            var subTestCategoryIdParameter = subTestCategoryId.HasValue ?
+                new ObjectParameter("SubTestCategoryId", subTestCategoryId) :
+                new ObjectParameter("SubTestCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetSubTestCategoryDetailsById_Result>("usp_tbl_GetSubTestCategoryDetailsById", subTestCategoryIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetSubTestCategoryDetailsBySubTestId_Result> usp_tbl_GetSubTestCategoryDetailsBySubTestId(Nullable<int> subTestCategoryId)
+        {
+            var subTestCategoryIdParameter = subTestCategoryId.HasValue ?
+                new ObjectParameter("SubTestCategoryId", subTestCategoryId) :
+                new ObjectParameter("SubTestCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetSubTestCategoryDetailsBySubTestId_Result>("usp_tbl_GetSubTestCategoryDetailsBySubTestId", subTestCategoryIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetSubTestComponenets_Result> usp_tbl_GetSubTestComponenets()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetSubTestComponenets_Result>("usp_tbl_GetSubTestComponenets");
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetSubTestComponenetsById_Result> usp_tbl_GetSubTestComponenetsById(Nullable<int> testComponentId)
+        {
+            var testComponentIdParameter = testComponentId.HasValue ?
+                new ObjectParameter("TestComponentId", testComponentId) :
+                new ObjectParameter("TestComponentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetSubTestComponenetsById_Result>("usp_tbl_GetSubTestComponenetsById", testComponentIdParameter);
+        }
+    
+        public virtual int usp_tbl_GetTestCategoryByName(string name, ObjectParameter count)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_GetTestCategoryByName", nameParameter, count);
+        }
+    
+        public virtual int usp_tbl_GetTestCategoryByNameId(Nullable<int> id, string name, ObjectParameter count)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_GetTestCategoryByNameId", idParameter, nameParameter, count);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetTestCategoryDetailsById_Result> usp_tbl_GetTestCategoryDetailsById(Nullable<int> testCategoryId)
+        {
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetTestCategoryDetailsById_Result>("usp_tbl_GetTestCategoryDetailsById", testCategoryIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetTestConfigurationDetailById_Result> usp_tbl_GetTestConfigurationDetailById(Nullable<int> testConfigurationId)
+        {
+            var testConfigurationIdParameter = testConfigurationId.HasValue ?
+                new ObjectParameter("TestConfigurationId", testConfigurationId) :
+                new ObjectParameter("TestConfigurationId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetTestConfigurationDetailById_Result>("usp_tbl_GetTestConfigurationDetailById", testConfigurationIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetTestConfigurationDetailsById_Result> usp_tbl_GetTestConfigurationDetailsById(Nullable<int> testConfigurationId)
+        {
+            var testConfigurationIdParameter = testConfigurationId.HasValue ?
+                new ObjectParameter("TestConfigurationId", testConfigurationId) :
+                new ObjectParameter("TestConfigurationId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetTestConfigurationDetailsById_Result>("usp_tbl_GetTestConfigurationDetailsById", testConfigurationIdParameter);
+        }
+    
+        public virtual int usp_tbl_GetTestSubCategoryByName(string name, Nullable<int> testCategoryId, ObjectParameter count)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_GetTestSubCategoryByName", nameParameter, testCategoryIdParameter, count);
+        }
+    
+        public virtual int usp_tbl_GetTestSubCategoryByNameId(Nullable<int> id, string name, Nullable<int> testCategoryId, ObjectParameter count)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_GetTestSubCategoryByNameId", idParameter, nameParameter, testCategoryIdParameter, count);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetUserDetailsById_Result> usp_tbl_GetUserDetailsById(Nullable<int> userId)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetUserDetailsById_Result>("usp_tbl_GetUserDetailsById", userIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetUserDetailsByNamePwd_Result> usp_tbl_GetUserDetailsByNamePwd(string userName, string password)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetUserDetailsByNamePwd_Result>("usp_tbl_GetUserDetailsByNamePwd", userNameParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetValveModelDetailsById_Result> usp_tbl_GetValveModelDetailsById(Nullable<int> valveModelId)
+        {
+            var valveModelIdParameter = valveModelId.HasValue ?
+                new ObjectParameter("ValveModelId", valveModelId) :
+                new ObjectParameter("ValveModelId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetValveModelDetailsById_Result>("usp_tbl_GetValveModelDetailsById", valveModelIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetValveModels_Result> usp_tbl_GetValveModels(Nullable<int> valveTypeId)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetValveModels_Result>("usp_tbl_GetValveModels", valveTypeIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetValveSizeDetailsById_Result> usp_tbl_GetValveSizeDetailsById(Nullable<int> valveSizeId)
+        {
+            var valveSizeIdParameter = valveSizeId.HasValue ?
+                new ObjectParameter("ValveSizeId", valveSizeId) :
+                new ObjectParameter("ValveSizeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetValveSizeDetailsById_Result>("usp_tbl_GetValveSizeDetailsById", valveSizeIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetValveSizesById_Result> usp_tbl_GetValveSizesById(Nullable<int> valveSizeId)
+        {
+            var valveSizeIdParameter = valveSizeId.HasValue ?
+                new ObjectParameter("ValveSizeId", valveSizeId) :
+                new ObjectParameter("ValveSizeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetValveSizesById_Result>("usp_tbl_GetValveSizesById", valveSizeIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_GetValveTypeDetailsById_Result> usp_tbl_GetValveTypeDetailsById(Nullable<int> valveTypeId)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_GetValveTypeDetailsById_Result>("usp_tbl_GetValveTypeDetailsById", valveTypeIdParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertCustomers(string customerName, string customerCode, string contactNumber, string emailAddress, string address, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var customerNameParameter = customerName != null ?
+                new ObjectParameter("CustomerName", customerName) :
+                new ObjectParameter("CustomerName", typeof(string));
+    
+            var customerCodeParameter = customerCode != null ?
+                new ObjectParameter("CustomerCode", customerCode) :
+                new ObjectParameter("CustomerCode", typeof(string));
+    
+            var contactNumberParameter = contactNumber != null ?
+                new ObjectParameter("ContactNumber", contactNumber) :
+                new ObjectParameter("ContactNumber", typeof(string));
+    
+            var emailAddressParameter = emailAddress != null ?
+                new ObjectParameter("EmailAddress", emailAddress) :
+                new ObjectParameter("EmailAddress", typeof(string));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertCustomers", customerNameParameter, customerCodeParameter, contactNumberParameter, emailAddressParameter, addressParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertPressureClass(string pressureClassValue, string description, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var pressureClassValueParameter = pressureClassValue != null ?
+                new ObjectParameter("PressureClassValue", pressureClassValue) :
+                new ObjectParameter("PressureClassValue", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertPressureClass", pressureClassValueParameter, descriptionParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertRoleRights(Nullable<int> roleId, Nullable<int> screenId, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var screenIdParameter = screenId.HasValue ?
+                new ObjectParameter("ScreenId", screenId) :
+                new ObjectParameter("ScreenId", typeof(int));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertRoleRights", roleIdParameter, screenIdParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertRoleRightScreens(Nullable<int> roleId, Nullable<int> screenId, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var screenIdParameter = screenId.HasValue ?
+                new ObjectParameter("ScreenId", screenId) :
+                new ObjectParameter("ScreenId", typeof(int));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertRoleRightScreens", roleIdParameter, screenIdParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertRoleRightsS(Nullable<int> roleId, Nullable<int> screenId, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var screenIdParameter = screenId.HasValue ?
+                new ObjectParameter("ScreenId", screenId) :
+                new ObjectParameter("ScreenId", typeof(int));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertRoleRightsS", roleIdParameter, screenIdParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertRoleRightsScreens(Nullable<int> roleId, Nullable<int> screenId, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var screenIdParameter = screenId.HasValue ?
+                new ObjectParameter("ScreenId", screenId) :
+                new ObjectParameter("ScreenId", typeof(int));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertRoleRightsScreens", roleIdParameter, screenIdParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertRoles(string roleName, string description, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertRoles", roleNameParameter, descriptionParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertSubTestCategories(Nullable<int> testCategoryId, string subTestCategoryName, string remarks, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            var subTestCategoryNameParameter = subTestCategoryName != null ?
+                new ObjectParameter("SubTestCategoryName", subTestCategoryName) :
+                new ObjectParameter("SubTestCategoryName", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertSubTestCategories", testCategoryIdParameter, subTestCategoryNameParameter, remarksParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertTestCategories(string testCategoryName, string testCategoryDescription, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testCategoryNameParameter = testCategoryName != null ?
+                new ObjectParameter("TestCategoryName", testCategoryName) :
+                new ObjectParameter("TestCategoryName", typeof(string));
+    
+            var testCategoryDescriptionParameter = testCategoryDescription != null ?
+                new ObjectParameter("TestCategoryDescription", testCategoryDescription) :
+                new ObjectParameter("TestCategoryDescription", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertTestCategories", testCategoryNameParameter, testCategoryDescriptionParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertTestComponent(Nullable<int> testComponentCategoryId, string make, string serialNumber, string range, string pressureGauge, Nullable<System.DateTime> calibrationOn, Nullable<System.DateTime> calibrationDueOn, string remarks, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testComponentCategoryIdParameter = testComponentCategoryId.HasValue ?
+                new ObjectParameter("TestComponentCategoryId", testComponentCategoryId) :
+                new ObjectParameter("TestComponentCategoryId", typeof(int));
+    
+            var makeParameter = make != null ?
+                new ObjectParameter("Make", make) :
+                new ObjectParameter("Make", typeof(string));
+    
+            var serialNumberParameter = serialNumber != null ?
+                new ObjectParameter("SerialNumber", serialNumber) :
+                new ObjectParameter("SerialNumber", typeof(string));
+    
+            var rangeParameter = range != null ?
+                new ObjectParameter("Range", range) :
+                new ObjectParameter("Range", typeof(string));
+    
+            var pressureGaugeParameter = pressureGauge != null ?
+                new ObjectParameter("PressureGauge", pressureGauge) :
+                new ObjectParameter("PressureGauge", typeof(string));
+    
+            var calibrationOnParameter = calibrationOn.HasValue ?
+                new ObjectParameter("CalibrationOn", calibrationOn) :
+                new ObjectParameter("CalibrationOn", typeof(System.DateTime));
+    
+            var calibrationDueOnParameter = calibrationDueOn.HasValue ?
+                new ObjectParameter("CalibrationDueOn", calibrationDueOn) :
+                new ObjectParameter("CalibrationDueOn", typeof(System.DateTime));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertTestComponent", testComponentCategoryIdParameter, makeParameter, serialNumberParameter, rangeParameter, pressureGaugeParameter, calibrationOnParameter, calibrationDueOnParameter, remarksParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertTestComponentCategory(string testComponentCategoryName, string description, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testComponentCategoryNameParameter = testComponentCategoryName != null ?
+                new ObjectParameter("TestComponentCategoryName", testComponentCategoryName) :
+                new ObjectParameter("TestComponentCategoryName", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertTestComponentCategory", testComponentCategoryNameParameter, descriptionParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertTestComponents(Nullable<int> testComponentCategoryId, string name, string make, string serialNumber, string range, Nullable<int> unitId, string pressureGauge, Nullable<System.DateTime> calibrationOn, Nullable<System.DateTime> calibrationDueOn, string remarks, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testComponentCategoryIdParameter = testComponentCategoryId.HasValue ?
+                new ObjectParameter("TestComponentCategoryId", testComponentCategoryId) :
+                new ObjectParameter("TestComponentCategoryId", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var makeParameter = make != null ?
+                new ObjectParameter("Make", make) :
+                new ObjectParameter("Make", typeof(string));
+    
+            var serialNumberParameter = serialNumber != null ?
+                new ObjectParameter("SerialNumber", serialNumber) :
+                new ObjectParameter("SerialNumber", typeof(string));
+    
+            var rangeParameter = range != null ?
+                new ObjectParameter("Range", range) :
+                new ObjectParameter("Range", typeof(string));
+    
+            var unitIdParameter = unitId.HasValue ?
+                new ObjectParameter("UnitId", unitId) :
+                new ObjectParameter("UnitId", typeof(int));
+    
+            var pressureGaugeParameter = pressureGauge != null ?
+                new ObjectParameter("PressureGauge", pressureGauge) :
+                new ObjectParameter("PressureGauge", typeof(string));
+    
+            var calibrationOnParameter = calibrationOn.HasValue ?
+                new ObjectParameter("CalibrationOn", calibrationOn) :
+                new ObjectParameter("CalibrationOn", typeof(System.DateTime));
+    
+            var calibrationDueOnParameter = calibrationDueOn.HasValue ?
+                new ObjectParameter("CalibrationDueOn", calibrationDueOn) :
+                new ObjectParameter("CalibrationDueOn", typeof(System.DateTime));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertTestComponents", testComponentCategoryIdParameter, nameParameter, makeParameter, serialNumberParameter, rangeParameter, unitIdParameter, pressureGaugeParameter, calibrationOnParameter, calibrationDueOnParameter, remarksParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_InsertTestConfiguration(Nullable<int> dataCapturingRate, Nullable<int> testDuration, string testName, string testDescription, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, string remarks)
+        {
+            var dataCapturingRateParameter = dataCapturingRate.HasValue ?
+                new ObjectParameter("DataCapturingRate", dataCapturingRate) :
+                new ObjectParameter("DataCapturingRate", typeof(int));
+    
+            var testDurationParameter = testDuration.HasValue ?
+                new ObjectParameter("TestDuration", testDuration) :
+                new ObjectParameter("TestDuration", typeof(int));
+    
+            var testNameParameter = testName != null ?
+                new ObjectParameter("TestName", testName) :
+                new ObjectParameter("TestName", typeof(string));
+    
+            var testDescriptionParameter = testDescription != null ?
+                new ObjectParameter("TestDescription", testDescription) :
+                new ObjectParameter("TestDescription", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_InsertTestConfiguration", dataCapturingRateParameter, testDurationParameter, testNameParameter, testDescriptionParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter, remarksParameter);
+        }
+    
+        public virtual int usp_tbl_InsertUnitDetails(Nullable<int> unitTypeId, string unitName, string unitDescription, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var unitTypeIdParameter = unitTypeId.HasValue ?
+                new ObjectParameter("UnitTypeId", unitTypeId) :
+                new ObjectParameter("UnitTypeId", typeof(int));
+    
+            var unitNameParameter = unitName != null ?
+                new ObjectParameter("UnitName", unitName) :
+                new ObjectParameter("UnitName", typeof(string));
+    
+            var unitDescriptionParameter = unitDescription != null ?
+                new ObjectParameter("UnitDescription", unitDescription) :
+                new ObjectParameter("UnitDescription", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_InsertUnitDetails", unitTypeIdParameter, unitNameParameter, unitDescriptionParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_InsertUser(string userName, string userCode, string password, Nullable<int> roleId, Nullable<int> designationId, Nullable<int> organizationId, string mobileNumber, string emailAddress, Nullable<System.DateTime> dateOfBirth, Nullable<System.DateTime> joiningDate, string address, Nullable<bool> isActive, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, ObjectParameter userId)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("UserCode", userCode) :
+                new ObjectParameter("UserCode", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var designationIdParameter = designationId.HasValue ?
+                new ObjectParameter("DesignationId", designationId) :
+                new ObjectParameter("DesignationId", typeof(int));
+    
+            var organizationIdParameter = organizationId.HasValue ?
+                new ObjectParameter("OrganizationId", organizationId) :
+                new ObjectParameter("OrganizationId", typeof(int));
+    
+            var mobileNumberParameter = mobileNumber != null ?
+                new ObjectParameter("MobileNumber", mobileNumber) :
+                new ObjectParameter("MobileNumber", typeof(string));
+    
+            var emailAddressParameter = emailAddress != null ?
+                new ObjectParameter("EmailAddress", emailAddress) :
+                new ObjectParameter("EmailAddress", typeof(string));
+    
+            var dateOfBirthParameter = dateOfBirth.HasValue ?
+                new ObjectParameter("DateOfBirth", dateOfBirth) :
+                new ObjectParameter("DateOfBirth", typeof(System.DateTime));
+    
+            var joiningDateParameter = joiningDate.HasValue ?
+                new ObjectParameter("JoiningDate", joiningDate) :
+                new ObjectParameter("JoiningDate", typeof(System.DateTime));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(bool));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertUser", userNameParameter, userCodeParameter, passwordParameter, roleIdParameter, designationIdParameter, organizationIdParameter, mobileNumberParameter, emailAddressParameter, dateOfBirthParameter, joiningDateParameter, addressParameter, isActiveParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter, userId);
+        }
+    
+        public virtual int usp_Tbl_InsertUserDetails(string userName, string name, string userCode, string password, Nullable<int> roleId, Nullable<int> designationId, Nullable<int> organizationId, string mobileNumber, string emailAddress, Nullable<System.DateTime> dateOfBirth, Nullable<System.DateTime> joiningDate, string address, Nullable<bool> isActive, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, ObjectParameter userId)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("UserCode", userCode) :
+                new ObjectParameter("UserCode", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var designationIdParameter = designationId.HasValue ?
+                new ObjectParameter("DesignationId", designationId) :
+                new ObjectParameter("DesignationId", typeof(int));
+    
+            var organizationIdParameter = organizationId.HasValue ?
+                new ObjectParameter("OrganizationId", organizationId) :
+                new ObjectParameter("OrganizationId", typeof(int));
+    
+            var mobileNumberParameter = mobileNumber != null ?
+                new ObjectParameter("MobileNumber", mobileNumber) :
+                new ObjectParameter("MobileNumber", typeof(string));
+    
+            var emailAddressParameter = emailAddress != null ?
+                new ObjectParameter("EmailAddress", emailAddress) :
+                new ObjectParameter("EmailAddress", typeof(string));
+    
+            var dateOfBirthParameter = dateOfBirth.HasValue ?
+                new ObjectParameter("DateOfBirth", dateOfBirth) :
+                new ObjectParameter("DateOfBirth", typeof(System.DateTime));
+    
+            var joiningDateParameter = joiningDate.HasValue ?
+                new ObjectParameter("JoiningDate", joiningDate) :
+                new ObjectParameter("JoiningDate", typeof(System.DateTime));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(bool));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_InsertUserDetails", userNameParameter, nameParameter, userCodeParameter, passwordParameter, roleIdParameter, designationIdParameter, organizationIdParameter, mobileNumberParameter, emailAddressParameter, dateOfBirthParameter, joiningDateParameter, addressParameter, isActiveParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter, userId);
+        }
+    
+        public virtual int usp_tbl_InsertValuesFromDevices_T(Nullable<int> valueP, Nullable<int> decimalPointP, Nullable<int> setPoint1P, Nullable<int> setPoint2P, Nullable<int> valueT, Nullable<int> decimalPointT, Nullable<int> setPoint1T, Nullable<int> setPoint2T, Nullable<System.DateTime> capturedDateTime, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, Nullable<int> testRecordId)
+        {
+            var valuePParameter = valueP.HasValue ?
+                new ObjectParameter("ValueP", valueP) :
+                new ObjectParameter("ValueP", typeof(int));
+    
+            var decimalPointPParameter = decimalPointP.HasValue ?
+                new ObjectParameter("DecimalPointP", decimalPointP) :
+                new ObjectParameter("DecimalPointP", typeof(int));
+    
+            var setPoint1PParameter = setPoint1P.HasValue ?
+                new ObjectParameter("SetPoint1P", setPoint1P) :
+                new ObjectParameter("SetPoint1P", typeof(int));
+    
+            var setPoint2PParameter = setPoint2P.HasValue ?
+                new ObjectParameter("SetPoint2P", setPoint2P) :
+                new ObjectParameter("SetPoint2P", typeof(int));
+    
+            var valueTParameter = valueT.HasValue ?
+                new ObjectParameter("ValueT", valueT) :
+                new ObjectParameter("ValueT", typeof(int));
+    
+            var decimalPointTParameter = decimalPointT.HasValue ?
+                new ObjectParameter("DecimalPointT", decimalPointT) :
+                new ObjectParameter("DecimalPointT", typeof(int));
+    
+            var setPoint1TParameter = setPoint1T.HasValue ?
+                new ObjectParameter("SetPoint1T", setPoint1T) :
+                new ObjectParameter("SetPoint1T", typeof(int));
+    
+            var setPoint2TParameter = setPoint2T.HasValue ?
+                new ObjectParameter("SetPoint2T", setPoint2T) :
+                new ObjectParameter("SetPoint2T", typeof(int));
+    
+            var capturedDateTimeParameter = capturedDateTime.HasValue ?
+                new ObjectParameter("CapturedDateTime", capturedDateTime) :
+                new ObjectParameter("CapturedDateTime", typeof(System.DateTime));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            var testRecordIdParameter = testRecordId.HasValue ?
+                new ObjectParameter("TestRecordId", testRecordId) :
+                new ObjectParameter("TestRecordId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_InsertValuesFromDevices_T", valuePParameter, decimalPointPParameter, setPoint1PParameter, setPoint2PParameter, valueTParameter, decimalPointTParameter, setPoint1TParameter, setPoint2TParameter, capturedDateTimeParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter, testRecordIdParameter);
+        }
+    
+        public virtual int usp_tbl_InsertValveModelDetails(Nullable<int> valveTypeId, string valveModelDescription, string valveModelName, string remarks, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            var valveModelDescriptionParameter = valveModelDescription != null ?
+                new ObjectParameter("ValveModelDescription", valveModelDescription) :
+                new ObjectParameter("ValveModelDescription", typeof(string));
+    
+            var valveModelNameParameter = valveModelName != null ?
+                new ObjectParameter("ValveModelName", valveModelName) :
+                new ObjectParameter("ValveModelName", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_InsertValveModelDetails", valveTypeIdParameter, valveModelDescriptionParameter, valveModelNameParameter, remarksParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_InsertValveSize(string sizeDescription, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, string sizeName)
+        {
+            var sizeDescriptionParameter = sizeDescription != null ?
+                new ObjectParameter("SizeDescription", sizeDescription) :
+                new ObjectParameter("SizeDescription", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            var sizeNameParameter = sizeName != null ?
+                new ObjectParameter("SizeName", sizeName) :
+                new ObjectParameter("SizeName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_InsertValveSize", sizeDescriptionParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter, sizeNameParameter);
+        }
+    
+        public virtual int usp_tbl_InsertValveTestRecords_M(Nullable<int> valveId, Nullable<int> customerId, Nullable<int> sizeId, Nullable<System.DateTime> testingDate, Nullable<System.DateTime> testingDueDate, string testReportNumber, string tagNumber, string make, string valveSrNumber, string setPressure, string fluidandState, string cDTP, string backPressure, string pressureType, string springNr, string oPTemperature, Nullable<int> sealingStatus, Nullable<int> testCategoryId, Nullable<int> subTestCategoryId, Nullable<int> valveTypeId, string material, string section, string pressureClass, string makePressureGauge, string serialNumber, string range, string pressureGaugeType, string pressureGauge, string digitalTransmitter, Nullable<System.DateTime> calibrationOn, Nullable<System.DateTime> calibrationDueOn, string remarks, string testStatus, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, ObjectParameter recordIdMaster)
+        {
+            var valveIdParameter = valveId.HasValue ?
+                new ObjectParameter("ValveId", valveId) :
+                new ObjectParameter("ValveId", typeof(int));
+    
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            var sizeIdParameter = sizeId.HasValue ?
+                new ObjectParameter("SizeId", sizeId) :
+                new ObjectParameter("SizeId", typeof(int));
+    
+            var testingDateParameter = testingDate.HasValue ?
+                new ObjectParameter("TestingDate", testingDate) :
+                new ObjectParameter("TestingDate", typeof(System.DateTime));
+    
+            var testingDueDateParameter = testingDueDate.HasValue ?
+                new ObjectParameter("TestingDueDate", testingDueDate) :
+                new ObjectParameter("TestingDueDate", typeof(System.DateTime));
+    
+            var testReportNumberParameter = testReportNumber != null ?
+                new ObjectParameter("TestReportNumber", testReportNumber) :
+                new ObjectParameter("TestReportNumber", typeof(string));
+    
+            var tagNumberParameter = tagNumber != null ?
+                new ObjectParameter("TagNumber", tagNumber) :
+                new ObjectParameter("TagNumber", typeof(string));
+    
+            var makeParameter = make != null ?
+                new ObjectParameter("Make", make) :
+                new ObjectParameter("Make", typeof(string));
+    
+            var valveSrNumberParameter = valveSrNumber != null ?
+                new ObjectParameter("ValveSrNumber", valveSrNumber) :
+                new ObjectParameter("ValveSrNumber", typeof(string));
+    
+            var setPressureParameter = setPressure != null ?
+                new ObjectParameter("SetPressure", setPressure) :
+                new ObjectParameter("SetPressure", typeof(string));
+    
+            var fluidandStateParameter = fluidandState != null ?
+                new ObjectParameter("FluidandState", fluidandState) :
+                new ObjectParameter("FluidandState", typeof(string));
+    
+            var cDTPParameter = cDTP != null ?
+                new ObjectParameter("CDTP", cDTP) :
+                new ObjectParameter("CDTP", typeof(string));
+    
+            var backPressureParameter = backPressure != null ?
+                new ObjectParameter("BackPressure", backPressure) :
+                new ObjectParameter("BackPressure", typeof(string));
+    
+            var pressureTypeParameter = pressureType != null ?
+                new ObjectParameter("PressureType", pressureType) :
+                new ObjectParameter("PressureType", typeof(string));
+    
+            var springNrParameter = springNr != null ?
+                new ObjectParameter("SpringNr", springNr) :
+                new ObjectParameter("SpringNr", typeof(string));
+    
+            var oPTemperatureParameter = oPTemperature != null ?
+                new ObjectParameter("OPTemperature", oPTemperature) :
+                new ObjectParameter("OPTemperature", typeof(string));
+    
+            var sealingStatusParameter = sealingStatus.HasValue ?
+                new ObjectParameter("SealingStatus", sealingStatus) :
+                new ObjectParameter("SealingStatus", typeof(int));
+    
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            var subTestCategoryIdParameter = subTestCategoryId.HasValue ?
+                new ObjectParameter("SubTestCategoryId", subTestCategoryId) :
+                new ObjectParameter("SubTestCategoryId", typeof(int));
+    
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            var materialParameter = material != null ?
+                new ObjectParameter("Material", material) :
+                new ObjectParameter("Material", typeof(string));
+    
+            var sectionParameter = section != null ?
+                new ObjectParameter("Section", section) :
+                new ObjectParameter("Section", typeof(string));
+    
+            var pressureClassParameter = pressureClass != null ?
+                new ObjectParameter("PressureClass", pressureClass) :
+                new ObjectParameter("PressureClass", typeof(string));
+    
+            var makePressureGaugeParameter = makePressureGauge != null ?
+                new ObjectParameter("MakePressureGauge", makePressureGauge) :
+                new ObjectParameter("MakePressureGauge", typeof(string));
+    
+            var serialNumberParameter = serialNumber != null ?
+                new ObjectParameter("SerialNumber", serialNumber) :
+                new ObjectParameter("SerialNumber", typeof(string));
+    
+            var rangeParameter = range != null ?
+                new ObjectParameter("Range", range) :
+                new ObjectParameter("Range", typeof(string));
+    
+            var pressureGaugeTypeParameter = pressureGaugeType != null ?
+                new ObjectParameter("PressureGaugeType", pressureGaugeType) :
+                new ObjectParameter("PressureGaugeType", typeof(string));
+    
+            var pressureGaugeParameter = pressureGauge != null ?
+                new ObjectParameter("PressureGauge", pressureGauge) :
+                new ObjectParameter("PressureGauge", typeof(string));
+    
+            var digitalTransmitterParameter = digitalTransmitter != null ?
+                new ObjectParameter("DigitalTransmitter", digitalTransmitter) :
+                new ObjectParameter("DigitalTransmitter", typeof(string));
+    
+            var calibrationOnParameter = calibrationOn.HasValue ?
+                new ObjectParameter("CalibrationOn", calibrationOn) :
+                new ObjectParameter("CalibrationOn", typeof(System.DateTime));
+    
+            var calibrationDueOnParameter = calibrationDueOn.HasValue ?
+                new ObjectParameter("CalibrationDueOn", calibrationDueOn) :
+                new ObjectParameter("CalibrationDueOn", typeof(System.DateTime));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var testStatusParameter = testStatus != null ?
+                new ObjectParameter("TestStatus", testStatus) :
+                new ObjectParameter("TestStatus", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_InsertValveTestRecords_M", valveIdParameter, customerIdParameter, sizeIdParameter, testingDateParameter, testingDueDateParameter, testReportNumberParameter, tagNumberParameter, makeParameter, valveSrNumberParameter, setPressureParameter, fluidandStateParameter, cDTPParameter, backPressureParameter, pressureTypeParameter, springNrParameter, oPTemperatureParameter, sealingStatusParameter, testCategoryIdParameter, subTestCategoryIdParameter, valveTypeIdParameter, materialParameter, sectionParameter, pressureClassParameter, makePressureGaugeParameter, serialNumberParameter, rangeParameter, pressureGaugeTypeParameter, pressureGaugeParameter, digitalTransmitterParameter, calibrationOnParameter, calibrationDueOnParameter, remarksParameter, testStatusParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter, recordIdMaster);
+        }
+    
+        public virtual int usp_tbl_InsertValveTestValues_M(Nullable<int> valveTypeId, Nullable<int> valveModelId, Nullable<int> customerId, Nullable<int> valveSizeId, Nullable<int> testCategoryId, Nullable<int> testSubCategoryId, Nullable<int> sealingId, Nullable<int> sectionId, Nullable<int> pressureClassId, Nullable<int> pressureGaugeId, Nullable<int> pressureTransmitterId, string testReportNumber, Nullable<System.DateTime> testingDate, Nullable<System.DateTime> nextDueDate, string tagNumber, string make, string serialNumber, string setPressure, string fluidandState, string cDTP, string backPressure, string springNr, string oPTemperature, string material, string testResult, Nullable<int> notesId, string pressureSystemId, string testingOperator, string qualityEngineer, string witnessBy, Nullable<int> testConfigurationId, string testBenchSrNo, string remarks, string pressureGaugetype, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, ObjectParameter recordIdMaster)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            var valveModelIdParameter = valveModelId.HasValue ?
+                new ObjectParameter("ValveModelId", valveModelId) :
+                new ObjectParameter("ValveModelId", typeof(int));
+    
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            var valveSizeIdParameter = valveSizeId.HasValue ?
+                new ObjectParameter("ValveSizeId", valveSizeId) :
+                new ObjectParameter("ValveSizeId", typeof(int));
+    
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            var testSubCategoryIdParameter = testSubCategoryId.HasValue ?
+                new ObjectParameter("TestSubCategoryId", testSubCategoryId) :
+                new ObjectParameter("TestSubCategoryId", typeof(int));
+    
+            var sealingIdParameter = sealingId.HasValue ?
+                new ObjectParameter("SealingId", sealingId) :
+                new ObjectParameter("SealingId", typeof(int));
+    
+            var sectionIdParameter = sectionId.HasValue ?
+                new ObjectParameter("SectionId", sectionId) :
+                new ObjectParameter("SectionId", typeof(int));
+    
+            var pressureClassIdParameter = pressureClassId.HasValue ?
+                new ObjectParameter("PressureClassId", pressureClassId) :
+                new ObjectParameter("PressureClassId", typeof(int));
+    
+            var pressureGaugeIdParameter = pressureGaugeId.HasValue ?
+                new ObjectParameter("PressureGaugeId", pressureGaugeId) :
+                new ObjectParameter("PressureGaugeId", typeof(int));
+    
+            var pressureTransmitterIdParameter = pressureTransmitterId.HasValue ?
+                new ObjectParameter("PressureTransmitterId", pressureTransmitterId) :
+                new ObjectParameter("PressureTransmitterId", typeof(int));
+    
+            var testReportNumberParameter = testReportNumber != null ?
+                new ObjectParameter("TestReportNumber", testReportNumber) :
+                new ObjectParameter("TestReportNumber", typeof(string));
+    
+            var testingDateParameter = testingDate.HasValue ?
+                new ObjectParameter("TestingDate", testingDate) :
+                new ObjectParameter("TestingDate", typeof(System.DateTime));
+    
+            var nextDueDateParameter = nextDueDate.HasValue ?
+                new ObjectParameter("NextDueDate", nextDueDate) :
+                new ObjectParameter("NextDueDate", typeof(System.DateTime));
+    
+            var tagNumberParameter = tagNumber != null ?
+                new ObjectParameter("TagNumber", tagNumber) :
+                new ObjectParameter("TagNumber", typeof(string));
+    
+            var makeParameter = make != null ?
+                new ObjectParameter("Make", make) :
+                new ObjectParameter("Make", typeof(string));
+    
+            var serialNumberParameter = serialNumber != null ?
+                new ObjectParameter("SerialNumber", serialNumber) :
+                new ObjectParameter("SerialNumber", typeof(string));
+    
+            var setPressureParameter = setPressure != null ?
+                new ObjectParameter("SetPressure", setPressure) :
+                new ObjectParameter("SetPressure", typeof(string));
+    
+            var fluidandStateParameter = fluidandState != null ?
+                new ObjectParameter("FluidandState", fluidandState) :
+                new ObjectParameter("FluidandState", typeof(string));
+    
+            var cDTPParameter = cDTP != null ?
+                new ObjectParameter("CDTP", cDTP) :
+                new ObjectParameter("CDTP", typeof(string));
+    
+            var backPressureParameter = backPressure != null ?
+                new ObjectParameter("BackPressure", backPressure) :
+                new ObjectParameter("BackPressure", typeof(string));
+    
+            var springNrParameter = springNr != null ?
+                new ObjectParameter("SpringNr", springNr) :
+                new ObjectParameter("SpringNr", typeof(string));
+    
+            var oPTemperatureParameter = oPTemperature != null ?
+                new ObjectParameter("OPTemperature", oPTemperature) :
+                new ObjectParameter("OPTemperature", typeof(string));
+    
+            var materialParameter = material != null ?
+                new ObjectParameter("Material", material) :
+                new ObjectParameter("Material", typeof(string));
+    
+            var testResultParameter = testResult != null ?
+                new ObjectParameter("TestResult", testResult) :
+                new ObjectParameter("TestResult", typeof(string));
+    
+            var notesIdParameter = notesId.HasValue ?
+                new ObjectParameter("NotesId", notesId) :
+                new ObjectParameter("NotesId", typeof(int));
+    
+            var pressureSystemIdParameter = pressureSystemId != null ?
+                new ObjectParameter("PressureSystemId", pressureSystemId) :
+                new ObjectParameter("PressureSystemId", typeof(string));
+    
+            var testingOperatorParameter = testingOperator != null ?
+                new ObjectParameter("TestingOperator", testingOperator) :
+                new ObjectParameter("TestingOperator", typeof(string));
+    
+            var qualityEngineerParameter = qualityEngineer != null ?
+                new ObjectParameter("QualityEngineer", qualityEngineer) :
+                new ObjectParameter("QualityEngineer", typeof(string));
+    
+            var witnessByParameter = witnessBy != null ?
+                new ObjectParameter("WitnessBy", witnessBy) :
+                new ObjectParameter("WitnessBy", typeof(string));
+    
+            var testConfigurationIdParameter = testConfigurationId.HasValue ?
+                new ObjectParameter("TestConfigurationId", testConfigurationId) :
+                new ObjectParameter("TestConfigurationId", typeof(int));
+    
+            var testBenchSrNoParameter = testBenchSrNo != null ?
+                new ObjectParameter("TestBenchSrNo", testBenchSrNo) :
+                new ObjectParameter("TestBenchSrNo", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var pressureGaugetypeParameter = pressureGaugetype != null ?
+                new ObjectParameter("PressureGaugetype", pressureGaugetype) :
+                new ObjectParameter("PressureGaugetype", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_InsertValveTestValues_M", valveTypeIdParameter, valveModelIdParameter, customerIdParameter, valveSizeIdParameter, testCategoryIdParameter, testSubCategoryIdParameter, sealingIdParameter, sectionIdParameter, pressureClassIdParameter, pressureGaugeIdParameter, pressureTransmitterIdParameter, testReportNumberParameter, testingDateParameter, nextDueDateParameter, tagNumberParameter, makeParameter, serialNumberParameter, setPressureParameter, fluidandStateParameter, cDTPParameter, backPressureParameter, springNrParameter, oPTemperatureParameter, materialParameter, testResultParameter, notesIdParameter, pressureSystemIdParameter, testingOperatorParameter, qualityEngineerParameter, witnessByParameter, testConfigurationIdParameter, testBenchSrNoParameter, remarksParameter, pressureGaugetypeParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter, recordIdMaster);
+        }
+    
+        public virtual int usp_tbl_InsertValveTypeDetails(string valveTypeDescription, string valveTypeName, Nullable<int> createdBy, Nullable<System.DateTime> createdDate, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var valveTypeDescriptionParameter = valveTypeDescription != null ?
+                new ObjectParameter("ValveTypeDescription", valveTypeDescription) :
+                new ObjectParameter("ValveTypeDescription", typeof(string));
+    
+            var valveTypeNameParameter = valveTypeName != null ?
+                new ObjectParameter("ValveTypeName", valveTypeName) :
+                new ObjectParameter("ValveTypeName", typeof(string));
+    
+            var createdByParameter = createdBy.HasValue ?
+                new ObjectParameter("CreatedBy", createdBy) :
+                new ObjectParameter("CreatedBy", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_InsertValveTypeDetails", valveTypeDescriptionParameter, valveTypeNameParameter, createdByParameter, createdDateParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_PressureClassExistsId(Nullable<int> id, string value, ObjectParameter count)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var valueParameter = value != null ?
+                new ObjectParameter("value", value) :
+                new ObjectParameter("value", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_PressureClassExistsId", idParameter, valueParameter, count);
+        }
+    
+        public virtual int usp_Tbl_PressureClassExistsValue(string value, ObjectParameter count)
+        {
+            var valueParameter = value != null ?
+                new ObjectParameter("value", value) :
+                new ObjectParameter("value", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_PressureClassExistsValue", valueParameter, count);
+        }
+    
+        public virtual int usp_Tbl_ResetPassword(Nullable<int> userId, string password, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_ResetPassword", userIdParameter, passwordParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_TestComponentCategoryExists(string name, ObjectParameter count)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_TestComponentCategoryExists", nameParameter, count);
+        }
+    
+        public virtual int usp_Tbl_TestComponentCategoryExistsId(Nullable<int> id, string name, ObjectParameter count)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_TestComponentCategoryExistsId", idParameter, nameParameter, count);
+        }
+    
+        public virtual ObjectResult<usp_tbl_TestComponentDetailsById_Result> usp_tbl_TestComponentDetailsById(Nullable<int> testComponentId)
+        {
+            var testComponentIdParameter = testComponentId.HasValue ?
+                new ObjectParameter("TestComponentId", testComponentId) :
+                new ObjectParameter("TestComponentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_TestComponentDetailsById_Result>("usp_tbl_TestComponentDetailsById", testComponentIdParameter);
+        }
+    
+        public virtual ObjectResult<usp_tbl_TestComponentDetailsById1_Result> usp_tbl_TestComponentDetailsById1(Nullable<int> testComponentId)
+        {
+            var testComponentIdParameter = testComponentId.HasValue ?
+                new ObjectParameter("TestComponentId", testComponentId) :
+                new ObjectParameter("TestComponentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_tbl_TestComponentDetailsById1_Result>("usp_tbl_TestComponentDetailsById1", testComponentIdParameter);
+        }
+    
+        public virtual int usp_Tbl_TestComponentExists(string name, ObjectParameter count)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_TestComponentExists", nameParameter, count);
+        }
+    
+        public virtual int usp_Tbl_TestComponentExistsId(Nullable<int> id, string name, Nullable<int> testCategoryId, ObjectParameter count)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_TestComponentExistsId", idParameter, nameParameter, testCategoryIdParameter, count);
+        }
+    
+        public virtual int usp_Tbl_TestConfigurationExists(string name, Nullable<int> testDuration, Nullable<int> dataCapturingRate, ObjectParameter testExists)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var testDurationParameter = testDuration.HasValue ?
+                new ObjectParameter("TestDuration", testDuration) :
+                new ObjectParameter("TestDuration", typeof(int));
+    
+            var dataCapturingRateParameter = dataCapturingRate.HasValue ?
+                new ObjectParameter("DataCapturingRate", dataCapturingRate) :
+                new ObjectParameter("DataCapturingRate", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_TestConfigurationExists", nameParameter, testDurationParameter, dataCapturingRateParameter, testExists);
+        }
+    
+        public virtual int usp_Tbl_TestConfigurationExistsId(Nullable<int> id, string name, Nullable<int> testDuration, Nullable<int> dataCapturingRate, ObjectParameter testExists)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var testDurationParameter = testDuration.HasValue ?
+                new ObjectParameter("TestDuration", testDuration) :
+                new ObjectParameter("TestDuration", typeof(int));
+    
+            var dataCapturingRateParameter = dataCapturingRate.HasValue ?
+                new ObjectParameter("DataCapturingRate", dataCapturingRate) :
+                new ObjectParameter("DataCapturingRate", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_TestConfigurationExistsId", idParameter, nameParameter, testDurationParameter, dataCapturingRateParameter, testExists);
+        }
+    
+        public virtual int usp_Tbl_UpdateCustomers(Nullable<int> customerId, string customerName, string customerCode, string contactNumber, string emailAddress, string address, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var customerIdParameter = customerId.HasValue ?
+                new ObjectParameter("CustomerId", customerId) :
+                new ObjectParameter("CustomerId", typeof(int));
+    
+            var customerNameParameter = customerName != null ?
+                new ObjectParameter("CustomerName", customerName) :
+                new ObjectParameter("CustomerName", typeof(string));
+    
+            var customerCodeParameter = customerCode != null ?
+                new ObjectParameter("CustomerCode", customerCode) :
+                new ObjectParameter("CustomerCode", typeof(string));
+    
+            var contactNumberParameter = contactNumber != null ?
+                new ObjectParameter("ContactNumber", contactNumber) :
+                new ObjectParameter("ContactNumber", typeof(string));
+    
+            var emailAddressParameter = emailAddress != null ?
+                new ObjectParameter("EmailAddress", emailAddress) :
+                new ObjectParameter("EmailAddress", typeof(string));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_UpdateCustomers", customerIdParameter, customerNameParameter, customerCodeParameter, contactNumberParameter, emailAddressParameter, addressParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_UpdateModelTypeDetailsById(Nullable<int> valveModelId, Nullable<int> valveTypeId, string valveModelName, string valveodelDescription, string remarks, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var valveModelIdParameter = valveModelId.HasValue ?
+                new ObjectParameter("ValveModelId", valveModelId) :
+                new ObjectParameter("ValveModelId", typeof(int));
+    
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            var valveModelNameParameter = valveModelName != null ?
+                new ObjectParameter("ValveModelName", valveModelName) :
+                new ObjectParameter("ValveModelName", typeof(string));
+    
+            var valveodelDescriptionParameter = valveodelDescription != null ?
+                new ObjectParameter("ValveodelDescription", valveodelDescription) :
+                new ObjectParameter("ValveodelDescription", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UpdateModelTypeDetailsById", valveModelIdParameter, valveTypeIdParameter, valveModelNameParameter, valveodelDescriptionParameter, remarksParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_UpdatePressureClass(Nullable<int> pressureClassId, string pressureClassValue, string description, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var pressureClassIdParameter = pressureClassId.HasValue ?
+                new ObjectParameter("PressureClassId", pressureClassId) :
+                new ObjectParameter("PressureClassId", typeof(int));
+    
+            var pressureClassValueParameter = pressureClassValue != null ?
+                new ObjectParameter("PressureClassValue", pressureClassValue) :
+                new ObjectParameter("PressureClassValue", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_UpdatePressureClass", pressureClassIdParameter, pressureClassValueParameter, descriptionParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_UpdateRoles(Nullable<int> roleId, string roleName, string description, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var roleNameParameter = roleName != null ?
+                new ObjectParameter("RoleName", roleName) :
+                new ObjectParameter("RoleName", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UpdateRoles", roleIdParameter, roleNameParameter, descriptionParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_UpdateStatusofTest(Nullable<int> recordIdMaster, string status)
+        {
+            var recordIdMasterParameter = recordIdMaster.HasValue ?
+                new ObjectParameter("RecordIdMaster", recordIdMaster) :
+                new ObjectParameter("RecordIdMaster", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UpdateStatusofTest", recordIdMasterParameter, statusParameter);
+        }
+    
+        public virtual int usp_Tbl_UpdateSubTestCategories(Nullable<int> subTestCategoryId, Nullable<int> testCategoryId, string subTestCategoryName, string remarks, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var subTestCategoryIdParameter = subTestCategoryId.HasValue ?
+                new ObjectParameter("SubTestCategoryId", subTestCategoryId) :
+                new ObjectParameter("SubTestCategoryId", typeof(int));
+    
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            var subTestCategoryNameParameter = subTestCategoryName != null ?
+                new ObjectParameter("SubTestCategoryName", subTestCategoryName) :
+                new ObjectParameter("SubTestCategoryName", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_UpdateSubTestCategories", subTestCategoryIdParameter, testCategoryIdParameter, subTestCategoryNameParameter, remarksParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_UpdateTestCategories(Nullable<int> testCategoryId, string testCategoryName, string testCategoryDescription, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testCategoryIdParameter = testCategoryId.HasValue ?
+                new ObjectParameter("TestCategoryId", testCategoryId) :
+                new ObjectParameter("TestCategoryId", typeof(int));
+    
+            var testCategoryNameParameter = testCategoryName != null ?
+                new ObjectParameter("TestCategoryName", testCategoryName) :
+                new ObjectParameter("TestCategoryName", typeof(string));
+    
+            var testCategoryDescriptionParameter = testCategoryDescription != null ?
+                new ObjectParameter("TestCategoryDescription", testCategoryDescription) :
+                new ObjectParameter("TestCategoryDescription", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_UpdateTestCategories", testCategoryIdParameter, testCategoryNameParameter, testCategoryDescriptionParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_UpdateTestComponent(Nullable<int> testComponentId, Nullable<int> testComponentCategoryId, string make, string serialNumber, string range, string pressureGauge, Nullable<System.DateTime> calibrationOn, Nullable<System.DateTime> calibrationDueOn, string remarks, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testComponentIdParameter = testComponentId.HasValue ?
+                new ObjectParameter("TestComponentId", testComponentId) :
+                new ObjectParameter("TestComponentId", typeof(int));
+    
+            var testComponentCategoryIdParameter = testComponentCategoryId.HasValue ?
+                new ObjectParameter("TestComponentCategoryId", testComponentCategoryId) :
+                new ObjectParameter("TestComponentCategoryId", typeof(int));
+    
+            var makeParameter = make != null ?
+                new ObjectParameter("Make", make) :
+                new ObjectParameter("Make", typeof(string));
+    
+            var serialNumberParameter = serialNumber != null ?
+                new ObjectParameter("SerialNumber", serialNumber) :
+                new ObjectParameter("SerialNumber", typeof(string));
+    
+            var rangeParameter = range != null ?
+                new ObjectParameter("Range", range) :
+                new ObjectParameter("Range", typeof(string));
+    
+            var pressureGaugeParameter = pressureGauge != null ?
+                new ObjectParameter("PressureGauge", pressureGauge) :
+                new ObjectParameter("PressureGauge", typeof(string));
+    
+            var calibrationOnParameter = calibrationOn.HasValue ?
+                new ObjectParameter("CalibrationOn", calibrationOn) :
+                new ObjectParameter("CalibrationOn", typeof(System.DateTime));
+    
+            var calibrationDueOnParameter = calibrationDueOn.HasValue ?
+                new ObjectParameter("CalibrationDueOn", calibrationDueOn) :
+                new ObjectParameter("CalibrationDueOn", typeof(System.DateTime));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_UpdateTestComponent", testComponentIdParameter, testComponentCategoryIdParameter, makeParameter, serialNumberParameter, rangeParameter, pressureGaugeParameter, calibrationOnParameter, calibrationDueOnParameter, remarksParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_UpdateTestComponentCategory(Nullable<int> testComponentCategoryId, string testComponentCategoryName, string description, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testComponentCategoryIdParameter = testComponentCategoryId.HasValue ?
+                new ObjectParameter("TestComponentCategoryId", testComponentCategoryId) :
+                new ObjectParameter("TestComponentCategoryId", typeof(int));
+    
+            var testComponentCategoryNameParameter = testComponentCategoryName != null ?
+                new ObjectParameter("TestComponentCategoryName", testComponentCategoryName) :
+                new ObjectParameter("TestComponentCategoryName", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("Description", description) :
+                new ObjectParameter("Description", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UpdateTestComponentCategory", testComponentCategoryIdParameter, testComponentCategoryNameParameter, descriptionParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_UpdateTestComponents(Nullable<int> testComponentId, Nullable<int> testComponentCategoryId, string name, string make, string serialNumber, string range, Nullable<int> unitId, string pressureGauge, Nullable<System.DateTime> calibrationOn, Nullable<System.DateTime> calibrationDueOn, string remarks, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var testComponentIdParameter = testComponentId.HasValue ?
+                new ObjectParameter("TestComponentId", testComponentId) :
+                new ObjectParameter("TestComponentId", typeof(int));
+    
+            var testComponentCategoryIdParameter = testComponentCategoryId.HasValue ?
+                new ObjectParameter("TestComponentCategoryId", testComponentCategoryId) :
+                new ObjectParameter("TestComponentCategoryId", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var makeParameter = make != null ?
+                new ObjectParameter("Make", make) :
+                new ObjectParameter("Make", typeof(string));
+    
+            var serialNumberParameter = serialNumber != null ?
+                new ObjectParameter("SerialNumber", serialNumber) :
+                new ObjectParameter("SerialNumber", typeof(string));
+    
+            var rangeParameter = range != null ?
+                new ObjectParameter("Range", range) :
+                new ObjectParameter("Range", typeof(string));
+    
+            var unitIdParameter = unitId.HasValue ?
+                new ObjectParameter("UnitId", unitId) :
+                new ObjectParameter("UnitId", typeof(int));
+    
+            var pressureGaugeParameter = pressureGauge != null ?
+                new ObjectParameter("PressureGauge", pressureGauge) :
+                new ObjectParameter("PressureGauge", typeof(string));
+    
+            var calibrationOnParameter = calibrationOn.HasValue ?
+                new ObjectParameter("CalibrationOn", calibrationOn) :
+                new ObjectParameter("CalibrationOn", typeof(System.DateTime));
+    
+            var calibrationDueOnParameter = calibrationDueOn.HasValue ?
+                new ObjectParameter("CalibrationDueOn", calibrationDueOn) :
+                new ObjectParameter("CalibrationDueOn", typeof(System.DateTime));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_UpdateTestComponents", testComponentIdParameter, testComponentCategoryIdParameter, nameParameter, makeParameter, serialNumberParameter, rangeParameter, unitIdParameter, pressureGaugeParameter, calibrationOnParameter, calibrationDueOnParameter, remarksParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_Tbl_UpdateTestConfiguration(Nullable<int> testConfigurationId, Nullable<int> dataCapturingRate, Nullable<int> testDuration, string testName, string testDescription, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, string remarks)
+        {
+            var testConfigurationIdParameter = testConfigurationId.HasValue ?
+                new ObjectParameter("TestConfigurationId", testConfigurationId) :
+                new ObjectParameter("TestConfigurationId", typeof(int));
+    
+            var dataCapturingRateParameter = dataCapturingRate.HasValue ?
+                new ObjectParameter("DataCapturingRate", dataCapturingRate) :
+                new ObjectParameter("DataCapturingRate", typeof(int));
+    
+            var testDurationParameter = testDuration.HasValue ?
+                new ObjectParameter("TestDuration", testDuration) :
+                new ObjectParameter("TestDuration", typeof(int));
+    
+            var testNameParameter = testName != null ?
+                new ObjectParameter("TestName", testName) :
+                new ObjectParameter("TestName", typeof(string));
+    
+            var testDescriptionParameter = testDescription != null ?
+                new ObjectParameter("TestDescription", testDescription) :
+                new ObjectParameter("TestDescription", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_UpdateTestConfiguration", testConfigurationIdParameter, dataCapturingRateParameter, testDurationParameter, testNameParameter, testDescriptionParameter, lastModifiedByParameter, lastModifiedDateParameter, remarksParameter);
+        }
+    
+        public virtual int usp_Tbl_UpdatetUser(string userName, string userCode, string password, Nullable<int> roleId, Nullable<int> designationId, Nullable<int> organizationId, string mobileNumber, string emailAddress, Nullable<System.DateTime> dateOfBirth, Nullable<System.DateTime> joiningDate, string address, Nullable<bool> isActive, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, string name, Nullable<int> userId)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var userCodeParameter = userCode != null ?
+                new ObjectParameter("UserCode", userCode) :
+                new ObjectParameter("UserCode", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var designationIdParameter = designationId.HasValue ?
+                new ObjectParameter("DesignationId", designationId) :
+                new ObjectParameter("DesignationId", typeof(int));
+    
+            var organizationIdParameter = organizationId.HasValue ?
+                new ObjectParameter("OrganizationId", organizationId) :
+                new ObjectParameter("OrganizationId", typeof(int));
+    
+            var mobileNumberParameter = mobileNumber != null ?
+                new ObjectParameter("MobileNumber", mobileNumber) :
+                new ObjectParameter("MobileNumber", typeof(string));
+    
+            var emailAddressParameter = emailAddress != null ?
+                new ObjectParameter("EmailAddress", emailAddress) :
+                new ObjectParameter("EmailAddress", typeof(string));
+    
+            var dateOfBirthParameter = dateOfBirth.HasValue ?
+                new ObjectParameter("DateOfBirth", dateOfBirth) :
+                new ObjectParameter("DateOfBirth", typeof(System.DateTime));
+    
+            var joiningDateParameter = joiningDate.HasValue ?
+                new ObjectParameter("JoiningDate", joiningDate) :
+                new ObjectParameter("JoiningDate", typeof(System.DateTime));
+    
+            var addressParameter = address != null ?
+                new ObjectParameter("Address", address) :
+                new ObjectParameter("Address", typeof(string));
+    
+            var isActiveParameter = isActive.HasValue ?
+                new ObjectParameter("IsActive", isActive) :
+                new ObjectParameter("IsActive", typeof(bool));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_UpdatetUser", userNameParameter, userCodeParameter, passwordParameter, roleIdParameter, designationIdParameter, organizationIdParameter, mobileNumberParameter, emailAddressParameter, dateOfBirthParameter, joiningDateParameter, addressParameter, isActiveParameter, lastModifiedByParameter, lastModifiedDateParameter, nameParameter, userIdParameter);
+        }
+    
+        public virtual int usp_tbl_UpdateUnitDetails(Nullable<int> unitId, Nullable<int> unitTypeId, string unitName, string unitDescription, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var unitIdParameter = unitId.HasValue ?
+                new ObjectParameter("UnitId", unitId) :
+                new ObjectParameter("UnitId", typeof(int));
+    
+            var unitTypeIdParameter = unitTypeId.HasValue ?
+                new ObjectParameter("UnitTypeId", unitTypeId) :
+                new ObjectParameter("UnitTypeId", typeof(int));
+    
+            var unitNameParameter = unitName != null ?
+                new ObjectParameter("UnitName", unitName) :
+                new ObjectParameter("UnitName", typeof(string));
+    
+            var unitDescriptionParameter = unitDescription != null ?
+                new ObjectParameter("UnitDescription", unitDescription) :
+                new ObjectParameter("UnitDescription", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UpdateUnitDetails", unitIdParameter, unitTypeIdParameter, unitNameParameter, unitDescriptionParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_UpdateValveSize(Nullable<int> sizeId, string sizeDescription, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate, string sizeName)
+        {
+            var sizeIdParameter = sizeId.HasValue ?
+                new ObjectParameter("SizeId", sizeId) :
+                new ObjectParameter("SizeId", typeof(int));
+    
+            var sizeDescriptionParameter = sizeDescription != null ?
+                new ObjectParameter("SizeDescription", sizeDescription) :
+                new ObjectParameter("SizeDescription", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            var sizeNameParameter = sizeName != null ?
+                new ObjectParameter("SizeName", sizeName) :
+                new ObjectParameter("SizeName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UpdateValveSize", sizeIdParameter, sizeDescriptionParameter, lastModifiedByParameter, lastModifiedDateParameter, sizeNameParameter);
+        }
+    
+        public virtual int usp_tbl_UpdateValveTypeDetails(Nullable<int> valveTypeId, string valveTypeDescription, string valveTypeName, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            var valveTypeDescriptionParameter = valveTypeDescription != null ?
+                new ObjectParameter("ValveTypeDescription", valveTypeDescription) :
+                new ObjectParameter("ValveTypeDescription", typeof(string));
+    
+            var valveTypeNameParameter = valveTypeName != null ?
+                new ObjectParameter("ValveTypeName", valveTypeName) :
+                new ObjectParameter("ValveTypeName", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UpdateValveTypeDetails", valveTypeIdParameter, valveTypeDescriptionParameter, valveTypeNameParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_UpdateValveTypeDetailsById(Nullable<int> valveTypeId, string valveTypeDescription, string valveTypeName, Nullable<int> lastModifiedBy, Nullable<System.DateTime> lastModifiedDate)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            var valveTypeDescriptionParameter = valveTypeDescription != null ?
+                new ObjectParameter("ValveTypeDescription", valveTypeDescription) :
+                new ObjectParameter("ValveTypeDescription", typeof(string));
+    
+            var valveTypeNameParameter = valveTypeName != null ?
+                new ObjectParameter("ValveTypeName", valveTypeName) :
+                new ObjectParameter("ValveTypeName", typeof(string));
+    
+            var lastModifiedByParameter = lastModifiedBy.HasValue ?
+                new ObjectParameter("LastModifiedBy", lastModifiedBy) :
+                new ObjectParameter("LastModifiedBy", typeof(int));
+    
+            var lastModifiedDateParameter = lastModifiedDate.HasValue ?
+                new ObjectParameter("LastModifiedDate", lastModifiedDate) :
+                new ObjectParameter("LastModifiedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UpdateValveTypeDetailsById", valveTypeIdParameter, valveTypeDescriptionParameter, valveTypeNameParameter, lastModifiedByParameter, lastModifiedDateParameter);
+        }
+    
+        public virtual int usp_tbl_UserExists(string userName, string emailId, string mobileNumber, ObjectParameter userExists)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var emailIdParameter = emailId != null ?
+                new ObjectParameter("EmailId", emailId) :
+                new ObjectParameter("EmailId", typeof(string));
+    
+            var mobileNumberParameter = mobileNumber != null ?
+                new ObjectParameter("MobileNumber", mobileNumber) :
+                new ObjectParameter("MobileNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UserExists", userNameParameter, emailIdParameter, mobileNumberParameter, userExists);
+        }
+    
+        public virtual int usp_tbl_UserExistsId(Nullable<int> userId, string userName, string emailId, string mobileNumber, ObjectParameter userExists)
+        {
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            var emailIdParameter = emailId != null ?
+                new ObjectParameter("EmailId", emailId) :
+                new ObjectParameter("EmailId", typeof(string));
+    
+            var mobileNumberParameter = mobileNumber != null ?
+                new ObjectParameter("MobileNumber", mobileNumber) :
+                new ObjectParameter("MobileNumber", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_tbl_UserExistsId", userIdParameter, userNameParameter, emailIdParameter, mobileNumberParameter, userExists);
+        }
+    
+        public virtual int usp_Tbl_ValveModel(string name, Nullable<int> valveTypeId, ObjectParameter exists)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_ValveModel", nameParameter, valveTypeIdParameter, exists);
+        }
+    
+        public virtual int usp_Tbl_ValveModelExistsName(Nullable<int> valveTypeId, string name, ObjectParameter count)
+        {
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_ValveModelExistsName", valveTypeIdParameter, nameParameter, count);
+        }
+    
+        public virtual int usp_Tbl_ValveModelExistsNameId(Nullable<int> id, Nullable<int> valveTypeId, string name, ObjectParameter count)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var valveTypeIdParameter = valveTypeId.HasValue ?
+                new ObjectParameter("ValveTypeId", valveTypeId) :
+                new ObjectParameter("ValveTypeId", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_ValveModelExistsNameId", idParameter, valveTypeIdParameter, nameParameter, count);
+        }
+    
+        public virtual int usp_Tbl_ValveSizeExists(string name, ObjectParameter count)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_ValveSizeExists", nameParameter, count);
+        }
+    
+        public virtual int usp_Tbl_ValveSizeExistsId(Nullable<int> id, string name, ObjectParameter count)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_ValveSizeExistsId", idParameter, nameParameter, count);
+        }
+    
+        public virtual int usp_Tbl_ValveTypeExists(string name, ObjectParameter count)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_ValveTypeExists", nameParameter, count);
+        }
+    
+        public virtual int usp_Tbl_ValveTypeExistsId(Nullable<int> id, string name, ObjectParameter count)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_Tbl_ValveTypeExistsId", idParameter, nameParameter, count);
+        }
     }
 }

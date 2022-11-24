@@ -166,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\ApplicationSession.cs" />
     <Compile Include="Common\GetDocumentNumber.cs" />
+    <Compile Include="Controllers\DebitNoteController.cs" />
     <Compile Include="Controllers\GRNController.cs" />
     <Compile Include="Controllers\InwardNoteController.cs" />
     <Compile Include="Controllers\InwardQCSortingController.cs" />
@@ -220,9 +221,6 @@
     <Compile Include="DAL\DesignationMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\EmployeeMaster.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DAL\FinishGoodSery.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -259,7 +257,13 @@
     <Compile Include="DAL\InwardNote.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\InwardNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\InwardQC.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\InwardQCDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\IssueNote.cs">
@@ -319,7 +323,7 @@
     <Compile Include="DAL\PurchaseOrderItemsDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PurchaseOrderPaymentDetail.cs">
+    <Compile Include="DAL\PurchaseOrderPaymentDetails.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\QCProductionSpecificationMaster.cs">
@@ -388,6 +392,87 @@
     <Compile Include="DAL\TaxMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Tbl_Customers_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_Designation_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_Notes_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_Organization_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_PressureClass_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_PressureValues_T.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_RoleRights_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_Roles_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_Screens_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_Sealing_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_Section_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_SubTestCategory_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_TemperatureValues_T.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_TestCategory_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_TestComponentCategory_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_TestComponent_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_TestConfiguration_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_Units_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_UnitType_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_UserDetails_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_User_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_ValveModel_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_ValveSize_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_Valves_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_ValveTestRecordsEntry_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_ValveTestRecordsold_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Tbl_ValveTypes_M.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\TermsAndConditionMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -398,6 +483,219 @@
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\UserDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetAllValveTestRecordsDates_T_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetAllValveTestRecordsforExcel_T_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetAllValveTestRecords_T_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetPressureandTemperatureValues_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetPressureTemperatureValueswithSetPressure_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetValveTestDetailById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetValveTestDetailByRecordId_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetValveTestDetailByRecordNumber_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetValveTestRecordsDates_T_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetValveTestRecordsforExcel_T_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetValveTestRecordsForSearch_T_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetValveTestRecordsSearch_T_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetValveTestRecords_T_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GeAllTestComponents_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GeCustomerDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllCustomersListName_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllCustomersList_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllCustomers_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllDesignations_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllOrganizations_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllPressureClasses_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllPressureClass_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllPressureGauges_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllPressureTransmitters_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllPressureUnitTypes_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllRoles_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllScreens_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllSealingStatus_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllSections_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllSubTestCategoriesList_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllSubTestCategories_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllTemperatureUnitTypes_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllTestCategories_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllTestComponentCategories_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllTestComponentCategoryById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllTestComponentDetails_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllTestComponents_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllTestConfigurations_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllUserDetails_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllUsersDetails_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllUsers_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllValveIds_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllValveModels_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllValveSizesSetails_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllValveSizes_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetAllValveTypes_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetCustomerDetailsByCustomerId_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetCustomerDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetDetailsByUserId_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GeTestComponentDetails_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_Tbl_GetPressureClassById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetRoleDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetRoleRightsDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetScreensNotInRoleRightsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetSubTestCategories_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetSubTestCategoryDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetSubTestCategoryDetailsBySubTestId_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetSubTestComponenetsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetSubTestComponenets_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetTestCategoryDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetTestConfigurationDetailById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetTestConfigurationDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetUserDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetUserDetailsByNamePwd_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetValveModelDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetValveModels_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetValveSizeDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetValveSizesById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetValveTypeDetailsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_TestComponentDetailsById1_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_TestComponentDetailsById_Result.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\WorkOrder.cs">
@@ -414,9 +712,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CommonFunctions.cs" />
+    <Compile Include="Repository\DebitNoteRepository.cs" />
     <Compile Include="Repository\GRNRepository.cs" />
     <Compile Include="Repository\Interface\ICommonFunctions.cs" />
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
+    <Compile Include="Repository\Interface\IDebitNoteRepository.cs" />
     <Compile Include="Repository\Interface\IGRNRepository.cs" />
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
@@ -1463,14 +1763,20 @@
     <Content Include="Views\InwardQCSorting\AddInwardQC.cshtml" />
     <Content Include="Views\InwardQCSorting\ViewInwardQC.cshtml" />
     <Content Include="Views\GRN\Index.cshtml" />
-    <Content Include="Views\PurchaseOrder\AddPurchaseOrder.cshtml" />
-    <Content Include="Views\PurchaseOrder\EditPurchaseOrder.cshtml" />
-    <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\StockReport\Index.cshtml" />
+    <Content Include="Views\DebitNote\AddDebitNote.cshtml" />
+    <Content Include="Views\DebitNote\Index.cshtml" />
     <Content Include="Views\POPayment\AddPOPayment.cshtml" />
+    <Content Include="Views\POPayment\EditPOPayment.cshtml" />
     <Content Include="Views\POPayment\Index.cshtml" />
-    <Content Include="Views\StockTransfer\Index.cshtml" />
+    <Content Include="Views\POPayment\_POPaymentDetails.cshtml" />
+    <Content Include="Views\PurchaseOrder\AddPurchaseOrder.cshtml" />
+    <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\StockTransfer\AddStockTransfer.cshtml" />
+    <Content Include="Views\StockTransfer\Index.cshtml" />
+    <Content Include="Views\PurchaseOrder\POAmendment.cshtml" />
+    <Content Include="Views\PurchaseOrder\ViewPurchaseOrder.cshtml" />
+    <Content Include="Views\PurchaseOrder\EditPurchaseOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
