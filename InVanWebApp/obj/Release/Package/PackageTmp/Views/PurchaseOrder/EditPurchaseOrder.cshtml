@@ -134,7 +134,6 @@
                 <br />
                 <div class="col-md-2">
                     @Html.Label("Indent Number")
-                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm" })
@@ -145,7 +144,6 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Remarks")
-                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
@@ -321,7 +319,7 @@
                 Back To List
             </a>
             <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
-            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Update</button>
+            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
         </div>
     </div>
 
@@ -333,6 +331,12 @@
 }
 
 <script type="text/javascript">
+
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        createJson();
+    };
+    //==========end===============
 
 //===========The below function is for updating the draft flag value if user clicked it as save the PO as draft====//
     $("#btn_SaveDraft").click(function () {
@@ -636,7 +640,7 @@
 
 
     function removeTr(index) {
-        ///Finding the length of existing table
+        /////Finding the length of existing table
         var table = document.getElementById('submissionTable');
         var tableRows = table.rows.length;
         if (tableRows > 2) {
@@ -647,6 +651,19 @@
         }
         CalculateTotalBeforeTax();
         return false;
+
+        //var length = document.getElementById("submissionTable").rows.length;
+        //length = parseFloat(length) - 1;
+        ////console.log("Length: " + length + counter);
+        //if (counter > 1 & length == index) {
+        //    $('#tablerow_' + index).remove();
+        //    counter--;
+        //}
+        //else {
+        //    $('#tablerow_' + index).remove();
+        //}
+        //CalculateTotalBeforeTax();
+        //return false;
     }
 
     function fileValidation() {

@@ -50,5 +50,8 @@ namespace InVanWebApp_BO
         //Added below fields for Grid dropdowns
         public double UnitPrice { get; set; }
         public float ItemTaxValue { get; set; }
+
+        //Added below code for Stock transfer module.
+        public Nullable<double> RequiredQuantity { get; set; } //Rahul added 23 Nov 2022 
     }
 }

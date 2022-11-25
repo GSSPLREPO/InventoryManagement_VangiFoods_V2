@@ -302,7 +302,7 @@
             <a href="@Url.Action("Index","PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
                 Back To List
             </a>
-            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">Submit</button>
+            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Submit</button>
         </div>
     </div>
 }
@@ -312,6 +312,13 @@
 }
 
 <script type="text/javascript">
+
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        createJson();
+    };
+    //==========end===============
+
     //=======The below function is for fetching the files value in the textbox of file type============//
     $(document).ready(function () {
         CalculateTotalBeforeTax();
@@ -608,11 +615,9 @@
 
 
     function removeTr(index) {
-        ///Finding the length of existing table
-        debugger;
+        /////Finding the length of existing table
         var table = document.getElementById('submissionTable');
         var tableRows = table.rows.length;
-
         if (tableRows > 2) {
             if (counter => index) {
                 $('#tablerow_' + index).remove();

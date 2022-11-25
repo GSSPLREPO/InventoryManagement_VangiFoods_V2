@@ -12,13 +12,15 @@ namespace InVanWebApp.Repository.Interface
         //Define function for fetching details of Purchase Order.
         IEnumerable<StockTransferBO> GetAll();
         //Function for Get Location Master  Location Name
-        IEnumerable<StockTransferBO> GetFromLocationNameList(); 
+        IEnumerable<StockTransferBO> GetFromLocationNameList();
         //Function for Get Location Master To Location Name
+        //Function for Get Location Master  List  
+        IEnumerable<LocationWiseStockBO> GetFromLocationMasterList(int id);   
         IEnumerable<StockTransferBO> GetToLocationNameList(); 
         //For fetching the list of items
-        IEnumerable<StockMasterBO> GetItemDetailsForDD(int ItemType); 
-        //Fetch the details of Item by it's ID
-        StockMasterBO GetItemDetails(int itemID);
+        IEnumerable<ItemBO> GetItemDetailsForDD(int ItemType);
+        //Fetch the details of Item and Location wise stock by it's ID
+        ItemBO GetItemDetails(int itemID, int LocationId);   
         //Function define for: Insert record.
         ResponseMessageBO Insert(StockTransferBO stockTransferMaster);
         //Fetch the details of Item by it's ID 

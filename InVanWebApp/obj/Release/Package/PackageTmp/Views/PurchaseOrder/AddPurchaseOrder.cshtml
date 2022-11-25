@@ -45,7 +45,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly="readonly"})
                     @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
@@ -69,7 +69,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("TermsAndConditionID", (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
+                    @Html.DropDownListFor(model=>model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
                     @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val())" })
-                    @*@Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })*@
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
                     @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
@@ -242,7 +242,7 @@
                                                     @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;" })
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(0);">Delete</button>
+                                                    <button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -275,7 +275,7 @@
                                        onchange="return fileValidation()" />
 
                                 <!-- Image preview -->
-                                <span style="color:green">@ViewBag.Message</span>
+                                @*<span style="color:green">@ViewBag.Message</span>*@
                                 <br />
                                 <br />
                                 <center>
@@ -295,21 +295,21 @@
                             <div class="form-group">
                                 <div class="row mb-2">
                                     <label id="lblTotalBeforeTax">Total (before tax): </label>
-                                    <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="" />
+                                    <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="" readonly="readonly"/>
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total tax: </label>
                                     @*<input class="form-control" id="TotalTax" name="Tax" />*@
-                                    <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" />
+                                    <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" readonly="readonly"/>
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total (after tax):</label>
                                     @*<input class="form-control" id="TotalAfterTax" />*@
-                                    <input class="form-control text-right form-control-sm" id="TotalAfterTax" name="TotalAfterTax" />
+                                    <input class="form-control text-right form-control-sm" id="TotalAfterTax" name="TotalAfterTax" readonly="readonly"/>
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Grand Total:</b></label>
-                                    <input class="form-control text-right form-control-sm" id="GrandTotal" name="GrandTotal" />
+                                    <input class="form-control text-right form-control-sm" id="GrandTotal" name="GrandTotal" readonly="readonly"/>
                                 </div>
                                 <div class="row mb-2">
                                     <label>Advanced To Pay:</label>
@@ -327,7 +327,7 @@
                 Back To List
             </a>
             <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right" formaction="SaveDraft">Save Draft</button>
-            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" formaction="AddPurchaseOrder">Save</button>
+            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" formaction="AddPurchaseOrder" onclick="SaveBtnClick()">Save</button>
         </div>
     </div>
 
@@ -345,6 +345,12 @@
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        createJson();
+    };
+    //==========end===============
 
     //========adding the below document.ready code for disabling the previous dates in both PO date and
     //delivery date.
@@ -420,7 +426,7 @@
     //onchange = "SelectedIndexChanged($(this).val())"
 
     function SelectedIndexChangedItemList(id) {
-        debugger
+        ////debugger
         var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
         itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
@@ -428,7 +434,7 @@
     }
 
     function SelectedIndexChangedTerms(id) {
-        debugger
+        ////debugger
         var selectedOptionTerms, termsName;
         selectedOptionTerms = document.getElementById("TermsAndConditionID").selectedIndex;
         termsName = document.getElementById("TermsAndConditionID").options[selectedOptionTerms].innerText;
@@ -437,7 +443,7 @@
 
     function SelectedIndexChanged(id) {
         //alert(id);
-        debugger
+        ////debugger
         var selectedOption,companyName;
         selectedOption = document.getElementById("VendorsID").selectedIndex;
         companyName = document.getElementById("VendorsID").options[selectedOption].innerText;
@@ -459,7 +465,7 @@
 
     function SelectedIndexChangedLocation(id) {
         //alert(id);
-        debugger
+        ////debugger
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
         locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
@@ -472,7 +478,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                debugger;
+                ////debugger;
                 //console.log(result);
                 var deliveryAdd = result[0].DeliveryAddress;
                 $("#DeliveryAddress").val(deliveryAdd);
@@ -496,12 +502,12 @@
                 //as inputto json method GetitemDetails.
 
                 success: function (itemDescription) {
-                    debugger
+                    ////debugger
                     // states contains the JSON formatted list
                     // of states passed from the controller
                     //rahul added $(itemDescription).each(function ()
                     //$(itemDescription).each(function () {
-                    //    debugger
+                    //    //debugger
                     //    $("#Item_ID").append($("<option></option>").val(this.ID).html(this.Item_Code));
                     //});
 
@@ -533,12 +539,12 @@
     }
 
     $("#Item_ID").change(function () {
-        debugger
+       // //debugger
         getitemDetails();
     });
 
     function getitemDetailsJSTbl(count) {
-        debugger
+        ////debugger
         console.log(count);
         //SelectedIndexChangedItemList();
        // var itemId = "ItemID['" + counter + "']";
@@ -556,12 +562,12 @@
                 //as inputto json method GetitemDetails.
 
                         success: function (itemDescription) {
-                    debugger
+                    ////debugger
                     // states contains the JSON formatted list
                     // of states passed from the controller
                     //rahul added $(itemDescription).each(function ()
                     //$(itemDescription).each(function () {
-                    //    debugger
+                    //    //debugger
                     //    $("#Item_ID").append($("<option></option>").val(this.ID).html(this.Item_Code));
                     //});
 
@@ -599,9 +605,9 @@
 
     function calcTax(cnt, e) {
         alert("calcTax");
-        debugger;
+        //debugger;
         if (isNumberKey(e)) {
-            debugger;
+            //debugger;
         var itemQuantity = $("#itemQuantity_" + cnt).val();
         console.log(itemQuantity);
         var itemPrice = $("#itemPrice_" + cnt).val();
@@ -625,7 +631,7 @@
     var counter = 1;
 
     $("#AddItem").click(function () {
-        debugger
+        ////debugger
         //'<select id="ItemID" class="form-control" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
         //var nameItem = "Item_ID['" + counter + "']";
         var itemId = "ItemID_"+counter;
@@ -675,6 +681,7 @@
 
 
     function CalItemTotalPrice(value, id) {
+        //debugger;
         //alert(value + " " + id);
         var temp_rowNo = id.split('_');
         var rowNo = temp_rowNo[1];
@@ -695,16 +702,24 @@
         var length = document.getElementById("submissionTable").rows.length;
         length = parseFloat(length) - 2;
         var total = parseFloat(ItemTotalPrice.value);
-        var totalTax = (parseFloat(ItemTaxValue.value)/100)* total;
+        var totalTax = (parseFloat(ItemTaxValue.value) / 100) * total;
         var i = 1;
-        while (i<=length) {
-            var temp = document.getElementById("totalItemCost_" + i).value;
-            var tempTotalTax = document.getElementById("itemTax_" + i).value;
-            total = parseFloat(temp) + total;
+        while (i <= length) {
+            //This if -else condition is written for: If user delete any other row of the dynamic table.
 
-            tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
-            totalTax = parseFloat(tempTotalTax) + totalTax;
-            i++;
+            if ($('#tablerow' + i).length) {
+                var temp = document.getElementById("totalItemCost_" + i).value;
+                var tempTotalTax = document.getElementById("itemTax_" + i).value;
+                total = parseFloat(temp) + total;
+
+                tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
+                totalTax = parseFloat(tempTotalTax) + totalTax;
+                i++;
+            }
+            else {
+                i++;
+                length++;
+            }
         }
         $('#TotalBeforeTax').val(total);
         $('#TotalTax').val(totalTax);
@@ -714,8 +729,9 @@
 
         createJson();
     }
+
     function createJson() {
-        debugger
+        ////debugger
         //var table = $('#submissionTable').tableToJSON();
         ////table = { "myrows": table };//make myrows the parent object
         //alert(JSON.stringify(table));
@@ -728,75 +744,8 @@
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
-    //$("#btnSave").click(function () {
-    //    debugger
-    //        var $form = $(this).closest('form');
-    //        var dataPO = $form.serializeArray();
-
-    //        console.log(dataPO);
-
-    //        var arrIdPO = [];
-    //        var arrQtePO = [];
-
-    //        for( i = 0; i < dataPO.length; i++)
-    //        {
-    //            debugger
-    //            if (dataPO[i].name == 'product.Item_ID')
-    //            {
-    //                arrIdPO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.Item_Code')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemName')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemQuantity')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemUnit')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemUnitPrice')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemTaxValue')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.TotalItemCost')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //        }
-
-
-    //    $.ajax({
-    //        type: "POST",
-    //        url: "/Home/PurchaseOrder/AddPurchaseOrder",
-    //        data: { res, arrIdPO, arrQtePO},
-    //        contentType: "application/json; charset=utf-8",
-    //        dataType: "json",
-    //        success: function (response) {
-    //            alert("Hello: " + response.Name + " .\nCurrent Date and Time: " + response.DateTime);
-    //        },
-    //        failure: function (response) {
-    //            alert(response.responseText);
-    //        },
-    //        error: function (response) {
-    //            alert(response.responseText);
-    //        }
-    //    });
-    //});
-
-
     $("#ItemQuantity").change(function () {
-        debugger
+        ////debugger
         var quantity = $("#ItemQuantity").val();
         var price = $("#ItemUnitPrice").val();
         var tempTax = $("#ItemTaxValue").val().split("%")
@@ -816,10 +765,17 @@
 
 
     function removeTr(index) {
-        if (counter > 1) {
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        //console.log("Length: " + length + counter);
+        if (counter > 1 & length == index) {
             $('#tablerow' + index).remove();
             counter--;
         }
+        else {
+            $('#tablerow' + index).remove();
+        }
+        CalculateTotalBeforeTax();
         return false;
     }
 
@@ -885,12 +841,12 @@
         //as inputto json method GetitemDetails.
 
         success: function (itemDescription) {
-            debugger
+            //debugger
             // states contains the JSON formatted list
             // of states passed from the controller
             //rahul added $(itemDescription).each(function ()
             $(itemDescription).each(function () {
-                debugger
+                //debugger
                 $("#Item_ID").append($("<option></option>").val(this.ID).html(this.Item_Code));
             });
 

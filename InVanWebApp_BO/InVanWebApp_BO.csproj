@@ -68,8 +68,10 @@
     <Compile Include="DebitNoteBO.cs" />
     <Compile Include="DesignationBO.cs" />
     <Compile Include="GRN_BO.cs" />
+    <Compile Include="InventoryControlReportBO.cs" />
     <Compile Include="InwardNoteBO.cs" />
     <Compile Include="InwardQCBO.cs" />
+    <Compile Include="LocationWiseStockBO.cs" />
     <Compile Include="OrganisationGroupBO.cs" />
     <Compile Include="OrganisationsBO.cs" />
     <Compile Include="POPaymentBO.cs" />
