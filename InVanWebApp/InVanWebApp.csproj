@@ -176,6 +176,7 @@
     <Compile Include="Controllers\POPaymentController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
+    <Compile Include="Controllers\StockMovementController.cs" />
     <Compile Include="Controllers\StockReportController.cs" />
     <Compile Include="Controllers\StockTransferController.cs" />
     <Compile Include="Controllers\UserDetailsController.cs" />
@@ -436,6 +437,7 @@
     <Compile Include="Repository\Interface\IPOPaymentRepository.cs" />
     <Compile Include="Repository\Interface\IPurchaseOrderRepository.cs" />
     <Compile Include="Repository\Interface\IStockMasterRepository.cs" />
+    <Compile Include="Repository\Interface\IStockMovementRepository.cs" />
     <Compile Include="Repository\Interface\IStockTransferRepository.cs" />
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
     <Compile Include="Repository\Interface\IUserDetailsRepository.cs" />
@@ -459,6 +461,7 @@
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
     <Compile Include="Repository\StockMasterRepository.cs" />
+    <Compile Include="Repository\StockMovementRepository.cs" />
     <Compile Include="Repository\StockTransferRepository.cs" />
     <Compile Include="Repository\TaxRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
@@ -2620,7 +2623,6 @@
     <Content Include="Views\POPayment\AddPOPayment.cshtml" />
     <Content Include="Views\POPayment\EditPOPayment.cshtml" />
     <Content Include="Views\POPayment\Index.cshtml" />
-    <Content Include="Views\POPayment\_POPaymentDetails.cshtml" />
     <Content Include="Views\PurchaseOrder\AddPurchaseOrder.cshtml" />
     <Content Include="Views\PurchaseOrder\Index.cshtml" />
     <Content Include="Views\StockTransfer\AddStockTransfer.cshtml" />
@@ -2630,6 +2632,8 @@
     <Content Include="Views\PurchaseOrder\EditPurchaseOrder.cshtml" />
     <Content Include="Views\InventoryControl\Index.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\Index.cshtml" />
+    <Content Include="Views\POPayment\_POPaymentDetails.cshtml" />
+    <Content Include="Views\StockMovement\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

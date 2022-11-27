@@ -12,20 +12,14 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using log4net;
 
 namespace InVanWebApp.Controllers
 {
     public class StockReportController : Controller
     {
         IStockMasterRepository _StockMasterRepository;
-        private static ILog log = LogManager.GetLogger(typeof(StockReportController));
-
-        #region Initializing Cunstructor
-        /// <summary>
-        /// Raj: Constructor without parameter
-        /// </summary>
-        public StockReportController()
+        
+         public StockReportController()
         {
             _StockMasterRepository = new StockMasterRepository();
         }
@@ -34,17 +28,16 @@ namespace InVanWebApp.Controllers
         {
             _StockMasterRepository = stockMasterRepository;
         }
-        #endregion
+
         // GET: StockReport
-        
-        #region Bind the grid
+
         public ActionResult Index()
         {
             return View();
         }
-
+       
         /// <summary>
-        /// Bind grid by fetvching the stock details
+        /// to get stock details
         /// </summary>
         /// <returns></returns>
         public JsonResult GetStock()
@@ -54,15 +47,12 @@ namespace InVanWebApp.Controllers
             return Json(new { data = stockDetails }, JsonRequestBehavior.AllowGet);
         }
 
-        #endregion
-
-        #region Pdf export functionality
         /// <summary>
         /// 17/11/2022 Bhandavi
         /// Export report to pdf
         /// </summary>
         /// <returns></returns>
-      //  [Obsolete]
+        [Obsolete]
         public ActionResult ExprotAsPDF()
         {
             var stockDetails = _StockMasterRepository.GetAllStock();
@@ -71,7 +61,6 @@ namespace InVanWebApp.Controllers
             {
                 return View("Index");
             }
-
             StringBuilder sb = new StringBuilder();
             List<StockReportBO> stockReport = TempData["StockDetailsTemp"] as List<StockReportBO>;
 
@@ -82,11 +71,11 @@ namespace InVanWebApp.Controllers
             string ReportName = "Stock Report";
             string name = "Vangi Foods";
             string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
-            sb.Append("<div style='padding:9px; vertical-align:top'>");
-            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>"); /* font*/
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
             sb.Append("<tr >");
-            sb.Append("<th Colspan='9' style='text-align:right;padding: 5px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
+            sb.Append("<th Colspan='9' style='text-align:right;padding-bottom:-85px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
             sb.Append("</th></tr>");
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
@@ -94,26 +83,28 @@ namespace InVanWebApp.Controllers
             sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px'>");
             //sb.Append("<br/>");
             sb.Append("<label style='font-size:22px; bottom:20px;'>" + ReportName + "</label>");
-            //sb.Append("<br/>");           
+            sb.Append("<br/>");           
             sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
             //sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
 
             sb.Append("</th></tr>");
-
+            
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price (Rs)</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Stock Quantity (Kg)</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Inventory Value (Rs)</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</th>"); 
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</th>"); 
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price</th>"); 
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Stock Quantity</th>"); 
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Inventory Value</th>"); 
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder</th>"); 
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder Level</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Reorder Quantity</th>");
             sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("<tbody>");
+            stockReport.Count();
+            //stockReport.r
             foreach (var item in stockReport)
             {
 
@@ -124,7 +115,7 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemUnitPrice + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.StockQuantity + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InventoryValue + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Reorder + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Reorder + "</td>"); 
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ReOrderLevel + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemReOrderQuantity + "</td>");
                 sb.Append("</tr>");
@@ -137,14 +128,15 @@ namespace InVanWebApp.Controllers
             {
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 20f);
-
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+                    
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
-
+                  
                     writer.PageEvent = new PageHeaderFooter();
                     pdfDoc.Open();
                     //pdfDoc.NewPage();
+                   
 
                     setBorder(writer, pdfDoc);
 
@@ -158,7 +150,7 @@ namespace InVanWebApp.Controllers
         }
 
         /// <summary>
-        /// Setting border to pdf document
+        /// setting border to pdf document
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="pdfDoc"></param>
@@ -180,12 +172,13 @@ namespace InVanWebApp.Controllers
             //---------------------------------------
         }
 
-        #endregion
     }
+
+    
 
     public class PageHeaderFooter : PdfPageEventHelper
     {
-        private readonly Font _pageNumberFont = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
+        private readonly Font _pageNumberFont = new Font(Font.NORMAL, 9f, Font.NORMAL, BaseColor.BLACK);
 
         public override void OnEndPage(PdfWriter writer, Document document)
         {
@@ -204,14 +197,15 @@ namespace InVanWebApp.Controllers
 
             var numberTable = new PdfPTable(1);
             numberTable.DefaultCell.Border = 0;
-            var numberCell = new PdfPCell(new Phrase(text, _pageNumberFont)) { HorizontalAlignment = Element.ALIGN_CENTER };
+            var numberCell = new PdfPCell(new Phrase(text, _pageNumberFont)) { HorizontalAlignment = Element.ALIGN_CENTER, PaddingLeft = 200, };
             numberCell.Border = 0;
             numberTable.AddCell(numberCell);
 
-
+            
 
             numberTable.TotalWidth = 50;
             numberTable.WriteSelectedRows(0, -1, document.Right - 300, document.Bottom + 2, writer.DirectContent);
         }
     }
+
 }

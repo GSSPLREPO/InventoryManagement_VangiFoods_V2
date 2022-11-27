@@ -122,18 +122,20 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@InvoiceAmount", POPaymentDetails.PaymentAmount);
                     cmd.Parameters.AddWithValue("@AmountPaid", POPaymentDetails.TotalPaybleAmount);
                     cmd.Parameters.AddWithValue("@BalancePay", POPaymentDetails.BalanceAmount);
-                    cmd.Parameters.AddWithValue("@AdvancedPayment", 0);
+                    cmd.Parameters.AddWithValue("@AdvancedPayment", POPaymentDetails.AdvancedPayment);
                     cmd.Parameters.AddWithValue("@PaymentDate", POPaymentDetails.PaymentDate);
+                    cmd.Parameters.AddWithValue("@PaymentDueDate", POPaymentDetails.PaymentDueDate);
                     cmd.Parameters.AddWithValue("@PaymentMode", POPaymentDetails.PaymentMode);
                     cmd.Parameters.AddWithValue("@ChequeNo", POPaymentDetails.ChequeNumber);
                     cmd.Parameters.AddWithValue("@BankName", POPaymentDetails.BankName);
                     cmd.Parameters.AddWithValue("@AccountNo", POPaymentDetails.AccountNumber);
-                    cmd.Parameters.AddWithValue("@PaymentDetails", POPaymentDetails.Remarks);
+                    //cmd.Parameters.AddWithValue("@PaymentDetails", POPaymentDetails.Remarks);
+                    cmd.Parameters.AddWithValue("@Remarks", POPaymentDetails.Remarks);
                     cmd.Parameters.AddWithValue("@PaymentStatus", POPaymentDetails.IsPaid);
-                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedBy", POPaymentDetails.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
-                    cmd.Parameters.AddWithValue("@LastModifiedDate", DateTime.Now);
+                    //cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    //cmd.Parameters.AddWithValue("@LastModifiedDate", DateTime.Now);
 
                     con.Open();
 
@@ -161,14 +163,43 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="purchaseOrderId"></param>
         /// <returns></returns>
-        public PurchaseOrder GetPurchaseOrderById(int purchaseOrderId)
+        public PurchaseOrderBO GetPurchaseOrderById(int purchaseOrderId)
         {
-            string purchaseOrderQuery = "SELECT * FROM PurchaseOrder WITH(NOLOCK) WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
-            using (SqlConnection con = new SqlConnection(connString))
+            PurchaseOrderBO result = new PurchaseOrderBO();
+            try
             {
-                var purchaseOrder = con.Query<PurchaseOrder>(purchaseOrderQuery, new { @purchaseOrderId = purchaseOrderId }).FirstOrDefault();
-                return purchaseOrder;
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_PurchaseOrderPaymentDetails_GetByPOId", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PO_ID", purchaseOrderId);
+
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        result.PurchaseOrderId = Convert.ToInt32(dataReader["PurchaseOrderId"]);
+                        result.PONumber = dataReader["PONumber"].ToString();
+                        result.GrandTotal =Convert.ToDecimal(dataReader["GrandTotal"]);
+                        result.AdvancedPayment = float.Parse(dataReader["AdvancedPayment"].ToString());
+                        result.VendorsID = Convert.ToInt32(dataReader["VendorsID"]);
+                        result.AmountPaid = float.Parse(dataReader["AmountPaid"].ToString());
+                    }
+                    con.Close();
+                }
             }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return result;
+            //string purchaseOrderQuery = "SELECT * FROM PurchaseOrder WITH(NOLOCK) WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
+            //using (SqlConnection con = new SqlConnection(connString))
+            //{
+            //    var purchaseOrder = con.Query<PurchaseOrder>(purchaseOrderQuery, new { @purchaseOrderId = purchaseOrderId }).FirstOrDefault();
+            //    return purchaseOrder;
+            //}
         }
 
         /// <summary>

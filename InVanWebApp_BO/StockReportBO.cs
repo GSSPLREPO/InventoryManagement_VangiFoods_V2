@@ -11,14 +11,12 @@ namespace InVanWebApp_BO
         public int ID { get; set; }
         public string Item_Code { get; set; }
         public string ItemName { get; set; }
+        public string Reorder { get; set; }
         public decimal ItemUnitPrice { get; set; }
         public decimal  StockQuantity { get; set; }
         public decimal InventoryValue { get; set; }
         public decimal ReOrderLevel { get; set; }
         public decimal ItemReOrderQuantity { get; set; }
-
-        //Added the below fields for report generation by Bhandavi.
-        public string Reorder { get; set; }
         public int RowNumber { get; set; }
     }
 }

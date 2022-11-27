@@ -86,6 +86,9 @@ namespace InVanWebApp_BO
         //===The below field is add by Raj ======
         public int InwardCount { get; set; }
 
+        //Added the below field for PO payment module
+        public float AmountPaid { get; set; }
+
     }
 
     public class PurchaseOrderItemsDetails
