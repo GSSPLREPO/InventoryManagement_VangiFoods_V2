@@ -179,6 +179,7 @@
     <Compile Include="Controllers\StockMovementController.cs" />
     <Compile Include="Controllers\StockReportController.cs" />
     <Compile Include="Controllers\StockTransferController.cs" />
+    <Compile Include="Controllers\TermsAndConditionController.cs" />
     <Compile Include="Controllers\UserDetailsController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
@@ -433,6 +434,7 @@
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
+    <Compile Include="Repository\Interface\ITermsConditionRepository.cs" />
     <Compile Include="Repository\Interface\IOrganisationRepository.cs" />
     <Compile Include="Repository\Interface\IPOPaymentRepository.cs" />
     <Compile Include="Repository\Interface\IPurchaseOrderRepository.cs" />
@@ -464,6 +466,7 @@
     <Compile Include="Repository\StockMovementRepository.cs" />
     <Compile Include="Repository\StockTransferRepository.cs" />
     <Compile Include="Repository\TaxRepository.cs" />
+    <Compile Include="Repository\TermsConditionRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
     <Compile Include="Repository\UserDetailsRepository.cs" />
   </ItemGroup>
@@ -2634,6 +2637,10 @@
     <Content Include="Views\Dashb_RTWarehouseWiseStock\Index.cshtml" />
     <Content Include="Views\POPayment\_POPaymentDetails.cshtml" />
     <Content Include="Views\StockMovement\Index.cshtml" />
+    <Content Include="Views\TermsAndCondition\Index.cshtml" />
+    <Content Include="Views\TermsAndCondition\EditTerms.cshtml" />
+    <Content Include="Views\TermsAndCondition\AddTerms.cshtml" />
+    <Content Include="Views\GRN\AddGRN.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

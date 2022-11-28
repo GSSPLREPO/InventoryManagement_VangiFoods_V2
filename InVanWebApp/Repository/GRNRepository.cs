@@ -12,7 +12,7 @@ using System.Data;
 
 namespace InVanWebApp.Repository
 {
-    public class GRNRepository: IGRNRepository
+    public class GRNRepository : IGRNRepository
     {
         private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private static ILog log = LogManager.GetLogger(typeof(InwardNoteRepository));
@@ -58,5 +58,148 @@ namespace InVanWebApp.Repository
 
         #endregion
 
+        #region Bind dropdown of Inward Number
+        public IEnumerable<InwardNoteBO> GetInwardNumberForDropdown()
+        {
+            List<InwardNoteBO> resultList = new List<InwardNoteBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_InwardNoteForGRN_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new InwardNoteBO()
+                        {
+                            ID = Convert.ToInt32(dataReader["ID"]),
+                            InwardNumber = dataReader["InwardNumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Bind all inward note details 
+        public IEnumerable<InwardNoteBO> GetInwardDetailsById(int InwId)
+        {
+            List<InwardNoteBO> resultList = new List<InwardNoteBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_InwdDetailsForGRN_GetByID", con);
+                    cmd.Parameters.AddWithValue("@ID", InwId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new InwardNoteBO()
+                        {
+                            PO_Id = Convert.ToInt32(dataReader["PO_Id"]),
+                            PONumber = dataReader["PONumber"].ToString(),
+                            LocationStockID = Convert.ToInt32(dataReader["LocationId"]),
+                            DeliveryAddress = dataReader["DeliveryAddress"].ToString(),
+                            SupplierAddress = dataReader["SupplierAddress"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                    SqlCommand cmd1 = new SqlCommand("usp_tbl_InwardItemDetailsForGRN_GetByID", con);
+                    cmd1.Parameters.AddWithValue("@ID", InwId);
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader1 = cmd1.ExecuteReader();
+
+                    while (dataReader1.Read())
+                    {
+                        var result = new InwardNoteBO()
+                        {
+                            Item_Name = dataReader1["Item_Name"].ToString(),
+                            Item_Code = dataReader1["Item_Code"].ToString(),
+                            ItemUnit = dataReader1["ItemUnit"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
+                            TotalQuantity = float.Parse(dataReader1["TotalQuantity"].ToString()),
+                            InwardQuantity = (dataReader1["InwardQuantity"] != null ? Convert.ToDouble(dataReader1["InwardQuantity"]) : 0),
+                            ReceivedQty = float.Parse(dataReader1["ReceivedQty"].ToString())
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                    // }
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Insert function
+        /// <summary>
+        /// Farheen: Insert record.
+        /// </summary>
+        /// <param name="model"></param>
+        public ResponseMessageBO Insert(GRN_BO model)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
+            {
+                //var userId = Session[ApplicationSession.USERID];
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_GRN_Insert", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@GRNCode", model.GRNCode);
+                    cmd.Parameters.AddWithValue("@GRNDate", model.GRNDate);
+                    cmd.Parameters.AddWithValue("@InwardNoteId", model.InwardNoteId);
+                    cmd.Parameters.AddWithValue("@PO_Id", model.PO_ID);
+                    cmd.Parameters.AddWithValue("@PONumber", model.PONumber);
+                    cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
+                    cmd.Parameters.AddWithValue("@DeliveryAddress", model.DeliveryAddress);
+                    cmd.Parameters.AddWithValue("@Remark", model.Remark);
+                    cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
+                    cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    //cmd.ExecuteNonQuery();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
+                    con.Close();
+                }
+                //return true;
+
+            }
+            catch (Exception ex)
+            {
+                response.Status = false;
+                log.Error(ex.Message, ex);
+                // return false;
+            }
+            return response;
+        }
+
+        #endregion
     }
 }

@@ -55,5 +55,12 @@ namespace InVanWebApp_BO
         public float RejectedQuantity { get; set; }
         public float WastageQuantityInPercentage { get; set; }
 
+        //Added below fields for GRN module
+        public string DeliveryAddress { get; set; }
+        public string SupplierAddress { get; set; }
+        public string ItemUnit { get; set; }
+        public float TotalQuantity { get; set; }
+        public float ReceivedQty { get; set; }
+
     }
 }
