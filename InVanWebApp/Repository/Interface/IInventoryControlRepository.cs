@@ -9,6 +9,7 @@ namespace InVanWebApp.Repository.Interface
 {
     public interface IInventoryControlRepository
     {
-        List<InventoryControlReportBO> GetAllInventoryControl();
+        //List<InventoryControlReportBO> GetAllInventoryControl();
+        List<InventoryControlReportBO> GetAllInventoryControlDate(DateTime fromDate, DateTime toDate);
     }
 }

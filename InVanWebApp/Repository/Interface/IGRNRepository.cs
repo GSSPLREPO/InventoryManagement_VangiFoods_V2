@@ -21,5 +21,13 @@ namespace InVanWebApp.Repository.Interface
         //Insert function
         ResponseMessageBO Insert(GRN_BO model);
 
+        //Delete function
+        void Delete(int Id, int userId);
+
+        //Function define for: Get GRN record by it's ID.
+        GRN_BO GetById(int ID);
+
+        //Function fetch the GRN details for View/pdf
+        List<GRN_BO> GetGRNItemDetails(int Id);
     }
 }

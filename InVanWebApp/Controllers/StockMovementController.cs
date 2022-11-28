@@ -12,6 +12,7 @@ using iTextSharp.text.html.simpleparser;
 using iTextSharp.tool.xml;
 using System.Text;
 using InVanWebApp_BO;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Controllers
 {
@@ -41,17 +42,27 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            var model = _repository.GetAllTransfferedStock();
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                //var model = _repository.GetAllTransfferedStock();
+                StockMovementBO model = new StockMovementBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
         /// to get stock details
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetStock()
+        public JsonResult GetStockMovementDate(DateTime fromDate, DateTime toDate)
         {
-            var stockDetails = _repository.GetAllTransfferedStock();
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            var stockDetails = _repository.GetAllTransfferedStock(fromDate, toDate);
             TempData["StockDetailsTemp"] = stockDetails;
             return Json(new { data = stockDetails }, JsonRequestBehavior.AllowGet);
         }
@@ -66,7 +77,9 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public object ExprotAsPDF()
         {
-            var stockDetails = _repository.GetAllTransfferedStock();
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            var stockDetails = _repository.GetAllTransfferedStock(fromDate,toDate);
             TempData["StockDetailsTemp"] = stockDetails;
             if (TempData["StockDetailsTemp"] == null)
             {
@@ -102,7 +115,7 @@ namespace InVanWebApp.Controllers
 
             sb.Append("</th></tr>");
 
-            
+
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</th>");
@@ -128,13 +141,13 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Code + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Name + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.CreatedDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Date + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.FromLocationName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.FromLocation_BeforeTransferQty + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.TransferQuantity + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ValueOut + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.BalanceQty_FromLocation + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Action+ "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Action + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ToLocationName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ToLocation_FinalQty + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ValueIn + "</td>");
@@ -151,7 +164,7 @@ namespace InVanWebApp.Controllers
                 {
                     Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
                     pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
-                    
+
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
 

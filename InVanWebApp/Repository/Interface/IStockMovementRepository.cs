@@ -9,6 +9,6 @@ namespace InVanWebApp.Repository.Interface
 {
     public interface IStockMovementRepository
     {
-        List<StockMovementBO> GetAllTransfferedStock();       
+        List<StockMovementBO> GetAllTransfferedStock(DateTime fromDate, DateTime toDate);       
     }
 }

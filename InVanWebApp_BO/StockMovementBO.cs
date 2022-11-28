@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
@@ -37,6 +38,13 @@ namespace InVanWebApp_BO
         public int BalanceQty_FromLocation { get; set; }
         public float ToLocation_FinalQty { get; set; }
         public float UnitPrice { get; set; }
+
+        [Required(ErrorMessage = "Please Select From Date ")]
+        public DateTime fromDate { get; set; }
+
+        [Required(ErrorMessage = "Please Select From Date ")]
+        public DateTime toDate { get; set; }
+        public string Date { get; set; }
 
     }
 }

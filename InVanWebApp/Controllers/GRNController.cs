@@ -73,7 +73,7 @@ namespace InVanWebApp.Controllers
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
 
                 //=========here document type=5 i.e. for generating the GRN note (logic is in SP).====//
-                var DocumentNumber = objDocNo.GetDocumentNo(5);
+                var DocumentNumber = objDocNo.GetDocumentNo(7);
                 ViewData["DocumentNo"] = DocumentNumber;
 
                 return View(model);
@@ -109,7 +109,7 @@ namespace InVanWebApp.Controllers
                             model.GRNDate = DateTime.Today;
 
                             GetDocumentNumber objDocNo = new GetDocumentNumber();
-                            var DocumentNumber = objDocNo.GetDocumentNo(5);
+                            var DocumentNumber = objDocNo.GetDocumentNo(7);
                             ViewData["DocumentNo"] = DocumentNumber;
 
                             return View(model);
@@ -126,7 +126,7 @@ namespace InVanWebApp.Controllers
                         model.GRNDate = DateTime.Today;
 
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
-                        var DocumentNumber = objDocNo.GetDocumentNo(5);
+                        var DocumentNumber = objDocNo.GetDocumentNo(7);
                         ViewData["DocumentNo"] = DocumentNumber;
 
                         return View(model);
@@ -146,7 +146,7 @@ namespace InVanWebApp.Controllers
                 model.GRNDate = DateTime.Today;
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
-                var DocumentNumber = objDocNo.GetDocumentNo(5);
+                var DocumentNumber = objDocNo.GetDocumentNo(7);
                 ViewData["DocumentNo"] = DocumentNumber;
                 return View(model);
             }
@@ -189,6 +189,53 @@ namespace InVanWebApp.Controllers
             var result = _purchaseOrderRepository.GetLocationNameList();
             var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
             ViewData["LocationName"] = resultList;
+        }
+        #endregion
+
+        #region Delete function
+        /// <summary>
+        /// Date: 28 Nov'22
+        /// Farheen: Delete the perticular record
+        /// </summary>
+        /// <param name="ID">record Id</param>
+        /// <returns></returns>
+
+        [HttpGet]
+        public ActionResult DeleteGRN(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                _repository.Delete(ID, userID);
+                TempData["Success"] = "<script>alert('GRN deleted successfully!');</script>";
+                return RedirectToAction("Index", "GRN");
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+        #endregion
+
+        #region This method is for View the GRN Details
+        [HttpGet]
+        public ActionResult ViewGRN(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                GRN_BO model = _repository.GetById(ID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+        public JsonResult BindGRNItemDetails(string id)
+        {
+            int GRN_Id = 0;
+            if (id != "" && id != null)
+                GRN_Id = Convert.ToInt32(id);
+
+            var result = _repository.GetGRNItemDetails(GRN_Id);
+            return Json(result);
         }
         #endregion
 

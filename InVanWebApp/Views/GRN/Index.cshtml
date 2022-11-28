@@ -16,7 +16,7 @@
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Transactions</a>
                     </li>
                     <li class="breadcrumb-item active">Goods Receipt Note</li>
                 </ol>
@@ -52,13 +52,13 @@
                                                 <td>@Html.DisplayFor(modelItem => item.GRNDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.InwardNoteNumber)</td>
                                                 <td>
-                                                    <a href=@Url.Action("ViewInwardNote", "InwardNote", new { ID = item.ID })>
+                                                    <a href=@Url.Action("ViewGRN", "GRN", new { ID = item.ID })>
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
                                                     @*<a href=@Url.Action("EditInwardNote", "InwardNote", new { ID = item.ID })>
                                                             <i class="fa fa-edit text-primary"></i>
                                                         </a> &emsp;*@
-                                                    <a href=@Url.Action("DeleteInwardNote", "InwardNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("DeleteGRN", "GRN", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                     @*@Html.ActionLink("Edit", "EditOrganisation", new { OrganisationId = item.OrganisationId }) |

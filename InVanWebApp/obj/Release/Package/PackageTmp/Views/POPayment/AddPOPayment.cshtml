@@ -10,16 +10,19 @@
         <h4>Add Purchase Order Payment</h4>
         <hr />
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 @Html.Label("PO Number")
                 <span style="color:red">*</span>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 @Html.DropDownList("PONumber", new SelectList((System.Collections.IEnumerable)ViewData["PONumbers"], "Value", "Text"), "-- Select Purchase Number -- ", new { @class = "form-control" })
                 <span id="ddValidPONumber" class="error mt-2 text-danger"></span>
             </div>
             <div id="rData"></div>
         </div>
+            <a href="@Url.Action("Index", "POPayment")" id="btnBackBtn" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                Back To List
+            </a>
     </div>
 </div>
 
@@ -36,7 +39,7 @@
     
     $('#PONumber').change(function () {
         var Id = $('#PONumber option:selected').attr('value');
-
+        $('#btnBackBtn').hide();
         if (Id > 1) {
             var url = "/POPayment/PurchaseOrderDetails?purchaseOrderId=" + Id;
             $.get(url, function (data) {
@@ -48,110 +51,6 @@
         }
     });
 
-</script>
-
-<script>
-    $('#PaymentMode').change(function () {
-        var mode = $('#PaymentMode option:selected').attr('value');
-        if (mode == 'Cheque') {
-            $('#dvBankName').show();
-            $('#dvCheque').show();
-            $('#dvAccountNo').hide();
-        }
-        else if (mode == 'Online') {
-            $('#dvBankName').show();
-            $('#dvCheque').hide();
-            $('#dvAccountNo').show();
-        }
-        else {
-            $('#dvBankName').hide();
-            $('#dvCheque').hide();
-            $('#dvAccountNo').hide();
-        }
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#frmPaymentDetails').submit(function (e) {
-            e.preventDefault();
-            var VendorName = $('#VendorName').val();
-            var InvoiceNumber = $('#InvoiceNumber').val();
-            var PaymentDueDate = $('#PaymentDueDate').val();
-            var PaymentAmount = $('#PaymentAmount').val();
-            ////var paymentMode = $('#PaymentMode option:selected').attr('value');
-            var TotalPOAmount = $('#TotalPOAmount').val();
-            var TotalPaybleAmount = $('#TotalPaybleAmount').val();
-            var BalanceAmount = $('#BalanceAmount').val();
-            var PaymentDate = $('#PaymentDate').val();
-            ////var IsPaid = $('#IsPaid option:selected').attr('value');
-            $(".error").remove();
-
-            if (VendorName.length < 1) {
-                $('#VendorName').after('<span class="error">Enter Vendor Name!</span>');
-            }
-            if (InvoiceNumber.length < 1) {
-                $('#InvoiceNumber').after('<span class="error">Enter Invoice Number!</span>');
-            }
-            if (PaymentDueDate.length < 1) {
-                $('#PaymentDueDate').after('<span class="error">Select Payment Due Date!</span>');
-            }
-            if (PaymentAmount.length < 1) {
-                $('#PaymentAmount').after('<span class="error">Enter Payment Amount!</span>');
-            }
-
-            //if (paymentMode.length < 1) {
-            //    $('#PaymentMode').after('<span class="error">Select Payment Mode!</span>');
-            //}
-
-            //if (paymentMode == 'Cheque') {
-            //    var BankName = $('#BankName').val();
-            //    var ChequeNumber = $('#ChequeNumber').val();
-
-            //    if (BankName.length < 1) {
-            //        $('#BankName').after('<span class="error">Enter Bank Name!</span>');
-            //    }
-            //    if (ChequeNumber.length < 1) {
-            //        $('#ChequeNumber').after('<span class="error">Enter Cheque Number!</span>');
-            //    }
-            //}
-            //if (paymentMode == 'Online') {
-            //    var BankName = $('#BankName').val();
-            //    var AccountNumber = $('#AccountNumber').val();
-
-            //    if (BankName.length < 1) {
-            //        $('#BankName').after('<span class="error">Enter Bank Name!</span>');
-            //    }
-            //    if (AccountNumber.length < 1) {
-            //        $('#AccountNumber').after('<span class="error">Enter Account Number Number!</span>');
-            //    }
-            //}
-
-            if (TotalPOAmount.length < 1) {
-                $('#TotalPOAmount').after('<span class="error">Enter Total PO Payment Amount!</span>');
-            }
-            if (TotalPaybleAmount.length < 1) {
-                $('#TotalPaybleAmount').after('<span class="error">Enter Total Payable Amount!</span>');
-            }
-            if (BalanceAmount.length < 1) {
-                $('#BalanceAmount').after('<span class="error">Enter Payment Amount!</span>');
-            }
-            if (PaymentDate.length < 1) {
-                $('#PaymentDate').after('<span class="error">Enter Payment Amount!</span>');
-            }
-            //if (IsPaid.length < 1) {
-            //    $('#IsPaid').after('<span class="error">Enter Payment Amount!</span>');
-            //}
-        });
-    });
-
-    function calculateBalancePay() {
-        var totalPayment = $('#TotalPOAmount').val();
-        var paybleAmount = $('#TotalPaybleAmount').val();
-        console.log(paybleAmount);
-        var balanceAmt = parseInt(totalPayment) - parseInt(paybleAmount);
-        $('#BalanceAmount').val(balanceAmt)
-
-    }
 </script>
 
 

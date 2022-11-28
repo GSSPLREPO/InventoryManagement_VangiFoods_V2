@@ -36,5 +36,18 @@ namespace InVanWebApp_BO
         public string InwardNoteNumber { get; set; }
         [Required(ErrorMessage ="Please enter delivery address!")]
         public string DeliveryAddress { get; set; }
+
+        //Added the field for GRN View
+        public string SupplierAddress { get; set; }
+        public int ItemID { get; set; }
+        public string ItemName { get; set; }
+        public string ItemCode { get; set; }
+        public decimal ItemUnitPrice { get; set; }
+        public string ItemUnit { get; set; }
+
+        public float OrderQty{ get; set; }
+        public float ReceivedQty{ get; set; }
+        public float InwardQty{ get; set; }
+        public string LocationName { get; set; }
     }
 }
