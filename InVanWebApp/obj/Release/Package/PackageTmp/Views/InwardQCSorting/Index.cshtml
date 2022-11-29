@@ -16,7 +16,7 @@
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">QC</a>
                     </li>
                     <li class="breadcrumb-item active">Inward QC Sorting</li>
                 </ol>
@@ -41,8 +41,8 @@
                                             <th>@Html.Label("Inward Number")</th>
                                             <th>@Html.Label("Inward QC Date")</th>
                                             @*<th>@Html.Label("Item Name")</th>
-                                            <th>@Html.Label("Item Code")</th>
-                                            <th>@Html.Label("Item Unit Price")</th>*@
+                                                <th>@Html.Label("Item Code")</th>
+                                                <th>@Html.Label("Item Unit Price")</th>*@
                                             <th>@Html.Label("Inward Quantity (Kg)")</th>
                                             <th>@Html.Label("Rejected Quantity (Kg)")</th>
                                             <th>@Html.Label("View/Delete")</th>
@@ -56,8 +56,8 @@
                                                 <td>@Html.DisplayFor(modelItem => item.InwardNumber)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.InwardQCDate)</td>
                                                 @*<td>@Html.DisplayFor(modelItem => item.Item_Name)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Item_Code)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ItemUnitPrice)</td>*@
+                                                    <td>@Html.DisplayFor(modelItem => item.Item_Code)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.ItemUnitPrice)</td>*@
                                                 <td>@Html.DisplayFor(modelItem => item.InwardQuantity)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.RejectedQuantity)</td>
                                                 <td>
@@ -92,17 +92,24 @@
 @Html.Raw(TempData["Success"])
 
 @section scripts{
-    @*<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
-        <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>*@
-    <script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-    <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblInward').dataTable().fnDestroy();
+            $('#tblInward').dataTable({
+                "iDisplayLength": 10
+            });
+        });
         var table = $('#tblInward').dataTable({
-            "searching": true,
-            "bLengthChange": false,
-            "bPaginate": true
-            //"pageLength": 15
+            "serverSide": false,
+            "filter": true,
+            "pageLength": 20
         });
     </script>
 }

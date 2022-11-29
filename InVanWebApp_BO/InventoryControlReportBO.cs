@@ -28,5 +28,13 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Please Select From Date ")]
         public DateTime toDate { get; set; }
+        public DateTime IssueNoteDate { get; set; }
+
+        public string PONumber { get; set; }
+        public string Title { get; set; }
+        public float POQuantity { get; set; }
+        public float QuantityIssued { get; set; }
+        public int PO_ID { get; set; }
+
     }
 }

@@ -40,6 +40,22 @@ namespace InVanWebApp.Repository
                         var result = new InventoryControlReportBO()
                         {
                             //ID = Convert.ToInt32(reader["Item_Id"]),
+                            //ItemName = reader["Item_Name"].ToString(),
+                            //ItemCode = reader["Item_Code"].ToString(),
+                            //ItemUnitPrice = Convert.ToDecimal(reader["UnitPrice"].ToString()),
+                            //PONumber = Convert.ToDateTime(reader["PONumber"]).ToString("dd/MM/yyyy"),
+                            //PurchaseQuantity = Convert.ToInt32(reader["PQuantity"]),
+                            //PurchaseDate = Convert.ToDateTime(reader["PODate"]).ToString("dd/MM/yyyy"),
+                            //PurchasePrice = Convert.ToDecimal(reader["PurchasePrice"].ToString()),
+                            //Title = reader["Tittle"].ToString(),
+                            //AvailablePrice = Convert.ToDecimal(reader["AvailablePrice"].ToString()),
+                            //IssueNoteDate = Convert.ToDateTime(reader["IssueNoteDate"]),
+                            //UsedQuantity = Convert.ToInt32(reader["QuantityIssued"]),
+                            //UsedPrice = Convert.ToDecimal(reader["UsedPrice"].ToString()),
+                            //AvailableQuantity = Convert.ToInt32(reader["StockQuantity"]),
+                            //UsedDate = Convert.ToDateTime(reader["IssueNoteDate"]).ToString("dd/MM/yyyy")
+
+                            //ID = Convert.ToInt32(reader["Item_Id"]),
                             ItemName = reader["Item_Name"].ToString(),
                             ItemCode = reader["Item_Code"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["UnitPrice"].ToString()),
@@ -51,6 +67,7 @@ namespace InVanWebApp.Repository
                             UsedPrice = Convert.ToDecimal(reader["UsedPrice"].ToString()),
                             AvailableQuantity = Convert.ToInt32(reader["StockQuantity"]),
                             AvailablePrice = Convert.ToDecimal(reader["AvailablePrice"].ToString())
+
                         };
                         inventoryControlReports.Add(result);
                     }

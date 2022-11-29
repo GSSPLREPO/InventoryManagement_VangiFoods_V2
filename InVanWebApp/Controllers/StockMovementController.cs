@@ -91,6 +91,8 @@ namespace InVanWebApp.Controllers
 
             if (stockReport.Count < 0)
                 return View("Index");
+            string Fromdate = "From Date:";
+            string Todate = "To Date:";
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
             //string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
             string ReportName = "Stock Movement Report";
@@ -100,8 +102,14 @@ namespace InVanWebApp.Controllers
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
             sb.Append("<tr >");
-            sb.Append("<th Colspan='9' style='text-align:right;padding-right:-370px;padding-bottom:-85px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
+            sb.Append("<th  style='text-align:right;padding-right:-70px;padding-bottom:-290px;font-size:11px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
             sb.Append("</th></tr>");
+            sb.Append("<tr >");
+            sb.Append("<th colspan=9 style='text-align:right;padding-right:-400px;padding-bottom:-290px;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            //sb.Append("<tr >");
+            //sb.Append("<th Colspan='9' style='text-align:right;padding-right:-370px;padding-bottom:-85px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
+            //sb.Append("</th></tr>");
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
                 "<img height='150' width='150' src='" + strPath + "'/></th>");

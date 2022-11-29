@@ -1,4 +1,4 @@
-﻿
+﻿@model InVanWebApp_BO.InventoryControlReportBO
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -8,19 +8,22 @@
 
 <html>
 <head>
-    <title>Inward Note</title>
+    <title>Inventory Control Report</title>
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+    @*.border{
+          border:0.05px;
+        }*@
 </head>
 <body>
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Stock Report</h4>
+            <h4 class="page-title">Inventory Control Report</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Reports</a>
                     </li>
-                    <li class="breadcrumb-item active">Stock Report</li>
+                    <li class="breadcrumb-item active">Inventory control Report</li>
                 </ol>
             </nav>
         </div>
@@ -30,43 +33,73 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="col-md-12 mb-2" style="float:right">
-                                @using (Html.BeginForm("ExprotAsPDF", "InventoryControl", FormMethod.Post, new { @style = "float:right" }))
-                                {
-                                    <button class="btn btn-danger" style="float:right;"><i class="fas fa-file-pdf"></i> Export To PDF</button>
-                                }
+                            @*<div class="col-md-12 mb-2">*@
+                            @using (Html.BeginForm("ExprotAsPDF", "InventoryControl", FormMethod.Post@*, new { @style = "float:right" }*@))
+{
+@*<div class="row">*@
+<div class="row">
+    @*<div class="col-md-12">*@
+    <div class="col-md-2">
+        <label>From Date:</label>
+    </div>
+    <div class="col-md-3">
+        @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date" })
+        @Html.ValidationMessageFor(model => model.fromDate, "", new { @class = "col-form-label error mt-2 text-danger" })
+    </div>
+    &nbsp;
+    <div class="col-md-2">
+        <label>To Date:</label>
+    </div>
+    <div class="col-md-3">
+        @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date" })
+        @Html.ValidationMessageFor(model => model.toDate, "", new { @class = "col-form-label error mt-2 text-danger" })
+    </div>
+    &nbsp;
+    <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
+    @*</div>*@
+</div>
+<br />
+<div class="col-md-2 md-2" style="float:right;">
+    @*<button class="btn btn-danger" style="float:right" id="ExportPdf"><i class="fas fa-file-pdf"></i> Export To PDF</button>*@
+    <a style="font-size: 50px;" id="ExportPdf" href="@Url.Action("ExprotAsPDF", "InventoryControl")" class="far fa-file-pdf float-right text-danger">
+
+    </a>
+
+
+</div>
+@*</div>*@
+
+}
+                            <div style="margin-top:25px">
+                                <table id="tblInventoryControlReport" class="ui celled table table-striped table-bordered hover table-sm">
+                                    <thead class="text-center" style="text-align:center">
+                                        <tr>
+                                            @*<th>ID</th>*@
+                                            <th rowspan="2" style="text-align:center">Sr. No.</th>
+                                            <th rowspan="2" style="text-align:center">Item Name</th>
+                                            <th rowspan="2" style="text-align:center">Price Per Unit</th>
+                                            <th colspan="3" style="text-align:center">
+                                                Purchase
+                                            </th>
+                                            <th style="text-align:center" colspan="3">Used</th>
+
+                                            <th style="text-align:center" colspan="2">Available</th>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:center">Date</th>
+                                            <th style="text-align:center">Quantity</th>
+                                            <th style="text-align:center">Price</th>
+                                            <th style="text-align:center">Date</th>
+                                            <th style="text-align:center">Quantity</th>
+                                            <th style="text-align:center">Price</th>
+                                            <th style="text-align:center">Quantity</th>
+                                            <th style="text-align:center">Price</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody class="text-center"></tbody>
+                                </table>
                             </div>
-                            <br />
-
-
-                            <table id="tblInventoryControlReport" class="ui celled table table-striped table-bordered hover table-sm">
-                                <thead class="text-center" style="text-align:center">
-                                    <tr>
-                                        @*<th>ID</th>*@
-                                        <th rowspan="2" style="text-align:center">Sr. No.</th>
-                                        <th rowspan="2" style="text-align:center">Item Name</th>
-                                        <th rowspan="2" style="text-align:center">Price Per Unit</th>
-                                        <th colspan="3" style="text-align:center">
-                                            Purchase                                         
-                                        </th>
-                                        <th style="text-align:center" colspan="3">Used</th>
-                                       
-                                        <th style="text-align:center" colspan="2">Available</th>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align:center">Date</th>
-                                        <th style="text-align:center">Quantity</th>
-                                        <th style="text-align:center">Price</th>
-                                        <th style="text-align:center">Date</th>
-                                        <th style="text-align:center">Quantity</th>
-                                        <th style="text-align:center">Price</th>
-                                        <th style="text-align:center">Quantity</th>
-                                        <th style="text-align:center">Price</th>
-                                    </tr>
-
-                                </thead>
-                                <tbody class="text-center"></tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -76,6 +109,7 @@
 </body>
 </html>
 @section scripts{
+    @*<script src="~/Theme/MainContent/js/jquery.min.js"></script>*@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
     @*<link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css" rel="stylesheet">
         <link href="https://cdn.datatables.net/1.10.21/css/dataTables.semanticui.min.css" rel="stylesheet">*@
@@ -86,26 +120,24 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>*@
 
 
-
-    <script>
-        $(document).ready(function () {
-            BindReport();
-
-
-        });
-
-        function BindReport() {
+    <link href="~/Themes/MainContent/css/jquery-ui.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $("#btnGo").on('click', function () {
+            $('#ExportPdf').show();
+            $('#tblInventoryControlReport').show();
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
             $('#tblInventoryControlReport').dataTable().fnDestroy();
             var t = $('#tblInventoryControlReport').DataTable({
-                "processing": true, // for show progress bar
+                //"processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
-                "sAjaxSource": "/InventoryControl/GetInventoryControl",
+                "sAjaxSource": "/InventoryControl/GetInventoryControlDate?fromDate=" + fromDate + "&toDate=" + toDate,
 
                 "pageLength": 20,
 
-                "columns": [              
-                    { "data": "ID", "autoWidth": true },               
+                "columns": [
+                    { "data": "ID", "autoWidth": true },
                     { "data": "ItemName", "autoWidth": true },
                     { "data": "ItemUnitPrice", "autoWidth": true },
                     { "data": "PurchaseDate", "autoWidth": true },
@@ -116,9 +148,9 @@
                     { "data": "UsedPrice", "autoWidth": true },
                     { "data": "AvailableQuantity", "autoWidth": true },
                     { "data": "AvailablePrice", "autoWidth": true },
-                
+
                 ]
-          });
+            });
             t.on('order.dt search.dt', function () {
                 let i = 1;
 
@@ -126,14 +158,59 @@
                     this.data(i++);
                 });
             }).draw();
-        }
+        })
+    </script>
 
-        function RemoveCompany(id) {
-            if (confirm("Are you Sure? You want to remove this company.")) {
+    <script>
 
-                BindCompany();
-            }
-        }
+        $(document).ready(function () {
+            $('#ExportPdf').hide();
+            $('#tblInventoryControlReport').hide();
+            //BindReport();
+
+
+        });
+
+        //function BindReport() {
+        //    $('#tblInventoryControlReport').dataTable().fnDestroy();
+        //    var t = $('#tblInventoryControlReport').DataTable({
+        //        //"processing": true, // for show progress bar
+        //        "serverSide": false, // for process server side
+        //        "filter": true, // this is for disable filter (search box)
+        //        "sAjaxSource": "/InventoryControl/GetInventoryControl",
+
+        //        "pageLength": 20,
+
+        //        "columns": [
+        //            { "data": "ID", "autoWidth": true },
+        //            { "data": "ItemName", "autoWidth": true },
+        //            { "data": "ItemUnitPrice", "autoWidth": true },
+        //            { "data": "PurchaseDate", "autoWidth": true },
+        //            { "data": "PurchaseQuantity", "autoWidth": true },
+        //            { "data": "PurchasePrice", "autoWidth": true },
+        //            { "data": "UsedDate", "autoWidth": true },
+        //            { "data": "UsedQuantity", "autoWidth": true },
+        //            { "data": "UsedPrice", "autoWidth": true },
+        //            { "data": "AvailableQuantity", "autoWidth": true },
+        //            { "data": "AvailablePrice", "autoWidth": true },
+
+        //        ]
+        //    });
+        //    t.on('order.dt search.dt', function () {
+        //        let i = 1;
+
+        //        t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+        //            this.data(i++);
+        //        });
+        //    }).draw();
+        //}
+
+        //function RemoveCompany(id) {
+        //    if (confirm("Are you Sure? You want to remove this company.")) {
+
+        //        BindCompany();
+        //    }
+        //}
 
     </script>
 }

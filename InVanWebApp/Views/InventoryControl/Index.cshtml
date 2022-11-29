@@ -60,7 +60,12 @@
 </div>
 <br />
 <div class="col-md-2 md-2" style="float:right;">
-    <button class="btn btn-danger" style="float:right" id="ExportPdf"><i class="fas fa-file-pdf"></i> Export To PDF</button>
+    @*<button class="btn btn-danger" style="float:right" id="ExportPdf"><i class="fas fa-file-pdf"></i> Export To PDF</button>*@
+    <a style="font-size: 50px;" id="ExportPdf" href="@Url.Action("ExprotAsPDF", "InventoryControl")" class="far fa-file-pdf float-right text-danger">
+
+    </a>
+
+
 </div>
 @*</div>*@
 

@@ -202,7 +202,7 @@
                                                             @Html.TextBox("Item_Code_" + c, item.Item_Code, new { @class = "form-control", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control", style = "height:30px;width:200px;" })
+                                                            @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("ItemQuantity_" + c, item.ItemQuantity, new
@@ -215,16 +215,16 @@
                                                             })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control", style = "height:30px;width:100px;" })
+                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, "", new { @class = "form-control", style = "height:30px;width:100px;" })
+                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("itemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control", style = "height:30px;width:80px;" })
+                                                            @Html.TextBox("itemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control", style = "height:30px;width:80px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control", style = "height:30px;width:200px;" })
+                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             <button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
@@ -537,22 +537,22 @@
             '<input type="text" id="' + itemCode + '" class="form-control" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '" value="" required="required" />' +
+            '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '" value="" required="required" />' +
+            '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemPrice + '" class="form-control" style = "height:30px;width:100px;" name="' + itemPrice + '" value="" required="required" />' +
+            '<input type="text" id="' + itemPrice + '" class="form-control" style = "height:30px;width:100px;" name="' + itemPrice + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemTax + '" class="form-control " style = "height:30px;width:80px;" name="' + itemTax+ ' " value="" required="required" />' +
+            '<input type="text" id="' + itemTax + '" class="form-control " style = "height:30px;width:80px;" name="' + itemTax + ' "readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + totalItemCost + '" class="form-control" style = "height:30px;width:200px;" name="' + totalItemCost + '" value="" required="required" />' +
+            '<input type="text" id="' + totalItemCost + '" class="form-control" style = "height:30px;width:200px;" name="' + totalItemCost + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
             '<button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +

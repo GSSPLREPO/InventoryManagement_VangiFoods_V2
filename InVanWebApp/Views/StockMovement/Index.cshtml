@@ -52,11 +52,13 @@
                                         </div>
                                         &nbsp;
                                         <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
+                                        &emsp;
+
+                                        <a style="font-size: 40px;" id="ExportPdf" href="@Url.Action("ExprotAsPDF", "StockMovement")" class="far fa-file-pdf float-right text-danger">
+
+                                        </a>
                                     </div>
                                     <br />
-                                    <a style="font-size: 50px;" id="ExportPdf" href="@Url.Action("ExprotAsPDF", "StockMovement")" class="far fa-file-pdf float-right text-danger">
-
-                                    </a>
                                 }
                                 <div style="margin-top:25px;">
                                     <table class="ui celled table table-striped table-bordered hover table-sm" id="tblInward">
@@ -81,27 +83,27 @@
                                         </thead>
                                         <tbody class="text-center"></tbody>
                                         @*<tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@Html.DisplayFor(modelItem => item.SrNo)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Item_Code)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Item_Name)</td>
-                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
-                            <td>@Html.DisplayFor(modelItem => item.FromLocationName)</td>
-                            <td>@Html.DisplayFor(modelItem => item.FromLocation_BeforeTransferQty)</td>
-                            <td>@Html.DisplayFor(modelItem => item.TransferQuantity)</td>
-                            <td>@Html.DisplayFor(modelItem => item.ValueOut)</td>
-                            <td>@Html.DisplayFor(modelItem => item.BalanceQty_FromLocation)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Action)</td>
-                            <td>@Html.DisplayFor(modelItem => item.ToLocationName)</td>
-                            <td>@Html.DisplayFor(modelItem => item.ToLocation_FinalQty)</td>
-                            <td>@Html.DisplayFor(modelItem => item.ValueIn)</td>
-                            <td>@Html.DisplayFor(modelItem => item.UnitPrice)</td>
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(modelItem => item.SrNo)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.Item_Code)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.Item_Name)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.FromLocationName)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.FromLocation_BeforeTransferQty)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.TransferQuantity)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ValueOut)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.BalanceQty_FromLocation)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.Action)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ToLocationName)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ToLocation_FinalQty)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.ValueIn)</td>
+                                                        <td>@Html.DisplayFor(modelItem => item.UnitPrice)</td>
 
-                        </tr>
-                    }
-                </tbody>*@
+                                                    </tr>
+                                                }
+                                            </tbody>*@
                                     </table>
                                 </div>
                             </div>
@@ -130,28 +132,32 @@
             $('#ExportPdf').hide();
             $('#tblInward').hide();
         });
-        //$("#ExportPdf a").click(function () {
-        //    alert("Hi");
-        //});
-        $("#btnGo").on('click', function () {
-            $('#ExportPdf').show();
-            $('#tblInward').show();
 
-            //$("#fromDate").disabled=true;
-            //$("#toDate").disabled=true;
+        $("#btnGo").on('click', function () {
 
             var fromDate = $("#fromDate").val();
             var toDate = $("#toDate").val();
+            var tempFromDate = new Date();
+            tempFromDate= fromDate;
+            var tempToDate = new Date();
+            tempToDate= toDate;
+            if (tempFromDate > tempToDate) {
+                alert('Invalid Date!');
+                $('#fromDate').focus();
+                return;
+            }
+            else {
+                $('#ExportPdf').show();
+                $('#tblInward').show();
+            }
 
             $('#tblInward').dataTable().fnDestroy();
             var t = $('#tblInward').DataTable({
                 //"processing": true, // for show progress bar
                 "serverSide": false, // for process server side
-                "filter": true, // this is for disable filter (search box)
-                "sAjaxSource": "/StockMovement/GetStockMovementDate?fromDate=" + fromDate + "&toDate=" + toDate,
-
+                "filter": true,
                 "pageLength": 20,
-
+                "sAjaxSource": "/StockMovement/GetStockMovementDate?fromDate=" + fromDate + "&toDate=" + toDate,
                 "columns": [
                     { "data": "SrNo", "autoWidth": true },
                     { "data": "Item_Code", "autoWidth": true },
@@ -168,6 +174,7 @@
                     { "data": "ValueIn", "autoWidth": true },
                     { "data": "UnitPrice", "autoWidth": true },
                 ]
+
             });
             t.on('order.dt search.dt', function () {
                 let i = 1;
@@ -182,7 +189,7 @@
 
 @*/*Rahul : Added style on 07 Nov 2022.*/*@
 @*<style>
-    div#tblInward_filter {
-        float: left !important;
-    }
-</style>*@
+        div#tblInward_filter {
+            float: left !important;
+        }
+    </style>*@

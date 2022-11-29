@@ -20,8 +20,9 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TermName, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.TextBoxFor(model => model.TermName, new { @class = "form-control form-control-sm", maxlength = "50", onkeydown = "javascript:return isValidateLen('Name',15);" })
                     @Html.ValidationMessageFor(model => model.TermName, "", new { @class = "error mt-2 text-danger" })
+                    <label id="lblNameError" style="display: none">Length exceeded!</label>
                 </div>
             </div>
             <br />
@@ -52,3 +53,23 @@
 }
 
 @Html.Raw(TempData["Success"])
+
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function isValidateLen(txtID, len) {
+        txtObj = document.getElementById(txtID);
+        if (txtObj.value.length < len) {
+            $('#lblNameError').attr('style', 'display:none');
+            return true;
+        }
+        else {
+            //alert("Length exceeded");
+            $('#lblNameError').attr('style', 'display:block');
+            $('#lblNameError').attr('style', 'color:red');
+            //return false;
+        }
+    }
+</script>
