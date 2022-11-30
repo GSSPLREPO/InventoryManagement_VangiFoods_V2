@@ -83,9 +83,12 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Item_Code", item.Item_Code);
                     cmd.Parameters.AddWithValue("@Item_Name", item.Item_Name);
                     cmd.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
+                    cmd.Parameters.AddWithValue("@UOM", item.UnitOfMeasurement_ID);
                     cmd.Parameters.AddWithValue("@MinStock", item.MinStock);
+                    cmd.Parameters.AddWithValue("@UnitPrice", item.UnitPrice);
+                    cmd.Parameters.AddWithValue("@TaxId", item.TaxId);
                     cmd.Parameters.AddWithValue("@Description", item.Description);
-                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     //cmd.ExecuteNonQuery();

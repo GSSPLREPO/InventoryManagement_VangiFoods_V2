@@ -197,7 +197,7 @@ namespace InVanWebApp.Controllers
 
             var numberTable = new PdfPTable(1);
             numberTable.DefaultCell.Border = 0;
-            var numberCell = new PdfPCell(new Phrase(text, _pageNumberFont)) { HorizontalAlignment = Element.ALIGN_CENTER, PaddingLeft = 200, };
+            var numberCell = new PdfPCell(new Phrase(text, _pageNumberFont)) { HorizontalAlignment = Element.ALIGN_CENTER};
             numberCell.Border = 0;
             numberTable.AddCell(numberCell);
 

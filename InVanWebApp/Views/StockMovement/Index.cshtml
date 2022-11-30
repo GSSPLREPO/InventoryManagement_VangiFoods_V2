@@ -34,7 +34,7 @@
                                 @using (Html.BeginForm("ExprotAsPDF", "StockMovement", FormMethod.Post))
                                 {
 
-                                    <div class="row">
+                                    <div class="row" style="padding-right:10px;">
                                         <div class="col-md-2">
                                             <label>From Date:</label>
                                         </div>
@@ -51,12 +51,13 @@
                                             @Html.ValidationMessageFor(model => model.toDate, "", new { @class = "col-form-label error mt-2 text-danger" })
                                         </div>
                                         &nbsp;
+                                        <div style="padding-right :7%;">
                                         <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
-                                        &emsp;
+                                        </div>
+                                        &nbsp;
+                                            <a style="font-size: 40px;" id="ExportPdf" href="@Url.Action("ExprotAsPDF", "StockMovement")" class="far fa-file-pdf float-right text-danger">
 
-                                        <a style="font-size: 40px;" id="ExportPdf" href="@Url.Action("ExprotAsPDF", "StockMovement")" class="far fa-file-pdf float-right text-danger">
-
-                                        </a>
+                                            </a>
                                     </div>
                                     <br />
                                 }
@@ -138,11 +139,11 @@
             var fromDate = $("#fromDate").val();
             var toDate = $("#toDate").val();
             var tempFromDate = new Date();
-            tempFromDate= fromDate;
+            tempFromDate = fromDate;
             var tempToDate = new Date();
-            tempToDate= toDate;
+            tempToDate = toDate;
             if (tempFromDate > tempToDate) {
-                alert('Invalid Date!');
+                alert('From date cannot be greater than To date!');
                 $('#fromDate').focus();
                 return;
             }

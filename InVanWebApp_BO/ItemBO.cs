@@ -41,13 +41,20 @@ namespace InVanWebApp_BO
         public string ItemCategoryName { get; set; }
         public string ItemTypeName { get; set; }
 
+        [Required(ErrorMessage ="Select the tax!")]
+        public int TaxId { get; set; }
+
         //Added below fields for Grid dropdowns (Added by Rahul)
+        [Required(ErrorMessage = "Select the unit!")]
         public Nullable<int> UnitOfMeasurement_ID { get; set; }
         //public string Price { get; set; }
         //public string Tax { get; set; }
         public string UnitCode { get; set; }
 
         //Added below fields for Grid dropdowns
+
+        [Required(ErrorMessage = "Enter price!")]
+        [StringLength(8, ErrorMessage = "Check the figure!")]
         public double UnitPrice { get; set; }
         public float ItemTaxValue { get; set; }
 

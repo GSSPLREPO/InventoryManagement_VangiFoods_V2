@@ -9,6 +9,8 @@ using InVanWebApp_BO;
 using Excel = Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
 using log4net;
+using InVanWebApp.Repository.Interface;
+using InVanWebApp.Common;
 //using iTextSharp.text;
 //using iTextSharp.text.pdf;
 //using iTextSharp.tool.xml;
@@ -19,6 +21,8 @@ namespace InVanWebApp.Controllers
     public class ItemController : Controller
     {
         private IItemRepository _iItemRepository;
+        private ITaxRepository _taxRepository;
+        private IUnitRepository _unitRepository;
         private static ILog log = LogManager.GetLogger(typeof(ItemController));
 
         #region Initializing constructor
@@ -29,6 +33,8 @@ namespace InVanWebApp.Controllers
         public ItemController()
         {
             _iItemRepository = new ItemRepository();
+            _taxRepository = new TaxRepository();
+            _unitRepository = new UnitRepository();
         }
 
         /// <summary>
@@ -53,8 +59,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _iItemRepository.GetAll();
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var model = _iItemRepository.GetAll();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 
@@ -67,8 +78,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddItems()
         {
-            BindItemTypeCategory();
-            return View();
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                BindItemTypeCategory();
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
@@ -82,21 +98,32 @@ namespace InVanWebApp.Controllers
         {
             try
             {
-                ResponseMessageBO response = new ResponseMessageBO();
-                if (ModelState.IsValid)
+                if (Session[ApplicationSession.USERID] != null)
                 {
-                    response = _iItemRepository.Insert(model);
-                    if (response.Status)
-                        TempData["Success"] = "<script>alert('Item Inserted Successfully!');</script>";
+                    ResponseMessageBO response = new ResponseMessageBO();
+                    if (ModelState.IsValid)
+                    {
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _iItemRepository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Item Inserted Successfully!');</script>";
+                        else
+                            TempData["Success"] = "<script>alert('Duplicate Item! Can not be inserted!');</script>";
+
+                        return RedirectToAction("Index", "Item");
+
+                    }
                     else
-                        TempData["Success"] = "<script>alert('Duplicate Item! Can not be inserted!');</script>";
-
-                    return RedirectToAction("Index", "Item");
-
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                    }
                 }
+                else
+                    return RedirectToAction("Index", "Login");
             }
             catch (Exception ex)
             {
+                TempData["Success"] = "<script>alert('Something went wrong!');</script>";
                 log.Error(ex.Message, ex);
             }
 
@@ -104,7 +131,7 @@ namespace InVanWebApp.Controllers
             return View();
         }
 
-       
+
 
         /// <summary>
         /// Date: 22 Aug 2022
@@ -294,7 +321,7 @@ namespace InVanWebApp.Controllers
         //    }
         //}
         #endregion
-        
+
         #region For binding the dropdown of Item type and category.
         public void BindItemTypeCategory()
         {
@@ -304,6 +331,14 @@ namespace InVanWebApp.Controllers
             var itemType = _iItemRepository.GetItemTypeForDropdown();
             var dd1 = new SelectList(itemType.ToList(), "ID", "ItemType");
             ViewData["ItemType"] = dd1;
+
+            var tax = _taxRepository.GetAll();
+            var dd2 = new SelectList(tax.ToList(), "ID", "TaxName");
+            ViewData["Tax"] = dd2;
+
+            var unit = _unitRepository.GetAll();
+            var dd3 = new SelectList(unit.ToList(), "UnitID", "UnitName");
+            ViewData["UOM"] = dd3;
         }
 
         #endregion

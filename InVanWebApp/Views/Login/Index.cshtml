@@ -38,7 +38,7 @@
                             <div class="brand-logo">
                                 <img src="~/Theme/MainContent/images/Logo.svg" alt="Vangi Foods" class="d-none" />
                             </div>
-                            <div class="shadow-lg p-4 pb-5 bg-white rounded">
+                            <div class="shadow-lg p-4 pb-5 bg-white rounded" style="padding-bottom:1rem !important; padding: 2rem!important">
                                 @*rahul code 08/09/2022*@
                                 @using (Html.BeginForm("Index", "Login", FormMethod.Post))
                                 {
@@ -84,10 +84,14 @@
 
                                     </form>
                                     <div>
-                                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                                            Powred by @*<i class="far fa-heart text-danger"></i>*@
-                                            <a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
+                                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center" style="font-size:12px;">
+                                            Powered by &nbsp;
+                                            <a style="margin-right:0rem !important" class="brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
                                         </span>
+                                        <!--<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+                                        Powered by-->
+                                        <!--<a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
+                                        </span>-->
                                     </div>
                                 }
                             </div>
