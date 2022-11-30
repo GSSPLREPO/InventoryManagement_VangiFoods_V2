@@ -718,6 +718,7 @@
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
     <Compile Include="Repository\Interface\IDebitNoteRepository.cs" />
     <Compile Include="Repository\Interface\IGRNRepository.cs" />
+    <Compile Include="Repository\Interface\IInventoryControlRepository.cs" />
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
@@ -728,6 +729,7 @@
     <Compile Include="Repository\Interface\IStockTransferRepository.cs" />
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
     <Compile Include="Repository\Interface\IUserDetailsRepository.cs" />
+    <Compile Include="Repository\InventoryControlRepository.cs" />
     <Compile Include="Repository\InwardNoteRepository.cs" />
     <Compile Include="Repository\InwardQCSortingRepository.cs" />
     <Compile Include="Repository\ItemRepository.cs" />
@@ -1777,6 +1779,7 @@
     <Content Include="Views\PurchaseOrder\POAmendment.cshtml" />
     <Content Include="Views\PurchaseOrder\ViewPurchaseOrder.cshtml" />
     <Content Include="Views\PurchaseOrder\EditPurchaseOrder.cshtml" />
+    <Content Include="Views\InventoryControl\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

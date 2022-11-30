@@ -13,7 +13,7 @@ namespace InVanWebApp.Controllers
 {
     public class StockTransferController : Controller
     {
-        private IStockTransferRepository _stockTransferRepository; 
+        private IStockTransferRepository _stockTransferRepository;
         private static ILog log = LogManager.GetLogger(typeof(StockTransferController));
 
         #region Initializing constructor
@@ -23,9 +23,10 @@ namespace InVanWebApp.Controllers
         public StockTransferController()
         {
             _stockTransferRepository = new StockTransferRepository();
-            var itemList = _stockTransferRepository.GetItemDetailsForDD(1);
-            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-            ViewData["itemListForDD"] = dd;
+            //var itemList = _stockTransferRepository.GetItemDetailsForDD(1);
+            //var itemList = _stockTransferRepository.GetItemDetailsForDDD(6);
+            //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+            //ViewData["itemListForDD"] = dd;   
         }
         /// <summary>
         /// Rahul: Constructor with parameters for initializing the interface object.
@@ -61,13 +62,14 @@ namespace InVanWebApp.Controllers
             //return View();
 
             if (Session[ApplicationSession.USERID] != null)
-            {                
+            {
                 BindFromLocationName();
                 BindToLocationName();
                 //Binding item grid with sell type item.
-                //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+                //var itemList = _stockTransferRepository.GetItemDetailsForDDD(6);
                 //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 //ViewData["itemListForDD"] = dd;
+
 
                 return View();
             }
@@ -79,25 +81,25 @@ namespace InVanWebApp.Controllers
         {
             var result = _stockTransferRepository.GetFromLocationNameList();
             var resultList = new SelectList(result.ToList(), "FromLocationId", "FromLocationName");
-            ViewData["FromLocationName"] = resultList; 
+            ViewData["FromLocationName"] = resultList;
         }
         #endregion
 
         #region Bind dropdowns Location Master          
         public JsonResult BindFromLocationMaster(string id)
-        {   
+        {
             int Id = 0;
             if (id != null && id != "")
                 Id = Convert.ToInt32(id);
-            var result = _stockTransferRepository.GetFromLocationMasterList(Id); 
+            var result = _stockTransferRepository.GetFromLocationMasterList(Id);
             return Json(result);
         }
         #endregion 
 
         #region Bind dropdowns From Location Name 
-        public void BindToLocationName() 
+        public void BindToLocationName()
         {
-            var result = _stockTransferRepository.GetToLocationNameList();  
+            var result = _stockTransferRepository.GetToLocationNameList();
             var resultList = new SelectList(result.ToList(), "ToLocationId", "ToLocationName");
             ViewData["ToLocationName"] = resultList;
         }
@@ -106,9 +108,9 @@ namespace InVanWebApp.Controllers
         #region Function for get item details
         public JsonResult GetitemDetails(string id, string locationId)
         {
-            var itemId = Convert.ToInt32(id);           
-            var locationID = Convert.ToInt32(locationId);            
-            var itemDetails = _stockTransferRepository.GetItemDetails(itemId, locationID);              
+            var itemId = Convert.ToInt32(id);
+            var locationID = Convert.ToInt32(locationId);
+            var itemDetails = _stockTransferRepository.GetItemDetails(itemId, locationID);
             return Json(itemDetails);
         }
         #endregion
@@ -120,14 +122,14 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddStockTransfer(StockTransferBO model)  
+        public ActionResult AddStockTransfer(StockTransferBO model)
         {
             try
             {
                 if (Session[ApplicationSession.USERID] != null)
                 {
                     ResponseMessageBO response = new ResponseMessageBO();
-                                        
+
                     if (ModelState.IsValid)
                     {
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
@@ -139,19 +141,19 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Duplicate Stock Transfer! Can not be inserted!');</script>";
                             BindFromLocationName();
                             BindToLocationName();
-                            return View(model); 
+                            return View(model);
                         }
-                        return RedirectToAction("Index", "StockTransfer");                          
+                        return RedirectToAction("Index", "StockTransfer");
                     }
                     else
                     {
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         BindFromLocationName();
-                        BindToLocationName(); 
+                        BindToLocationName();
                         //var itemList = _stockTransferRepository.GetItemDetailsForDD(1); 
                         //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code"); 
                         //ViewData["itemListForDD"] = dd; 
-                        return View(model); 
+                        return View(model);
                     }
                 }
                 else

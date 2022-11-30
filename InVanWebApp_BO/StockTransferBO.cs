@@ -14,7 +14,8 @@ namespace InVanWebApp_BO
         public Nullable<int> ToLocationId { get; set; }        
         public Nullable<int> ItemId { get; set; }        
         public Nullable<double> TransferQuantity { get; set; }
-        public Nullable<double> RequiredQuantity { get; set; } 
+        public Nullable<double> FromLocation_BeforeTransferQty { get; set; }  
+        public Nullable<double> ToLocation_FinalQty { get; set; }   
         [Required(ErrorMessage = "Enter remakrs!")]
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
@@ -32,11 +33,18 @@ namespace InVanWebApp_BO
         public Nullable<double> StockQuantity { get; set; } //Rahul added on 10/11/2022 
         public string TxtItemDetails { get; set; } //Rahul added on 10/11/2022 
 
+        //FromLocationBeforeTransferQty float Checked
+
         //public List<Item> Item { get; set; } 
 
         //public List<LocationMaster> LocationMaster { get; set; }
-         
-        public List<StockMaster> itemDetails { get; set; } 
+
+        public List<StockMaster> itemDetails { get; set; }
+        public string QuantitiesForSorting { get; set; }
+        public string BalanceQuantities { get; set; }
+        public string RejectedQuantities { get; set; }
+        public string WastageQuantities { get; set; }
+        public string ReasonsForRejection { get; set; }
 
     }
 

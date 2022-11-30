@@ -18,6 +18,12 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-                
+        //Added below fields for Grid dropdowns
+        public string Item_Code { get; set; }
+        public string Item_Name { get; set; }        
+        public string UnitCode { get; set; }
+        public float ItemTaxValue { get; set; }        
+        public double UnitPrice { get; set; }
+        
     }
 }

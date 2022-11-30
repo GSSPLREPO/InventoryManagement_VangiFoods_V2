@@ -10,7 +10,7 @@
     @Html.AntiForgeryToken()
     <div class="card">
         <div class="card-body">
-            <h4>Add Debit / Rejection Note Note</h4>
+            <h4>Add Debit Note / Rejection Note</h4>
             <hr />
             @Html.ValidationSummary(true)
             <div class="row">
@@ -18,7 +18,7 @@
                     <label>Note Type <span style="color:red">*</span> </label>
                 </div>
                 <div class="col-md-4">
-                    <select class="form-control" id="NoteType" name="NoteType">
+                    <select class="form-control form-control-sm" id="NoteType" name="NoteType">
                         <option value="DebitNote">Debit Note</option>
                         <option value="RejectionNote">Rejection Note</option>
                     </select>
@@ -38,7 +38,18 @@
                     Inward No.
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("InwardNumber", new SelectList((System.Collections.IEnumerable)ViewData["InwardNoteNumbers"], "Value", "Text"), "-- Select Purchase Number -- ", new { @class = "form-control select2" })
+                    @Html.DropDownList("InwardNumber", new SelectList((System.Collections.IEnumerable)ViewData["InwardNoteNumbers"], "Value", "Text"), "-- Select Purchase Number -- ", new { @class = "form-control form-control-sm select2" })
+                </div>
+                <br />
+                <br />
+
+                <div class="col-md-2">
+                    @Html.Label("Debit/Rejection Note Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @*@Html.TextBoxFor(model => model.DebitRejectionNoteNo, new { @class = "form-control", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.DebitRejectionNoteNo, "", new { @class = "error mt-2 text-danger" })*@
                 </div>
             </div>
             <br />
@@ -120,25 +131,25 @@
 
                                         <tr id="tablerow">
                                             <td>
-                                                <input class="form-control" />
+                                                <input class="form-control form-control-sm" />
                                             </td>
                                             <td>
-                                                <input class="form-control" />
+                                                <input class="form-control form-control-sm" />
                                             </td>
                                             <td>
-                                                <input class="form-control" />
+                                                <input class="form-control form-control-sm" />
                                             </td>
                                             <td>
-                                                <input class="form-control" />
+                                                <input class="form-control form-control-sm" />
                                             </td>
                                             <td>
-                                                <input class="form-control" />
+                                                <input class="form-control form-control-sm" />
                                             </td>
                                             <td>
-                                                <input class="form-control" />
+                                                <input class="form-control form-control-sm" />
                                             </td>
                                             <td>
-                                                <input class="form-control" />
+                                                <input class="form-control form-control-sm" />
                                             </td>
                                         </tr>
                                     </tbody>
@@ -181,26 +192,29 @@
                             <div class="form-group">
                                 <div class="row">
                                     <label>Total (before tax): </label>
-                                    <input class="form-control" id="TotalBeforeTax" name="TotalItemCost" />
+                                    <input class="form-control form-control-sm" id="TotalBeforeTax" name="TotalItemCost" />
                                 </div>
                                 <div class="row">
                                     <label>Total tax: </label>
                                     @*<input class="form-control" id="TotalTax" name="Tax" />*@
-                                    <input class="form-control" id="TotalTax" name="TotalTax" />
+                                    <input class="form-control form-control-sm" id="TotalTax" name="TotalTax" />
                                 </div>
                                 <div class="row">
                                     <label>Total (after tax):</label>
                                     @*<input class="form-control" id="TotalAfterTax" />*@
-                                    <input class="form-control" id="TotalAfterTax" name="TotalAfterTax" />
+                                    <input class="form-control form-control-sm" id="TotalAfterTax" name="TotalAfterTax" />
                                 </div>
                                 <div class="row">
                                     <label><b>Grand Total:</b></label>
-                                    <input class="form-control" id="GrandTotal" name="GrandTotal" />
+                                    <input class="form-control form-control-sm" id="GrandTotal" name="GrandTotal" />
                                 </div>
                             </div>
                             <br />
                             <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="AddPurchaseOrder">Save</button>
-                            @Html.ActionLink("Back to List", "Index")
+                            @*@Html.ActionLink("Back to List", "Index")*@
+                            <a href="@Url.Action("Index", "DebitNote")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                                Back To List
+                            </a>
                         </div>
                     </div>
                 </div>

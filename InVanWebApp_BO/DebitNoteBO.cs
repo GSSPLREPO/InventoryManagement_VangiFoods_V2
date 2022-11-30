@@ -11,5 +11,6 @@ namespace InVanWebApp_BO
         public int ID { get; set; }
         public string NoteType { get; set; }
         public DateTime NoteDate { get; set; }
+        public string DebitRejectionNoteNo { get; set; } //Rahul added 25 Nov 2022.
     }
 }

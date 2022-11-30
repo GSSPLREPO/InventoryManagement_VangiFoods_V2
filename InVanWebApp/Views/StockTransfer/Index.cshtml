@@ -30,11 +30,17 @@
                     <div class="card">
                         <div class="card-body">                            
                             <a href="@Url.Action("AddStockTransfer","StockTransfer")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span>  Add Stock Transfer
+                                <span class="fa fa-plus"></span> Stock Transfer
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
                                 <table id="example" class="table table-striped table-bordered">
                                     <tr>
+                                        <th>
+                                            @Html.DisplayName("SrNo")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Date")
+                                        </th>
                                         <th>
                                             @Html.DisplayName("Item Code")
                                         </th>
@@ -42,23 +48,29 @@
                                             @Html.DisplayName("Item Name")
                                         </th>
                                         <th>
+                                            @Html.DisplayName("Total Qty")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Unit Price")
+                                        </th>
+                                        <th>
                                             @Html.DisplayName("From Location")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Final Qty Out")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Value Out")
                                         </th>
                                         <th>
                                             @Html.DisplayName("To Location")
                                         </th>
                                         <th>
-                                            @Html.DisplayName("Transfer Quantity")
+                                            @Html.DisplayName("Final Qty In")
                                         </th>
                                         <th>
-                                            @Html.DisplayName("Required Quantity")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Final Quantity")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Remarks")
-                                        </th>
+                                            @Html.DisplayName("Value In")
+                                        </th>                                        
                                         <!--<th>-->
                                         @*@Html.DisplayName("Edit/Delete")*@
                                         <!--</th>-->
@@ -68,25 +80,37 @@
                                     {
                                         <tr>
                                             <td>
+                                                @Html.DisplayFor(modelItem => item.ID)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                                            </td>
+                                            <td>
                                                 @Html.DisplayFor(modelItem => item.Item_Code)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Item_Name)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.FromLocationName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ToLocationName)
-                                            </td>
-                                            <td>
                                                 @Html.DisplayFor(modelItem => item.TransferQuantity)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.RequiredQuantity)
+                                                @Html.DisplayFor(modelItem => item.FromLocation_BeforeTransferQty)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.FinalQuantity)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Remarks)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Remarks)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Remarks)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Remarks)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.Remarks)
