@@ -1,0 +1,75 @@
+﻿@model InVanWebApp_BO.TermsAndConditionMasterBO
+@{
+    ViewBag.Title = "Add Terms and Condition";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            @*<div class="form-horizontal">*@
+            <h4>Add Terms and Condition</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Term Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TermName, new { @class = "form-control form-control-sm", maxlength = "50", onkeydown = "javascript:return isValidateLen('Name',15);" })
+                    @Html.ValidationMessageFor(model => model.TermName, "", new { @class = "error mt-2 text-danger" })
+                    <label id="lblNameError" style="display: none">Length exceeded!</label>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Description")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TermDescription, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.TermDescription, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <a href="@Url.Action("Index", "TermsAndCondition")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
+                Back To List
+            </a>
+            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Save</button>
+
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@Html.Raw(TempData["Success"])
+
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    function isValidateLen(txtID, len) {
+        txtObj = document.getElementById(txtID);
+        if (txtObj.value.length < len) {
+            $('#lblNameError').attr('style', 'display:none');
+            return true;
+        }
+        else {
+            //alert("Length exceeded");
+            $('#lblNameError').attr('style', 'display:block');
+            $('#lblNameError').attr('style', 'color:red');
+            //return false;
+        }
+    }
+</script>

@@ -1,0 +1,272 @@
+﻿@model InVanWebApp_BO.CompanyBO
+@{
+    ViewBag.Title = "Add Company";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@Html.AntiForgeryToken()
+<div class="card">
+    <div class="card-body">
+        @*<div class="form-horizontal">*@
+        <h4 class="card-title"><b>Add Company</b></h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        <div class="row">
+            <div class="col-md-2 text-right">
+                <button class="btn btn-primary mr-2" id="btnAdd" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Single Company</button>
+            </div>&nbsp;&nbsp;&nbsp;
+            <div class="col-md-2 text-right">
+                <button class="btn btn-primary mr-2" id="btnAddMultiple" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Multiple Companies</button>
+            </div>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div id="AddDiv" style="display:none;">
+                <div class="row">
+                    <div class="col-md-1">
+                        @Html.Label("Buyer")
+                    </div>
+                    <div class="col-md-2">
+                        @Html.RadioButtonFor(model => model.CompanyType, "Buyer", new { @class = "form-control form-control-sm", @Value = "Buyer" })
+                    </div>
+                    <div class="col-md-1">
+                        @Html.Label("Supplier")
+                    </div>
+                    <div class="col-md-2">
+                        @Html.RadioButtonFor(model => model.CompanyType, "Supplier", new { @class = "form-control form-control-sm", @Value = "Supplier" })
+
+                    </div>
+                    <div class="col-md-1">
+                        @Html.Label("Both")
+                    </div>
+                    <div class="col-md-2">
+                        @Html.RadioButtonFor(model => model.CompanyType, "Both", new { @class = "form-control form-control-sm", @Value = "Both" })
+                        @*<div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" name="CompanyType" value="Both" class="form-check-input" />
+
+                                </label>
+                            </div>*@
+                    </div>
+                    @Html.ValidationMessageFor(model => model.CompanyType, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Company Name")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control form-control-sm", placeholder = "Company name" })
+                        @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Email ID")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.EmailId, new { @class = "form-control form-control-sm", type = "text", placeholder = "Email Id" })
+                        @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Contact Person")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.ContactPersonName, new { @class = "form-control form-control-sm", placeholder = "Contact person name" })
+                        @Html.ValidationMessageFor(model => model.ContactPersonName, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Contact Number")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.ContactPersonNo, new { @class = "form-control form-control-sm", placeholder = "Contact person number" })
+                        @Html.ValidationMessageFor(model => model.ContactPersonNo, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Address")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control form-control-sm", placeholder = "Address" })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("GST Number")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.GSTNumber, new { @class = "form-control form-control-sm", type = "text", maxlength = "50", placeholder = "GST Number" })
+                        @Html.ValidationMessageFor(model => model.GSTNumber, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Remarks")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", placeholder = "Remark" })
+                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-1">
+                        @Html.Label("Is Active")
+                    </div>
+                    <div class="col-md-2" style="padding-top:0.6%;">
+                            @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control form-control-sm"})
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Is Black Listed")
+                    </div>
+                    <div class="col-md-2" style="padding-top:0.6%;">
+                        @Html.CheckBoxFor(model => model.IsBlackListed, new { @class = "form-control form-control-sm" })
+                    </div>
+                    @*<div class="col-md-2">
+                            @Html.Label("Is Black Listed")
+                        </div>
+                        <div class="col-md-2">
+                            <input type="checkbox" name="IsBlackListed" id="IsBlackListed" class="form-check-input" value="true" />
+                            <input name="IsBlackListed" type="hidden" checked value="false" />
+                        </div>*@
+                </div>
+                @*<br />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">Submit</button>
+                        </div>
+                    </div>*@
+            </div>
+
+
+            <div id="AddMultipleDiv" style="display:none;">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-lg-7">
+                            <label>Add Multiple Companies</label>
+                            <input type="file" name="UploadedFile" id="fileupload" class="file-drop-zone" required>
+                            <span id="sfileupload" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @*<button type="button" class="btn btn-info" id="btnViewExcel"><i class="icon-eye2"></i> View Excel</button>*@ @*uploadexcel*@
+                            <a href="~/ExcelFileFormat/Download-Format-Company.xlsx" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" download><i class="icon-cloud-download2"></i> Download Excel File Format</a>
+                            <span> </span>
+                            <button type="submit" class="btn btn-primary mr-2" id="uploadexcel" style="display: none; background: linear-gradient(85deg, #392c70, #6a005b);"> Upload</button>
+                            <input type="hidden" id="hdnExcelRecord" name="hdnExcelRecord" />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <br />
+            <a href="@Url.Action("Index", "Company")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
+                Back To List
+            </a>
+            <button id="btnSave" type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;display:none;">Save</button>
+        }
+    </div>
+
+</div>
+
+@Html.Raw(TempData["Success"])
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#IsActive').attr('checked', 'checked');
+        var $radios = $('input:radio[name=CompanyType]');
+        if ($radios.is(':checked') === false) {
+            $radios.filter('[value=Buyer]').prop('checked', true);
+        }
+    });
+
+    $("#btnAdd").click(function () {
+        $("#AddMultipleDiv").hide();
+        $("#AddDiv").show();
+        $("#btnSave").show();
+        $("#btnAdd").hide();
+        $("#btnAddMultiple").hide();
+    });
+
+    $("#btnAddMultiple").click(function () {
+        $("#AddMultipleDiv").show();
+        $("#AddDiv").hide();
+        $("#btnAdd").hide();
+        $("#btnAddMultiple").hide();
+        $("#btnSave").hide();
+
+        //ViewBag.Edit = true;
+        //window.location.href = '/Project/Index';
+    });
+
+
+    $('#uploadexcel').show();
+    $('#uploadexcel').attr("disabled", true);
+
+    $('#uploadexcel').click(function () {
+
+        // Checking whether FormData is available in browser
+        if (window.FormData !== undefined) {
+
+
+            var fileUpload = $("#fileupload").get(0);
+            var files = fileUpload.files;
+
+            // Create FormData object
+            var fileData = new FormData();
+
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+            // Adding one more key to FormData object
+            //fileData.append('username', ‘Manas’);
+
+            $.ajax({
+                url: '/Company/UploadCompany',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    alert(result);
+                    window.location.href = "/Company/Index";
+                },
+                error: function (err) {
+                    alert('Format of data uploaded is incorrect.');
+
+                }
+            });
+        } else {
+            alert("FormData is not supported.");
+        }
+    });
+
+    $('#fileupload').change(function () {
+        var fileExtension = ['xls', 'xlsx'];
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            $('#uploadexcel').attr("disabled", true);
+            alert("Only '.xls','.xlsx' formats are allowed.");
+            $('#fileupload').val('');
+            //$('#<%= myLabel.ClientID %>').html("Only '.jpeg','.jpg' formats are allowed.");
+        }
+        else {
+            $('#uploadexcel').attr("disabled", false);
+        }
+    });
+</script>

@@ -111,25 +111,20 @@
             </div>
             <br />
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-2">
                     @Html.Label("Is Active")
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" style="padding-top:0.6%;">
                     @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control form-control-sm" })
                 </div>
+                <div class="col-md-2"></div>
                 <div class="col-md-2">
                     @Html.Label("Is Black Listed")
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" style="padding-top:0.6%;">
                     @Html.CheckBoxFor(model => model.IsBlackListed, new { @class = "form-control form-control-sm" })
                 </div>
-                @*<div class="col-md-2">
-                        @Html.Label("Is Black Listed")
-                    </div>
-                    <div class="col-md-2">
-                        <input type="checkbox" name="IsBlackListed" id="IsBlackListed" class="form-check-input" value="true" />
-                        <input name="IsBlackListed" type="hidden" checked value="false" />
-                    </div>*@
+                <div class="col-md-2"></div>
             </div>
             <br />
             <div class="row">

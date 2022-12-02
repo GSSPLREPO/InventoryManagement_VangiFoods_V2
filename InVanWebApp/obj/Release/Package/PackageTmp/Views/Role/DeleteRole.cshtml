@@ -1,0 +1,41 @@
+﻿@model InVanWebApp_BO.RoleBO
+@{
+    ViewBag.Title = "DeleteRole";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<div>
+    @using (Html.BeginForm("Delete", "Role", FormMethod.Post))
+    {
+        @Html.HiddenFor(r => r.RoleId)
+        <div class="card">
+            <div class="card-body">
+                <h4>Delete Role</h4>
+                <hr />
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.RoleName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.RoleName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Description)
+                    </dd>
+                </dl>
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

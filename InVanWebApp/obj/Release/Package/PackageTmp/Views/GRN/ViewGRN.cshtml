@@ -1,0 +1,289 @@
+﻿@model InVanWebApp_BO.GRN_BO
+@{
+    ViewBag.Title = "ViewGRN";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GRN</title>
+    <style>
+        html2canvas-container {
+            width: 3000px !important;
+            height: 3000px !important;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        @Html.HiddenFor(model => model.ID)
+        @*@Html.HiddenFor(model => model.PO_Id)*@
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="row" id="printV" width="1000px">
+                <div class="row" style="margin-bottom: 1%;">
+                    <div class="col-md-12" style="margin-left: 1560%;">
+                        <img src="~/Theme/MainContent/images/pdf.png" id="btnExport" style="width:45px;height:45px" />
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-12  grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" style="width:80px;height:50px;">
+                                &nbsp;&nbsp;&nbsp;<h3 class="card-title font-weight-bold" style="font-size: 16pt;">GRN Document</h3>
+
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <Center><h5 class="font-weight-bold">GRN Details</h5></Center>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label class="font-weight-bold">GRN Number</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.TextBoxFor(model => model.GRNCode, new { style = "border:none; width:100%" })
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="font-weight-bold">GRN Date</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.GRNDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label class="font-weight-bold">Inward Number</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.InwardNoteNumber)
+                                </div>
+                                <div class="col-lg-2">
+                                    <label class="font-weight-bold">PO Number</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.PONumber, new { @class = "form-control form-control-sm", style = "border:none" })
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <div class="col-md-12">
+                                <Center><h5 class="font-weight-bold">Shipping Details</h5></Center>
+                                <hr />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label class="font-weight-bold">Location</label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.DisplayFor(model => model.LocationName)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label class="font-weight-bold">Shipping Details</label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.DisplayFor(model => model.DeliveryAddress, new { @class = "form-control form-control-sm", style = "border:none" })
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label class="font-weight-bold">Supplier Details</label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.DisplayFor(model => model.SupplierAddress, new { @class = "form-control form-control-sm", style = "border:none" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <div class="col-md-12">
+                                <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                <hr />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped" id="ItemTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Code</th>
+                                                <th>Unit</th>
+                                                <th>Unit Price</th>
+                                                <th>Ordered Quantity</th>
+                                                <th>Inward Quantity</th>
+                                                <th>Received Quantity</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-9"></div>
+                                <div class="col-md-3">
+                                    @*@Html.DisplayFor(model => model.Signature)*@
+                                    <div id="imagePreview"></div>
+                                    @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
+                                    <p class="font-weight-bold"> Authorized Signature</p>
+                                </div>
+                            </div>
+                            <br />
+                            <a href="@Url.Action("Index", "GRN")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                Back To List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+
+
+    <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+    <script src="~/Theme/MainContent/js/jquery.min.js"></script>
+    <script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/jspdf.min.js"></script>
+    <script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/html2canvas.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            BindItemDetails();
+        });
+
+        $('#btnExport').click(function () {
+            var printD = document.getElementById("printV");
+            $("#btnExport").hide();
+            $("#btnBack").hide();
+            // $("#btnPrint").hide();
+            html2canvas(printD).then(function (canvas) {
+
+                var img = canvas.toDataURL("image/png", 1.0);
+
+                var doc = new jsPDF('p', 'pt', 'a3');
+
+                var specialElementHandlers = {
+                    '#editor': function (element, renderer) {
+                        return true;
+                    }
+                };
+
+                doc.addImage(img, 'JPEG', 5, 5);
+                doc.fromHTML(printD, 15, 15, {
+                    'width': 200,
+                    // 'margin':[10,60,40,20],
+                    'elementHandlers': specialElementHandlers
+                });
+                var currentDate = new Date();
+                //var time = getTime();
+                var today = new Date();
+                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                console.log(time);
+                var today = formatDate(currentDate);
+                doc.save('GRN_' + today + '_' + time + '.pdf');
+                $("#btnExport").show();
+                $("#btnBack").show();
+                //$("#btnPrint").show();
+            });
+            //window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+
+        });
+
+        function formatDate(date) {
+            // alert(date);
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+            return [day, month, year].join('-');
+            //return [year, month, day].join('-');
+        }
+
+        function BindItemDetails() {
+            var id = $('#ID').val();
+            //var InwardId = $('#ID').val();
+            //For deleting the rows of Item table if exist.
+
+            var table = document.getElementById('ItemTable');
+            var rowCount = table.rows.length;
+            console.log(rowCount)
+            while (rowCount != '1') {
+                var row = table.deleteRow(rowCount - 1);
+                rowCount--;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: `/GRN/BindGRNItemDetails?id=` + id,
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var ColCount = result.length
+
+                    //===================Create dynamic table for binding Item details====================//
+                    var table = document.getElementById('ItemTable');
+                    for (var j = 0; j < result.length; j++) {
+                        var rowCount = table.rows.length;
+                        var cellCount = table.rows[0].cells.length;
+                        var row = table.insertRow(rowCount);
+                        for (var i = 0; i < cellCount; i++) {
+                            var cell = 'cell' + i;
+                            cell = row.insertCell(i);
+                            if (i == 0) {
+                                cell.innerHTML = result[j].ItemName;
+                            }
+                            else if (i == 1) {
+                                cell.innerHTML = result[j].ItemCode;
+                            }
+                            else if (i == 2) {
+                                cell.innerHTML = result[j].ItemUnit;
+                            }
+                            else if (i == 3) {
+                                cell.innerHTML = result[j].ItemUnitPrice + " Rs";
+                            }
+                            else if (i == 4) {
+                                cell.innerHTML = result[j].OrderQty + " KG";
+                            }
+                            else if (i == 5) {
+                                cell.innerHTML = result[j].InwardQty + " KG";
+                            }
+                            else if (i == 6) {
+                                cell.innerHTML = result[j].ReceivedQty + " KG";
+                            }
+                        }
+
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
+

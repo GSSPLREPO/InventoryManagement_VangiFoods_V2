@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Controllers
 {
@@ -11,7 +12,12 @@ namespace InVanWebApp.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
-            return View();
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         public ActionResult SalesOrder()

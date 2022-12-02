@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Rejection / Debit Note";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debit / Rejection Note</title>
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Debit / Rejection Note</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
+                    </li>
+                    <li class="breadcrumb-item active">Debit/Rejection Note</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="@Url.Action("AddDebitNote","DebitNote")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span>  Add Debit / Rejection Note
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

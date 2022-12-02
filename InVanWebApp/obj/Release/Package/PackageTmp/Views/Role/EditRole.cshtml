@@ -1,0 +1,48 @@
+﻿@model InVanWebApp_BO.RoleBO
+@{
+    ViewBag.Title = "EditRole";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Role</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.RoleId)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Role Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RoleName, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.RoleName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Description")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <a href="@Url.Action("Index", "Role")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                Back To List
+            </a>
+            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">Update</button>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@Html.Raw(TempData["Success"])
