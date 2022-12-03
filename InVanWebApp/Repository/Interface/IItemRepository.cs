@@ -25,7 +25,7 @@ namespace InVanWebApp.Repository
         ResponseMessageBO Update(ItemBO item);
 
         //Function define for: Delete record of item using it's ID
-        void Delete(int Item_Id);
+        void Delete(int Item_Id, int userId);
 
         //Function for fetching list of item category.
         IEnumerable<ItemCategoryMasterBO> GetItemCategoryForDropDown();

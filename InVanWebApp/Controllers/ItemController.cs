@@ -140,91 +140,98 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
         public JsonResult UploadItems()
         {
-            try
+            if (Session[ApplicationSession.USERID] != null)
             {
-                List<ResponseMessageBO> responsesList = new List<ResponseMessageBO>();
-                HttpFileCollectionBase files = Request.Files;
-                HttpPostedFileBase materialExcelFile = files[0];
-                string materialExcelFilename;
-
-                // Checking for Internet Explorer  
-                if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                try
                 {
-                    string[] testfiles = materialExcelFile.FileName.Split(new char[] { '\\' });
-                    materialExcelFilename = testfiles[testfiles.Length - 1];
-                }
-                else
-                {
-                    materialExcelFilename = materialExcelFile.FileName;
-                }
+                    List<ResponseMessageBO> responsesList = new List<ResponseMessageBO>();
+                    HttpFileCollectionBase files = Request.Files;
+                    HttpPostedFileBase materialExcelFile = files[0];
+                    string materialExcelFilename;
 
-                // Get the complete folder path and store the file inside it.  
-                materialExcelFilename = Path.Combine(Server.MapPath("~/ExcelUploads/"), materialExcelFilename);
-                materialExcelFile.SaveAs(materialExcelFilename);
-
-                //------------------------ New Code Start----------------------------------
-                var listMaterialExcelEntity = new List<ItemBO>();
-                using (var package = new ExcelPackage(materialExcelFile.InputStream))
-                {
-                    // get the first worksheet in the workbook
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
-                    int col = 1;
-
-                    for (int row = 2; worksheet.Cells[row, col].Value != null; row++)
+                    // Checking for Internet Explorer  
+                    if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
                     {
-                        // do something with worksheet.Cells[row, col].Value 
-                        var productExcel = new ItemBO();
-
-                        productExcel.Item_Name = worksheet.Cells[row, col].Value != null ? worksheet.Cells[row, col].Value.ToString() : null;
-                        productExcel.ItemTypeName = worksheet.Cells[row, col + 1].Value != null ? worksheet.Cells[row, col + 1].Value.ToString() : null;
-                        productExcel.ItemCategoryName = worksheet.Cells[row, col + 2].Value != null ? worksheet.Cells[row, col + 2].Value.ToString() : null;
-                        productExcel.Item_Code = worksheet.Cells[row, col + 3].Value != null ? worksheet.Cells[row, col + 3].Value.ToString() : null;
-                        productExcel.HSN_Code = worksheet.Cells[row, col + 4].Value != null ? worksheet.Cells[row, col + 4].Value.ToString() : null;
-                        productExcel.MinStock = Convert.ToDouble(worksheet.Cells[row, col + 5].Value != null ? worksheet.Cells[row, col + 5].Value : "0");
-                        productExcel.Description = worksheet.Cells[row, col + 6].Value != null ? worksheet.Cells[row, col + 6].Value.ToString() : null;
-
-                        productExcel.CreatedBy = 1;
-                        productExcel.CreatedDate = DateTime.UtcNow.AddHours(5.5);
-                        productExcel.IsDeleted = false;
-                        listMaterialExcelEntity.Add(productExcel);
+                        string[] testfiles = materialExcelFile.FileName.Split(new char[] { '\\' });
+                        materialExcelFilename = testfiles[testfiles.Length - 1];
                     }
-                    responsesList = _iItemRepository.SaveItemData(listMaterialExcelEntity);
-
-                } // the using 
-                  //------------------------ New Code End----------------------------------
-
-                //List<MaterialEntities> listMaterialEntities = insertMaterialExcelRecords(materialExcelFile);
-                //if (listMaterialExcelEntity != null && listMaterialExcelEntity.Count > 0)
-                //{
-                //    return Json("Data Uploaded Successfully", JsonRequestBehavior.AllowGet);
-                //}
-                //return Json("", JsonRequestBehavior.AllowGet);
-                int i = 0, flag = 0;
-                int count = responsesList.Count;
-                string ItemList = "";
-
-                while (i < count)
-                {
-                    if (responsesList[i].Status == false)
-                        ItemList = ItemList + responsesList[i].ItemName + ", ";
                     else
-                        flag = 1;
-                    i++;
-                }
-                if (ItemList != "")
-                {
-                    if (flag == 1)
-                        return Json("Few items are uploaded successfully! And following items are duplicate: " + ItemList, JsonRequestBehavior.AllowGet);
+                    {
+                        materialExcelFilename = materialExcelFile.FileName;
+                    }
+
+                    // Get the complete folder path and store the file inside it.  
+                    materialExcelFilename = Path.Combine(Server.MapPath("~/ExcelUploads/"), materialExcelFilename);
+                    materialExcelFile.SaveAs(materialExcelFilename);
+
+                    //------------------------ New Code Start----------------------------------
+                    var listMaterialExcelEntity = new List<ItemBO>();
+                    using (var package = new ExcelPackage(materialExcelFile.InputStream))
+                    {
+                        // get the first worksheet in the workbook
+                        ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                        int col = 1;
+
+                        for (int row = 2; worksheet.Cells[row, col].Value != null; row++)
+                        {
+                            // do something with worksheet.Cells[row, col].Value 
+                            var productExcel = new ItemBO();
+
+                            productExcel.Item_Name = worksheet.Cells[row, col].Value != null ? worksheet.Cells[row, col].Value.ToString() : null;
+                            productExcel.ItemTypeName = worksheet.Cells[row, col + 1].Value != null ? worksheet.Cells[row, col + 1].Value.ToString() : null;
+                            productExcel.ItemCategoryName = worksheet.Cells[row, col + 2].Value != null ? worksheet.Cells[row, col + 2].Value.ToString() : null;
+                            productExcel.Item_Code = worksheet.Cells[row, col + 3].Value != null ? worksheet.Cells[row, col + 3].Value.ToString() : null;
+                            productExcel.UnitPrice = Convert.ToDouble(worksheet.Cells[row, col + 4].Value != null ? worksheet.Cells[row, col + 4].Value : "0");
+                            productExcel.HSN_Code = worksheet.Cells[row, col + 5].Value != null ? worksheet.Cells[row, col + 5].Value.ToString() : null;
+                            productExcel.MinStock = Convert.ToDouble(worksheet.Cells[row, col + 6].Value != null ? worksheet.Cells[row, col + 6].Value : "0");
+                            productExcel.Description = worksheet.Cells[row, col + 7].Value != null ? worksheet.Cells[row, col + 7].Value.ToString() : null;
+                            var tempCreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                            
+                            productExcel.CreatedBy = tempCreatedBy;
+                            productExcel.CreatedDate = DateTime.UtcNow.AddHours(5.5);
+                            productExcel.IsDeleted = false;
+                            listMaterialExcelEntity.Add(productExcel);
+                        }
+                        responsesList = _iItemRepository.SaveItemData(listMaterialExcelEntity);
+
+                    } // the using 
+                      //------------------------ New Code End----------------------------------
+
+                    //List<MaterialEntities> listMaterialEntities = insertMaterialExcelRecords(materialExcelFile);
+                    //if (listMaterialExcelEntity != null && listMaterialExcelEntity.Count > 0)
+                    //{
+                    //    return Json("Data Uploaded Successfully", JsonRequestBehavior.AllowGet);
+                    //}
+                    //return Json("", JsonRequestBehavior.AllowGet);
+                    int i = 0, flag = 0;
+                    int count = responsesList.Count;
+                    string ItemList = "";
+
+                    while (i < count)
+                    {
+                        if (responsesList[i].Status == false)
+                            ItemList = ItemList + responsesList[i].ItemName + ", ";
+                        else
+                            flag = 1;
+                        i++;
+                    }
+                    if (ItemList != "")
+                    {
+                        if (flag == 1)
+                            return Json("Few items are uploaded successfully! And following items are duplicate: " + ItemList, JsonRequestBehavior.AllowGet);
+                        else
+                            return Json("No item inserted! And list of duplicate items: " + ItemList, JsonRequestBehavior.AllowGet);
+                    }
                     else
-                        return Json("No item inserted! And list of duplicate items: " + ItemList, JsonRequestBehavior.AllowGet);
+                        return Json("All Items Uploaded Successfully!", JsonRequestBehavior.AllowGet);
                 }
-                else
-                    return Json("All Items Uploaded Successfully!", JsonRequestBehavior.AllowGet);
+                catch (Exception ex)
+                {
+                    return Json(ex, JsonRequestBehavior.AllowGet);
+                }
             }
-            catch (Exception ex)
-            {
-                return Json(ex, JsonRequestBehavior.AllowGet);
-            }
+            else
+                return Json("Session Out!", JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -238,9 +245,14 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditItem(int Item_ID)
         {
-            BindItemTypeCategory();
-            ItemBO model = _iItemRepository.GetById(Item_ID);
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                BindItemTypeCategory();
+                ItemBO model = _iItemRepository.GetById(Item_ID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
@@ -252,30 +264,36 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditItem(ItemBO model)
         {
-            ResponseMessageBO response = new ResponseMessageBO();
-            try
+            if (Session[ApplicationSession.USERID] != null)
             {
-                if (ModelState.IsValid)
+                ResponseMessageBO response = new ResponseMessageBO();
+                try
                 {
-                    response = _iItemRepository.Update(model);
-                    if (response.Status)
-                        TempData["Success"] = "<script>alert('Item updated successfully!');</script>";
+                    if (ModelState.IsValid)
+                    {
+                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _iItemRepository.Update(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Item updated successfully!');</script>";
 
+                        else
+                            TempData["Success"] = "<script>alert('Duplicate Item! Can not be updated!');</script>";
+
+
+                        return RedirectToAction("Index", "Item");
+                    }
                     else
-                        TempData["Success"] = "<script>alert('Duplicate Item! Can not be updated!');</script>";
-
-
+                        return View(model);
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex.Message, ex);
+                    TempData["Success"] = "<script>alert('Error while update!');</script>";
                     return RedirectToAction("Index", "Item");
                 }
-                else
-                    return View(model);
             }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-                TempData["Success"] = "<script>alert('Error while update!');</script>";
-                return RedirectToAction("Index", "Item");
-            }
+            else
+                return RedirectToAction("Index", "Login");
 
         }
 
@@ -288,19 +306,20 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <param name="ID">record Id</param>
         /// <returns></returns>
-        //[HttpGet]
-        //public ActionResult DeleteItem(int Item_ID)
-        //{
-        //    ItemBO model = _iItemRepository.GetById(Item_ID);
-        //    return View(model);
-        //}
+
 
         [HttpGet]
         public ActionResult DeleteItem(int Item_ID)
         {
-            _iItemRepository.Delete(Item_ID);
-            TempData["Success"] = "<script>alert('Item deleted successfully!');</script>";
-            return RedirectToAction("Index", "Item");
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                int userId = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                _iItemRepository.Delete(Item_ID, userId);
+                TempData["Success"] = "<script>alert('Item deleted successfully!');</script>";
+                return RedirectToAction("Index", "Item");
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 
@@ -343,5 +362,13 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Get Tax Value
+        public JsonResult GetTaxValue(string id)
+        {
+            int taxId = Convert.ToInt32(id);
+            var result = _taxRepository.GetById(taxId);
+            return Json(result);
+        }
+        #endregion
     }
 }

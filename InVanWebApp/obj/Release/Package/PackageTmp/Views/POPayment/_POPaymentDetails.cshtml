@@ -129,7 +129,7 @@
                                                 @Html.DisplayFor(x => item.ItemUnitPrice)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(x=>item.ItemTaxValue)
+                                                @Html.DisplayFor(x => item.ItemTaxValue)
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(x => item.TotalItemCost)
@@ -300,6 +300,8 @@
 
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -359,9 +361,9 @@
         var paidAmount = $('#AmountPaid').val();
         paidAmount = parseFloat(paidAmount);
 
-        var balanceAmt = (totalPayment - (AdvancePayment+paidAmount)) - paybleAmount;
-       
-        if (paybleAmount > totalPayment || paybleAmount > (totalPayment - (AdvancePayment+paidAmount))) {
+        var balanceAmt = (totalPayment - (AdvancePayment + paidAmount)) - paybleAmount;
+
+        if (paybleAmount > totalPayment || paybleAmount > (totalPayment - (AdvancePayment + paidAmount))) {
             alert('Please enter valid payable amount!');
 
             $('#TotalPaybleAmount').val('0');

@@ -9,6 +9,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using OfficeOpenXml;
 using log4net;
 using InVanWebApp.Repository.Interface;
+using InVanWebApp.Common;
 using System.IO;
 
 namespace InVanWebApp.Controllers
@@ -50,8 +51,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _companyRepository.GetAll();
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var model = _companyRepository.GetAll();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 
@@ -64,7 +70,12 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddCompany()
         {
-            return View();
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
@@ -75,35 +86,41 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddCompany(CompanyBO model)
         {
-            try
+            if (Session[ApplicationSession.USERID] != null)
             {
-                ResponseMessageBO response = new ResponseMessageBO();
-                if (ModelState.IsValid)
+                try
                 {
-                    response = _companyRepository.Insert(model);
-                    if (response.Status)
-                        TempData["Success"] = "<script>alert('Company details Inserted Successfully!');</script>";
-                    else
+                    ResponseMessageBO response = new ResponseMessageBO();
+                    if (ModelState.IsValid)
                     {
-                        if(response.CompanyName!=null || response.CompanyName!="")
-                            TempData["Success"] = "<script>alert('Duplicate company details! Can not be inserted!');</script>";
+                        response = _companyRepository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Company details Inserted Successfully!');</script>";
                         else
-                            TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-                        
-                        return View();
+                        {
+                            if (response.CompanyName != null || response.CompanyName != "")
+                                TempData["Success"] = "<script>alert('Duplicate company details! Can not be inserted!');</script>";
+                            else
+                                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+
+                            return View();
+                        }
+
+                        return RedirectToAction("Index", "Company");
+
                     }
 
-                    return RedirectToAction("Index", "Company");
-
                 }
+                catch (Exception ex)
+                {
+                    log.Error("Error", ex);
+                    TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                    return RedirectToAction("Index", "Company");
+                }
+                return View();
             }
-            catch (Exception ex)
-            {
-                log.Error("Error", ex);
-                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-                return RedirectToAction("Index", "Company");
-            }
-            return View();
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
@@ -166,15 +183,8 @@ namespace InVanWebApp.Controllers
                     }
                     responsesList = _companyRepository.SaveCompanyData(listMaterialExcelEntity);
 
-                } // the using 
-                  //------------------------ New Code End----------------------------------
+                }
 
-                //List<MaterialEntities> listMaterialEntities = insertMaterialExcelRecords(materialExcelFile);
-                //if (listMaterialExcelEntity != null && listMaterialExcelEntity.Count > 0)
-                //{
-                //    return Json("Data Uploaded Successfully", JsonRequestBehavior.AllowGet);
-                //}
-                //return Json("", JsonRequestBehavior.AllowGet);
                 int i = 0, flag = 0;
                 int count = responsesList.Count;
                 string ItemList = "";
@@ -192,7 +202,7 @@ namespace InVanWebApp.Controllers
                     if (flag == 1)
                         return Json("Few company are uploaded successfully! And following companies are duplicate: " + ItemList, JsonRequestBehavior.AllowGet);
                     else
-                        return Json("No company inserted! And list of duplicate items: " + ItemList, JsonRequestBehavior.AllowGet);
+                        return Json("Insertion failed! Duplicate company name: " + ItemList, JsonRequestBehavior.AllowGet);
                 }
                 else
                     return Json("All Company Uploaded Successfully!", JsonRequestBehavior.AllowGet);
@@ -214,8 +224,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditCompany(int ID)
         {
-            CompanyBO model = _companyRepository.GetById(ID);
-            return View(model);
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                CompanyBO model = _companyRepository.GetById(ID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         /// <summary>
@@ -226,32 +241,37 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditCompany(CompanyBO model)
         {
-            ResponseMessageBO response = new ResponseMessageBO();
-            try
+            if (Session[ApplicationSession.USERID] != null)
             {
-                if (ModelState.IsValid)
+                ResponseMessageBO response = new ResponseMessageBO();
+                try
                 {
-                    response = _companyRepository.Update(model);
-                    if (response.Status)
-                        TempData["Success"] = "<script>alert('User updated successfully!');</script>";
-                    else
+                    if (ModelState.IsValid)
                     {
-                        TempData["Success"] = "<script>alert('Duplicate category!');</script>";
-                        return View();
-                    }
+                        response = _companyRepository.Update(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Company updated successfully!');</script>";
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Duplicate Company!');</script>";
+                            return View();
+                        }
 
+                        return RedirectToAction("Index", "Company");
+                    }
+                    else
+                        return View(model);
+
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex.Message, ex);
+                    TempData["Success"] = "<script>alert('Error while update!');</script>";
                     return RedirectToAction("Index", "Company");
                 }
-                else
-                    return View(model);
-
             }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-                TempData["Success"] = "<script>alert('Error while update!');</script>";
-                return RedirectToAction("Index", "Company");
-            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         #endregion
@@ -266,11 +286,14 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteSupplierCustomer(int ID)
         {
-            //CompanyBO model = _companyRepository.GetById(ID);
-            //return View(model);
-            _companyRepository.Delete(ID);
-            TempData["Success"] = "<script>alert('Supplier/Customer deleted successfully!');</script>";
-            return RedirectToAction("Index", "Company");
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                _companyRepository.Delete(ID);
+                TempData["Success"] = "<script>alert('Supplier/Customer deleted successfully!');</script>";
+                return RedirectToAction("Index", "Company");
+            }
+            else
+                return RedirectToAction("Index","Login");
         }
 
         #endregion

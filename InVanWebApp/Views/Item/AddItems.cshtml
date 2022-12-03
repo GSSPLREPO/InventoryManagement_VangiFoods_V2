@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="col-md-2">
-                        @Html.Label("Minimum Stock")
+                        @Html.Label("Minimum Stock (Kg)")
                         <span style="color:red">*</span>
                     </div>
                     <div class="col-md-4">
@@ -85,20 +85,23 @@
                 <br />
                 <div class="row">
                     <div class="col-md-2">
-                            @Html.Label("Price Per Unit (Rs)")
-                            <span style="color:red">*</span>
-                        </div>
-                        <div class="col-md-4">
-                            @Html.TextBoxFor(model => model.UnitPrice, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)" })
-                            @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "error mt-2 text-danger" })
-                        </div>
+                        @Html.Label("Price Per Unit (Rs)")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.UnitPrice, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)" })
+                        @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "error mt-2 text-danger" })
+                    </div>
                     <div class="col-md-2">
                         @Html.Label("Tax")
                         <span style="color:red">*</span>
                     </div>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.TaxId, (IEnumerable<SelectListItem>)ViewData["Tax"], "---Select---", new { @class = "form-control" })
+                    <div class="col-md-2">
+                        @Html.DropDownListFor(model => model.TaxId, (IEnumerable<SelectListItem>)ViewData["Tax"], "---Select---", new { @class = "form-control", onchange = "TaxOnchangeEvent()" })
                         @Html.ValidationMessageFor(model => model.TaxId, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.TextBox("ItemTaxVal", "", new { @class = "form-control form-control-sm", @readonly = "readonly",id= "ItemTaxVal" })
                     </div>
                 </div>
                 <br />
@@ -165,6 +168,23 @@
 
 <script type="text/javascript">
 
+    //On change function tax dropdown
+    function TaxOnchangeEvent() {
+        var TaxId = $('#TaxId').val();
+        $.ajax({
+            url: '/Item/GetTaxValue',
+            type: "POST",
+            data: { id: TaxId },
+            success: function (result) {
+                $('#ItemTaxVal').val(result.TaxValue + " %");
+            },
+            error: function (err) {
+                alert('Not able to get the selected tax value!');
+
+            }
+        });
+    }
+
     function isNumberKey(evt) {
         //comparing pressed keycodes
         var keycode = (evt.which) ? evt.which : evt.keyCode;
@@ -178,13 +198,6 @@
             else
                 return true;
         }
-        return true;
-    }
-
-    function isNumberKey(evt) {
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
         return true;
     }
 

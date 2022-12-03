@@ -139,7 +139,7 @@ namespace InVanWebApp.Repository
                         material.HSN_Code = model[i].HSN_Code;
                         material.MinStock = model[i].MinStock;
                         material.Description = model[i].Description;
-
+                        material.UnitPrice = model[i].UnitPrice;
                         material.IsDeleted = false;
                         material.CreatedBy = model[i].CreatedBy;
                         material.CreatedDate = Convert.ToDateTime(model[i].CreatedDate);
@@ -156,6 +156,7 @@ namespace InVanWebApp.Repository
                             cmd.Parameters.AddWithValue("@Item_Name", material.Item_Name);
                             cmd.Parameters.AddWithValue("@HSN_Code", material.HSN_Code);
                             cmd.Parameters.AddWithValue("@MinStock", material.MinStock);
+                            cmd.Parameters.AddWithValue("@UnitPrice", material.UnitPrice);
                             cmd.Parameters.AddWithValue("@Description", material.Description);
                             cmd.Parameters.AddWithValue("@CreatedBy", material.CreatedBy);
                             cmd.Parameters.AddWithValue("@CreatedDate", material.CreatedDate);
@@ -223,7 +224,11 @@ namespace InVanWebApp.Repository
                             Item_Name = reader["Item_Name"].ToString(),
                             HSN_Code = reader["HSN_Code"].ToString(),
                             MinStock = Convert.ToInt32(reader["MinStock"]),
-                            Description = reader["Description"].ToString()
+                            Description = reader["Description"].ToString(),
+                            UnitOfMeasurement_ID = Convert.ToInt32(reader["UnitOfMeasurement_ID"]),
+                            UnitPrice = Convert.ToDouble(reader["UnitPrice"]),
+                            TaxId=Convert.ToInt32(reader["TaxId"]),
+                            ItemTaxValue=float.Parse(reader["ItemTaxValue"].ToString())
                         };
                     }
                     con.Close();
@@ -257,9 +262,12 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Item_Code", item.Item_Code);
                     cmd.Parameters.AddWithValue("@Item_Name", item.Item_Name);
                     cmd.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
+                    cmd.Parameters.AddWithValue("@UOM", item.UnitOfMeasurement_ID);
                     cmd.Parameters.AddWithValue("@MinStock", item.MinStock);
+                    cmd.Parameters.AddWithValue("@UnitPrice", item.UnitPrice);
+                    cmd.Parameters.AddWithValue("@TaxId", item.TaxId);
                     cmd.Parameters.AddWithValue("@Description", item.Description);
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", item.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     //cmd.ExecuteNonQuery();
@@ -283,7 +291,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Delete function
-        public void Delete(int Item_ID)
+        public void Delete(int Item_ID, int userId)
         {
             try
             {
@@ -292,7 +300,7 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_Item_Delete", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Item_ID", Item_ID);
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     cmd.ExecuteNonQuery();

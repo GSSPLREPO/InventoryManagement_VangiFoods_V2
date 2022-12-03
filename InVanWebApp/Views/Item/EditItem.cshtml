@@ -56,12 +56,14 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("HSN Code")
+                    @Html.Label("UOM")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.HSN_Code, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.HSN_Code, "", new { @class = "error mt-2 text-danger" })
+                    @Html.DropDownListFor(model => model.UnitOfMeasurement_ID, (IEnumerable<SelectListItem>)ViewData["UOM"], "---Select unit---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UnitOfMeasurement_ID, "", new { @class = "error mt-2 text-danger" })
                 </div>
+
                 <div class="col-md-2">
                     @Html.Label("Minimum Stock")
                     <span style="color:red">*</span>
@@ -72,23 +74,36 @@
                 </div>
             </div>
             <br />
-            @*<div class="form-group">
-                    @Html.Label("Tax")
-                    @Html.DropDownList("Tax", new List<SelectListItem>
-                    {
-                        new SelectListItem{ Text="Tax: 0%", Value = "0%" },
-                        new SelectListItem{ Text="Tax: 5%", Value = "5%" },
-                        new SelectListItem{ Text="Tax: 18%", Value = "18%" },
-                        new SelectListItem{ Text="Tax: 12%", Value = "12%" },
-                        new SelectListItem{ Text="Tax: 3%", Value = "3%" },
-                        new SelectListItem{ Text="Tax: 9%", Value = "9%" },
-                        new SelectListItem{ Text="Tax: 0.1%", Value = "0.1%" },
-                        new SelectListItem{ Text="Tax: 0.25%", Value = "0.25%" }
-                    }, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Tax, "", new { @class = "error mt-2 text-danger" })
-                </div>*@
-
             <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Price Per Unit (Rs)")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.UnitPrice, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)" })
+                    @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Tax")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownListFor(model => model.TaxId, (IEnumerable<SelectListItem>)ViewData["Tax"], "---Select---", new { @class = "form-control", onchange = "TaxOnchangeEvent()" })
+                    @Html.ValidationMessageFor(model => model.TaxId, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.TextBox("ItemTaxVal", "", new { @class = "form-control form-control-sm", @readonly = "readonly", id = "ItemTaxVal" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("HSN Code")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.HSN_Code, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.HSN_Code, "", new { @class = "error mt-2 text-danger" })
+                </div>
                 <div class="col-md-2">
                     @Html.Label("Description")
                 </div>
@@ -110,3 +125,33 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        TaxOnchangeEvent();
+        var taxValue = $('#ItemTaxVal').val();
+        taxValue = taxValue + " %";
+        $('#ItemTaxVal').val(taxValue);
+    });
+
+    function TaxOnchangeEvent() {
+        var TaxId = $('#TaxId').val();
+        $.ajax({
+            url: '/Item/GetTaxValue',
+            type: "POST",
+            data: { id: TaxId },
+            success: function (result) {
+                $('#ItemTaxVal').val(result.TaxValue+" %");
+            },
+            error: function (err) {
+                alert('Not able to get the selected tax value!');
+
+            }
+        });
+    }
+</script>

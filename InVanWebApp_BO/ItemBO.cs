@@ -54,7 +54,6 @@ namespace InVanWebApp_BO
         //Added below fields for Grid dropdowns
 
         [Required(ErrorMessage = "Enter price!")]
-        //[StringLength(8, ErrorMessage = "Check the figure!")]
         public double UnitPrice { get; set; }
         public float ItemTaxValue { get; set; }
 
