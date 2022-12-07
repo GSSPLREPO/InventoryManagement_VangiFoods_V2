@@ -28,6 +28,8 @@ namespace InVanWebApp.DAL
         public string PONumber { get; set; }
         public string GRNCode { get; set; }
         public Nullable<System.DateTime> GRNDate { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public string DeliveryAddress { get; set; }
         public string Remark { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -36,6 +38,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         public virtual InwardNote InwardNote { get; set; }
+        public virtual LocationMaster LocationMaster { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GRNDetail> GRNDetails { get; set; }

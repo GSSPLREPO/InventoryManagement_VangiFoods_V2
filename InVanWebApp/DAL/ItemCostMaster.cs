@@ -14,12 +14,6 @@ namespace InVanWebApp.DAL
     
     public partial class ItemCostMaster
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ItemCostMaster()
-        {
-            this.LocationWiseStocks = new HashSet<LocationWiseStock>();
-        }
-    
         public int Id { get; set; }
         public Nullable<int> ItemId { get; set; }
         public Nullable<decimal> UnitPrice { get; set; }
@@ -32,7 +26,5 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         public virtual Item Item { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LocationWiseStock> LocationWiseStocks { get; set; }
     }
 }

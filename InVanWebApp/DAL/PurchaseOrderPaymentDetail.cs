@@ -12,7 +12,7 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class PurchaseOrderPaymentDetails
+    public partial class PurchaseOrderPaymentDetail
     {
         public int ID { get; set; }
         public Nullable<int> PurchaseOrderId { get; set; }
@@ -28,15 +28,15 @@ namespace InVanWebApp.DAL
         public string AccountNo { get; set; }
         public string PaymentDetails { get; set; }
         public string PaymentStatus { get; set; }
+        public Nullable<System.DateTime> PaymentDueDate { get; set; }
+        public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-
-        //Added below two new columns by raj in this table
-        public Nullable<System.DateTime> PaymentDueDate { get; set; }
-        public string Remarks { get; set; }
+    
         public virtual PurchaseOrder PurchaseOrder { get; set; }
+
     }
 }

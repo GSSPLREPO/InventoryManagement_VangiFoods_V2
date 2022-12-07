@@ -19,9 +19,11 @@ namespace InVanWebApp.DAL
         {
             this.DebitNoteDetails = new HashSet<DebitNoteDetail>();
             this.GRNDetails = new HashSet<GRNDetail>();
+            this.Indent_Details = new HashSet<Indent_Details>();
             this.InwardNoteDetails = new HashSet<InwardNoteDetail>();
             this.ItemCostMasters = new HashSet<ItemCostMaster>();
             this.ItemTaxMasters = new HashSet<ItemTaxMaster>();
+            this.LocationWiseStocks = new HashSet<LocationWiseStock>();
             this.PurchaseOrderItemsDetails = new HashSet<PurchaseOrderItemsDetail>();
             this.RequestForQuotations = new HashSet<RequestForQuotation>();
             this.SalesOrderItemsDetails = new HashSet<SalesOrderItemsDetail>();
@@ -51,6 +53,8 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GRNDetail> GRNDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Indent_Details> Indent_Details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InwardNoteDetail> InwardNoteDetails { get; set; }
         public virtual ItemCategoryMaster ItemCategoryMaster { get; set; }
         public virtual ItemType ItemType { get; set; }
@@ -59,6 +63,8 @@ namespace InVanWebApp.DAL
         public virtual ICollection<ItemCostMaster> ItemCostMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemTaxMaster> ItemTaxMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LocationWiseStock> LocationWiseStocks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

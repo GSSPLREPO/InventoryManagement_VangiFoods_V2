@@ -224,12 +224,14 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public PurchaseOrderPaymentDetails GetPOPaymentDetailsById(int Id)
+        //public PurchaseOrderPaymentDetails GetPOPaymentDetailsById(int Id)
+        public PurchaseOrderPaymentDetail GetPOPaymentDetailsById(int Id)
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
                 String query = "SELECT * FROM PurchaseOrderPaymentDetails WITH(NOLOCK) WHERE ID = @Id AND IsDeleted = 0";
-                var POPaymentDetail = con.Query<PurchaseOrderPaymentDetails>(query, new { @Id = Id }).FirstOrDefault();
+                //var POPaymentDetail = con.Query<PurchaseOrderPaymentDetails>(query, new { @Id = Id }).FirstOrDefault();
+                var POPaymentDetail = con.Query<PurchaseOrderPaymentDetail>(query, new { @Id = Id }).FirstOrDefault();
                 return POPaymentDetail;
             }
         }

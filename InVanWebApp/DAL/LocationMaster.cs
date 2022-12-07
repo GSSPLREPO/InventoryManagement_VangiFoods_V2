@@ -17,6 +17,7 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LocationMaster()
         {
+            this.GRN_Master = new HashSet<GRN_Master>();
             this.LabMasters = new HashSet<LabMaster>();
             this.LocationWiseStocks = new HashSet<LocationWiseStock>();
             this.MachineMasters = new HashSet<MachineMaster>();
@@ -37,6 +38,8 @@ namespace InVanWebApp.DAL
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GRN_Master> GRN_Master { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LabMaster> LabMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

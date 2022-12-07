@@ -26,7 +26,8 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<POPaymentBO> GetAll();
 
         //Function detine for get Purchase Order Payment Details
-        PurchaseOrderPaymentDetails GetPOPaymentDetailsById(int Id);
+        //PurchaseOrderPaymentDetails GetPOPaymentDetailsById(int Id);
+        PurchaseOrderPaymentDetail GetPOPaymentDetailsById(int Id);
 
         //Function define for the update of Payment Details.
         ResponseMessageBO Update(POPaymentBO model);

@@ -20,9 +20,10 @@ namespace InVanWebApp.DAL
         public string Item_Name { get; set; }
         public string Item_Code { get; set; }
         public Nullable<decimal> ItemUnitPrice { get; set; }
-        public string ItemTaxValue { get; set; }
+        public string ItemUnit { get; set; }
         public Nullable<double> OrderQuantity { get; set; }
         public Nullable<double> ReceivedQuantity { get; set; }
+        public Nullable<double> InwardQty { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

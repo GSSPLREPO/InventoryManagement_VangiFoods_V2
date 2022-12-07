@@ -12,20 +12,28 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class LocationWiseStock
+    public partial class Indent
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Indent()
+        {
+            this.Indent_Details = new HashSet<Indent_Details>();
+        }
+    
         public int ID { get; set; }
-        public Nullable<int> LocationID { get; set; }
-        public Nullable<double> Quantity { get; set; }
-        public Nullable<int> ItemId { get; set; }
-        public Nullable<decimal> ItemUnitPrice { get; set; }
+        public string IndentNo { get; set; }
+        public Nullable<System.DateTime> IndentDate { get; set; }
+        public Nullable<System.DateTime> IndentDueDate { get; set; }
+        public Nullable<int> RaisedTo { get; set; }
+        public string Description { get; set; }
+        public Nullable<int> Status { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
-        public virtual Item Item { get; set; }
-        public virtual LocationMaster LocationMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Indent_Details> Indent_Details { get; set; }
     }
 }

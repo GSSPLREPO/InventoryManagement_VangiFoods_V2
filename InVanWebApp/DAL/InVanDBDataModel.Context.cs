@@ -40,6 +40,8 @@ namespace InVanWebApp.DAL
         public virtual DbSet<GRN_Master> GRN_Master { get; set; }
         public virtual DbSet<GRNDetail> GRNDetails { get; set; }
         public virtual DbSet<GSTMaster> GSTMasters { get; set; }
+        public virtual DbSet<Indent> Indents { get; set; }
+        public virtual DbSet<Indent_Details> Indent_Details { get; set; }
         public virtual DbSet<InquiryMaster> InquiryMasters { get; set; }
         public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
         public virtual DbSet<InwardNote> InwardNotes { get; set; }
@@ -65,7 +67,7 @@ namespace InVanWebApp.DAL
         public virtual DbSet<PurchaseOrderAmendment> PurchaseOrderAmendments { get; set; }
         public virtual DbSet<PurchaseOrderAmendmentDetail> PurchaseOrderAmendmentDetails { get; set; }
         public virtual DbSet<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
-        public virtual DbSet<PurchaseOrderPaymentDetails> PurchaseOrderPaymentDetails1 { get; set; }
+        public virtual DbSet<PurchaseOrderPaymentDetail> PurchaseOrderPaymentDetails { get; set; }
         public virtual DbSet<QCProductionSpecificationMaster> QCProductionSpecificationMasters { get; set; }
         public virtual DbSet<QCProductioObservationMaste> QCProductioObservationMastes { get; set; }
         public virtual DbSet<QCProductioObservationMaster> QCProductioObservationMasters { get; set; }

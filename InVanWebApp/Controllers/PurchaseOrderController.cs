@@ -16,6 +16,7 @@ namespace InVanWebApp.Controllers
     public class PurchaseOrderController : Controller
     {
         private IPurchaseOrderRepository _purchaseOrderRepository;
+        private IIndentRepository _indentRepository;
         private static ILog log = LogManager.GetLogger(typeof(PurchaseOrderController));
 
         #region Initializing constructor
@@ -25,6 +26,7 @@ namespace InVanWebApp.Controllers
         public PurchaseOrderController()
         {
             _purchaseOrderRepository = new PurchaseOrderRepository();
+            _indentRepository = new IndentRepository();
 
             var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
@@ -93,6 +95,15 @@ namespace InVanWebApp.Controllers
             ViewData["TermsAndConditionID"] = resultList;
         }
         #endregion
+        
+        #region Bind dropdowns Indent
+        public void BindIndentDropDown()
+        {
+            var result = _indentRepository.GetAll();
+            var resultList = new SelectList(result.ToList(), "ID", "IndentNo");
+            ViewData["IndentDD"] = resultList;
+        }
+        #endregion
 
         #region Bind dropdowns Location Name 
         public void BindLocationName()
@@ -139,6 +150,7 @@ namespace InVanWebApp.Controllers
                 BindTermsAndCondition();
                 //BindOrganisations();
                 BindLocationName();
+                BindIndentDropDown();
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
                 //=========here document type=3 i.e. for generating the Inward note (logic is in SP).====//
@@ -195,6 +207,7 @@ namespace InVanWebApp.Controllers
                             BindTermsAndCondition();
                             //BindOrganisations();
                             BindLocationName();
+                            BindIndentDropDown();
                             UploadSignature(Signature);
                             return View(model);
                         }
@@ -206,6 +219,7 @@ namespace InVanWebApp.Controllers
                     {
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         BindCompany();
+                        BindIndentDropDown();
                         BindTermsAndCondition();
                         //BindOrganisations();
                         BindLocationName();
@@ -263,6 +277,7 @@ namespace InVanWebApp.Controllers
                             BindTermsAndCondition();
                             //BindOrganisations();
                             BindLocationName();
+                            BindIndentDropDown();
                             UploadSignature(Signature);
                             return RedirectToAction("AddPurchaseOrder", "PurchaseOrder", model);
                         }
@@ -274,6 +289,7 @@ namespace InVanWebApp.Controllers
                     {
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         BindCompany();
+                        BindIndentDropDown();
                         BindTermsAndCondition();
                         //BindOrganisations();
                         BindLocationName();
@@ -330,6 +346,7 @@ namespace InVanWebApp.Controllers
                 BindCompany();
                 BindTermsAndCondition();
                 BindLocationName();
+                BindIndentDropDown();
 
                 PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
 
@@ -405,6 +422,7 @@ namespace InVanWebApp.Controllers
                             BindCompany();
                             BindTermsAndCondition();
                             BindLocationName();
+                            BindIndentDropDown();
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
                             //Binding item grid with sell type item.
                             var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
@@ -503,6 +521,7 @@ namespace InVanWebApp.Controllers
                     BindCompany();
                     BindTermsAndCondition();
                     BindLocationName();
+                    BindIndentDropDown();
 
                     PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
                     //Binding item grid with sell type item.
@@ -582,6 +601,8 @@ namespace InVanWebApp.Controllers
                             BindCompany();
                             BindTermsAndCondition();
                             BindLocationName();
+                            BindIndentDropDown();
+
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
                             //Binding item grid with sell type item.
                             var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
@@ -640,6 +661,7 @@ namespace InVanWebApp.Controllers
             BindCompany();
             BindTermsAndCondition();
             BindLocationName();
+            BindIndentDropDown();
 
             //Binding item grid with sell type item.
             var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);

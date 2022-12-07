@@ -40,6 +40,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
     
+        public virtual PurchaseOrder PurchaseOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderAmendmentDetail> PurchaseOrderAmendmentDetails { get; set; }
     }

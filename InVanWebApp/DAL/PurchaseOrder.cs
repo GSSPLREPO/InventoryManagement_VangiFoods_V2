@@ -20,7 +20,8 @@ namespace InVanWebApp.DAL
             this.DebitNotes = new HashSet<DebitNote>();
             this.GRN_Master = new HashSet<GRN_Master>();
             this.PurchaseOrderItemsDetails = new HashSet<PurchaseOrderItemsDetail>();
-            this.PurchaseOrderPaymentDetails = new HashSet<PurchaseOrderPaymentDetails>();
+            this.PurchaseOrderPaymentDetails = new HashSet<PurchaseOrderPaymentDetail>();
+            this.PurchaseOrderAmendments = new HashSet<PurchaseOrderAmendment>();
             this.StockMasters = new HashSet<StockMaster>();
         }
     
@@ -71,8 +72,10 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrderPaymentDetails> PurchaseOrderPaymentDetails { get; set; }
+        public virtual ICollection<PurchaseOrderPaymentDetail> PurchaseOrderPaymentDetails { get; set; }
         public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrderAmendment> PurchaseOrderAmendments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockMaster> StockMasters { get; set; }
     }

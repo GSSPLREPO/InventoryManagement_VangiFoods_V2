@@ -12,20 +12,20 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class LocationWiseStock
+    public partial class Indent_Details
     {
         public int ID { get; set; }
-        public Nullable<int> LocationID { get; set; }
-        public Nullable<double> Quantity { get; set; }
+        public Nullable<int> IndentID { get; set; }
         public Nullable<int> ItemId { get; set; }
-        public Nullable<decimal> ItemUnitPrice { get; set; }
+        public Nullable<double> RequiredQuantity { get; set; }
+        public Nullable<double> SentQuantity { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        public virtual Indent Indent { get; set; }
         public virtual Item Item { get; set; }
-        public virtual LocationMaster LocationMaster { get; set; }
     }
 }

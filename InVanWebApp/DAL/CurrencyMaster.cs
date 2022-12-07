@@ -18,7 +18,7 @@ namespace InVanWebApp.DAL
         public int CountryID { get; set; }
         public string CurrencyName { get; set; }
         public Nullable<double> CurrencyPrice { get; set; }
-        public Nullable<double> ndianCurrencyPrice { get; set; }
+        public Nullable<double> IndianCurrencyValue { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

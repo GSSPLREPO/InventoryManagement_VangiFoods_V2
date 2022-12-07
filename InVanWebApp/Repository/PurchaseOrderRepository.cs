@@ -155,7 +155,8 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
                         objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
                         objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
-                        objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
+                        //objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(6).Value.ToString();
                         objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
                         objItemDetails.CreatedBy = purchaseOrderMaster.CreatedBy;
                         itemDetails.Add(objItemDetails);
@@ -342,7 +343,8 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
                         objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
                         objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
-                        objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
+                        //objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(6).Value.ToString();
                         objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
                         objItemDetails.CreatedBy = model.LastModifiedBy;
                         itemDetails.Add(objItemDetails);

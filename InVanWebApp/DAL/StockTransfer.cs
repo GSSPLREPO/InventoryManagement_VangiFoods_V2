@@ -21,7 +21,9 @@ namespace InVanWebApp.DAL
         public string Item_Name { get; set; }
         public string Item_Code { get; set; }
         public Nullable<double> TransferQuantity { get; set; }
-        public Nullable<double> RequiredQuantity { get; set; }
+        public Nullable<double> FinalQuantity { get; set; }
+        public Nullable<double> FromLocation_BeforeTransferQty { get; set; }
+        public Nullable<double> ToLocation_FinalQty { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

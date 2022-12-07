@@ -155,8 +155,8 @@
                     @Html.Label("Indent Number")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
+                    @Html.DropDownListFor(model=>model.IndentNumber, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IndentNumber  , "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
             <br />

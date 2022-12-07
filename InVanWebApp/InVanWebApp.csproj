@@ -169,6 +169,7 @@
     <Compile Include="Controllers\Dashb_RTWarehouseWiseStockController.cs" />
     <Compile Include="Controllers\DebitNoteController.cs" />
     <Compile Include="Controllers\GRNController.cs" />
+    <Compile Include="Controllers\IndentController.cs" />
     <Compile Include="Controllers\InventoryControlController.cs" />
     <Compile Include="Controllers\InwardNoteController.cs" />
     <Compile Include="Controllers\InwardQCSortingController.cs" />
@@ -235,6 +236,12 @@
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\GSTMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Indent.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Indent_Details.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\InquiryMaster.cs">
@@ -327,7 +334,7 @@
     <Compile Include="DAL\PurchaseOrderItemsDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PurchaseOrderPaymentDetails.cs">
+    <Compile Include="DAL\PurchaseOrderPaymentDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\QCProductionSpecificationMaster.cs">
@@ -425,11 +432,13 @@
     <Compile Include="Repository\DashboardRepository.cs" />
     <Compile Include="Repository\DebitNoteRepository.cs" />
     <Compile Include="Repository\GRNRepository.cs" />
+    <Compile Include="Repository\IndentRepository.cs" />
     <Compile Include="Repository\Interface\ICommonFunctions.cs" />
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
     <Compile Include="Repository\Interface\IDashboardRepository.cs" />
     <Compile Include="Repository\Interface\IDebitNoteRepository.cs" />
     <Compile Include="Repository\Interface\IGRNRepository.cs" />
+    <Compile Include="Repository\Interface\IIndentRepository.cs" />
     <Compile Include="Repository\Interface\IInventoryControlRepository.cs" />
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
@@ -2642,6 +2651,7 @@
     <Content Include="Views\TermsAndCondition\AddTerms.cshtml" />
     <Content Include="Views\GRN\AddGRN.cshtml" />
     <Content Include="Views\GRN\ViewGRN.cshtml" />
+    <Content Include="Views\Indent\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
