@@ -66,7 +66,11 @@ namespace InVanWebApp_BO
         public int CountryID { get; set; }
         public string CurrencyName { get; set; }
         public Nullable<double> CurrencyPrice { get; set; }
+<<<<<<< Updated upstream
         public Nullable<double> IndianCurrencyValue { get; set; }         
+=======
+        public Nullable<double> IndianCurrencyValue { get; set; } 
+>>>>>>> Stashed changes
 
         //==============These fields are for PO item details==============//
         public Nullable<int> Item_ID { get; set; }

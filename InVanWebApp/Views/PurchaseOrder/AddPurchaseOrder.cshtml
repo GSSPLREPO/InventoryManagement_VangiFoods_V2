@@ -45,7 +45,11 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4 form-group">
+<<<<<<< Updated upstream
                     @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @id = "PODate", @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+=======
+                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+>>>>>>> Stashed changes
                     @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
@@ -82,7 +86,11 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
+<<<<<<< Updated upstream
                     @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control" })
+=======
+                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedCurrencyValue($(this).val())" })
+>>>>>>> Stashed changes
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
@@ -249,7 +257,11 @@
                                                     @Html.TextBox("ItemUnitPrice", "", new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
+<<<<<<< Updated upstream
                                                     @Html.TextBox("CurrencyName", "", new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+=======
+                                                    @Html.TextBox("IndianCurrencyValue", "", new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+>>>>>>> Stashed changes
                                                 </td>
                                                 <td>
                                                     @Html.TextBox("ItemTaxValue", "", new { @class = "form-control text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
@@ -282,7 +294,11 @@
             <br />
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="col-md-6 grid-margin stretch-card flex-wrap">
+<<<<<<< Updated upstream
                     <div class="card h-50 mb-2">
+=======
+                    <div class="card h-50"> 
+>>>>>>> Stashed changes
                         <div class="card-body">
                             <h4 class="card-title" style="color:darkcyan">Attach Signature<span style="color:red"> * </span></h4>
                             
@@ -301,6 +317,7 @@
                             </div>
                         </div>
                     </div>
+<<<<<<< Updated upstream
                     <br /><br />
                     <div class="card h-50">
                         <div class="card-body">
@@ -316,6 +333,8 @@
                             </div>
                         </div>
                     </div>
+=======
+>>>>>>> Stashed changes
 
                 </div>
                 <br />
@@ -360,11 +379,19 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="col-md-6 grid-margin stretch-card flex-wrap">
                     @*Rahul set ''T&C'' from top to here 02/12/2022.*@
+<<<<<<< Updated upstream
                     <div class="row w-100 mb-2">
                         <div class="col-md-4">
                             @Html.Label("Terms And Condition")
                             <span style="color:red">*</span>
                         </div><br />
+=======
+                    <div class="row w-100">
+                        <div class="col-md-4">
+                            @Html.Label("Terms And Condition")
+                            <span style="color:red">*</span>
+                        </div>
+>>>>>>> Stashed changes
                         <div class="col-md-8">
                             @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
                             @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
@@ -394,7 +421,10 @@
 
                     </div>
                 </div>
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
             </div>
 
             <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
@@ -706,7 +736,11 @@
                     $("#ItemName").val(itemDescription.Item_Name);
                     $("#ItemUnit").val(itemDescription.UnitCode);
                     $("#ItemUnitPrice").val(itemDescription.UnitPrice);
+<<<<<<< Updated upstream
                     $("#CurrencyName").val(itemDescription.IndianCurrencyValue);
+=======
+                    $("#IndianCurrencyValue").val(itemDescription.IndianCurrencyValue);
+>>>>>>> Stashed changes
                     $("#ItemTaxValue").val(itemDescription.ItemTaxValue);
                     $("#ItemQuantity").val('0');
 
@@ -730,6 +764,7 @@
 
     //onchange = "SelectedIndexChangedCurrencyValue($(this).val())"
 
+<<<<<<< Updated upstream
     //function SelectedIndexChangedCurrencyValue(id) {
     //    //alert(id);
     //    debugger
@@ -738,6 +773,16 @@
     //    currencyName = document.getElementById("CurrencyID").options[selectedOptionCurrencyName].innerText;
     //    document.getElementById("IndianCurrencyValue").value = currencyName;
     //}
+=======
+    function SelectedIndexChangedCurrencyValue(id) {
+        //alert(id);
+        debugger
+        var selectedOptionCurrencyName, currencyName;
+        selectedOptionCurrencyName = document.getElementById("CurrencyID").selectedIndex;
+        currencyName = document.getElementById("CurrencyID").options[selectedOptionCurrencyName].innerText;
+        document.getElementById("IndianCurrencyValue").value = currencyName;
+    }
+>>>>>>> Stashed changes
 
 
     $("#Item_ID").change(function () {
@@ -793,7 +838,11 @@
                             $("#itemDescription_" + count).val(itemDescription.Item_Name);
                             $("#itemUnit_" + count).val(itemDescription.UnitCode);
                             $("#itemPrice_" + count).val(itemDescription.UnitPrice);
+<<<<<<< Updated upstream
                             $("#currencyName_" + count).val(itemDescription.IndianCurrencyValue); //Rahul added 03/12/2022.
+=======
+                            $("#indianCurrencyValue_" + count).val(itemDescription.IndianCurrencyValue); //Rahul added 03/12/2022.
+>>>>>>> Stashed changes
                             $("#itemTax_" + count).val(itemDescription.ItemTaxValue);
                             $("#itemQuantity_" + count).val('0');
                             $("#totalItemCost_" + count).val('0');
@@ -855,7 +904,11 @@
         var itemQuantity = "itemQuantity_" + counter;
         var itemUnit = "itemUnit_" + counter;
         var itemPrice = "itemPrice_" + counter;
+<<<<<<< Updated upstream
         var currencyName = "currencyName_" + counter;
+=======
+        var indianCurrencyValue = "indianCurrencyValue_" + counter;
+>>>>>>> Stashed changes
         var itemTax = "itemTax_" + counter;
         var totalItemCost = "totalItemCost_" + counter;
         $('<tr id="tablerow' + counter + '">' + '<td>'+
@@ -881,7 +934,11 @@
             '</td>' +
             '<td>' +
             //Rahul added 03/12/2022.
+<<<<<<< Updated upstream
             '<input type="text" id="' + currencyName + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + currencyName + '"readonly = "readonly" required="required" />' +
+=======
+            '<input type="text" id="' + indianCurrencyValue + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + indianCurrencyValue + '"readonly = "readonly" value="" required="required" />' +
+>>>>>>> Stashed changes
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemTax + '" class="form-control text-right" style = "height:30px;width:80px;" name="' + itemTax+ ' "readonly = "readonly" value="" required="required" />' +
