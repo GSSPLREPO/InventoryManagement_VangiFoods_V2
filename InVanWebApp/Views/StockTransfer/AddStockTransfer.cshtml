@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
-@using (Html.BeginForm("AddStockTransfer", "StockTransfer"))
+@using (Html.BeginForm("AddStockTransfer", "StockTransfer", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -43,113 +43,94 @@
             <br />
             <br />
             <br />
-            <div class="row">
-                <div class="col-md-4">
-                    @Html.Label("From Location Item Details")
-                </div>
-            </div>
-            <hr />
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group mb-0">
                             <div class="row">
                                 <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-striped" id="ItemTable">                                        
+                                    <table class="table table-striped" id="submissionTable">
+                                        <thead>
                                             <tr>
-                                                <th>Code</th>
-                                                <th>Name</th>
-                                                <th>Before Transfer Qty.</th>
-                                                <th>Transfer Qty.</th>
-                                                <th>Balance Qty.</th>
-                                                <th>Units (Kg)</th>
-                                                <th>Unit Price</th>
-                                                <th>Tax (%)</th>
-                                                <th>Remarks</th>
+                                                <th class="sortStyle">
+                                                    Item Code
+                                                    <i class="fa fa-angle-down"></i>
+                                                </th>
+                                                <th class="sortStyle d-n">
+                                                    Selected Item Code
+                                                    <i class=""></i>
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Item Description
+                                                    <i class=""></i>
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Current Quantity
+                                                    <i class=""></i>
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Units
+                                                    <i class=""></i>
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Change Quantity
+                                                    <i class=""></i>
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Final Quantity
+                                                    <i class=""></i>
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Remarks
+                                                    <span style="color:red">*</span>
+                                                    <i class=""></i>
+                                                </th>
                                             </tr>
+                                        </thead>
+                                        <tbody id="myTableBody">
+                                            <tr id="tablerow">
+                                                <td>
+                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                </td>
+                                                <td class="col-2">
+                                                    @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("Item_Name", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(model => model.RequiredQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(model => model.TransferQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("FinalQuantity", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(model => model.Remarks, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;" })
+                                                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(0);" disabled>Delete</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
-                                    @*<table class="table table-striped" id="submissionTable">
-                                            <thead>
-                                                <tr>
-                                                    <th class="sortStyle">
-                                                        From Location Item Code
-                                                        <i class="fa fa-angle-down"></i>
-                                                    </th>
-                                                    <th class="sortStyle d-n">
-                                                        From Location Selected Item Code
-                                                        <i class=""></i>
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        From Location Item Description
-                                                        <i class=""></i>
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        From Location Before Transfer Qty
-                                                        <i class=""></i>
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        From Location Units
-                                                        <i class=""></i>
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        From Location Transfer Quantity
-                                                        <i class=""></i>
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        From Location Final Quantity
-                                                        <i class=""></i>
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Remarks
-                                                        <span style="color:red">*</span>
-                                                        <i class=""></i>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="myTableBody">
-                                                <tr id="tablerow">
-                                                    <td>
-                                                        @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
-                                                    </td>
-                                                    <td class="col-2">
-                                                        @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("Item_Name", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.FromLocation_BeforeTransferQty, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("UnitID", "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.TransferQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("FinalQuantity", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.Remarks, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;" })
-                                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(0);" disabled>Delete</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>*@
                                 </div>
                             </div>
-                            <!--<br />
-                            <div class="row">-->
-                            @*<button type="button" class="btn btn-info shadow" id="AddItem">
-                                    + Add Item
-                                </button>*@
-                            <!--<button type="button" class="btn btn-primary btn-sm shadow" id="AddItem" style="background: linear-gradient(85deg, #392c70, #6a005b); margin-left: 1rem;">
+                            <br />
+                            <div class="row">
+                                @*<button type="button" class="btn btn-info shadow" id="AddItem">
+                                        + Add Item
+                                    </button>*@
+                                <button type="button" class="btn btn-primary btn-sm shadow" id="AddItem" style="background: linear-gradient(85deg, #392c70, #6a005b); margin-left: 1rem;">
                                     + Add Item
                                 </button>
-                            </div>-->
+                            </div>
                         </div>
                         <div class="col-md-4">
                             @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
@@ -161,8 +142,7 @@
             <br />
             <div class="row float-right mr-1">
                 <div>
-                    @*<button type="submit" id="btnSave" class="btn btn-primary mr-2 float-right" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="createJson(); SetInwardQty();">Submit</button>*@
-                    <button type="submit" id="btnSave" class="btn btn-primary mr-2 float-right" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="createJson()">Submit</button>
+                    <button type="submit" id="btnSave" class="btn btn-primary mr-2 float-right" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="AddStockTransfer" onclick="createJson()">Submit</button>
                 </div>
                 <div>
                     @*<button type="button" id="btnBack" class="btn btn-primary mr-2 float-right text-white" style="background: linear-gradient(85deg, #392c70, #6a005b);">
@@ -190,11 +170,7 @@
 
         </div>
     </div>
-    @Html.TextBoxFor(model => model.QuantitiesForSorting, new { style = "display:none" })
-    @Html.TextBoxFor(model => model.BalanceQuantities, new { style = "display:none" })
-    @Html.TextBoxFor(model => model.RejectedQuantities, new { style = "display:none" })
-    @Html.TextBoxFor(model => model.WastageQuantities, new { style = "display:none" })
-    @Html.TextBoxFor(model => model.ReasonsForRejection, new { style = "display:none" })
+
 
 }
 
@@ -207,11 +183,7 @@
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-    var QuantitiesForSorting = "";
-    var BalanceQuantities = "";
-    var RejectedQuantities = "";
-    var WastagePercentages = "";
-    var Reasons = "";
+
     function SelectedIndexChangedFromLocation(id) {
         //alert(id);
         debugger
@@ -220,199 +192,33 @@
         locationName = document.getElementById("FromLocationId").options[selectedOptionLocationName].innerText;
         document.getElementById("FromLocationName").value = locationName;
 
-        //For deleting the rows of Item table if exist.
+    //    $.ajax({
+    //        type: "POST",
+    //        url: `/StockTransfer/BindFromLocationMaster?id=` + id,
+    //        data: "{}",
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (result) {
+    //            debugger;
+    //            console.log(result);
+    //            var requiredQuantity = result[0].Quantity;
+    //            $("#RequiredQuantity").val(requiredQuantity);
+    //            var itemQty = result[0].Quantity;
+    //            var tempCount = counter;
+    //            $("#itemQuantity_" + counter).val(itemQty);
+    //            if (counter == 2) {
+    //                tempCount--;
+    //                $("#itemQuantity_" + tempCount).val(itemQty);
+    //            } else {
+    //                tempCount = counter;
+    //                tempCount--;
+    //                $("#itemQuantity_" + tempCount).val(itemQty);
+    //            }
 
-        var table = document.getElementById('ItemTable');
-        var rowCount = table.rows.length;
-        while (rowCount != '1') {
-            var row = table.deleteRow(rowCount - 1);
-            rowCount--;
-        }
-        $.ajax({
-            type: "POST",
-            url: `/StockTransfer/BindFromLocationMaster?id=` + id,
-            data: "{ }",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                //console.log(result);
 
-                var ColCount = result.length
-
-                //===================Create dynamic table for binding Item details====================//
-                var table = document.getElementById('ItemTable');
-                for (var j = 1; j < result.length; j++) {
-                    var rowCount = table.rows.length;
-                    var cellCount = table.rows[0].cells.length;
-                    var row = table.insertRow(rowCount);
-                    for (var i = 0; i < cellCount; i++) {
-                        var cell = 'cell' + i;
-                        cell = row.insertCell(i);
-                        if (i == 0) {
-                            cell.innerHTML = result[j].Item_Code;                           
-                        }
-                        else if (i == 1) {
-                            cell.innerHTML = result[j].Item_Name;
-                        }
-                        else if (i == 2) {                            
-                            cell.innerHTML = result[j].Quantity + " Kg";
-                            cell.setAttribute("id", "ItemQty" + j);
-                        }
-                        else if (i == 3) {
-
-                            //cell.innerHTML = result[j].TransferQuantity + " Kg";
-                            //cell.setAttribute("id", "TransferQty" + j);
-                            var t3 = document.createElement("input");
-                            t3.id = "TransferQty" + j;
-
-                            var cellData = document.getElementById("ItemQty" + j);
-                            var temp_itemQty = cellData.innerHTML.split(' ');
-                            var deliveredQty = parseFloat(temp_itemQty[0]);
-
-                            if (result[j].TransferQuantity == deliveredQty) {
-                                t3.setAttribute("disabled", "true");
-                            }
-                            else {
-                                t3.removeAttribute("disabled", "false");
-                                t3.removeAttribute("disabled", "true");
-                                //t3.setAttribute("onclick", "createJson()");
-                               // t3.setAttribute("onkeyup", "OnKeyTransferQty($(this).val())");
-                                t3.setAttribute("onchange", "OnChangeQCQty($(this).val(),id)");
-                            }
-                            t3.setAttribute("type", "number");
-                            cell.appendChild(t3);
-
-                        }
-                        else if (i == 4) {
-
-                            //cell.innerHTML = result[j].FinalQuantity + " Kg";
-                            //cell.setAttribute("id", "FinalQty" + j);
-
-                            var t4 = document.createElement("input");
-                            t4.id = "FinalQty" + j;
-                            t4.setAttribute("disabled", "true");
-                            if (result[j].QuantityTookForSorting == deliveredQty) {
-                                t4.setAttribute("value", result[j].WastageQuantityInPercentage != 0 ? result[j].WastageQuantityInPercentage : '0');
-                            }
-                            cell.appendChild(t4);
-                        }
-                        else if (i == 5) {
-                            cell.innerHTML = result[j].UnitCode;
-                            cell.setAttribute("id", "UnitCode");
-                        }
-                        else if (i == 6) {
-                            cell.innerHTML = result[j].UnitPrice;
-                            cell.setAttribute("id", "UnitPrice" + j);
-                        }
-                        else if (i == 7) {
-                            cell.innerHTML = result[j].ItemTaxValue;
-                            cell.setAttribute("id", "ItemTaxValue" + j);
-                        }
-                        else if (i == 8) {
-                            var t8 = document.createElement("input");
-                            t8.id = "txtRemarks_" + j;
-                            if (result[j].QuantityTookForSorting == deliveredQty) {
-                                t8.setAttribute("value", result[j].Remarks);
-                                t8.setAttribute("disabled", "true");
-                            }
-                            else {
-                                //t8.removeAttribute("disabled", "false");
-                                t8.removeAttribute("disabled", "true");
-                                t8.setAttribute("onkeyup", "OnKeyRemark($(this).val(),id)");
-                                t8.setAttribute("onchange", "OnChangeRemarkQty($(this).val(),id)");
-                            }
-                            cell.appendChild(t8);
-                        }
-
-                    }
-
-                }
-            }
-        });
-
-       // getitemDetails();
-        //$.ajax({
-        //    type: "POST",
-        //    url: `/StockTransfer/BindFromLocationMaster?id=` + id,
-        //    data: "{}",
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "json",
-        //    success: function (result) {
-        //        debugger;
-        //        console.log(result);
-
-        //        //var requiredQuantity = result[0].Quantity;
-        //        //$("#RequiredQuantity").val(requiredQuantity);
-        //        //var itemQty = result[0].Quantity;
-        //        //var tempCount = counter;
-        //        //$("#itemQuantity_" + counter).val(itemQty);
-        //        //if (counter == 2) {
-        //        //    tempCount--;
-        //        //    $("#itemQuantity_" + tempCount).val(itemQty);
-        //        //} else {
-        //        //    tempCount = counter;
-        //        //    tempCount--;
-        //        //    $("#itemQuantity_" + tempCount).val(itemQty);
-        //        //}
-        //    }
-        //});
+    //        }
+    //    });
     }
-
-    function OnChangeRemarkQty(value, id) {
-        Reasons = Reasons + id + "*" + value + ",";
-    }
-
-    function OnKeyRemark(value, id) {
-
-        var RemarkLen = value.length;
-        var rowNo = id.split('_');
-        rowNo = rowNo[1];
-
-        var RejQty = $("#txtRejectedQty" + rowNo).val();
-        if (RejQty != null && RejQty != 0 && RejQty != '') {
-            if (RemarkLen <= 0) {
-                alert("Remarks cannot be empty!");
-                document.getElementById(id).focus();
-                //return false;
-            }
-
-        }
-        if (RemarkLen > 150)
-            alert("Exceeding the remark length!");
-        createJson();
-    }
-
-
-    function OnChangeQCQty(value, id) {
-        debugger
-        OnKeyTransferQty();
-        var rowNo = id.split('y')[1];
-        var cell = document.getElementById("ItemQty" + rowNo);
-        var temp_itemQty = cell.innerHTML.split(' ');
-        var InwQty = parseFloat(temp_itemQty[0]);
-        value = parseFloat(value);
-
-        if (value > InwQty) {
-            alert("QC quantity cannot be greater then Inward quantity!");
-            document.getElementById(id).focus();
-            document.getElementById(id).setAttribute("style", "border-color:red;");
-            return;
-        }
-        else {
-            var tempInwQty = document.getElementById("TransferQty" + rowNo).value;
-            //console.log(tempInwQty + " " + InwQty);
-            document.getElementById("FinalQty" + rowNo).value = ((parseFloat(temp_itemQty[0])) - parseFloat(tempInwQty));
-            QuantitiesForSorting = QuantitiesForSorting + "TransferQty" + rowNo + "*" + value + ",";
-
-            var BalQty = document.getElementById("FinalQty" + rowNo).value;
-            BalanceQuantities = BalanceQuantities + "FinalQty" + rowNo + "*" + BalQty + ",";
-            document.getElementById(id).setAttribute("style", "border-color:none;");
-        }
-        //onkeyup();
-        //createJson();
-        
-    }
-
 
     function SelectedIndexChangedToLocation(id) {
         //alert(id);
@@ -437,33 +243,7 @@
         //});
     }
 
-    //function SelectedIndexChangedItemList(id) {
-    //    debugger
-    //    var FromLocationCheck = $('#FromLocationId').val();
-    //    var ToLocationCheck = $('#ToLocationId').val();
-
-    //    if (FromLocationCheck == '' || FromLocationCheck == null) {
-    //        debugger
-    //        $('#FromLocationId').focus();
-    //        document.getElementById('Item_ID').selectedIndex = 0;
-    //        return;
-    //    }
-    //    else if (ToLocationCheck == '' || ToLocationCheck == null) {
-    //        debugger
-    //        $('#ToLocationId').focus();
-    //        document.getElementById('Item_ID').selectedIndex = 0;
-    //        return;
-    //    }
-    //    else {
-    //        var selectedOptionTerms, itemCode;
-    //        selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
-    //        itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
-    //        document.getElementById("Item_Code").value = itemCode;
-    //    }
-
-    //}
-
-    function OnKeyTransferQty() {
+    function SelectedIndexChangedItemList(id) {
         debugger
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
@@ -471,55 +251,24 @@
         if (FromLocationCheck == '' || FromLocationCheck == null) {
             debugger
             $('#FromLocationId').focus();
-            document.getElementById('TransferQty').selectedIndex = 0;
+            document.getElementById('Item_ID').selectedIndex = 0;
             return;
         }
         else if (ToLocationCheck == '' || ToLocationCheck == null) {
             debugger
             $('#ToLocationId').focus();
-            document.getElementById('TransferQty').selectedIndex = 0;
+            document.getElementById('Item_ID').selectedIndex = 0;
             return;
         }
-        else if (ToLocationCheck == FromLocationCheck) {
-            debugger
-            $('#ToLocationId').focus();
-            document.getElementById('TransferQty').selectedIndex = 0;
-            return;
+        else {
+            var selectedOptionTerms, itemCode;
+            selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
+            itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
+            document.getElementById("Item_Code").value = itemCode;
         }
-        //else if (ToLocationCheck != FromLocationCheck) {
-        //    debugger
-        //    $('#TransferQty').focus();
-        //    document.getElementById('TransferQty').selectedIndex = 0;
-        //    return;
-        //}
+
     }
-
-    function SetInwardQty() {
-        $('#QuantitiesForSorting').val(QuantitiesForSorting);
-        $('#BalanceQuantities').val(BalanceQuantities);
-        $('#RejectedQuantities').val(RejectedQuantities);
-        $('#WastageQuantities').val(WastagePercentages);
-        $('#ReasonsForRejection').val(Reasons);
-        console.log(QuantitiesForSorting + "_" + BalanceQuantities + "_" + RejectedQuantities + "_" + WastagePercentages + "_" + Reasons);
-    }
-
-    var TxtItemDetails = "";
-
-    function createJson() {
-        debugger        
-        //let res = [...document.getElementById("ItemTable").children].map(tr =>
-        //    Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
-        //        [el.name, el.value])));
-        let res = [...document.getElementById("ItemTable").children].map(tr =>
-            Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
-                [el.name, el.value])));
-        console.log(res);
-        var TxtItemDetails = JSON.stringify(res);
-        console.log(TxtItemDetails);
-        $('#TxtItemDetails').val(TxtItemDetails);
-    }
-
-    @*$("#Item_ID").change(function () {
+    $("#Item_ID").change(function () {
         debugger
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
@@ -728,7 +477,6 @@
             $('#tablerow' + index).remove();
         }
         return false;
-    }*@
+    }
 
 </script>
-@Html.Raw(TempData["Success"])

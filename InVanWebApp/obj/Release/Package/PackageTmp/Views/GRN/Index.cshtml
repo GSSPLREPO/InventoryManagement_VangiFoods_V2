@@ -16,7 +16,7 @@
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Master</a>
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Transactions</a>
                     </li>
                     <li class="breadcrumb-item active">Goods Receipt Note</li>
                 </ol>
@@ -52,13 +52,13 @@
                                                 <td>@Html.DisplayFor(modelItem => item.GRNDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.InwardNoteNumber)</td>
                                                 <td>
-                                                    <a href=@Url.Action("ViewInwardNote", "InwardNote", new { ID = item.ID })>
+                                                    <a href=@Url.Action("ViewGRN", "GRN", new { ID = item.ID })>
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
                                                     @*<a href=@Url.Action("EditInwardNote", "InwardNote", new { ID = item.ID })>
                                                             <i class="fa fa-edit text-primary"></i>
                                                         </a> &emsp;*@
-                                                    <a href=@Url.Action("DeleteInwardNote", "InwardNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("DeleteGRN", "GRN", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                     @*@Html.ActionLink("Edit", "EditOrganisation", new { OrganisationId = item.OrganisationId }) |
@@ -83,25 +83,30 @@
 @Html.Raw(TempData["Success"])
 
 @section scripts{
-    @*<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
-        <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>*@
-    <script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-    <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />
 
-    @*<script src="~/DataTables-1.10.18/Buttons-1.5.4/js/dataTables.buttons.min.js"></script>
-        <link href="~/datatables-1.10.18/buttons-1.5.4/css/buttons.datatables.min.css" rel="stylesheet" />
-        <script src="~/DataTables-1.10.18/JSZip-2.5.0/jszip.min.js"></script>
-        <script src="~/DataTables-1.10.18/pdfmake-0.1.36/pdfmake.min.js"></script>
-        <script src="~/DataTables-1.10.18/pdfmake-0.1.36/vfs_fonts.js"></script>
-        <script src="~/DataTables-1.10.18/Buttons-1.5.4/js/buttons.html5.min.js"></script>
-        <script src="~/DataTables-1.10.18/Buttons-1.5.4/js/buttons.print.min.js"></script>*@
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
 
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblInward').dataTable().fnDestroy();
+            $('#tblInward').dataTable({
+                //"aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+                "iDisplayLength": 10
+            });
+        });
+
         var table = $('#tblInward').dataTable({
-            "searching": true,
-            "bLengthChange": false,
-            "bPaginate": true
+            "serverSide": false,
+            "filter": true,
+            "pageLength": 20
+            // "searching": true,
+            //"bLengthChange": false,
+            // "bPaginate": true
             //"pageLength": 15
         });
     </script>

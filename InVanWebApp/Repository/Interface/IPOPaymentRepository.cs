@@ -17,7 +17,7 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Insert(POPaymentBO POPaymentDetails);
 
         //Define function for return the Purchase Order Details behalf of PurchaseOrderId
-        PurchaseOrder GetPurchaseOrderById(int purchaseOrderId);
+        PurchaseOrderBO GetPurchaseOrderById(int purchaseOrderId);
 
         //Define function for get the PurchaseOrder Items.
         List<PurchaseOrderItemsDetail> GetPOItemsByPurchaseOrderId(int purchaseOrderId);

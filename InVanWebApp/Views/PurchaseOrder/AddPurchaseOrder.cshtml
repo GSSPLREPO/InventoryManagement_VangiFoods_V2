@@ -33,7 +33,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
@@ -45,10 +45,9 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @id = "PODate", @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
                 </div>
-
 
 
                 <div class="col-md-2">
@@ -56,26 +55,41 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4 form-group">
-                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })
                     @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
             </div>
             <br />
-
+            @*Rahul moved ''T&C'' from top to bottom 02/12/2022.*@
+            @*<div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Terms And Condition")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
+                        @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                    <div class="col-md-4 d-none">
+                        @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                    </div>
+                </div>*@
+            @*Rahul added ''CurrencyValue'' 07/12/2022.*@
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Terms And Condition")
+                    @Html.Label("Currency")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("TermsAndConditionID", (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
+                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
                 </div>
             </div>
+
             <br />
             <br />
             <div class="row">
@@ -85,7 +99,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val())" })
-                    @*@Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })*@
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
                     @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
@@ -109,8 +123,9 @@
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Delivery Details
-                            <span style="color:red">*</span>
+                            <h4 class="card-title" style="color:darkcyan">
+                                Delivery Details
+                                <span style="color:red">*</span>
                             </h4>
                             <hr />
                             <div class="form-group">
@@ -124,8 +139,9 @@
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Supplier Details
-                            <span style="color:red">*</span>
+                            <h4 class="card-title" style="color:darkcyan">
+                                Supplier Details
+                                <span style="color:red">*</span>
                             </h4>
                             <hr />
                             <div class="form-group">
@@ -146,7 +162,7 @@
                 </div>
                 <div class="col-md-4">
 
-                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control", Value = "0", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", Value = "0", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <br />
@@ -185,33 +201,29 @@
                                                     Item Code
                                                     <i class="fa fa-angle-down"></i>
                                                 </th>
-                                                <th class="sortStyle d-n">
+                                                <th class="sortStyle d-n d-none">
                                                     Selected Item Code
-                                                    <i class="fa fa-angle-down"></i>
                                                 </th>
                                                 <th class="sortStyle">
-                                                    Item Description
-                                                    <i class="fa fa-angle-down"></i>
+                                                    Item
                                                 </th>
                                                 <th class="sortStyle">
                                                     Quantity
-                                                    <i class="fa fa-angle-down"></i>
                                                 </th>
                                                 <th class="sortStyle">
                                                     Units
-                                                    <i class="fa fa-angle-down"></i>
                                                 </th>
                                                 <th class="sortStyle">
-                                                    Price
-                                                    <i class="fa fa-angle-down"></i>
+                                                    Price (Per Unit)
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Currency
                                                 </th>
                                                 <th class="sortStyle">
                                                     Tax
-                                                    <i class="fa fa-angle-down"></i>
                                                 </th>
                                                 <th class="sortStyle">
                                                     Total before tax
-                                                    <i class="fa fa-angle-down"></i>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -220,40 +232,42 @@
                                                 <td>
                                                     @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control", style = "height:30px;width:100px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
                                                 </td>
-                                                <td class="col-md-4">
+                                                <td class="col-md-4 d-none">
                                                     @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBox("ItemName", "", new { @class = "form-control", style = "height:30px;width:200px;" })
+                                                    @Html.TextBox("ItemName", "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                </td>
+
+                                                <td>
+                                                    @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control text-right", style = "height:30px;width:100px;", value = "0", MaxLength = "8", onkeypress = "return isNumberKey(event)" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)" })
+                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control", style = "height:30px;width:100px;" })
+                                                    @Html.TextBox("ItemUnitPrice", "", new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBox("ItemUnitPrice", "", new { @class = "form-control text-right", style = "height:30px;width:100px;" })
+                                                    @Html.TextBox("CurrencyName", "", new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBox("ItemTaxValue", "", new { @class = "form-control text-right", style = "height:30px;width:80px;" })
+                                                    @Html.TextBox("ItemTaxValue", "", new { @class = "form-control text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;" })
+                                                    @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-primary" onclick="removeTr(0);">Delete</button>
+                                                    <button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <br />
+                                    <button type="button" class="btn btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
+                                        + Add Item
+                                    </button>
                                 </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <button type="button" class="btn btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
-                                    + Add Item
-                                </button>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -267,17 +281,18 @@
             <hr />
             <br />
             <div class="col-md-12 grid-margin stretch-card">
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card h-75">
+                <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                    <div class="card h-50 mb-2">
                         <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
+                            <h4 class="card-title" style="color:darkcyan">Attach Signature<span style="color:red"> * </span></h4>
+                            
                             <hr />
                             <div class="form-group">
                                 <input type="file" id="file" name="Signature"
                                        onchange="return fileValidation()" />
 
                                 <!-- Image preview -->
-                                <span style="color:green">@ViewBag.Message</span>
+                                @*<span style="color:green">@ViewBag.Message</span>*@
                                 <br />
                                 <br />
                                 <center>
@@ -286,6 +301,22 @@
                             </div>
                         </div>
                     </div>
+                    <br /><br />
+                    <div class="card h-50">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Attach File<span style="color:red"> * </span></h4>
+                             
+                            <hr />
+                            <div class="form-group">
+                                <input type="file" name="Attachment" id="fileattach" class="file-drop-zone" required>
+                                <span id="sfileupload" class="text-danger"></span>
+                                <br /><br />
+                                @*<button type="submit" class="btn btn-primary mr-2" id="attachfile" style="display: none; background: linear-gradient(85deg, #392c70, #6a005b);"> Upload</button>
+            <input type="hidden" id="hdnExcelRecord" name="hdnExcelRecord" />*@
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <br />
                 <br />
@@ -297,25 +328,25 @@
                             <div class="form-group">
                                 <div class="row mb-2">
                                     <label id="lblTotalBeforeTax">Total (before tax): </label>
-                                    <input class="form-control text-right" id="TotalBeforeTax" name="TotalItemCost" value="" />
+                                    <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total tax: </label>
                                     @*<input class="form-control" id="TotalTax" name="Tax" />*@
-                                    <input class="form-control text-right" id="TotalTax" name="TotalTax" />
+                                    <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total (after tax):</label>
                                     @*<input class="form-control" id="TotalAfterTax" />*@
-                                    <input class="form-control text-right" id="TotalAfterTax" name="TotalAfterTax" />
+                                    <input class="form-control text-right form-control-sm" id="TotalAfterTax" name="TotalAfterTax" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Grand Total:</b></label>
-                                    <input class="form-control text-right" id="GrandTotal" name="GrandTotal" />
+                                    <input class="form-control text-right form-control-sm" id="GrandTotal" name="GrandTotal" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
                                     <label>Advanced To Pay:</label>
-                                    <input class="form-control text-right" id="AdvancedPayment" name="AdvancedPayment" value="0" onkeypress="return isNumberKey(event)" />
+                                    <input class="form-control text-right form-control-sm" id="AdvancedPayment" name="AdvancedPayment" value="0" MaxLength="8" onkeypress="return isNumberKey(event)" />
                                 </div>
                             </div>
                             <br />
@@ -325,11 +356,52 @@
                 <br />
                 <br />
             </div>
+
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                    @*Rahul set ''T&C'' from top to here 02/12/2022.*@
+                    <div class="row w-100 mb-2">
+                        <div class="col-md-4">
+                            @Html.Label("Terms And Condition")
+                            <span style="color:red">*</span>
+                        </div><br />
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
+                            @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
+                        </div>
+                        <div class="col-md-4 d-none">
+                            @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                        </div>
+                    </div>
+
+
+                    <div class="col">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title" style="color:darkcyan">
+                                        Term Description
+                                        <span style="color:red">*</span>
+                                    </h4>
+                                    <hr />
+                                    <div class="form-group">
+                                        @Html.TextAreaFor(model => model.TermDescription, new { id = "TermDescription", @class = "form-control", placeholder = "Term Description", style = "height:100px" })
+                                        @Html.ValidationMessageFor(model => model.TermDescription, "", new { @class = "error mt-2 text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
             <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                 Back To List
             </a>
             <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right" formaction="SaveDraft">Save Draft</button>
-            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" formaction="AddPurchaseOrder">Save</button>
+            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
         </div>
     </div>
 
@@ -346,7 +418,22 @@
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 
+
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#DeliveryDate").datepicker({
+            minDate: 0,
+            onSelect: function (date) {
+                $("#PODate").datepicker('option', 'minDate', date);
+            }
+        });
+    });
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+        function SaveBtnClick() {
+           // alert("createJson() function called!")
+        createJson();
+    };
+    //==========end===============
 
     //========adding the below document.ready code for disabling the previous dates in both PO date and
     //delivery date.
@@ -362,23 +449,6 @@
     //});
 
     var TxtItemDetails = "";
-
-    //$("#btnAdd").click(function () {
-    //    $("#AddMultipleDiv").hide();
-    //    $("#AddDiv").show();
-    //    $("#btnAdd").hide();
-    //    $("#btnAddMultiple").hide();
-    //});
-
-    //$("#btnAddMultiple").click(function () {
-    //    $("#AddMultipleDiv").show();
-    //    $("#AddDiv").hide();
-    //    $("#btnAdd").hide();
-    //    $("#btnAddMultiple").hide();
-    //    //ViewBag.Edit = true;
-    //    //window.location.href = '/Project/Index';
-    //});
-
 
     $('#uploadexcel').show();
     $('#uploadexcel').attr("disabled", true);
@@ -436,10 +506,104 @@
         }
     });
 
+    //fileattach
+    $('#attachfile').show();
+    $('#attachfile').attr("disabled", true);
+
+    //$('#attachfile').click(function () {
+
+    //    // Checking whether FormData is available in browser
+    //    if (window.FormData !== undefined) {
+
+
+    //        var fileattach = $("#fileattach").get(0);
+    //        var files = fileattach.files;
+
+    //        // Create FormData object
+    //        var fileData = new FormData();
+
+    //        // Looping over all files and add it to FormData object
+    //        for (var i = 0; i < files.length; i++) {
+    //            fileData.append(files[i].name, files[i]);
+    //        }
+
+    //        // Adding one more key to FormData object
+    //        //fileData.append('username', ‘Manas’);
+
+    //        $.ajax({
+    //            url: '/PurchaseOrder/FileAttachment',
+    //            type: "POST",
+    //            contentType: false, // Not to set any content header
+    //            processData: false, // Not to process data
+    //            data: fileData,
+    //            success: function (result) {
+    //                alert(result);
+    //                window.location.href = "/PurchaseOrder/AddPurchaseOrder";
+    //            },
+    //            error: function (err) {
+    //                alert('Format of data uploaded is incorrect.');
+
+    //            }
+    //        });
+    //    } else {
+    //        alert("Form data is not supported.");
+    //    }
+    //}); 
+
+    $('#fileattach').change(function () {
+        debugger
+        var fileExtension = ['xls', 'xlsx', 'doc', 'docx', 'pdf'];
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            // $('#attachfile').attr("disabled", true);
+            alert("Only '.xls', '.xlsx', '.doc', '.docx', '.pdf' formats are allowed.");
+            $('#fileattach').val('');
+            //$('#<%= myLabel.ClientID %>').html("Only '.jpeg','.jpg' formats are allowed.");
+        }
+                // Checking whether FormData is available in browser
+        else if (window.FormData !== undefined) {
+
+
+            var fileattach = $("#fileattach").get(0);
+            var files = fileattach.files;
+
+            // Create FormData object
+            var fileData = new FormData();
+            var fileattachment = files[0].name;
+            console.log(fileattachment)
+            $("#fileattach").val(fileattachment);
+
+            // Looping over all files and add it to FormData object
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }          
+            
+        } else
+            {
+            alert("Form data is not supported.");
+            }
+        //else {
+        //    //$('#attachfile').attr("disabled", false);
+        //    var fileattachment = $('#fileattach').val();
+        //    console.log(fileattachment)
+        //    $("#fileattach").val(fileattachment);
+        //}
+    });
+
+
+       /*Rahul : Add Javascript validation on 06 Dec 2022.*/
+    //$('#DeliveryDate').datepicker({
+    //        //format: "yyyy-MM-dd",
+    //        //clearBtn: true,
+    //        //autoclose: true,
+    //        //todayHighlight: true,
+    //        minDate: 0,
+    //        //endDate: "today"
+    //    });
+
     //onchange = "SelectedIndexChanged($(this).val())"
 
     function SelectedIndexChangedItemList(id) {
-        debugger
+        ////debugger
         var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
         itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
@@ -447,16 +611,28 @@
     }
 
     function SelectedIndexChangedTerms(id) {
-        debugger
-        var selectedOptionTerms, termsName;
-        selectedOptionTerms = document.getElementById("TermsAndConditionID").selectedIndex;
-        termsName = document.getElementById("TermsAndConditionID").options[selectedOptionTerms].innerText;
-        document.getElementById("Terms").value = termsName;
+        ////debugger
+        //var selectedOptionTerms, termsName;
+        //selectedOptionTerms = document.getElementById("TermsAndConditionID").selectedIndex;
+        //termsName = document.getElementById("TermsAndConditionID").options[selectedOptionTerms].innerText;
+        //document.getElementById("Terms").value = termsName;
+        $.ajax({
+            url: '/PurchaseOrder/GetTermsDescription',
+            type: "POST",
+            data: { id: id },
+            success: function (result) {
+                $('#TermDescription').val(result.TermDescription);
+            },
+            error: function (err) {
+                alert('Not able to get the selected terms and condition value!');
+
+            }
+        });
     }
 
     function SelectedIndexChanged(id) {
         //alert(id);
-        debugger
+        ////debugger
         var selectedOption,companyName;
         selectedOption = document.getElementById("VendorsID").selectedIndex;
         companyName = document.getElementById("VendorsID").options[selectedOption].innerText;
@@ -478,7 +654,7 @@
 
     function SelectedIndexChangedLocation(id) {
         //alert(id);
-        debugger
+        ////debugger
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
         locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
@@ -491,7 +667,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                debugger;
+                ////debugger;
                 //console.log(result);
                 var deliveryAdd = result[0].DeliveryAddress;
                 $("#DeliveryAddress").val(deliveryAdd);
@@ -510,17 +686,17 @@
 
                 dataType: 'json',
 
-                data: { id: $("#Item_ID").val() },
+                data: { id: $("#Item_ID").val(), currencyId: $("#CurrencyID").val() },
                 // here we are get value of selected item and passing same value
                 //as inputto json method GetitemDetails.
 
                 success: function (itemDescription) {
-                    debugger
+                    ////debugger
                     // states contains the JSON formatted list
                     // of states passed from the controller
                     //rahul added $(itemDescription).each(function ()
                     //$(itemDescription).each(function () {
-                    //    debugger
+                    //    //debugger
                     //    $("#Item_ID").append($("<option></option>").val(this.ID).html(this.Item_Code));
                     //});
 
@@ -530,6 +706,7 @@
                     $("#ItemName").val(itemDescription.Item_Name);
                     $("#ItemUnit").val(itemDescription.UnitCode);
                     $("#ItemUnitPrice").val(itemDescription.UnitPrice);
+                    $("#CurrencyName").val(itemDescription.IndianCurrencyValue);
                     $("#ItemTaxValue").val(itemDescription.ItemTaxValue);
                     $("#ItemQuantity").val('0');
 
@@ -551,36 +728,60 @@
 
     }
 
+    //onchange = "SelectedIndexChangedCurrencyValue($(this).val())"
+
+    //function SelectedIndexChangedCurrencyValue(id) {
+    //    //alert(id);
+    //    debugger
+    //    var selectedOptionCurrencyName, currencyName;
+    //    selectedOptionCurrencyName = document.getElementById("CurrencyID").selectedIndex;
+    //    currencyName = document.getElementById("CurrencyID").options[selectedOptionCurrencyName].innerText;
+    //    document.getElementById("IndianCurrencyValue").value = currencyName;
+    //}
+
+
     $("#Item_ID").change(function () {
+       // //debugger
+        //getitemDetails();
         debugger
-        getitemDetails();
+        var CurrencyIDCheck = $('#CurrencyID').val();
+
+        if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
+            debugger
+            $('#CurrencyID').focus();
+            document.getElementById('Item_ID').selectedIndex = 0;
+            return;
+        }
+         else { getitemDetails(); }
+
     });
 
     function getitemDetailsJSTbl(count) {
-        debugger
+        ////debugger
         console.log(count);
         //SelectedIndexChangedItemList();
        // var itemId = "ItemID['" + counter + "']";
         //var itemId = "Item_ID['" + counter + "']";
         var itemId = "ItemID_" + count;
+        var currencyID = $('#CurrencyID').val();
+        //console.log("currencyID" + currencyID);
         var selectedItemId = $("#" + itemId).val();
                     $.ajax({
                 type: 'POST',
-                //url: '@Url.Action("GetitemDetails?id='+${itemId}+'")', // we are calling json method
                 url: '@Url.Action("GetitemDetails")', // we are calling json method
 
                 dataType: 'json',
-                data: { id: selectedItemId },
+                data: { id: selectedItemId, currencyId: currencyID }, //Rahul 'currencyId' added from controller
                 // here we are get value of selected item and passing same value
                 //as inputto json method GetitemDetails.
 
-                        success: function (itemDescription) {
-                    debugger
+                success: function (itemDescription) {
+                    ////debugger
                     // states contains the JSON formatted list
                     // of states passed from the controller
                     //rahul added $(itemDescription).each(function ()
                     //$(itemDescription).each(function () {
-                    //    debugger
+                    //    //debugger
                     //    $("#Item_ID").append($("<option></option>").val(this.ID).html(this.Item_Code));
                     //});
 
@@ -592,6 +793,7 @@
                             $("#itemDescription_" + count).val(itemDescription.Item_Name);
                             $("#itemUnit_" + count).val(itemDescription.UnitCode);
                             $("#itemPrice_" + count).val(itemDescription.UnitPrice);
+                            $("#currencyName_" + count).val(itemDescription.IndianCurrencyValue); //Rahul added 03/12/2022.
                             $("#itemTax_" + count).val(itemDescription.ItemTaxValue);
                             $("#itemQuantity_" + count).val('0');
                             $("#totalItemCost_" + count).val('0');
@@ -618,9 +820,9 @@
 
     function calcTax(cnt, e) {
         alert("calcTax");
-        debugger;
+        //debugger;
         if (isNumberKey(e)) {
-            debugger;
+            //debugger;
         var itemQuantity = $("#itemQuantity_" + cnt).val();
         console.log(itemQuantity);
         var itemPrice = $("#itemPrice_" + cnt).val();
@@ -644,7 +846,7 @@
     var counter = 1;
 
     $("#AddItem").click(function () {
-        debugger
+        ////debugger
         //'<select id="ItemID" class="form-control" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
         //var nameItem = "Item_ID['" + counter + "']";
         var itemId = "ItemID_"+counter;
@@ -653,6 +855,7 @@
         var itemQuantity = "itemQuantity_" + counter;
         var itemUnit = "itemUnit_" + counter;
         var itemPrice = "itemPrice_" + counter;
+        var currencyName = "currencyName_" + counter;
         var itemTax = "itemTax_" + counter;
         var totalItemCost = "totalItemCost_" + counter;
         $('<tr id="tablerow' + counter + '">' + '<td>'+
@@ -660,30 +863,34 @@
             //'<input type="text" id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" value="" required="required" />' +
             '<select id="'+itemId+'" onchange="getitemDetailsJSTbl('+counter+')"; class="form-control" data-val="true" data-val-number="The field Item_ID must be a number." name="'+itemId+' " style="height:30px;width:100px;" aria-describedby="Item_ID-error" aria-invalid="false">'+$('#Item_ID').html()+'</select>' +
             '</td>' +
-            '<td>' +
+            '<td class="d-none">' +
             '<input type="text" id="' + itemCode + '" class="form-control" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '" value="" required="required" />' +
+            '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
             /*'<input type="text" id="' + itemQuantity + '" onkeyup="calcTax(' + counter + ',' + this.value + ')"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
             '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '" value="" required="required" />' +
+            '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemPrice + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + itemPrice + '" value="" required="required" />' +
+            '<input type="text" id="' + itemPrice + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + itemPrice + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemTax + '" class="form-control text-right" style = "height:30px;width:80px;" name="' + itemTax+ ' " value="" required="required" />' +
+            //Rahul added 03/12/2022.
+            '<input type="text" id="' + currencyName + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + currencyName + '"readonly = "readonly" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + totalItemCost + '" class="form-control text-right" style = "height:30px;width:200px;" name="' + totalItemCost + '" value="" required="required" />' +
+            '<input type="text" id="' + itemTax + '" class="form-control text-right" style = "height:30px;width:80px;" name="' + itemTax+ ' "readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<button type="button" class="btn btn-primary" onclick="removeTr(' + counter + ');">Delete</button>' +
+            '<input type="text" id="' + totalItemCost + '" class="form-control text-right" style = "height:30px;width:200px;" name="' + totalItemCost + '"readonly = "readonly" value="" required="required" />' +
+            '</td>' +
+            '<td>' +
+            '<button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
             '</td>' +
             '</tr>').appendTo('#submissionTable');
 
@@ -694,6 +901,7 @@
 
 
     function CalItemTotalPrice(value, id) {
+        //debugger;
         //alert(value + " " + id);
         var temp_rowNo = id.split('_');
         var rowNo = temp_rowNo[1];
@@ -702,6 +910,7 @@
             var price = $("#itemPrice_" + rowNo).val();
             price = parseFloat(price);
             var totalPrice = price * value;
+            totalPrice = Math.round(totalPrice);
             $("#totalItemCost_" + rowNo).val(totalPrice);
         }
 
@@ -714,131 +923,90 @@
         var length = document.getElementById("submissionTable").rows.length;
         length = parseFloat(length) - 2;
         var total = parseFloat(ItemTotalPrice.value);
-        var totalTax = (parseFloat(ItemTaxValue.value)/100)* total;
+        total = Math.round(total);
+        var totalTax = (parseFloat(ItemTaxValue.value) / 100) * total;
+        totalTax = Math.round(totalTax);
         var i = 1;
-        while (i<=length) {
-            var temp = document.getElementById("totalItemCost_" + i).value;
-            var tempTotalTax = document.getElementById("itemTax_" + i).value;
-            total = parseFloat(temp) + total;
+        while (i <= length) {
+            //This if -else condition is written for: If user delete any other row of the dynamic table.
 
-            tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
-            totalTax = parseFloat(tempTotalTax) + totalTax;
-            i++;
+            if ($('#tablerow' + i).length) {
+                var temp = document.getElementById("totalItemCost_" + i).value;
+                var tempTotalTax = document.getElementById("itemTax_" + i).value;
+                total = parseFloat(temp) + total;
+
+                tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
+                totalTax = parseFloat(tempTotalTax) + totalTax;
+                i++;
+            }
+            else {
+                i++;
+                length++;
+            }
         }
         $('#TotalBeforeTax').val(total);
-        $('#TotalTax').val(totalTax);
+        $('#TotalTax').val(totalTax.toFixed(2));
         var tempGrandTotal = total + totalTax;
-        $('#TotalAfterTax').val(tempGrandTotal);
-        $('#GrandTotal').val(tempGrandTotal);
+        $('#TotalAfterTax').val(tempGrandTotal.toFixed(2));
+        $('#GrandTotal').val(tempGrandTotal.toFixed(2));
 
         createJson();
     }
+
     function createJson() {
-        debugger
+        ////debugger
         //var table = $('#submissionTable').tableToJSON();
         ////table = { "myrows": table };//make myrows the parent object
         //alert(JSON.stringify(table));
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
-        console.log(res);
+
         var TxtItemDetails = JSON.stringify(res);
-        console.log(TxtItemDetails);
+        console.log("result: " +TxtItemDetails);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
-
-    //$("#btnSave").click(function () {
-    //    debugger
-    //        var $form = $(this).closest('form');
-    //        var dataPO = $form.serializeArray();
-
-    //        console.log(dataPO);
-
-    //        var arrIdPO = [];
-    //        var arrQtePO = [];
-
-    //        for( i = 0; i < dataPO.length; i++)
-    //        {
-    //            debugger
-    //            if (dataPO[i].name == 'product.Item_ID')
-    //            {
-    //                arrIdPO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.Item_Code')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemName')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemQuantity')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemUnit')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemUnitPrice')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.ItemTaxValue')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //            else if (dataPO[i].name == 'product.TotalItemCost')
-    //            {
-    //                arrQtePO.push(dataPO[i].value);
-    //            }
-    //        }
-
-
-    //    $.ajax({
-    //        type: "POST",
-    //        url: "/Home/PurchaseOrder/AddPurchaseOrder",
-    //        data: { res, arrIdPO, arrQtePO},
-    //        contentType: "application/json; charset=utf-8",
-    //        dataType: "json",
-    //        success: function (response) {
-    //            alert("Hello: " + response.Name + " .\nCurrent Date and Time: " + response.DateTime);
-    //        },
-    //        failure: function (response) {
-    //            alert(response.responseText);
-    //        },
-    //        error: function (response) {
-    //            alert(response.responseText);
-    //        }
-    //    });
-    //});
-
-
+    //onchange = "CalItemTotalPrice($(this).val(),id)";
     $("#ItemQuantity").change(function () {
-        debugger
+        //debugger
         var quantity = $("#ItemQuantity").val();
+        quantity = Math.round(quantity);
         var price = $("#ItemUnitPrice").val();
         var tempTax = $("#ItemTaxValue").val().split("%")
         var tax = tempTax[0];
 
         //Set total price in item grid.
         var totalPrice = quantity * price;
+        totalPrice = Math.round(totalPrice);
         $("#ItemTotalPrice").val(totalPrice);
         //Set values in Bill
         var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
         //console.log("quan:" + quantity + ",totalprice:" + totalPrice + ",tax:" + tax + ",TPAT:" + totalPriceAfterTax);
         $("#TotalBeforeTax").val(totalPrice);
-        $("#TotalTax").val($("#ItemTaxValue").val());
+        //Rahul added 'itemTaxVal' 03/12/2022.
+        var itemTaxVal = tax / 100 * totalPrice;
+        //$("#ItemTaxValue").val();
+        //var itemTaxVal = Math.round((itemTaxVal + Number.EPSILON) * 100) / 100;
+        itemTaxVal = Math.round(itemTaxVal);
+        totalPriceAfterTax = Math.round(totalPriceAfterTax);
+        $("#TotalTax").val(itemTaxVal);
         $("#TotalAfterTax").val(totalPriceAfterTax);
         $("#GrandTotal").val(totalPriceAfterTax);
     });
 
 
     function removeTr(index) {
-        if (counter > 1) {
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        //console.log("Length: " + length + counter);
+        if (counter > 1 & length == index) {
             $('#tablerow' + index).remove();
             counter--;
         }
+        else {
+            $('#tablerow' + index).remove();
+        }
+        CalculateTotalBeforeTax();
         return false;
     }
 
@@ -874,6 +1042,7 @@
         }
     }
 
+
     $("#btn_SaveDraft").click(function () {
         $("#DraftFlag").val('true');
         //var ab=$("#DraftFlag").val();
@@ -882,9 +1051,21 @@
 
     /*Rahul : Add Javascript validation on 12 Oct 2022.*/
         function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57))
+            //var charCode = (evt.which) ? evt.which : evt.keyCode;
+            //if (charCode > 31 && (charCode < 48 || charCode > 57))
+            //    return false;
+            //return true;
+            var keycode = (evt.which) ? evt.which : evt.keyCode;
+            if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
                 return false;
+            }
+            else {
+                var parts = evt.srcElement.value.split('.');
+                if (parts.length > 1 && keycode == 46)
+                    return false;
+                else
+                    return true;
+            }
             return true;
         }
 
@@ -904,12 +1085,12 @@
         //as inputto json method GetitemDetails.
 
         success: function (itemDescription) {
-            debugger
+            //debugger
             // states contains the JSON formatted list
             // of states passed from the controller
             //rahul added $(itemDescription).each(function ()
             $(itemDescription).each(function () {
-                debugger
+                //debugger
                 $("#Item_ID").append($("<option></option>").val(this.ID).html(this.Item_Code));
             });
 

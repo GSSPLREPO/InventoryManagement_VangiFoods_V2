@@ -38,7 +38,7 @@
                             <div class="brand-logo">
                                 <img src="~/Theme/MainContent/images/Logo.svg" alt="Vangi Foods" class="d-none" />
                             </div>
-                            <div class="shadow-lg p-4 pb-5 bg-white rounded">
+                            <div class="shadow-lg p-4 pb-5 bg-white rounded" style="padding-bottom:1rem !important; padding: 2rem!important">
                                 @*rahul code 08/09/2022*@
                                 @using (Html.BeginForm("Index", "Login", FormMethod.Post))
                                 {
@@ -69,24 +69,29 @@
                                             </div>
                                         </div>
                                         @*<div class="my-2 d-flex justify-content-between align-items-center">
-                    <div class="form-check">
-                        <label class="form-check-label text-muted">
-                            <input type="checkbox" class="form-check-input">
-                            Keep me signed in
-                        </label>
-                    </div>
-                    <a href="#" class="auth-link text-black">Forgot password?</a>
-                </div>*@
+                                                <div class="form-check">
+                                                    <label class="form-check-label text-muted">
+                                                        <input type="checkbox" class="form-check-input">
+                                                        Keep me signed in
+                                                    </label>
+                                                </div>
+                                                <a href="#" class="auth-link text-black">Forgot password?</a>
+                                            </div>*@
                                         <div class="my-3">
                                             <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style="background: linear-gradient(85deg, #392c70, #6a005b); line-height: normal;">Login</button>
                                             @*<a href="@Url.Action("Index","Dashboard")" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Login</a>*@
                                         </div>
+
                                     </form>
                                     <div>
-                                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center" style="font-size: 0.75rem;">
-                                            Powred by @*<i class="far fa-heart text-danger"></i>*@
-                                            <a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="20" alt="logo" /></a>
+                                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center" style="font-size:12px;">
+                                            Powered by &nbsp;
+                                            <a style="margin-right:0rem !important" class="brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
                                         </span>
+                                        <!--<span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+                                        Powered by-->
+                                        <!--<a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
+                                        </span>-->
                                     </div>
                                 }
                             </div>

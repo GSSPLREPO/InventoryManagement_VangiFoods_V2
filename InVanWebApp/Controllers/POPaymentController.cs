@@ -81,11 +81,13 @@ namespace InVanWebApp.Controllers
                 ResponseMessageBO response = new ResponseMessageBO();
                 if (ModelState.IsValid)
                 {
+                    model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                     response = _POPaymentRepository.Insert(model);
                     if (response.Status)
                     {
                         BindPONumbers();
-                        TempData["Success"] = "<script>alert('Purchase Order inserted successfully!');</script>";
+                        TempData["Success"] = "<script>alert('PO payment details inserted successfully!');</script>";
+                        return RedirectToAction("Index", "POPayment");
                     }
                     else
                     {
@@ -93,14 +95,12 @@ namespace InVanWebApp.Controllers
                         BindPONumbers();
                         return View(model);
                     }
-
-                    return View(model);
                 }
                 else
                 {
                     var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
 
-                    TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                    TempData["Success"] = "<script>alert('Please fill all mandatory fields!');</script>";
                     BindPONumbers();
                     return View(model);
                 }
@@ -165,8 +165,8 @@ namespace InVanWebApp.Controllers
                 TotalPOAmount = Convert.ToDecimal(purchaseOrderDetail.GrandTotal),
                 VendorID = (int)purchaseOrderDetail.VendorsID,
                 VendorName = purchaseOrderDetail.CompanyName,
-               // PaymentDueDate = paymentDetails.PaymentDueDate,
-                //Remarks = paymentDetails.Remarks
+                PaymentDueDate = paymentDetails.PaymentDueDate,
+                Remarks = paymentDetails.Remarks
             };
 
             return View(model);
@@ -218,7 +218,7 @@ namespace InVanWebApp.Controllers
 
             var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
             _POPaymentRepository.Delete(ID, userID);
-            TempData["Success"] = "<script>alert('Inward note deleted successfully!');</script>";
+            TempData["Success"] = "<script>alert('PO payment details deleted successfully!');</script>";
             return RedirectToAction("Index", "POPayment");
         }
         #endregion
@@ -234,7 +234,6 @@ namespace InVanWebApp.Controllers
         {
             POPaymentBO model = new POPaymentBO();
 
-
             var purchaseDetails = _POPaymentRepository.GetPurchaseOrderById(purchaseOrderId);
 
             var purchaseOrderItems = _POPaymentRepository.GetPOItemsByPurchaseOrderId(purchaseOrderId);
@@ -249,7 +248,7 @@ namespace InVanWebApp.Controllers
                     IsDeleted = item.IsDeleted,
                     ItemName = item.ItemName,
                     ItemQuantity = item.ItemQuantity,
-                    ItemTaxValue = item.ItemTaxValue.ToString(),
+                    ItemTaxValue = Math.Round((Convert.ToDouble(item.ItemTaxValue)),2).ToString(),
                     ItemUnit = item.ItemUnit,
                     ItemUnitPrice = item.ItemUnitPrice,
                     Item_Code = item.Item_Code,
@@ -266,12 +265,15 @@ namespace InVanWebApp.Controllers
             model.PurchaseOrderId = purchaseOrderId;
             model.PONumber = purchaseDetails.PONumber;
             model.TotalPOAmount = Convert.ToDecimal(purchaseDetails.GrandTotal);
+            model.AdvancedPayment = Convert.ToDecimal(purchaseDetails.AdvancedPayment);
             model.VendorID = (int)purchaseDetails.VendorsID;
+            model.AmountPaid = purchaseDetails.AmountPaid;
             model.VendorName = _CompanyRepository.GetById(model.VendorID).CompanyName;
             model.PurchaseOrderItems = items;
+            model.PaymentDueDate = DateTime.Today;
+            model.PaymentDate = DateTime.Today;
 
             BindPONumbers();
-
             return PartialView("_POPaymentDetails", model);
 
         }

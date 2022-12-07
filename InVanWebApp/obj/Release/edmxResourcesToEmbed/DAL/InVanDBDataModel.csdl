@@ -5,13 +5,13 @@
     <EntitySet Name="CityMasters" EntityType="InVanDBModels.CityMaster" />
     <EntitySet Name="ClientMasters" EntityType="InVanDBModels.ClientMaster" />
     <EntitySet Name="COAMasters" EntityType="InVanDBModels.COAMaster" />
+    <EntitySet Name="Companies" EntityType="InVanDBModels.Company" />
     <EntitySet Name="CountryMasters" EntityType="InVanDBModels.CountryMaster" />
     <EntitySet Name="CurrencyMasters" EntityType="InVanDBModels.CurrencyMaster" />
     <EntitySet Name="DebitNotes" EntityType="InVanDBModels.DebitNote" />
     <EntitySet Name="DebitNoteDetails" EntityType="InVanDBModels.DebitNoteDetail" />
     <EntitySet Name="Departments" EntityType="InVanDBModels.Department" />
     <EntitySet Name="DesignationMasters" EntityType="InVanDBModels.DesignationMaster" />
-    <EntitySet Name="EmployeeMasters" EntityType="InVanDBModels.EmployeeMaster" />
     <EntitySet Name="FinishGoodSeries" EntityType="InVanDBModels.FinishGoodSery" />
     <EntitySet Name="GRN_Master" EntityType="InVanDBModels.GRN_Master" />
     <EntitySet Name="GRNDetails" EntityType="InVanDBModels.GRNDetail" />
@@ -19,6 +19,9 @@
     <EntitySet Name="InquiryMasters" EntityType="InVanDBModels.InquiryMaster" />
     <EntitySet Name="InvoiceMasters" EntityType="InVanDBModels.InvoiceMaster" />
     <EntitySet Name="InwardNotes" EntityType="InVanDBModels.InwardNote" />
+    <EntitySet Name="InwardNoteDetails" EntityType="InVanDBModels.InwardNoteDetail" />
+    <EntitySet Name="InwardQCs" EntityType="InVanDBModels.InwardQC" />
+    <EntitySet Name="InwardQCDetails" EntityType="InVanDBModels.InwardQCDetail" />
     <EntitySet Name="IssueNotes" EntityType="InVanDBModels.IssueNote" />
     <EntitySet Name="IssueNoteDetails" EntityType="InVanDBModels.IssueNoteDetail" />
     <EntitySet Name="Items" EntityType="InVanDBModels.Item" />
@@ -37,6 +40,8 @@
     <EntitySet Name="PurchaseOrders" EntityType="InVanDBModels.PurchaseOrder" />
     <EntitySet Name="PurchaseOrderAmendments" EntityType="InVanDBModels.PurchaseOrderAmendment" />
     <EntitySet Name="PurchaseOrderAmendmentDetails" EntityType="InVanDBModels.PurchaseOrderAmendmentDetail" />
+    <EntitySet Name="PurchaseOrderItemsDetails" EntityType="InVanDBModels.PurchaseOrderItemsDetail" />
+    <EntitySet Name="PurchaseOrderPaymentDetails1" EntityType="InVanDBModels.PurchaseOrderPaymentDetails" />
     <EntitySet Name="QCProductionSpecificationMasters" EntityType="InVanDBModels.QCProductionSpecificationMaster" />
     <EntitySet Name="QCProductioObservationMastes" EntityType="InVanDBModels.QCProductioObservationMaste" />
     <EntitySet Name="QCProductioObservationMasters" EntityType="InVanDBModels.QCProductioObservationMaster" />
@@ -46,6 +51,8 @@
     <EntitySet Name="RoleRights" EntityType="InVanDBModels.RoleRight" />
     <EntitySet Name="Roles" EntityType="InVanDBModels.Role" />
     <EntitySet Name="SalesOrders" EntityType="InVanDBModels.SalesOrder" />
+    <EntitySet Name="SalesOrderItemsDetails" EntityType="InVanDBModels.SalesOrderItemsDetail" />
+    <EntitySet Name="SalesOrderPaymentDetails" EntityType="InVanDBModels.SalesOrderPaymentDetail" />
     <EntitySet Name="ScreenNames" EntityType="InVanDBModels.ScreenName" />
     <EntitySet Name="SOItems" EntityType="InVanDBModels.SOItem" />
     <EntitySet Name="SOItemSchedules" EntityType="InVanDBModels.SOItemSchedule" />
@@ -59,6 +66,7 @@
     <EntitySet Name="TaxMasters" EntityType="InVanDBModels.TaxMaster" />
     <EntitySet Name="TermsAndConditionMasters" EntityType="InVanDBModels.TermsAndConditionMaster" />
     <EntitySet Name="UnitMasters" EntityType="InVanDBModels.UnitMaster" />
+    <EntitySet Name="UserDetails" EntityType="InVanDBModels.UserDetail" />
     <EntitySet Name="Users" EntityType="InVanDBModels.User" />
     <EntitySet Name="WorkOrders" EntityType="InVanDBModels.WorkOrder" />
     <EntitySet Name="WorkOrderDetails" EntityType="InVanDBModels.WorkOrderDetail" />
@@ -79,25 +87,33 @@
       <End Role="StateMaster" EntitySet="StateMasters" />
       <End Role="CityMaster" EntitySet="CityMasters" />
     </AssociationSet>
-    <AssociationSet Name="FK_EmployeeMaster_CityMaster" Association="InVanDBModels.FK_EmployeeMaster_CityMaster">
+    <AssociationSet Name="FK_Company_CityMaster" Association="InVanDBModels.FK_Company_CityMaster">
       <End Role="CityMaster" EntitySet="CityMasters" />
-      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+      <End Role="Company" EntitySet="Companies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_COAMaster_WorkOrder" Association="InVanDBModels.FK_COAMaster_WorkOrder">
+      <End Role="WorkOrder" EntitySet="WorkOrders" />
+      <End Role="COAMaster" EntitySet="COAMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_CountryMaster" Association="InVanDBModels.FK_Company_CountryMaster">
+      <End Role="CountryMaster" EntitySet="CountryMasters" />
+      <End Role="Company" EntitySet="Companies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Company_StateMaster" Association="InVanDBModels.FK_Company_StateMaster">
+      <End Role="StateMaster" EntitySet="StateMasters" />
+      <End Role="Company" EntitySet="Companies" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrder_Company" Association="InVanDBModels.FK_PurchaseOrder_Company">
+      <End Role="Company" EntitySet="Companies" />
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
     </AssociationSet>
     <AssociationSet Name="FK_CurrencyMaster_ToCountryMaster" Association="InVanDBModels.FK_CurrencyMaster_ToCountryMaster">
       <End Role="CountryMaster" EntitySet="CountryMasters" />
       <End Role="CurrencyMaster" EntitySet="CurrencyMasters" />
     </AssociationSet>
-    <AssociationSet Name="FK_EmployeeMaster_CountryMaster" Association="InVanDBModels.FK_EmployeeMaster_CountryMaster">
-      <End Role="CountryMaster" EntitySet="CountryMasters" />
-      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
-    </AssociationSet>
     <AssociationSet Name="FK_StateMaster_CountryMaster" Association="InVanDBModels.FK_StateMaster_CountryMaster">
       <End Role="CountryMaster" EntitySet="CountryMasters" />
       <End Role="StateMaster" EntitySet="StateMasters" />
-    </AssociationSet>
-    <AssociationSet Name="FK_DebitNote_GRN_Master" Association="InVanDBModels.FK_DebitNote_GRN_Master">
-      <End Role="GRN_Master" EntitySet="GRN_Master" />
-      <End Role="DebitNote" EntitySet="DebitNotes" />
     </AssociationSet>
     <AssociationSet Name="FK_DebitNote_InwardNote" Association="InVanDBModels.FK_DebitNote_InwardNote">
       <End Role="InwardNote" EntitySet="InwardNotes" />
@@ -117,23 +133,19 @@
     </AssociationSet>
     <AssociationSet Name="FK_EmployeeMaster_Department" Association="InVanDBModels.FK_EmployeeMaster_Department">
       <End Role="Department" EntitySet="Departments" />
-      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_EmployeeMaster_EmployeeMaster" Association="InVanDBModels.FK_EmployeeMaster_EmployeeMaster">
       <End Role="DesignationMaster" EntitySet="DesignationMasters" />
-      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
-    </AssociationSet>
-    <AssociationSet Name="FK_EmployeeMaster_StateMaster" Association="InVanDBModels.FK_EmployeeMaster_StateMaster">
-      <End Role="StateMaster" EntitySet="StateMasters" />
-      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Users_EmployeeMaster" Association="InVanDBModels.FK_Users_EmployeeMaster">
-      <End Role="EmployeeMaster" EntitySet="EmployeeMasters" />
-      <End Role="User" EntitySet="Users" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_LabMaster_ToFinishGoodSeries" Association="InVanDBModels.FK_LabMaster_ToFinishGoodSeries">
       <End Role="FinishGoodSery" EntitySet="FinishGoodSeries" />
       <End Role="LabMaster" EntitySet="LabMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GRN_Master_InwardNote" Association="InVanDBModels.FK_GRN_Master_InwardNote">
+      <End Role="InwardNote" EntitySet="InwardNotes" />
+      <End Role="GRN_Master" EntitySet="GRN_Master" />
     </AssociationSet>
     <AssociationSet Name="FK_GRN_Master_PurchaseOrder" Association="InVanDBModels.FK_GRN_Master_PurchaseOrder">
       <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
@@ -142,6 +154,10 @@
     <AssociationSet Name="FK_GRNDetails_GRN_Master" Association="InVanDBModels.FK_GRNDetails_GRN_Master">
       <End Role="GRN_Master" EntitySet="GRN_Master" />
       <End Role="GRNDetail" EntitySet="GRNDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockMaster_GRN_Master" Association="InVanDBModels.FK_StockMaster_GRN_Master">
+      <End Role="GRN_Master" EntitySet="GRN_Master" />
+      <End Role="StockMaster" EntitySet="StockMasters" />
     </AssociationSet>
     <AssociationSet Name="FK_GRNDetails_Item" Association="InVanDBModels.FK_GRNDetails_Item">
       <End Role="Item" EntitySet="Items" />
@@ -155,17 +171,25 @@
       <End Role="ItemType" EntitySet="ItemTypes" />
       <End Role="InquiryMaster" EntitySet="InquiryMasters" />
     </AssociationSet>
-    <AssociationSet Name="FK_InwardNote_Item" Association="InVanDBModels.FK_InwardNote_Item">
+    <AssociationSet Name="FK_InwardNoteDetails_InwardNote" Association="InVanDBModels.FK_InwardNoteDetails_InwardNote">
+      <End Role="InwardNote" EntitySet="InwardNotes" />
+      <End Role="InwardNoteDetail" EntitySet="InwardNoteDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InwardQC_InwardNote" Association="InVanDBModels.FK_InwardQC_InwardNote">
+      <End Role="InwardNote" EntitySet="InwardNotes" />
+      <End Role="InwardQC" EntitySet="InwardQCs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InwardNoteDetails_Item" Association="InVanDBModels.FK_InwardNoteDetails_Item">
       <End Role="Item" EntitySet="Items" />
-      <End Role="InwardNote" EntitySet="InwardNotes" />
+      <End Role="InwardNoteDetail" EntitySet="InwardNoteDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK_InwardNote_LocationWiseStock" Association="InVanDBModels.FK_InwardNote_LocationWiseStock">
-      <End Role="LocationWiseStock" EntitySet="LocationWiseStocks" />
-      <End Role="InwardNote" EntitySet="InwardNotes" />
+    <AssociationSet Name="FK_InwardQCDetails_InwardQC" Association="InVanDBModels.FK_InwardQCDetails_InwardQC">
+      <End Role="InwardQC" EntitySet="InwardQCs" />
+      <End Role="InwardQCDetail" EntitySet="InwardQCDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK_StockMaster_InwardNote" Association="InVanDBModels.FK_StockMaster_InwardNote">
-      <End Role="InwardNote" EntitySet="InwardNotes" />
-      <End Role="StockMaster" EntitySet="StockMasters" />
+    <AssociationSet Name="FK_IssueNoteDetails_IssueNote" Association="InVanDBModels.FK_IssueNoteDetails_IssueNote">
+      <End Role="IssueNote" EntitySet="IssueNotes" />
+      <End Role="IssueNoteDetail" EntitySet="IssueNoteDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_Item_ItemCategoryMaster" Association="InVanDBModels.FK_Item_ItemCategoryMaster">
       <End Role="ItemCategoryMaster" EntitySet="ItemCategoryMasters" />
@@ -173,6 +197,10 @@
     </AssociationSet>
     <AssociationSet Name="FK_Item_ItemType" Association="InVanDBModels.FK_Item_ItemType">
       <End Role="ItemType" EntitySet="ItemTypes" />
+      <End Role="Item" EntitySet="Items" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Item_UnitMaster" Association="InVanDBModels.FK_Item_UnitMaster">
+      <End Role="UnitMaster" EntitySet="UnitMasters" />
       <End Role="Item" EntitySet="Items" />
     </AssociationSet>
     <AssociationSet Name="FK_ItemCostMaster_Item" Association="InVanDBModels.FK_ItemCostMaster_Item">
@@ -183,13 +211,21 @@
       <End Role="Item" EntitySet="Items" />
       <End Role="ItemTaxMaster" EntitySet="ItemTaxMasters" />
     </AssociationSet>
-    <AssociationSet Name="FK_PurchaseOrder_Item" Association="InVanDBModels.FK_PurchaseOrder_Item">
+    <AssociationSet Name="FK_OrderItemsDetails_Item" Association="InVanDBModels.FK_OrderItemsDetails_Item">
       <End Role="Item" EntitySet="Items" />
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+      <End Role="PurchaseOrderItemsDetail" EntitySet="PurchaseOrderItemsDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_RequestForQuotation_Item" Association="InVanDBModels.FK_RequestForQuotation_Item">
       <End Role="Item" EntitySet="Items" />
       <End Role="RequestForQuotation" EntitySet="RequestForQuotations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalesOrderItemsDetails_Item" Association="InVanDBModels.FK_SalesOrderItemsDetails_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="SalesOrderItemsDetail" EntitySet="SalesOrderItemsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOItem_Item" Association="InVanDBModels.FK_SOItem_Item">
+      <End Role="Item" EntitySet="Items" />
+      <End Role="SOItem" EntitySet="SOItems" />
     </AssociationSet>
     <AssociationSet Name="FK_StockAdjustment_Item" Association="InVanDBModels.FK_StockAdjustment_Item">
       <End Role="Item" EntitySet="Items" />
@@ -251,17 +287,29 @@
       <End Role="OrganisationGroup" EntitySet="OrganisationGroups" />
       <End Role="Organisation" EntitySet="Organisations" />
     </AssociationSet>
-    <AssociationSet Name="FK_PurchaseOrder_Status" Association="InVanDBModels.FK_PurchaseOrder_Status">
-      <End Role="Status" EntitySet="Status" />
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+    <AssociationSet Name="FK_UserDetails_Organisations" Association="InVanDBModels.FK_UserDetails_Organisations">
+      <End Role="Organisation" EntitySet="Organisations" />
+      <End Role="UserDetail" EntitySet="UserDetails" />
     </AssociationSet>
-    <AssociationSet Name="FK_PurchaseOrder_Status1" Association="InVanDBModels.FK_PurchaseOrder_Status1">
-      <End Role="Status" EntitySet="Status" />
+    <AssociationSet Name="FK_OrderItemsDetails_PurchaseOrder" Association="InVanDBModels.FK_OrderItemsDetails_PurchaseOrder">
       <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+      <End Role="PurchaseOrderItemsDetail" EntitySet="PurchaseOrderItemsDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderPaymentDetails_PurchaseOrder" Association="InVanDBModels.FK_OrderPaymentDetails_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+      <End Role="PurchaseOrderPaymentDetail" EntitySet="PurchaseOrderPaymentDetails1" />
     </AssociationSet>
     <AssociationSet Name="FK_PurchaseOrder_TermsAndConditionMaster" Association="InVanDBModels.FK_PurchaseOrder_TermsAndConditionMaster">
       <End Role="TermsAndConditionMaster" EntitySet="TermsAndConditionMasters" />
       <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StockMaster_PurchaseOrder" Association="InVanDBModels.FK_StockMaster_PurchaseOrder">
+      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+      <End Role="StockMaster" EntitySet="StockMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PurchaseOrderAmendmentDetails_PurchaseOrderAmendment" Association="InVanDBModels.FK_PurchaseOrderAmendmentDetails_PurchaseOrderAmendment">
+      <End Role="PurchaseOrderAmendment" EntitySet="PurchaseOrderAmendments" />
+      <End Role="PurchaseOrderAmendmentDetail" EntitySet="PurchaseOrderAmendmentDetails" />
     </AssociationSet>
     <AssociationSet Name="FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster" Association="InVanDBModels.FK_QCProductioObservationMaste_ToQCProductionSpecificationMaster">
       <End Role="QCProductionSpecificationMaster" EntitySet="QCProductionSpecificationMasters" />
@@ -274,10 +322,6 @@
     <AssociationSet Name="FK_RejectionDataSheetMaster_ToSupplierMaster" Association="InVanDBModels.FK_RejectionDataSheetMaster_ToSupplierMaster">
       <End Role="SupplierMaster" EntitySet="SupplierMasters" />
       <End Role="RejectionDataSheetMaster" EntitySet="RejectionDataSheetMasters" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RequestForQuotation_RequestForQuotation1" Association="InVanDBModels.FK_RequestForQuotation_RequestForQuotation1">
-      <End Role="RequestForQuotation" EntitySet="RequestForQuotations" />
-      <End Role="RequestForQuotation1" EntitySet="RequestForQuotations" />
     </AssociationSet>
     <AssociationSet Name="FK_RequestForQuotation_UnitMaster" Association="InVanDBModels.FK_RequestForQuotation_UnitMaster">
       <End Role="UnitMaster" EntitySet="UnitMasters" />
@@ -295,93 +339,6 @@
       <End Role="Role" EntitySet="Roles" />
       <End Role="User" EntitySet="Users" />
     </AssociationSet>
-    <AssociationSet Name="FK_StockMaster_UnitMaster" Association="InVanDBModels.FK_StockMaster_UnitMaster">
-      <End Role="UnitMaster" EntitySet="UnitMasters" />
-      <End Role="StockMaster" EntitySet="StockMasters" />
-    </AssociationSet>
-    <EntitySet Name="Companies" EntityType="InVanDBModels.Company" />
-    <AssociationSet Name="FK_Company_CityMaster" Association="InVanDBModels.FK_Company_CityMaster">
-      <End Role="CityMaster" EntitySet="CityMasters" />
-      <End Role="Company" EntitySet="Companies" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Company_CountryMaster" Association="InVanDBModels.FK_Company_CountryMaster">
-      <End Role="CountryMaster" EntitySet="CountryMasters" />
-      <End Role="Company" EntitySet="Companies" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Company_StateMaster" Association="InVanDBModels.FK_Company_StateMaster">
-      <End Role="StateMaster" EntitySet="StateMasters" />
-      <End Role="Company" EntitySet="Companies" />
-    </AssociationSet>
-    <EntitySet Name="UserDetails" EntityType="InVanDBModels.UserDetail" />
-    <AssociationSet Name="FK_EmployeeMaster_CityMaster1" Association="InVanDBModels.FK_EmployeeMaster_CityMaster1">
-      <End Role="CityMaster" EntitySet="CityMasters" />
-      <End Role="UserDetail" EntitySet="UserDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_EmployeeMaster_CountryMaster1" Association="InVanDBModels.FK_EmployeeMaster_CountryMaster1">
-      <End Role="CountryMaster" EntitySet="CountryMasters" />
-      <End Role="UserDetail" EntitySet="UserDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_EmployeeMaster_Department1" Association="InVanDBModels.FK_EmployeeMaster_Department1">
-      <End Role="Department" EntitySet="Departments" />
-      <End Role="UserDetail" EntitySet="UserDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_EmployeeMaster_EmployeeMaster1" Association="InVanDBModels.FK_EmployeeMaster_EmployeeMaster1">
-      <End Role="DesignationMaster" EntitySet="DesignationMasters" />
-      <End Role="UserDetail" EntitySet="UserDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_EmployeeMaster_StateMaster1" Association="InVanDBModels.FK_EmployeeMaster_StateMaster1">
-      <End Role="StateMaster" EntitySet="StateMasters" />
-      <End Role="UserDetail" EntitySet="UserDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Users_EmployeeMaster1" Association="InVanDBModels.FK_Users_EmployeeMaster1">
-      <End Role="UserDetail" EntitySet="UserDetails" />
-      <End Role="User" EntitySet="Users" />
-    </AssociationSet>
-    <EntitySet Name="InwardQCs" EntityType="InVanDBModels.InwardQC" />
-    <EntitySet Name="PurchaseOrderItemsDetails" EntityType="InVanDBModels.PurchaseOrderItemsDetail" />
-    <EntitySet Name="PurchaseOrderPaymentDetails" EntityType="InVanDBModels.PurchaseOrderPaymentDetail" />
-    <EntitySet Name="SalesOrderItemsDetails" EntityType="InVanDBModels.SalesOrderItemsDetail" />
-    <EntitySet Name="SalesOrderPaymentDetails" EntityType="InVanDBModels.SalesOrderPaymentDetail" />
-    <AssociationSet Name="FK_GRN_Master_InwardNote" Association="InVanDBModels.FK_GRN_Master_InwardNote">
-      <End Role="InwardNote" EntitySet="InwardNotes" />
-      <End Role="GRN_Master" EntitySet="GRN_Master" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StockMaster_GRN_Master" Association="InVanDBModels.FK_StockMaster_GRN_Master">
-      <End Role="GRN_Master" EntitySet="GRN_Master" />
-      <End Role="StockMaster" EntitySet="StockMasters" />
-    </AssociationSet>
-    <AssociationSet Name="FK_InwardNote_PurchaseOrder" Association="InVanDBModels.FK_InwardNote_PurchaseOrder">
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-      <End Role="InwardNote" EntitySet="InwardNotes" />
-    </AssociationSet>
-    <AssociationSet Name="FK_InwardQC_Item" Association="InVanDBModels.FK_InwardQC_Item">
-      <End Role="Item" EntitySet="Items" />
-      <End Role="InwardQC" EntitySet="InwardQCs" />
-    </AssociationSet>
-    <AssociationSet Name="FK_OrderItemsDetails_Item" Association="InVanDBModels.FK_OrderItemsDetails_Item">
-      <End Role="Item" EntitySet="Items" />
-      <End Role="PurchaseOrderItemsDetail" EntitySet="PurchaseOrderItemsDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SalesOrderItemsDetails_Item" Association="InVanDBModels.FK_SalesOrderItemsDetails_Item">
-      <End Role="Item" EntitySet="Items" />
-      <End Role="SalesOrderItemsDetail" EntitySet="SalesOrderItemsDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserDetails_Organisations" Association="InVanDBModels.FK_UserDetails_Organisations">
-      <End Role="Organisation" EntitySet="Organisations" />
-      <End Role="UserDetail" EntitySet="UserDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_OrderItemsDetails_PurchaseOrder" Association="InVanDBModels.FK_OrderItemsDetails_PurchaseOrder">
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-      <End Role="PurchaseOrderItemsDetail" EntitySet="PurchaseOrderItemsDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_OrderPaymentDetails_PurchaseOrder" Association="InVanDBModels.FK_OrderPaymentDetails_PurchaseOrder">
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-      <End Role="PurchaseOrderPaymentDetail" EntitySet="PurchaseOrderPaymentDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_StockMaster_PurchaseOrder" Association="InVanDBModels.FK_StockMaster_PurchaseOrder">
-      <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-      <End Role="StockMaster" EntitySet="StockMasters" />
-    </AssociationSet>
     <AssociationSet Name="FK_SalesOrderItemsDetails_SalesOrder" Association="InVanDBModels.FK_SalesOrderItemsDetails_SalesOrder">
       <End Role="SalesOrder" EntitySet="SalesOrders" />
       <End Role="SalesOrderItemsDetail" EntitySet="SalesOrderItemsDetails" />
@@ -393,6 +350,14 @@
     <AssociationSet Name="FK_StockMaster_SalesOrder" Association="InVanDBModels.FK_StockMaster_SalesOrder">
       <End Role="SalesOrder" EntitySet="SalesOrders" />
       <End Role="StockMaster" EntitySet="StockMasters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_EmployeeMaster" Association="InVanDBModels.FK_Users_EmployeeMaster">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WorkOrderDetails_WorkOrder" Association="InVanDBModels.FK_WorkOrderDetails_WorkOrder">
+      <End Role="WorkOrder" EntitySet="WorkOrders" />
+      <End Role="WorkOrderDetail" EntitySet="WorkOrderDetails" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Branch">
@@ -432,9 +397,7 @@
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_CityMaster_StateMaster" FromRole="CityMaster" ToRole="StateMaster" />
-    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_CityMaster" FromRole="CityMaster" ToRole="EmployeeMaster" />
     <NavigationProperty Name="Companies" Relationship="InVanDBModels.FK_Company_CityMaster" FromRole="CityMaster" ToRole="Company" />
-    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_CityMaster1" FromRole="CityMaster" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="ClientMaster">
     <Key>
@@ -508,6 +471,36 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="WorkOrder" Relationship="InVanDBModels.FK_COAMaster_WorkOrder" FromRole="COAMaster" ToRole="WorkOrder" />
+  </EntityType>
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPersonName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ContactPersonNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="StateID" Type="Int32" />
+    <Property Name="CountryID" Type="Int32" />
+    <Property Name="PinCode" Type="Int32" />
+    <Property Name="GSTNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
+    <Property Name="IsBlackListed" Type="Boolean" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CityMaster" Relationship="InVanDBModels.FK_Company_CityMaster" FromRole="Company" ToRole="CityMaster" />
+    <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_Company_CountryMaster" FromRole="Company" ToRole="CountryMaster" />
+    <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_Company_StateMaster" FromRole="Company" ToRole="StateMaster" />
+    <NavigationProperty Name="PurchaseOrders" Relationship="InVanDBModels.FK_PurchaseOrder_Company" FromRole="Company" ToRole="PurchaseOrder" />
   </EntityType>
   <EntityType Name="CountryMaster">
     <Key>
@@ -521,11 +514,9 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="CurrencyMasters" Relationship="InVanDBModels.FK_CurrencyMaster_ToCountryMaster" FromRole="CountryMaster" ToRole="CurrencyMaster" />
-    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster" FromRole="CountryMaster" ToRole="EmployeeMaster" />
-    <NavigationProperty Name="StateMasters" Relationship="InVanDBModels.FK_StateMaster_CountryMaster" FromRole="CountryMaster" ToRole="StateMaster" />
     <NavigationProperty Name="Companies" Relationship="InVanDBModels.FK_Company_CountryMaster" FromRole="CountryMaster" ToRole="Company" />
-    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster1" FromRole="CountryMaster" ToRole="UserDetail" />
+    <NavigationProperty Name="CurrencyMasters" Relationship="InVanDBModels.FK_CurrencyMaster_ToCountryMaster" FromRole="CountryMaster" ToRole="CurrencyMaster" />
+    <NavigationProperty Name="StateMasters" Relationship="InVanDBModels.FK_StateMaster_CountryMaster" FromRole="CountryMaster" ToRole="StateMaster" />
   </EntityType>
   <EntityType Name="CurrencyMaster">
     <Key>
@@ -548,29 +539,24 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="DebitNoteNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="DebitNoteDate" Type="DateTime" Precision="3" />
-    <Property Name="GRNId" Type="Int32" />
+    <Property Name="DebitRejectionNoteNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DebitRejectionNoteDate" Type="DateTime" Precision="3" />
     <Property Name="InwardNoteId" Type="Int32" />
+    <Property Name="InwardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PO_ID" Type="Int32" />
     <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FlagDebitRejectionNotes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Attachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Signature" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedby" Type="Int32" />
-    <NavigationProperty Name="GRN_Master" Relationship="InVanDBModels.FK_DebitNote_GRN_Master" FromRole="DebitNote" ToRole="GRN_Master" />
     <NavigationProperty Name="InwardNote" Relationship="InVanDBModels.FK_DebitNote_InwardNote" FromRole="DebitNote" ToRole="InwardNote" />
     <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_DebitNote_PurchaseOrder" FromRole="DebitNote" ToRole="PurchaseOrder" />
     <NavigationProperty Name="DebitNoteDetails" Relationship="InVanDBModels.FK_DebitNoteDetails_DebitNote" FromRole="DebitNote" ToRole="DebitNoteDetail" />
-    <Property Name="DebitRejectionNoteNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="DebitRejectionNoteDate" Type="DateTime" Precision="3" />
-    <Property Name="GRNCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="GRNDate" Type="DateTime" Precision="3" />
-    <Property Name="FlagDebitRejectionNotes" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Attachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="DebitNoteDetail">
     <Key>
@@ -579,8 +565,12 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="DebitNoteId" Type="Int32" />
     <Property Name="ItemId" Type="Int32" />
+    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnitPrice" Type="Decimal" Precision="8" Scale="2" />
     <Property Name="QuantityDebited" Type="Double" />
-    <Property Name="Price" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="QuantityRejected" Type="Double" />
     <Property Name="Status" Type="Boolean" />
     <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="IsDeleted" Type="Boolean" />
@@ -590,9 +580,6 @@
     <Property Name="LastModifiedby" Type="Int32" />
     <NavigationProperty Name="DebitNote" Relationship="InVanDBModels.FK_DebitNoteDetails_DebitNote" FromRole="DebitNoteDetail" ToRole="DebitNote" />
     <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_DebitNoteDetails_Item" FromRole="DebitNoteDetail" ToRole="Item" />
-    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Department">
     <Key>
@@ -610,8 +597,7 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedby" Type="Int32" />
     <NavigationProperty Name="Branch" Relationship="InVanDBModels.FK_Department_ToBranch" FromRole="Department" ToRole="Branch" />
-    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="Department" ToRole="EmployeeMaster" />
-    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_Department1" FromRole="Department" ToRole="UserDetail" />
+    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="Department" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="DesignationMaster">
     <Key>
@@ -625,38 +611,7 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster" FromRole="DesignationMaster" ToRole="EmployeeMaster" />
-    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster1" FromRole="DesignationMaster" ToRole="UserDetail" />
-  </EntityType>
-  <EntityType Name="EmployeeMaster">
-    <Key>
-      <PropertyRef Name="EmployeeID" />
-    </Key>
-    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="EmployeeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="DepartmentID" Type="Int32" />
-    <Property Name="DesignationID" Type="Int32" />
-    <Property Name="EmployeeMobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="EmployeeBirthDate" Type="DateTime" Precision="0" />
-    <Property Name="EmployeeJoingDate" Type="DateTime" Precision="0" />
-    <Property Name="EmployeeGender" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-    <Property Name="CountryID" Type="Int32" />
-    <Property Name="StateID" Type="Int32" />
-    <Property Name="CityID" Type="Int32" />
-    <Property Name="EmployeeAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="PinNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="EmployeePic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IsDeleted" Type="Int32" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="CityMaster" Relationship="InVanDBModels.FK_EmployeeMaster_CityMaster" FromRole="EmployeeMaster" ToRole="CityMaster" />
-    <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster" FromRole="EmployeeMaster" ToRole="CountryMaster" />
-    <NavigationProperty Name="Department" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="EmployeeMaster" ToRole="Department" />
-    <NavigationProperty Name="DesignationMaster" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster" FromRole="EmployeeMaster" ToRole="DesignationMaster" />
-    <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster" FromRole="EmployeeMaster" ToRole="StateMaster" />
-    <NavigationProperty Name="Users" Relationship="InVanDBModels.FK_Users_EmployeeMaster" FromRole="EmployeeMaster" ToRole="User" />
+    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster" FromRole="DesignationMaster" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="FinishGoodSery">
     <Key>
@@ -687,6 +642,8 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InwardNoteId" Type="Int32" />
+    <Property Name="InwardNoteNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PO_ID" Type="Int32" />
     <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="GRNCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -697,12 +654,9 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="DebitNotes" Relationship="InVanDBModels.FK_DebitNote_GRN_Master" FromRole="GRN_Master" ToRole="DebitNote" />
+    <NavigationProperty Name="InwardNote" Relationship="InVanDBModels.FK_GRN_Master_InwardNote" FromRole="GRN_Master" ToRole="InwardNote" />
     <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_GRN_Master_PurchaseOrder" FromRole="GRN_Master" ToRole="PurchaseOrder" />
     <NavigationProperty Name="GRNDetails" Relationship="InVanDBModels.FK_GRNDetails_GRN_Master" FromRole="GRN_Master" ToRole="GRNDetail" />
-    <Property Name="InwardNoteId" Type="Int32" />
-    <Property Name="InwardNoteNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="InwardNote" Relationship="InVanDBModels.FK_GRN_Master_InwardNote" FromRole="GRN_Master" ToRole="InwardNote" />
     <NavigationProperty Name="StockMasters" Relationship="InVanDBModels.FK_StockMaster_GRN_Master" FromRole="GRN_Master" ToRole="StockMaster" />
   </EntityType>
   <EntityType Name="GRNDetail">
@@ -712,6 +666,10 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="GRN_ID" Type="Int32" />
     <Property Name="ItemID" Type="Int32" />
+    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
     <Property Name="OrderQuantity" Type="Double" />
     <Property Name="ReceivedQuantity" Type="Double" />
     <Property Name="IsDeleted" Type="Boolean" />
@@ -721,10 +679,6 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="GRN_Master" Relationship="InVanDBModels.FK_GRNDetails_GRN_Master" FromRole="GRNDetail" ToRole="GRN_Master" />
     <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_GRNDetails_Item" FromRole="GRNDetail" ToRole="Item" />
-    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="ItemPrice" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="GSTMaster">
     <Key>
@@ -801,12 +755,11 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PO_Id" Type="Int32" />
+    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PODate" Type="DateTime" Precision="3" />
     <Property Name="InwardNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="InwardDate" Type="DateTime" Precision="3" />
-    <Property Name="InwardQuantity" Type="Double" />
-    <Property Name="RejectedQuantity" Type="Double" />
-    <Property Name="LocationStockID" Type="Int32" />
-    <Property Name="ItemId" Type="Int32" />
     <Property Name="Signature" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="IsDeleted" Type="Boolean" />
@@ -815,17 +768,75 @@
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="DebitNotes" Relationship="InVanDBModels.FK_DebitNote_InwardNote" FromRole="InwardNote" ToRole="DebitNote" />
-    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_InwardNote_Item" FromRole="InwardNote" ToRole="Item" />
-    <NavigationProperty Name="LocationWiseStock" Relationship="InVanDBModels.FK_InwardNote_LocationWiseStock" FromRole="InwardNote" ToRole="LocationWiseStock" />
-    <NavigationProperty Name="StockMasters" Relationship="InVanDBModels.FK_StockMaster_InwardNote" FromRole="InwardNote" ToRole="StockMaster" />
-    <Property Name="PO_Id" Type="Int32" />
-    <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="GRN_Master" Relationship="InVanDBModels.FK_GRN_Master_InwardNote" FromRole="InwardNote" ToRole="GRN_Master" />
-    <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_InwardNote_PurchaseOrder" FromRole="InwardNote" ToRole="PurchaseOrder" />
+    <NavigationProperty Name="InwardNoteDetails" Relationship="InVanDBModels.FK_InwardNoteDetails_InwardNote" FromRole="InwardNote" ToRole="InwardNoteDetail" />
+    <NavigationProperty Name="InwardQCs" Relationship="InVanDBModels.FK_InwardQC_InwardNote" FromRole="InwardNote" ToRole="InwardQC" />
+  </EntityType>
+  <EntityType Name="InwardNoteDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InwardNoteId" Type="Int32" />
+    <Property Name="ItemId" Type="Int32" />
     <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="InwardQuantity1" Type="Double" />
     <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="POQuantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="InwardQuantity" Type="Double" />
+    <Property Name="BalanceQuantity" Type="Double" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="InwardNote" Relationship="InVanDBModels.FK_InwardNoteDetails_InwardNote" FromRole="InwardNoteDetail" ToRole="InwardNote" />
+    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_InwardNoteDetails_Item" FromRole="InwardNoteDetail" ToRole="Item" />
+  </EntityType>
+  <EntityType Name="InwardQC">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InwardNote_Id" Type="Int32" />
+    <Property Name="InwardNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="InwardQCNo" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+    <Property Name="InwardQCDate" Type="DateTime" Precision="3" />
+    <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="InwardNote" Relationship="InVanDBModels.FK_InwardQC_InwardNote" FromRole="InwardQC" ToRole="InwardNote" />
+    <NavigationProperty Name="InwardQCDetails" Relationship="InVanDBModels.FK_InwardQCDetails_InwardQC" FromRole="InwardQC" ToRole="InwardQCDetail" />
+  </EntityType>
+  <EntityType Name="InwardQCDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InwardQC_Id" Type="Int32" />
+    <Property Name="SupplierName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ItemId" Type="Int32" />
+    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="InwardQuantity" Type="Double" />
+    <Property Name="RejectedQuantity" Type="Double" />
+    <Property Name="BalanceQuantity" Type="Double" />
+    <Property Name="QuantityTookForSorting" Type="Double" />
+    <Property Name="WastageQuantityInPercentage" Type="Double" />
+    <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="InwardQC" Relationship="InVanDBModels.FK_InwardQCDetails_InwardQC" FromRole="InwardQCDetail" ToRole="InwardQC" />
   </EntityType>
   <EntityType Name="IssueNote">
     <Key>
@@ -851,6 +862,7 @@
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedby" Type="Int32" />
+    <NavigationProperty Name="IssueNoteDetails" Relationship="InVanDBModels.FK_IssueNoteDetails_IssueNote" FromRole="IssueNote" ToRole="IssueNoteDetail" />
   </EntityType>
   <EntityType Name="IssueNoteDetail">
     <Key>
@@ -869,6 +881,7 @@
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedby" Type="Int32" />
+    <NavigationProperty Name="IssueNote" Relationship="InVanDBModels.FK_IssueNoteDetails_IssueNote" FromRole="IssueNoteDetail" ToRole="IssueNote" />
   </EntityType>
   <EntityType Name="Item">
     <Key>
@@ -880,6 +893,7 @@
     <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Item_Name" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
     <Property Name="HSN_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UnitOfMeasurement_ID" Type="Int32" />
     <Property Name="MinStock" Type="Double" />
     <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="IsDeleted" Type="Boolean" />
@@ -889,19 +903,19 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="DebitNoteDetails" Relationship="InVanDBModels.FK_DebitNoteDetails_Item" FromRole="Item" ToRole="DebitNoteDetail" />
     <NavigationProperty Name="GRNDetails" Relationship="InVanDBModels.FK_GRNDetails_Item" FromRole="Item" ToRole="GRNDetail" />
-    <NavigationProperty Name="InwardNotes" Relationship="InVanDBModels.FK_InwardNote_Item" FromRole="Item" ToRole="InwardNote" />
+    <NavigationProperty Name="InwardNoteDetails" Relationship="InVanDBModels.FK_InwardNoteDetails_Item" FromRole="Item" ToRole="InwardNoteDetail" />
     <NavigationProperty Name="ItemCategoryMaster" Relationship="InVanDBModels.FK_Item_ItemCategoryMaster" FromRole="Item" ToRole="ItemCategoryMaster" />
     <NavigationProperty Name="ItemType" Relationship="InVanDBModels.FK_Item_ItemType" FromRole="Item" ToRole="ItemType" />
+    <NavigationProperty Name="UnitMaster" Relationship="InVanDBModels.FK_Item_UnitMaster" FromRole="Item" ToRole="UnitMaster" />
     <NavigationProperty Name="ItemCostMasters" Relationship="InVanDBModels.FK_ItemCostMaster_Item" FromRole="Item" ToRole="ItemCostMaster" />
     <NavigationProperty Name="ItemTaxMasters" Relationship="InVanDBModels.FK_ItemTax_Item" FromRole="Item" ToRole="ItemTaxMaster" />
-    <NavigationProperty Name="PurchaseOrders" Relationship="InVanDBModels.FK_PurchaseOrder_Item" FromRole="Item" ToRole="PurchaseOrder" />
+    <NavigationProperty Name="PurchaseOrderItemsDetails" Relationship="InVanDBModels.FK_OrderItemsDetails_Item" FromRole="Item" ToRole="PurchaseOrderItemsDetail" />
     <NavigationProperty Name="RequestForQuotations" Relationship="InVanDBModels.FK_RequestForQuotation_Item" FromRole="Item" ToRole="RequestForQuotation" />
+    <NavigationProperty Name="SalesOrderItemsDetails" Relationship="InVanDBModels.FK_SalesOrderItemsDetails_Item" FromRole="Item" ToRole="SalesOrderItemsDetail" />
+    <NavigationProperty Name="SOItems" Relationship="InVanDBModels.FK_SOItem_Item" FromRole="Item" ToRole="SOItem" />
     <NavigationProperty Name="StockAdjustments" Relationship="InVanDBModels.FK_StockAdjustment_Item" FromRole="Item" ToRole="StockAdjustment" />
     <NavigationProperty Name="StockMasters" Relationship="InVanDBModels.FK_StockMaster_Item" FromRole="Item" ToRole="StockMaster" />
     <NavigationProperty Name="StockTransfers" Relationship="InVanDBModels.FK_StockTransfer_T_Item" FromRole="Item" ToRole="StockTransfer" />
-    <NavigationProperty Name="InwardQCs" Relationship="InVanDBModels.FK_InwardQC_Item" FromRole="Item" ToRole="InwardQC" />
-    <NavigationProperty Name="PurchaseOrderItemsDetails" Relationship="InVanDBModels.FK_OrderItemsDetails_Item" FromRole="Item" ToRole="PurchaseOrderItemsDetail" />
-    <NavigationProperty Name="SalesOrderItemsDetails" Relationship="InVanDBModels.FK_SalesOrderItemsDetails_Item" FromRole="Item" ToRole="SalesOrderItemsDetail" />
   </EntityType>
   <EntityType Name="ItemCategoryMaster">
     <Key>
@@ -945,7 +959,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ItemId" Type="Int32" />
     <Property Name="TaxId" Type="Int32" />
-    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ItemTaxValue" Type="Double" />
     <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
     <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="IsDeleted" Type="Boolean" />
@@ -998,6 +1012,7 @@
     <Property Name="LocationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Levels" Type="Int32" />
     <Property Name="ParentId" Type="Int32" />
+    <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="IsDeleted" Type="Int32" />
     <Property Name="CreatedBy" Type="Int32" />
@@ -1024,7 +1039,6 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="InwardNotes" Relationship="InVanDBModels.FK_InwardNote_LocationWiseStock" FromRole="LocationWiseStock" ToRole="InwardNote" />
     <NavigationProperty Name="ItemCostMaster" Relationship="InVanDBModels.FK_LocationWiseStock_ItemCostMaster" FromRole="LocationWiseStock" ToRole="ItemCostMaster" />
     <NavigationProperty Name="LocationMaster" Relationship="InVanDBModels.FK_LocationWiseStock_LocationMaster" FromRole="LocationWiseStock" ToRole="LocationMaster" />
   </EntityType>
@@ -1090,15 +1104,11 @@
     <Property Name="ContactPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ContactNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="Range" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Division" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="Commisionerate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CityId" Type="Int32" />
     <Property Name="StateId" Type="Int32" />
-    <Property Name="StateCode" Type="Int32" />
-    <Property Name="Country" Type="String" />
+    <Property Name="Country" Type="Int32" />
     <Property Name="PANNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="CINNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="GSTINNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1110,7 +1120,6 @@
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Branches" Relationship="InVanDBModels.FK_Branch_ToOrganisations" FromRole="Organisation" ToRole="Branch" />
     <NavigationProperty Name="OrganisationGroup" Relationship="InVanDBModels.FK_Organisations_ToOrganisationGroups" FromRole="Organisation" ToRole="OrganisationGroup" />
-    <Property Name="CityId" Type="Int32" />
     <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_UserDetails_Organisations" FromRole="Organisation" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="ProcessMaster">
@@ -1133,60 +1142,47 @@
     <Property Name="PurchaseOrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Tittle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="DocumentDate" Type="DateTime" Precision="0" />
+    <Property Name="PODate" Type="DateTime" Precision="3" />
     <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
-    <Property Name="DocumentNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="BuyerAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="SupplierAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="CompanyID" Type="Int32" />
-    <Property Name="Item_ID" Type="Int32" />
-    <Property Name="ItemQuantity" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Tax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="TotalItemCost" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="GrandTotal" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="AdvancedPAyment" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="OtherChargesDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="OtherChargesTax" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="OtherChargesCost" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Signature" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <Property Name="TermsAndConditionID" Type="Int32" />
-    <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="TransactionFlag" Type="Int32" />
-    <Property Name="DraftFlag" Type="Boolean" />
-    <Property Name="InvoiceStatus" Type="Int32" />
-    <Property Name="GoodsStatus" Type="Int32" />
-    <Property Name="WorkOrderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="Amendment" Type="Int32" />
-    <Property Name="IndentNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="IsDeleted" Type="Boolean" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="OrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="DebitNotes" Relationship="InVanDBModels.FK_DebitNote_PurchaseOrder" FromRole="PurchaseOrder" ToRole="DebitNote" />
-    <NavigationProperty Name="GRN_Master" Relationship="InVanDBModels.FK_GRN_Master_PurchaseOrder" FromRole="PurchaseOrder" ToRole="GRN_Master" />
-    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_PurchaseOrder_Item" FromRole="PurchaseOrder" ToRole="Item" />
-    <NavigationProperty Name="Status" Relationship="InVanDBModels.FK_PurchaseOrder_Status" FromRole="PurchaseOrder" ToRole="Status" />
-    <NavigationProperty Name="Status1" Relationship="InVanDBModels.FK_PurchaseOrder_Status1" FromRole="PurchaseOrder" ToRole="Status" />
-    <NavigationProperty Name="TermsAndConditionMaster" Relationship="InVanDBModels.FK_PurchaseOrder_TermsAndConditionMaster" FromRole="PurchaseOrder" ToRole="TermsAndConditionMaster" />
+    <Property Name="VendorsID" Type="Int32" />
+    <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="DiscountValue" Type="Double" />
     <Property Name="CGST" Type="Double" />
     <Property Name="SGST" Type="Double" />
     <Property Name="IGST" Type="Double" />
+    <Property Name="TermsAndConditionID" Type="Int32" />
     <Property Name="Terms" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PurchaseOrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Cancelled" Type="Int32" />
     <Property Name="ReasonForCancellation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="TotalAmount" Type="Double" />
+    <Property Name="DraftFlag" Type="Boolean" />
+    <Property Name="Amendment" Type="Int32" />
+    <Property Name="DeliveryAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SupplierAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AdvancedPayment" Type="Double" />
+    <Property Name="GrandTotal" Type="Double" />
+    <Property Name="TotalAfterTax" Type="Double" />
+    <Property Name="LocationId" Type="Int32" />
+    <Property Name="LocationName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Attachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Signature" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IndentNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="ApprovedBy" Type="Int32" />
     <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
     <Property Name="CheckedBy" Type="Int32" />
     <Property Name="CheckedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="InwardNotes" Relationship="InVanDBModels.FK_InwardNote_PurchaseOrder" FromRole="PurchaseOrder" ToRole="InwardNote" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <NavigationProperty Name="Company" Relationship="InVanDBModels.FK_PurchaseOrder_Company" FromRole="PurchaseOrder" ToRole="Company" />
+    <NavigationProperty Name="DebitNotes" Relationship="InVanDBModels.FK_DebitNote_PurchaseOrder" FromRole="PurchaseOrder" ToRole="DebitNote" />
+    <NavigationProperty Name="GRN_Master" Relationship="InVanDBModels.FK_GRN_Master_PurchaseOrder" FromRole="PurchaseOrder" ToRole="GRN_Master" />
     <NavigationProperty Name="PurchaseOrderItemsDetails" Relationship="InVanDBModels.FK_OrderItemsDetails_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderItemsDetail" />
     <NavigationProperty Name="PurchaseOrderPaymentDetails" Relationship="InVanDBModels.FK_OrderPaymentDetails_PurchaseOrder" FromRole="PurchaseOrder" ToRole="PurchaseOrderPaymentDetail" />
+    <NavigationProperty Name="TermsAndConditionMaster" Relationship="InVanDBModels.FK_PurchaseOrder_TermsAndConditionMaster" FromRole="PurchaseOrder" ToRole="TermsAndConditionMaster" />
     <NavigationProperty Name="StockMasters" Relationship="InVanDBModels.FK_StockMaster_PurchaseOrder" FromRole="PurchaseOrder" ToRole="StockMaster" />
   </EntityType>
   <EntityType Name="PurchaseOrderAmendment">
@@ -1195,32 +1191,24 @@
     </Key>
     <Property Name="PurchaseOrderAmendmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PurchaseOrderId" Type="Int32" />
-    <Property Name="SupplierId" Type="Int32" />
-    <Property Name="PONo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="POAmendNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="POAmendDate" Type="DateTime" Precision="3" />
-    <Property Name="PODate" Type="DateTime" Precision="3" />
-    <Property Name="Total" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="TotalAmount" Type="Double" />
     <Property Name="PaymentsTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="DeliveryTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="TransitInsurance" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="PackingAndForwarding" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="TestToBeOffered" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="SupervisionTerms" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Warranty" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ApprovalStatus" Type="Int32" />
     <Property Name="ApprovalRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="ApprovedById" Type="Int32" />
-    <Property Name="PreparedById" Type="Int32" />
+    <Property Name="ApprovedByDate" Type="DateTime" Precision="3" />
     <Property Name="CheckedById" Type="Int32" />
+    <Property Name="CheckedByDate" Type="DateTime" Precision="3" />
+    <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="CheckedByDate" Type="DateTime" Precision="3" />
-    <Property Name="ApprovedByDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PurchaseOrderAmendmentDetails" Relationship="InVanDBModels.FK_PurchaseOrderAmendmentDetails_PurchaseOrderAmendment" FromRole="PurchaseOrderAmendment" ToRole="PurchaseOrderAmendmentDetail" />
   </EntityType>
   <EntityType Name="PurchaseOrderAmendmentDetail">
     <Key>
@@ -1229,25 +1217,73 @@
     <Property Name="PurchaseOrderAmendmentDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="PurchaseOrderAmendmentId" Type="Int32" />
     <Property Name="ItemId" Type="Int32" />
+    <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="AmendQuantity" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="UnitId" Type="Int32" />
-    <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="AmendRate" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="CGST" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="SGST" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="IGST" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="AmendDISC" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="AmendDiscount" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="AmendCgst" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="AmendSgst" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="AmendIgst" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="Value" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
+    <NavigationProperty Name="PurchaseOrderAmendment" Relationship="InVanDBModels.FK_PurchaseOrderAmendmentDetails_PurchaseOrderAmendment" FromRole="PurchaseOrderAmendmentDetail" ToRole="PurchaseOrderAmendment" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderItemsDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PurchaseOrderId" Type="Int32" />
+    <Property Name="Item_ID" Type="Int32" />
+    <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemQuantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TotalItemCost" Type="Double" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_OrderItemsDetails_Item" FromRole="PurchaseOrderItemsDetail" ToRole="Item" />
+    <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_OrderItemsDetails_PurchaseOrder" FromRole="PurchaseOrderItemsDetail" ToRole="PurchaseOrder" />
+  </EntityType>
+  <EntityType Name="PurchaseOrderPaymentDetails">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PurchaseOrderId" Type="Int32" />
+    <Property Name="InvoiceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceAmount" Type="Double" />
+    <Property Name="AmountPaid" Type="Double" />
+    <Property Name="BalancePay" Type="Double" />
+    <Property Name="AdvancedPayment" Type="Double" />
+    <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+    <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ChequeNo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="BankName" Type="String" MaxLength="600" FixedLength="false" Unicode="false" />
+    <Property Name="AccountNo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_OrderPaymentDetails_PurchaseOrder" FromRole="PurchaseOrderPaymentDetail" ToRole="PurchaseOrder" />
   </EntityType>
   <EntityType Name="QCProductionSpecificationMaster">
     <Key>
@@ -1364,8 +1400,6 @@
     <NavigationProperty Name="Branch" Relationship="InVanDBModels.FK_RequestForQuotation_Branch" FromRole="RequestForQuotation" ToRole="Branch" />
     <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_RequestForQuotation_Item" FromRole="RequestForQuotation" ToRole="Item" />
     <NavigationProperty Name="LocationMaster" Relationship="InVanDBModels.FK_RequestForQuotation_LocationMaster" FromRole="RequestForQuotation" ToRole="LocationMaster" />
-    <NavigationProperty Name="RequestForQuotation1" Relationship="InVanDBModels.FK_RequestForQuotation_RequestForQuotation1" FromRole="RequestForQuotation" ToRole="RequestForQuotation1" />
-    <NavigationProperty Name="RequestForQuotation2" Relationship="InVanDBModels.FK_RequestForQuotation_RequestForQuotation1" FromRole="RequestForQuotation1" ToRole="RequestForQuotation" />
     <NavigationProperty Name="UnitMaster" Relationship="InVanDBModels.FK_RequestForQuotation_UnitMaster" FromRole="RequestForQuotation" ToRole="UnitMaster" />
   </EntityType>
   <EntityType Name="RoleRight">
@@ -1455,6 +1489,47 @@
     <NavigationProperty Name="SalesOrderPaymentDetails" Relationship="InVanDBModels.FK_SalesOrderPaymentDetails_SalesOrder" FromRole="SalesOrder" ToRole="SalesOrderPaymentDetail" />
     <NavigationProperty Name="StockMasters" Relationship="InVanDBModels.FK_StockMaster_SalesOrder" FromRole="SalesOrder" ToRole="StockMaster" />
   </EntityType>
+  <EntityType Name="SalesOrderItemsDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="SalesOrderId" Type="Int32" />
+    <Property Name="Item_ID" Type="Int32" />
+    <Property Name="ItemQuantity" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
+    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnit" Type="Int32" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_SalesOrderItemsDetails_Item" FromRole="SalesOrderItemsDetail" ToRole="Item" />
+    <NavigationProperty Name="SalesOrder" Relationship="InVanDBModels.FK_SalesOrderItemsDetails_SalesOrder" FromRole="SalesOrderItemsDetail" ToRole="SalesOrder" />
+  </EntityType>
+  <EntityType Name="SalesOrderPaymentDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SalesOrderId" Type="Int32" />
+    <Property Name="InvoiceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InvoiceAmount" Type="Double" />
+    <Property Name="AmountPaid" Type="Double" />
+    <Property Name="BalancePay" Type="Double" />
+    <Property Name="AdvancedPayment" Type="Double" />
+    <Property Name="PaymentDate" Type="DateTime" Precision="0" />
+    <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentDetails" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+    <Property Name="PaymentStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="IsDeleted" Type="Boolean" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SalesOrder" Relationship="InVanDBModels.FK_SalesOrderPaymentDetails_SalesOrder" FromRole="SalesOrderPaymentDetail" ToRole="SalesOrder" />
+  </EntityType>
   <EntityType Name="ScreenName">
     <Key>
       <PropertyRef Name="ScreenId" />
@@ -1487,6 +1562,7 @@
     <Property Name="LastModifiedById" Type="Int32" />
     <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="JoNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_SOItem_Item" FromRole="SOItem" ToRole="Item" />
   </EntityType>
   <EntityType Name="SOItemSchedule">
     <Key>
@@ -1517,10 +1593,8 @@
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <NavigationProperty Name="CityMasters" Relationship="InVanDBModels.FK_CityMaster_StateMaster" FromRole="StateMaster" ToRole="CityMaster" />
-    <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_StateMaster_CountryMaster" FromRole="StateMaster" ToRole="CountryMaster" />
-    <NavigationProperty Name="EmployeeMasters" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster" FromRole="StateMaster" ToRole="EmployeeMaster" />
     <NavigationProperty Name="Companies" Relationship="InVanDBModels.FK_Company_StateMaster" FromRole="StateMaster" ToRole="Company" />
-    <NavigationProperty Name="UserDetails" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster1" FromRole="StateMaster" ToRole="UserDetail" />
+    <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_StateMaster_CountryMaster" FromRole="StateMaster" ToRole="CountryMaster" />
   </EntityType>
   <EntityType Name="Status">
     <Key>
@@ -1533,8 +1607,6 @@
     <Property Name="CreatedById" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedById" Type="Int32" />
-    <NavigationProperty Name="PurchaseOrders" Relationship="InVanDBModels.FK_PurchaseOrder_Status" FromRole="Status" ToRole="PurchaseOrder" />
-    <NavigationProperty Name="PurchaseOrders1" Relationship="InVanDBModels.FK_PurchaseOrder_Status1" FromRole="Status" ToRole="PurchaseOrder" />
   </EntityType>
   <EntityType Name="StockAdjustment">
     <Key>
@@ -1542,6 +1614,8 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ItemId" Type="Int32" />
+    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Item_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="QuantityAdjust" Type="Int32" />
     <Property Name="Reason" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="IsDeleted" Type="Boolean" />
@@ -1550,8 +1624,6 @@
     <Property Name="LastModificationDate" Type="DateTime" Precision="3" />
     <Property Name="LastModificationBy" Type="Int32" />
     <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_StockAdjustment_Item" FromRole="StockAdjustment" ToRole="Item" />
-    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Item_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="StockMaster">
     <Key>
@@ -1559,25 +1631,24 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ItemID" Type="Int32" Nullable="false" />
+    <Property Name="ItemName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ItemUnitPrice" Type="Decimal" Precision="8" Scale="2" />
+    <Property Name="ItemUnit" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="StockQuantity" Type="Double" />
-    <Property Name="UnitID" Type="Int32" />
-    <Property Name="InwardNoteId" Type="Int32" />
+    <Property Name="GRNId" Type="Int32" />
+    <Property Name="PO_Id" Type="Int32" />
+    <Property Name="PO_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SaledOrder_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SO_Id" Type="Int32" />
     <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="InwardNote" Relationship="InVanDBModels.FK_StockMaster_InwardNote" FromRole="StockMaster" ToRole="InwardNote" />
-    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_StockMaster_Item" FromRole="StockMaster" ToRole="Item" />
-    <NavigationProperty Name="UnitMaster" Relationship="InVanDBModels.FK_StockMaster_UnitMaster" FromRole="StockMaster" ToRole="UnitMaster" />
-    <Property Name="Unit" Type="Int32" />
-    <Property Name="GRNId" Type="Int32" />
-    <Property Name="PO_Id" Type="Int32" />
-    <Property Name="PO_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="SaledOrder_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="SO_Id" Type="Int32" />
     <NavigationProperty Name="GRN_Master" Relationship="InVanDBModels.FK_StockMaster_GRN_Master" FromRole="StockMaster" ToRole="GRN_Master" />
+    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_StockMaster_Item" FromRole="StockMaster" ToRole="Item" />
     <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_StockMaster_PurchaseOrder" FromRole="StockMaster" ToRole="PurchaseOrder" />
     <NavigationProperty Name="SalesOrder" Relationship="InVanDBModels.FK_StockMaster_SalesOrder" FromRole="StockMaster" ToRole="SalesOrder" />
   </EntityType>
@@ -1589,6 +1660,8 @@
     <Property Name="FromLocationId" Type="Int32" />
     <Property Name="ToLocationId" Type="Int32" />
     <Property Name="ItemId" Type="Int32" />
+    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Item_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="TransferQuantity" Type="Double" />
     <Property Name="RequiredQuantity" Type="Double" />
     <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -1600,8 +1673,6 @@
     <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_StockTransfer_T_Item" FromRole="StockTransfer" ToRole="Item" />
     <NavigationProperty Name="LocationMaster" Relationship="InVanDBModels.FK_StockTransfer_T_LocationMaster" FromRole="StockTransfer" ToRole="LocationMaster" />
     <NavigationProperty Name="LocationMaster1" Relationship="InVanDBModels.FK_StockTransfer_T_LocationMaster1" FromRole="StockTransfer" ToRole="LocationMaster" />
-    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Item_Code" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="SupplierMaster">
     <Key>
@@ -1649,6 +1720,7 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="TaxName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TaxValue" Type="Decimal" Precision="18" Scale="4" />
     <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="CreatedBy" Type="Int32" />
@@ -1684,8 +1756,37 @@
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Items" Relationship="InVanDBModels.FK_Item_UnitMaster" FromRole="UnitMaster" ToRole="Item" />
     <NavigationProperty Name="RequestForQuotations" Relationship="InVanDBModels.FK_RequestForQuotation_UnitMaster" FromRole="UnitMaster" ToRole="RequestForQuotation" />
-    <NavigationProperty Name="StockMasters" Relationship="InVanDBModels.FK_StockMaster_UnitMaster" FromRole="UnitMaster" ToRole="StockMaster" />
+  </EntityType>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="DepartmentID" Type="Int32" />
+    <Property Name="DesignationID" Type="Int32" />
+    <Property Name="OrganizationID" Type="Int32" />
+    <Property Name="EmployeeMobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeBirthDate" Type="DateTime" Precision="0" />
+    <Property Name="EmployeeJoingDate" Type="DateTime" Precision="0" />
+    <Property Name="EmployeeGender" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EmployeeAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PinNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeePic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Signature" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastModifiedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Department" Relationship="InVanDBModels.FK_EmployeeMaster_Department" FromRole="UserDetail" ToRole="Department" />
+    <NavigationProperty Name="DesignationMaster" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster" FromRole="UserDetail" ToRole="DesignationMaster" />
+    <NavigationProperty Name="Organisation" Relationship="InVanDBModels.FK_UserDetails_Organisations" FromRole="UserDetail" ToRole="Organisation" />
+    <NavigationProperty Name="Users" Relationship="InVanDBModels.FK_Users_EmployeeMaster" FromRole="UserDetail" ToRole="User" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -1696,15 +1797,14 @@
     <Property Name="EmployeeId" Type="Int32" />
     <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsActive" Type="Boolean" />
     <Property Name="IsDeleted" Type="Boolean" />
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="EmployeeMaster" Relationship="InVanDBModels.FK_Users_EmployeeMaster" FromRole="User" ToRole="EmployeeMaster" />
     <NavigationProperty Name="Role" Relationship="InVanDBModels.FK_Users_Roles" FromRole="User" ToRole="Role" />
-    <NavigationProperty Name="UserDetail" Relationship="InVanDBModels.FK_Users_EmployeeMaster1" FromRole="User" ToRole="UserDetail" />
-    <Property Name="IsActive" Type="Boolean" />
+    <NavigationProperty Name="UserDetail" Relationship="InVanDBModels.FK_Users_EmployeeMaster" FromRole="User" ToRole="UserDetail" />
   </EntityType>
   <EntityType Name="WorkOrder">
     <Key>
@@ -1740,6 +1840,8 @@
     <Property Name="LastModifiedBy" Type="Int32" />
     <Property Name="FreightRs" Type="Decimal" Precision="18" Scale="2" />
     <Property Name="FreightGSTPercent" Type="Decimal" Precision="18" Scale="2" />
+    <NavigationProperty Name="COAMasters" Relationship="InVanDBModels.FK_COAMaster_WorkOrder" FromRole="WorkOrder" ToRole="COAMaster" />
+    <NavigationProperty Name="WorkOrderDetails" Relationship="InVanDBModels.FK_WorkOrderDetails_WorkOrder" FromRole="WorkOrder" ToRole="WorkOrderDetail" />
   </EntityType>
   <EntityType Name="WorkOrderDetail">
     <Key>
@@ -1763,6 +1865,7 @@
     <Property Name="CreatedBy" Type="Int32" />
     <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
     <Property Name="LastModifiedBy" Type="Int32" />
+    <NavigationProperty Name="WorkOrder" Relationship="InVanDBModels.FK_WorkOrderDetails_WorkOrder" FromRole="WorkOrderDetail" ToRole="WorkOrder" />
   </EntityType>
   <EntityType Name="YearMaster">
     <Key>
@@ -1825,15 +1928,63 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_EmployeeMaster_CityMaster">
+  <Association Name="FK_Company_CityMaster">
     <End Type="InVanDBModels.CityMaster" Role="CityMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
+    <End Type="InVanDBModels.Company" Role="Company" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="CityMaster">
         <PropertyRef Name="CityID" />
       </Principal>
-      <Dependent Role="EmployeeMaster">
+      <Dependent Role="Company">
         <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_COAMaster_WorkOrder">
+    <End Type="InVanDBModels.WorkOrder" Role="WorkOrder" Multiplicity="0..1" />
+    <End Type="InVanDBModels.COAMaster" Role="COAMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkOrder">
+        <PropertyRef Name="WorkOrderId" />
+      </Principal>
+      <Dependent Role="COAMaster">
+        <PropertyRef Name="WorkOrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_CountryMaster">
+    <End Type="InVanDBModels.CountryMaster" Role="CountryMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.Company" Role="Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CountryMaster">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Company_StateMaster">
+    <End Type="InVanDBModels.StateMaster" Role="StateMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.Company" Role="Company" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StateMaster">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="Company">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrder_Company">
+    <End Type="InVanDBModels.Company" Role="Company" Multiplicity="0..1" />
+    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PurchaseOrder">
+        <PropertyRef Name="VendorsID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1851,18 +2002,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_EmployeeMaster_CountryMaster">
-    <End Type="InVanDBModels.CountryMaster" Role="CountryMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CountryMaster">
-        <PropertyRef Name="CountryID" />
-      </Principal>
-      <Dependent Role="EmployeeMaster">
-        <PropertyRef Name="CountryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_StateMaster_CountryMaster">
     <End Type="InVanDBModels.CountryMaster" Role="CountryMaster" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -1874,18 +2013,6 @@
       </Principal>
       <Dependent Role="StateMaster">
         <PropertyRef Name="CountryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_DebitNote_GRN_Master">
-    <End Type="InVanDBModels.GRN_Master" Role="GRN_Master" Multiplicity="0..1" />
-    <End Type="InVanDBModels.DebitNote" Role="DebitNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GRN_Master">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="DebitNote">
-        <PropertyRef Name="GRNId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1939,12 +2066,12 @@
   </Association>
   <Association Name="FK_EmployeeMaster_Department">
     <End Type="InVanDBModels.Department" Role="Department" Multiplicity="0..1" />
-    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Department">
         <PropertyRef Name="DepartmentID" />
       </Principal>
-      <Dependent Role="EmployeeMaster">
+      <Dependent Role="UserDetail">
         <PropertyRef Name="DepartmentID" />
       </Dependent>
     </ReferentialConstraint>
@@ -1953,37 +2080,13 @@
     <End Type="InVanDBModels.DesignationMaster" Role="DesignationMaster" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="DesignationMaster">
         <PropertyRef Name="DesignationID" />
       </Principal>
-      <Dependent Role="EmployeeMaster">
+      <Dependent Role="UserDetail">
         <PropertyRef Name="DesignationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EmployeeMaster_StateMaster">
-    <End Type="InVanDBModels.StateMaster" Role="StateMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StateMaster">
-        <PropertyRef Name="StateID" />
-      </Principal>
-      <Dependent Role="EmployeeMaster">
-        <PropertyRef Name="StateID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Users_EmployeeMaster">
-    <End Type="InVanDBModels.EmployeeMaster" Role="EmployeeMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.User" Role="User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="EmployeeMaster">
-        <PropertyRef Name="EmployeeID" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="EmployeeId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1998,6 +2101,18 @@
       </Principal>
       <Dependent Role="LabMaster">
         <PropertyRef Name="FGSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GRN_Master_InwardNote">
+    <End Type="InVanDBModels.InwardNote" Role="InwardNote" Multiplicity="0..1" />
+    <End Type="InVanDBModels.GRN_Master" Role="GRN_Master" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InwardNote">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GRN_Master">
+        <PropertyRef Name="InwardNoteId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2022,6 +2137,18 @@
       </Principal>
       <Dependent Role="GRNDetail">
         <PropertyRef Name="GRN_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockMaster_GRN_Master">
+    <End Type="InVanDBModels.GRN_Master" Role="GRN_Master" Multiplicity="0..1" />
+    <End Type="InVanDBModels.StockMaster" Role="StockMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GRN_Master">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="StockMaster">
+        <PropertyRef Name="GRNId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2063,39 +2190,63 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_InwardNote_Item">
-    <End Type="InVanDBModels.Item" Role="Item" Multiplicity="0..1" />
-    <End Type="InVanDBModels.InwardNote" Role="InwardNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Item">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="InwardNote">
-        <PropertyRef Name="ItemId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_InwardNote_LocationWiseStock">
-    <End Type="InVanDBModels.LocationWiseStock" Role="LocationWiseStock" Multiplicity="0..1" />
-    <End Type="InVanDBModels.InwardNote" Role="InwardNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LocationWiseStock">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="InwardNote">
-        <PropertyRef Name="LocationStockID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StockMaster_InwardNote">
+  <Association Name="FK_InwardNoteDetails_InwardNote">
     <End Type="InVanDBModels.InwardNote" Role="InwardNote" Multiplicity="0..1" />
-    <End Type="InVanDBModels.StockMaster" Role="StockMaster" Multiplicity="*" />
+    <End Type="InVanDBModels.InwardNoteDetail" Role="InwardNoteDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="InwardNote">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="StockMaster">
+      <Dependent Role="InwardNoteDetail">
         <PropertyRef Name="InwardNoteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InwardQC_InwardNote">
+    <End Type="InVanDBModels.InwardNote" Role="InwardNote" Multiplicity="0..1" />
+    <End Type="InVanDBModels.InwardQC" Role="InwardQC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InwardNote">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="InwardQC">
+        <PropertyRef Name="InwardNote_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InwardNoteDetails_Item">
+    <End Type="InVanDBModels.Item" Role="Item" Multiplicity="0..1" />
+    <End Type="InVanDBModels.InwardNoteDetail" Role="InwardNoteDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="InwardNoteDetail">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InwardQCDetails_InwardQC">
+    <End Type="InVanDBModels.InwardQC" Role="InwardQC" Multiplicity="0..1" />
+    <End Type="InVanDBModels.InwardQCDetail" Role="InwardQCDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="InwardQC">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="InwardQCDetail">
+        <PropertyRef Name="InwardQC_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IssueNoteDetails_IssueNote">
+    <End Type="InVanDBModels.IssueNote" Role="IssueNote" Multiplicity="0..1" />
+    <End Type="InVanDBModels.IssueNoteDetail" Role="IssueNoteDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IssueNote">
+        <PropertyRef Name="IssueNoteId" />
+      </Principal>
+      <Dependent Role="IssueNoteDetail">
+        <PropertyRef Name="IssueNoteId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2123,6 +2274,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Item_UnitMaster">
+    <End Type="InVanDBModels.UnitMaster" Role="UnitMaster" Multiplicity="0..1" />
+    <End Type="InVanDBModels.Item" Role="Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UnitMaster">
+        <PropertyRef Name="UnitID" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="UnitOfMeasurement_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ItemCostMaster_Item">
     <End Type="InVanDBModels.Item" Role="Item" Multiplicity="0..1" />
     <End Type="InVanDBModels.ItemCostMaster" Role="ItemCostMaster" Multiplicity="*" />
@@ -2147,14 +2310,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PurchaseOrder_Item">
+  <Association Name="FK_OrderItemsDetails_Item">
     <End Type="InVanDBModels.Item" Role="Item" Multiplicity="0..1" />
-    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+    <End Type="InVanDBModels.PurchaseOrderItemsDetail" Role="PurchaseOrderItemsDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Item">
         <PropertyRef Name="ID" />
       </Principal>
-      <Dependent Role="PurchaseOrder">
+      <Dependent Role="PurchaseOrderItemsDetail">
         <PropertyRef Name="Item_ID" />
       </Dependent>
     </ReferentialConstraint>
@@ -2167,6 +2330,30 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="RequestForQuotation">
+        <PropertyRef Name="ItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalesOrderItemsDetails_Item">
+    <End Type="InVanDBModels.Item" Role="Item" Multiplicity="0..1" />
+    <End Type="InVanDBModels.SalesOrderItemsDetail" Role="SalesOrderItemsDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SalesOrderItemsDetail">
+        <PropertyRef Name="Item_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOItem_Item">
+    <End Type="InVanDBModels.Item" Role="Item" Multiplicity="0..1" />
+    <End Type="InVanDBModels.SOItem" Role="SOItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SOItem">
         <PropertyRef Name="ItemId" />
       </Dependent>
     </ReferentialConstraint>
@@ -2359,27 +2546,39 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PurchaseOrder_Status">
-    <End Type="InVanDBModels.Status" Role="Status" Multiplicity="0..1" />
-    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+  <Association Name="FK_UserDetails_Organisations">
+    <End Type="InVanDBModels.Organisation" Role="Organisation" Multiplicity="0..1" />
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Status">
-        <PropertyRef Name="StatusId" />
+      <Principal Role="Organisation">
+        <PropertyRef Name="OrganisationId" />
       </Principal>
-      <Dependent Role="PurchaseOrder">
-        <PropertyRef Name="InvoiceStatus" />
+      <Dependent Role="UserDetail">
+        <PropertyRef Name="OrganizationID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_PurchaseOrder_Status1">
-    <End Type="InVanDBModels.Status" Role="Status" Multiplicity="0..1" />
-    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+  <Association Name="FK_OrderItemsDetails_PurchaseOrder">
+    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
+    <End Type="InVanDBModels.PurchaseOrderItemsDetail" Role="PurchaseOrderItemsDetail" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Status">
-        <PropertyRef Name="StatusId" />
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="PurchaseOrderId" />
       </Principal>
-      <Dependent Role="PurchaseOrder">
-        <PropertyRef Name="GoodsStatus" />
+      <Dependent Role="PurchaseOrderItemsDetail">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderPaymentDetails_PurchaseOrder">
+    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
+    <End Type="InVanDBModels.PurchaseOrderPaymentDetails" Role="PurchaseOrderPaymentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Principal>
+      <Dependent Role="PurchaseOrderPaymentDetail">
+        <PropertyRef Name="PurchaseOrderId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2392,6 +2591,30 @@
       </Principal>
       <Dependent Role="PurchaseOrder">
         <PropertyRef Name="TermsAndConditionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StockMaster_PurchaseOrder">
+    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
+    <End Type="InVanDBModels.StockMaster" Role="StockMaster" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrder">
+        <PropertyRef Name="PurchaseOrderId" />
+      </Principal>
+      <Dependent Role="StockMaster">
+        <PropertyRef Name="PO_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PurchaseOrderAmendmentDetails_PurchaseOrderAmendment">
+    <End Type="InVanDBModels.PurchaseOrderAmendment" Role="PurchaseOrderAmendment" Multiplicity="0..1" />
+    <End Type="InVanDBModels.PurchaseOrderAmendmentDetail" Role="PurchaseOrderAmendmentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PurchaseOrderAmendment">
+        <PropertyRef Name="PurchaseOrderAmendmentId" />
+      </Principal>
+      <Dependent Role="PurchaseOrderAmendmentDetail">
+        <PropertyRef Name="PurchaseOrderAmendmentId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2434,18 +2657,6 @@
       </Principal>
       <Dependent Role="RejectionDataSheetMaster">
         <PropertyRef Name="SupplierID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_RequestForQuotation_RequestForQuotation1">
-    <End Type="InVanDBModels.RequestForQuotation" Role="RequestForQuotation" Multiplicity="1" />
-    <End Type="InVanDBModels.RequestForQuotation" Role="RequestForQuotation1" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="RequestForQuotation">
-        <PropertyRef Name="RequestForQuotationId" />
-      </Principal>
-      <Dependent Role="RequestForQuotation1">
-        <PropertyRef Name="RequestForQuotationId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2501,416 +2712,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_StockMaster_UnitMaster">
-    <End Type="InVanDBModels.UnitMaster" Role="UnitMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.StockMaster" Role="StockMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UnitMaster">
-        <PropertyRef Name="UnitID" />
-      </Principal>
-      <Dependent Role="StockMaster">
-        <PropertyRef Name="UnitID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="Company">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="CompanyType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="CompanyName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="ContactPersonName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="ContactPersonNo" Type="Int32" />
-    <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="CityID" Type="Int32" />
-    <Property Name="StateID" Type="Int32" />
-    <Property Name="CountryID" Type="Int32" />
-    <Property Name="PinCode" Type="Int32" />
-    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="IsActive" Type="Boolean" />
-    <Property Name="IsBlackListed" Type="Boolean" />
-    <Property Name="IsDeleted" Type="Boolean" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="CityMaster" Relationship="InVanDBModels.FK_Company_CityMaster" FromRole="Company" ToRole="CityMaster" />
-    <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_Company_CountryMaster" FromRole="Company" ToRole="CountryMaster" />
-    <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_Company_StateMaster" FromRole="Company" ToRole="StateMaster" />
-    <Property Name="GSTNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-  </EntityType>
-  <Association Name="FK_Company_CityMaster">
-    <End Type="InVanDBModels.CityMaster" Role="CityMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.Company" Role="Company" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CityMaster">
-        <PropertyRef Name="CityID" />
-      </Principal>
-      <Dependent Role="Company">
-        <PropertyRef Name="CityID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Company_CountryMaster">
-    <End Type="InVanDBModels.CountryMaster" Role="CountryMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.Company" Role="Company" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CountryMaster">
-        <PropertyRef Name="CountryID" />
-      </Principal>
-      <Dependent Role="Company">
-        <PropertyRef Name="CountryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Company_StateMaster">
-    <End Type="InVanDBModels.StateMaster" Role="StateMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.Company" Role="Company" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StateMaster">
-        <PropertyRef Name="StateID" />
-      </Principal>
-      <Dependent Role="Company">
-        <PropertyRef Name="StateID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="UserDetail">
-    <Key>
-      <PropertyRef Name="EmployeeID" />
-    </Key>
-    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="EmployeeName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-    <Property Name="DepartmentID" Type="Int32" />
-    <Property Name="DesignationID" Type="Int32" />
-    <Property Name="EmployeeMobileNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-    <Property Name="EmployeeBirthDate" Type="DateTime" Precision="0" />
-    <Property Name="EmployeeJoingDate" Type="DateTime" Precision="0" />
-    <Property Name="EmployeeGender" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-    <Property Name="CountryID" Type="Int32" />
-    <Property Name="StateID" Type="Int32" />
-    <Property Name="CityID" Type="Int32" />
-    <Property Name="EmployeeAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="PinNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="EmployeePic" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="IsDeleted" Type="Int32" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="CityMaster" Relationship="InVanDBModels.FK_EmployeeMaster_CityMaster1" FromRole="UserDetail" ToRole="CityMaster" />
-    <NavigationProperty Name="CountryMaster" Relationship="InVanDBModels.FK_EmployeeMaster_CountryMaster1" FromRole="UserDetail" ToRole="CountryMaster" />
-    <NavigationProperty Name="Department" Relationship="InVanDBModels.FK_EmployeeMaster_Department1" FromRole="UserDetail" ToRole="Department" />
-    <NavigationProperty Name="DesignationMaster" Relationship="InVanDBModels.FK_EmployeeMaster_EmployeeMaster1" FromRole="UserDetail" ToRole="DesignationMaster" />
-    <NavigationProperty Name="StateMaster" Relationship="InVanDBModels.FK_EmployeeMaster_StateMaster1" FromRole="UserDetail" ToRole="StateMaster" />
-    <NavigationProperty Name="Users" Relationship="InVanDBModels.FK_Users_EmployeeMaster1" FromRole="UserDetail" ToRole="User" />
-    <Property Name="OrganizationID" Type="Int32" />
-    <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="Signature" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="Organisation" Relationship="InVanDBModels.FK_UserDetails_Organisations" FromRole="UserDetail" ToRole="Organisation" />
-  </EntityType>
-  <Association Name="FK_EmployeeMaster_CityMaster1">
-    <End Type="InVanDBModels.CityMaster" Role="CityMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CityMaster">
-        <PropertyRef Name="CityID" />
-      </Principal>
-      <Dependent Role="UserDetail">
-        <PropertyRef Name="CityID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EmployeeMaster_CountryMaster1">
-    <End Type="InVanDBModels.CountryMaster" Role="CountryMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CountryMaster">
-        <PropertyRef Name="CountryID" />
-      </Principal>
-      <Dependent Role="UserDetail">
-        <PropertyRef Name="CountryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EmployeeMaster_Department1">
-    <End Type="InVanDBModels.Department" Role="Department" Multiplicity="0..1" />
-    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Department">
-        <PropertyRef Name="DepartmentID" />
-      </Principal>
-      <Dependent Role="UserDetail">
-        <PropertyRef Name="DepartmentID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EmployeeMaster_EmployeeMaster1">
-    <End Type="InVanDBModels.DesignationMaster" Role="DesignationMaster" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="DesignationMaster">
-        <PropertyRef Name="DesignationID" />
-      </Principal>
-      <Dependent Role="UserDetail">
-        <PropertyRef Name="DesignationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EmployeeMaster_StateMaster1">
-    <End Type="InVanDBModels.StateMaster" Role="StateMaster" Multiplicity="0..1" />
-    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="StateMaster">
-        <PropertyRef Name="StateID" />
-      </Principal>
-      <Dependent Role="UserDetail">
-        <PropertyRef Name="StateID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Users_EmployeeMaster1">
-    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="0..1" />
-    <End Type="InVanDBModels.User" Role="User" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UserDetail">
-        <PropertyRef Name="EmployeeID" />
-      </Principal>
-      <Dependent Role="User">
-        <PropertyRef Name="EmployeeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityType Name="InwardQC">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="InwardNote_Id" Type="Int32" />
-    <Property Name="InwardQCNo" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
-    <Property Name="ItemId" Type="Int32" />
-    <Property Name="Item_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Item_Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="InwardQuantity" Type="Double" />
-    <Property Name="RejectedQuantity" Type="Double" />
-    <Property Name="ItemPrice" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="IsDeleted" Type="Boolean" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_InwardQC_Item" FromRole="InwardQC" ToRole="Item" />
-    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
-  </EntityType>
-  <EntityType Name="PurchaseOrderItemsDetail">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PurchaseOrderId" Type="Int32" />
-    <Property Name="Item_ID" Type="Int32" />
-    <Property Name="ItemQuantity" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="ItemUnit" Type="Int32" />
-    <Property Name="IsDeleted" Type="Boolean" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_OrderItemsDetails_Item" FromRole="PurchaseOrderItemsDetail" ToRole="Item" />
-    <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_OrderItemsDetails_PurchaseOrder" FromRole="PurchaseOrderItemsDetail" ToRole="PurchaseOrder" />
-  </EntityType>
-  <EntityType Name="PurchaseOrderPaymentDetail">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="PurchaseOrderId" Type="Int32" />
-    <Property Name="InvoiceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="InvoiceAmount" Type="Double" />
-    <Property Name="AmountPaid" Type="Double" />
-    <Property Name="BalancePay" Type="Double" />
-    <Property Name="AdvancedPayment" Type="Double" />
-    <Property Name="PaymentDate" Type="DateTime" Precision="0" />
-    <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="PaymentDetails" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-    <Property Name="PaymentStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="IsDeleted" Type="Boolean" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="PurchaseOrder" Relationship="InVanDBModels.FK_OrderPaymentDetails_PurchaseOrder" FromRole="PurchaseOrderPaymentDetail" ToRole="PurchaseOrder" />
-  </EntityType>
-  <EntityType Name="SalesOrderItemsDetail">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" />
-    <Property Name="SalesOrderId" Type="Int32" />
-    <Property Name="Item_ID" Type="Int32" />
-    <Property Name="ItemQuantity" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="ItemUnitPrice" Type="Decimal" Precision="18" Scale="2" />
-    <Property Name="ItemTaxValue" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-    <Property Name="ItemUnit" Type="Int32" />
-    <Property Name="IsDeleted" Type="Boolean" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Item" Relationship="InVanDBModels.FK_SalesOrderItemsDetails_Item" FromRole="SalesOrderItemsDetail" ToRole="Item" />
-    <NavigationProperty Name="SalesOrder" Relationship="InVanDBModels.FK_SalesOrderItemsDetails_SalesOrder" FromRole="SalesOrderItemsDetail" ToRole="SalesOrder" />
-  </EntityType>
-  <EntityType Name="SalesOrderPaymentDetail">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="SalesOrderId" Type="Int32" />
-    <Property Name="InvoiceNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="InvoiceAmount" Type="Double" />
-    <Property Name="AmountPaid" Type="Double" />
-    <Property Name="BalancePay" Type="Double" />
-    <Property Name="AdvancedPayment" Type="Double" />
-    <Property Name="PaymentDate" Type="DateTime" Precision="0" />
-    <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="PaymentDetails" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
-    <Property Name="PaymentStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <Property Name="IsDeleted" Type="Boolean" />
-    <Property Name="CreatedBy" Type="Int32" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="LastModifiedBy" Type="Int32" />
-    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="SalesOrder" Relationship="InVanDBModels.FK_SalesOrderPaymentDetails_SalesOrder" FromRole="SalesOrderPaymentDetail" ToRole="SalesOrder" />
-  </EntityType>
-  <Association Name="FK_GRN_Master_InwardNote">
-    <End Type="InVanDBModels.InwardNote" Role="InwardNote" Multiplicity="0..1" />
-    <End Type="InVanDBModels.GRN_Master" Role="GRN_Master" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="InwardNote">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="GRN_Master">
-        <PropertyRef Name="InwardNoteId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StockMaster_GRN_Master">
-    <End Type="InVanDBModels.GRN_Master" Role="GRN_Master" Multiplicity="0..1" />
-    <End Type="InVanDBModels.StockMaster" Role="StockMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GRN_Master">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="StockMaster">
-        <PropertyRef Name="GRNId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_InwardNote_PurchaseOrder">
-    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
-    <End Type="InVanDBModels.InwardNote" Role="InwardNote" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PurchaseOrder">
-        <PropertyRef Name="PurchaseOrderId" />
-      </Principal>
-      <Dependent Role="InwardNote">
-        <PropertyRef Name="PO_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_InwardQC_Item">
-    <End Type="InVanDBModels.Item" Role="Item" Multiplicity="0..1" />
-    <End Type="InVanDBModels.InwardQC" Role="InwardQC" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Item">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="InwardQC">
-        <PropertyRef Name="ItemId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OrderItemsDetails_Item">
-    <End Type="InVanDBModels.Item" Role="Item" Multiplicity="0..1" />
-    <End Type="InVanDBModels.PurchaseOrderItemsDetail" Role="PurchaseOrderItemsDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Item">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="PurchaseOrderItemsDetail">
-        <PropertyRef Name="Item_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SalesOrderItemsDetails_Item">
-    <End Type="InVanDBModels.Item" Role="Item" Multiplicity="0..1" />
-    <End Type="InVanDBModels.SalesOrderItemsDetail" Role="SalesOrderItemsDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Item">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="SalesOrderItemsDetail">
-        <PropertyRef Name="Item_ID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserDetails_Organisations">
-    <End Type="InVanDBModels.Organisation" Role="Organisation" Multiplicity="0..1" />
-    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Organisation">
-        <PropertyRef Name="OrganisationId" />
-      </Principal>
-      <Dependent Role="UserDetail">
-        <PropertyRef Name="OrganizationID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OrderItemsDetails_PurchaseOrder">
-    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
-    <End Type="InVanDBModels.PurchaseOrderItemsDetail" Role="PurchaseOrderItemsDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PurchaseOrder">
-        <PropertyRef Name="PurchaseOrderId" />
-      </Principal>
-      <Dependent Role="PurchaseOrderItemsDetail">
-        <PropertyRef Name="PurchaseOrderId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_OrderPaymentDetails_PurchaseOrder">
-    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
-    <End Type="InVanDBModels.PurchaseOrderPaymentDetail" Role="PurchaseOrderPaymentDetail" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PurchaseOrder">
-        <PropertyRef Name="PurchaseOrderId" />
-      </Principal>
-      <Dependent Role="PurchaseOrderPaymentDetail">
-        <PropertyRef Name="PurchaseOrderId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_StockMaster_PurchaseOrder">
-    <End Type="InVanDBModels.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
-    <End Type="InVanDBModels.StockMaster" Role="StockMaster" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="PurchaseOrder">
-        <PropertyRef Name="PurchaseOrderId" />
-      </Principal>
-      <Dependent Role="StockMaster">
-        <PropertyRef Name="PO_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_SalesOrderItemsDetails_SalesOrder">
     <End Type="InVanDBModels.SalesOrder" Role="SalesOrder" Multiplicity="0..1" />
     <End Type="InVanDBModels.SalesOrderItemsDetail" Role="SalesOrderItemsDetail" Multiplicity="*" />
@@ -2944,6 +2745,30 @@
       </Principal>
       <Dependent Role="StockMaster">
         <PropertyRef Name="SO_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_EmployeeMaster">
+    <End Type="InVanDBModels.UserDetail" Role="UserDetail" Multiplicity="0..1" />
+    <End Type="InVanDBModels.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WorkOrderDetails_WorkOrder">
+    <End Type="InVanDBModels.WorkOrder" Role="WorkOrder" Multiplicity="0..1" />
+    <End Type="InVanDBModels.WorkOrderDetail" Role="WorkOrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WorkOrder">
+        <PropertyRef Name="WorkOrderId" />
+      </Principal>
+      <Dependent Role="WorkOrderDetail">
+        <PropertyRef Name="WorkOrderId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

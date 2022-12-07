@@ -79,6 +79,7 @@
     <Compile Include="RoleRightBO.cs" />
     <Compile Include="ScreenNameBO.cs" />
     <Compile Include="StockMasterBO.cs" />
+    <Compile Include="StockMovementBO.cs" />
     <Compile Include="StockReportBO.cs" />
     <Compile Include="StockTransferBO.cs" />
     <Compile Include="UserDetailsBO.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="Status.cs" />
     <Compile Include="StorageLocationMaster.cs" />
     <Compile Include="TaxBO.cs" />
-    <Compile Include="TermsAndConditionMaster.cs" />
+    <Compile Include="TermsAndConditionMasterBO.cs" />
     <Compile Include="UnitMaster.cs" />
     <Compile Include="UsersBO.cs" />
   </ItemGroup>

@@ -33,7 +33,10 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-    
+
+        //Added below two new columns by raj in this table
+        public Nullable<System.DateTime> PaymentDueDate { get; set; }
+        public string Remarks { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
     }
 }

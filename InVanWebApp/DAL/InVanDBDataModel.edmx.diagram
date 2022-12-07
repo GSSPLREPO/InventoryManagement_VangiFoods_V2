@@ -147,57 +147,6 @@
         <AssociationConnector Association="InVanDBModels.FK_StockMaster_SalesOrder" />
         <AssociationConnector Association="InVanDBModels.FK_Users_EmployeeMaster" />
         <AssociationConnector Association="InVanDBModels.FK_WorkOrderDetails_WorkOrder" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Customers_M" Width="1.5" PointX="27.25" PointY="18.5" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Designation_M" Width="1.5" PointX="9.75" PointY="18.25" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Notes_M" Width="1.5" PointX="27.25" PointY="22.625" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Organization_M" Width="1.5" PointX="9.75" PointY="21.875" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_PressureClass_M" Width="1.5" PointX="27.25" PointY="15" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_PressureValues_T" Width="1.5" PointX="31.75" PointY="9.875" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_RoleRights_M" Width="1.5" PointX="18" PointY="1" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Roles_M" Width="1.5" PointX="15.75" PointY="16.125" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Screens_M" Width="1.5" PointX="15.75" PointY="1.125" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Sealing_M" Width="1.5" PointX="17.75" PointY="4.75" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Section_M" Width="1.5" PointX="17.75" PointY="8.75" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_SubTestCategory_M" Width="1.5" PointX="27.25" PointY="30.25" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_TemperatureValues_T" Width="1.5" PointX="31.75" PointY="5.625" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_TestCategory_M" Width="1.5" PointX="25" PointY="30.25" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_TestComponent_M" Width="1.5" PointX="27.25" PointY="8.625" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_TestComponentCategory_M" Width="1.5" PointX="25" PointY="13.75" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_TestConfiguration_M" Width="1.5" PointX="27.25" PointY="26.125" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Units_M" Width="1.5" PointX="25" PointY="9.5" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_UnitType_M" Width="1.5" PointX="22.75" PointY="7.625" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_User_M" Width="1.5" PointX="9.75" PointY="26.125" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_UserDetails_M" Width="1.5" PointX="12" PointY="17.125" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_ValveModel_M" Width="1.5" PointX="27.25" PointY="34.125" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_ValveSize_M" Width="1.5" PointX="25" PointY="5.625" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_ValveTestRecordsEntry_M" Width="1.5" PointX="29.5" PointY="4" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_ValveTestRecordsold_M" Width="1.5" PointX="0.75" PointY="18.75" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_ValveTypes_M" Width="1.5" PointX="25" PointY="34.25" />
-        <EntityTypeShape EntityType="InVanDBModels.Tbl_Valves_M" Width="1.5" PointX="17.75" PointY="12.75" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_Customers_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_UserDetails_M_Tbl_Designation_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_Notes_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_UserDetails_M_Tbl_Organization_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_PressureClass_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_PressureValues_T_Tbl_ValveTestRecordsEntry_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_RoleRights_M_Tbl_Roles_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_RoleRights_M_Tbl_Screens_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_SubTestCategory_M_Tbl_TestCategory_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_SubTestCategory_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_TemperatureValues_T_Tbl_ValveTestRecordsEntry_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_TestCategory_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_TestComponent_M_Tbl_TestComponentCategory_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_TestComponent_M_Tbl_Units_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_TestComponent_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_TestComponent_M1" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_TestConfiguration_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_Units_M_Tbl_UnitType_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveSize_M_Tbl_UnitType_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_UserDetails_M_Tbl_User_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveModels_M_Tbl_ValveTypes_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_ValveModel_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_ValveSize_M" />
-        <AssociationConnector Association="InVanDBModels.FK_Tbl_ValveTestRecordsEntry_M_Tbl_ValveTypes_M" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

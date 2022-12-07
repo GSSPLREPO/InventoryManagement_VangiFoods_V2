@@ -21,7 +21,7 @@ namespace InVanWebApp.DAL
         public string Item_Code { get; set; }
         public Nullable<decimal> ItemUnitPrice { get; set; }
         public Nullable<decimal> ItemQuantity { get; set; }
-        public string ItemTaxValue { get; set; }
+        public Nullable<decimal> ItemTaxValue { get; set; }
         public string ItemUnit { get; set; }
         public Nullable<double> TotalItemCost { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

@@ -10,10 +10,9 @@ namespace InVanWebApp_BO
     public class POPaymentBO
     {
         public int ID { get; set; }
-        [Required(ErrorMessage = "Select PO Number!")]
         public int PurchaseOrderId { get; set; }
-        public string PONumber { get; set; }
-
+      //  [Required(ErrorMessage = "Select PO Number!")]
+        public string PONumber { get; set; }        
         public int VendorID { get; set; }
 
         [Required(ErrorMessage = "Enter Vendor Name!")]
@@ -21,12 +20,16 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Enter Invoice Number!")]
         public string InvoiceNumber { get; set; }
+        
+        [Required(ErrorMessage = "Select payment date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> PaymentDate { get; set; }
 
         [Required(ErrorMessage = "Select Payment Due Date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> PaymentDueDate { get; set; }
 
-        [Required(ErrorMessage = "Enter Payment Amount!")]
+        [Required(ErrorMessage = "Enter invoice amount!")]
         public decimal PaymentAmount { get; set; }
 
         [Required(ErrorMessage = "Select Payment Mode!")]
@@ -47,10 +50,15 @@ namespace InVanWebApp_BO
         public string IsPaid { get; set; }
         public string Remarks { get; set; }
 
-        public int LastModifiedBy { get; set; }
 
         public List<PurchaseOrderItemsDetailBO> PurchaseOrderItems { get; set; }
-
+        public decimal AdvancedPayment { get; set; }
+        public float AmountPaid{ get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public int LastModifiedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
     }
     public class PurchaseOrderItemsDetailBO
     {

@@ -28,7 +28,6 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage ="Enter minimum stock value!")]
         [Range(0, double.MaxValue, ErrorMessage = "Please enter valid stock value!")]
         public Nullable<double> MinStock { get; set; }
-        public Nullable<double> RequiredQuantity { get; set; } //Rahul added 23 Nov 2022 
 
         [StringLength(150, ErrorMessage = "Legth of description is exceeded!")]
         public string Description { get; set; }
@@ -51,5 +50,9 @@ namespace InVanWebApp_BO
         //Added below fields for Grid dropdowns
         public double UnitPrice { get; set; }
         public float ItemTaxValue { get; set; }
+        public string IndianCurrencyValue { get; set; } //Rahul added 02 Dec 2022 
+
+        //Added below code for Stock transfer module.
+        public Nullable<double> RequiredQuantity { get; set; } //Rahul added 23 Nov 2022 
     }
 }

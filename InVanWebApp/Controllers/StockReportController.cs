@@ -18,9 +18,8 @@ namespace InVanWebApp.Controllers
     public class StockReportController : Controller
     {
         IStockMasterRepository _StockMasterRepository;
-
-
-        public StockReportController()
+        
+         public StockReportController()
         {
             _StockMasterRepository = new StockMasterRepository();
         }
@@ -62,7 +61,6 @@ namespace InVanWebApp.Controllers
             {
                 return View("Index");
             }
-
             StringBuilder sb = new StringBuilder();
             List<StockReportBO> stockReport = TempData["StockDetailsTemp"] as List<StockReportBO>;
 
@@ -74,7 +72,7 @@ namespace InVanWebApp.Controllers
             string name = "Vangi Foods";
             string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
             sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
-            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>"); /* font*/
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
             sb.Append("<tr >");
             sb.Append("<th Colspan='9' style='text-align:right;padding-bottom:-85px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
@@ -91,7 +89,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
 
             sb.Append("</th></tr>");
-
+            
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</th>"); 
@@ -105,6 +103,8 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("<tbody>");
+            stockReport.Count();
+            //stockReport.r
             foreach (var item in stockReport)
             {
 
@@ -136,6 +136,7 @@ namespace InVanWebApp.Controllers
                     writer.PageEvent = new PageHeaderFooter();
                     pdfDoc.Open();
                     //pdfDoc.NewPage();
+                   
 
                     setBorder(writer, pdfDoc);
 
@@ -196,7 +197,7 @@ namespace InVanWebApp.Controllers
 
             var numberTable = new PdfPTable(1);
             numberTable.DefaultCell.Border = 0;
-            var numberCell = new PdfPCell(new Phrase(text, _pageNumberFont)) { HorizontalAlignment = Element.ALIGN_CENTER };
+            var numberCell = new PdfPCell(new Phrase(text, _pageNumberFont)) { HorizontalAlignment = Element.ALIGN_CENTER};
             numberCell.Border = 0;
             numberTable.AddCell(numberCell);
 

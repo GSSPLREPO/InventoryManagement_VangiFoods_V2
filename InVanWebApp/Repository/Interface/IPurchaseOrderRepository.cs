@@ -39,11 +39,13 @@ namespace InVanWebApp.Repository
         IEnumerable<PurchaseOrderBO> GetLocationMasterList(int id);
         //Function for Get Location Master  Location Name
         IEnumerable<PurchaseOrderBO> GetLocationNameList();
+        //Function for Get Location Master  Currency Price 
+        IEnumerable<PurchaseOrderBO> GetCurrencyPriceList(); 
 
         //For fetching the list of items
         IEnumerable<ItemBO> GetItemDetailsForDD(int ItemType);
         //Fetch the details of Item by it's ID
-        ItemBO GetItemDetails(int itemID);
+        ItemBO GetItemDetails(int itemID,int currencyID);
 
         //Function define for: Delete record of item type using it's PurchaseOrderId 
         void Delete(int PurchaseOrderId, int userId);

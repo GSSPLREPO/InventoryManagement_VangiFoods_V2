@@ -65,7 +65,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_PODetails_GetAll", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_PurchaseOrder_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
