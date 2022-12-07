@@ -115,7 +115,10 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        if (model.ItemTaxValue == 0 & model.TaxId == 0 & model.UnitPrice == 0)
+                            return RedirectToAction("Index", "Item");
+                        else
+                            TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                     }
                 }
                 else

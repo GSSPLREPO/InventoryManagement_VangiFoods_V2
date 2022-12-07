@@ -41,16 +41,16 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Item_Name, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.Item_Name, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.Item_Name, new { @class = "form-control form-control-sm", maxlength = "40" })
+                    @Html.ValidationMessageFor(model => model.Item_Name, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Item Code")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.Item_Code, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control form-control-sm", maxlength = "20" })
+                    @Html.ValidationMessageFor(model => model.Item_Code, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
                 </div>
             </div>
             <br />
@@ -69,7 +69,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.MinStock, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(model => model.MinStock, new { @class = "form-control form-control-sm", maxlength="9" })
                     @Html.ValidationMessageFor(model => model.MinStock, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.UnitPrice, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)" })
+                    @Html.TextBoxFor(model => model.UnitPrice, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "8" })
                     @Html.ValidationMessageFor(model => model.UnitPrice, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -101,14 +101,14 @@
                     @Html.Label("HSN Code")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.HSN_Code, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.HSN_Code, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.HSN_Code, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.HSN_Code, "", new { @class = "error mt-2 text-danger", id = "validationMsgHSN" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Description")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "150" })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -132,6 +132,67 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 <script type="text/javascript">
+
+    //Validation for special characters.
+    $('#Item_Name').on("keydown keyup change", function () {
+        var maxLength = 40;
+        var $th = $(this);
+        $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
+            function (str) {
+                $('#validationMsgName').text('Special caracters not allowed!');
+                $('#validationMsgName').show();
+                return '';
+            }));
+
+        if (($('#Item_Name').val().length) > maxLength) {
+            $('#validationMsgName').show();
+            $('#validationMsgName').text('Length is exceeding!');
+            //return false;
+        }
+        else
+            $('#validationMsgName').hide();
+    });
+
+    //Validation for special characters.
+    $('#Item_Code').on("keydown keyup change", function () {
+        var maxLength = 20;
+        var $th = $(this);
+        $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
+            function (str) {
+                $('#validationMsgCode').text('Special caracters not allowed!');
+                $('#validationMsgCode').show();
+                return '';
+            }));
+
+        if (($('#Item_Code').val().length) > maxLength) {
+            $('#validationMsgCode').show();
+            $('#validationMsgCode').text('Length is exceeding!');
+            //return false;
+        }
+        else
+            $('#validationMsgCode').hide();
+    });
+
+    //Validation for special characters.
+    $('#HSN_Code').on("keydown keyup change", function () {
+        var maxLength = 10;
+        var $th = $(this);
+        $th.val($th.val().replace(/[^a-zA-Z0-9]/g,
+            function (str) {
+                $('#validationMsgHSN').text('Special caracters not allowed!');
+                $('#validationMsgHSN').show();
+                return '';
+            }));
+
+        if (($('#HSN_Code').val().length) > maxLength) {
+            $('#validationMsgHSN').show();
+            $('#validationMsgHSN').text('Length is exceeding!');
+            //return false;
+        }
+        else
+            $('#validationMsgHSN').hide();
+    });
+
     $(document).ready(function () {
         TaxOnchangeEvent();
         var taxValue = $('#ItemTaxVal').val();
