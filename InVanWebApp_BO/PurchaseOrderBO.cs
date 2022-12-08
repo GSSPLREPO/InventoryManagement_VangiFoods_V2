@@ -29,6 +29,9 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select terms and condition!")]
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
+
+        [Required(ErrorMessage = "Enter Term Description!")] //Rahul added 03/12/2022. 
+        public string TermDescription { get; set; } //Rahul added 03/12/2022.
         public string PurchaseOrderStatus { get; set; }
         public Nullable<int> Cancelled { get; set; }
         public string ReasonForCancellation { get; set; }
@@ -88,6 +91,29 @@ namespace InVanWebApp_BO
 
         //Added the below field for PO payment module
         public float AmountPaid { get; set; }
+
+        //Added the below field for PO timeline view 
+        public int ID { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime InwardDate { get; set; }
+        public string InwardNumber { get; set; }
+        public string GRNCode { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime GRNDate { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime PaymentDate { get; set; }
+        public string InvoiceNumber { get; set; }
+
+        //==============Rahul: These fields are for PO Currency details 02/12/2022==============//
+        [Required(ErrorMessage = "Select Currency!")]
+        public int CurrencyID { get; set; }
+        public int CountryID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public Nullable<double> IndianCurrencyValue { get; set; }
+
+
 
     }
 

@@ -13,6 +13,9 @@ using iTextSharp.tool.xml;
 using System.Text;
 using InVanWebApp_BO;
 using InVanWebApp.Common;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
 
 namespace InVanWebApp.Controllers
 {
@@ -130,15 +133,15 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>From Location Name</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>From Location Before Transfer Quantity</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Transfer Quantity</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Value Out</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Balance Quantity From Location</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>From Location Before Transfer Quantity (KG)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Transfer Quantity (KG)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Value Out (Rs)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Balance Quantity From Location (KG)</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Action</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>To Location Name</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>To Location Final Quantity</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Value In</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Unit Price</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>To Location Final Quantity (KG)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Value In (Rs)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Unit Price (Rs)</th>");
             sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("<tbody>");
@@ -237,6 +240,91 @@ namespace InVanWebApp.Controllers
             }
         }
 
+        #endregion
+
+        #region Excel Functionality
+        public void ExportAsExcel()
+        {
+
+            GridView gv = new GridView();
+            List<StockMovementBO> stockMovements = _repository.GetAllTransfferedStock(Convert.ToDateTime(Session["FromDate"]), Convert.ToDateTime(Session["toDate"]));
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Item Code");
+            dt.Columns.Add("Item Name");
+            dt.Columns.Add("Date");
+            dt.Columns.Add("From Location");
+            dt.Columns.Add("From Location Before Transfer Quantity (KG)");
+            dt.Columns.Add("Transfer Quantity (KG)");
+            dt.Columns.Add("Value Out (Rs)");
+            dt.Columns.Add("Balance Quantity From Location (KG)");
+            dt.Columns.Add("Action");
+            dt.Columns.Add("To Location");
+            dt.Columns.Add("To Location Final Quantity (KG)");
+            dt.Columns.Add("Value In (Rs)");
+            dt.Columns.Add("Price Per Unit (Rs)");
+
+            foreach (StockMovementBO st in stockMovements)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["Item Code"] = st.Item_Code.ToString();
+                dr["Item Name"] = st.Item_Name.ToString();
+                dr["Date"] = st.Date.ToString();
+                dr["From Location"] = st.FromLocationName.ToString();
+                dr["From Location Before Transfer Quantity (KG)"] = st.FromLocation_BeforeTransferQty.ToString();
+                dr["Transfer Quantity (KG)"] = st.TransferQuantity.ToString();
+                dr["Value Out (Rs)"] = st.ValueOut.ToString();
+                dr["Balance Quantity From Location (KG)"] = st.BalanceQty_FromLocation.ToString();
+                dr["Action"] = st.Action.ToString();
+                dr["To Location"] = st.ToLocationName.ToString();
+                dr["To Location Final Quantity (KG)"] = st.ToLocation_FinalQty.ToString();
+                dr["Value In (Rs)"] = st.ValueIn.ToString();
+                dr["Price Per Unit (Rs)"] = st.UnitPrice.ToString();
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_Stock_Movement_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Stock Movement Report";/* The Stock Movement Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date:";/* The To Date are given here  */
+            string name = "Vangi Foods";/* The Vangi Foods are given here  */
+            string address = "Sr No 673, Opp Surya Gate, Gana Rd, Karamsad, Gujarat 388325";/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td><td colspan='3' rowspan='5'> <img height='150' width='150' src='" + strPath + "'/></td></td>" +
+                "<tr><td><td><td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></td></td></td></tr></tr>" +
+                "<tr><td><td><td><td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></td></td></td></tr>" +
+                "<tr><td><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></td></tr>" +
+                "<tr><tr><td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td><td><td><td><td><td><td><td><td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td></td></td></td></td></td></td></td></td></td>"
+                + "</td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
         #endregion
     }
 

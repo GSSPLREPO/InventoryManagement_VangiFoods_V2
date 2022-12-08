@@ -17,6 +17,9 @@ namespace InVanWebApp.Controllers
     {
         private IPurchaseOrderRepository _purchaseOrderRepository;
         private IIndentRepository _indentRepository;
+        private IInwardNoteRepository _inwardNoteRepository;
+        private ITermsConditionRepository _termsConditionRepository;
+
         private static ILog log = LogManager.GetLogger(typeof(PurchaseOrderController));
 
         #region Initializing constructor
@@ -27,6 +30,8 @@ namespace InVanWebApp.Controllers
         {
             _purchaseOrderRepository = new PurchaseOrderRepository();
             _indentRepository = new IndentRepository();
+            _inwardNoteRepository = new InwardNoteRepository();
+            _termsConditionRepository = new TermsConditionRepository();
 
             var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
@@ -151,6 +156,7 @@ namespace InVanWebApp.Controllers
                 //BindOrganisations();
                 BindLocationName();
                 BindIndentDropDown();
+                BindCurrencyPrice();
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
                 //=========here document type=3 i.e. for generating the Inward note (logic is in SP).====//
@@ -205,6 +211,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Duplicate Purchase Order! Can not be inserted!');</script>";
                             BindCompany();
                             BindTermsAndCondition();
+                            BindCurrencyPrice();
                             //BindOrganisations();
                             BindLocationName();
                             BindIndentDropDown();
@@ -221,6 +228,7 @@ namespace InVanWebApp.Controllers
                         BindCompany();
                         BindIndentDropDown();
                         BindTermsAndCondition();
+                        BindCurrencyPrice();
                         //BindOrganisations();
                         BindLocationName();
                         UploadSignature(Signature);
@@ -275,6 +283,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Duplicate Purchase Order as draft.! Can not be saved as draft.!');</script>";
                             BindCompany();
                             BindTermsAndCondition();
+                            BindCurrencyPrice();
                             //BindOrganisations();
                             BindLocationName();
                             BindIndentDropDown();
@@ -291,6 +300,7 @@ namespace InVanWebApp.Controllers
                         BindCompany();
                         BindIndentDropDown();
                         BindTermsAndCondition();
+                        BindCurrencyPrice();
                         //BindOrganisations();
                         BindLocationName();
                         UploadSignature(Signature);
@@ -345,6 +355,7 @@ namespace InVanWebApp.Controllers
             {
                 BindCompany();
                 BindTermsAndCondition();
+                BindCurrencyPrice();
                 BindLocationName();
                 BindIndentDropDown();
 
@@ -421,6 +432,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                             BindCompany();
                             BindTermsAndCondition();
+                            BindCurrencyPrice();
                             BindLocationName();
                             BindIndentDropDown();
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
@@ -469,10 +481,11 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Function for get item details
-        public JsonResult GetitemDetails(string id)
+        public JsonResult GetitemDetails(string id,string currencyId)
         {
             var itemId = Convert.ToInt32(id);
-            var itemDetails = _purchaseOrderRepository.GetItemDetails(itemId);
+            var currencyID = Convert.ToInt32(currencyId);
+            var itemDetails = _purchaseOrderRepository.GetItemDetails(itemId, currencyID);
             //var finalDetials = itemDetails.Item_Name +"#"+ itemDetails.UnitName +"#"+ itemDetails.Price+"#"+itemDetails.Tax;
             //return Json(finalDetials);
             return Json(itemDetails);
@@ -520,6 +533,7 @@ namespace InVanWebApp.Controllers
                 {
                     BindCompany();
                     BindTermsAndCondition();
+                    BindCurrencyPrice();
                     BindLocationName();
                     BindIndentDropDown();
 
@@ -600,6 +614,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Duplicate category!');</script>";
                             BindCompany();
                             BindTermsAndCondition();
+                            BindCurrencyPrice();
                             BindLocationName();
                             BindIndentDropDown();
 
@@ -660,6 +675,7 @@ namespace InVanWebApp.Controllers
 
             BindCompany();
             BindTermsAndCondition();
+            BindCurrencyPrice();
             BindLocationName();
             BindIndentDropDown();
 
@@ -672,6 +688,77 @@ namespace InVanWebApp.Controllers
 
         }
         #endregion
+
+        #region Transaction Timeline View for Purchase Order 
+        /// <summary>
+        /// Created By: Rahul 
+        /// Created Date : 07-12-2022 
+        /// Description: This method responsible for View of Purchase Order details. 
+        /// </summary>
+        /// <param name="PurchaseOrderId"></param>
+        /// <returns></returns>
+        public ActionResult TimelineViewPurchaseOrder(int ID)
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            PurchaseOrderBO modelPO = _purchaseOrderRepository.GetPurchaseOrderById(ID);
+            PurchaseOrderBO timelinePO = _purchaseOrderRepository.GetDetailsForTimelineView(ID);
+            InwardNoteBO inwardNote = _inwardNoteRepository.GetPOById(ID);
+
+            if (timelinePO != null)
+            {
+                modelPO.GRNDate = (DateTime)timelinePO.GRNDate;
+                modelPO.GRNCode = timelinePO.GRNCode;
+
+                modelPO.PaymentDate = (DateTime)timelinePO.PaymentDate;
+                modelPO.InvoiceNumber = timelinePO.InvoiceNumber;
+            }
+            if (inwardNote != null)
+            {
+                modelPO.InwardDate = (DateTime)inwardNote.InwardDate;
+                modelPO.InwardNumber = inwardNote.InwardNumber;
+            }
+            //if (timelinePO.GRNCode != null)
+            //{
+            //    modelPO.GRNDate = (DateTime)timelinePO.GRNDate;
+            //    modelPO.GRNCode = timelinePO.GRNCode;
+            //}
+
+            //if (timelinePO.InvoiceNumber != null)
+            //{
+            //    modelPO.PaymentDate = (DateTime)timelinePO.PaymentDate;
+            //    modelPO.InvoiceNumber = timelinePO.InvoiceNumber;
+            //}
+
+            //if (inwardNote.InwardNumber != null)
+            //{
+            //    modelPO.InwardDate = (DateTime)inwardNote.InwardDate;
+            //    modelPO.InwardNumber = inwardNote.InwardNumber;
+            //}
+
+
+            return PartialView("_TimelinePV", modelPO);
+
+        }
+        #endregion
+
+        #region Bind dropdowns Currency Price
+        public void BindCurrencyPrice()
+        {
+            var result = _purchaseOrderRepository.GetCurrencyPriceList();
+            var resultList = new SelectList(result.ToList(), "CurrencyID", "CurrencyName", "IndianCurrencyValue");
+            ViewData["CurrencyName"] = resultList;
+        }
+        #endregion
+
+        public JsonResult GetTermsDescription(string id)
+        {
+            int taxId = Convert.ToInt32(id);
+            var result = _termsConditionRepository.GetById(taxId);
+            return Json(result);
+        }
+
 
     }
 }

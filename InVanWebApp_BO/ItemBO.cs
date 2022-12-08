@@ -59,5 +59,8 @@ namespace InVanWebApp_BO
 
         //Added below code for Stock transfer module.
         public Nullable<double> RequiredQuantity { get; set; } //Rahul added 23 Nov 2022 
+        public string IndianCurrencyValue { get; set; } //Rahul added 02 Dec 2022 
+
+
     }
 }

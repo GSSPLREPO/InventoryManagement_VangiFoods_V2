@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using Dapper;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
@@ -163,10 +164,10 @@ namespace InVanWebApp.Repository
                                 Item_Code = dataReader1["Item_Code"].ToString(),
                                 ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
                                 ItemUnit = dataReader1["ItemUnit"].ToString(),
-                                ItemQuantity = (dataReader1["ItemQuantity"]!=null?Convert.ToDecimal(dataReader1["ItemQuantity"]):0),
+                                ItemQuantity = (dataReader1["ItemQuantity"] != null ? Convert.ToDecimal(dataReader1["ItemQuantity"]) : 0),
                                 //ItemTaxValue = dataReader1["ItemTaxValue"].ToString(),  rahul updated String to Decimal 
                                 ItemTaxValue = Convert.ToDecimal(dataReader1["ItemTaxValue"]),
-                                InwardQuantity = ((dataReader1["InwardQuantity"]!=null)?Convert.ToDecimal(dataReader1["InwardQuantity"]):0)
+                                InwardQuantity = ((dataReader1["InwardQuantity"] != null) ? Convert.ToDecimal(dataReader1["InwardQuantity"]) : 0)
                             };
                             resultList.Add(result);
                         }
@@ -344,6 +345,36 @@ namespace InVanWebApp.Repository
             catch (Exception ex)
             {
                 log.Error(ex.Message, ex);
+            }
+        }
+        #endregion
+
+        //Rahul: this function id calling from PO for timeline of PO
+        #region GetPOById function for timeline view 
+
+        /// <summary>
+        /// GetPOById record by ID, Rahul 08/12/2022. 
+        /// </summary>
+        /// <param name="ID"></param>
+        public InwardNoteBO GetPOById(int PO_Id)
+        {
+
+            string inwardNoteQuery = "SELECT TOP(1) * FROM InwardNote WITH(NOLOCK) WHERE PO_Id = @purchaseOrderId AND IsDeleted = 0 order by CreatedDate desc";
+            try
+            {
+
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    var inwardNote = con.Query<InwardNoteBO>(inwardNoteQuery, new { @purchaseOrderId = PO_Id }).FirstOrDefault();
+
+                    return inwardNote;
+                }
+            }
+            catch (Exception ex)
+            {
+                InwardNoteBO inwardNoteBO = new InwardNoteBO();
+                log.Error(ex.Message, ex);
+                return inwardNoteBO;
             }
         }
         #endregion

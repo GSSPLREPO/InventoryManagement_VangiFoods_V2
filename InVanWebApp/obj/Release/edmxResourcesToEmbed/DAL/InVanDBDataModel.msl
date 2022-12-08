@@ -160,7 +160,7 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="ndianCurrencyPrice" ColumnName="ndianCurrencyPrice" />
+          <ScalarProperty Name="IndianCurrencyValue" ColumnName="IndianCurrencyValue" />
           <ScalarProperty Name="CurrencyPrice" ColumnName="CurrencyPrice" />
           <ScalarProperty Name="CurrencyName" ColumnName="CurrencyName" />
           <ScalarProperty Name="CountryID" ColumnName="CountryID" />
@@ -276,6 +276,8 @@
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+          <ScalarProperty Name="LocationId" ColumnName="LocationId" />
           <ScalarProperty Name="GRNDate" ColumnName="GRNDate" />
           <ScalarProperty Name="GRNCode" ColumnName="GRNCode" />
           <ScalarProperty Name="PONumber" ColumnName="PONumber" />
@@ -294,9 +296,10 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="InwardQty" ColumnName="InwardQty" />
           <ScalarProperty Name="ReceivedQuantity" ColumnName="ReceivedQuantity" />
           <ScalarProperty Name="OrderQuantity" ColumnName="OrderQuantity" />
-          <ScalarProperty Name="ItemTaxValue" ColumnName="ItemTaxValue" />
+          <ScalarProperty Name="ItemUnit" ColumnName="ItemUnit" />
           <ScalarProperty Name="ItemUnitPrice" ColumnName="ItemUnitPrice" />
           <ScalarProperty Name="Item_Code" ColumnName="Item_Code" />
           <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
@@ -318,6 +321,40 @@
           <ScalarProperty Name="TaxRate" ColumnName="TaxRate" />
           <ScalarProperty Name="TaxName" ColumnName="TaxName" />
           <ScalarProperty Name="TaxID" ColumnName="TaxID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Indents">
+      <EntityTypeMapping TypeName="InVanDBModels.Indent">
+        <MappingFragment StoreEntitySet="Indent">
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="RaisedTo" ColumnName="RaisedTo" />
+          <ScalarProperty Name="IndentDueDate" ColumnName="IndentDueDate" />
+          <ScalarProperty Name="IndentDate" ColumnName="IndentDate" />
+          <ScalarProperty Name="IndentNo" ColumnName="IndentNo" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Indent_Details">
+      <EntityTypeMapping TypeName="InVanDBModels.Indent_Details">
+        <MappingFragment StoreEntitySet="Indent_Details">
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="SentQuantity" ColumnName="SentQuantity" />
+          <ScalarProperty Name="RequiredQuantity" ColumnName="RequiredQuantity" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+          <ScalarProperty Name="IndentID" ColumnName="IndentID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -628,7 +665,8 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-          <ScalarProperty Name="ItemCostID" ColumnName="ItemCostID" />
+          <ScalarProperty Name="ItemUnitPrice" ColumnName="ItemUnitPrice" />
+          <ScalarProperty Name="ItemId" ColumnName="ItemId" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="LocationID" ColumnName="LocationID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
@@ -846,14 +884,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PurchaseOrderPaymentDetails1">
-      <EntityTypeMapping TypeName="InVanDBModels.PurchaseOrderPaymentDetails">
+    <EntitySetMapping Name="PurchaseOrderPaymentDetails">
+      <EntityTypeMapping TypeName="InVanDBModels.PurchaseOrderPaymentDetail">
         <MappingFragment StoreEntitySet="PurchaseOrderPaymentDetails">
           <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
           <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="PaymentDueDate" ColumnName="PaymentDueDate" />
           <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
           <ScalarProperty Name="PaymentDetails" ColumnName="PaymentDetails" />
           <ScalarProperty Name="AccountNo" ColumnName="AccountNo" />
@@ -1234,7 +1274,9 @@
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-          <ScalarProperty Name="RequiredQuantity" ColumnName="RequiredQuantity" />
+          <ScalarProperty Name="ToLocation_FinalQty" ColumnName="ToLocation_FinalQty" />
+          <ScalarProperty Name="FromLocation_BeforeTransferQty" ColumnName="FromLocation_BeforeTransferQty" />
+          <ScalarProperty Name="FinalQuantity" ColumnName="FinalQuantity" />
           <ScalarProperty Name="TransferQuantity" ColumnName="TransferQuantity" />
           <ScalarProperty Name="Item_Code" ColumnName="Item_Code" />
           <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />

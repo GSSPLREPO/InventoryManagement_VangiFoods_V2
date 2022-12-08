@@ -635,7 +635,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Get details of Items by ID
-        public ItemBO GetItemDetails(int itemID)
+        public ItemBO GetItemDetails(int itemID,int currencyID)
         {
             try
             {
@@ -647,6 +647,7 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_GetItemDetailsByIdForPOandOC", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ItemId", itemID);
+                    cmd.Parameters.AddWithValue("@CurrencyID", currencyID); //added 
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
@@ -657,7 +658,8 @@ namespace InVanWebApp.Repository
                             Item_Code = reader["Item_Code"].ToString(),
                             UnitCode = reader["UnitID"].ToString(),
                             UnitPrice = Convert.ToDouble(reader["UnitPrice"]),
-                            ItemTaxValue = float.Parse(reader["ItemTaxValue"].ToString())
+                            ItemTaxValue = float.Parse(reader["ItemTaxValue"].ToString()),
+                            IndianCurrencyValue = reader["IndianCurrencyValue"].ToString()
                         };
                     }
                     con.Close();
@@ -820,6 +822,85 @@ namespace InVanWebApp.Repository
                 log.Error(ex.Message, ex);
             }
             return response;
+        }
+        #endregion
+
+        #region GetPOById function for timeline view 
+
+        /// <summary>
+        /// GetPOById record by ID, Rahul 08/12/2022. 
+        /// </summary>
+        /// <param name="ID"></param>
+        public PurchaseOrderBO GetDetailsForTimelineView(int PO_Id)
+        {
+            PurchaseOrderBO poBo = new PurchaseOrderBO();
+            string grnMasterQuery = "SELECT TOP(1) * FROM GRN_Master WITH(NOLOCK) WHERE PO_Id = @purchaseOrderId AND IsDeleted = 0 order by CreatedDate desc";
+            string poPaymentDetailsQuery = "SELECT TOP(1) * FROM PurchaseOrderPaymentDetails WITH(NOLOCK) WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0 order by CreatedDate desc ";
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                var grnResult = con.Query<GRN_BO>(grnMasterQuery, new { @purchaseOrderId = PO_Id }).FirstOrDefault();
+                var poPaymentResult = con.Query<POPaymentBO>(poPaymentDetailsQuery, new { @purchaseOrderId = PO_Id }).FirstOrDefault();
+                if (grnResult == null)
+                {
+                    //poBo.GRNDate = null;
+                    poBo.GRNCode = null;
+                }
+                else
+                {
+                    poBo.GRNDate = (DateTime)grnResult.GRNDate;
+                    poBo.GRNCode = grnResult.GRNCode;
+                }
+
+                if (poPaymentResult == null)
+                {
+                    //poBo.PaymentDate = null;
+                    poBo.InvoiceNumber = null;
+                }
+                else
+                {
+                    poBo.PaymentDate = (DateTime)poPaymentResult.PaymentDate;
+                    poBo.InvoiceNumber = poPaymentResult.InvoiceNumber;
+                }
+
+                return poBo;
+            }
+        }
+        #endregion
+
+        ///Rahul added 02/12/2022. 
+        #region Function for binding dropdown GetCurrencyPriceList.
+        public IEnumerable<PurchaseOrderBO> GetCurrencyPriceList()
+        {
+            List<PurchaseOrderBO> resultList = new List<PurchaseOrderBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_CurrencyMaster_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new PurchaseOrderBO()
+                        {
+                            CurrencyID = Convert.ToInt32(dataReader["CurrencyID"]),
+                            CurrencyName = dataReader["CurrencyName"].ToString(),
+                            IndianCurrencyValue = float.Parse(dataReader["IndianCurrencyValue"].ToString())
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
         }
         #endregion
 

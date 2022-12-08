@@ -9,6 +9,8 @@ namespace InVanWebApp.Repository.Interface
 {
     public interface IStockMasterRepository
     {
-        List<StockReportBO> GetAllStock();
+        //List<StockReportBO> GetAllStock();
+
+        IEnumerable<StockReportBO> GetAllStock();
     }
 }

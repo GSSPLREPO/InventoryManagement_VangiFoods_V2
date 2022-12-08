@@ -49,7 +49,13 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.Tittle)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.PONumber)</td>
+                                                @*<td>@Html.DisplayFor(modelItem => item.PONumber)</td>*@
+                                                <td>
+                                                    <button type="button" class="btn btn-sm btn-link" style="background-color:transparent" data-toggle="modal" title="PO Timeline" data-target="#myModal" id="@item.PurchaseOrderId" onclick="TimelineViewDetails(this.id)" >@Html.DisplayFor(modelItem => item.PONumber)</button>
+                                                    @*<a href="#" class="btn btn-sm btn-link" id="@item.PurchaseOrderId" onclick="TimelineViewDetails(this.id)">
+                                                        @Html.DisplayFor(modelItem => item.PONumber)
+                                                    </a>*@
+                                                </td>
                                                 <td>
                                                     @*@Html.DisplayFor(modelItem => item.PurchaseOrderStatus)*@
                                                     @if (item.PurchaseOrderStatus == "Closed")
@@ -123,6 +129,30 @@
                                         }
                                     </tbody>
                                 </table>
+                                @*Model Started*@
+                                <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    @*<div class="modal-dialog modal-lg modal-dialog-centered">*@
+                                    <div class="modal-dialog modal-lg" role="document">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            @*<div class="modal-header" dir="rtl">*@
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel" style="color:darkcyan">Transaction Timeline</h4>
+                                                @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*Model end*@
                             </div>
                         </div>
                     </div>
@@ -158,6 +188,71 @@
             "filter": true,
             "pageLength": 20
         });
+
+                function TimelineViewDetails(ID) {
+            $.get("@Url.Action("TimelineViewPurchaseOrder", "PurchaseOrder")/" + ID,
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+
+            //$("#myModal").modal("show");
+            //$("#myModal").addClass("show");
+                    $('#myModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget) // Button that triggered the modal
+                        var recipient = button.data('whatever') // Extract info from data-* attributes
+                        //// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                        //// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                        var modal = $(this)
+                        //modal.find('.modal-title').text('New message to ' + recipient)
+                        modal.find('.modal-body input').val(recipient)
+                    })
+        }
+
     </script>
 }
 
+<style>
+    .horizontal-timeline .items {
+        border-top: 3px solid #e9ecef;
+    }
+
+        .horizontal-timeline .items .items-list {
+            display: block;
+            position: relative;
+            text-align: center;
+            padding-top: 70px;
+            margin-right: 0;
+        }
+
+            .horizontal-timeline .items .items-list:before {
+                content: "";
+                position: absolute;
+                height: 36px;
+                border-right: 2px dashed #dee2e6;
+                top: 0;
+            }
+
+            .horizontal-timeline .items .items-list .event-date {
+                position: absolute;
+                top: 36px;
+                left: 0;
+                right: 0;
+                /*width: 75px;*/
+                width: 100px;
+                margin: 0 auto;
+                font-size: 0.9rem;
+                padding-top: 8px;
+            }
+
+    @@media (min-width: 1140px) {
+        .horizontal-timeline .items .items-list {
+            display: inline-block;
+            width: 24%;
+            padding-top: 45px;
+        }
+
+            .horizontal-timeline .items .items-list .event-date {
+                top: -40px;
+            }
+    }
+</style>

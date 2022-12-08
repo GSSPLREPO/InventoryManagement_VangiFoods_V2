@@ -5,13 +5,17 @@ using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 using iTextSharp.tool.xml;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace InVanWebApp.Controllers
 {
@@ -47,11 +51,7 @@ namespace InVanWebApp.Controllers
             return Json(new { data = stockDetails }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>
-        /// 17/11/2022 Bhandavi
-        /// Export report to pdf
-        /// </summary>
-        /// <returns></returns>
+        
         [Obsolete]
         public ActionResult ExprotAsPDF()
         {
@@ -94,12 +94,12 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</th>"); 
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</th>"); 
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price</th>"); 
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Stock Quantity</th>"); 
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Inventory Value</th>"); 
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price (Rs)</th>"); 
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Stock Quantity (KG)</th>"); 
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Inventory Value (Rs)</th>"); 
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder</th>"); 
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder Level</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Reorder Quantity</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder Level (KG)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Reorder Quantity (KG)</th>");
             sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("<tbody>");
@@ -172,9 +172,77 @@ namespace InVanWebApp.Controllers
             //---------------------------------------
         }
 
-    }
+        public void ExportAsExcel()
+        {
 
-    
+            GridView gv = new GridView();
+            IEnumerable<StockReportBO> stockReports = _StockMasterRepository.GetAllStock();
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Reorder");
+            dt.Columns.Add("Item code");
+            dt.Columns.Add("Item Name");
+            dt.Columns.Add("Item Unit Price (Rs)");
+            dt.Columns.Add("Stock Quantity (KG)");
+            dt.Columns.Add("Inventory Value (Rs)");
+            dt.Columns.Add("Reorder Level (KG)");
+            dt.Columns.Add("Item Reorder Quantity (KG)");
+
+            foreach (StockReportBO st in stockReports)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.RowNumber.ToString();
+                dr["Reorder"] = st.Reorder.ToString();
+                dr["Item code"] = st.Item_Code.ToString();
+                dr["Item Name"] = st.ItemName.ToString();
+                dr["Item Unit Price (Rs)"] = st.ItemUnitPrice.ToString();
+                dr["Stock Quantity (KG)"] = st.StockQuantity.ToString();
+                dr["Inventory Value (Rs)"] = st.InventoryValue.ToString();
+                dr["Reorder Level (KG)"] = st.ReOrderLevel.ToString();
+                dr["Item Reorder Quantity (KG)"] = st.ItemReOrderQuantity.ToString();
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_Stock_Movement_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Stock Movement Report";/* The Stock Movement Report name are given here  */
+            string name = "Vangi Foods";/* The Vangi Foods are given here  */
+            string address = "Sr No 673, Opp Surya Gate, Gana Rd, Karamsad, Gujarat 388325";/* The Address are given here  */
+
+
+
+
+            String content1 = "<table>" + "<tr><td><td colspan='3' rowspan='5'> <img height='120' width='120' src='" + strPath + "'/></td></td>" +
+                "<tr><td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></td></tr></tr>" +
+                "<tr><td><td><td colspan='2'>" + name + "</td></td></tr>" +
+                "<tr><td><td colspan='4'>" + address + "</td></td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
+
+    }
 
     public class PageHeaderFooter : PdfPageEventHelper
     {
@@ -207,5 +275,7 @@ namespace InVanWebApp.Controllers
             numberTable.WriteSelectedRows(0, -1, document.Right - 300, document.Bottom + 2, writer.DirectContent);
         }
     }
+
+
 
 }

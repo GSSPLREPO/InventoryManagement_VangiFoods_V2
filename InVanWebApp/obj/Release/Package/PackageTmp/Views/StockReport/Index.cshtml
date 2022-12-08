@@ -30,16 +30,15 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="col-md-12 mb-2" style="float:right">
-                               @* <a style="font-size: 50px; float: right; color:#6a005b; " href="@Url.Action("ExprotAsPDF", "StockReport")" class="far fa-file-pdf">*@
-                                <a style="font-size: 50px;" href="@Url.Action("ExprotAsPDF", "StockReport")" class="far fa-file-pdf float-right text-danger">
-
-                                </a>
+                            <div class="col-md-12 mb-2" style="float:left;padding-left:90.5%;">
+                                @* <a style="font-size: 50px; float: right; color:#6a005b; " href="@Url.Action("ExprotAsPDF", "StockReport")" class="far fa-file-pdf">*@
+                                <a style="font-size: 50px;" href="@Url.Action("ExprotAsPDF", "StockReport")" ><img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /></a>
+                                <a style="font-size: 50px;" href="@Url.Action("ExportAsExcel", "StockReport")" ><img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px;" /></a>
                                 @*   @using (Html.BeginForm("ExprotAsPDF", "StockReport", FormMethod.Post, new { @style = "float:right" }))
-                                     {
-                                     @* <button  style="background:white;"><i style="height: 70px; width: 70px;"class="far fa-file-pdf" ></i></button>; *@
-                                   @* <button @*class="btn btn-danger" style="float:right;"><i class="fa-sharp fa-solid fa-file-pdf" ></i></button> /*<i class="fa-sharp fa-solid fa-file-pdf"></i> 
-                                }*@
+        {
+        @* <button  style="background:white;"><i style="height: 70px; width: 70px;"class="far fa-file-pdf" ></i></button>; *@
+                                @* <button @*class="btn btn-danger" style="float:right;"><i class="fa-sharp fa-solid fa-file-pdf" ></i></button> /*<i class="fa-sharp fa-solid fa-file-pdf"></i>
+        }*@
                             </div>
                             <br />
                            
@@ -52,11 +51,11 @@
                                         <th style="text-align:center">Reorder</th>
                                         <th style="text-align:center">Item Code</th>
                                         <th style="text-align:center">Item Name</th>
-                                        <th style="text-align:center">Item Unit Price</th>
-                                        <th style="text-align:center">Stock Quantity</th>
-                                        <th style="text-align:center">Inventory Value</th>
-                                        <th style="text-align:center">Reorder Level</th>
-                                        <th style="text-align:center">Item Reorder Quantity</th>
+                                        <th style="text-align:center">Item Unit Price (Rs)</th>
+                                        <th style="text-align:center">Stock Quantity (KG)</th>
+                                        <th style="text-align:center">Inventory Value (Rs)</th>
+                                        <th style="text-align:center">Reorder Level (KG)</th>
+                                        <th style="text-align:center">Item Reorder Quantity (KG)</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center"></tbody>

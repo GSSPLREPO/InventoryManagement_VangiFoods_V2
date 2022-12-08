@@ -43,7 +43,7 @@ namespace InVanWebApp.Repository
         //For fetching the list of items
         IEnumerable<ItemBO> GetItemDetailsForDD(int ItemType);
         //Fetch the details of Item by it's ID
-        ItemBO GetItemDetails(int itemID);
+        ItemBO GetItemDetails(int itemID, int currencyID);
 
         //Function define for: Delete record of item type using it's PurchaseOrderId 
         void Delete(int PurchaseOrderId, int userId);
@@ -52,6 +52,10 @@ namespace InVanWebApp.Repository
 
         //Function Define For: Save the Amendment details againts Purchase Order.
         ResponseMessageBO SaveAmendment(PurchaseOrderBO model);
+
+        /// Function for timeline view of PO record by ID, Rahul 08/12/2022.
+        PurchaseOrderBO GetDetailsForTimelineView(int PO_Id);
+        IEnumerable<PurchaseOrderBO> GetCurrencyPriceList();
 
     }
 }

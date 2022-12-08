@@ -49,6 +49,7 @@ namespace InVanWebApp.Repository
                             BalanceQty_FromLocation = Convert.ToInt32(reader["BalanceQty_FromLocation"]),
                             Action = reader["Action"].ToString(),
                             ToLocationName = reader["ToLocationName"].ToString(),
+                            ToLocation_FinalQty = float.Parse(reader["ToLocation_FinalQty"].ToString()),
                             ValueIn = float.Parse(reader["ValueIn"].ToString()),
                             UnitPrice= float.Parse(reader["UnitPrice"].ToString())
                         };

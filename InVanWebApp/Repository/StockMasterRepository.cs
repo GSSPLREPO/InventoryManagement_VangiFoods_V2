@@ -14,7 +14,7 @@ namespace InVanWebApp.Repository
     {
         private string conStr = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
 
-        public List<StockReportBO> GetAllStock()
+        public IEnumerable<StockReportBO> GetAllStock()
         {
             using (SqlConnection con = new SqlConnection(conStr))
             {

@@ -30,5 +30,7 @@ namespace InVanWebApp.Repository.Interface
         //Function define for: Delete record of item type using it's ID
         void Delete(int ID, int userId);
 
+        //Rahul: this function id calling from PO for timeline of PO
+        InwardNoteBO GetPOById(int PO_Id);
     }
 }
