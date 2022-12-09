@@ -113,7 +113,9 @@ namespace InVanWebApp_BO
         public Nullable<double> CurrencyPrice { get; set; }
         public Nullable<double> IndianCurrencyValue { get; set; }
 
-
+        //Added below fields for Indent dropdown in PO.
+        public int IndentID { get; set; }
+        public string IndentDescription { get; set; }
 
     }
 
@@ -134,6 +136,11 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+
+        //Added the below field for currency details in PO
+        public int CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
 
     }
 }

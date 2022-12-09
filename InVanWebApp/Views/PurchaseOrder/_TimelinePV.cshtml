@@ -6,7 +6,7 @@
     <h2>PONumber: @Model.PONumber</h2>*@
 
 <div class="container-fluid py-5">
-    
+
     <div class="row">
         <div class="col-lg-12">
 
@@ -32,7 +32,7 @@
                         <div class="px-4">
                             <div class="event-date badge bg-success font-weight-bold" style="color:white">
                                 @*@Model.InwardDate.ToString("dd/MM/yyyy")*@
-                                 
+
                                 @{ if ((DateTime.Compare(Model.InwardDate, Convert.ToDateTime("01-01-0001 00:00:00")) == 0))
                                     {
                                         <div class="mb-2 font-weight-bold">Not yet done</div>
@@ -52,7 +52,7 @@
                                     }
                                     else
                                     {
-                                        <div class="mb-2 text-muted font-weight-bold">Not yet done</div>
+                                        <div class="mb-2 text-muted font-weight-bold">Inward is pending!</div>
                                     } }
                             </p>
                             <div>
@@ -80,7 +80,7 @@
                                     }
                                     else
                                     {
-                                        <div class="mb-2 text-muted font-weight-bold">Not yet done</div>
+                                <div class="mb-2 text-muted font-weight-bold">GRN is pending!</div>
                                     } }
                             </p>
                             <div>
@@ -103,14 +103,14 @@
                             </div>
                             <h5 class="pt-2">PO Payment</h5>
                             <p class="text-muted font-weight-bold">
-                                @*@Model.InvoiceNumber*@ 
+                                @*@Model.InvoiceNumber*@
                                 @{ if (Model.InvoiceNumber != null)
                                     {
                                         @Model.InvoiceNumber
                                     }
                                     else
-                                    {                                        
-                                        <div class="mb-2 text-muted font-weight-bold">Not yet done</div> 
+                                    {
+                                        <div class="mb-2 text-muted font-weight-bold">PO payment is pending!</div>
                                     } }
                             </p>
                             <div>

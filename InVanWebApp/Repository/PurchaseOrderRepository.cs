@@ -101,7 +101,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@SGST", purchaseOrderMaster.SGST);
                     cmd.Parameters.AddWithValue("@IGST", purchaseOrderMaster.IGST);
                     cmd.Parameters.AddWithValue("@TermsAndConditionID", purchaseOrderMaster.TermsAndConditionID);
-                    cmd.Parameters.AddWithValue("@Terms", purchaseOrderMaster.Terms);
+                    //cmd.Parameters.AddWithValue("@Terms", purchaseOrderMaster.Terms);
                     //cmd.Parameters.AddWithValue("@PurchaseOrderStatus", purchaseOrderMaster.PurchaseOrderStatus);
                     cmd.Parameters.AddWithValue("@PurchaseOrderStatus", "Open");
                     cmd.Parameters.AddWithValue("@Cancelled", purchaseOrderMaster.Cancelled);
@@ -127,6 +127,15 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LocationName", purchaseOrderMaster.LocationName);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", purchaseOrderMaster.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", purchaseOrderMaster.GrandTotal);
+                    //FN: Added the below field for Indent, currency and terms description
+                    cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.TermDescription);
+                    cmd.Parameters.AddWithValue("@IndentID",purchaseOrderMaster.IndentID);
+                    cmd.Parameters.AddWithValue("@IndentDescription", purchaseOrderMaster.IndentDescription);
+                    cmd.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
+                    cmd.Parameters.AddWithValue("@CurrencyName", purchaseOrderMaster.CurrencyName);
+                    //cmd.Parameters.AddWithValue("@CurrencyPrice", purchaseOrderMaster.CurrencyPrice);
+
+
 
                     //con.Open();
 
@@ -143,11 +152,11 @@ namespace InVanWebApp.Repository
                     var json = new JavaScriptSerializer();
                     var data = json.Deserialize<Dictionary<string, string>[]>(purchaseOrderMaster.TxtItemDetails);
 
-                    List<PurchaseOrderItemsDetail> itemDetails = new List<PurchaseOrderItemsDetail>();
+                    List<PurchaseOrderItemsDetails> itemDetails = new List<PurchaseOrderItemsDetails>();
 
                     foreach (var item in data)
                     {
-                        PurchaseOrderItemsDetail objItemDetails = new PurchaseOrderItemsDetail();
+                        PurchaseOrderItemsDetails objItemDetails = new PurchaseOrderItemsDetails();
                         objItemDetails.PurchaseOrderId = PurchaseOrderId;
                         objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
                         objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
@@ -159,6 +168,12 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemTaxValue = item.ElementAt(6).Value.ToString();
                         objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
                         objItemDetails.CreatedBy = purchaseOrderMaster.CreatedBy;
+
+                        //Added the below field for Currency
+                        objItemDetails.CurrencyID = purchaseOrderMaster.CurrencyID;
+                        objItemDetails.CurrencyName = purchaseOrderMaster.CurrencyName;
+                        //objItemDetails.CurrencyPrice = purchaseOrderMaster.CurrencyPrice;
+
                         itemDetails.Add(objItemDetails);
                     }
 
@@ -181,6 +196,12 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         //cmdNew.Parameters.AddWithValue("@LastModifiedBy", 1);
                         //cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));    
+
+                        //Added the below field for Indent, currency and terms description
+                        cmd.Parameters.AddWithValue("@CurrencyID", item.CurrencyID);
+                        cmd.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
+                        //cmd.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice);
+                        cmd.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
 
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
 
@@ -331,11 +352,11 @@ namespace InVanWebApp.Repository
                     var json = new JavaScriptSerializer();
                     var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
 
-                    List<PurchaseOrderItemsDetail> itemDetails = new List<PurchaseOrderItemsDetail>();
+                    List<PurchaseOrderItemsDetails> itemDetails = new List<PurchaseOrderItemsDetails>();
 
                     foreach (var item in data)
                     {
-                        PurchaseOrderItemsDetail objItemDetails = new PurchaseOrderItemsDetail();
+                        PurchaseOrderItemsDetails objItemDetails = new PurchaseOrderItemsDetails();
                         objItemDetails.PurchaseOrderId = model.PurchaseOrderId;
                         objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
                         objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();

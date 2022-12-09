@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using InVanWebApp.Repository.Interface;
@@ -57,6 +58,50 @@ namespace InVanWebApp.Repository
             return resultList;
 
             //return _context.UnitMasters.ToList();
+        }
+        #endregion
+
+        #region Update functions
+        /// <summary>
+        /// Farheen: This function is for fetch data for editing by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        public List<Indent_DetailsBO> GetById(int id)
+        {
+            var resultList = new List<Indent_DetailsBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_IndentItemDetails_GetByID", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new Indent_DetailsBO()
+                        {
+                            IndentID = Convert.ToInt32(reader["IndentID"]),
+                            ItemName = reader["ItemName"].ToString(),
+                            ItemId= Convert.ToInt32(reader["ItemId"]),
+                            RequiredQuantity= Convert.ToDouble(reader["RequiredQuantity"]),
+                            SentQuantity= Convert.ToDouble(reader["SentQuantity"])
+                            
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+            //return _context.UnitMasters.Find(UnitID);
         }
         #endregion
     }

@@ -752,13 +752,21 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Bind descriptions of terms and Indent
         public JsonResult GetTermsDescription(string id)
         {
             int taxId = Convert.ToInt32(id);
             var result = _termsConditionRepository.GetById(taxId);
             return Json(result);
         }
+        
+        public JsonResult GetIndentDescription(string id)
+        {
+            int Id = Convert.ToInt32(id);
+            var result = _indentRepository.GetById(Id);
+            return Json(result);
+        }
 
-
+        #endregion
     }
 }
