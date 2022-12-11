@@ -51,7 +51,7 @@ namespace InVanWebApp.Repository
                             Item_Code = reader["Item_Code"].ToString(),
                             Item_Name = reader["Item_Name"].ToString(),
                             TransferQuantity = Convert.ToInt32(reader["TransferQuantity"]),
-                            RequiredQuantity = Convert.ToInt32(reader["RequiredQuantity"]),
+                            //RequiredQuantity = Convert.ToInt32(reader["RequiredQuantity"]),
                             FinalQuantity = Convert.ToInt32(reader["FinalQuantity"]),
                             Remarks = reader["Remarks"].ToString(),
                             LastModifiedDate = Convert.ToDateTime(reader["LastModifiedDate"])                          

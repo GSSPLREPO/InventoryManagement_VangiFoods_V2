@@ -66,19 +66,6 @@
                     @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
                 </div>
             </div>
-            @*<div class="row">
-                    <div class="col-md-2">
-                        @Html.Label("Terms And Condition")
-                        <span style="color:red">*</span>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["Terms"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
-                        @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
-                    </div>
-                    <div class="col-md-4 d-none">
-                        @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>*@
             <br />
             <div class="row">
                 <div class="col-md-2">
@@ -243,7 +230,7 @@
                                                             @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("CurrencyName_", "", new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("itemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control", style = "height:30px;width:80px;", @readonly = "readonly" })
@@ -303,7 +290,7 @@
                         <p style="padding-left: 5%;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
                     </div>
 
-                    <div class="card" h-50>
+                    <div class="card h-50">
                         <div class="card-body">
                             <h4 class="card-title" style="color:darkcyan">Terms and Conditions<span style="color:red"> * </span></h4>
                             <hr />
@@ -313,12 +300,12 @@
                                     <span style="color:red">*</span>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
+                                    @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["Terms"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
                                     @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
                                 </div>
-                                <div class="col-md-4 d-none">
+                                @*<div class="col-md-4 d-none">
                                     @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                                </div>
+                                </div>*@
                             </div>
                             <br />
                             @*Rahul set ''T&C'' from top to here 02/12/2022.*@
@@ -327,8 +314,8 @@
                                     @Html.Label("Terms Description")
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.TextAreaFor(model => model.TermDescription, new { id = "TermDescription", @class = "form-control", placeholder = "Term Description", style = "height:100px" })
-                                    @Html.ValidationMessageFor(model => model.TermDescription, "", new { @class = "error mt-2 text-danger" })
+                                    @Html.TextAreaFor(model => model.Terms, new { id = "TermDescription", @class = "form-control", placeholder = "Term Description", style = "height:100px" })
+                                    @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -343,22 +330,22 @@
                             <div class="form-group">
                                 <div class="row mb-2">
                                     <label>Total (before tax): </label>
-                                    <input class="form-control form-control-sm text-right" id="TotalBeforeTax" name="TotalItemCost" />
+                                    <input class="form-control form-control-sm text-right" id="TotalBeforeTax" name="TotalItemCost" readonly="readonly" />
                                     @*@Html.TextBoxFor(x=>x.TotalItemCost, new { @class = "form-control"})*@
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total tax: </label>
-                                    <input class="form-control form-control-sm text-right" id="TotalTax" name="TotalTax" />
+                                    <input class="form-control form-control-sm text-right" id="TotalTax" name="TotalTax" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total (after tax):</label>
                                     @*<input class="form-control" id="TotalAfterTax" name="TotalAfterTax" />*@
-                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right" })
+                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right", @readonly="readonly" })
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Grand Total:</b></label>
                                     @*<input class="form-control" id="GrandTotal" name="GrandTotal" />*@
-                                    @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control form-control-sm text-right" })
+                                    @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control form-control-sm text-right", @readonly = "readonly" })
                                 </div>
                                 <div class="row mb-2">
                                     <label>Advanced To Pay:</label>
@@ -431,6 +418,7 @@
             type: "POST",
             data: { id: id },
             success: function (result) {
+                console.log(result.TermDescription);
                 $('#TermDescription').val(result.TermDescription);
             },
             error: function (err) {
@@ -456,7 +444,9 @@
                 var i = 0;
                 if (result != [] & result != null) {
                     while (i < objLength) {
-                        finalResult = finalResult + "Item: " + result[i].ItemName + ",  Required Quantity: " + result[i].RequiredQuantity + " KG \n";
+                        var balanceQty = parseFloat(result[i].RequiredQuantity) - parseFloat(result[i].SentQuantity);
+                        finalResult = finalResult + "Item: " + result[i].ItemName + ",  Required Quantity: " +
+                            result[i].RequiredQuantity + " KG , Balance Quantity: " + balanceQty + " KG \n";
 
                         i++;
                     }
@@ -471,18 +461,6 @@
     }
 
     //=============End==============
-
-    function SelectedIndexChangedTerms(id) {
-        debugger
-        var selectedOptionTerms, termsName;
-        selectedOptionTerms = document.getElementById("TermsAndConditionID").selectedIndex;
-        termsName = document.getElementById("TermsAndConditionID").options[selectedOptionTerms].innerText;
-        document.getElementById("Terms").value = termsName;
-    }
-
-    //$(document).ready(function () {
-    //    CalculateTotalBeforeTax();
-    //});
 
     function SelectedIndexChanged(id) {
         var selectedOption, companyName;
@@ -505,8 +483,7 @@
     }
 
     function SelectedIndexChangedLocation(id) {
-        //alert(id);
-        debugger
+
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
         locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
@@ -563,7 +540,6 @@
                     alert('Failed to retrieve Item description.' + ex);
                 }
             });
-
 
     }
 
@@ -736,7 +712,6 @@
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
-
     $("#ItemQuantity").change(function () {
         var quantity = $("#ItemQuantity").val();
         var price = $("#ItemUnitPrice").val();
@@ -747,15 +722,19 @@
         var totalPrice = quantity * price;
         totalPrice = Math.round(totalPrice);
         $("#ItemTotalPrice").val(totalPrice);
+
         //Set values in Bill
         var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
-        //console.log("quan:" + quantity + ",totalprice:" + totalPrice + ",tax:" + tax + ",TPAT:" + totalPriceAfterTax);
         $("#TotalBeforeTax").val(totalPrice);
-        $("#TotalTax").val($("#ItemTaxValue").val());
+
+        var itemTaxVal = tax / 100 * totalPrice;
+        itemTaxVal = Math.round(itemTaxVal);
+        totalPriceAfterTax = Math.round(totalPriceAfterTax);
+
+        $("#TotalTax").val(itemTaxVal);
         $("#TotalAfterTax").val(totalPriceAfterTax);
         $("#GrandTotal").val(totalPriceAfterTax);
     });
-
 
     function removeTr(index) {
         /////Finding the length of existing table

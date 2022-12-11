@@ -23,7 +23,7 @@ namespace InVanWebApp.Repository
         /// Farheen: This function is for fecthing list of indents.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<IndentBO> GetAll()
+        public IEnumerable<IndentBO> GetAll(string type=null)
         {
             List<IndentBO> resultList = new List<IndentBO>();
             try
@@ -31,6 +31,7 @@ namespace InVanWebApp.Repository
                 using (SqlConnection con = new SqlConnection(conString))
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_Indent_GetAll", con);
+                    cmd.Parameters.AddWithValue("@Type",type);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.

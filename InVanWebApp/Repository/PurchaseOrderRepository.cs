@@ -165,8 +165,8 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
                         objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
                         //objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
-                        objItemDetails.ItemTaxValue = item.ElementAt(6).Value.ToString();
-                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(7).Value.ToString();
+                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(8).Value);
                         objItemDetails.CreatedBy = purchaseOrderMaster.CreatedBy;
 
                         //Added the below field for Currency
@@ -198,10 +198,10 @@ namespace InVanWebApp.Repository
                         //cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));    
 
                         //Added the below field for Indent, currency and terms description
-                        cmd.Parameters.AddWithValue("@CurrencyID", item.CurrencyID);
-                        cmd.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
-                        //cmd.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice);
-                        cmd.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
+                        cmdNew.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
+                        cmdNew.Parameters.AddWithValue("@CurrencyName", purchaseOrderMaster.CurrencyName);
+                        //cmdNew.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice);
+                        cmdNew.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
 
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
 
@@ -340,6 +340,13 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
+                    //FN: Added the below field for Indent, currency and terms description
+
+                    cmd.Parameters.AddWithValue("@IndentID", model.IndentID);
+                    cmd.Parameters.AddWithValue("@IndentDescription", model.IndentDescription);
+                    cmd.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
+                    cmd.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
+
 
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -365,9 +372,10 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
                         objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
                         //objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
-                        objItemDetails.ItemTaxValue = item.ElementAt(6).Value.ToString();
-                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(7).Value.ToString();
+                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(8).Value);
                         objItemDetails.CreatedBy = model.LastModifiedBy;
+
                         itemDetails.Add(objItemDetails);
                     }
 
@@ -392,6 +400,13 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@LastModifiedBy", item.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+
+                        //Added the below field for Indent, currency and terms description
+                        cmdNew.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
+                        cmdNew.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
+                        //cmdNew.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice);
+                        cmdNew.Parameters.AddWithValue("@IndentID", model.IndentID);
+
                         if (count == 1)
                             cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
                         else

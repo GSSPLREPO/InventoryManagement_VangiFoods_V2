@@ -30,7 +30,7 @@ namespace InVanWebApp_BO
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
 
-        [Required(ErrorMessage = "Enter Term Description!")] //Rahul added 03/12/2022. 
+        /*[Required(ErrorMessage = "Enter Term Description!")] *///Rahul added 03/12/2022. 
         public string TermDescription { get; set; } //Rahul added 03/12/2022.
         public string PurchaseOrderStatus { get; set; }
         public Nullable<int> Cancelled { get; set; }

@@ -439,7 +439,9 @@
                 var i = 0;
                 if (result != [] & result != null) {
                     while (i < objLength) {
-                        finalResult =finalResult+ "Item: "+result[i].ItemName + ",  Required Quantity: " + result[i].RequiredQuantity + " KG \n";
+                        var balanceQty = parseFloat(result[i].RequiredQuantity) - parseFloat(result[i].SentQuantity);
+                        finalResult = finalResult + "Item: " + result[i].ItemName + ",  Required Quantity: " +
+                            result[i].RequiredQuantity + " KG , Balance Quantity: " + balanceQty + " KG \n";
 
                         i++;
                     }
