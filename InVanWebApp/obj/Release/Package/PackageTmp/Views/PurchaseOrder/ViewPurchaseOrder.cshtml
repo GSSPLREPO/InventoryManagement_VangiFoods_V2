@@ -64,22 +64,16 @@
                                     <label class="font-weight-bold">PO Document Date</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control", style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;" })
+                                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                                 </div>
                                 <div class="col-md-2">
                                     <label class="font-weight-bold">Delivery Date</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control", style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;" })
+                                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Terms And Condition</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.Terms)
-                                </div>
                                 <div class="col-md-2">
                                     <label class="font-weight-bold">Amendment Number</label>
                                 </div>
@@ -107,12 +101,12 @@
                                 <div class="col-md-6">
                                     <h4 class="card-title" style="color:darkcyan">Delivery Details</h4>
                                     <hr />
-                                    @Html.TextAreaFor(model => model.DeliveryAddress, new { style = "border:none; width:100%" })
+                                    @Html.TextAreaFor(model => model.DeliveryAddress, new { style = "border:none; width:100%", @readonly = "readonly" })
                                 </div>
                                 <div class="col-md-6">
                                     <h4 class="card-title" style="color:darkcyan">Supplier Details</h4>
                                     <hr />
-                                    @Html.TextAreaFor(model => model.SupplierAddress, new { style = "border:none; width:100%" })
+                                    @Html.TextAreaFor(model => model.SupplierAddress, new { style = "border:none; width:100%", @readonly = "readonly" })
                                 </div>
                             </div>
                             <br />
@@ -148,6 +142,7 @@
                                                         <th class="sortStyle">
                                                             Price (Rs)
                                                         </th>
+                                                        <th>Currency</th>
                                                         <th class="sortStyle">
                                                             Tax (%)
                                                         </th>
@@ -179,11 +174,14 @@
                                                                 <td>
                                                                     @Html.DisplayFor(x => item.ItemUnitPrice)
                                                                 </td>
-                                                                <td style="width:15%;">
-                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; width:30%;" })
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.CurrencyName)
                                                                 </td>
                                                                 <td style="width:15%;">
-                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none; width:30%;" })
+                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; width:30%;", @readonly = "readonly" })
+                                                                </td>
+                                                                <td style="width:15%;">
+                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none; width:30%;", @readonly = "readonly" })
                                                                 </td>
                                                             </tr>
                                                             { c++; }
@@ -218,8 +216,11 @@
                                             <label class="font-weight-bold">Total (before tax): </label>&emsp;
                                         </div>
                                         <div class="col-md-6">
-                                            <input class="text-right" id="TotalBeforeTax" name="TotalBeforeTax" style="border:none;" />
-                                            <b>Rs.</b>
+                                            <input class="text-right" id="TotalBeforeTax" name="TotalBeforeTax" style="border:none;" readonly="readonly" />
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
+                                            @*<div class="font-weight-bold" id="CurrencyType"></div>*@
+                                            @*<b>Rs.</b>*@
+                                            @Html.TextBoxFor(model => model.CurrencyName, new { @class = "font-weight-bold d-none" })
                                         </div>
                                     </div>
                                     <div class="row">
@@ -227,8 +228,8 @@
                                             <label class="font-weight-bold">Total tax: </label>&emsp;
                                         </div>
                                         <div class="col-md-6">
-                                            <input class="text-right" id="TotalTax" name="TotalTax" style="border:none;" />
-                                            <b>Rs.</b>
+                                            <input class="text-right" id="TotalTax" name="TotalTax" style="border:none;" readonly="readonly" />
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType1" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -236,8 +237,8 @@
                                             <label class="font-weight-bold">Total (after tax):</label>&emsp;
                                         </div>
                                         <div class="col-md-6">
-                                            @Html.TextBoxFor(model => model.TotalAfterTax, new { @class = "text-right", style = "border:none" })
-                                            <b>Rs.</b>
+                                            @Html.TextBoxFor(model => model.TotalAfterTax, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType2" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -245,8 +246,8 @@
                                             <label class="font-weight-bold">Grand Total:</label>&emsp;
                                         </div>
                                         <div class="col-md-6">
-                                            @Html.TextBoxFor(model => model.GrandTotal, new { @class = "text-right", style = "border:none" })
-                                            <b>Rs.</b>
+                                            @Html.TextBoxFor(model => model.GrandTotal, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType3" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -254,13 +255,23 @@
                                             <label class="font-weight-bold">Advanced To Pay:</label>&emsp;
                                         </div>
                                         <div class="col-md-6">
-                                            @Html.TextBoxFor(model => model.AdvancedPayment, new { @class = "text-right", style = "border:none" })
-                                            <b>Rs.</b>
+                                            @Html.TextBoxFor(model => model.AdvancedPayment, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType4" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Terms And Condition</label>
+                                </div>
+                                <div class="col-md-10 text-justify">
+                                    @Html.DisplayFor(model => model.Terms)
+                                </div>
+                            </div>
+                            <br />
                             <br />
                             <div class="row">
                                 <div class="col-md-10"></div>
@@ -298,6 +309,13 @@
 
     $(document).ready(function () {
         CalculateTotalBeforeTax();
+        var type = $('#CurrencyName').val();
+        if (type != null) {
+            $('.CurrencyType').val(type);
+        }
+        else
+            $('.CurrencyType').val('Rs.');
+
     });
 
     function CalculateTotalBeforeTax() {

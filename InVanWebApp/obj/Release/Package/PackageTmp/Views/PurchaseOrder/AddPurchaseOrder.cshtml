@@ -143,6 +143,7 @@
                 </div>
                 <div class="col-md-2 mb-1">
                     @Html.Label("Indent Number")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.IndentID, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control listbox", onchange = "SelectedIndexChangedIndent($(this).val())" })
@@ -268,6 +269,7 @@
                                 <input type="file" id="file" name="Signature"
                                        onchange="return fileValidation()" />
 
+
                                 <!-- Image preview -->
                                 <br />
                                 <br />
@@ -276,10 +278,11 @@
                                 </center>
                             </div>
                         </div>
+                            <p style="padding-left: 5%;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
                     </div>
                     <div class="card" h-50>
                         <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Terms and Condition<span style="color:red"> * </span></h4>
+                            <h4 class="card-title" style="color:darkcyan">Terms and Conditions<span style="color:red"> * </span></h4>
                             <hr />
                             <div class="row">
                                 <div class="col-md-4">
@@ -437,7 +440,9 @@
                 var i = 0;
                 if (result != [] & result != null) {
                     while (i < objLength) {
-                        finalResult =finalResult+ "Item: "+result[i].ItemName + ",  Required Quantity: " + result[i].RequiredQuantity + " KG \n";
+                        var balanceQty = parseFloat(result[i].RequiredQuantity) - parseFloat(result[i].SentQuantity);
+                        finalResult = finalResult + "Item: " + result[i].ItemName + ",  Required Quantity: " +
+                            result[i].RequiredQuantity + " KG , Balance Quantity: " + balanceQty + " KG \n";
 
                         i++;
                     }

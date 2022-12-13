@@ -3,6 +3,19 @@
 
 var InwardQuantities = "";
 var BalanceQuantities = "";
+var TxtItemDetails = "";
+
+//===========This function will create a json format of the item details
+function createJson() {
+    let res = [...document.getElementById("myTableBody").children].map(tr =>
+        Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
+            [el.name, el.value])));
+    console.log(res);
+    var TxtItemDetails = JSON.stringify(res);
+    console.log('Inwd: '+TxtItemDetails);
+    //$('#TxtItemDetails').val(TxtItemDetails);
+}
+
 function SelectedIndexChanged(id) {
 
     //For deleting the rows of Item table if exist.
@@ -54,7 +67,7 @@ function SelectedIndexChanged(id) {
                         cell.innerHTML = result[j].ItemTaxValue + " %";
                     }
                     else if (i == 4) {
-                        cell.innerHTML = result[j].ItemUnitPrice + " Rs";
+                        cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
                     }
                     else if (i == 5) {
 
@@ -116,7 +129,7 @@ function OnChangeIWQty(value, id) {
     }
     else {
         var tempInwQty = document.getElementById("txtInwardQty" + rowNo).value;
-        console.log(tempInwQty + " " + temp_itemQty[0] + " " + deliveredQty);
+        //console.log(tempInwQty + " " + temp_itemQty[0] + " " + deliveredQty);
         document.getElementById("txtBalanceQty" + rowNo).value = parseFloat(temp_itemQty[0]) - (parseFloat(deliveredQty) + parseFloat(tempInwQty));
         InwardQuantities = InwardQuantities + "txtInwardQty" + rowNo + "*" + value + ",";
 
@@ -124,6 +137,7 @@ function OnChangeIWQty(value, id) {
         BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" + BalQty + ",";
         document.getElementById(id).setAttribute("style", "border-color:none;");
     }
+    createJson();
 }
 
 

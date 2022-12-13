@@ -30,7 +30,7 @@
                     <div class="card">
                         <div class="card-body">
                             <a href="@Url.Action("AddPurchaseOrder","PurchaseOrder")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span>  Add Purchase Order
+                                <span class="fa fa-plus"></span> Purchase Order
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
                                 <table class="table table-striped table-bordered" id="tbl_PO">
@@ -60,28 +60,28 @@
                                                     @*@Html.DisplayFor(modelItem => item.PurchaseOrderStatus)*@
                                                     @if (item.PurchaseOrderStatus == "Closed")
                                                     {
-                                                        <p style="color: #17d317;font-weight:bold">
+                                                        <p style="color: #17d317;font-weight:bold" class="btn">
 
                                                             @Html.DisplayFor(modelItem => item.PurchaseOrderStatus, new { style = "color:green" })
                                                         </p>
                                                     }
                                                     else if (item.PurchaseOrderStatus == "Open")
                                                     {
-                                                        <p style="color: darkorange; font-weight: bold">
+                                                        <p style="color: darkorange; font-weight: bold" class="btn">
 
                                                             @Html.DisplayFor(modelItem => item.PurchaseOrderStatus, new { style = "color:#c900e1" })
                                                         </p>
                                                     }
                                                     else if (item.PurchaseOrderStatus == "Cancelled")
                                                     {
-                                                        <p style="color:red;font-weight:bold">
+                                                        <p style="color:red;font-weight:bold" class="btn">
 
                                                             @Html.DisplayFor(modelItem => item.PurchaseOrderStatus, new { style = "color:red" })
                                                         </p>
                                                     }
                                                     else
                                                     {
-                                                        <p style="color: yellow; font-weight: bold">
+                                                        <p style="color: #ffc800; font-weight: bold" class="btn">
 
                                                             @Html.DisplayFor(modelItem => item.PurchaseOrderStatus, new { style = "color:#ffbc00" })
                                                         </p>

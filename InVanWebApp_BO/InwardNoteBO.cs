@@ -62,5 +62,9 @@ namespace InVanWebApp_BO
         public float TotalQuantity { get; set; }
         public float ReceivedQty { get; set; }
 
+        //Added below fields for Currency module
+        public int CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public double CurrencyPrice { get; set; }
     }
 }
