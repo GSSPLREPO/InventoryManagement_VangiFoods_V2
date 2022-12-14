@@ -20,11 +20,16 @@ namespace InVanWebApp.Repository.Interface
         //For fetching the list of items
         IEnumerable<ItemBO> GetItemDetailsForDD(int ItemType);
         //Fetch the details of Item and Location wise stock by it's ID
-        ItemBO GetItemDetails(int itemID, int LocationId);   
+        ItemBO GetItemDetails(int itemID, int LocationId, DateTime CreatedDate);
         //Function define for: Insert record.
         ResponseMessageBO Insert(StockTransferBO stockTransferMaster);
         //Fetch the details of Item by it's ID 
         //StockTransferBO GetStockTransferById(int ID);  
+
+        //Get list of Items for Stock Transfer dropdown  
+        List<ItemBO> GetBindLocationWiseItemCodeList(int LocationId);
+        //For fetching the list of items
+        IEnumerable<LocationWiseStockBO> GetItemListForDD();  //added 
 
     }
 }

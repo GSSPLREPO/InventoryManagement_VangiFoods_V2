@@ -19,6 +19,9 @@ namespace InVanWebApp_BO
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<double> Trans_Quantity { get; set; }
-                
+        
+        //Added by Rahul: For Stock transfer
+        public string Item_Code { get; set; } ///added 
+
     }
 }

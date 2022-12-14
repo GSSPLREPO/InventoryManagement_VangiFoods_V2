@@ -36,8 +36,13 @@ namespace InVanWebApp_BO
 
         //public List<LocationMaster> LocationMaster { get; set; }
          
-        public List<StockMaster> itemDetails { get; set; } 
+        public List<StockMaster> itemDetails { get; set; }
 
+        //Added by Rahul: For stock transfer screen
+        public string Signature { get; set; }
+        public Nullable<double> FromLocation_BeforeTransferQty { get; set; } ///added 
+        public Nullable<double> BalanceQty_FromLocation { get; set; } ///added 
+        public DateTime InwardDateOfItem { get; set; }
     }
 
     public class StockMaster

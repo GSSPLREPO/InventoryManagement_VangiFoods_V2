@@ -41,21 +41,14 @@ namespace InVanWebApp.Repository
                     {
                         var StockTransferMasters = new StockTransferBO()
                         {
-
-                            ID = Convert.ToInt32(reader["ID"]),
-                            FromLocationId = Convert.ToInt32(reader["FromLocationId"]),
                             FromLocationName = reader["FromLocationName"].ToString(),
-                            ToLocationId = Convert.ToInt32(reader["ToLocationId"]),
-                            ToLocationName = reader["ToLocationName"].ToString(), 
-                            ItemId = Convert.ToInt32(reader["ItemId"]),
+                            ToLocationName = reader["ToLocationName"].ToString(),
                             Item_Code = reader["Item_Code"].ToString(),
                             Item_Name = reader["Item_Name"].ToString(),
+                            FromLocation_BeforeTransferQty = Convert.ToInt32(reader["FromLocation_BeforeTransferQty"]),
                             TransferQuantity = Convert.ToInt32(reader["TransferQuantity"]),
-                            //RequiredQuantity = Convert.ToInt32(reader["RequiredQuantity"]),
-                            FinalQuantity = Convert.ToInt32(reader["FinalQuantity"]),
-                            Remarks = reader["Remarks"].ToString(),
-                            LastModifiedDate = Convert.ToDateTime(reader["LastModifiedDate"])                          
-
+                            FinalQuantity = Convert.ToInt32(reader["BalanceQty_FromLocation"]),
+                            InwardDateOfItem = Convert.ToDateTime(reader["InwardDateOfItem"])
 
                         };
                         stockTransferMastersList.Add(StockTransferMasters);
@@ -145,8 +138,6 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-
-
         #region Function for binding dropdown Get To Location Name List.
         public IEnumerable<StockTransferBO> GetToLocationNameList()
         {
@@ -181,8 +172,6 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-
-
         #region Get list of Items for Stock Transfer dropdown
         public IEnumerable<ItemBO> GetItemDetailsForDD(int ItemType)
         {
@@ -209,11 +198,10 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-
         #region Get details of Items by ID  
-        public ItemBO GetItemDetails(int itemID, int LocationId)
+        public ItemBO GetItemDetails(int itemID, int LocationId, DateTime CreatedDate)
         {
-            ItemBO ItemDetails = new ItemBO();            
+            ItemBO ItemDetails = new ItemBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
@@ -222,26 +210,22 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ItemId", itemID);
                     cmd.Parameters.AddWithValue("@LocationId", LocationId);
+                    cmd.Parameters.AddWithValue("@CreatedDate", CreatedDate);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
                     {
-                        //LocationWiseStockBO locationWiseStockDetails = new LocationWiseStockBO();
-                        //locationWiseStockDetails.Quantity = Convert.ToDouble(reader["RequiredQuantity"]);
                         ItemDetails = new ItemBO()
                         {
                             Item_Name = reader["Item_Name"].ToString(),
                             Item_Code = reader["Item_Code"].ToString(),
                             UnitCode = reader["ItemUnit"].ToString(),
                             RequiredQuantity = Convert.ToDouble(reader["RequiredQuantity"])
-                            //locationwsieStockQuntity.Add(ItemDetails);
-                            //UnitPrice = Convert.ToDouble(reader["UnitPrice"]),
-                            //ItemTaxValue = float.Parse(reader["ItemTaxValue"].ToString())
                         };
-                  
+
                     }
                     con.Close();
-               
+
                 }
             }
             catch (DbEntityValidationException e)
@@ -256,13 +240,13 @@ namespace InVanWebApp.Repository
                             ve.PropertyName, ve.ErrorMessage);
                     }
                 }
-               
+
             }
             catch (Exception ex)
             {
                 log.Error(ex.Message, ex);
             }
-                return ItemDetails;
+            return ItemDetails;
         }
         #endregion
 
@@ -291,11 +275,12 @@ namespace InVanWebApp.Repository
                         stockTransfer.ToLocationId = stockTransferMaster.ToLocationId;
                         stockTransfer.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
                         stockTransfer.Item_Code = item.ElementAt(1).Value.ToString();
-                        stockTransfer.Item_Name = item.ElementAt(2).Value.ToString();
-                        stockTransfer.RequiredQuantity = Convert.ToDouble(item.ElementAt(3).Value);
-                        stockTransfer.TransferQuantity = Convert.ToDouble(item.ElementAt(5).Value);
-                        stockTransfer.FinalQuantity = Convert.ToDouble(item.ElementAt(6).Value);
-                        stockTransfer.Remarks = item.ElementAt(7).Value.ToString();
+                        stockTransfer.InwardDateOfItem = Convert.ToDateTime(item.ElementAt(2).Value);
+                        stockTransfer.Item_Name = item.ElementAt(3).Value.ToString();
+                        stockTransfer.RequiredQuantity = Convert.ToDouble(item.ElementAt(4).Value);
+                        stockTransfer.TransferQuantity = Convert.ToDouble(item.ElementAt(6).Value);
+                        stockTransfer.FinalQuantity = Convert.ToDouble(item.ElementAt(7).Value);
+                        stockTransfer.Remarks = item.ElementAt(8).Value.ToString();
 
                         transfersDetails.Add(stockTransfer);
 
@@ -317,9 +302,11 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@CreatedBy", stockTransferMaster.CreatedBy);
+                        cmdNew.Parameters.AddWithValue("@InwardDateOfItem", stockTransferMaster.InwardDateOfItem);
+
                         //cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                         //cmdNew.Parameters.AddWithValue("@LastModifiedBy", stockTransferMaster.CreatedBy);
-                        
+
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
                         while (dataReaderNew.Read())
                         {
@@ -333,9 +320,9 @@ namespace InVanWebApp.Repository
                     {
                         LocationWiseStockBO objLocationWiseStockDetails = new LocationWiseStockBO();
                         //objItemDetails.PO_Id = PO_Id;
-                        objLocationWiseStockDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);                        
-                        objLocationWiseStockDetails.Quantity = Convert.ToDouble(item.ElementAt(6).Value);
-                        objLocationWiseStockDetails.Trans_Quantity = Convert.ToDouble(item.ElementAt(5).Value);
+                        objLocationWiseStockDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
+                        objLocationWiseStockDetails.Quantity = Convert.ToDouble(item.ElementAt(7).Value);
+                        objLocationWiseStockDetails.Trans_Quantity = Convert.ToDouble(item.ElementAt(6).Value);
                         objLocationWiseStockDetails.LocationID = Convert.ToInt32(stockTransferMaster.FromLocationId);
                         locationwsieStockDetails.Add(objLocationWiseStockDetails);
                     }
@@ -351,7 +338,7 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@To_LocationID", stockTransferMaster.ToLocationId);
                         cmdNew.Parameters.AddWithValue("@Quantity", item.Quantity);
                         cmdNew.Parameters.AddWithValue("@Transf_Quantity", item.Trans_Quantity);
-                        cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);                        
+                        cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);
                         cmdNew.Parameters.AddWithValue("@CreatedBy", stockTransferMaster.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@LastModifiedBy", stockTransferMaster.CreatedBy);
@@ -369,26 +356,101 @@ namespace InVanWebApp.Repository
             }
             catch (Exception ex)
             {
+                response.Status = false;
                 log.Error(ex.Message, ex);
             }
             return response;
         }
         #endregion
 
-        //#region
-        //public StockTransferBO GetStockTransferById(int ID) 
-        //{
-        //    string stockTransferQuery = "SELECT * FROM PurchaseOrder WITH(NOLOCK) WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
-        //    string stockMasterItemQuery = "SELECT * FROM PurchaseOrderItemsDetails WITH(NOLOCK) WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
-        //    using (SqlConnection con = new SqlConnection(connString))
-        //    {
-        //        var stockTransfers = con.Query<StockTransferBO>(stockTransferQuery, new { @ItemId = ID }).FirstOrDefault();
-        //        var stockMasterList = con.Query<InVanWebApp_BO.StockMaster>(stockMasterItemQuery, new { @ItemId = ID }).ToList(); 
-        //        stockTransfers.itemDetails = stockMasterList; 
-        //        return stockTransfers;   
-        //    }
-        //}
-        //#endregion
+        #region Get list of Items for Stock Transfer dropdown    
+
+        public List<ItemBO> GetBindLocationWiseItemCodeList(int LocationId)
+        {
+            List<ItemBO> resultList = new List<ItemBO>();
+            ItemBO ItemDetails = new ItemBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_GetItemCodeListForStockTransfer", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    //cmd.Parameters.AddWithValue("@ItemId", itemID);
+                    cmd.Parameters.AddWithValue("@LocationId", LocationId);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        ItemDetails = new ItemBO()
+                        {
+                            ID = Convert.ToInt32(reader["ItemId"]),
+                            Item_Code = reader["Item_Code"].ToString(),
+
+                        };
+                        resultList.Add(ItemDetails);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Function for binding data Get From Location Wise Stock Quantity List.       ///added  
+        public IEnumerable<LocationWiseStockBO> GetItemListForDD()
+        {
+            List<LocationWiseStockBO> resultList = new List<LocationWiseStockBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_GetItemCodeListForStockTransfer", con);
+                    //cmd.Parameters.AddWithValue("@ID", id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new LocationWiseStockBO()
+                        {
+                            ItemId = Convert.ToInt32(dataReader["ItemId"]),
+                            Item_Code = dataReader["Item_Code"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
 
     }
 }
