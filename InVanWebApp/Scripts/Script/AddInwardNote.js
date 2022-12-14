@@ -7,13 +7,18 @@ var TxtItemDetails = "";
 
 //===========This function will create a json format of the item details
 function createJson() {
-    let res = [...document.getElementById("myTableBody").children].map(tr =>
-        Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
-            [el.name, el.value])));
-    console.log(res);
-    var TxtItemDetails = JSON.stringify(res);
-    console.log('Inwd: '+TxtItemDetails);
-    //$('#TxtItemDetails').val(TxtItemDetails);
+    var table = document.getElementById('ItemTable');
+    var rowCount = table.rows.length;
+    var i = 1;
+    InwardQuantities = "";
+    BalanceQuantities ="";
+    for (i = 1; i < rowCount; i++) {
+        var value = $('#txtInwardQty' + i).val();
+        var BalQty = $('#txtBalanceQty' + i).val();
+        InwardQuantities = InwardQuantities + "txtInwardQty" + i + "*" + value + ",";
+        BalanceQuantities = BalanceQuantities + "txtBalanceQty" + i + "*" + BalQty + ",";
+    }
+    //alert(InwardQuantities + "       " + BalanceQuantities);
 }
 
 function SelectedIndexChanged(id) {
@@ -71,7 +76,7 @@ function SelectedIndexChanged(id) {
                     }
                     else if (i == 5) {
 
-                        cell.innerHTML = result[j].InwardQuantity;
+                        cell.innerHTML = result[j].InwardQuantity + " " + result[j].ItemUnit;
                         cell.setAttribute("id", "DeliveredQty" + j);
                     }
                     else if (i == 6) {
@@ -138,6 +143,7 @@ function OnChangeIWQty(value, id) {
         document.getElementById(id).setAttribute("style", "border-color:none;");
     }
     createJson();
+    console.log('Inwd: ' + TxtItemDetails);
 }
 
 
@@ -159,6 +165,7 @@ function fileValidation() {
 }
 
 function SetInwardQty() {
+    createJson();
     $('#InwardQuantities').val(InwardQuantities);
     $('#BalanceQuantities').val(BalanceQuantities);
     //alert($('#InwardQuantities').val());
