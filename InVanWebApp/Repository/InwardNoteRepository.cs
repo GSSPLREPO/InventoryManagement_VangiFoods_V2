@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using Dapper;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
@@ -133,6 +134,7 @@ namespace InVanWebApp.Repository
                         {
                             var result = new PurchaseOrderBO()
                             {
+                                Item_ID = Convert.ToInt32(dataReader2["ItemID"]),
                                 ItemName = dataReader2["ItemName"].ToString(),
                                 Item_Code = dataReader2["Item_Code"].ToString(),
                                 ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
@@ -293,8 +295,8 @@ namespace InVanWebApp.Repository
                     //cmd.Parameters.AddWithValue("@PONumber", model.PONumber);
                     cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
                     cmd.Parameters.AddWithValue("@InwardDate", model.InwardDate);
-                    cmd.Parameters.AddWithValue("@InwardQuantities", model.InwardQuantities);
-                    cmd.Parameters.AddWithValue("@BalanceQuantities", model.BalanceQuantities);
+                    //cmd.Parameters.AddWithValue("@InwardQuantities", model.InwardQuantities);
+                    //cmd.Parameters.AddWithValue("@BalanceQuantities", model.BalanceQuantities);
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
@@ -302,21 +304,75 @@ namespace InVanWebApp.Repository
                     con.Open();
                     //cmd.ExecuteNonQuery();
                     SqlDataReader dataReader = cmd.ExecuteReader();
-
+                    int InwardID=0;
                     while (dataReader.Read())
                     {
                         response.Status = Convert.ToBoolean(dataReader["Status"]);
+                        InwardID = Convert.ToInt32(dataReader["InwardNoteId"]);
                     }
                     con.Close();
+
+                    var json = new JavaScriptSerializer();
+                    var data = json.Deserialize<Dictionary<string, string>[]>(model.InwardQuantities);
+
+                    List<InwardNoteDetailBO> itemDetails = new List<InwardNoteDetailBO>();
+
+                    foreach (var item in data)
+                    {
+                        InwardNoteDetailBO objItemDetails = new InwardNoteDetailBO();
+                        objItemDetails.PO_ID = model.PO_Id;
+                        objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
+                        objItemDetails.Item_Name = item.ElementAt(4).Value.ToString();
+                        objItemDetails.Item_Code = item.ElementAt(5).Value.ToString();
+                        objItemDetails.POQuantity = Convert.ToDecimal(item.ElementAt(6).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(8).Value.ToString();
+                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(2).Value);
+                        objItemDetails.ItemUnit = (item.ElementAt(7).Value).ToString();
+                        objItemDetails.InwardQuantity = Convert.ToDouble(item.ElementAt(0).Value);
+                        objItemDetails.BalanceQuantity = Convert.ToDouble(item.ElementAt(3).Value);
+                        objItemDetails.CurrencyName = (item.ElementAt(9).Value).ToString();
+                        objItemDetails.CreatedBy = model.CreatedBy;
+                        objItemDetails.CreatedDate = Convert.ToDateTime(System.DateTime.Now);
+
+                        itemDetails.Add(objItemDetails);
+                    }
+
+                    foreach (var item in itemDetails)
+                    {
+                        con.Open();
+                        SqlCommand cmdNew = new SqlCommand("usp_tbl_InwardItemDetails_Insert", con);
+                        cmdNew.CommandType = CommandType.StoredProcedure;
+
+                        cmdNew.Parameters.AddWithValue("@PurchaseOrderId", item.PO_ID);
+                        cmdNew.Parameters.AddWithValue("@InwardNoteId", InwardID);
+                        cmdNew.Parameters.AddWithValue("@Item_ID", item.ItemId);
+                        cmdNew.Parameters.AddWithValue("@ItemName", item.Item_Name);
+                        cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                        cmdNew.Parameters.AddWithValue("@POQuantity", item.POQuantity);
+                        cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
+                        cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
+                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                        cmdNew.Parameters.AddWithValue("@InwardQuantity", item.InwardQuantity);
+                        cmdNew.Parameters.AddWithValue("@BalanceQuantity", item.BalanceQuantity);
+                        cmdNew.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
+                        cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                        cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+
+                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                        while (dataReaderNew.Read())
+                        {
+                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                        }
+                        con.Close();
+                    }
                 }
-                //return true;
 
             }
             catch (Exception ex)
             {
                 response.Status = false;
                 log.Error(ex.Message, ex);
-                // return false;
             }
             return response;
         }

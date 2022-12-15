@@ -66,5 +66,33 @@ namespace InVanWebApp_BO
         public int CurrencyID { get; set; }
         public string CurrencyName { get; set; }
         public double CurrencyPrice { get; set; }
+        public List<InwardNoteDetailBO> itemDetails { get; set; }
+    }
+
+    public class InwardNoteDetailBO
+    {
+        public int ID { get; set; }
+        public Nullable<int> InwardNoteId { get; set; }
+        public Nullable<int> ItemId { get; set; }
+        public string Item_Name { get; set; }
+        public string Item_Code { get; set; }
+        public Nullable<decimal> ItemUnitPrice { get; set; }
+        public string ItemTaxValue { get; set; }
+        public string ItemUnit { get; set; }
+        public Nullable<decimal> POQuantity { get; set; }
+        public Nullable<double> InwardQuantity { get; set; }
+        public Nullable<double> BalanceQuantity { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+
+        //Added below fields for Currency module
+        public int CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public double CurrencyPrice { get; set; }
+        public int PO_ID { get; set; }
+
     }
 }

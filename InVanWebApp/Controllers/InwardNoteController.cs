@@ -97,14 +97,6 @@ namespace InVanWebApp.Controllers
                     ResponseMessageBO response = new ResponseMessageBO();
                     if (ModelState.IsValid)
                     {
-                        //if (Signature != null)
-                        //{
-                        //    string SignFilename = Signature.FileName;
-                        //    SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
-                        //    Signature.SaveAs(SignFilename);
-                        //    model.Signature = Signature.FileName.ToString();
-                        //}
-
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
 
                         response = _repository.Insert(model);
