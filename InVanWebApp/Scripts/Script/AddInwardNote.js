@@ -6,23 +6,6 @@ var BalanceQuantities = "";
 
 //===========This function will create a json format of the item details
 function createJson() {
-    //var $headers = $("th");
-    ////var $rows = $("tbody tr").each(function (index) {
-    ////    $cells = $(this).find("td");
-    ////    myRows[index] = {};
-    ////    $cells.each(function (cellIndex) {
-    ////        myRows[index][$($headers[cellIndex]).html()] = $(this).html();
-    ////    });
-    ////});
-    ////var table = document.getElementById('ItemTable');
-
-    //let res = [...document.getElementById("ItemTable").children].map(tr =>
-    //    Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
-    //        [$($headers).html(), el.value])));
-    ////console.log(res);
-    //TxtItemDetails = TxtItemDetails+JSON.stringify(res);
-    //alert(TxtItemDetails);
-
     //var table = document.getElementById('ItemTable');
     //var rowCount = table.rows.length;
     //var i = 1;

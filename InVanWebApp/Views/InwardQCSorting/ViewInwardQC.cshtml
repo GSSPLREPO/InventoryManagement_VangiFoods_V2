@@ -231,7 +231,7 @@
                             var cell = 'cell' + i;
                             cell = row.insertCell(i);
                             if (i == 0) {
-                                cell.innerHTML = result[j].ItemName;
+                                cell.innerHTML = result[j].Item_Name;
                             }
                             else if (i == 1) {
                                 cell.innerHTML = result[j].Item_Code;
@@ -240,7 +240,7 @@
                                 cell.innerHTML = result[j].InwardQuantity+" Kg";
                             }
                             else if (i == 3) {
-                                cell.innerHTML = result[j].ItemUnitPrice + " Rs";
+                                cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
                             }
                             else if (i == 4) {
                                 cell.innerHTML = result[j].QuantityTookForSorting + " Kg";

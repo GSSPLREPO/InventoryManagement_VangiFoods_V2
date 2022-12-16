@@ -49,5 +49,32 @@ namespace InVanWebApp_BO
         public string RejectedQuantities { get; set; }
         public string WastageQuantities { get; set; }
         public string ReasonsForRejection { get; set; }
+
+        //Added the below property for saving the item table details.
+        public List<InwardQCDetail> itemDetails { get; set; }
+    }
+
+    public class InwardQCDetail
+    {
+        public int ID { get; set; }
+        public Nullable<int> InwardQC_Id { get; set; }
+        public string SupplierName { get; set; }
+        public Nullable<int> ItemId { get; set; }
+        public string Item_Name { get; set; }
+        public string Item_Code { get; set; }
+        public Nullable<decimal> ItemUnitPrice { get; set; }
+        public string ItemTaxValue { get; set; }
+        public Nullable<double> InwardQuantity { get; set; }
+        public Nullable<double> RejectedQuantity { get; set; }
+        public Nullable<double> BalanceQuantity { get; set; }
+        public Nullable<double> QuantityTookForSorting { get; set; }
+        public Nullable<double> WastageQuantityInPercentage { get; set; }
+        public string Remarks { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+
     }
 }

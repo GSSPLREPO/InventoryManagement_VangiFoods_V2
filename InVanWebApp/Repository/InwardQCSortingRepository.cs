@@ -8,6 +8,7 @@ using log4net;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web.Script.Serialization;
 
 namespace InVanWebApp.Repository
 {
@@ -125,12 +126,68 @@ namespace InVanWebApp.Repository
                     con.Open();
 
                     SqlDataReader dataReader = cmd.ExecuteReader();
-
+                    int InwardQCID = 0;
                     while (dataReader.Read())
                     {
                         response.Status = Convert.ToBoolean(dataReader["Status"]);
+                        InwardQCID = Convert.ToInt32(dataReader["InwardQCID"]);
                     }
                     con.Close();
+                    //Pending work.
+                    var json = new JavaScriptSerializer();
+                    var data = json.Deserialize<Dictionary<string, string>[]>(model.QuantitiesForSorting);
+
+                    List<InwardNoteDetailBO> itemDetails = new List<InwardNoteDetailBO>();
+
+                    foreach (var item in data)
+                    {
+                        InwardNoteDetailBO objItemDetails = new InwardNoteDetailBO();
+                        objItemDetails.InwardNoteId = model.InwardNote_Id;
+                        objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
+                        objItemDetails.Item_Name = item.ElementAt(4).Value.ToString();
+                        objItemDetails.Item_Code = item.ElementAt(5).Value.ToString();
+                        objItemDetails.POQuantity = Convert.ToDecimal(item.ElementAt(6).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(8).Value.ToString();
+                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(2).Value);
+                        objItemDetails.ItemUnit = (item.ElementAt(7).Value).ToString();
+                        objItemDetails.InwardQuantity = Convert.ToDouble(item.ElementAt(0).Value);
+                        objItemDetails.BalanceQuantity = Convert.ToDouble(item.ElementAt(3).Value);
+                        objItemDetails.CurrencyName = (item.ElementAt(9).Value).ToString();
+                        objItemDetails.CreatedBy = model.CreatedBy;
+                        objItemDetails.CreatedDate = Convert.ToDateTime(System.DateTime.Now);
+
+                        itemDetails.Add(objItemDetails);
+                    }
+
+                    foreach (var item in itemDetails)
+                    {
+                        con.Open();
+                        SqlCommand cmdNew = new SqlCommand("usp_tbl_InwardItemDetails_Insert", con);
+                        cmdNew.CommandType = CommandType.StoredProcedure;
+
+                        cmdNew.Parameters.AddWithValue("@PurchaseOrderId", item.PO_ID);
+                        cmdNew.Parameters.AddWithValue("@InwardNoteId", InwardQCID);
+                        cmdNew.Parameters.AddWithValue("@Item_ID", item.ItemId);
+                        cmdNew.Parameters.AddWithValue("@ItemName", item.Item_Name);
+                        cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                        cmdNew.Parameters.AddWithValue("@POQuantity", item.POQuantity);
+                        cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
+                        cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
+                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                        cmdNew.Parameters.AddWithValue("@InwardQuantity", item.InwardQuantity);
+                        cmdNew.Parameters.AddWithValue("@BalanceQuantity", item.BalanceQuantity);
+                        cmdNew.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
+                        cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                        cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+
+                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                        while (dataReaderNew.Read())
+                        {
+                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                        }
+                        con.Close();
+                    }
                 }
 
             }
@@ -228,6 +285,7 @@ namespace InVanWebApp.Repository
                         {
                             var result = new InwardNoteBO()
                             {
+                                ItemId =Convert.ToInt32(dataReader2["ItemId"]),
                                 Item_Name = dataReader2["Item_Name"].ToString(),
                                 Item_Code = dataReader2["Item_Code"].ToString(),
                                 ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
@@ -236,8 +294,9 @@ namespace InVanWebApp.Repository
                                 BalanceQuantity = float.Parse(dataReader2["BalanceQuantity"].ToString()),
                                 RejectedQuantity = float.Parse(dataReader2["RejectedQuantity"].ToString()),
                                 WastageQuantityInPercentage = float.Parse(dataReader2["WastageQuantityInPercentage"].ToString()),
-                                Remarks = dataReader2["Remarks"].ToString()
-
+                                Remarks = dataReader2["Remarks"].ToString(),
+                                CurrencyID=Convert.ToInt32(dataReader2["CurrencyID"]),
+                                CurrencyName=dataReader2["CurrencyName"].ToString()
                             };
                             resultList.Add(result);
                         }
@@ -261,7 +320,8 @@ namespace InVanWebApp.Repository
                                 InwardQuantity = Convert.ToDouble(dataReader3["InwardQuantity"]),
                                 QuantityTookForSorting = float.Parse(dataReader3["QuantityTookForSorting"].ToString()),
                                 RejectedQuantity = float.Parse(dataReader3["RejectedQuantity"].ToString()),
-                                Remarks = dataReader3["Remarks"].ToString()
+                                Remarks = dataReader3["Remarks"].ToString(),
+                                CurrencyName=dataReader3["CurrencyName"].ToString()
 
                             };
                             resultList.Add(result);
