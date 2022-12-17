@@ -49,5 +49,10 @@ namespace InVanWebApp_BO
         public float ReceivedQty{ get; set; }
         public float InwardQty{ get; set; }
         public string LocationName { get; set; }
+
+        //Added the below fields for Currency
+        public int CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public float CurrencyPrice { get; set; }
     }
 }

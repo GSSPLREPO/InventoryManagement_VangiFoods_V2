@@ -77,6 +77,7 @@
                             <th>Wastage (%) (Wastage Quantity/Sorting Quantity*100)</th>
                             <th>Remarks</th>
                             <th class="d-none">ItemID</th>
+                            <th class="d-none">ItemTaxValue</th>
                         </tr>
                     </table>
                 </div>
@@ -95,7 +96,7 @@
             <a href="@Url.Action("Index", "InwardQCSorting")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                 Back To List
             </a>
-            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SetInwardQty()">Save</button>
+            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SetInwardQty()">Save</button>
         </div>
     </div>
     @Html.TextBoxFor(model => model.QuantitiesForSorting, new { style = "display:none" })
@@ -132,8 +133,9 @@
             var ItemCode = cellData.innerHTML;
 
             cellData = document.getElementById("ItemUnitPrice" + i);
-            var UnitPrice = cellData.innerHTML.split(' '); UnitPrice = UnitPrice[0];
+            var UnitPrice = cellData.innerHTML.split(' ');
             var CurrencyName = UnitPrice[1];
+            UnitPrice = UnitPrice[0];
 
             cellData = document.getElementById("DeliveredQty" + i);
             var InwardQty = cellData.innerHTML.split(' ');
@@ -159,11 +161,14 @@
             if (Remarks == null || Remarks == '')
                 Remarks = " ";
             var ItemID = $('#ItemID' + i).val();
+            var ItemTaxValue = $('#ItemTaxValue' + i).val();
+
             itemTableDetails = itemTableDetails +
                 "{ \"ItemId\":" + ItemID + ", \"Item_Name\": \"" + ItemName + "\", \"Item_Code\": \"" + ItemCode + "\", \"ItemUnitPrice\": " + UnitPrice +
                 ", \"ItemUnit\": \"" + Unit + "\", \"InwardQuantity\": " + InwardQty + ",\"QuantityTookForSorting\": " + SortingQtyTook +
                 ", \"BalanceQuantity\": " + BalanceQty + ", \"WastageQuantityInPercentage\": " + WastagePercentage + ",\"Remarks\":\"" + Remarks+
-                "\", \"CurrencyName\": \"" + CurrencyName + "\"";
+                "\", \"CurrencyName\": \"" + CurrencyName + "\",\"RejectedQuantity\":" + RejectedQty
+                + ",\"ItemTaxValue\":"+ItemTaxValue;
 
             if (i == (rowCount - 1))
                 itemTableDetails = itemTableDetails + "}";
@@ -177,6 +182,7 @@
 
     function SelectedIndexChanged(id) {
 
+        $('#btnSave').prop('disabled', false);
         //For deleting the rows of Item table if exist.
 
         var table = document.getElementById('ItemTable');
@@ -201,6 +207,7 @@
                 //$('#PODate').val(result[0].PODate);
                 $('#SupplierName').val(result[0].SupplierDetails);
                 var ColCount = result.length
+                var flag = 0; //This flag is for checking whether the selected Inward QC is completed or not.
 
                 //===================Create dynamic table for binding Item details====================//
                 var table = document.getElementById('ItemTable');
@@ -244,11 +251,13 @@
 
                             if (result[j].QuantityTookForSorting == deliveredQty) {
                                 t6.setAttribute("disabled", "true");
+                                flag = 1;
                             }
                             else {
                                 t6.removeAttribute("disabled", "false");
                                 t6.removeAttribute("disabled", "true");
                                 t6.setAttribute("onchange", "OnChangeQCQty($(this).val(),id)");
+                                flag = 0;
                             }
                             t6.setAttribute("type", "number");
                             cell.appendChild(t6);
@@ -310,10 +319,26 @@
                             t7.setAttribute("class", "d-none");
                             cell.appendChild(t7);
                         }
+                        else if (i == 11) {
+                            var t7 = document.createElement("input");
+                            t7.id = "ItemTaxValue" + j;
+                            t7.setAttribute("value", result[j].ItemTaxValue);
+                            t7.setAttribute("disabled", "true");
+                            t7.setAttribute("class", "d-none");
+                            cell.appendChild(t7);
+                        }
 
                     }
 
                 }
+                if (flag == 1) {
+                    alert('QC is done for the selected Inward number!');
+                    $('#btnSave').prop('disabled', 'true');
+                }
+                else {
+                    $('#btnSave').prop('disabled', false);
+                }
+
             }
         });
     }

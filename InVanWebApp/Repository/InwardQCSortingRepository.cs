@@ -114,13 +114,12 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@InwardNote_Id", model.InwardNote_Id);
                     //cmd.Parameters.AddWithValue("@InwardNumber", model.InwardNumber);
                     cmd.Parameters.AddWithValue("@InwardQCDate", model.InwardQCDate);
-                    cmd.Parameters.AddWithValue("@SupplierName", model.SupplierName);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
-                    cmd.Parameters.AddWithValue("@QuantitiesForSorting", model.QuantitiesForSorting);
-                    cmd.Parameters.AddWithValue("@BalanceQuantities", model.BalanceQuantities);
-                    cmd.Parameters.AddWithValue("@RejectedQuantities", model.RejectedQuantities);
-                    cmd.Parameters.AddWithValue("@WastageQuantities", model.WastageQuantities);
-                    cmd.Parameters.AddWithValue("@ReasonsForRejection", model.ReasonsForRejection);
+                    //cmd.Parameters.AddWithValue("@QuantitiesForSorting", model.QuantitiesForSorting);
+                    //cmd.Parameters.AddWithValue("@BalanceQuantities", model.BalanceQuantities);
+                    //cmd.Parameters.AddWithValue("@RejectedQuantities", model.RejectedQuantities);
+                    //cmd.Parameters.AddWithValue("@WastageQuantities", model.WastageQuantities);
+                    //cmd.Parameters.AddWithValue("@ReasonsForRejection", model.ReasonsForRejection);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
@@ -133,28 +132,29 @@ namespace InVanWebApp.Repository
                         InwardQCID = Convert.ToInt32(dataReader["InwardQCID"]);
                     }
                     con.Close();
-                    //Pending work.
+
                     var json = new JavaScriptSerializer();
                     var data = json.Deserialize<Dictionary<string, string>[]>(model.QuantitiesForSorting);
 
-                    List<InwardNoteDetailBO> itemDetails = new List<InwardNoteDetailBO>();
+                    List<InwardQCDetailBO> itemDetails = new List<InwardQCDetailBO>();
 
                     foreach (var item in data)
                     {
-                        InwardNoteDetailBO objItemDetails = new InwardNoteDetailBO();
-                        objItemDetails.InwardNoteId = model.InwardNote_Id;
-                        objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
-                        objItemDetails.Item_Name = item.ElementAt(4).Value.ToString();
-                        objItemDetails.Item_Code = item.ElementAt(5).Value.ToString();
-                        objItemDetails.POQuantity = Convert.ToDecimal(item.ElementAt(6).Value);
-                        objItemDetails.ItemTaxValue = item.ElementAt(8).Value.ToString();
-                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(2).Value);
-                        objItemDetails.ItemUnit = (item.ElementAt(7).Value).ToString();
-                        objItemDetails.InwardQuantity = Convert.ToDouble(item.ElementAt(0).Value);
-                        objItemDetails.BalanceQuantity = Convert.ToDouble(item.ElementAt(3).Value);
-                        objItemDetails.CurrencyName = (item.ElementAt(9).Value).ToString();
-                        objItemDetails.CreatedBy = model.CreatedBy;
-                        objItemDetails.CreatedDate = Convert.ToDateTime(System.DateTime.Now);
+                        InwardQCDetailBO objItemDetails = new InwardQCDetailBO();
+                        objItemDetails.InwardQC_Id = InwardQCID;
+                        objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
+                        objItemDetails.Item_Name = item.ElementAt(1).Value.ToString();
+                        objItemDetails.Item_Code = item.ElementAt(2).Value.ToString();
+                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(3).Value);
+                        objItemDetails.ItemUnit = (item.ElementAt(4).Value).ToString();
+                        objItemDetails.InwardQuantity = Convert.ToDouble(item.ElementAt(5).Value);
+                        objItemDetails.QuantityTookForSorting = Convert.ToDouble(item.ElementAt(6).Value);
+                        objItemDetails.BalanceQuantity = Convert.ToDouble(item.ElementAt(7).Value);
+                        objItemDetails.WastageQuantityInPercentage = Convert.ToDouble(item.ElementAt(8).Value);
+                        objItemDetails.Remarks = (item.ElementAt(9).Value).ToString();
+                        objItemDetails.CurrencyName = (item.ElementAt(10).Value).ToString();
+                        objItemDetails.RejectedQuantity = Convert.ToDouble(item.ElementAt(11).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(12).Value.ToString();
 
                         itemDetails.Add(objItemDetails);
                     }
@@ -162,22 +162,26 @@ namespace InVanWebApp.Repository
                     foreach (var item in itemDetails)
                     {
                         con.Open();
-                        SqlCommand cmdNew = new SqlCommand("usp_tbl_InwardItemDetails_Insert", con);
+                        SqlCommand cmdNew = new SqlCommand("usp_tbl_InwardQCItemDetails_Insert", con);
                         cmdNew.CommandType = CommandType.StoredProcedure;
 
-                        cmdNew.Parameters.AddWithValue("@PurchaseOrderId", item.PO_ID);
-                        cmdNew.Parameters.AddWithValue("@InwardNoteId", InwardQCID);
+                        cmdNew.Parameters.AddWithValue("@InwardNote_Id", model.InwardNote_Id);
+                        cmdNew.Parameters.AddWithValue("@InwardQCId", InwardQCID);
                         cmdNew.Parameters.AddWithValue("@Item_ID", item.ItemId);
                         cmdNew.Parameters.AddWithValue("@ItemName", item.Item_Name);
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
-                        cmdNew.Parameters.AddWithValue("@POQuantity", item.POQuantity);
-                        cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
                         cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
                         cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                        cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
+                        cmdNew.Parameters.AddWithValue("@SupplierName", model.SupplierName);
                         cmdNew.Parameters.AddWithValue("@InwardQuantity", item.InwardQuantity);
+                        cmdNew.Parameters.AddWithValue("@QuantityTookForSorting", item.QuantityTookForSorting);
                         cmdNew.Parameters.AddWithValue("@BalanceQuantity", item.BalanceQuantity);
+                        cmdNew.Parameters.AddWithValue("@WastageQuantityInPercentage", item.WastageQuantityInPercentage);
+                        cmdNew.Parameters.AddWithValue("@RejectedQuantity", item.RejectedQuantity);
+                        cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks);
                         cmdNew.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
-                        cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                        cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
 
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
@@ -296,7 +300,8 @@ namespace InVanWebApp.Repository
                                 WastageQuantityInPercentage = float.Parse(dataReader2["WastageQuantityInPercentage"].ToString()),
                                 Remarks = dataReader2["Remarks"].ToString(),
                                 CurrencyID=Convert.ToInt32(dataReader2["CurrencyID"]),
-                                CurrencyName=dataReader2["CurrencyName"].ToString()
+                                CurrencyName=dataReader2["CurrencyName"].ToString(),
+                                ItemTaxValue = dataReader2["ItemTaxValue"].ToString()
                             };
                             resultList.Add(result);
                         }

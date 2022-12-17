@@ -136,7 +136,8 @@ namespace InVanWebApp.Repository
                             ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
                             TotalQuantity = float.Parse(dataReader1["TotalQuantity"].ToString()),
                             InwardQuantity = (dataReader1["InwardQuantity"] != null ? Convert.ToDouble(dataReader1["InwardQuantity"]) : 0),
-                            ReceivedQty = float.Parse(dataReader1["ReceivedQty"].ToString())
+                            ReceivedQty = float.Parse(dataReader1["ReceivedQty"].ToString()),
+                            CurrencyName = dataReader1["CurrencyName"].ToString()
                         };
                         resultList.Add(result);
                     }
@@ -300,7 +301,8 @@ namespace InVanWebApp.Repository
                             ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
                             OrderQty = float.Parse(dataReader1["OrderQuantity"].ToString()),
                             InwardQty = float.Parse(dataReader1["InwardQty"].ToString()),
-                            ReceivedQty = float.Parse(dataReader1["ReceivedQuantity"].ToString())
+                            ReceivedQty = float.Parse(dataReader1["ReceivedQuantity"].ToString()),
+                            CurrencyName=dataReader1["CurrencyName"].ToString()
                         };
                         resultList.Add(result);
                     }

@@ -67,6 +67,9 @@ namespace InVanWebApp_BO
         public string CurrencyName { get; set; }
         public double CurrencyPrice { get; set; }
         public List<InwardNoteDetailBO> itemDetails { get; set; }
+        
+        //This field is used in Inward QC.
+        public string ItemTaxValue { get; set; }
     }
 
     public class InwardNoteDetailBO

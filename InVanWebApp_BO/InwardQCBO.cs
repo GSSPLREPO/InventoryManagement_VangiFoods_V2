@@ -51,10 +51,10 @@ namespace InVanWebApp_BO
         public string ReasonsForRejection { get; set; }
 
         //Added the below property for saving the item table details.
-        public List<InwardQCDetail> itemDetails { get; set; }
+        public List<InwardQCDetailBO> itemDetails { get; set; }
     }
 
-    public class InwardQCDetail
+    public class InwardQCDetailBO
     {
         public int ID { get; set; }
         public Nullable<int> InwardQC_Id { get; set; }
@@ -63,6 +63,7 @@ namespace InVanWebApp_BO
         public string Item_Name { get; set; }
         public string Item_Code { get; set; }
         public Nullable<decimal> ItemUnitPrice { get; set; }
+        public string ItemUnit { get; set; }
         public string ItemTaxValue { get; set; }
         public Nullable<double> InwardQuantity { get; set; }
         public Nullable<double> RejectedQuantity { get; set; }
@@ -75,6 +76,9 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+
+        //Added the below properties for Currency
+        public string CurrencyName { get; set; }
 
     }
 }
