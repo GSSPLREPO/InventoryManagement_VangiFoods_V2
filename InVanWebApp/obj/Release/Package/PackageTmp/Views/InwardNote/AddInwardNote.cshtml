@@ -81,29 +81,23 @@
             <hr />
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-striped" id="ItemTable">
+                    <table class="table table-striped table-responsive" id="ItemTable">
                         <tr>
                             <th>Item</th>
                             <th>Code</th>
                             <th>Quantity</th>
                             <th>Tax</th>
-                            <th>Unit Price</th>
+                            <th style="width:12%">Unit Price</th>
                             <th>Delivered</th>
                             <th>Delivered Now (Kg)</th>
                             <th>Balance (Kg)</th>
+                            <th class="d-none">ItemID</th>
                         </tr>
                     </table>
                 </div>
             </div>
             <br />
             <div class="row">
-                @*<div class="col-md-2">
-                    @Html.Label("Signature")
-                </div>
-                <div class="col-md-4">
-                    <input type="file" name="Signature" id="fileupload" class="file-drop-zone" onchange="return fileValidation()">
-                    <span id="sfileupload" class="text-danger"></span>
-                </div>*@
                 <div class="col-md-2">
                     @Html.Label("Remarks")
                 </div>

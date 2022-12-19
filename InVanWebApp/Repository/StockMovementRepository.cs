@@ -51,7 +51,9 @@ namespace InVanWebApp.Repository
                             ToLocationName = reader["ToLocationName"].ToString(),
                             ToLocation_FinalQty = float.Parse(reader["ToLocation_FinalQty"].ToString()),
                             ValueIn = float.Parse(reader["ValueIn"].ToString()),
-                            UnitPrice= float.Parse(reader["UnitPrice"].ToString())
+                            UnitPrice = float.Parse(reader["UnitPrice"].ToString()),
+                            InwardDateOfItem = Convert.ToDateTime(reader["InwardDateOfItem"]).ToString("dd/MM/yyyy hh:mm:ss"),
+
                         };
                         resultList.Add(result);
                     }

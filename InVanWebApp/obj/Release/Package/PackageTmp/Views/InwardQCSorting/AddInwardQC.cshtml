@@ -63,8 +63,8 @@
             </div>
             <hr />
             <div class="row">
-                <div class="col-md-12" style="overflow: scroll;">
-                    <table class="table table-striped" id="ItemTable">
+                <div class="col-md-12">
+                    <table class="table table-striped table-responsive" id="ItemTable">
                         <tr>
                             <th>Item</th>
                             <th>Code</th>
@@ -76,6 +76,8 @@
                             <th>Total Waste Quantity (Kg)</th>
                             <th>Wastage (%) (Wastage Quantity/Sorting Quantity*100)</th>
                             <th>Remarks</th>
+                            <th class="d-none">ItemID</th>
+                            <th class="d-none">ItemTaxValue</th>
                         </tr>
                     </table>
                 </div>
@@ -94,7 +96,7 @@
             <a href="@Url.Action("Index", "InwardQCSorting")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                 Back To List
             </a>
-            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SetInwardQty()">Save</button>
+            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SetInwardQty()">Save</button>
         </div>
     </div>
     @Html.TextBoxFor(model => model.QuantitiesForSorting, new { style = "display:none" })
@@ -115,9 +117,72 @@
     var RejectedQuantities = "";
     var WastagePercentages = "";
     var Reasons = "";
+    var itemTableDetails = "";
+
+    //===========This function will create a json format of the item details
+    function createJson() {
+        var table = document.getElementById('ItemTable');
+        var rowCount = table.rows.length;
+        var i = 1;
+        itemTableDetails = "[";
+        for (i = 1; i < rowCount; i++) {
+            var cellData = document.getElementById("Item_Name" + i);
+            var ItemName = cellData.innerHTML;
+
+            cellData = document.getElementById("Item_Code" + i);
+            var ItemCode = cellData.innerHTML;
+
+            cellData = document.getElementById("ItemUnitPrice" + i);
+            var UnitPrice = cellData.innerHTML.split(' ');
+            var CurrencyName = UnitPrice[1];
+            UnitPrice = UnitPrice[0];
+
+            cellData = document.getElementById("DeliveredQty" + i);
+            var InwardQty = cellData.innerHTML.split(' ');
+            var Unit = InwardQty[1]; InwardQty = InwardQty[0];
+
+            var SortingQtyTook = $('#txtQCQty' + i).val();
+            if (SortingQtyTook == null || SortingQtyTook == '')
+                SortingQtyTook = 0;
+
+            var BalanceQty = $('#txtBalanceQty' + i).val();
+            if (BalanceQty == null || BalanceQty == '')
+                BalanceQty = 0;
+            
+            var RejectedQty = $('#txtRejectedQty' + i).val();
+            if (RejectedQty == null || RejectedQty == '')
+                RejectedQty = 0;
+            
+            var WastagePercentage = $('#txtWastagePer' + i).val();
+            if (WastagePercentage == null || WastagePercentage == '')
+                WastagePercentage = 0;
+            
+            var Remarks = $('#txtRemarks_' + i).val();
+            if (Remarks == null || Remarks == '')
+                Remarks = " ";
+            var ItemID = $('#ItemID' + i).val();
+            var ItemTaxValue = $('#ItemTaxValue' + i).val();
+
+            itemTableDetails = itemTableDetails +
+                "{ \"ItemId\":" + ItemID + ", \"Item_Name\": \"" + ItemName + "\", \"Item_Code\": \"" + ItemCode + "\", \"ItemUnitPrice\": " + UnitPrice +
+                ", \"ItemUnit\": \"" + Unit + "\", \"InwardQuantity\": " + InwardQty + ",\"QuantityTookForSorting\": " + SortingQtyTook +
+                ", \"BalanceQuantity\": " + BalanceQty + ", \"WastageQuantityInPercentage\": " + WastagePercentage + ",\"Remarks\":\"" + Remarks+
+                "\", \"CurrencyName\": \"" + CurrencyName + "\",\"RejectedQuantity\":" + RejectedQty
+                + ",\"ItemTaxValue\":"+ItemTaxValue;
+
+            if (i == (rowCount - 1))
+                itemTableDetails = itemTableDetails + "}";
+            else
+                itemTableDetails = itemTableDetails + "},";
+        }
+        itemTableDetails = itemTableDetails + "]"
+        //alert(itemTableDetails);
+    }
+
 
     function SelectedIndexChanged(id) {
 
+        $('#btnSave').prop('disabled', false);
         //For deleting the rows of Item table if exist.
 
         var table = document.getElementById('ItemTable');
@@ -142,6 +207,7 @@
                 //$('#PODate').val(result[0].PODate);
                 $('#SupplierName').val(result[0].SupplierDetails);
                 var ColCount = result.length
+                var flag = 0; //This flag is for checking whether the selected Inward QC is completed or not.
 
                 //===================Create dynamic table for binding Item details====================//
                 var table = document.getElementById('ItemTable');
@@ -154,13 +220,15 @@
                         cell = row.insertCell(i);
                         if (i == 0) {
                             cell.innerHTML = result[j].Item_Name;
+                            cell.setAttribute("id", "Item_Name" + j);
                         }
                         else if (i == 1) {
                             cell.innerHTML = result[j].Item_Code;
+                            cell.setAttribute("id", "Item_Code" + j);
                         }
                         else if (i == 2) {
-                            cell.innerHTML = result[j].ItemUnitPrice;
-                            //cell.setAttribute("id", "ItemQty" + j);
+                            cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
+                            cell.setAttribute("id", "ItemUnitPrice" + j);
                         }
                         else if (i == 3) {
 
@@ -183,11 +251,13 @@
 
                             if (result[j].QuantityTookForSorting == deliveredQty) {
                                 t6.setAttribute("disabled", "true");
+                                flag = 1;
                             }
                             else {
                                 t6.removeAttribute("disabled", "false");
                                 t6.removeAttribute("disabled", "true");
                                 t6.setAttribute("onchange", "OnChangeQCQty($(this).val(),id)");
+                                flag = 0;
                             }
                             t6.setAttribute("type", "number");
                             cell.appendChild(t6);
@@ -241,10 +311,34 @@
                             }
                             cell.appendChild(t7);
                         }
+                        else if (i == 10) {
+                            var t7 = document.createElement("input");
+                            t7.id = "ItemID" + j;
+                            t7.setAttribute("value", result[j].ItemId);
+                            t7.setAttribute("disabled", "true");
+                            t7.setAttribute("class", "d-none");
+                            cell.appendChild(t7);
+                        }
+                        else if (i == 11) {
+                            var t7 = document.createElement("input");
+                            t7.id = "ItemTaxValue" + j;
+                            t7.setAttribute("value", result[j].ItemTaxValue);
+                            t7.setAttribute("disabled", "true");
+                            t7.setAttribute("class", "d-none");
+                            cell.appendChild(t7);
+                        }
 
                     }
 
                 }
+                if (flag == 1) {
+                    alert('QC is done for the selected Inward number!');
+                    $('#btnSave').prop('disabled', 'true');
+                }
+                else {
+                    $('#btnSave').prop('disabled', false);
+                }
+
             }
         });
     }
@@ -363,12 +457,14 @@
     }
 
     function SetInwardQty() {
-        $('#QuantitiesForSorting').val(QuantitiesForSorting);
-        $('#BalanceQuantities').val(BalanceQuantities);
-        $('#RejectedQuantities').val(RejectedQuantities);
-        $('#WastageQuantities').val(WastagePercentages);
-        $('#ReasonsForRejection').val(Reasons);
-        console.log(QuantitiesForSorting + "_" + BalanceQuantities + "_" + RejectedQuantities + "_" + WastagePercentages + "_" + Reasons);
+        createJson();
+        $('#QuantitiesForSorting').val(itemTableDetails);
+        //$('#QuantitiesForSorting').val(QuantitiesForSorting);
+        //$('#BalanceQuantities').val(BalanceQuantities);
+        //$('#RejectedQuantities').val(RejectedQuantities);
+        //$('#WastageQuantities').val(WastagePercentages);
+        //$('#ReasonsForRejection').val(Reasons);
+        //console.log(QuantitiesForSorting + "_" + BalanceQuantities + "_" + RejectedQuantities + "_" + WastagePercentages + "_" + Reasons);
     }
 
 </script>

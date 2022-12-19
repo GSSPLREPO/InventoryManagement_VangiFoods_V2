@@ -16,14 +16,16 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Controllers
 {
     public class StockReportController : Controller
     {
         IStockMasterRepository _StockMasterRepository;
-        
-         public StockReportController()
+
+        #region Initializing the constructors
+        public StockReportController()
         {
             _StockMasterRepository = new StockMasterRepository();
         }
@@ -32,12 +34,18 @@ namespace InVanWebApp.Controllers
         {
             _StockMasterRepository = stockMasterRepository;
         }
+        #endregion
 
-        // GET: StockReport
+        #region Binding the stock data
 
         public ActionResult Index()
         {
-            return View();
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                return View();
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
        
         /// <summary>
@@ -51,7 +59,8 @@ namespace InVanWebApp.Controllers
             return Json(new { data = stockDetails }, JsonRequestBehavior.AllowGet);
         }
 
-        
+        #endregion
+
         [Obsolete]
         public ActionResult ExprotAsPDF()
         {
@@ -61,6 +70,7 @@ namespace InVanWebApp.Controllers
             {
                 return View("Index");
             }
+
             StringBuilder sb = new StringBuilder();
             List<StockReportBO> stockReport = TempData["StockDetailsTemp"] as List<StockReportBO>;
 

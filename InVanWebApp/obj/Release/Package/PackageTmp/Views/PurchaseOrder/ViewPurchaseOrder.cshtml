@@ -177,11 +177,11 @@
                                                                 <td>
                                                                     @Html.DisplayFor(x => item.CurrencyName)
                                                                 </td>
-                                                                <td style="width:15%;">
-                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; width:30%;", @readonly = "readonly" })
+                                                                <td>
+                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;", @readonly = "readonly" })
                                                                 </td>
-                                                                <td style="width:15%;">
-                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none; width:30%;", @readonly = "readonly" })
+                                                                <td>
+                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
                                                                 </td>
                                                             </tr>
                                                             { c++; }

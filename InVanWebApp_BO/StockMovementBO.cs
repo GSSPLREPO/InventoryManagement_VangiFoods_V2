@@ -46,5 +46,7 @@ namespace InVanWebApp_BO
         public DateTime toDate { get; set; }
         public string Date { get; set; }
 
+        //Added the below fields for reports
+        public string InwardDateOfItem { get; set; }
     }
 }

@@ -160,6 +160,7 @@
                                     <option value="Cash">Cash</option>
                                     <option value="Cheque">Cheque</option>
                                     <option value="Online">Online</option>
+                                    <option value="RTGS/NEFT">RTGS/NEFT</option>
                                 </select>
                                 @Html.ValidationMessageFor(model => model.PaymentMode, "", new { @class = "error mt-2 text-danger" })
                             </div>
@@ -169,7 +170,18 @@
                                 @Html.Label("Bank Name")
                             </div>
                             <div class="col-md-8">
-                                @Html.TextBoxFor(x => x.BankName, new { @class = "form-control form-control-sm", @placeholder = "Enter Bank Name" })
+                                @Html.TextBoxFor(x => x.BankName, new { @class = "form-control form-control-sm", @placeholder = "Enter Bank Name", onkeypress = "return isAlphabetsKey(event,2)", maxlength = "150" })
+                                <span id="validationBank" class="error mt-2 text-danger field-validation-error" style="display:none;">Only albhabets are allowed!</span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" id="dvBranchName" style="display:none;">
+                            <div class="col-md-4">
+                                @Html.Label("Branch Name")
+                            </div>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(x => x.BranchName, new { @class = "form-control form-control-sm", @placeholder = "Enter Branch Name", onkeypress = "return isAlphabetsKey(event,1)", maxlength = "150" })
+                                <span id="validationBranch" class="error mt-2 text-danger field-validation-error" style="display:none;">Only albhabets are allowed!</span>
                             </div>
                         </div>
                         <br />
@@ -178,7 +190,8 @@
                                 @Html.Label("Cheque Number")
                             </div>
                             <div class="col-md-8">
-                                @Html.TextBoxFor(x => x.ChequeNumber, new { @class = "form-control form-control-sm", @placeholder = "Enter Cheque Number" })
+                                @Html.TextBoxFor(x => x.ChequeNumber, new { @class = "form-control form-control-sm", @placeholder = "Enter Cheque Number", onkeypress = "return isNumberKey(event,1)", maxlength = "6" })
+                                <span id="validationChequeNo" class="error mt-2 text-danger field-validation-error" style="display:none;">Only numbers are allowed!</span>
                             </div>
                         </div>
                         <div class="row" id="dvAccountNo" style="display:none;">
@@ -186,7 +199,18 @@
                                 @Html.Label("Account Number")
                             </div>
                             <div class="col-md-8">
-                                @Html.TextBoxFor(x => x.AccountNumber, new { @class = "form-control form-control-sm", @placeholder = "Enter Account Number" })
+                                @Html.TextBoxFor(x => x.AccountNumber, new { @class = "form-control form-control-sm", @placeholder = "Enter Account Number", onkeypress = "return isNumberKey(event,2)", maxlength = "17" })
+                                <span id="validationAccountNo" class="error mt-2 text-danger field-validation-error" style="display:none;">Only numbers are allowed!</span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" id="dvIFSC" style="display:none;">
+                            <div class="col-md-4">
+                                @Html.Label("RTGS/NEFT IFSC code")
+                            </div>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(x => x.IFSCCode, new { @class = "form-control form-control-sm", @placeholder = "Enter IFSC Code", onkeypress = "return isAlphaNumericKey(event,1)", maxlength = "11" })
+                                <span id="validationIFSC" class="error mt-2 text-danger field-validation-error" style="display:none;">Only albhabets/numbers are allowed!</span>
                             </div>
                         </div>
                     </div>
@@ -235,7 +259,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-8">
-                                @Html.TextBoxFor(x => x.TotalPaybleAmount, new { @class = "form-control form-control-sm", @placeholder = "Total Payble Amount", @onblur = "calculateBalancePay()" })
+                                @Html.TextBoxFor(x => x.TotalPaybleAmount, new { @class = "form-control form-control-sm", @placeholder = "Total Payble Amount", @onblur = "calculateBalancePay()", onkeypress = "return isPriceKey(event)", maxlength = "8" })
                                 @Html.ValidationMessageFor(model => model.TotalPaybleAmount, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -267,15 +291,17 @@
                                 <select class="form-control" id="IsPaid" name="IsPaid">
                                     <option value="Paid">Paid</option>
                                     <option value="UnPaid">Unpaid</option>
+                                    <option value="Hold">Hold</option>
                                 </select>
                                 @Html.ValidationMessageFor(model => model.IsPaid, "", new { @class = "error mt-2 text-danger" })
 
                             </div>
                             <div class="col-md-2">
                                 @Html.Label("Remarks")
+                                <span style="color:red; display:none" id="RemarkSpan">*</span>
                             </div>
                             <div class="col-md-4">
-                                <input type="text" name="Remarks" class="form-control form-control-sm" />
+                                <input type="text" id="Remarks" name="Remarks" class="form-control form-control-sm" />
                             </div>
                         </div>
                     </div>
@@ -304,6 +330,7 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 <script type="text/javascript">
+
     $(document).ready(function () {
         var totalPayment = $('#TotalPOAmount').val();
         totalPayment = parseFloat(totalPayment);
@@ -331,23 +358,121 @@
 
     $('#PaymentMode').change(function () {
         var mode = $('#PaymentMode option:selected').attr('value');
+        $('#dvCheque').hide();
+        $('#dvAccountNo').hide();
+        $('#dvCheque').hide();
+
         if (mode == 'Cheque') {
             $('#dvBankName').show();
             $('#dvCheque').show();
-            $('#dvAccountNo').hide();
+            $('#dvBranchName').show();
         }
         else if (mode == 'Online') {
             $('#dvBankName').show();
-            $('#dvCheque').hide();
+            $('#dvBranchName').show();
             $('#dvAccountNo').show();
+        }
+        else if (mode == 'RTGS/NEFT') {
+            $('#dvBankName').show();
+            $('#dvBranchName').show();
+            $('#dvAccountNo').show();
+            $('#dvIFSC').show();
         }
         else {
             $('#dvBankName').hide();
             $('#dvCheque').hide();
             $('#dvAccountNo').hide();
+            $('#dvBranchName').hide();
+            $('#dvIFSC').hide();
         }
     });
 
+    $('#IsPaid').change(function () {
+        var tempVariable = $('#IsPaid option:selected').attr('value');
+        if (tempVariable == 'Hold') {
+            $("#Remarks").attr("required", "true");
+            $("#RemarkSpan").css("display", "contents");
+        }
+        else {
+            $("#Remarks").removeAttr("required", "true");
+            $("#RemarkSpan").css("display", "none");
+        }
+    });
+
+    //================Validation for number, alphanumeric and price==================//
+    function isNumberKey(evt, id) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if ((keycode < 48 || keycode > 57)) {
+            if (id == '1')
+                $('#validationChequeNo').css('display', 'contents');
+            else if (id == '2')
+                $('#validationAccountNo').css('display', 'contents');
+
+            return false;
+        }
+        if (id == '1')
+            $('#validationChequeNo').css('display', 'none');
+        else if (id == '2')
+            $('#validationAccountNo').css('display', 'none');
+        return true;
+    }
+
+    function isAlphaNumericKey(evt, id) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!((keycode > 47 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123))) {
+            if (id == '1')
+                $('#validationIFSC').css('display', 'contents');
+
+            return false;
+        }
+        if (id == '1')
+            $('#validationIFSC').css('display', 'none');
+        return true;
+    }
+
+    function isAlphabetsKey(evt, id) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (id == '1') {
+            if (!((parseInt(keycode) >= 97 && parseInt(keycode) <= 122) || parseInt(keycode) == 32)) {
+                $('#validationBranch').css('display', 'contents');
+
+                return false;
+            }
+            $('#validationBranch').css('display', 'none');
+
+            return true;
+        }
+        if (id == '2') {
+            if (!((parseInt(keycode) >= 97 && parseInt(keycode) <= 122) || (parseInt(keycode) == 32) || (parseInt(keycode)==46) || (parseInt(keycode)==45))) {
+                $('#validationBank').css('display', 'contents');
+
+                return false;
+            }
+            $('#validationBank').css('display', 'none');
+
+            return true;
+        }
+
+
+    }
+
+    function isPriceKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+
+
+    //=================================End===============================
     function calculateBalancePay() {
         var totalPayment = $('#TotalPOAmount').val();
         totalPayment = parseFloat(totalPayment);

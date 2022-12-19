@@ -59,6 +59,10 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public int LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+
+        //Add below fields for IFSC
+        public string IFSCCode { get; set; }
+        public string BranchName { get; set; }
     }
     public class PurchaseOrderItemsDetailBO
     {

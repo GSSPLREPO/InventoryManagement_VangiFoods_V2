@@ -3,6 +3,58 @@
 
 var InwardQuantities = "";
 var BalanceQuantities = "";
+
+//===========This function will create a json format of the item details
+function createJson() {
+    //var table = document.getElementById('ItemTable');
+    //var rowCount = table.rows.length;
+    //var i = 1;
+    //InwardQuantities = "";
+    //BalanceQuantities ="";
+    //for (i = 1; i < rowCount; i++) {
+    //    var value = $('#txtInwardQty' + i).val();
+    //    var BalQty = $('#txtBalanceQty' + i).val();
+    //    var UnitPrice = $('#UnitPrice_' + i).val();
+    //    var ItemID = $('#ItemID_' + i).val();
+    //    InwardQuantities = InwardQuantities + "txtInwardQty" + i + "*" + value + ",";
+    //    BalanceQuantities = BalanceQuantities + "txtBalanceQty" + i + "*" + BalQty + ",";
+    //    alert(InwardQuantities);
+    //    //JSON.stringify(res)
+    //}
+
+    var table = document.getElementById('ItemTable');
+    var rowCount = table.rows.length;
+    var i = 1;
+    InwardQuantities = "[";
+    BalanceQuantities = "";
+    for (i = 1; i < rowCount; i++) {
+        var ItemName = $('#ItemName_' + i).val();
+        var ItemCode = $('#ItemCode_' + i).val();
+        var cellData = document.getElementById("ItemQty" + i);
+        var POQty = cellData.innerHTML.split(' ');
+        var Unit = POQty[1]; POQty = POQty[0];
+        var Tax = $('#ItemTaxValue' + i).val(); Tax = Tax.split(" "); Tax = Tax[0];
+        var value = $('#txtInwardQty' + i).val();
+        if (value == null || value == '')
+            value = 0;
+        var BalQty = $('#txtBalanceQty' + i).val();
+        var UnitPrice = $('#UnitPrice_' + i).val(); UnitPrice = UnitPrice.split(" ");
+        var CurrencyName = UnitPrice[1];
+        UnitPrice = UnitPrice[0];
+        var ItemID = $('#ItemID_' + i).val();
+        InwardQuantities = InwardQuantities + "{\"InwardQuantity\":" + value + ", \"ItemId\":" + ItemID +
+            ", \"ItemUnitPrice\": " + UnitPrice + ", \"BalanceQuantity\": " + BalQty +
+            ", \"Item_Name\": \"" + ItemName + "\", \"Item_Code\": \"" + ItemCode + "\",\"POQuantity\": " + POQty +
+            ", \"ItemUnit\": \"" + Unit + "\", \"ItemTaxValue\": " + Tax + ", \"CurrencyName\": \"" + CurrencyName + "\"";
+
+        if (i == (rowCount - 1))
+            InwardQuantities = InwardQuantities + "}";
+        else
+            InwardQuantities = InwardQuantities + "},";
+    }
+    InwardQuantities = InwardQuantities + "]"
+}
+
 function SelectedIndexChanged(id) {
 
     //For deleting the rows of Item table if exist.
@@ -41,24 +93,48 @@ function SelectedIndexChanged(id) {
                     var cell = 'cell' + i;
                     cell = row.insertCell(i);
                     if (i == 0) {
-                        cell.innerHTML = result[j].ItemName;
+                        var t0 = document.createElement("input");
+                        t0.id = "ItemName_" + j;
+                        t0.setAttribute("disabled", "true");
+                        t0.setAttribute("style", "background:transparent;border:none;");
+                        t0.setAttribute("value", result[j].ItemName);
+                        cell.appendChild(t0);
+                        //cell.innerHTML = result[j].ItemName;
                     }
                     else if (i == 1) {
-                        cell.innerHTML = result[j].Item_Code;
+                        var t1 = document.createElement("input");
+                        t1.id = "ItemCode_" + j;
+                        t1.setAttribute("disabled", "true");
+                        t1.setAttribute("style", "background:transparent;border:none;");
+                        t1.setAttribute("value", result[j].Item_Code);
+                        cell.appendChild(t1);
+                        //cell.innerHTML = result[j].Item_Code;
                     }
                     else if (i == 2) {
                         cell.innerHTML = result[j].ItemQuantity + " " + result[j].ItemUnit;
                         cell.setAttribute("id", "ItemQty" + j);
                     }
                     else if (i == 3) {
-                        cell.innerHTML = result[j].ItemTaxValue + " %";
+                        var t3 = document.createElement("input");
+                        t3.id = "ItemTaxValue" + j;
+                        t3.setAttribute("disabled", "true");
+                        t3.setAttribute("style", "background:transparent;border:none;");
+                        t3.setAttribute("value", result[j].ItemTaxValue + " %");
+                        cell.appendChild(t3);
+                        //cell.innerHTML = result[j].ItemTaxValue + " %";
                     }
                     else if (i == 4) {
-                        cell.innerHTML = result[j].ItemUnitPrice + " Rs";
+                        var t4 = document.createElement("input");
+                        t4.id = "UnitPrice_" + j;
+                        t4.setAttribute("disabled", "true");
+                        t4.setAttribute("style", "background:transparent;border:none;");
+                        t4.setAttribute("value", result[j].ItemUnitPrice + " " + result[j].CurrencyName);
+                        cell.appendChild(t4);
+
+                        //cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
                     }
                     else if (i == 5) {
-
-                        cell.innerHTML = result[j].InwardQuantity;
+                        cell.innerHTML = result[j].InwardQuantity + " " + result[j].ItemUnit;
                         cell.setAttribute("id", "DeliveredQty" + j);
                     }
                     else if (i == 6) {
@@ -90,6 +166,16 @@ function SelectedIndexChanged(id) {
                         t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
                         cell.appendChild(t7);
                     }
+                    else if (i == 8) {
+                        var t8 = document.createElement("input");
+                        t8.id = "ItemID_" + j;
+                        t8.setAttribute("disabled", "true");
+                        t8.setAttribute("class", "d-none");
+                        t8.setAttribute("value", result[j].Item_ID);
+                        cell.appendChild(t8);
+                        //cell.innerHTML = result[j].Item_ID;
+                        // cell.setAttribute("id", "ItemID_" + j);
+                    }
                 }
 
             }
@@ -116,7 +202,7 @@ function OnChangeIWQty(value, id) {
     }
     else {
         var tempInwQty = document.getElementById("txtInwardQty" + rowNo).value;
-        console.log(tempInwQty + " " + temp_itemQty[0] + " " + deliveredQty);
+        //console.log(tempInwQty + " " + temp_itemQty[0] + " " + deliveredQty);
         document.getElementById("txtBalanceQty" + rowNo).value = parseFloat(temp_itemQty[0]) - (parseFloat(deliveredQty) + parseFloat(tempInwQty));
         InwardQuantities = InwardQuantities + "txtInwardQty" + rowNo + "*" + value + ",";
 
@@ -145,8 +231,9 @@ function fileValidation() {
 }
 
 function SetInwardQty() {
+    createJson();
     $('#InwardQuantities').val(InwardQuantities);
-    $('#BalanceQuantities').val(BalanceQuantities);
+    //$('#BalanceQuantities').val(BalanceQuantities);
     //alert($('#InwardQuantities').val());
     //alert($('#BalanceQuantities').val());
 }

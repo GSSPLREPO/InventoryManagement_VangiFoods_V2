@@ -18,5 +18,9 @@ namespace InVanWebApp_BO
         public decimal ReOrderLevel { get; set; }
         public decimal ItemReOrderQuantity { get; set; }
         public int RowNumber { get; set; }
+
+        //Added the below fields for report
+        public string ItemCategory { get; set; }
+        public string ItemUnit { get; set; }
     }
 }
