@@ -31,29 +31,25 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="col-md-12 mb-2" style="float:left;padding-left:89.3%;">
-                                @* <a style="font-size: 50px; float: right; color:#6a005b; " href="@Url.Action("ExprotAsPDF", "StockReport")" class="far fa-file-pdf">*@
-                                <a style="font-size: 50px;" href="@Url.Action("ExprotAsPDF", "StockReport")" ><img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /></a>
-                                <a style="font-size: 50px;" href="@Url.Action("ExportAsExcel", "StockReport")" ><img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px;" /></a>
-                                @*   @using (Html.BeginForm("ExprotAsPDF", "StockReport", FormMethod.Post, new { @style = "float:right" }))
-        {
-        @* <button  style="background:white;"><i style="height: 70px; width: 70px;"class="far fa-file-pdf" ></i></button>; *@
-                                @* <button @*class="btn btn-danger" style="float:right;"><i class="fa-sharp fa-solid fa-file-pdf" ></i></button> /*<i class="fa-sharp fa-solid fa-file-pdf"></i>
-        }*@
+                                <a style="font-size: 50px;" href="@Url.Action("ExprotAsPDF", "StockReport")"><img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /></a>
+                                <a style="font-size: 50px;" href="@Url.Action("ExportAsExcel", "StockReport")"><img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px;" /></a>
                             </div>
                             <br />
-                           
+
 
                             <table id="tblStockReport" class="ui celled table table-striped table-bordered hover table-sm">
                                 <thead class="text-center" style="text-align:center">
                                     <tr>
                                         @*<th>ID</th>*@
                                         <th style="text-align:center">Sr. No.</th>
-                                        <th style="text-align:center">Reorder</th>
                                         <th style="text-align:center">Item Code</th>
                                         <th style="text-align:center">Item Name</th>
+                                        <th style="text-align:center">Category</th>
                                         <th style="text-align:center">Item Unit Price (Rs)</th>
                                         <th style="text-align:center">Stock Quantity (KG)</th>
+                                        <th style="text-align:center">Item Unit</th>
                                         <th style="text-align:center">Inventory Value (Rs)</th>
+                                        <th style="text-align:center">Reorder</th>
                                         <th style="text-align:center">Reorder Level (KG)</th>
                                         <th style="text-align:center">Item Reorder Quantity (KG)</th>
                                     </tr>
@@ -69,47 +65,41 @@
 </body>
 </html>
 @section scripts{
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-    @*<link href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.semanticui.min.css" rel="stylesheet">*@
-
-
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-    @*<script src="https://cdn.datatables.net/1.10.21/js/dataTables.semanticui.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.1/semantic.min.js"></script>*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
-
-
-    <script>
+    <script type="text/javascript">
         $(document).ready(function () {
             BindStockReport();
-
+            
 
         });
 
         function BindStockReport() {
             $('#tblStockReport').dataTable().fnDestroy();
-          var t=  $('#tblStockReport').DataTable({
+            var t = $('#tblStockReport').DataTable({
                 "processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "sAjaxSource": "/StockReport/GetStock",
-
                 "pageLength": 20,
-
+                "scrollX": true,
                 "columns": [
                     /* { "data": "ID", "autoWidth": true },*/
                     { "data": "ID", "autoWidth": true },
-                    { "data": "Reorder", "autoWidth": true },
                     { "data": "Item_Code", "autoWidth": true },
                     { "data": "ItemName", "autoWidth": true },
+                    { "data": "ItemCategory", "autoWidth": true },
                     { "data": "ItemUnitPrice", "autoWidth": true },
                     { "data": "StockQuantity", "autoWidth": true },
+                    { "data": "ItemUnit", "autoWidth": true },
                     { "data": "InventoryValue", "autoWidth": true },
+                    { "data": "Reorder", "autoWidth": true },
                     { "data": "ReOrderLevel", "autoWidth": true },
                     { "data": "ItemReOrderQuantity", "autoWidth": true },
                 ]
-          });
+            });
             t.on('order.dt search.dt', function () {
                 let i = 1;
 
@@ -118,7 +108,7 @@
                 });
             }).draw();
         }
-
+       
         function RemoveCompany(id) {
             if (confirm("Are you Sure? You want to remove this company.")) {
 
@@ -127,4 +117,4 @@
         }
 
     </script>
-}
+    }

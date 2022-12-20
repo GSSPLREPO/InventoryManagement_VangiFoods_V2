@@ -72,7 +72,7 @@ namespace InVanWebApp.Controllers
 
         [HttpPost]
         public ActionResult AddPOPayment(POPaymentBO model)
-        {
+         {
             try
             {
                 if (Session[ApplicationSession.USERID] == null)
@@ -119,9 +119,11 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditPOPayment(int ID)
         {
-            var paymentDetails = _POPaymentRepository.GetPOPaymentDetailsById(ID);
-            var purchaseOrderDetail = _POPaymentRepository.GetPurchaseOrderById((int)paymentDetails.PurchaseOrderId);
-            var purchaseOrderItems = _POPaymentRepository.GetPOItemsByPurchaseOrderId((int)paymentDetails.PurchaseOrderId);
+
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+            var result = _POPaymentRepository.GetByID(ID);
+            var purchaseOrderItems = _POPaymentRepository.GetPOItemsByPurchaseOrderId((int)result.PurchaseOrderId);
             List<PurchaseOrderItemsDetailBO> items = new List<PurchaseOrderItemsDetailBO>();
             foreach (var item in purchaseOrderItems)
             {
@@ -145,31 +147,9 @@ namespace InVanWebApp.Controllers
                 };
                 items.Add(purchaseOrderItem);
             }
-
-            POPaymentBO model = new POPaymentBO()
-            {
-                AccountNumber = paymentDetails.AccountNo,
-                BalanceAmount = (decimal)paymentDetails.BalancePay,
-                BankName = paymentDetails.BankName,
-                ChequeNumber = paymentDetails.ChequeNo,
-                ID = paymentDetails.ID,
-                InvoiceNumber = paymentDetails.InvoiceNo,
-                IsPaid = paymentDetails.PaymentStatus,
-                PaymentAmount = (decimal)paymentDetails.InvoiceAmount,
-                PaymentDate = Convert.ToDateTime(paymentDetails.PaymentDate),
-                PaymentMode = paymentDetails.PaymentMode,
-                PONumber = purchaseOrderDetail.PONumber,
-                PurchaseOrderId = (int)paymentDetails.PurchaseOrderId,
-                PurchaseOrderItems = items,
-                TotalPaybleAmount = (int)paymentDetails.AmountPaid,
-                TotalPOAmount = Convert.ToDecimal(purchaseOrderDetail.GrandTotal),
-                VendorID = (int)purchaseOrderDetail.VendorsID,
-                VendorName = purchaseOrderDetail.CompanyName,
-                PaymentDueDate = paymentDetails.PaymentDueDate,
-                Remarks = paymentDetails.Remarks
-            };
-
-            return View(model);
+            result.PurchaseOrderItems = items;
+            
+            return View(result);
         }
 
         [HttpPost]
@@ -189,13 +169,68 @@ namespace InVanWebApp.Controllers
 
                         else
                         {
-                            TempData["Success"] = "<script>alert('Duplicate organisation! Can not be updated!');</script>";
-                            return View(model);
+                            TempData["Success"] = "<script>alert('Error while updating!');</script>";
+                            var result = _POPaymentRepository.GetByID(model.ID);
+                            var purchaseOrderItems = _POPaymentRepository.GetPOItemsByPurchaseOrderId((int)result.PurchaseOrderId);
+                            List<PurchaseOrderItemsDetailBO> items = new List<PurchaseOrderItemsDetailBO>();
+                            foreach (var item in purchaseOrderItems)
+                            {
+                                PurchaseOrderItemsDetailBO purchaseOrderItem = new PurchaseOrderItemsDetailBO
+                                {
+                                    CreatedBy = item.CreatedBy,
+                                    CreatedDate = item.CreatedDate,
+                                    ID = item.ID,
+                                    IsDeleted = item.IsDeleted,
+                                    ItemName = item.ItemName,
+                                    ItemQuantity = item.ItemQuantity,
+                                    ItemTaxValue = item.ItemTaxValue.ToString(),
+                                    ItemUnit = item.ItemUnit,
+                                    ItemUnitPrice = item.ItemUnitPrice,
+                                    Item_Code = item.Item_Code,
+                                    Item_ID = item.Item_ID,
+                                    LastModifiedBy = item.LastModifiedBy,
+                                    LastModifiedDate = item.LastModifiedDate,
+                                    PurchaseOrderId = item.PurchaseOrderId,
+                                    TotalItemCost = item.TotalItemCost
+                                };
+                                items.Add(purchaseOrderItem);
+                            }
+                            result.PurchaseOrderItems = items;
+                            return View(result);
                         }
                         return RedirectToAction("Index", "POPayment");
                     }
                     else
-                        return View(model);
+                    {
+                        TempData["Success"] = "<script>alert('Error while updating!');</script>";
+                        var result = _POPaymentRepository.GetByID(model.ID);
+                        var purchaseOrderItems = _POPaymentRepository.GetPOItemsByPurchaseOrderId((int)result.PurchaseOrderId);
+                        List<PurchaseOrderItemsDetailBO> items = new List<PurchaseOrderItemsDetailBO>();
+                        foreach (var item in purchaseOrderItems)
+                        {
+                            PurchaseOrderItemsDetailBO purchaseOrderItem = new PurchaseOrderItemsDetailBO
+                            {
+                                CreatedBy = item.CreatedBy,
+                                CreatedDate = item.CreatedDate,
+                                ID = item.ID,
+                                IsDeleted = item.IsDeleted,
+                                ItemName = item.ItemName,
+                                ItemQuantity = item.ItemQuantity,
+                                ItemTaxValue = item.ItemTaxValue.ToString(),
+                                ItemUnit = item.ItemUnit,
+                                ItemUnitPrice = item.ItemUnitPrice,
+                                Item_Code = item.Item_Code,
+                                Item_ID = item.Item_ID,
+                                LastModifiedBy = item.LastModifiedBy,
+                                LastModifiedDate = item.LastModifiedDate,
+                                PurchaseOrderId = item.PurchaseOrderId,
+                                TotalItemCost = item.TotalItemCost
+                            };
+                            items.Add(purchaseOrderItem);
+                        }
+                        result.PurchaseOrderItems = items;
+                        return View(result);
+                    }
                 }
                 else
                     return RedirectToAction("Index", "Login");

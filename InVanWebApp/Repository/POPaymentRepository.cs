@@ -129,13 +129,12 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@ChequeNo", POPaymentDetails.ChequeNumber);
                     cmd.Parameters.AddWithValue("@BankName", POPaymentDetails.BankName);
                     cmd.Parameters.AddWithValue("@AccountNo", POPaymentDetails.AccountNumber);
-                    //cmd.Parameters.AddWithValue("@PaymentDetails", POPaymentDetails.Remarks);
                     cmd.Parameters.AddWithValue("@Remarks", POPaymentDetails.Remarks);
                     cmd.Parameters.AddWithValue("@PaymentStatus", POPaymentDetails.IsPaid);
                     cmd.Parameters.AddWithValue("@CreatedBy", POPaymentDetails.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
-                    //cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
-                    //cmd.Parameters.AddWithValue("@LastModifiedDate", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@BranchName", POPaymentDetails.BranchName);
+                    cmd.Parameters.AddWithValue("@IFSCCode", POPaymentDetails.IFSCCode);
 
                     con.Open();
 
@@ -181,7 +180,7 @@ namespace InVanWebApp.Repository
                     {
                         result.PurchaseOrderId = Convert.ToInt32(dataReader["PurchaseOrderId"]);
                         result.PONumber = dataReader["PONumber"].ToString();
-                        result.GrandTotal =Convert.ToDecimal(dataReader["GrandTotal"]);
+                        result.GrandTotal = Convert.ToDecimal(dataReader["GrandTotal"]);
                         result.AdvancedPayment = float.Parse(dataReader["AdvancedPayment"].ToString());
                         result.VendorsID = Convert.ToInt32(dataReader["VendorsID"]);
                         result.AmountPaid = float.Parse(dataReader["AmountPaid"].ToString());
@@ -239,6 +238,59 @@ namespace InVanWebApp.Repository
 
 
         #region Update Payment Details
+        /// <summary>
+        /// Created By: Farheen 
+        /// Date: 20 Dec'22
+        /// Description: Fetch the details of Payment for edit by PO payment id.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public POPaymentBO GetByID(int Id)
+        {
+            var result = new POPaymentBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_POPayment_GetByID", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", Id);
+
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        result.ID = Convert.ToInt32(dataReader["ID"]);
+                        result.PurchaseOrderId = Convert.ToInt32(dataReader["PurchaseOrderId"]);
+                        result.PONumber = dataReader["PONumber"].ToString();
+                        result.VendorName = dataReader["VendorName"].ToString();
+                        result.PaymentDate = Convert.ToDateTime(dataReader["PaymentDate"]);
+                        result.InvoiceNumber = dataReader["InvoiceNo"].ToString();
+                        result.PaymentAmount = Convert.ToDecimal(dataReader["InvoiceAmount"]);
+                        result.PaymentDueDate = Convert.ToDateTime(dataReader["PaymentDueDate"]);
+                        result.PaymentMode = dataReader["PaymentMode"].ToString();
+                        result.BankName = dataReader["BankName"].ToString();
+                        result.BranchName = dataReader["BranchName"].ToString();
+                        result.AccountNumber = dataReader["AccountNo"].ToString();
+                        result.IFSCCode = dataReader["IFSCCode"].ToString();
+                        result.ChequeNumber = dataReader["ChequeNo"].ToString();
+                        result.TotalPOAmount = Convert.ToDecimal(dataReader["PO_Amount"]);
+                        result.AdvancedPayment = Convert.ToDecimal(dataReader["AdvancePayment"]);
+                        result.AmountPaid = float.Parse(dataReader["AmountPaid"].ToString());
+                        result.BalanceAmount = Convert.ToDecimal(dataReader["BalancePay"]);
+                        result.IsPaid = dataReader["PaymentStatus"].ToString();
+                        result.Remarks = dataReader["Remarks"].ToString();
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = null;
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
         public ResponseMessageBO Update(POPaymentBO model)
         {
             ResponseMessageBO response = new ResponseMessageBO();
@@ -249,17 +301,24 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_PurchaseOrderPaymentDetails_Update", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", model.ID);
+                    cmd.Parameters.AddWithValue("@PurchaseOrderId", model.PurchaseOrderId);
+                    cmd.Parameters.AddWithValue("@InvoiceNo", model.InvoiceNumber);
+                    cmd.Parameters.AddWithValue("@InvoiceAmount", model.PaymentAmount);
+                    cmd.Parameters.AddWithValue("@PaymentDueDate", model.PaymentDueDate);
                     cmd.Parameters.AddWithValue("@PaymentMode", model.PaymentMode);
                     cmd.Parameters.AddWithValue("@ChequeNo", model.ChequeNumber);
                     cmd.Parameters.AddWithValue("@BankName", model.BankName);
+                    cmd.Parameters.AddWithValue("@BranchName", model.BranchName);
                     cmd.Parameters.AddWithValue("@AccountNo", model.AccountNumber);
-                    cmd.Parameters.AddWithValue("@AmountPaid", model.TotalPaybleAmount);
-                    cmd.Parameters.AddWithValue("@BalancePay", model.BalanceAmount);
+                    cmd.Parameters.AddWithValue("@IFSCCode", model.IFSCCode);
                     cmd.Parameters.AddWithValue("@PaymentStatus", model.IsPaid);
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@PaymentDueDate", model.PaymentDueDate);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    //cmd.Parameters.AddWithValue("@BalancePay", model.BalanceAmount);
+                    //cmd.Parameters.AddWithValue("@PaymentDate", model.PaymentDate);
+                    //cmd.Parameters.AddWithValue("@AdvancedPayment", model.AdvancedPayment);
+                    //cmd.Parameters.AddWithValue("@AmountPaid", model.TotalPaybleAmount);
 
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();

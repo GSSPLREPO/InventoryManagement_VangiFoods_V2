@@ -105,10 +105,10 @@ namespace InVanWebApp.Controllers
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
             sb.Append("<tr >");
-            sb.Append("<th  style='text-align:right;padding-right:-70px;padding-bottom:-290px;font-size:11px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("<th  style='text-align:right;padding-right:-80px;padding-bottom:-290px;font-size:11px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
             sb.Append("</th></tr>");
             sb.Append("<tr >");
-            sb.Append("<th colspan=9 style='text-align:right;padding-right:-400px;padding-bottom:-290px;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("<th colspan=9 style='text-align:right;padding-right:-440px;padding-bottom:-290px;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
             sb.Append("</th></tr>");
             //sb.Append("<tr >");
             //sb.Append("<th Colspan='9' style='text-align:right;padding-right:-370px;padding-bottom:-85px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
@@ -131,9 +131,11 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward Date of Item</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Price Per Unit (RS)</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>From Location Name</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>From Location Before Transfer Quantity (KG)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>From Location Before Transfer Quantity (Kg)</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Transfer Quantity (KG)</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Value Out (Rs)</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Balance Quantity From Location (KG)</th>");
@@ -141,7 +143,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>To Location Name</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>To Location Final Quantity (KG)</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Value In (Rs)</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Unit Price (Rs)</th>");
+
             sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("<tbody>");
@@ -152,6 +154,8 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Code + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Name + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardDateOfItem + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.UnitPrice + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Date + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.FromLocationName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.FromLocation_BeforeTransferQty + "</td>");
@@ -162,7 +166,7 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ToLocationName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ToLocation_FinalQty + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ValueIn + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.UnitPrice + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.UnitPrice + "</td>");
                 sb.Append("</tr>");
             }
             sb.Append("</tbody>");
@@ -252,6 +256,8 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("Item Code");
             dt.Columns.Add("Item Name");
+            dt.Columns.Add("Inward Date of Item");
+            dt.Columns.Add("Price Per Unit (Rs)");
             dt.Columns.Add("Date");
             dt.Columns.Add("From Location");
             dt.Columns.Add("From Location Before Transfer Quantity (KG)");
@@ -262,14 +268,15 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("To Location");
             dt.Columns.Add("To Location Final Quantity (KG)");
             dt.Columns.Add("Value In (Rs)");
-            dt.Columns.Add("Price Per Unit (Rs)");
-
+            
             foreach (StockMovementBO st in stockMovements)
             {
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = st.SrNo.ToString();
                 dr["Item Code"] = st.Item_Code.ToString();
                 dr["Item Name"] = st.Item_Name.ToString();
+                dr["Inward Date of Item"] = st.InwardDateOfItem.ToString();
+                dr["Price Per Unit (Rs)"] = st.UnitPrice.ToString();
                 dr["Date"] = st.Date.ToString();
                 dr["From Location"] = st.FromLocationName.ToString();
                 dr["From Location Before Transfer Quantity (KG)"] = st.FromLocation_BeforeTransferQty.ToString();
@@ -280,7 +287,7 @@ namespace InVanWebApp.Controllers
                 dr["To Location"] = st.ToLocationName.ToString();
                 dr["To Location Final Quantity (KG)"] = st.ToLocation_FinalQty.ToString();
                 dr["Value In (Rs)"] = st.ValueIn.ToString();
-                dr["Price Per Unit (Rs)"] = st.UnitPrice.ToString();
+                
                 dt.Rows.Add(dr);
             }
             gv.DataSource = dt;
@@ -308,11 +315,11 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td><td colspan='3' rowspan='5'> <img height='150' width='150' src='" + strPath + "'/></td></td>" +
-                "<tr><td><td><td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></td></td></td></tr></tr>" +
+                "<tr><td><td><td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></td></td></td></tr></tr>" +
                 "<tr><td><td><td><td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></td></td></td></tr>" +
                 "<tr><td><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></td></tr>" +
                 "<tr><tr><td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-                + "<td><td><td><td><td><td><td><td><td><td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td></td></td></td></td></td></td></td></td></td>"
+                + "<td><td><td><td><td><td><td><td><td><td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td></td></td></td></td></td></td></td></td></td>"
                 + "</td></tr>" + "</table>"
                 + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 

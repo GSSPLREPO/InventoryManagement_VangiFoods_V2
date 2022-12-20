@@ -47,7 +47,7 @@ namespace InVanWebApp.Controllers
             else
                 return RedirectToAction("Index", "Login");
         }
-       
+
         /// <summary>
         /// to get stock details
         /// </summary>
@@ -61,6 +61,11 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Export PDF
+        /// <summary>
+        /// Create by Maharshi on 06/12/2022
+        /// </summary>
+        /// <returns></returns>
         [Obsolete]
         public ActionResult ExprotAsPDF()
         {
@@ -85,29 +90,31 @@ namespace InVanWebApp.Controllers
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
             sb.Append("<tr >");
-            sb.Append("<th Colspan='9' style='text-align:right;padding-bottom:-85px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
+            sb.Append("<th Colspan='9' style='text-align:right;padding-right:-120px;padding-bottom:-95px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
             sb.Append("</th></tr>");
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px'>");
+            sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:-150px'>");
             //sb.Append("<br/>");
             sb.Append("<label style='font-size:22px; bottom:20px;'>" + ReportName + "</label>");
-            sb.Append("<br/>");           
+            sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
             //sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
 
             sb.Append("</th></tr>");
-            
+
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</th>"); 
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</th>"); 
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price (Rs)</th>"); 
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Stock Quantity (KG)</th>"); 
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Inventory Value (Rs)</th>"); 
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder</th>"); 
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:13%;font-size:13px;border: 0.05px  #e2e9f3;'>Category</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price (Rs)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Stock Quantity (KG)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Inventory Value (Rs)</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Reorder Level (KG)</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:11%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Reorder Quantity (KG)</th>");
             sb.Append("</tr>");
@@ -122,10 +129,12 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RowNumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Code + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemCategory + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemUnitPrice + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.StockQuantity + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemUnit + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InventoryValue + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Reorder + "</td>"); 
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Reorder + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ReOrderLevel + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemReOrderQuantity + "</td>");
                 sb.Append("</tr>");
@@ -139,14 +148,14 @@ namespace InVanWebApp.Controllers
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
-                    
+
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
-                  
+
                     writer.PageEvent = new PageHeaderFooter();
                     pdfDoc.Open();
                     //pdfDoc.NewPage();
-                   
+
 
                     setBorder(writer, pdfDoc);
 
@@ -181,7 +190,9 @@ namespace InVanWebApp.Controllers
 
             //---------------------------------------
         }
+        #endregion
 
+        #region Export Excel
         public void ExportAsExcel()
         {
 
@@ -189,12 +200,14 @@ namespace InVanWebApp.Controllers
             IEnumerable<StockReportBO> stockReports = _StockMasterRepository.GetAllStock();
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
-            dt.Columns.Add("Reorder");
             dt.Columns.Add("Item code");
             dt.Columns.Add("Item Name");
+            dt.Columns.Add("Category");
             dt.Columns.Add("Item Unit Price (Rs)");
             dt.Columns.Add("Stock Quantity (KG)");
+            dt.Columns.Add("Item Unit");
             dt.Columns.Add("Inventory Value (Rs)");
+            dt.Columns.Add("Reorder");
             dt.Columns.Add("Reorder Level (KG)");
             dt.Columns.Add("Item Reorder Quantity (KG)");
 
@@ -202,12 +215,14 @@ namespace InVanWebApp.Controllers
             {
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = st.RowNumber.ToString();
-                dr["Reorder"] = st.Reorder.ToString();
                 dr["Item code"] = st.Item_Code.ToString();
                 dr["Item Name"] = st.ItemName.ToString();
+                dr["Category"] = st.ItemCategory.ToString();
                 dr["Item Unit Price (Rs)"] = st.ItemUnitPrice.ToString();
                 dr["Stock Quantity (KG)"] = st.StockQuantity.ToString();
+                dr["Item Unit"] = st.ItemUnit.ToString();
                 dr["Inventory Value (Rs)"] = st.InventoryValue.ToString();
+                dr["Reorder"] = st.Reorder.ToString();
                 dr["Reorder Level (KG)"] = st.ReOrderLevel.ToString();
                 dr["Item Reorder Quantity (KG)"] = st.ItemReOrderQuantity.ToString();
                 dt.Rows.Add(dr);
@@ -219,7 +234,7 @@ namespace InVanWebApp.Controllers
             Response.ContentType = "application/vnd.ms-excel";
             Response.ContentEncoding = System.Text.Encoding.Unicode;
             Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
-            string filename = "Rpt_Stock_Movement_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            string filename = "Rpt_Stock_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
             Response.AddHeader("content-disposition", "attachment;filename=" + filename);
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             StringWriter sw = new StringWriter();
@@ -229,7 +244,7 @@ namespace InVanWebApp.Controllers
             gv.RenderControl(hw);
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
-            string ReportName = "Stock Movement Report";/* The Stock Movement Report name are given here  */
+            string ReportName = "Stock Report";/* The Stock Movement Report name are given here  */
             string name = "Vangi Foods";/* The Vangi Foods are given here  */
             string address = "Sr No 673, Opp Surya Gate, Gana Rd, Karamsad, Gujarat 388325";/* The Address are given here  */
 
@@ -237,11 +252,10 @@ namespace InVanWebApp.Controllers
 
 
             String content1 = "<table>" + "<tr><td><td colspan='3' rowspan='5'> <img height='120' width='120' src='" + strPath + "'/></td></td>" +
-                "<tr><td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></td></tr></tr>" +
-                "<tr><td><td><td colspan='2'>" + name + "</td></td></tr>" +
-                "<tr><td><td colspan='4'>" + address + "</td></td></tr>" + "</table>"
+                "<tr><td><td></td><td></td><td colspan='5' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></td></tr></tr>" +
+                "<tr><td><td></td><td><td colspan='2'>&nbsp;&nbsp;&nbsp;&emsp;&emsp;" + name + "</td></td></tr>" +
+                "<tr><td><td></td><td colspan='6'>" + address + "</td></td></tr>" + "</table>"
                 + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
-
 
             string style = @"<!--mce:2-->";
             Response.Write(style);
@@ -253,7 +267,9 @@ namespace InVanWebApp.Controllers
         }
 
     }
+    #endregion
 
+    #region pdf Helper
     public class PageHeaderFooter : PdfPageEventHelper
     {
         private readonly Font _pageNumberFont = new Font(Font.NORMAL, 9f, Font.NORMAL, BaseColor.BLACK);
@@ -275,17 +291,17 @@ namespace InVanWebApp.Controllers
 
             var numberTable = new PdfPTable(1);
             numberTable.DefaultCell.Border = 0;
-            var numberCell = new PdfPCell(new Phrase(text, _pageNumberFont)) { HorizontalAlignment = Element.ALIGN_CENTER};
+            var numberCell = new PdfPCell(new Phrase(text, _pageNumberFont)) { HorizontalAlignment = Element.ALIGN_CENTER };
             numberCell.Border = 0;
             numberTable.AddCell(numberCell);
 
-            
+
 
             numberTable.TotalWidth = 50;
             numberTable.WriteSelectedRows(0, -1, document.Right - 300, document.Bottom + 2, writer.DirectContent);
         }
     }
-
+    #endregion
 
 
 }

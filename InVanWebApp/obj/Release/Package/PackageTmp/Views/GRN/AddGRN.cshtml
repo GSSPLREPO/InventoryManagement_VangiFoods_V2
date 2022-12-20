@@ -28,7 +28,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.GRNDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                    @Html.TextBoxFor(model => model.GRNDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date",@readonly="readonly" })
                     @Html.ValidationMessageFor(model => model.GRNDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

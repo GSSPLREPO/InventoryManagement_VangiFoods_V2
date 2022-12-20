@@ -34,5 +34,8 @@ namespace InVanWebApp.Repository.Interface
 
         //Function define for the delete payment details
         void Delete(int ID, int userId);
+
+        //Update functionality for Update
+        POPaymentBO GetByID(int Id);
     }
 }
