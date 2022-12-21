@@ -104,7 +104,7 @@ namespace InVanWebApp.Controllers
         #region Bind dropdowns Indent
         public void BindIndentDropDown(string type=null)
         {
-            var result = _indentRepository.GetAll(type);
+            var result = _purchaseOrderRepository.GetIndentListForDropdown();
             var resultList = new SelectList(result.ToList(), "ID", "IndentNo");
             ViewData["IndentDD"] = resultList;
         }
@@ -825,7 +825,7 @@ namespace InVanWebApp.Controllers
         public JsonResult GetIndentDescription(string id)
         {
             int Id = Convert.ToInt32(id);
-            var result = _indentRepository.GetById(Id);
+            var result = _indentRepository.GetItemDetailsById(Id);
             return Json(result);
         }
 

@@ -1,0 +1,342 @@
+﻿@model InVanWebApp_BO.IndentBO
+@{
+    ViewBag.Title = "AddIndent";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm("AddIndent", "Indent", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Add Indent</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Indent Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.IndentNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.IndentNo, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Indent Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.IndentDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.IndentDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Indent By")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.RaisedBy, (IEnumerable<SelectListItem>)ViewData["EmployeeName"], "---Select---", new { @class = "form-control" , onchange= "SetUserName()" })
+                    @Html.ValidationMessageFor(model => model.RaisedBy, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Designation")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.DesignationId, (IEnumerable<SelectListItem>)ViewData["Designations"], "---Select---", new { @class = "form-control", onchange = "SetDesignationName()" })
+                    @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.DesignationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Location Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SetLocationName()" })
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                    <table class="table table-striped" id="submissionTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="sortStyle">
+                                                    Item Code
+                                                </th>
+                                                <th class="sortStyle d-n d-none">
+                                                    Selected Item Code
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Item
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Indent Quantity
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Units
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myTableBody">
+                                            <tr id="tablerow">
+                                                <td>
+                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                </td>
+                                                <td class="col-md-4 d-none">
+                                                    @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("ItemName", "", new { @class = "form-control", style = "height:30px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(model => model.RequiredQuantity, new { @class = "form-control text-right", style = "height:30px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <button type="button" class="btn btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
+                                        + Add Item
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @*<input class="form-control text-right" id="TxtItemDetails" name="TxtItemDetails" value="" />*@
+                            @Html.TextBoxFor(model => model.itemDetails, new { style = "display:none" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+
+
+            <a href="@Url.Action("Index", "Indent")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                Back To List
+            </a>
+            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    function SetUserName() {
+        var selectedOptionTerms = document.getElementById("RaisedBy").selectedIndex;
+        var tempUserName = document.getElementById("RaisedBy").options[selectedOptionTerms].innerText;
+        document.getElementById("UserName").value = tempUserName;
+    }
+
+    function SetDesignationName() {
+        var selectedOptionTerms = document.getElementById("DesignationId").selectedIndex;
+        var tempDesignation = document.getElementById("DesignationId").options[selectedOptionTerms].innerText;
+        document.getElementById("DesignationName").value = tempDesignation;
+    }
+
+    function SetLocationName() {
+        var selectedOptionTerms = document.getElementById("LocationId").selectedIndex;
+        var tempLocation = document.getElementById("LocationId").options[selectedOptionTerms].innerText;
+        document.getElementById("LocationName").value = tempLocation;
+    }
+
+    var TxtItemDetails = "";
+
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        createJson();
+    };
+
+    function createJson() {
+        let res = [...document.getElementById("myTableBody").children].map(tr =>
+            Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
+                [el.name, el.value])));
+        var TxtItemDetails = JSON.stringify(res);
+        console.log(TxtItemDetails);
+        $('#itemDetails').val(TxtItemDetails);
+    }
+    //==========end===============
+
+    $("#Item_ID").change(function () {
+        getitemDetails();
+    });
+
+    function getitemDetails() {
+                    $("#f").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetitemDetails","PurchaseOrder")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { id: $("#Item_ID").val(), currencyId: '0' },
+                // here we are get value of selected item and passing same value
+                //as inputto json method GetitemDetails.
+
+                success: function (itemDescription) {
+
+                    var description = JSON.stringify(itemDescription);
+                    $("#ItemName").val(itemDescription.Item_Name);
+                    $("#ItemUnit").val(itemDescription.UnitCode);
+                    $("#RequiredQuantity").val('0');
+                },
+                failure: function () {
+                    alert('Failed to retrieved item detals!');
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Item description.' + ex);
+                }
+            });
+
+
+    }
+
+    function getitemDetailsJSTbl(count) {
+        console.log(count);
+        var itemId = "ItemID_" + count;
+        var selectedItemId = $("#" + itemId).val();
+                    $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetitemDetails","PurchaseOrder")', // we are calling json method
+
+                dataType: 'json',
+                data: { id: selectedItemId, currencyId: '0' },
+                //Rahul 'currencyId' added from controller
+                // here we are get value of selected item and passing same value
+                //as inputto json method GetitemDetails.
+
+                        success: function (itemDescription) {
+                            var description = JSON.stringify(itemDescription);
+                            console.log(description);
+
+                            $("#itemCode_" + count).val(itemDescription.Item_Code);
+                            $("#itemDescription_" + count).val(itemDescription.Item_Name);
+                            $("#itemUnit_" + count).val(itemDescription.UnitCode);
+                            $("#requiredQuantity_" + count).val('0');
+                },
+                failure: function () {
+                    alert('Failed to retrieved item detals!');
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Item description.' + ex);
+                }
+            });
+
+
+       // $("#itemDescription" + count).val(count.Item_Name);
+
+    }
+
+    function SelectedIndexChangedItemList(id) {
+        var selectedOptionTerms, itemCode;
+        selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
+        itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
+        document.getElementById("ItemCode").value = itemCode;
+    }
+
+    var counter = 1;
+
+    $("#AddItem").click(function () {
+        var itemId = "ItemID_" + counter;
+        var itemCode = "itemCode_" + counter;
+        var itemDescription = "itemDescription_" + counter;
+        var itemQuantity = "requiredQuantity_" + counter;
+        var itemUnit = "itemUnit_" + counter;
+        $('<tr id="tablerow' + counter + '">' + '<td>' +
+            //'<select id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" required="required" /></select>' +
+            //'<input type="text" id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" value="" required="required" />' +
+            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
+            '</td>' +
+            '<td class="d-none">' +
+            '<input type="text" id="' + itemCode + '" class="form-control" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
+            '</td>' +
+            '<td>' +
+           '<input type="text" id="' + itemQuantity + '" class="form-control text-right" style = "height:30px;" name="' + itemQuantity + '" value="0"     required="required" />' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
+            '</td>' +
+            '<td>' +
+            '<button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
+            '</td>' +
+            '</tr>').appendTo('#submissionTable');
+
+        counter++;
+        return false;
+    });
+
+    function removeTr(index) {
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        //console.log("Length: " + length + counter);
+        if (counter > 1 & length == index) {
+            $('#tablerow' + index).remove();
+            counter--;
+        }
+        else {
+            $('#tablerow' + index).remove();
+        }
+        CalculateTotalBeforeTax();
+        return false;
+    }
+
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+
+</script>

@@ -57,5 +57,6 @@ namespace InVanWebApp.Repository
         PurchaseOrderBO GetDetailsForTimelineView(int PO_Id);
         IEnumerable<PurchaseOrderBO> GetCurrencyPriceList();
 
+        IEnumerable<IndentBO> GetIndentListForDropdown(string type=null);
     }
 }

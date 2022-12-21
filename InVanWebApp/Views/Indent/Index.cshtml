@@ -30,7 +30,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <a href="@Url.Action("AddItems","Indent")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                            <a href="@Url.Action("AddIndent","Indent")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
                                 <span class="fa fa-plus"></span>  Add Indent
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
@@ -41,7 +41,7 @@
                                             <th>@Html.DisplayName("Indent Due Date")</th>
                                             <th>@Html.DisplayName("Status")</th>
                                             <th>@Html.DisplayName("Description")</th>
-                                            <th>@Html.DisplayName("Edit/Delete")</th>
+                                            <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
                                     <tbody style="overflow-wrap: anywhere;">
@@ -61,12 +61,26 @@
                                                     @Html.DisplayFor(modelItem => item.Description)
                                                 </td>
                                                 <td>
-                                                    <a href=@Url.Action("EditItem", "Indent", new { Item_ID = item.ID })>
-                                                        <i class="fa fa-edit text-primary"></i>
-                                                    </a> &emsp;
-                                                    <a href=@Url.Action("DeleteItem", "Indent", new { Item_ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
-                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                    </a>
+                                                    @if (item.IndentCount == 0)
+                                                    {
+                                                        <a href=@Url.Action("EditIndent", "Indent", new { Item_ID = item.ID })>
+                                                            <i class="fa fa-edit text-primary"></i>
+                                                        </a> <span>&emsp;</span>
+                                                        <a href=@Url.Action("DeleteIndent", "Indent", new { Item_ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href=@Url.Action("EditIndent", "Indent", new { Item_ID = item.ID, style="pointer-events: none;"})>
+                                                            <i class="fa fa-edit text-primary"></i>
+                                                        </a> <span>&emsp;</span>
+                                                        <a href=@Url.Action("DeleteIndent", "Indent", new { Item_ID = item.ID , style="pointer-events: none;"}) onclick="return confirm('Are you sure want to delete?');">
+                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                        </a>
+
+                                                    }
+
                                                 </td>
                                             </tr>
                                         }

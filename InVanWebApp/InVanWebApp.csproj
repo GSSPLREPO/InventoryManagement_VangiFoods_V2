@@ -2655,6 +2655,8 @@
     <Content Include="Views\GRN\ViewGRN.cshtml" />
     <Content Include="Views\Indent\Index.cshtml" />
     <Content Include="Views\PurchaseOrder\_TimelinePV.cshtml" />
+    <Content Include="Views\Indent\AddIndent.cshtml" />
+    <Content Include="Views\Indent\EditIndent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

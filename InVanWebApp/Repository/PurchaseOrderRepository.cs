@@ -46,7 +46,7 @@ namespace InVanWebApp.Repository
                         var PurchaseOrderMasters = new PurchaseOrderBO()
                         {
                             PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderId"]),
-                            Amendment=Convert.ToInt32(reader["Amendment"]),
+                            Amendment = Convert.ToInt32(reader["Amendment"]),
                             Tittle = reader["Tittle"].ToString(),
                             PONumber = reader["PONumber"].ToString(),
                             PurchaseOrderStatus = reader["PurchaseOrderStatus"].ToString(),
@@ -129,7 +129,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@GrandTotal", purchaseOrderMaster.GrandTotal);
                     //FN: Added the below field for Indent, currency and terms description
                     cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.TermDescription);
-                    cmd.Parameters.AddWithValue("@IndentID",purchaseOrderMaster.IndentID);
+                    cmd.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
                     cmd.Parameters.AddWithValue("@IndentDescription", purchaseOrderMaster.IndentDescription);
                     cmd.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
                     cmd.Parameters.AddWithValue("@CurrencyName", purchaseOrderMaster.CurrencyName);
@@ -671,7 +671,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Get details of Items by ID
-        public ItemBO GetItemDetails(int itemID,int currencyID)
+        public ItemBO GetItemDetails(int itemID, int currencyID)
         {
             try
             {
@@ -934,6 +934,45 @@ namespace InVanWebApp.Repository
             catch (Exception ex)
             {
                 resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Bind Indent dropdown
+        public IEnumerable<IndentBO> GetIndentListForDropdown(string type = null)
+        {
+            List<IndentBO> resultList = new List<IndentBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_Indent_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue(@type, type);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new IndentBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            IndentNo = reader["IndentNo"].ToString(),
+                            IndentDate = Convert.ToDateTime(reader["IndentDate"]),
+                            //IndentDueDate = Convert.ToDateTime(reader["IndentDueDate"]),
+                            IndentStatus = reader["IndentStatus"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            IndentCount = Convert.ToInt32(reader["IndentCount"])
+                        };
+                        resultList.Add(result);
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
                 log.Error(ex.Message, ex);
             }
             return resultList;

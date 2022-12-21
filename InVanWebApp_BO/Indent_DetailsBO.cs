@@ -18,7 +18,9 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        
+
+        public string ItemCode { get; set; }
+        public string ItemUnit { get; set; }
         //Added for fetching Item details in PO
         public string ItemName { get; set; }
     }
