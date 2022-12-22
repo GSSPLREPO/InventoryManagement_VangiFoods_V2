@@ -176,6 +176,7 @@
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
+    <Compile Include="Controllers\RequestForQuotationController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
     <Compile Include="Controllers\StockMovementController.cs" />
     <Compile Include="Controllers\StockReportController.cs" />
@@ -443,6 +444,7 @@
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
+    <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
     <Compile Include="Repository\Interface\ITermsConditionRepository.cs" />
     <Compile Include="Repository\Interface\IOrganisationRepository.cs" />
     <Compile Include="Repository\Interface\IPOPaymentRepository.cs" />
@@ -469,6 +471,7 @@
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
     <Compile Include="Repository\PurchaseOrderRepository.cs" />
+    <Compile Include="Repository\RequestForQuotationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
     <Compile Include="Repository\StockMasterRepository.cs" />
@@ -2657,6 +2660,10 @@
     <Content Include="Views\PurchaseOrder\_TimelinePV.cshtml" />
     <Content Include="Views\Indent\AddIndent.cshtml" />
     <Content Include="Views\Indent\EditIndent.cshtml" />
+    <Content Include="Views\RequestForQuotation\AddRequestForQuotation.cshtml" />
+    <Content Include="Views\RequestForQuotation\EditRequestForQuotation.cshtml" />
+    <Content Include="Views\RequestForQuotation\Index.cshtml" />
+    <Content Include="Views\RequestForQuotation\_RFQPV.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

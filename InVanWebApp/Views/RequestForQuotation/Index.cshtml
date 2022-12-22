@@ -1,0 +1,156 @@
+﻿@model IEnumerable<InVanWebApp_BO.RequestForQuotationBO>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+
+<html>
+<head>
+    <title>Request For Quotation</title>
+</head>
+<body>
+
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Request For Quotation</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Transactions</a>
+                    </li>
+                    <li class="breadcrumb-item active">Request For Quotation</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="@Url.Action("AddRequestForQuotation","RequestForQuotation")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span> Request For Quotation
+                            </a>    
+                            <div class="table-responsive" style="padding-top:15px;">
+                                <table class="table table-striped table-bordered" id="tbl_PO">
+                                    <thead>
+                                        <tr>
+                                            <th>@Html.DisplayName("RFQ Number")</th>
+                                            <th>@Html.DisplayName("Date")</th>
+                                            <th>@Html.DisplayName("Delivery Date")</th>
+                                            <th>@Html.DisplayName("Bidding Start Date")</th>
+                                            <th>@Html.DisplayName("Bidding End Date")</th>
+                                            <th>@Html.DisplayName("HSN_Code")</th>
+                                            <th>@Html.DisplayName("Quantity")</th>
+                                            <th>@Html.DisplayName("Created By Date")</th>
+                                            @*<th>@Html.DisplayName("")</th>*@
+                                            <th>@Html.DisplayName("Actions")</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @*@Html.DisplayFor(modelItem => item.RFQNO)*@
+                                                    <button type="button" class="btn btn-sm btn-link" style="background-color:transparent" data-toggle="modal" title="RFQ Summary View" data-target="#myModal" id="@item.RequestForQuotationId" onclick="RFQItemViewDetails(this.id)">@Html.DisplayFor(modelItem => item.RFQNO)</button>
+                                                </td>
+                                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.DeliveryDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.BiddingStartDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.BiddingEndDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.HSN_Code)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CreatedByDate)</td>
+                                                <td>                                                    
+                                                    @*<a href=@Url.Action("EditRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId }) title="Edit RFQ">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a> 
+                                                    <span>&nbsp;&nbsp;</span>*@  
+                                                    <a href=@Url.Action("DeleteRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId, }) onclick="return confirm('Are you sure want to delete the RFQ?');" title="Delete RFQ">                                                           
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>                                                    
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                @*Model Started*@
+                                <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">                                    
+                                    <div class="modal-dialog modal-lg" role="document">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">                                            
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel" style="color:darkcyan">RFQ Summary</h4>                                                
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*Model end*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
+@Html.Raw(TempData["Success"])
+
+
+@section scripts{  
+
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tbl_PO').dataTable().fnDestroy();
+            $('#tbl_PO').dataTable({
+                "iDisplayLength": 10
+            });
+        });
+
+        var table = $('#tbl_PO').dataTable({
+            "serverSide": false,
+            "filter": true,
+            "pageLength": 20
+        });
+
+        function RFQItemViewDetails(ID) {
+            debugger
+            $.get("@Url.Action("RequestForQuotationView", "RequestForQuotation")/" + ID,
+                function (data) {
+                    $('.modal-body').html(data);
+                });
+
+            //$("#myModal").modal("show");
+            //$("#myModal").addClass("show");
+            $('#myModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var recipient = button.data('whatever') // Extract info from data-* attributes
+                //// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                //// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this)
+                //modal.find('.modal-title').text('New message to ' + recipient)
+                modal.find('.modal-body input').val(recipient)
+            });
+        }
+    </script>
+}

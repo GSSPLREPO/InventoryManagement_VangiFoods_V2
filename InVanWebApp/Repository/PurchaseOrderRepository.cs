@@ -128,7 +128,11 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@TotalAfterTax", purchaseOrderMaster.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", purchaseOrderMaster.GrandTotal);
                     //FN: Added the below field for Indent, currency and terms description
-                    cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.TermDescription);
+                    if (purchaseOrderMaster.Terms != null) { 
+                        cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.Terms);
+                    }
+                    else
+                        cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.TermDescription);
                     cmd.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
                     cmd.Parameters.AddWithValue("@IndentDescription", purchaseOrderMaster.IndentDescription);
                     cmd.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
@@ -380,7 +384,7 @@ namespace InVanWebApp.Repository
                     }
 
                     var count = itemDetails.Count;
-
+                    var i = 1;
                     foreach (var item in itemDetails)
                     {
                         con.Open();
@@ -409,9 +413,11 @@ namespace InVanWebApp.Repository
 
                         if (count == 1)
                             cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
-                        else
+                        else { 
                             cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 0);
-
+                            cmdNew.Parameters.AddWithValue("@flagCheck", i);
+                        }
+                        i++;
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
 
                         while (dataReaderNew.Read())
@@ -950,7 +956,7 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_Indent_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue(@type, type);
+                    cmd.Parameters.AddWithValue("@type", type);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
@@ -963,7 +969,7 @@ namespace InVanWebApp.Repository
                             //IndentDueDate = Convert.ToDateTime(reader["IndentDueDate"]),
                             IndentStatus = reader["IndentStatus"].ToString(),
                             Description = reader["Description"].ToString(),
-                            IndentCount = Convert.ToInt32(reader["IndentCount"])
+                            //IndentCount = Convert.ToInt32(reader["IndentCount"])
                         };
                         resultList.Add(result);
 

@@ -217,7 +217,8 @@ namespace InVanWebApp.Repository
                         result = new IndentBO()
                         {
                             IndentNo=reader["IndentNo"].ToString(),
-                            IndentDate= DateTime.ParseExact(reader["IndentDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                            //IndentDate= DateTime.ParseExact(reader["IndentDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+                            IndentDate= Convert.ToDateTime(reader["IndentDate"].ToString()),
                             LocationId=Convert.ToInt32(reader["LocationId"]),
                             LocationName=reader["LocationName"].ToString(),
                             RaisedBy=Convert.ToInt32(reader["RaisedBy"]),
@@ -310,7 +311,7 @@ namespace InVanWebApp.Repository
                         itemDetails.Add(objItemDetails);
                     }
                     var count = itemDetails.Count;
-
+                    var i = 1;
                     foreach (var item in itemDetails)
                     {
                         con.Open();
@@ -327,9 +328,11 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                         if (count == 1)
                             cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
-                        else
+                        else { 
                             cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 0);
-
+                            cmdNew.Parameters.AddWithValue("@flagCheck", i);
+                        }
+                        i++;
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
 
                         while (dataReaderNew.Read())

@@ -30,8 +30,7 @@
                         @Html.AntiForgeryToken()
                         <div class="card">
                             <div class="card-body">
-                                <h4>Purchase Order Payments</h4>
-                                <hr />
+                               
                                 <div class="row">
                                     <div class="col-md-12">
                                         <a href="@Url.Action("AddPOPayment","POPayment")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
@@ -55,7 +54,7 @@
                                                         <th>PaymentDate</th>
                                                         <th>Payment Mode</th>
                                                         <th>Payment Status</th>
-                                                        <th>Delete</th>
+                                                        <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -73,9 +72,9 @@
                                                             <td>@Html.DisplayFor(x => item.PaymentMode)</td>
                                                             <td>@Html.DisplayFor(x => item.IsPaid)</td>
                                                             <td>
-                                                                @*<a href=@Url.Action("EditPOPayment", "POPayment", new { ID = item.ID })>
+                                                                <a href=@Url.Action("EditPOPayment", "POPayment", new { ID = item.ID })>
                                                                         <i class="fa fa-edit text-primary"></i>
-                                                                    </a> *@&nbsp;
+                                                                    </a> &nbsp;
                                                                 <a href=@Url.Action("DeletePOPayment", "POPayment", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
                                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                                 </a>

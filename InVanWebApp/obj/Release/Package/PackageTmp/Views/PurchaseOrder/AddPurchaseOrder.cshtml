@@ -526,14 +526,6 @@
         document.getElementById("Item_Code").value = itemCode;
     }
 
-    //function SelectedIndexChangedTerms(id) {
-    //    ////debugger
-    //    var selectedOptionTerms, termsName;
-    //    selectedOptionTerms = document.getElementById("TermsAndConditionID").selectedIndex;
-    //    termsName = document.getElementById("TermsAndConditionID").options[selectedOptionTerms].innerText;
-    //    document.getElementById("Terms").value = termsName;
-    //}
-
     function SelectedIndexChanged(id) {
         //alert(id);
         ////debugger
@@ -883,6 +875,7 @@
 
     $("#btn_SaveDraft").click(function () {
         $("#DraftFlag").val('true');
+        createJson();
     });
 
     /*Rahul : Add Javascript validation on 12 Oct 2022.*/

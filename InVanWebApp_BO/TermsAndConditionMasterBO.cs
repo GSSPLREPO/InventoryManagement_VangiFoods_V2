@@ -15,7 +15,7 @@ namespace InVanWebApp_BO
         public string TermName { get; set; }
 
         [Required(ErrorMessage ="Please describe terms and condition!")]
-        [StringLength(150, ErrorMessage = "Legth of description is exceeded!")]
+        //[StringLength(150, ErrorMessage = "Legth of description is exceeded!")]
         public string TermDescription { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

@@ -1,48 +1,42 @@
-﻿@model InVanWebApp_BO.PurchaseOrderBO
+﻿@model InVanWebApp_BO.RequestForQuotationBO
+
 @{
-    ViewBag.Title = "EditPurchaseOrder";
+    ViewBag.Title = "EditRequestForQuotation";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
-@using (Html.BeginForm("EditPurchaseOrder", "PurchaseOrder", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@using (Html.BeginForm("EditRequestForQuotation", "RequestForQuotation", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="card">
         <div class="card-body">
-            <h4>Edit Purchase Order</h4>
+            <h4>Edit Request For Quotation</h4>
             <hr />
             @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.PurchaseOrderId)
+            @Html.HiddenFor(model => model.RequestForQuotationId)
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Tittle")
+                    @Html.Label("RFQ Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", placeholder = "Purchase Order For Vangi Foods", type = "text" })
-                    @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.RFQNO, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.RFQNO, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <br />
                 <div class="col-md-2">
-                    @Html.Label("PO Number")
+                    @Html.Label("Date")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
             <br />
             <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("PO Document Date")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
-                </div>
                 <div class="col-md-2">
                     @Html.Label("Delivery Date")
                     <span style="color:red">*</span>
@@ -51,21 +45,38 @@
                     @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
                     @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
+                <div class="col-md-2">
+                    @*@Html.Label("Currency")*@
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @*@Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })*@
+                </div>
+                <div class="col-md-4 d-none">
+                    @*@Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })*@
+                </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Currency")
+                    @Html.Label("Bidding Start Date")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.BiddingStartDate, "{0:yyyy-MM-dd}", new { @id = "BiddingStartDate", @class = "form-control form-control-sm date1", type = "date" })
+                    @Html.ValidationMessageFor(model => model.BiddingStartDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control",  @readonly = "readonly" })
-                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control", @readonly = "readonly" })
+
+                <div class="col-md-2">
+                    @Html.Label("Bidding End Date")
+                    <span style="color:red">*</span>
                 </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.BiddingEndDate, "{0:yyyy-MM-dd}", new { @id = "BiddingEndDate", @class = "form-control form-control-sm date1", type = "date" })
+                    @Html.ValidationMessageFor(model => model.BiddingEndDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
             </div>
             <br />
             <div class="row">
@@ -74,22 +85,23 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val())" })
+                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control form-control-sm ", onchange = "SelectedIndexChangedLocation($(this).val())" })
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm ", @readonly = "readonly" })
                 </div>
                 <br />
                 <div class="col-md-2">
-                    @Html.Label("Vendors Name")
-                    <span style="color:red">*</span>
+                    @*@Html.Label("Vendors Name")*@
+                    @*<span style="color:red">*</span>*@
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.VendorsID, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.VendorsID, "", new { @class = "error mt-2 text-danger" })
+                    @*@Html.DropDownListFor(model => model.VendorsID, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm ", onchange = "SelectedIndexChanged($(this).val())" })
+                @Html.ValidationMessageFor(model => model.VendorsID, "", new { @class = "error mt-2 text-danger" })*@
                 </div>
                 <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", @readonly = "readonly" })
+                    @*@Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control form-control-sm ", @readonly = "readonly" })*@
                 </div>
             </div>
             <br />
@@ -100,7 +112,7 @@
                             <h4 class="card-title" style="color:darkcyan">Delivery Details</h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px" })
+                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm ", placeholder = "Delivery address", style = "height:100px" })
                                 @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -109,36 +121,18 @@
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Supplier Details</h4>
+                            <h4 class="card-title" style="color:darkcyan">@Html.Label("Vendor Name")</h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
-                                @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "error mt-2 text-danger" })
+                                @Html.DropDownListFor(model => model.CompanyName, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control js-example-basic-multiple", multiple = "multiple", onchange = "SelectedIndexChanged($(this).val())" })
+                                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })
+                                @Html.TextBoxFor(model => model.VendorIDs, new { style = "display:none" })
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Amendment Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", Value = "0", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <br />
-                <br />
-                <div class="col-md-2 mb-1">
-                    @Html.Label("Indent Number")
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.IndentID, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control listbox", onchange = "SelectedIndexChangedIndent($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.IndentID, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
             <br />
             <div class="row">
                 <div class="col-md-2">
@@ -147,16 +141,6 @@
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2 mb-1">
-                    @Html.Label("Indent Summary")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextAreaFor(modal => modal.IndentDescription, new { @class = "form-control form-control-sm", @readonly = "readonly", id = "IndentDescription" })
-                    @Html.ValidationMessageFor(model => model.IndentDescription, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
                 </div>
             </div>
             <br />
@@ -172,7 +156,7 @@
                                                 <th class="sortStyle">
                                                     Item Code
                                                 </th>
-                                                <th class="sortStyle d-none">
+                                                <th class="sortStyle d-n d-none">
                                                     Selected Item Code
                                                 </th>
                                                 <th class="sortStyle">
@@ -185,14 +169,14 @@
                                                     Units
                                                 </th>
                                                 <th class="sortStyle">
-                                                    Price (Per Unit)
-                                                </th>
-                                                <th class="sortStyle">Currency</th>
-                                                <th class="sortStyle">
-                                                    Tax
+                                                    Delivery Date
                                                 </th>
                                                 <th class="sortStyle">
-                                                    Total before tax
+                                                    HSN Code
+                                                </th>
+                                                <th class="sortStyle">
+                                                    Remarks
+                                                    <span style="color:red">*</span>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -205,42 +189,39 @@
                                                     <tr id="tablerow_@c">
                                                         <td>
                                                             @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
-                                                                new { @class = "form-control", id = "Item_ID_" + c, style = "height:30px;width:130px;", onchange = "getitemDetailsJSTbl('" + c + "')" })
-                                                            @*@Html.TextBoxFor(x => item.Item_ID, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })*@
+                                                                new { @class = "form-control form-control-sm ", id = "Item_ID_" + c, style = "height:30px;width:130px;", onchange = "getitemDetailsJSTbl('" + c + "')" })
                                                         </td>
                                                         <td class="col-md-4 d-none">
-                                                            @Html.TextBox("Item_Code_" + c, item.Item_Code, new { @class = "form-control", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                            @Html.TextBox("Item_Code_" + c, item.Item_Code, new { @class = "form-control form-control-sm ", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                            @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemQuantity_" + c, item.ItemQuantity, new
+                                                            @Html.TextBoxFor(model => model.Quantity, new { id = "Quantity_" + c, @class = "form-control form-control-sm ", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new
                                                             {
-                                                                @class = "form-control",
-                                                                style = "height:30px;width:100px;",
-                                                                value = "0",
-                                                                onkeypress = "return isNumberKey(event)",
-                                                           onchange = "CalItemTotalPrice($(this).val(),id)"
+                                                                @id = "DeliveryDate_" + c,
+                                                                @class = "form-control form-control-sm date1",
+                                                           type = "date",
+                                                                style = "height:30px;width:130px;"
                                                             })
+                                                            @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            @Html.TextBox("HSN_Code_" + c, item.HSN_Code, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            @Html.TextBox("remarks_" + c, item.Remarks, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:80px;" })
+                                                            @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("itemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control", style = "height:30px;width:80px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
+                                                            <button type="button" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
                                                         </td>
                                                     </tr>
                                                     { c++; }
@@ -251,7 +232,7 @@
                                         </tbody>
                                     </table>
                                     <br />
-                                    <button type="button" class="btn btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
+                                    <button type="button" class="btn btn-primary btn-sm shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
                                         + Add Item
                                     </button>
                                 </div>
@@ -275,7 +256,7 @@
                             <div class="form-group">
                                 @Html.TextBoxFor(x => x.Signature, new { id = "file", type = "file", onchange = "return fileValidation()" })
                                 @*<input type="file" id="file" name="Signature"
-                                    onchange="return fileValidation()"/>*@
+                            onchange="return fileValidation()"/>*@
                                 <!-- Image preview -->
                                 <span style="color:green">@ViewBag.Message</span>
                                 <br />
@@ -291,84 +272,27 @@
                         <p style="padding-left: 5%;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
                     </div>
 
-                    <div class="card h-50">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Terms and Conditions<span style="color:red"> * </span></h4>
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-4">
-                                    @Html.Label("T & C")
-                                    <span style="color:red">*</span>
-                                </div>
-                                <div class="col-md-8">
-                                    @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["Terms"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
-                                    @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
-                                </div>
-                                @*<div class="col-md-4 d-none">
-                                    @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                                </div>*@
-                            </div>
-                            <br />
-                            @*Rahul set ''T&C'' from top to here 02/12/2022.*@
-                            <div class="row">
-                                <div class="col-md-4">
-                                    @Html.Label("Terms Description")
-                                </div>
-                                <div class="col-md-8">
-                                    @Html.TextAreaFor(model => model.Terms, new { id = "TermDescription", @class = "form-control", placeholder = "Term Description", style = "height:100px" })
-                                    @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <hr />
-                            <div class="form-group">
-                                <div class="row mb-2">
-                                    <label>Total (before tax): </label>
-                                    <input class="form-control form-control-sm text-right" id="TotalBeforeTax" name="TotalItemCost" readonly="readonly" />
-                                    @*@Html.TextBoxFor(x=>x.TotalItemCost, new { @class = "form-control"})*@
-                                </div>
-                                <div class="row mb-2">
-                                    <label>Total tax: </label>
-                                    <input class="form-control form-control-sm text-right" id="TotalTax" name="TotalTax" readonly="readonly" />
-                                </div>
-                                <div class="row mb-2">
-                                    <label>Total (after tax):</label>
-                                    @*<input class="form-control" id="TotalAfterTax" name="TotalAfterTax" />*@
-                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right", @readonly="readonly" })
-                                </div>
-                                <div class="row mb-2">
-                                    <label><b>Grand Total:</b></label>
-                                    @*<input class="form-control" id="GrandTotal" name="GrandTotal" />*@
-                                    @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control form-control-sm text-right", @readonly = "readonly" })
-                                </div>
-                                <div class="row mb-2">
-                                    <label>Advanced To Pay:</label>
-                                    @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control  form-control-sm text-right", maxlength = "8", onkeypress = "return isNumberKey(event)" })
-                                </div>
-                            </div>
-                            <br />
-                        </div>
-                    </div>
-                </div>
-                <br />
             </div>
-
-            <a href="@Url.Action("Index","PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
+            <br />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <a href="@Url.Action("Index","RequestForQuotation")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
                 Back To List
             </a>
-            <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
+            @*<button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>*@
             <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
         </div>
     </div>
-
-    @Html.HiddenFor(model => model.DraftFlag, new { @Value = "false" })
+        
 }
 @Html.Raw(TempData["Success"])
 @section Scripts {
@@ -376,6 +300,11 @@
 }
 
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        //alert('multiple called!') 
+        $('.js-example-basic-multiple').select2();
+    });
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
@@ -415,7 +344,7 @@
     //=====================Onchange of Terms and Condition===========================
     function SelectedIndexChangedTerms(id) {
         $.ajax({
-            url: '/PurchaseOrder/GetTermsDescription',
+            url: '/RequestForQuotation/GetTermsDescription',
             type: "POST",
             data: { id: id },
             success: function (result) {
@@ -436,7 +365,7 @@
         var IdentNumber = $("#IndentID option:selected").text();
         $('#IndentNumber').val(IdentNumber);
         $.ajax({
-            url: '/PurchaseOrder/GetIndentDescription',
+            url: '/RequestForQuotation/GetIndentDescription',
             type: "POST",
             data: { id: id },
             success: function (result) {
@@ -464,27 +393,16 @@
     //=============End==============
 
     function SelectedIndexChanged(id) {
+        //alert(id);
+        debugger
         var selectedOption, companyName;
-        selectedOption = document.getElementById("VendorsID").selectedIndex;
-        companyName = document.getElementById("VendorsID").options[selectedOption].innerText;
-        document.getElementById("CompanyName").value = companyName;
+        selectedOption = document.getElementById("CompanyName").selectedIndex;
+        document.getElementById("VendorIDs").value = id;
+        //console.log(id);   
 
-        $.ajax({
-            type: "POST",
-            url: `/PurchaseOrder/BindCompanyAddress?id=` + id,
-            data: "{}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                //console.log(result);
-                var suplierAdd = result[0].SupplierAddress;
-                $("#SupplierAddress").val(suplierAdd);
-            }
-        });
     }
-
     function SelectedIndexChangedLocation(id) {
-
+        debugger
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
         locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
@@ -492,7 +410,7 @@
 
         $.ajax({
             type: "POST",
-            url: `/PurchaseOrder/BindLocationMaster?id=` + id,
+            url: `/RequestForQuotation/BindLocationMaster?id=` + id,
             data: "{}",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -525,7 +443,7 @@
                     $("#ItemUnitPrice").val(itemDescription.UnitPrice);
                     $("#CurrencyName").val(itemDescription.IndianCurrencyValue);
                     $("#ItemTaxValue").val(itemDescription.ItemTaxValue);
-                    $("#ItemQuantity").val('0');
+                    $("#Quantity").val('0');
 
                     $("#ItemTotalPrice").val('');
                     $("#TotalBeforeTax").val('');
@@ -549,8 +467,7 @@
         var currencyID = $('#CurrencyID').val();
         var selectedItemId = $("#" + itemId).val();
                     $.ajax({
-                type: 'POST',
-                //url: '@Url.Action("GetitemDetails?id='+${itemId}+'")', // we are calling json method
+                type: 'POST',                
                 url: '@Url.Action("GetitemDetails")', // we are calling json method
 
                 dataType: 'json',
@@ -563,12 +480,9 @@
                             var description = JSON.stringify(itemDescription);
                             $("#Item_Code_" + count).val(itemDescription.Item_Code);
                             $("#ItemName_" + count).val(itemDescription.Item_Name);
-                            $("#ItemUnit_" + count).val(itemDescription.UnitCode);
-                            $("#ItemUnitPrice_" + count).val(itemDescription.UnitPrice);
-                            $("#CurrencyName_" + count).val(itemDescription.IndianCurrencyValue);
-                            $("#itemTax_" + count).val(itemDescription.ItemTaxValue);
-                            $("#ItemQuantity_" + count).val('0');
-                            $("#totalItemCost_" + count).val('0');
+                            $("#ItemUnit_" + count).val(itemDescription.UnitCode);                                                                                    
+                            $("#Quantity_" + count).val('0');
+                            
                 },
                 failure: function () {
                     alert('Failed to retrieved item detals!');
@@ -579,27 +493,6 @@
             });
     }
 
-    function calcTax(cnt, e) {
-        if (isNumberKey(e)) {
-        var itemQuantity = $("#itemQuantity_" + cnt).val();
-       // console.log(itemQuantity);
-        var itemPrice = $("#itemPrice_" + cnt).val();
-        //var tempTax = $("#itemTax_").val().split("%");
-        var tax = $("#itemTax_").val();
-        //var tax = tempTax[0];
-
-        //Set total price in item grid.
-        var totalPrice = itemQuantity * itemPrice;
-        $("#totalItemCost_" + cnt).val(totalPrice);
-        //Set values in Bill
-        var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
-        //console.log("quan:" + quantity + ",totalprice:" + totalPrice + ",tax:" + tax + ",TPAT:" + totalPriceAfterTax);
-        $("#totalBeforeTax_").val(totalPrice);
-        $("#totalTax_").val($("#ItemTax").val());
-        $("#rotalAfterTax_").val(totalPriceAfterTax);
-        $("#grandTotal_").val(totalPriceAfterTax);
-        }
-    }
 
     ///Finding the length of existing table
     var table = document.getElementById('submissionTable');
@@ -610,12 +503,12 @@
         var itemId = "Item_ID_"+counter;
         var itemCode = "Item_Code_" + counter;
         var itemDescription = "ItemName_" + counter;
-        var itemQuantity = "ItemQuantity_" + counter;
+        var Quantity = "Quantity_" + counter;
         var itemUnit = "ItemUnit_" + counter;
-        var itemPrice = "ItemUnitPrice_" + counter;
-        var currencyName = "CurrencyName_" + counter;
-        var itemTax = "itemTax_" + counter;
-        var totalItemCost = "totalItemCost_" + counter;
+        var hsnCode = "HSN_Code_" + counter;
+        var deliveryDate = "DeliveryDate_" + counter;
+        var remarks = "remarks_" + counter;
+        
         $('<tr id="tablerow_' + counter + '">' + '<td>'+
             '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:130px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID_1').html()+'</select>' +
             '</td>' +
@@ -626,23 +519,20 @@
             '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +
+            '<input type="text" id="' + Quantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control" style = "height:30px;width:100px;" name="' + Quantity + '" value="0"     required="required" />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" id="' + itemPrice + '" class="form-control" style = "height:30px;width:100px;" name="' + itemPrice + '"readonly = "readonly" value="" required="required" />' +
-            '</td>' +
+            '</td>' +            
             '<td>' +
             //Rahul added 03/12/2022.
-            '<input type="text" id="' + currencyName + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + currencyName + '"readonly = "readonly" required="required" />' +
+            '<input type="date" id="' + deliveryDate + '" class="form-control form-control-sm date1" style = "height:30px;width:100%;" name="' + deliveryDate + '" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemTax + '" class="form-control " style = "height:30px;width:80px;" name="' + itemTax + ' "readonly = "readonly" value="" required="required" />' +
+            '<input type="text" id="' + hsnCode + '" class="form-control form-control-sm " style = "height:30px;width:200px;" name="' + hsnCode + '"  />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + totalItemCost + '" class="form-control" style = "height:30px;width:200px;" name="' + totalItemCost + '"readonly = "readonly" value="" required="required" />' +
+            '<input type="text" id="' + remarks + '" onchange="createJson()"; class="form-control form-control-sm  text-right" style = "height:30px;width:200px;" name="' + remarks + '"  />' +
             '</td>' +
             '<td>' +
             '<button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
@@ -658,51 +548,6 @@
 
     //=================end============================//
 
-    function CalItemTotalPrice(value, id) {
-        //alert(value + " " + id);
-        var temp_rowNo = id.split('_');
-        var rowNo = temp_rowNo[1];
-        value = parseFloat(value);
-        if (value != 0) {
-            var price = $("#ItemUnitPrice_" + rowNo).val();
-            price = parseFloat(price);
-            var totalPrice = price * value;
-            totalPrice = Math.round(totalPrice);
-            $("#totalItemCost_" + rowNo).val(totalPrice);
-        }
-
-        CalculateTotalBeforeTax();
-    }
-
-    function CalculateTotalBeforeTax() {
-        $('#TotalBeforeTax').val('');
-        $('#TotalTax').val('');
-        var length = document.getElementById("submissionTable").rows.length;
-        length = parseFloat(length) - 1;
-        var total = 0;
-        var totalTax = 0;
-        var i = 1;
-        while (i<=length) {
-            var temp = document.getElementById("totalItemCost_" + i).value;
-            var tempTotalTax = document.getElementById("itemTax_" + i).value;
-            total = parseFloat(temp) + total;
-
-            tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
-            totalTax = parseFloat(tempTotalTax) + totalTax;
-            i++;
-        }
-        total = Math.round(total);
-        totalTax = Math.round(totalTax);
-
-        $('#TotalBeforeTax').val(total);
-        $('#TotalTax').val(totalTax);
-        var tempGrandTotal = total + totalTax;
-        $('#TotalAfterTax').val(tempGrandTotal);
-        $('#GrandTotal').val(tempGrandTotal);
-
-        createJson();
-    }
-
     function createJson() {
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
@@ -713,8 +558,8 @@
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
-    $("#ItemQuantity").change(function () {
-        var quantity = $("#ItemQuantity").val();
+    $("#Quantity").change(function () {
+        var quantity = $("#Quantity").val();
         var price = $("#ItemUnitPrice").val();
         var tempTax = $("#ItemTaxValue").val().split("%")
         var tax = tempTax[0];

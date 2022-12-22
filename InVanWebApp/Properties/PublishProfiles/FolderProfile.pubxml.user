@@ -39,16 +39,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/21/2022 11:34:39</publishTime>
     </File>
     <File Include="bin/InVanWebApp.dll">
-      <publishTime>12/20/2022 15:00:25</publishTime>
+      <publishTime>12/22/2022 16:21:04</publishTime>
     </File>
     <File Include="bin/InVanWebApp.pdb">
-      <publishTime>12/20/2022 15:00:25</publishTime>
+      <publishTime>12/22/2022 16:21:04</publishTime>
     </File>
     <File Include="bin/InVanWebApp_BO.dll">
-      <publishTime>12/20/2022 11:30:43</publishTime>
+      <publishTime>12/22/2022 16:21:03</publishTime>
     </File>
     <File Include="bin/InVanWebApp_BO.pdb">
-      <publishTime>12/20/2022 11:30:43</publishTime>
+      <publishTime>12/22/2022 16:21:03</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>09/21/2022 11:34:40</publishTime>
@@ -6519,7 +6519,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/29/2022 15:53:28</publishTime>
     </File>
     <File Include="Views/GRN/ViewGRN.cshtml">
-      <publishTime>12/17/2022 16:29:33</publishTime>
+      <publishTime>12/22/2022 15:43:09</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>
@@ -6530,8 +6530,14 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/Home/Index.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>
     </File>
+    <File Include="Views/Indent/AddIndent.cshtml">
+      <publishTime>12/21/2022 22:30:13</publishTime>
+    </File>
+    <File Include="Views/Indent/EditIndent.cshtml">
+      <publishTime>12/22/2022 09:41:13</publishTime>
+    </File>
     <File Include="Views/Indent/Index.cshtml">
-      <publishTime>12/07/2022 15:16:22</publishTime>
+      <publishTime>12/21/2022 23:22:08</publishTime>
     </File>
     <File Include="Views/InventoryControl/Index.cshtml">
       <publishTime>11/29/2022 10:57:01</publishTime>
@@ -6546,7 +6552,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/29/2022 15:57:50</publishTime>
     </File>
     <File Include="Views/InwardNote/ViewInwardNote.cshtml">
-      <publishTime>12/14/2022 17:22:51</publishTime>
+      <publishTime>12/22/2022 15:43:09</publishTime>
     </File>
     <File Include="Views/InwardQCSorting/AddInwardQC.cshtml">
       <publishTime>12/17/2022 15:35:22</publishTime>
@@ -6555,13 +6561,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/29/2022 17:07:21</publishTime>
     </File>
     <File Include="Views/InwardQCSorting/ViewInwardQC.cshtml">
-      <publishTime>12/16/2022 17:01:05</publishTime>
+      <publishTime>12/22/2022 15:43:09</publishTime>
     </File>
     <File Include="Views/Item/AddItem.cshtml">
       <publishTime>05/23/2022 18:29:54</publishTime>
     </File>
     <File Include="Views/Item/AddItems.cshtml">
-      <publishTime>12/06/2022 12:02:13</publishTime>
+      <publishTime>12/22/2022 11:52:31</publishTime>
     </File>
     <File Include="Views/Item/DeleteItem.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>
@@ -6624,31 +6630,43 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/27/2022 11:25:28</publishTime>
     </File>
     <File Include="Views/POPayment/EditPOPayment.cshtml">
-      <publishTime>11/14/2022 14:40:30</publishTime>
+      <publishTime>12/20/2022 23:36:05</publishTime>
     </File>
     <File Include="Views/POPayment/Index.cshtml">
-      <publishTime>11/29/2022 17:05:57</publishTime>
+      <publishTime>12/20/2022 15:19:34</publishTime>
     </File>
     <File Include="Views/POPayment/_POPaymentDetails.cshtml">
-      <publishTime>12/20/2022 13:43:51</publishTime>
+      <publishTime>12/20/2022 23:41:25</publishTime>
     </File>
     <File Include="Views/PurchaseOrder/AddPurchaseOrder.cshtml">
-      <publishTime>12/12/2022 10:43:57</publishTime>
+      <publishTime>12/22/2022 14:22:23</publishTime>
     </File>
     <File Include="Views/PurchaseOrder/EditPurchaseOrder.cshtml">
-      <publishTime>12/11/2022 13:55:03</publishTime>
+      <publishTime>12/22/2022 14:58:22</publishTime>
     </File>
     <File Include="Views/PurchaseOrder/Index.cshtml">
       <publishTime>12/11/2022 14:17:11</publishTime>
     </File>
     <File Include="Views/PurchaseOrder/POAmendment.cshtml">
-      <publishTime>12/11/2022 13:54:22</publishTime>
+      <publishTime>12/22/2022 16:18:49</publishTime>
     </File>
     <File Include="Views/PurchaseOrder/ViewPurchaseOrder.cshtml">
-      <publishTime>12/13/2022 16:35:16</publishTime>
+      <publishTime>12/22/2022 15:43:09</publishTime>
     </File>
     <File Include="Views/PurchaseOrder/_TimelinePV.cshtml">
       <publishTime>12/09/2022 15:06:37</publishTime>
+    </File>
+    <File Include="Views/RequestForQuotation/AddRequestForQuotation.cshtml">
+      <publishTime>12/22/2022 10:25:57</publishTime>
+    </File>
+    <File Include="Views/RequestForQuotation/EditRequestForQuotation.cshtml">
+      <publishTime>12/22/2022 10:25:57</publishTime>
+    </File>
+    <File Include="Views/RequestForQuotation/Index.cshtml">
+      <publishTime>12/22/2022 10:45:39</publishTime>
+    </File>
+    <File Include="Views/RequestForQuotation/_RFQPV.cshtml">
+      <publishTime>12/22/2022 10:25:57</publishTime>
     </File>
     <File Include="Views/Role/AddRole.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>
@@ -6663,7 +6681,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/21/2022 11:34:37</publishTime>
     </File>
     <File Include="Views/RoleRights/Index.cshtml">
-      <publishTime>12/09/2022 17:22:17</publishTime>
+      <publishTime>12/22/2022 11:18:55</publishTime>
     </File>
     <File Include="Views/Shared/Dashboard.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>
@@ -6672,10 +6690,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>09/21/2022 11:34:37</publishTime>
     </File>
     <File Include="Views/Shared/MainMaster.cshtml">
-      <publishTime>12/09/2022 17:12:43</publishTime>
+      <publishTime>12/22/2022 10:27:27</publishTime>
     </File>
     <File Include="Views/Shared/SideNavBar.cshtml">
-      <publishTime>12/11/2022 23:35:59</publishTime>
+      <publishTime>12/22/2022 10:31:03</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>09/21/2022 11:34:37</publishTime>

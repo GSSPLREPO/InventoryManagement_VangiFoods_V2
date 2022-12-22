@@ -104,7 +104,7 @@ namespace InVanWebApp.Controllers
         #region Bind dropdowns Indent
         public void BindIndentDropDown(string type=null)
         {
-            var result = _purchaseOrderRepository.GetIndentListForDropdown();
+            var result = _purchaseOrderRepository.GetIndentListForDropdown(type);
             var resultList = new SelectList(result.ToList(), "ID", "IndentNo");
             ViewData["IndentDD"] = resultList;
         }

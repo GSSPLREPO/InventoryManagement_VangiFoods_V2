@@ -30,62 +30,62 @@
                     <div class="card">
                         <div class="card-body">
                             @*@using (Html.BeginForm("AddRoleRights", "RoleRights", FormMethod.Post))*@
-                            
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        @Html.Label("Roles")
-                                        <span style="color:red">*</span>
-                                    </div>
-                                    <div class="col-md-4">
-                                        @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewData["Roles"], "--Select--",
-                                        new { @Id = "role", @class = "form-control" })
-                                    </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.Label("Roles")
+                                    <span style="color:red">*</span>
                                 </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <button id="btnSave" type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Save</button>
-                                        @*<a href="@Url.Action("AddRoleRights","RoleRights")" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">
-                                                Save
-                                            </a>*@
-                                    </div>
+                                <div class="col-md-4">
+                                    @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewData["Roles"], "--Select--",
+                                    new { @Id = "role", @class = "form-control" })
                                 </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <h5><u><i>Screen Names</i></u></h5>
-                                    </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button id="btnSave" type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">Save</button>
+                                    @*<a href="@Url.Action("AddRoleRights","RoleRights")" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);">
+                                            Save
+                                        </a>*@
                                 </div>
-                                <hr />
-                                <br />
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="row">
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h5><u><i>Screen Names</i></u></h5>
+                                </div>
+                            </div>
+                            <hr />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            @Html.CheckBox("checkAll", new { @id = "checkAll" })
+                                        </div>
+                                        <div class="col-md-2">
+                                            <h5>Select All</h5>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    @foreach (var item in Model)
+                                    {
+                                        <div class=" form-group row">
                                             <div class="col-md-1">
-                                                @Html.CheckBox("checkAll", new { @id = "checkAll" })
+                                                @*@Html.CheckBoxFor(item => item[i].Selected, new { @checked = "checked" })*@
+                                                <input id="@item.ScreenName" class="removeLater" type="checkbox" name="skill" value="@item.ScreenName" />
                                             </div>
-                                            <div class="col-md-2">
-                                                <h5>Select All</h5>
+                                            <div class="col-md-8">
+                                                @Html.HiddenFor(modelItem => item.RoleId)
+                                                @Html.HiddenFor(modelItem => item.ScreenId)
+                                                @Html.DisplayFor(modelItem => item.ScreenName)
                                             </div>
                                         </div>
-                                        <br />
-                                        @foreach (var item in Model)
-                                        {
-                                            <div class=" form-group row">
-                                                <div class="col-md-1">
-                                                    @*@Html.CheckBoxFor(item => item[i].Selected, new { @checked = "checked" })*@
-                                                    <input id="@item.ScreenName" class="removeLater" type="checkbox" name="skill" value="@item.ScreenName" />
-                                                </div>
-                                                <div class="col-md-8">
-                                                    @Html.HiddenFor(modelItem => item.RoleId)
-                                                    @Html.HiddenFor(modelItem => item.ScreenId)
-                                                    @Html.DisplayFor(modelItem => item.ScreenName)
-                                                </div>
-                                            </div>
-                                        }
-                                    </div>
+                                    }
                                 </div>
-                            
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -143,14 +143,13 @@
             async: true,
             success: function (result) {
                 $.each(result, function (key, item) {
-
                     $(':checkbox').each(function () {
                         if (this.id == item.ScreenName) {
                             this.checked = true;
                         }
                     });
-                    document.getElementById("btnSave").disabled = false;
                 });
+                document.getElementById("btnSave").disabled = false;
             }
         });
     })
@@ -169,7 +168,7 @@
                 //checkboxValues.push($("input:checked").val());
                 checkboxValues.push($(this).val());
             });
-            
+
             //alert(checkboxValues);
             //return true;
             $.ajax({

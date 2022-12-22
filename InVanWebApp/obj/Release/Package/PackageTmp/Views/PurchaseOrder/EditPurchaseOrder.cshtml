@@ -63,7 +63,8 @@
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control",  @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control", @readonly = "readonly" })
                 </div>
             </div>
             <br />
@@ -634,10 +635,10 @@
             '<input type="text" id="' + itemPrice + '" class="form-control" style = "height:30px;width:100px;" name="' + itemPrice + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<td>' +
             //Rahul added 03/12/2022.
             '<input type="text" id="' + currencyName + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + currencyName + '"readonly = "readonly" required="required" />' +
             '</td>' +
+            '<td>' +
             '<input type="text" id="' + itemTax + '" class="form-control " style = "height:30px;width:80px;" name="' + itemTax + ' "readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
