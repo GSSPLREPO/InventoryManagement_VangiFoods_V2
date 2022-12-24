@@ -38,9 +38,9 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.DisplayName("Indent Number")</th>
-                                            <th>@Html.DisplayName("Indent Due Date")</th>
+                                            <th>@Html.DisplayName("Indent Date")</th>
                                             <th>@Html.DisplayName("Status")</th>
-                                            <th>@Html.DisplayName("Description")</th>
+                                            <th>@Html.DisplayName("Remarks")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
@@ -52,7 +52,7 @@
                                                     @Html.DisplayFor(modelItem => item.IndentNo)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(modelItem => item.IndentDueDate)
+                                                    @Html.DisplayFor(modelItem => item.IndentDate)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.IndentStatus)

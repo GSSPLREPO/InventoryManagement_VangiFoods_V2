@@ -135,7 +135,10 @@
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="~/StockTransfer">Stock Transfer</a></li>
+                    <div id="StockTransfer">
+                        <a class="nav-link" href="@Url.Action("Index","StockTransfer")">Stock Transfer</a>
+                    </div>
+                    @*<li class="nav-item"> <a class="nav-link" href="~/StockTransfer">Stock Transfer</a></li>*@
                 </ul>
             </div>
         </li>
@@ -167,14 +170,14 @@
             </a>
             <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="~/DailyOperations/CalibrationLogSheetForInstruments">Calibration Log</a></li>
+                    @*<li class="nav-item"><a class="nav-link" href="~/DailyOperations/CalibrationLogSheetForInstruments">Calibration Log</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/DailyOperations/Chlorination">Chlorination</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/DailyOperations/CriticalControlPointLogSheet">CriticalControlPoint</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/DailyOperations/PreStartupHygiene">Pre-Startup Hygiene</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/DailyOperations/ProductEvaluationLog">ProductEvaluationLog</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/DailyOperations/SanitizationHygine">Sanitization & Hygine</a></li>
                     <li class="nav-item"><a class="nav-link" href="~/DailyOperations/VegWasherDosageLog">Veg Washer Dosage Log</a></li>
-                    <li class="nav-item"><a class="nav-link" href="~/DailyOperations/WaterAnalysis">Water Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link" href="~/DailyOperations/WaterAnalysis">Water Analysis</a></li>*@
                 </ul>
             </div>
         </li>
@@ -282,11 +285,12 @@
                             <a class="nav-link" href="~/StockMovement">Stock Movement Report</a>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <div id="InventoryControlReport">
                             <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
                         </div>
-                    </li>
+                    </li>*@
+
                     @*<li class="nav-item"> <a class="nav-link" href="#">Material</a></li>
                     <li class="nav-item"> <a class="nav-link" href="#">Production</a></li>
                     <li class="nav-item"> <a class="nav-link" href="#">QC</a></li>
