@@ -78,7 +78,7 @@ namespace InVanWebApp.Controllers
                 ViewData["DocumentNo"] = DocumentNumber;
 
                 //Binding item grid with sell type item.
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                var itemList = _repository.GetItemDetailsForDD();
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 ViewData["itemListForDD"] = dd;
 
@@ -124,7 +124,7 @@ namespace InVanWebApp.Controllers
                             ViewData["DocumentNo"] = DocumentNumber;
 
                             //Binding item grid with sell type item.
-                            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                            var itemList = _repository.GetItemDetailsForDD();
                             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                             ViewData["itemListForDD"] = dd;
 
@@ -140,7 +140,7 @@ namespace InVanWebApp.Controllers
                         BindUsers();
                         BindLocation();
                         BindDesignations();
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                        var itemList = _repository.GetItemDetailsForDD();
                         var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                         ViewData["itemListForDD"] = dd;
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -163,7 +163,7 @@ namespace InVanWebApp.Controllers
                 BindUsers();
                 BindLocation();
                 BindDesignations();
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                var itemList = _repository.GetItemDetailsForDD();
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 ViewData["itemListForDD"] = dd;
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -197,7 +197,7 @@ namespace InVanWebApp.Controllers
                 IndentBO model = _repository.GetById(ID);
                 model.indent_Details = _repository.GetItemDetailsByIndentId(ID);
                 //Binding item grid with sell type item.
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                var itemList = _repository.GetItemDetailsForDD();
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 string itemListForDD = "itemListForDD";
 
@@ -258,7 +258,7 @@ namespace InVanWebApp.Controllers
                             model1.indent_Details = _repository.GetItemDetailsByIndentId(model.ID);
 
                             //Binding item grid with sell type item.
-                            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                            var itemList = _repository.GetItemDetailsForDD();
                             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                             string itemListForDD = "itemListForDD";
 
@@ -294,7 +294,7 @@ namespace InVanWebApp.Controllers
                         model1.indent_Details = _repository.GetItemDetailsByIndentId(model.ID);
 
                         //Binding item grid with sell type item.
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                        var itemList = _repository.GetItemDetailsForDD();
                         var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                         string itemListForDD = "itemListForDD";
 

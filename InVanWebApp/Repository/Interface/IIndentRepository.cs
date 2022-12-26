@@ -25,5 +25,7 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Insert(IndentBO model);
         IndentBO GetById(int id);
         List<Indent_DetailsBO> GetItemDetailsByIndentId(int IndentId);
+
+        List<ItemBO> GetItemDetailsForDD();
     }
 }

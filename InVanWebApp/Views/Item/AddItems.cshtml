@@ -94,7 +94,6 @@
                     </div>
                     <div class="col-md-2">
                         @Html.Label("Tax")
-                        <span style="color:red">*</span>
                     </div>
                     <div class="col-md-2">
                         @Html.DropDownListFor(model => model.TaxId, (IEnumerable<SelectListItem>)ViewData["Tax"], "---Select---", new { @class = "form-control", onchange = "TaxOnchangeEvent()" })
@@ -167,6 +166,17 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        document.getElementById('TaxId').removeAttribute("data-val", "true");
+
+    });
+
+    $('#btnSave').click(function () {
+        var value = $('#TaxId').val();
+        if (value == '') {
+            $('#TaxId').val(0);
+        }
+    }); 
 
     //Validation for special characters.
     $('#Item_Name').on("keydown keyup change", function () {
@@ -232,18 +242,22 @@
     //On change function tax dropdown
     function TaxOnchangeEvent() {
         var TaxId = $('#TaxId').val();
-        $.ajax({
-            url: '/Item/GetTaxValue',
-            type: "POST",
-            data: { id: TaxId },
-            success: function (result) {
-                $('#ItemTaxVal').val(result.TaxValue + " %");
-            },
-            error: function (err) {
-                alert('Not able to get the selected tax value!');
+        if (TaxId != null & TaxId != 0 & TaxId != '') {
+            $.ajax({
+                url: '/Item/GetTaxValue',
+                type: "POST",
+                data: { id: TaxId },
+                success: function (result) {
+                    $('#ItemTaxVal').val(result.TaxValue + " %");
+                },
+                error: function (err) {
+                    alert('Not able to get the selected tax value!');
 
-            }
-        });
+                }
+            });
+        }
+        else
+            $('#ItemTaxVal').val('');
     }
 
     function isNumberKey(evt) {

@@ -118,7 +118,10 @@ namespace InVanWebApp.Controllers
                         if (model.ItemTaxValue == 0 & model.TaxId == 0 & model.UnitPrice == 0)
                             return RedirectToAction("Index", "Item");
                         else
+                        {
                             TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                            return RedirectToAction("Index", "Item");
+                        }
                     }
                 }
                 else
@@ -189,7 +192,7 @@ namespace InVanWebApp.Controllers
                             productExcel.MinStock = Convert.ToDouble(worksheet.Cells[row, col + 6].Value != null ? worksheet.Cells[row, col + 6].Value : "0");
                             productExcel.Description = worksheet.Cells[row, col + 7].Value != null ? worksheet.Cells[row, col + 7].Value.ToString() : null;
                             var tempCreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                            
+
                             productExcel.CreatedBy = tempCreatedBy;
                             productExcel.CreatedDate = DateTime.UtcNow.AddHours(5.5);
                             productExcel.IsDeleted = false;

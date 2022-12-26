@@ -223,12 +223,12 @@ namespace InVanWebApp.Repository
                             Item_Code = reader["Item_Code"].ToString(),
                             Item_Name = reader["Item_Name"].ToString(),
                             HSN_Code = reader["HSN_Code"].ToString(),
-                            MinStock = Convert.ToInt32(reader["MinStock"]),
+                            MinStock = Convert.ToDouble(reader["MinStock"]),
                             Description = reader["Description"].ToString(),
                             UnitOfMeasurement_ID = Convert.ToInt32(reader["UnitOfMeasurement_ID"]),
                             UnitPrice = Convert.ToDouble(reader["UnitPrice"]),
-                            TaxId=Convert.ToInt32(reader["TaxId"]),
-                            ItemTaxValue=float.Parse(reader["ItemTaxValue"].ToString())
+                            TaxId = Convert.ToInt32(reader["TaxId"]),
+                            ItemTaxValue = float.Parse(reader["ItemTaxValue"].ToString())
                         };
                     }
                     con.Close();

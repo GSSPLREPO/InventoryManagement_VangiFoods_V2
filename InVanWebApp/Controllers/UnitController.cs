@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using InVanWebApp_BO;
 using InVanWebApp.Repository;
 using log4net;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Controllers
 {
@@ -40,6 +41,9 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
             var model = _unitRepository.GetAll();
             return View(model);
         }
@@ -53,6 +57,9 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddUnit()
         {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
             return View();
         }
 
@@ -64,16 +71,23 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult AddUnit(UnitMaster model)
         {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
             try
             {
                 ResponseMessageBO response = new ResponseMessageBO();
                 if (ModelState.IsValid)
                 {
+                    model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                     response = _unitRepository.Insert(model);
                     if (response.Status)
                         TempData["Success"] = "<script>alert('Unit inserted successfully!');</script>";
                     else
+                    { 
                         TempData["Success"] = "<script>alert('Duplicate unit!');</script>";
+                        return View();
+                    }
 
                     return RedirectToAction("Index", "Unit");
                 }
@@ -97,6 +111,9 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditUnit(int UnitID)
         {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
             UnitMaster model = _unitRepository.GetById(UnitID);
             return View(model);
         }
@@ -109,17 +126,24 @@ namespace InVanWebApp.Controllers
         [HttpPost]
         public ActionResult EditUnit(UnitMaster model)
         {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
             ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 if (ModelState.IsValid)
                 {
+                    model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                     response = _unitRepository.Update(model);
                     if (response.Status)
                         TempData["Success"] = "<script>alert('Unit updated successfully!');</script>";
 
                     else
+                    { 
                         TempData["Success"] = "<script>alert('Duplicate unit!');</script>";
+                        return View(model);
+                    }
 
                     return RedirectToAction("Index", "Unit");
                 }
@@ -146,6 +170,9 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteUnit(int UnitId)
         {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
             _unitRepository.Delete(UnitId);
             //_unitRepository.Save();
             TempData["Success"] = "<script>alert('Unit deleted successfully!');</script>";

@@ -115,7 +115,7 @@ namespace InVanWebApp.Repository
                 cmd.Parameters.AddWithValue("@UnitName", unitMaster.UnitName);
                 cmd.Parameters.AddWithValue("@UnitCode", unitMaster.UnitCode);
                 cmd.Parameters.AddWithValue("@Description", unitMaster.Description);
-                cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                cmd.Parameters.AddWithValue("@LastModifiedBy", unitMaster.LastModifiedBy);
                 cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                 con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();

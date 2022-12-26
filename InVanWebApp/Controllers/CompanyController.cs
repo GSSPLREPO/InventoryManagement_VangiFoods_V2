@@ -93,6 +93,7 @@ namespace InVanWebApp.Controllers
                     ResponseMessageBO response = new ResponseMessageBO();
                     if (ModelState.IsValid)
                     {
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _companyRepository.Insert(model);
                         if (response.Status)
                             TempData["Success"] = "<script>alert('Company details Inserted Successfully!');</script>";
@@ -176,7 +177,7 @@ namespace InVanWebApp.Controllers
                         productExcel.IsActive = worksheet.Cells[row, col + 8].Value != null ? Convert.ToBoolean(worksheet.Cells[row, col + 8].Value) : true;
                         productExcel.IsBlackListed = worksheet.Cells[row, col + 9].Value != null ? Convert.ToBoolean(worksheet.Cells[row, col + 9].Value) : false;
 
-                        productExcel.CreatedBy = 1;
+                        productExcel.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         productExcel.CreatedDate = DateTime.UtcNow.AddHours(5.5);
                         productExcel.IsDeleted = false;
                         listMaterialExcelEntity.Add(productExcel);
@@ -248,6 +249,7 @@ namespace InVanWebApp.Controllers
                 {
                     if (ModelState.IsValid)
                     {
+                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _companyRepository.Update(model);
                         if (response.Status)
                             TempData["Success"] = "<script>alert('Company updated successfully!');</script>";

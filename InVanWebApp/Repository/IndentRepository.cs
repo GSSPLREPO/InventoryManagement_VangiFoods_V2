@@ -376,5 +376,31 @@ namespace InVanWebApp.Repository
             }
         }
         #endregion
+
+        #region Get list of Items for Indent
+        public List<ItemBO> GetItemDetailsForDD()
+        {
+            List<ItemBO> ItemList = new List<ItemBO>();
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                SqlCommand cmd = new SqlCommand("usp_tbl_GetItemListForIndent", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                while (reader.Read())
+                {
+                    var item = new ItemBO()
+                    {
+                        ID = Convert.ToInt32(reader["ID"]),
+                        Item_Code = reader["Item_Code"].ToString()
+                    };
+                    ItemList.Add(item);
+                }
+                con.Close();
+                return ItemList;
+            }
+        }
+
+        #endregion
     }
 }

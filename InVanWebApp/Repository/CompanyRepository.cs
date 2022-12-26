@@ -83,7 +83,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@IsActive", model.IsActive);
                     cmd.Parameters.AddWithValue("@IsBlackListed", model.IsBlackListed);
-                    cmd.Parameters.AddWithValue("@CreatedBy", 1);
+                    cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -259,7 +259,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@IsActive", model.IsActive);
                     cmd.Parameters.AddWithValue("@IsBlackListed", model.IsBlackListed);
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", 1);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();

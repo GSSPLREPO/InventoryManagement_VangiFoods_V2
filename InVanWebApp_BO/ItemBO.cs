@@ -11,21 +11,21 @@ namespace InVanWebApp_BO
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage ="Select category name!")]
+        [Required(ErrorMessage = "Select category name!")]
         public Nullable<int> ItemCategory_ID { get; set; }
 
-        [Required(ErrorMessage ="Select type name!")]
+        [Required(ErrorMessage = "Select type name!")]
         public Nullable<int> ItemTypeID { get; set; }
-        
-        [Required(ErrorMessage ="Enter item code!")]
+
+        [Required(ErrorMessage = "Enter item code!")]
         public string Item_Code { get; set; }
 
-        [Required(ErrorMessage ="Enter item name!")]
+        [Required(ErrorMessage = "Enter item name!")]
         [StringLength(100, ErrorMessage = "Legth of item name is exceeded!")]
         public string Item_Name { get; set; }
         public string HSN_Code { get; set; }
 
-        [Required(ErrorMessage ="Enter minimum stock value!")]
+        [Required(ErrorMessage = "Enter minimum stock value!")]
         [Range(0, double.MaxValue, ErrorMessage = "Please enter valid stock value!")]
         public Nullable<double> MinStock { get; set; }
 
@@ -41,7 +41,7 @@ namespace InVanWebApp_BO
         public string ItemCategoryName { get; set; }
         public string ItemTypeName { get; set; }
 
-        [Required(ErrorMessage ="Select the tax!")]
+        //[Required(ErrorMessage ="Select the tax!")]
         public int TaxId { get; set; }
 
         //Added below fields for Grid dropdowns (Added by Rahul)

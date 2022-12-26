@@ -20,7 +20,6 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Enter unit name!")]
         [StringLength(50, ErrorMessage = "Legth of unit name is exceeded!")]
-
         public string UnitName { get; set; }
 
         [Required(ErrorMessage = "Enter unit code!")]

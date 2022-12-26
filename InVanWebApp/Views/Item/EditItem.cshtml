@@ -69,7 +69,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.MinStock, new { @class = "form-control form-control-sm", maxlength="9" })
+                    @Html.TextBoxFor(model => model.MinStock, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength ="9" })
                     @Html.ValidationMessageFor(model => model.MinStock, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -85,7 +85,6 @@
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Tax")
-                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-2">
                     @Html.DropDownListFor(model => model.TaxId, (IEnumerable<SelectListItem>)ViewData["Tax"], "---Select---", new { @class = "form-control", onchange = "TaxOnchangeEvent()" })
@@ -116,7 +115,7 @@
             <a href="@Url.Action("Index", "Item")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                 Back To List
             </a>
-            <button type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Update</button>
+            <button id="btnSave" type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Update</button>
 
         </div>
     </div>
@@ -132,6 +131,13 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
 <script type="text/javascript">
+
+    $('#btnSave').click(function () {
+        var value = $('#TaxId').val();
+        if (value == '') {
+            $('#TaxId').val(0);
+        }
+    });
 
     //Validation for special characters.
     $('#Item_Name').on("keydown keyup change", function () {
@@ -194,15 +200,18 @@
     });
 
     $(document).ready(function () {
+        document.getElementById('TaxId').removeAttribute("data-val", "true");
         TaxOnchangeEvent();
         var taxValue = $('#ItemTaxVal').val();
-        taxValue = taxValue + " %";
+        if(taxValue!=null & taxValue!='')
+            taxValue = taxValue + " %";
         $('#ItemTaxVal').val(taxValue);
     });
 
     function TaxOnchangeEvent() {
         var TaxId = $('#TaxId').val();
-        $.ajax({
+        if (TaxId != null & TaxId != 0 & TaxId != '') {
+            $.ajax({
             url: '/Item/GetTaxValue',
             type: "POST",
             data: { id: TaxId },
@@ -214,5 +223,24 @@
 
             }
         });
+        }
+        else
+            $('#ItemTaxVal').val('');
+    }
+
+    function isNumberKey(evt) {
+        //comparing pressed keycodes
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
     }
 </script>

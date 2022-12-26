@@ -16,7 +16,7 @@ namespace InVanWebApp_BO
         [StringLength(100, ErrorMessage = "Legth of name is exceeded!")]
         public string CompanyName { get; set; }
 
-        [Required(ErrorMessage = "Enter name of contact person!")]
+        //[Required(ErrorMessage = "Enter name of contact person!")]
         [StringLength(30, ErrorMessage = "Legth of name is exceeded!")]
         public string ContactPersonName { get; set; }
 
@@ -24,7 +24,7 @@ namespace InVanWebApp_BO
         [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         public string ContactPersonNo { get; set; }
 
-        [Required(ErrorMessage = "Enter email id!")]
+        //[Required(ErrorMessage = "Enter email id!")]
         [DataType(DataType.EmailAddress)]
         [RegularExpression("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}",
             ErrorMessage = "Please enter correct email")]
@@ -38,7 +38,7 @@ namespace InVanWebApp_BO
         public Nullable<int> CountryID { get; set; }
         public Nullable<int> PinCode { get; set; }
 
-        [Required(ErrorMessage = "Enter GST number!")]
+        //[Required(ErrorMessage = "Enter GST number!")]
         [StringLength(15, ErrorMessage = "Legth of GST is exceeded!")]
         [RegularExpression("^[a-zA-Z0-9]*$",
             ErrorMessage = "Invalid GST No. !")]

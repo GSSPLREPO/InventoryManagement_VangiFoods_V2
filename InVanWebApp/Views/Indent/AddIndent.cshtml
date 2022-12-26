@@ -193,7 +193,6 @@
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
         var TxtItemDetails = JSON.stringify(res);
-        console.log(TxtItemDetails);
         $('#itemDetails').val(TxtItemDetails);
     }
     //==========end===============
@@ -233,7 +232,6 @@
     }
 
     function getitemDetailsJSTbl(count) {
-        console.log(count);
         var itemId = "ItemID_" + count;
         var selectedItemId = $("#" + itemId).val();
                     $.ajax({
@@ -248,7 +246,6 @@
 
                         success: function (itemDescription) {
                             var description = JSON.stringify(itemDescription);
-                            console.log(description);
 
                             $("#itemCode_" + count).val(itemDescription.Item_Code);
                             $("#itemDescription_" + count).val(itemDescription.Item_Name);
@@ -272,6 +269,7 @@
         var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
         itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
+        itemCode = itemCode.split(' (')[0];
         document.getElementById("ItemCode").value = itemCode;
     }
 
@@ -312,7 +310,6 @@
     function removeTr(index) {
         var length = document.getElementById("submissionTable").rows.length;
         length = parseFloat(length) - 1;
-        //console.log("Length: " + length + counter);
         if (counter > 1 & length == index) {
             $('#tablerow' + index).remove();
             counter--;
