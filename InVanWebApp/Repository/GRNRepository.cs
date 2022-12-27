@@ -39,6 +39,7 @@ namespace InVanWebApp.Repository
                         {
                             ID = Convert.ToInt32(reader["ID"]),
                             GRNCode = reader["GRNCode"].ToString(),
+                            InwardQCNumber = reader["InwardQCNumber"].ToString(),
                             InwardNoteNumber = reader["InwardNoteNumber"].ToString(),
                             GRNDate = Convert.ToDateTime(reader["GRNDate"]),
                             Remark = reader["Remark"].ToString()
@@ -93,7 +94,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Bind all inward note details 
-        public IEnumerable<InwardNoteBO> GetInwardDetailsById(int InwId)
+        public IEnumerable<InwardNoteBO> GetInwardDetailsById(int Id)
         {
             List<InwardNoteBO> resultList = new List<InwardNoteBO>();
             try
@@ -101,7 +102,7 @@ namespace InVanWebApp.Repository
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_InwdDetailsForGRN_GetByID", con);
-                    cmd.Parameters.AddWithValue("@ID", InwId);
+                    cmd.Parameters.AddWithValue("@ID", Id);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -121,7 +122,7 @@ namespace InVanWebApp.Repository
                     con.Close();
 
                     SqlCommand cmd1 = new SqlCommand("usp_tbl_InwardItemDetailsForGRN_GetByID", con);
-                    cmd1.Parameters.AddWithValue("@ID", InwId);
+                    cmd1.Parameters.AddWithValue("@ID", Id);
                     cmd1.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader1 = cmd1.ExecuteReader();
@@ -171,7 +172,7 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@GRNCode", model.GRNCode);
                     cmd.Parameters.AddWithValue("@GRNDate", model.GRNDate);
-                    cmd.Parameters.AddWithValue("@InwardNoteId", model.InwardNoteId);
+                    cmd.Parameters.AddWithValue("@InwardQCId", model.InwardQCId);
                     cmd.Parameters.AddWithValue("@PO_Id", model.PO_ID);
                     cmd.Parameters.AddWithValue("@PONumber", model.PONumber);
                     cmd.Parameters.AddWithValue("@LocationId", model.LocationId);

@@ -39,9 +39,9 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.InwardNoteId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
+                    @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
                    new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.InwardNoteId, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.InwardQCId, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("PO Number")

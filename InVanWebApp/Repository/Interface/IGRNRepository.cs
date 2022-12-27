@@ -16,7 +16,7 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<InwardNoteBO> GetInwardNumberForDropdown();
 
         //Get inward note details by ID.
-        IEnumerable<InwardNoteBO> GetInwardDetailsById(int InwId);
+        IEnumerable<InwardNoteBO> GetInwardDetailsById(int Id);
 
         //Insert function
         ResponseMessageBO Insert(GRN_BO model);

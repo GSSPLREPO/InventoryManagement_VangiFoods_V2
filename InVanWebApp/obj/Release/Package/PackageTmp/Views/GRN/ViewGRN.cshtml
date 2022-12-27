@@ -180,7 +180,7 @@
 
                 var img = canvas.toDataURL("image/png", 1.0);
 
-                var doc = new jsPDF('p', 'pt', 'a3');
+                var doc = new jsPDF('p', 'pt', 'a4');
 
                 var specialElementHandlers = {
                     '#editor': function (element, renderer) {
@@ -188,7 +188,7 @@
                     }
                 };
 
-                doc.addImage(img, 'JPEG', 5, 5);
+                doc.addImage(img, 'JPEG', 15, 15, 570, 270);
                 doc.fromHTML(printD, 15, 15, {
                     'width': 200,
                     // 'margin':[10,60,40,20],

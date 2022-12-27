@@ -157,11 +157,11 @@ namespace InVanWebApp.Controllers
         #region Get Inward number details
         public JsonResult BindInwardDetails(string id)
         {
-            int InwId = 0;
+            int IQCId = 0;
             if (id != "" && id != null)
-                InwId = Convert.ToInt32(id);
+                IQCId = Convert.ToInt32(id);
             
-            var result = _repository.GetInwardDetailsById(InwId);
+            var result = _repository.GetInwardDetailsById(IQCId);
             return Json(result);
         }
 

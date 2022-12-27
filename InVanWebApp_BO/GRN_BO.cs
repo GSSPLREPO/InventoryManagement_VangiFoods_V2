@@ -30,8 +30,6 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-
-        [Required(ErrorMessage ="Please select Inward number!")]
         public Nullable<int> InwardNoteId { get; set; }
         public string InwardNoteNumber { get; set; }
         [Required(ErrorMessage ="Please enter delivery address!")]
@@ -54,5 +52,11 @@ namespace InVanWebApp_BO
         public int CurrencyID { get; set; }
         public string CurrencyName { get; set; }
         public float CurrencyPrice { get; set; }
+
+        //added new fields in GRNMaster table
+
+        [Required(ErrorMessage = "Please select Inward QC number!")]
+        public int InwardQCId { get; set; }
+        public string InwardQCNumber { get; set; }
     }
 }
