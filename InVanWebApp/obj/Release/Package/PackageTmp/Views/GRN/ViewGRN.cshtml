@@ -60,16 +60,24 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-2">
-                                    <label class="font-weight-bold">Inward Number</label>
+                                    <label class="font-weight-bold">Inward QC Number</label>
                                 </div>
                                 <div class="col-lg-4">
-                                    @Html.DisplayFor(model => model.InwardNoteNumber)
+                                    @Html.DisplayFor(model => model.InwardQCNumber) 
                                 </div>
                                 <div class="col-lg-2">
                                     <label class="font-weight-bold">PO Number</label>
                                 </div>
                                 <div class="col-lg-4">
                                     @Html.DisplayFor(model => model.PONumber, new { @class = "form-control form-control-sm", style = "border:none" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label class="font-weight-bold">Inward Number</label>
+                                </div>
+                                <div class="col-lg-4">
+                                    @Html.DisplayFor(model => model.InwardNoteNumber)
                                 </div>
                             </div>
                             <br />

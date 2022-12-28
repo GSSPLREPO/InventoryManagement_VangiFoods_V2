@@ -118,7 +118,7 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        //TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         BindInwardNoNumber();
                         model.InwardQCDate = DateTime.Today;
 

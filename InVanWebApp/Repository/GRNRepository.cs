@@ -261,6 +261,7 @@ namespace InVanWebApp.Repository
                             GRNDate=Convert.ToDateTime(reader["GRNDate"]),
                             PO_ID = Convert.ToInt32(reader["PO_Id"]),
                             PONumber = reader["PONumber"].ToString(),
+                            InwardQCNumber =reader["InwardQCNumber"].ToString(),
                             InwardNoteNumber = reader["InwardNoteNumber"].ToString(),
                             LocationName = reader["LocationName"].ToString(),
                             DeliveryAddress = reader["DeliveryAddress"].ToString(),

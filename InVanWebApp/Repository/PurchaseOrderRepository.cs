@@ -729,8 +729,8 @@ namespace InVanWebApp.Repository
 
         public PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId)
         {
-            string purchaseOrderQuery = "SELECT * FROM PurchaseOrder WITH(NOLOCK) WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
-            string purchaseOrderItemQuery = "SELECT * FROM PurchaseOrderItemsDetails WITH(NOLOCK) WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
+            string purchaseOrderQuery = "SELECT * FROM PurchaseOrder WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
+            string purchaseOrderItemQuery = "SELECT * FROM PurchaseOrderItemsDetails WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
             using (SqlConnection con = new SqlConnection(connString))
             {
                 var purchaseOrder = con.Query<PurchaseOrderBO>(purchaseOrderQuery, new { @purchaseOrderId = PurchaseOrderId }).FirstOrDefault();

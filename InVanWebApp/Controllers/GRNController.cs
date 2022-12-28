@@ -120,7 +120,7 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        //TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         BindInwardNumber();
                         BindLocationName();
                         model.GRNDate = DateTime.Today;
