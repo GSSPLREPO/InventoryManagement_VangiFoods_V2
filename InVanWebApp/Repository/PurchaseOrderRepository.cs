@@ -876,8 +876,8 @@ namespace InVanWebApp.Repository
         public PurchaseOrderBO GetDetailsForTimelineView(int PO_Id)
         {
             PurchaseOrderBO poBo = new PurchaseOrderBO();
-            string grnMasterQuery = "SELECT TOP(1) * FROM GRN_Master WITH(NOLOCK) WHERE PO_Id = @purchaseOrderId AND IsDeleted = 0 order by CreatedDate desc";
-            string poPaymentDetailsQuery = "SELECT TOP(1) * FROM PurchaseOrderPaymentDetails WITH(NOLOCK) WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0 order by CreatedDate desc ";
+            string grnMasterQuery = "SELECT TOP(1) * FROM GRN_Master WHERE PO_Id = @purchaseOrderId AND IsDeleted = 0 order by CreatedDate desc";
+            string poPaymentDetailsQuery = "SELECT TOP(1) * FROM PurchaseOrderPaymentDetails WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0 order by CreatedDate desc ";
             using (SqlConnection con = new SqlConnection(connString))
             {
                 var grnResult = con.Query<GRN_BO>(grnMasterQuery, new { @purchaseOrderId = PO_Id }).FirstOrDefault();

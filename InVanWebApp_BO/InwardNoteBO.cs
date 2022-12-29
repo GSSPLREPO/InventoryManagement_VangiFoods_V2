@@ -31,6 +31,7 @@ namespace InVanWebApp_BO
         public Nullable<decimal> ItemUnitPrice { get; set; }
         public string Signature { get; set; }
         public string Remarks { get; set; }
+        public string ChallanNo{ get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

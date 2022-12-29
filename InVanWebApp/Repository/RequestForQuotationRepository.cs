@@ -226,8 +226,8 @@ namespace InVanWebApp.Repository
         /// <param name="ID"></param>
         public RequestForQuotationBO GetRFQbyId(int RequestForQuotationId)  
         {
-            string rfqQuery = "SELECT * FROM RequestForQuotation WITH(NOLOCK) WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0";
-            string rfqItemQuery = "SELECT * FROM RequestForQuotationItemDetails WITH(NOLOCK) WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0";
+            string rfqQuery = "SELECT * FROM RequestForQuotation WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0";
+            string rfqItemQuery = "SELECT * FROM RequestForQuotationItemDetails WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0";
             using (SqlConnection con = new SqlConnection(connString)) 
             {
                 var rfq = con.Query<RequestForQuotationBO>(rfqQuery, new { @RequestForQuotationId = RequestForQuotationId }).FirstOrDefault();
@@ -358,7 +358,7 @@ namespace InVanWebApp.Repository
         public RequestForQuotationItemDetailsBO GetDetailsForRFQView(int RequestForQuotationId) 
         {
             RequestForQuotationItemDetailsBO rfqItemBo = new RequestForQuotationItemDetailsBO();            
-            string rfqItemDetailsQuery = "SELECT TOP(1) * FROM RequestForQuotationItemDetails WITH(NOLOCK) WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0 order by CreatedByDate desc ";
+            string rfqItemDetailsQuery = "SELECT TOP(1) * FROM RequestForQuotationItemDetails WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0 order by CreatedByDate desc ";
             using (SqlConnection con = new SqlConnection(connString))
             {                
                 var rfqItemDetailsResult = con.Query<RequestForQuotationItemDetailsBO>(rfqItemDetailsQuery, new { @RequestForQuotationId = RequestForQuotationId }).FirstOrDefault(); 

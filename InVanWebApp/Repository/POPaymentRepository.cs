@@ -135,6 +135,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@CreatedDate", DateTime.Now);
                     cmd.Parameters.AddWithValue("@BranchName", POPaymentDetails.BranchName);
                     cmd.Parameters.AddWithValue("@IFSCCode", POPaymentDetails.IFSCCode);
+                    cmd.Parameters.AddWithValue("@UTRNo", POPaymentDetails.UTRNo);
 
                     con.Open();
 
@@ -228,14 +229,13 @@ namespace InVanWebApp.Repository
         {
             using (SqlConnection con = new SqlConnection(connString))
             {
-                String query = "SELECT * FROM PurchaseOrderPaymentDetails WITH(NOLOCK) WHERE ID = @Id AND IsDeleted = 0";
+                String query = "SELECT * FROM PurchaseOrderPaymentDetails WHERE ID = @Id AND IsDeleted = 0";
                 //var POPaymentDetail = con.Query<PurchaseOrderPaymentDetails>(query, new { @Id = Id }).FirstOrDefault();
                 var POPaymentDetail = con.Query<PurchaseOrderPaymentDetail>(query, new { @Id = Id }).FirstOrDefault();
                 return POPaymentDetail;
             }
         }
         #endregion
-
 
         #region Update Payment Details
         /// <summary>
@@ -280,6 +280,7 @@ namespace InVanWebApp.Repository
                         result.BalanceAmount = Convert.ToDecimal(dataReader["BalancePay"]);
                         result.IsPaid = dataReader["PaymentStatus"].ToString();
                         result.Remarks = dataReader["Remarks"].ToString();
+                        result.UTRNo = dataReader["UTRNo"].ToString();
 
                     }
                 }
@@ -315,6 +316,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", DateTime.Now);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@UTRNo", model.UTRNo);
                     //cmd.Parameters.AddWithValue("@BalancePay", model.BalanceAmount);
                     //cmd.Parameters.AddWithValue("@PaymentDate", model.PaymentDate);
                     //cmd.Parameters.AddWithValue("@AdvancedPayment", model.AdvancedPayment);

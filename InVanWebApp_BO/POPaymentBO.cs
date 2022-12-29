@@ -63,6 +63,7 @@ namespace InVanWebApp_BO
         //Add below fields for IFSC
         public string IFSCCode { get; set; }
         public string BranchName { get; set; }
+        public string UTRNo { get; set; }
     }
     public class PurchaseOrderItemsDetailBO
     {

@@ -21,7 +21,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ItemType, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(model => model.ItemType, new { @class = "form-control form-control-sm", maxlength = "50" })
                     @Html.ValidationMessageFor(model => model.ItemType, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -31,7 +31,7 @@
                     @Html.Label("Description")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "50" })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

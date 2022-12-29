@@ -19,7 +19,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm", maxlength = "50" })
                     @Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100" })
                     @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

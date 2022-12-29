@@ -42,6 +42,7 @@ namespace InVanWebApp.Repository
                             PONumber = reader["PONumber"].ToString(),
                             InwardNumber = reader["InwardNumber"].ToString(),
                             InwardDate = Convert.ToDateTime(reader["InwardDate"]),
+                            ChallanNo=reader["ChallanNo"].ToString(),
                             Remarks = reader["Remarks"].ToString()
                         };
                         resultList.Add(result);
@@ -218,6 +219,7 @@ namespace InVanWebApp.Repository
                             PODate = Convert.ToDateTime(reader["PODate"]),
                             PO_Id = Convert.ToInt32(reader["PO_Id"]),
                             PONumber = reader["PONumber"].ToString(),
+                            ChallanNo=reader["ChallanNo"].ToString(),
                             Signature = reader["Signature"].ToString(),
                             Remarks = reader["Remarks"].ToString()
                         };
@@ -298,6 +300,7 @@ namespace InVanWebApp.Repository
                     //cmd.Parameters.AddWithValue("@InwardQuantities", model.InwardQuantities);
                     //cmd.Parameters.AddWithValue("@BalanceQuantities", model.BalanceQuantities);
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
+                    cmd.Parameters.AddWithValue("@ChallanNo", model.ChallanNo);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -418,7 +421,7 @@ namespace InVanWebApp.Repository
         public InwardNoteBO GetPOById(int PO_Id)
         {
 
-            string inwardNoteQuery = "SELECT TOP(1) * FROM InwardNote WITH(NOLOCK) WHERE PO_Id = @purchaseOrderId AND IsDeleted = 0 order by CreatedDate desc";
+            string inwardNoteQuery = "SELECT TOP(1) * FROM InwardNote WHERE PO_Id = @purchaseOrderId AND IsDeleted = 0 order by CreatedDate desc";
             try
             {
 

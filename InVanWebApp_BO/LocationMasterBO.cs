@@ -18,10 +18,10 @@ namespace InVanWebApp_BO
         public Nullable<int> ParentId { get; set; }
 
         [Required(ErrorMessage = "Enter address!")]
-        [StringLength(50, ErrorMessage = "Legth of address is exceeded!")]
+        [StringLength(400, ErrorMessage = "Legth of address is exceeded!")]
         public string Address { get; set; }
 
-        [StringLength(150, ErrorMessage = "Legth of remarks is exceeded!")]
+        [StringLength(100, ErrorMessage = "Legth of remarks is exceeded!")]
         public string Remark { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

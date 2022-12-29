@@ -44,6 +44,13 @@
                    new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
                     @Html.ValidationMessageFor(model => model.PO_Id, "", new { @class = "error mt-2 text-danger" })
                 </div>
+                <div class="col-md-2">
+                    @Html.Label("Bill/Challan No")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ChallanNo, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumericKey(event)", maxlength="17"})
+                    @Html.ValidationMessageFor(model => model.ChallanNo, "", new { @class = "error mt-2 text-danger", id="ValChallanNo" })
+                </div>
                 @*<div class="col-md-2">
                         @Html.Label("PO Date")
                         <span style="color:red">*</span>
