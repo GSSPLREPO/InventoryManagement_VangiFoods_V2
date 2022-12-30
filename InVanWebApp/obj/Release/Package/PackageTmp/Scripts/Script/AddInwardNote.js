@@ -238,4 +238,18 @@ function SetInwardQty() {
     //alert($('#BalanceQuantities').val());
 }
 
+function isAlphaNumericKey(evt) {
+    var keycode = (evt.which) ? evt.which : evt.keyCode;
+    if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95) )) {
+        $('#ValChallanNo').text('Only \"/, _, -\" are allowed!');
+        $('#ValChallanNo').css('display', 'contents');
+
+        return false;
+    }
+    else {
+        $('#ValChallanNo').css('display', 'none');
+        return true;
+    }
+}
+
 //</script>

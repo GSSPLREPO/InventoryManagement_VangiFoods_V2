@@ -8,12 +8,14 @@ using InVanWebApp.Repository;
 using InVanWebApp_BO;
 using log4net;
 using InVanWebApp.Common;
+using Newtonsoft.Json;
 
 namespace InVanWebApp.Controllers
 {
     public class Dashb_RTWarehouseWiseStockController : Controller
     {
         private IDashboardRepository _repository;
+        private ILocationRepository _repositoryLocation;
         private static ILog log = LogManager.GetLogger(typeof(GRNController));
 
         #region Initializing constructor
@@ -23,6 +25,7 @@ namespace InVanWebApp.Controllers
         public Dashb_RTWarehouseWiseStockController()
         {
             _repository = new DashboardRepository();
+            _repositoryLocation = new LocationRepository();
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
@@ -38,25 +41,33 @@ namespace InVanWebApp.Controllers
         // GET: Dashb_RTWarehouseWiseStock
         public ActionResult Index()
         {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            BindLocationDropdown();
             return View();
         }
 
-        public ActionResult GetDashboardData()
+        public JsonResult GetDashboardData(string id)
         {
-            try
-            {
-                if (Session[ApplicationSession.USERID] != null)
-                { 
+            int LocationId = Convert.ToInt32(id);
+            string jsonstring = string.Empty;
 
-                }
-                else
-                    return RedirectToAction("Index", "Login");
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-            }
-            return RedirectToAction("Index", "Dashb_RTWarehouseWiseStock");
+            var result = _repository.GetDashboardData(LocationId);
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
+        #region Bind location dropdown
+        public void BindLocationDropdown()
+        {
+            var ItemType = _repositoryLocation.GetAll();
+            var dd = new SelectList(ItemType.ToList(), "ID", "LocationName");
+            ViewData["LocationName"] = dd;
         }
 
         #endregion

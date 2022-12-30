@@ -60,32 +60,40 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-lg-2">
-                                            <p class="font-weight-bold">Inward Number</p>
+                                            <label class="font-weight-bold">Inward Number</label>
                                         </div>
                                         <div class="col-lg-4">
                                             @Html.DisplayFor(model => model.InwardNumber)
                                         </div>
                                         <div class="col-lg-2">
-                                            <p class="font-weight-bold">Inward Date</p>
+                                            <label class="font-weight-bold">Inward Date</label>
                                         </div>
                                         <div class="col-lg-4">
                                             @*@Html.DisplayFor(model => model.InwardDate)*@
-                                            @Html.TextBoxFor(model => model.InwardDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
+                                            @Html.TextBoxFor(model => model.InwardDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-2">
-                                            <p class="font-weight-bold">PO Number</p>
+                                            <label class="font-weight-bold">PO Number</label>
                                         </div>
                                         <div class="col-lg-4">
                                             @Html.DisplayFor(model => model.PONumber)
                                         </div>
                                         <div class="col-lg-2">
-                                            <p class="font-weight-bold">PO Date</p>
+                                            <label class="font-weight-bold">PO Date</label>
                                         </div>
                                         <div class="col-lg-4">
                                             @*@Html.DisplayFor(model => model.PODate)*@
-                                            @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
+                                            @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-2">
+                                            <label class="font-weight-bold">Bill/Challan No.</label>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            @Html.DisplayFor(model => model.ChallanNo)
                                         </div>
                                     </div>
                                 </div>
@@ -94,18 +102,28 @@
                             <hr />
                             <div class="row">
                                 <div class="col-md-12">
-                                    <table class="table table-striped" id="ItemTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Item</th>
-                                                <th>Code</th>
-                                                <th>PO Total Quantity</th>
-                                                <th>Tax</th>
-                                                <th>Unit Price</th>
-                                                <th>Inward Quantity</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                    <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                            <table class="table table-striped" id="ItemTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Item</th>
+                                                        <th>Code</th>
+                                                        <th>PO Total Quantity</th>
+                                                        <th>Tax</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Inward Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <br />

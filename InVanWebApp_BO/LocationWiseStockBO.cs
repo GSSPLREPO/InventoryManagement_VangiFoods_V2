@@ -23,5 +23,10 @@ namespace InVanWebApp_BO
         //Added by Rahul: For Stock transfer
         public string Item_Code { get; set; } ///added 
 
+        //Added for dashboard
+        public string LocationName { get; set; }
+        public string ItemName { get; set; }
+        public decimal ItemUnitPrice { get; set; }
+
     }
 }

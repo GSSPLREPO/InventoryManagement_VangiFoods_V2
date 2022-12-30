@@ -42,6 +42,7 @@
                                             <th>@Html.Label("Inward Number")</th>
                                             <th>@Html.Label("Inward Date")</th>
                                             <th>@Html.Label("PO Number")</th>
+                                            <th>@Html.Label("Bill/Challan Number")</th>
                                             <th>@Html.Label("View/Delete")</th>
                                         </tr>
                                     </thead>
@@ -52,6 +53,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.InwardNumber)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.InwardDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PONumber)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ChallanNo)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewInwardNote", "InwardNote", new { ID = item.ID })>
                                                         <i class="fa fa-eye text-primary"></i>

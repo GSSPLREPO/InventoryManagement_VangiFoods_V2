@@ -163,12 +163,12 @@
                                 <div class="col-md-7">
                                     @{
                                         List<SelectListItem> listMode = new List<SelectListItem>();
-                                        listMode.Add(new SelectListItem{ Text = "Cash", Value = "Cash" });
-                                        listMode.Add(new SelectListItem{ Text = "Cheque", Value = "Cheque" });
-                                        listMode.Add(new SelectListItem{ Text = "Online", Value = "Online" });
-                                        listMode.Add(new SelectListItem{ Text = "RTGS/NEFT", Value = "RTGS/NEFT" });
+                                        listMode.Add(new SelectListItem { Text = "Cash", Value = "Cash" });
+                                        listMode.Add(new SelectListItem { Text = "Cheque", Value = "Cheque" });
+                                        listMode.Add(new SelectListItem { Text = "Online", Value = "Online" });
+                                        listMode.Add(new SelectListItem { Text = "RTGS/NEFT", Value = "RTGS/NEFT" });
                                     }
-                                    @Html.DropDownListFor(model=>model.PaymentMode,listMode,new { @class = "form-control", id = "PaymentMode" })
+                                    @Html.DropDownListFor(model => model.PaymentMode, listMode, new { @class = "form-control", id = "PaymentMode" })
                                     @Html.ValidationMessageFor(model => model.PaymentMode, "", new { @class = "error mt-2 text-danger" })
                                 </div>
                             </div>
@@ -219,6 +219,16 @@
                                 <div class="col-md-7">
                                     @Html.TextBoxFor(x => x.IFSCCode, new { @class = "form-control form-control-sm", @placeholder = "Enter IFSC Code", onkeypress = "return isAlphaNumericKey(event,1)", maxlength = "11" })
                                     <span id="validationIFSC" class="error mt-2 text-danger field-validation-error" style="display:none;">Only albhabets/numbers are allowed!</span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" id="dvUTR" style="display:none;">
+                                <div class="col-md-5">
+                                    @Html.Label("UTR Number")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.UTRNo, new { @class = "form-control form-control-sm", @placeholder = "Enter UTR No", onkeypress = "return isAlphaNumericKey(event,3)", maxlength = "22" })
+                                    <span id="validationUTR" class="error mt-2 text-danger field-validation-error" style="display:none;">Only albhabets/numbers are allowed!</span>
                                 </div>
                             </div>
                         </div>
@@ -333,6 +343,8 @@
         $('#dvCheque').hide();
         $('#dvAccountNo').hide();
         $('#dvCheque').hide();
+        $('#dvIFSC').hide();
+        $('#dvUTR').hide();
 
         if (mode == 'Cheque') {
             $('#dvBankName').show();
@@ -349,6 +361,7 @@
             $('#dvBranchName').show();
             $('#dvAccountNo').show();
             $('#dvIFSC').show();
+            $('#dvUTR').show();
         }
         else {
             $('#dvBankName').hide();
@@ -436,6 +449,19 @@
             }
             else {
                 $('#validationIFSC').css('display', 'none');
+                return true;
+            }
+        }
+        else if (id == '3') {
+            if (!((keycode > 47 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123))) {
+
+                $('#validationUTR').text('Only albhabets/numbers are allowed!');
+                $('#validationUTR').css('display', 'contents');
+
+                return false;
+            }
+            else {
+                $('#validationUTR').css('display', 'none');
                 return true;
             }
         }
