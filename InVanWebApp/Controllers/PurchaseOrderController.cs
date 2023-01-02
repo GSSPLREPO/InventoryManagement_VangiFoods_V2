@@ -822,10 +822,11 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
         
-        public JsonResult GetIndentDescription(string id)
+        public JsonResult GetIndentDescription(string id, string tempCurrencyId)
         {
             int Id = Convert.ToInt32(id);
-            var result = _indentRepository.GetItemDetailsById(Id);
+            int CurrencyId = Convert.ToInt32(tempCurrencyId);
+            var result = _indentRepository.GetItemDetailsById(Id, CurrencyId);
             return Json(result);
         }
 

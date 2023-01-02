@@ -13,7 +13,7 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<IndentBO> GetAll();
 
         //Get by Id Indent details
-        List<Indent_DetailsBO> GetItemDetailsById(int id);
+        List<Indent_DetailsBO> GetItemDetailsById(int id, int CurrencyId=0);
 
         //Function define for the update of Indent.
         ResponseMessageBO Update(IndentBO model);

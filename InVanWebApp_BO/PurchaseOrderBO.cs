@@ -117,6 +117,8 @@ namespace InVanWebApp_BO
         public int IndentID { get; set; }
         public string IndentDescription { get; set; }
 
+        //Added below fields for Indent items bind in PO.
+        public float RequiredQuantity { get; set; }
     }
 
     public class PurchaseOrderItemsDetails

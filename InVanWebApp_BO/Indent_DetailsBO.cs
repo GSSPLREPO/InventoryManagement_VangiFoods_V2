@@ -23,5 +23,8 @@ namespace InVanWebApp_BO
         public string ItemUnit { get; set; }
         //Added for fetching Item details in PO
         public string ItemName { get; set; }
+        public double ItemUnitPrice { get; set; }
+        public double ItemTax { get; set; }
+        public double BalanceQuantity { get; set; }
     }
 }

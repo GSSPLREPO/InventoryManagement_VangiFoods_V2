@@ -158,7 +158,7 @@ namespace InVanWebApp.Repository
         /// <param name="id"></param>
         /// <returns></returns>
 
-        public List<Indent_DetailsBO> GetItemDetailsById(int id)
+        public List<Indent_DetailsBO> GetItemDetailsById(int id, int CurrencyId = 0)
         {
             var resultList = new List<Indent_DetailsBO>();
             try
@@ -168,6 +168,7 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_IndentItemDetails_GetByID", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.Parameters.AddWithValue("@CurrencyId", CurrencyId);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -178,7 +179,14 @@ namespace InVanWebApp.Repository
                             ItemName = reader["ItemName"].ToString(),
                             ItemId = Convert.ToInt32(reader["ItemId"]),
                             RequiredQuantity = Convert.ToDouble(reader["RequiredQuantity"]),
-                            SentQuantity = Convert.ToDouble(reader["SentQuantity"])
+                            SentQuantity = Convert.ToDouble(reader["SentQuantity"]),
+                            
+                            //Added the below fields for binding the items in PO
+                            ItemCode=reader["ItemCode"].ToString(),
+                            ItemUnit= reader["ItemUnit"].ToString(),
+                            ItemUnitPrice= Convert.ToDouble(reader["ItemUnitPrice"]),
+                            ItemTax= Convert.ToDouble(reader["ItemTax"]),
+                            BalanceQuantity= Convert.ToDouble(reader["BalanceQuantity"])
 
                         };
                         resultList.Add(result);
