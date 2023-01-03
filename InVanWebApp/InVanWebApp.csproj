@@ -176,6 +176,7 @@
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestForQuotationController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
     <Compile Include="Controllers\StockMovementController.cs" />
@@ -444,6 +445,7 @@
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
+    <Compile Include="Repository\Interface\IReportRepository.cs" />
     <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
     <Compile Include="Repository\Interface\ITermsConditionRepository.cs" />
     <Compile Include="Repository\Interface\IOrganisationRepository.cs" />
@@ -471,6 +473,7 @@
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
     <Compile Include="Repository\PurchaseOrderRepository.cs" />
+    <Compile Include="Repository\ReportRepository.cs" />
     <Compile Include="Repository\RequestForQuotationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
@@ -2664,6 +2667,8 @@
     <Content Include="Views\RequestForQuotation\EditRequestForQuotation.cshtml" />
     <Content Include="Views\RequestForQuotation\Index.cshtml" />
     <Content Include="Views\RequestForQuotation\_RFQPV.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\RawMaterialIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

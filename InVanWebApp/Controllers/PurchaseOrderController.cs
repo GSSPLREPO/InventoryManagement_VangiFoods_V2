@@ -511,7 +511,7 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region Function for get item details
+        #region Function for get item details (Not in used)
         public JsonResult GetitemDetails(string id,string currencyId)
         {
             var itemId = Convert.ToInt32(id);

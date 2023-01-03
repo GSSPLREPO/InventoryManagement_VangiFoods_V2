@@ -119,6 +119,10 @@ namespace InVanWebApp_BO
 
         //Added below fields for Indent items bind in PO.
         public float RequiredQuantity { get; set; }
+
+        //Added the below field for PO Report
+        public int SrNo { get; set; }
+        public string PurchaseOrderDate { get; set; }
     }
 
     public class PurchaseOrderItemsDetails

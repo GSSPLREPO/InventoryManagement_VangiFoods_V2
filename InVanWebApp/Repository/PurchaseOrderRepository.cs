@@ -128,7 +128,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@TotalAfterTax", purchaseOrderMaster.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", purchaseOrderMaster.GrandTotal);
                     //FN: Added the below field for Indent, currency and terms description
-                    if (purchaseOrderMaster.Terms != null) { 
+                    if (purchaseOrderMaster.Terms != null)
+                    {
                         cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.Terms);
                     }
                     else
@@ -137,9 +138,6 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@IndentDescription", purchaseOrderMaster.IndentDescription);
                     cmd.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
                     cmd.Parameters.AddWithValue("@CurrencyName", purchaseOrderMaster.CurrencyName);
-                    //cmd.Parameters.AddWithValue("@CurrencyPrice", purchaseOrderMaster.CurrencyPrice);
-
-
 
                     //con.Open();
 
@@ -172,7 +170,7 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemTaxValue = item.ElementAt(7).Value.ToString();
                         objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(8).Value);
                         objItemDetails.CreatedBy = purchaseOrderMaster.CreatedBy;
-
+                        //Note: need to add two more fields i.e. RequiredQty and BalanceQty
                         //Added the below field for Currency
                         objItemDetails.CurrencyID = purchaseOrderMaster.CurrencyID;
                         objItemDetails.CurrencyName = purchaseOrderMaster.CurrencyName;
@@ -413,7 +411,8 @@ namespace InVanWebApp.Repository
 
                         if (count == 1)
                             cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
-                        else { 
+                        else
+                        {
                             cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 0);
                             cmdNew.Parameters.AddWithValue("@flagCheck", i);
                         }

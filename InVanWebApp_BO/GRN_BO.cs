@@ -58,5 +58,10 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Please select Inward QC number!")]
         public int InwardQCId { get; set; }
         public string InwardQCNumber { get; set; }
+
+
+        //Added the below field for PO Report
+        public int SrNo { get; set; }
+        public string GRN_Date { get; set; }
     }
 }
