@@ -29,9 +29,6 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select terms and condition!")]
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
-
-        /*[Required(ErrorMessage = "Enter Term Description!")] *///Rahul added 03/12/2022. 
-        public string TermDescription { get; set; } //Rahul added 03/12/2022.
         public string PurchaseOrderStatus { get; set; }
         public Nullable<int> Cancelled { get; set; }
         public string ReasonForCancellation { get; set; }
@@ -115,7 +112,6 @@ namespace InVanWebApp_BO
 
         //Added below fields for Indent dropdown in PO.
         public int IndentID { get; set; }
-        public string IndentDescription { get; set; }
 
         //Added below fields for Indent items bind in PO.
         public float RequiredQuantity { get; set; }
@@ -147,6 +143,11 @@ namespace InVanWebApp_BO
         public int CurrencyID { get; set; }
         public string CurrencyName { get; set; }
         public Nullable<double> CurrencyPrice { get; set; }
+
+        //Added the below fields for Indent details in PO
+
+        public float RequiredQuantity { get; set; }
+        public float BalanceQuantity { get; set; }
 
     }
 }

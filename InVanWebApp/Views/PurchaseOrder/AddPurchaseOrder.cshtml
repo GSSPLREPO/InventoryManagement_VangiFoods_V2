@@ -63,7 +63,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName1"], "---Select---", new { @class = "form-control", id="CurrID" })
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
@@ -193,6 +193,7 @@
                                                 <th class="sortStyle">Currency</th>
                                                 <th class="sortStyle">Tax</th>
                                                 <th class="sortStyle">Total before tax</th>
+                                                <th class="sortStyle d-none">Actual Balance Quantity</th>
                                             </tr>
                                         </thead>
                                         @*<tbody id="myTableBody">
@@ -283,9 +284,9 @@
                                     @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
                                     @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
                                 </div>
-                                <div class="col-md-4 d-none">
+                                @*<div class="col-md-4 d-none">
                                     @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                                </div>
+                                </div>*@
                             </div>
                             <br />
                             @*Rahul set ''T&C'' from top to here 02/12/2022.*@
@@ -294,8 +295,8 @@
                                     @Html.Label("Terms Description")
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.TextAreaFor(model => model.TermDescription, new { id = "TermDescription", @class = "form-control", placeholder = "Term Description", style = "height:100px" })
-                                    @Html.ValidationMessageFor(model => model.TermDescription, "", new { @class = "error mt-2 text-danger" })
+                                    @Html.TextAreaFor(model => model.Terms, new { @class = "form-control", placeholder = "Term Description", style = "height:100px" })
+                                    @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
                                 </div>
                             </div>
                         </div>
@@ -339,7 +340,8 @@
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Advanced To Pay: </b></label>
-                                    <input class="form-control text-right form-control-sm" id="AdvancedPayment" maxlength="8" name="AdvancedPayment" value="0" onkeypress="return isNumberKey(event)" />
+                                    <input class="form-control text-right form-control-sm" id="AdvancedPayment" maxlength="8" name="AdvancedPayment" value="0" onkeyup="ValidateAdvancePayment($(this).val(),id)" onkeypress="return isNumberKey(event)" />
+                                    <span id="ValMsgAdvancePayment" style="display:none; color:red"></span>
                                 </div>
                             </div>
                             <br />
@@ -353,7 +355,7 @@
             <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                 Back To List
             </a>
-            <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right" formaction="SaveDraft">Save Draft</button>
+            <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
             <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
         </div>
     </div>
@@ -369,9 +371,8 @@
 
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
-
+@*<script src="~/Scripts/Script/AddPurchaseOrder.js"></script>*@
 <script type="text/javascript">
-
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
         createJson();
@@ -385,7 +386,7 @@
             type: "POST",
             data: { id: id },
             success: function (result) {
-                $('#TermDescription').val(result.TermDescription);
+                $('#Terms').val(result.TermDescription);
             },
             error: function (err) {
                 alert('Not able to get the selected terms and condition value!');
@@ -400,14 +401,15 @@
     function SelectedIndexChangedIndent(id) {
 
         //Check whether the currency dropdown is selected or not
-        var CurrencyIDCheck = $('#CurrencyID').val();
+        var CurrencyIDCheck = $('#CurrID').val();
         if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
-            $('#CurrencyID').focus();
+            $('#CurrID').focus();
             document.getElementById('IndentID').selectedIndex = 0;
             return;
         }
         else
-            document.getElementById('CurrencyID').setAttribute("disabled", "true");
+            document.getElementById('CurrID').setAttribute("disabled", "true");
+
         //For deleting the rows of Item table if exist.
 
         var table = document.getElementById('submissionTable');
@@ -419,7 +421,7 @@
 
         var IdentNumber = $("#IndentID option:selected").text();
         $('#IndentNumber').val(IdentNumber);
-        var CurrencyName = $("#CurrencyID option:selected").text();
+        var CurrencyName = $("#CurrID option:selected").text();
 
         $.ajax({
             url: '/PurchaseOrder/GetIndentDescription',
@@ -495,7 +497,7 @@
                             t4.setAttribute("value", result[j].ItemUnitPrice);
                             t4.setAttribute("class", "form-control form-control-sm");
                             t4.setAttribute("maxlength", "8");
-                            t4.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
+                            t4.setAttribute("onchange", "OnChangeUnitPrice($(this).val(),id)");
                             cell.appendChild(t4);
                         }
 
@@ -515,12 +517,17 @@
                             t4.setAttribute("value", 0);
                             cell.appendChild(t4);
                         }
+                        else if (i == 11) {
+                            cell.innerHTML = result[j].BalanceQuantity;
+                            cell.setAttribute("class", "d-none");
+                            cell.setAttribute("id", "ActualBalanceQuantity_" + j);
+                        }
                     }
 
                 }
             },
             error: function (err) {
-                alert('Not able to fetch item details!');
+                alert('Not able to fetch indent item details!');
 
             }
         });
@@ -530,9 +537,29 @@
 
     var TxtItemDetails = "";
 
+
+    function OnChangeUnitPrice(value, id) {
+        var rowNo = id.split('_')[1];
+        var UnitPrice = parseFloat(value);
+        if (UnitPrice <= 0 || value == null || value == '') {
+            alert("Price cannot be negative, null or zero!");
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            return;
+        }
+        else {
+
+            //Set total price in item grid.
+            var quantity = $("#txtItemQty_" + rowNo).val();
+            var totalPrice = quantity * UnitPrice;
+            totalPrice = Math.round(totalPrice);
+            $("#TotalItemCost_" + rowNo).val(totalPrice);
+            CalculateTotalBeforeTax();
+            document.getElementById(id).setAttribute("style", "none");
+        }
+    }
+
     function SelectedIndexChanged(id) {
-        //alert(id);
-        ////debugger
         var selectedOption, companyName;
         selectedOption = document.getElementById("VendorsID").selectedIndex;
         companyName = document.getElementById("VendorsID").options[selectedOption].innerText;
@@ -553,8 +580,6 @@
     }
 
     function SelectedIndexChangedLocation(id) {
-        //alert(id);
-        ////debugger
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
         locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
@@ -595,6 +620,9 @@
 
             i++;
         }
+        total = Math.round(total);
+        totalTax = Math.round(totalTax);
+
         $('#TotalBeforeTax').val(total);
         $('#TotalTax').val(totalTax.toFixed(2));
         var tempGrandTotal = total + totalTax;
@@ -617,7 +645,7 @@
         var rowCount = table.rows.length;
         var i = 0;
         TxtItemDetails = "[";
-        for (i = 0; i < rowCount-1; i++) {
+        for (i = 0; i < rowCount - 1; i++) {
             var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
             var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
             var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
@@ -631,7 +659,7 @@
             var Tax = (document.getElementById("ItemTax_" + i)).innerHTML.split(" ")[0];
             var TotalItemCost = $("#TotalItemCost_" + i).val();
             TotalItemCost = (TotalItemCost == null || TotalItemCost == '') ? 0 : TotalItemCost;
-            
+
 
             TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID + ", \"Item_Code\":\"" + ItemCode +
                 "\", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty + ", \"ItemUnit\": \"" + Unit +
@@ -645,7 +673,6 @@
         }
         TxtItemDetails = TxtItemDetails + "]"
         $('#TxtItemDetails').val(TxtItemDetails);
-        alert(TxtItemDetails);
     }
 
     //======Common function which get called on change of Item ordered quantity.==========================
@@ -653,30 +680,71 @@
     function OnChangeQty(value, id) {
         var rowNo = id.split('_')[1];
         var quantity = value;
-        var price = $("#ItemUnitPrice_" + rowNo).val();
-        var tempTax = ((document.getElementById("ItemTax_" + rowNo)).innerHTML).split(" %");
-        var tax = tempTax[0];
+        var BalanceQty = $("#BalanceQuantity_" + rowNo).val();
+        BalanceQty = parseFloat(BalanceQty);
+        quantity = parseFloat(quantity);
+        var RequiredQty = (document.getElementById("RequiredQuantity_" + rowNo)).innerHTML.split(" ")[0];
+        RequiredQty = parseFloat(RequiredQty);
 
-        //Set total price in item grid.
-        var totalPrice = quantity * price;
-        totalPrice = Math.round(totalPrice);
-        $("#TotalItemCost_" + rowNo).val(totalPrice);
+        if (quantity > BalanceQty) {
+            alert("Order quantity cannot be greater then indent balance quantity!");
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            return;
+        }
+        else {
+            var tempBalanceQty = BalanceQty - quantity;
+            if (quantity == 0) {
+                var ActualBalQty = (document.getElementById("ActualBalanceQuantity_" + rowNo)).innerHTML.split(" ")[0];
+                ActualBalQty = parseFloat(ActualBalQty);
+                $("#BalanceQuantity_" + rowNo).val(ActualBalQty);
+            }
+            else {
+                $("#BalanceQuantity_" + rowNo).val(tempBalanceQty);
+            }
 
-        var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
-        $("#TotalBeforeTax").val(totalPrice);
+            var price = $("#ItemUnitPrice_" + rowNo).val();
+            var tempTax = ((document.getElementById("ItemTax_" + rowNo)).innerHTML).split(" %");
+            var tax = tempTax[0];
 
-        var itemTaxVal = tax / 100 * totalPrice;
-        itemTaxVal = Math.round(itemTaxVal);
-        totalPriceAfterTax = Math.round(totalPriceAfterTax);
+            //Set total price in item grid.
+            var totalPrice = quantity * price;
+            totalPrice = Math.round(totalPrice);
+            $("#TotalItemCost_" + rowNo).val(totalPrice);
 
-        $("#TotalTax").val(itemTaxVal);
-        $("#TotalAfterTax").val(totalPriceAfterTax);
-        $("#GrandTotal").val(totalPriceAfterTax);
+            var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
+            $("#TotalBeforeTax").val(totalPrice);
 
-        CalculateTotalBeforeTax();
+            var itemTaxVal = tax / 100 * totalPrice;
+            itemTaxVal = Math.round(itemTaxVal);
+            totalPriceAfterTax = Math.round(totalPriceAfterTax);
+
+            $("#TotalTax").val(itemTaxVal);
+            $("#TotalAfterTax").val(totalPriceAfterTax);
+            $("#GrandTotal").val(totalPriceAfterTax);
+
+            CalculateTotalBeforeTax();
+            document.getElementById(id).setAttribute("style", "border-color:none;");
+        }
+
+
     };
 
     //=======================End======================================================//
+
+    function ValidateAdvancePayment(value, id) {
+        var GrandTotal = parseFloat($("#GrandTotal").val());
+        value = parseFloat(value);
+        if (value > GrandTotal) {
+            $("#ValMsgAdvancePayment").text("Advance payment cannot be greater than Grand total!");
+            $('#ValMsgAdvancePayment').show();
+            document.getElementById(id).focus();
+            return;
+        }
+        else
+            $('#ValMsgAdvancePayment').hide();
+
+    }
 
     $("#btn_SaveDraft").click(function () {
         $("#DraftFlag").val('true');
@@ -787,5 +855,6 @@
         }
         return true;
     }
-
 </script>
+
+@Html.Raw(TempData["Success"])

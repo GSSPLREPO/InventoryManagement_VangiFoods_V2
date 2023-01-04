@@ -33,9 +33,9 @@ namespace InVanWebApp.Controllers
             _inwardNoteRepository = new InwardNoteRepository();
             _termsConditionRepository = new TermsConditionRepository();
 
-            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-            ViewData["itemListForDD"] = dd;
+            //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+            //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+            //ViewData["itemListForDD"] = dd;
         }
         /// <summary>
         /// Rahul: Constructor with parameters for initializing the interface object.
@@ -69,75 +69,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region Bind dropdowns Company 
-        public void BindCompany()
-        {
-            var result = _purchaseOrderRepository.GetCompanyList();
-            var resultList = new SelectList(result.ToList(), "VendorsID", "CompanyName");
-            ViewData["CompanyName"] = resultList;
-        }
-        #endregion
-
-        #region Bind textarea Company Address 
-        public JsonResult BindCompanyAddress(string id)
-        {
-            int Id = 0;
-            if (id != null && id != "")
-                Id = Convert.ToInt32(id);
-            var result = _purchaseOrderRepository.GetCompanyAddressList(Id);
-            //var resultList = new SelectList(result.ToList(), "VendorsID", "SupplierAddress");
-            //var resultList = new SelectList(result.ToList(),"@ID", "SupplierAddress");
-            //ViewData["SupplierAddress"] = resultList;
-            return Json(result);
-        }
-        #endregion
-
-        #region Bind dropdowns Terms And Condition 
-        public void BindTermsAndCondition()
-        {
-            var result = _purchaseOrderRepository.GetTermsAndConditionList();
-            var resultList = new SelectList(result.ToList(), "TermsAndConditionID", "Terms");
-            ViewData["TermsAndConditionID"] = resultList;
-        }
-        #endregion
-        
-        #region Bind dropdowns Indent
-        public void BindIndentDropDown(string type=null)
-        {
-            var result = _purchaseOrderRepository.GetIndentListForDropdown(type);
-            var resultList = new SelectList(result.ToList(), "ID", "IndentNo");
-            ViewData["IndentDD"] = resultList;
-        }
-        #endregion
-
-        #region Bind dropdowns Location Name 
-        public void BindLocationName()
-        {
-            var result = _purchaseOrderRepository.GetLocationNameList();
-            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
-            ViewData["LocationName"] = resultList;
-        }
-        #endregion
-
-        #region Bind dropdowns Location Master  
-        //public void BindOrganisations() 
-        public JsonResult BindLocationMaster(string id)
-        {
-            //var result = _purchaseOrderRepository.GetOrganisationsList();            
-            //var resultList = new SelectList(result.ToList(), "OrganisationId", "DeliveryAddress");
-
-            //var resultList = new SelectList(result.ToList(), "LocationId", "LocationName", "DeliveryAddress");
-            //ViewData["LocationName"] = resultList;
-            //ViewData["DeliveryAddress"] = resultList;
-
-            int Id = 0;
-            if (id != null && id != "")
-                Id = Convert.ToInt32(id);
-            var result = _purchaseOrderRepository.GetLocationMasterList(Id);
-            return Json(result);
-        }
-        #endregion
-
         #region Insert function
         /// <summary>
         /// Rahul: Rendered the user to the add purchase order transaction form
@@ -164,9 +95,9 @@ namespace InVanWebApp.Controllers
                 ViewData["DocumentNo"] = DocumentNumber;
 
                 //Binding item grid with sell type item.
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                ViewData["itemListForDD"] = dd;
+                //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                //ViewData["itemListForDD"] = dd;
 
                 PurchaseOrderBO model = new PurchaseOrderBO();
                 model.PODate = DateTime.Today;
@@ -205,14 +136,19 @@ namespace InVanWebApp.Controllers
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _purchaseOrderRepository.Insert(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Purchase Order inserted successfully!');</script>";
+                        {
+                            if (model.DraftFlag == true)
+                                TempData["Success"] = "<script>alert('Purchase order inserted as draft successfully!');</script>";
+                            else
+                                TempData["Success"] = "<script>alert('Purchase Order inserted successfully!');</script>";
+    
+                        }
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate Purchase Order! Can not be inserted!');</script>";
                             BindCompany();
                             BindTermsAndCondition();
                             BindCurrencyPrice();
-                            //BindOrganisations();
                             BindLocationName();
                             BindIndentDropDown();
                             UploadSignature(Signature);
@@ -232,9 +168,9 @@ namespace InVanWebApp.Controllers
                         //BindOrganisations();
                         BindLocationName();
                         UploadSignature(Signature);
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                        ViewData["itemListForDD"] = dd;
+                        //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                        //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                        //ViewData["itemListForDD"] = dd;
                         return View(model);
                     }
                 }
@@ -284,7 +220,6 @@ namespace InVanWebApp.Controllers
                             BindCompany();
                             BindTermsAndCondition();
                             BindCurrencyPrice();
-                            //BindOrganisations();
                             BindLocationName();
                             BindIndentDropDown();
                             UploadSignature(Signature);
@@ -304,9 +239,6 @@ namespace InVanWebApp.Controllers
                         //BindOrganisations();
                         BindLocationName();
                         UploadSignature(Signature);
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                        ViewData["itemListForDD"] = dd;
                         return View(model);
                     }
                 }
@@ -321,27 +253,7 @@ namespace InVanWebApp.Controllers
             return View();
         }
         #endregion
-
-        #region Function for uploading the signature
-        /// <summary>
-        /// Date: 04 Oct 2022
-        /// Farheen: Upload Signature File items.
-        /// </summary>
-        /// <returns></returns>
-
-        public void UploadSignature(HttpPostedFileBase Signature)
-        {
-            if (Signature != null)
-            {
-                string SignFilename = Signature.FileName;
-                SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
-                Signature.SaveAs(SignFilename);
-
-            }
-        }
-
-        #endregion
-
+       
         #region  Update function
         /// <summary>
         ///Rahul: Rendered the user to the edit page with details of a perticular record.
@@ -361,30 +273,29 @@ namespace InVanWebApp.Controllers
 
                 PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
 
-                //Binding item grid with sell type item.
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                string itemListForDD = "itemListForDD";
+                ////Binding item grid with sell type item.
+                //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                //string itemListForDD = "itemListForDD";
 
-                if (model != null)
-                {
-                    var ItemCount = model.itemDetails.Count;
-                    var i = 0;
-                    while (i < ItemCount)
-                    {
-                        itemListForDD = "itemListForDD";
-                        itemListForDD = itemListForDD + i;
-                        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.itemDetails[i].Item_ID);
-                        ViewData[itemListForDD] = dd;
-                        i++;
-                    }
+                //if (model != null)
+                //{
+                //    var ItemCount = model.itemDetails.Count;
+                //    var i = 0;
+                //    while (i < ItemCount)
+                //    {
+                //        itemListForDD = "itemListForDD";
+                //        itemListForDD = itemListForDD + i;
+                //        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.itemDetails[i].Item_ID);
+                //        ViewData[itemListForDD] = dd;
+                //        i++;
+                //    }
 
-                }
+                //}
 
-                ViewData[itemListForDD] = dd;
+                //ViewData[itemListForDD] = dd;
 
                 return View(model);
-                //  return View();
             }
             else
                 return RedirectToAction("Index", "Login");
@@ -436,27 +347,6 @@ namespace InVanWebApp.Controllers
                             BindLocationName();
                             BindIndentDropDown();
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
-                            //Binding item grid with sell type item.
-                            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                            string itemListForDD = "itemListForDD";
-
-                            if (model1 != null)
-                            {
-                                var ItemCount = model1.itemDetails.Count;
-                                var i = 0;
-                                while (i < ItemCount)
-                                {
-                                    itemListForDD = "itemListForDD";
-                                    itemListForDD = itemListForDD + i;
-                                    dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
-                                    ViewData[itemListForDD] = dd;
-                                    i++;
-                                }
-
-                            }
-
-                            ViewData[itemListForDD] = dd;
 
                             return View(model1);
                         }
@@ -473,26 +363,26 @@ namespace InVanWebApp.Controllers
                         BindIndentDropDown();
                         PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
                         //Binding item grid with sell type item.
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                        string itemListForDD = "itemListForDD";
+                        //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                        //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                        //string itemListForDD = "itemListForDD";
 
-                        if (model1 != null)
-                        {
-                            var ItemCount = model1.itemDetails.Count;
-                            var i = 0;
-                            while (i < ItemCount)
-                            {
-                                itemListForDD = "itemListForDD";
-                                itemListForDD = itemListForDD + i;
-                                dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
-                                ViewData[itemListForDD] = dd;
-                                i++;
-                            }
+                        //if (model1 != null)
+                        //{
+                        //    var ItemCount = model1.itemDetails.Count;
+                        //    var i = 0;
+                        //    while (i < ItemCount)
+                        //    {
+                        //        itemListForDD = "itemListForDD";
+                        //        itemListForDD = itemListForDD + i;
+                        //        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
+                        //        ViewData[itemListForDD] = dd;
+                        //        i++;
+                        //    }
 
-                        }
+                        //}
 
-                        ViewData[itemListForDD] = dd;
+                        //ViewData[itemListForDD] = dd;
 
                         return View(model1);
                     }
@@ -510,19 +400,7 @@ namespace InVanWebApp.Controllers
         }
 
         #endregion
-
-        #region Function for get item details (Not in used)
-        public JsonResult GetitemDetails(string id,string currencyId)
-        {
-            var itemId = Convert.ToInt32(id);
-            var currencyID = Convert.ToInt32(currencyId);
-            var itemDetails = _purchaseOrderRepository.GetItemDetails(itemId, currencyID);
-            //var finalDetials = itemDetails.Item_Name +"#"+ itemDetails.UnitName +"#"+ itemDetails.Price+"#"+itemDetails.Tax;
-            //return Json(finalDetials);
-            return Json(itemDetails);
-        }
-        #endregion
-
+        
         #region Delete function
         /// <summary>
         /// Date: 07 Nov'22
@@ -804,13 +682,82 @@ namespace InVanWebApp.Controllers
 
         }
         #endregion
+        
+        #region Bind dropdowns Company 
+        public void BindCompany()
+        {
+            var result = _purchaseOrderRepository.GetCompanyList();
+            var resultList = new SelectList(result.ToList(), "VendorsID", "CompanyName");
+            ViewData["CompanyName"] = resultList;
+        }
+        #endregion
+
+        #region Bind textarea Company Address 
+        public JsonResult BindCompanyAddress(string id)
+        {
+            int Id = 0;
+            if (id != null && id != "")
+                Id = Convert.ToInt32(id);
+            var result = _purchaseOrderRepository.GetCompanyAddressList(Id);
+            //var resultList = new SelectList(result.ToList(), "VendorsID", "SupplierAddress");
+            //var resultList = new SelectList(result.ToList(),"@ID", "SupplierAddress");
+            //ViewData["SupplierAddress"] = resultList;
+            return Json(result);
+        }
+        #endregion
+
+        #region Bind dropdowns Terms And Condition 
+        public void BindTermsAndCondition()
+        {
+            var result = _purchaseOrderRepository.GetTermsAndConditionList();
+            var resultList = new SelectList(result.ToList(), "TermsAndConditionID", "Terms");
+            ViewData["TermsAndConditionID"] = resultList;
+        }
+        #endregion
+        
+        #region Bind dropdowns Indent
+        public void BindIndentDropDown(string type=null)
+        {
+            var result = _purchaseOrderRepository.GetIndentListForDropdown(type);
+            var resultList = new SelectList(result.ToList(), "ID", "IndentNo");
+            ViewData["IndentDD"] = resultList;
+        }
+        #endregion
+
+        #region Bind dropdowns Location Name 
+        public void BindLocationName()
+        {
+            var result = _purchaseOrderRepository.GetLocationNameList();
+            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
+            ViewData["LocationName"] = resultList;
+        }
+        #endregion
+
+        #region Bind dropdowns Location Master  
+        //public void BindOrganisations() 
+        public JsonResult BindLocationMaster(string id)
+        {
+            //var result = _purchaseOrderRepository.GetOrganisationsList();            
+            //var resultList = new SelectList(result.ToList(), "OrganisationId", "DeliveryAddress");
+
+            //var resultList = new SelectList(result.ToList(), "LocationId", "LocationName", "DeliveryAddress");
+            //ViewData["LocationName"] = resultList;
+            //ViewData["DeliveryAddress"] = resultList;
+
+            int Id = 0;
+            if (id != null && id != "")
+                Id = Convert.ToInt32(id);
+            var result = _purchaseOrderRepository.GetLocationMasterList(Id);
+            return Json(result);
+        }
+        #endregion
 
         #region Bind dropdowns Currency Price
         public void BindCurrencyPrice()
         {
             var result = _purchaseOrderRepository.GetCurrencyPriceList();
-            var resultList = new SelectList(result.ToList(), "CurrencyID", "CurrencyName", "IndianCurrencyValue");
-            ViewData["CurrencyName"] = resultList;
+            var resultList = new SelectList(result.ToList(), "CurrencyID", "CurrencyName");
+            ViewData["CurrencyName1"] = resultList;
         }
         #endregion
 
@@ -830,6 +777,38 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
 
+        #endregion
+        
+        #region Function for uploading the signature
+        /// <summary>
+        /// Date: 04 Oct 2022
+        /// Farheen: Upload Signature File items.
+        /// </summary>
+        /// <returns></returns>
+
+        public void UploadSignature(HttpPostedFileBase Signature)
+        {
+            if (Signature != null)
+            {
+                string SignFilename = Signature.FileName;
+                SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
+                Signature.SaveAs(SignFilename);
+
+            }
+        }
+
+        #endregion
+        
+        #region Function for get item details (Not in used)
+        public JsonResult GetitemDetails(string id,string currencyId)
+        {
+            var itemId = Convert.ToInt32(id);
+            var currencyID = Convert.ToInt32(currencyId);
+            var itemDetails = _purchaseOrderRepository.GetItemDetails(itemId, currencyID);
+            //var finalDetials = itemDetails.Item_Name +"#"+ itemDetails.UnitName +"#"+ itemDetails.Price+"#"+itemDetails.Tax;
+            //return Json(finalDetials);
+            return Json(itemDetails);
+        }
         #endregion
     }
 }

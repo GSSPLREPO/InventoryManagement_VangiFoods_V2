@@ -90,8 +90,6 @@ namespace InVanWebApp.Repository
                     con.Open();
                     cmd.Parameters.AddWithValue("@Tittle", purchaseOrderMaster.Tittle);
                     cmd.Parameters.AddWithValue("@PONumber", purchaseOrderMaster.PONumber);
-                    //cmd.Parameters.AddWithValue("@PODate", Convert.ToDateTime(System.DateTime.Now));                    
-                    //cmd.Parameters.AddWithValue("@DeliveryDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@PODate", purchaseOrderMaster.PODate);
                     cmd.Parameters.AddWithValue("@DeliveryDate", purchaseOrderMaster.DeliveryDate);
                     cmd.Parameters.AddWithValue("@VendorsID", purchaseOrderMaster.VendorsID);
@@ -101,8 +99,6 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@SGST", purchaseOrderMaster.SGST);
                     cmd.Parameters.AddWithValue("@IGST", purchaseOrderMaster.IGST);
                     cmd.Parameters.AddWithValue("@TermsAndConditionID", purchaseOrderMaster.TermsAndConditionID);
-                    //cmd.Parameters.AddWithValue("@Terms", purchaseOrderMaster.Terms);
-                    //cmd.Parameters.AddWithValue("@PurchaseOrderStatus", purchaseOrderMaster.PurchaseOrderStatus);
                     cmd.Parameters.AddWithValue("@PurchaseOrderStatus", "Open");
                     cmd.Parameters.AddWithValue("@Cancelled", purchaseOrderMaster.Cancelled);
                     cmd.Parameters.AddWithValue("@ReasonForCancellation", purchaseOrderMaster.ReasonForCancellation);
@@ -127,15 +123,10 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LocationName", purchaseOrderMaster.LocationName);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", purchaseOrderMaster.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", purchaseOrderMaster.GrandTotal);
+                    cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.Terms);
+
                     //FN: Added the below field for Indent, currency and terms description
-                    if (purchaseOrderMaster.Terms != null)
-                    {
-                        cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.Terms);
-                    }
-                    else
-                        cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.TermDescription);
                     cmd.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
-                    cmd.Parameters.AddWithValue("@IndentDescription", purchaseOrderMaster.IndentDescription);
                     cmd.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
                     cmd.Parameters.AddWithValue("@CurrencyName", purchaseOrderMaster.CurrencyName);
 
@@ -166,15 +157,14 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
                         objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
                         objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
-                        //objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
-                        objItemDetails.ItemTaxValue = item.ElementAt(7).Value.ToString();
-                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(8).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(6).Value.ToString();
+                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
+                        objItemDetails.BalanceQuantity = float.Parse(item.ElementAt(8).Value);
+                        objItemDetails.RequiredQuantity = float.Parse(item.ElementAt(9).Value);
                         objItemDetails.CreatedBy = purchaseOrderMaster.CreatedBy;
-                        //Note: need to add two more fields i.e. RequiredQty and BalanceQty
                         //Added the below field for Currency
                         objItemDetails.CurrencyID = purchaseOrderMaster.CurrencyID;
                         objItemDetails.CurrencyName = purchaseOrderMaster.CurrencyName;
-                        //objItemDetails.CurrencyPrice = purchaseOrderMaster.CurrencyPrice;
 
                         itemDetails.Add(objItemDetails);
                     }
@@ -196,13 +186,13 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
                         cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-                        //cmdNew.Parameters.AddWithValue("@LastModifiedBy", 1);
-                        //cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));    
+                        cmdNew.Parameters.AddWithValue("@BalanceQty", item.BalanceQuantity);
+                        cmdNew.Parameters.AddWithValue("@RequiredQty", item.RequiredQuantity);    
 
                         //Added the below field for Indent, currency and terms description
                         cmdNew.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
                         cmdNew.Parameters.AddWithValue("@CurrencyName", purchaseOrderMaster.CurrencyName);
-                        //cmdNew.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice);
+
                         cmdNew.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
 
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
@@ -230,79 +220,17 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="PurchaseOrderId"></param>
         /// <returns></returns>
-
-        public PurchaseOrderBO GetById(int PurchaseOrderId)
+        public PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId)
         {
-            var result = new PurchaseOrderBO();
-            try
+            string purchaseOrderQuery = "SELECT * FROM PurchaseOrder WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
+            string purchaseOrderItemQuery = "SELECT * FROM PurchaseOrderItemsDetails WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
+            using (SqlConnection con = new SqlConnection(connString))
             {
-                using (SqlConnection con = new SqlConnection(connString))
-                {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_PurchaseOrder_GetByID", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@PurchaseOrderId", PurchaseOrderId);
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        result = new PurchaseOrderBO()
-                        {
-                            PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderId"]),
-                            Tittle = string.IsNullOrEmpty(reader["Tittle"].ToString()) ? "" : reader["Tittle"].ToString(),
-                            PONumber = string.IsNullOrEmpty(reader["PONumber"].ToString()) ? "" : reader["PONumber"].ToString(),
-                            //PODate = reader["PODate"].ToString()==null ? null : Convert.ToDateTime(reader["PODate"].ToString()),
-                            //PODate = Convert.ToDateTime(reader["PODate"].ToString()),
-                            PODate = DateTime.ParseExact(reader["PODate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture),
-                            DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"].ToString()),
-                            VendorsID = Convert.ToInt32(reader["VendorsID"]),
-                            CompanyName = reader["CompanyName"] == null ? "" : reader["CompanyName"].ToString(),
-                            TermsAndConditionID = Convert.ToInt32(reader["TermsAndConditionID"]),
-                            Terms = reader["Terms"] == null ? "" : reader["Terms"].ToString(),
-                            ////PurchaseOrderStatus = reader["PurchaseOrderStatus"].ToString(),
-                            //LocationId = Convert.ToInt32(reader["LocationId"]),
-                            //LocationName = reader["LocationName"]==null?"": reader["LocationName"].ToString(),
-                            //DeliveryAddress = reader["DeliveryAddress"]==null?"":reader["DeliveryAddress"].ToString(),
-                            //SupplierAddress = reader["SupplierAddress"]==null?"": reader["SupplierAddress"].ToString(),
-                            //Amendment = Convert.ToInt32(reader["Amendment"]),
-                            //Signature = reader["Signature"]==null?"": reader["Signature"].ToString(),
-                            //IndentNumber = reader["IndentNumber"]==null?"": reader["IndentNumber"].ToString(),
-                            //Remarks = reader["Remarks"]==null?"": reader["Remarks"].ToString(),
-                            //Item_ID = Convert.ToInt32(reader["Item_ID"]),
-                            //Item_Code = reader["Item_Code"]==null?"": reader["Item_Code"].ToString(),
-                            //ItemDescription = reader["ItemDescription"]==null?"": reader["ItemDescription"].ToString(),
-                            //ItemQuantity = Convert.ToInt32(reader["ItemQuantity"]),
-                            //ItemUnit = reader["ItemUnit"]==null?"": reader["ItemUnit"].ToString(),
-                            //ItemPrice = Convert.ToInt32(reader["ItemPrice"]),
-                            //ItemTax = reader["ItemTax"]==null?"": reader["ItemTax"].ToString(),
-                            //TotalItemCost = Convert.ToInt32(reader["TotalItemCost"]),
-                            //TotalAfterTax = Convert.ToInt32(reader["TotalAfterTax"]),
-                            //GrandTotal = Convert.ToInt32(reader["GrandTotal"]),
-                            //AdvancedPAyment = Convert.ToInt32(reader["AdvancedPAyment"]),
-                            ////CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
-                            ////CreatedBy = Convert.ToInt32(reader["CreatedBy"]),
-                            ////DocumentNumber = reader["DocumentNumber"].ToString(),
-                            ////DiscountValue = Convert.ToInt32(reader["DiscountValue"]), //set value
-                            ////VAT = Convert.ToInt32(reader["VAT"]),
-                            ////AddVAT = Convert.ToInt32(reader["AddVAT"]),
-                            ////CST = Convert.ToInt32(reader["CST"]),                         
-                            ////Cancelled = Convert.ToInt32(reader["Cancelled"]),
-                            ////ReasonForCancellation = reader["ReasonForCancellation"].ToString(),
-                            ////TotalAmount = Convert.ToInt32(reader["TotalAmount"]),
-                            ////Attachment = reader["Attachment"].ToString(),
-                            ////WorkOrderNo = reader["WorkOrderNo"].ToString(),
-                            //LastModifiedBy = Convert.ToInt32(reader["LastModifiedBy"]),
-                            //LastModifiedDate = Convert.ToDateTime(reader["LastModifiedDate"])
-                        };
-                    }
-                    con.Close();
-                }
+                var purchaseOrder = con.Query<PurchaseOrderBO>(purchaseOrderQuery, new { @purchaseOrderId = PurchaseOrderId }).FirstOrDefault();
+                var purchaseOrderList = con.Query<PurchaseOrderItemsDetails>(purchaseOrderItemQuery, new { @purchaseOrderId = PurchaseOrderId }).ToList();
+                purchaseOrder.itemDetails = purchaseOrderList;
+                return purchaseOrder;
             }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-            }
-            return result;
-            //return _context.UnitMasters.Find(UnitID);
         }
 
         /// <summary>
@@ -345,7 +273,6 @@ namespace InVanWebApp.Repository
                     //FN: Added the below field for Indent, currency and terms description
 
                     cmd.Parameters.AddWithValue("@IndentID", model.IndentID);
-                    cmd.Parameters.AddWithValue("@IndentDescription", model.IndentDescription);
                     cmd.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
                     cmd.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
 
@@ -367,15 +294,16 @@ namespace InVanWebApp.Repository
                     {
                         PurchaseOrderItemsDetails objItemDetails = new PurchaseOrderItemsDetails();
                         objItemDetails.PurchaseOrderId = model.PurchaseOrderId;
-                        objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
-                        objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
+                        objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
+                        objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
                         objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
-                        //objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
-                        objItemDetails.ItemTaxValue = item.ElementAt(7).Value.ToString();
-                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(8).Value);
+                        objItemDetails.RequiredQuantity =float.Parse(item.ElementAt(3).Value);
+                        objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(4).Value);
+                        objItemDetails.BalanceQuantity =float.Parse(item.ElementAt(5).Value);
+                        objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
+                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(7).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(9).Value.ToString();
+                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(10).Value);
                         objItemDetails.CreatedBy = model.LastModifiedBy;
 
                         itemDetails.Add(objItemDetails);
@@ -402,11 +330,13 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@LastModifiedBy", item.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                        cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                        cmdNew.Parameters.AddWithValue("@RequiredQty", item.RequiredQuantity);
+                        cmdNew.Parameters.AddWithValue("@BalanceQty", item.BalanceQuantity);
 
                         //Added the below field for Indent, currency and terms description
                         cmdNew.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
                         cmdNew.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
-                        //cmdNew.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice);
                         cmdNew.Parameters.AddWithValue("@IndentID", model.IndentID);
 
                         if (count == 1)
@@ -649,6 +579,12 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Get list of Items for PO and OC dropdown
+        /// <summary>
+        /// The below function is not in used in Purchase Order but in use in some other
+        /// modules.
+        /// </summary>
+        /// <param name="ItemType"></param>
+        /// <returns></returns>
         public IEnumerable<ItemBO> GetItemDetailsForDD(int ItemType)
         {
             List<ItemBO> ItemList = new List<ItemBO>();
@@ -725,19 +661,6 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
-
-        public PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId)
-        {
-            string purchaseOrderQuery = "SELECT * FROM PurchaseOrder WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
-            string purchaseOrderItemQuery = "SELECT * FROM PurchaseOrderItemsDetails WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
-            using (SqlConnection con = new SqlConnection(connString))
-            {
-                var purchaseOrder = con.Query<PurchaseOrderBO>(purchaseOrderQuery, new { @purchaseOrderId = PurchaseOrderId }).FirstOrDefault();
-                var purchaseOrderList = con.Query<PurchaseOrderItemsDetails>(purchaseOrderItemQuery, new { @purchaseOrderId = PurchaseOrderId }).ToList();
-                purchaseOrder.itemDetails = purchaseOrderList;
-                return purchaseOrder;
-            }
-        }
 
         #region Amendment
         /// <summary>

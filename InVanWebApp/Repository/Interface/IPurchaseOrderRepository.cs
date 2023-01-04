@@ -13,7 +13,8 @@ namespace InVanWebApp.Repository
         //Define function for fetching details of Purchase Order.
         IEnumerable<PurchaseOrderBO> GetAll();
         //Define function for fetching details of company master by ID.
-        PurchaseOrderBO GetById(int ID);
+        PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId);
+
         //Define function for fetching details of Purchase Order by PurchaseOrderId.
         //PurchaseOrderBO GetById(int PurchaseOrderId);
         //Function define for: Insert record.
@@ -47,8 +48,6 @@ namespace InVanWebApp.Repository
 
         //Function define for: Delete record of item type using it's PurchaseOrderId 
         void Delete(int PurchaseOrderId, int userId);
-
-        PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId);
 
         //Function Define For: Save the Amendment details againts Purchase Order.
         ResponseMessageBO SaveAmendment(PurchaseOrderBO model);

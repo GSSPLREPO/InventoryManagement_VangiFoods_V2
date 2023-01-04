@@ -63,7 +63,7 @@
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control",  @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", @readonly = "readonly" })
                     @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control", @readonly = "readonly" })
                 </div>
             </div>
@@ -135,7 +135,7 @@
                     @Html.Label("Indent Number")
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.IndentID, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control listbox", onchange = "SelectedIndexChangedIndent($(this).val())" })
+                    @Html.DropDownListFor(model => model.IndentID, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control listbox", @readonly="readonly" })
                     @Html.ValidationMessageFor(model => model.IndentID, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -147,13 +147,6 @@
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2 mb-1">
-                    @Html.Label("Indent Summary")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextAreaFor(modal => modal.IndentDescription, new { @class = "form-control form-control-sm", @readonly = "readonly", id = "IndentDescription" })
-                    @Html.ValidationMessageFor(model => model.IndentDescription, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
                     @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
@@ -169,91 +162,78 @@
                                     <table class="table table-striped" id="submissionTable">
                                         <thead>
                                             <tr>
-                                                <th class="sortStyle">
-                                                    Item Code
-                                                </th>
-                                                <th class="sortStyle d-none">
-                                                    Selected Item Code
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Item
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Quantity
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Units
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Price (Per Unit)
-                                                </th>
+                                                <th class="sortStyle">Item Code</th>
+                                                <th class="sortStyle d-none">Item ID</th>
+                                                <th class="sortStyle">Item</th>
+                                                <th class="sortStyle">Required Quantity</th>
+                                                <th class="sortStyle">Order Quantity</th>
+                                                <th class="sortStyle">Balance Quantity</th>
+                                                <th class="sortStyle">Units</th>
+                                                <th class="sortStyle">Price (Per Unit)</th>
                                                 <th class="sortStyle">Currency</th>
-                                                <th class="sortStyle">
-                                                    Tax
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Total before tax
-                                                </th>
+                                                <th class="sortStyle">Tax</th>
+                                                <th class="sortStyle">Total before tax</th>
+                                                <th class="sortStyle d-none">Actual Balance Quantity</th>
                                             </tr>
                                         </thead>
                                         <tbody id="myTableBody">
                                             @{ int c = 1;
                                                 foreach (var item in Model.itemDetails)
                                                 {
-                                                    string itemListForDD = "itemListForDD";
-                                                    itemListForDD = itemListForDD + (c - 1);
+                                                    //string itemListForDD = "itemListForDD";
+                                                    //itemListForDD = itemListForDD + (c - 1);
                                                     <tr id="tablerow_@c">
                                                         <td>
-                                                            @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
-                                                                new { @class = "form-control", id = "Item_ID_" + c, style = "height:30px;width:130px;", onchange = "getitemDetailsJSTbl('" + c + "')" })
-                                                            @*@Html.TextBoxFor(x => item.Item_ID, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })*@
+                                                            @*@Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
+                                                                new { @class = "form-control", id = "Item_ID_" + c, style = "height:30px;width:130px;", onchange = "getitemDetailsJSTbl('" + c + "')" })*@
+                                                            @Html.TextBox("ItemCode_" + c, item.Item_Code, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })
                                                         </td>
                                                         <td class="col-md-4 d-none">
-                                                            @Html.TextBox("Item_Code_" + c, item.Item_Code, new { @class = "form-control", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                            @Html.TextBox("ItemID_" + c, item.Item_ID, new { @class = "form-control", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                            @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemQuantity_" + c, item.ItemQuantity, new
+                                                            @Html.TextBox("RequiredQuantity_" + c, item.RequiredQuantity, new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
                                                             {
                                                                 @class = "form-control",
-                                                                style = "height:30px;width:100px;",
-                                                                value = "0",
+                                                           style = "height:30px;width:100px;",
                                                                 onkeypress = "return isNumberKey(event)",
-                                                           onchange = "CalItemTotalPrice($(this).val(),id)"
+                                                           onchange = "OnChangeQty($(this).val(),id)"
                                                             })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("BalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly", onchange = "OnChangeUnitPrice($(this).val(),id)" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("itemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control", style = "height:30px;width:80px;", @readonly = "readonly" })
+                                                            @Html.TextBox("ItemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control", style = "height:30px;width:80px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                            @Html.TextBox("TotalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
+                                                         <td>
+                                                            @Html.TextBox("ActualBalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control d-none", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                     </tr>
                                                     { c++; }
                                                 }
-
                                             }
-
                                         </tbody>
                                     </table>
                                     <br />
-                                    <button type="button" class="btn btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
-                                        + Add Item
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -304,9 +284,6 @@
                                     @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["Terms"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
                                     @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
                                 </div>
-                                @*<div class="col-md-4 d-none">
-                                    @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                                </div>*@
                             </div>
                             <br />
                             @*Rahul set ''T&C'' from top to here 02/12/2022.*@
@@ -315,7 +292,7 @@
                                     @Html.Label("Terms Description")
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.TextAreaFor(model => model.Terms, new { id = "TermDescription", @class = "form-control", placeholder = "Term Description", style = "height:100px" })
+                                    @Html.TextAreaFor(model => model.Terms, new { @class = "form-control", placeholder = "Term Description", style = "height:100px" })
                                     @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
                                 </div>
                             </div>
@@ -341,7 +318,7 @@
                                 <div class="row mb-2">
                                     <label>Total (after tax):</label>
                                     @*<input class="form-control" id="TotalAfterTax" name="TotalAfterTax" />*@
-                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right", @readonly="readonly" })
+                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right", @readonly = "readonly" })
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Grand Total:</b></label>
@@ -383,9 +360,10 @@
     };
     //==========end===============
 
-//===========The below function is for updating the draft flag value if user clicked it as save the PO as draft====//
+    //===========The below function is for updating the draft flag value if user clicked it as save the PO as draft====//
     $("#btn_SaveDraft").click(function () {
         $("#DraftFlag").val('true');
+        createJson();
     });
     //=======end=============//
 
@@ -397,7 +375,7 @@
 
         //Get a reference to our file input
         const fileInput = document.querySelector('input[type="file"]');
-        var filePath = '/Signatures/'+fileName;
+        var filePath = '/Signatures/' + fileName;
 
         // Create a new File object
         const myFile = new File([filePath], fileName, {
@@ -419,43 +397,10 @@
             type: "POST",
             data: { id: id },
             success: function (result) {
-                console.log(result.TermDescription);
-                $('#TermDescription').val(result.TermDescription);
+                $('#Terms').val(result.TermDescription);
             },
             error: function (err) {
                 alert('Not able to get the selected terms and condition value!');
-
-            }
-        });
-    }
-
-    //=============End==============
-
-    //=====================Onchange of Indent description===========================
-    function SelectedIndexChangedIndent(id) {
-        var IdentNumber = $("#IndentID option:selected").text();
-        $('#IndentNumber').val(IdentNumber);
-        $.ajax({
-            url: '/PurchaseOrder/GetIndentDescription',
-            type: "POST",
-            data: { id: id },
-            success: function (result) {
-                var objLength = result.length;
-                var finalResult = "";
-                var i = 0;
-                if (result != [] & result != null) {
-                    while (i < objLength) {
-                        var balanceQty = parseFloat(result[i].RequiredQuantity) - parseFloat(result[i].SentQuantity);
-                        finalResult = finalResult + "Item: " + result[i].ItemName + ",  Required Quantity: " +
-                            result[i].RequiredQuantity + " KG , Balance Quantity: " + balanceQty + " KG \n";
-
-                        i++;
-                    }
-                }
-                $('#IndentDescription').val(finalResult);
-            },
-            error: function (err) {
-                alert('Not able to get the selected indent summary!');
 
             }
         });
@@ -505,186 +450,41 @@
         });
     }
 
-        //Dropdownlist Selectedchange event
-    function getitemDetails() {
-                    $("#f").empty();
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetitemDetails")', // we are calling json method
-
-                dataType: 'json',
-
-                data: { id: $("#Item_ID").val(), currencyId: $("#CurrencyID").val() },
-                // here we are get value of selected item and passing same value
-                //as inputto json method GetitemDetails.
-
-                success: function (itemDescription) {
-                    var description = JSON.stringify(itemDescription);
-                    $("#ItemName").val(itemDescription.Item_Name);
-                    $("#ItemUnit").val(itemDescription.UnitCode);
-                    $("#ItemUnitPrice").val(itemDescription.UnitPrice);
-                    $("#CurrencyName").val(itemDescription.IndianCurrencyValue);
-                    $("#ItemTaxValue").val(itemDescription.ItemTaxValue);
-                    $("#ItemQuantity").val('0');
-
-                    $("#ItemTotalPrice").val('');
-                    $("#TotalBeforeTax").val('');
-                    $("#TotalTax").val('');
-                    $("#TotalAfterTax").val('');
-                    $("#GrandTotal").val('');
-                    $("#AdvancedPAyment").val('');
-                },
-                failure: function () {
-                    alert('Failed to retrieved item detals!');
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve Item description.' + ex);
-                }
-            });
-
-    }
-
-    function getitemDetailsJSTbl(count) {
-        var itemId = "Item_ID_" + count;
-        var currencyID = $('#CurrencyID').val();
-        var selectedItemId = $("#" + itemId).val();
-                    $.ajax({
-                type: 'POST',
-                //url: '@Url.Action("GetitemDetails?id='+${itemId}+'")', // we are calling json method
-                url: '@Url.Action("GetitemDetails")', // we are calling json method
-
-                dataType: 'json',
-                        data: { id: selectedItemId, currencyId: currencyID },
-                // here we are get value of selected item and passing same value
-                //as input to json method GetitemDetails.
-
-                        success: function (itemDescription) {
-
-                            var description = JSON.stringify(itemDescription);
-                            $("#Item_Code_" + count).val(itemDescription.Item_Code);
-                            $("#ItemName_" + count).val(itemDescription.Item_Name);
-                            $("#ItemUnit_" + count).val(itemDescription.UnitCode);
-                            $("#ItemUnitPrice_" + count).val(itemDescription.UnitPrice);
-                            $("#CurrencyName_" + count).val(itemDescription.IndianCurrencyValue);
-                            $("#itemTax_" + count).val(itemDescription.ItemTaxValue);
-                            $("#ItemQuantity_" + count).val('0');
-                            $("#totalItemCost_" + count).val('0');
-                },
-                failure: function () {
-                    alert('Failed to retrieved item detals!');
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve Item description.' + ex);
-                }
-            });
-    }
-
-    function calcTax(cnt, e) {
-        if (isNumberKey(e)) {
-        var itemQuantity = $("#itemQuantity_" + cnt).val();
-       // console.log(itemQuantity);
-        var itemPrice = $("#itemPrice_" + cnt).val();
-        //var tempTax = $("#itemTax_").val().split("%");
-        var tax = $("#itemTax_").val();
-        //var tax = tempTax[0];
-
-        //Set total price in item grid.
-        var totalPrice = itemQuantity * itemPrice;
-        $("#totalItemCost_" + cnt).val(totalPrice);
-        //Set values in Bill
-        var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
-        //console.log("quan:" + quantity + ",totalprice:" + totalPrice + ",tax:" + tax + ",TPAT:" + totalPriceAfterTax);
-        $("#totalBeforeTax_").val(totalPrice);
-        $("#totalTax_").val($("#ItemTax").val());
-        $("#rotalAfterTax_").val(totalPriceAfterTax);
-        $("#grandTotal_").val(totalPriceAfterTax);
+    function OnChangeUnitPrice(value, id) {
+        var rowNo = id.split('_')[1];
+        var UnitPrice = parseFloat(value);
+        if (UnitPrice <= 0 || value == null || value == '') {
+            alert("Price cannot be negative, null or zero!");
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            return;
+        }
+        else {
+            //Set total price in item grid.
+            var quantity = $("#txtItemQty_" + rowNo).val();
+            var totalPrice = quantity * UnitPrice;
+            totalPrice = Math.round(totalPrice);
+            $("#TotalItemCost_" + rowNo).val(totalPrice);
+            CalculateTotalBeforeTax();
+            document.getElementById(id).setAttribute("style", "none");
         }
     }
 
     ///Finding the length of existing table
-    var table = document.getElementById('submissionTable');
-    var counter = table.rows.length;
-
-    //=======This below click function is for adding row in the table dynamically=====/////
-    $("#AddItem").click(function () {
-        var itemId = "Item_ID_"+counter;
-        var itemCode = "Item_Code_" + counter;
-        var itemDescription = "ItemName_" + counter;
-        var itemQuantity = "ItemQuantity_" + counter;
-        var itemUnit = "ItemUnit_" + counter;
-        var itemPrice = "ItemUnitPrice_" + counter;
-        var currencyName = "CurrencyName_" + counter;
-        var itemTax = "itemTax_" + counter;
-        var totalItemCost = "totalItemCost_" + counter;
-        $('<tr id="tablerow_' + counter + '">' + '<td>'+
-            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:130px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID_1').html()+'</select>' +
-            '</td>' +
-            '<td class="d-none">' +
-            '<input type="text" id="' + itemCode + '" class="form-control" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" id="' + itemPrice + '" class="form-control" style = "height:30px;width:100px;" name="' + itemPrice + '"readonly = "readonly" value="" required="required" />' +
-            '</td>' +
-            '<td>' +
-            //Rahul added 03/12/2022.
-            '<input type="text" id="' + currencyName + '" class="form-control text-right" style = "height:30px;width:100px;" name="' + currencyName + '"readonly = "readonly" required="required" />' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" id="' + itemTax + '" class="form-control " style = "height:30px;width:80px;" name="' + itemTax + ' "readonly = "readonly" value="" required="required" />' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" id="' + totalItemCost + '" class="form-control" style = "height:30px;width:200px;" name="' + totalItemCost + '"readonly = "readonly" value="" required="required" />' +
-            '</td>' +
-            '<td>' +
-            '<button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
-            '</td>' +
-            '</tr>').appendTo('#submissionTable');
-
-        /////////////This is piece of code is for de-selecting the Item list in the dropdown of newly created/added row//////////////////////
-        document.getElementById('Item_ID_' + counter).selectedIndex = 0;
-        /////////////////////end.../////////////////
-        counter++;
-        return false;
-    });
-
-    //=================end============================//
-
-    function CalItemTotalPrice(value, id) {
-        //alert(value + " " + id);
-        var temp_rowNo = id.split('_');
-        var rowNo = temp_rowNo[1];
-        value = parseFloat(value);
-        if (value != 0) {
-            var price = $("#ItemUnitPrice_" + rowNo).val();
-            price = parseFloat(price);
-            var totalPrice = price * value;
-            totalPrice = Math.round(totalPrice);
-            $("#totalItemCost_" + rowNo).val(totalPrice);
-        }
-
-        CalculateTotalBeforeTax();
-    }
+    //var table = document.getElementById('submissionTable');
+    //var counter = table.rows.length;
 
     function CalculateTotalBeforeTax() {
         $('#TotalBeforeTax').val('');
         $('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;
-        length = parseFloat(length) - 1;
+        length = parseFloat(length) - 2;
         var total = 0;
         var totalTax = 0;
-        var i = 1;
-        while (i<=length) {
-            var temp = document.getElementById("totalItemCost_" + i).value;
-            var tempTotalTax = document.getElementById("itemTax_" + i).value;
+        var i = 0;
+        while (i <= length) {
+            var temp = document.getElementById("TotalItemCost_" + i).value;
+            var tempTotalTax = document.getElementById("ItemTax_" + i).value;
             total = parseFloat(temp) + total;
 
             tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
@@ -697,8 +497,8 @@
         $('#TotalBeforeTax').val(total);
         $('#TotalTax').val(totalTax);
         var tempGrandTotal = total + totalTax;
-        $('#TotalAfterTax').val(tempGrandTotal);
-        $('#GrandTotal').val(tempGrandTotal);
+        $('#TotalAfterTax').val(tempGrandTotal.toFixed(2));
+        $('#GrandTotal').val(tempGrandTotal.toFixed(2));
 
         createJson();
     }
@@ -713,56 +513,56 @@
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
-    $("#ItemQuantity").change(function () {
-        var quantity = $("#ItemQuantity").val();
-        var price = $("#ItemUnitPrice").val();
-        var tempTax = $("#ItemTaxValue").val().split("%")
-        var tax = tempTax[0];
+    function OnChangeQty(value, id) {
+        var rowNo = id.split('_')[1];
+        var quantity = value;
+        var BalanceQty = $("#BalanceQuantity_" + rowNo).val();
+        BalanceQty = parseFloat(BalanceQty);
+        quantity = parseFloat(quantity);
+        var RequiredQty = $("#RequiredQuantity_" + rowNo).val().split(" ")[0];
+        RequiredQty = parseFloat(RequiredQty);
 
-        //Set total price in item grid.
-        var totalPrice = quantity * price;
-        totalPrice = Math.round(totalPrice);
-        $("#ItemTotalPrice").val(totalPrice);
-
-        //Set values in Bill
-        var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
-        $("#TotalBeforeTax").val(totalPrice);
-
-        var itemTaxVal = tax / 100 * totalPrice;
-        itemTaxVal = Math.round(itemTaxVal);
-        totalPriceAfterTax = Math.round(totalPriceAfterTax);
-
-        $("#TotalTax").val(itemTaxVal);
-        $("#TotalAfterTax").val(totalPriceAfterTax);
-        $("#GrandTotal").val(totalPriceAfterTax);
-    });
-
-    function removeTr(index) {
-        /////Finding the length of existing table
-        var table = document.getElementById('submissionTable');
-        var tableRows = table.rows.length;
-        if (tableRows > 2) {
-            if (counter => index) {
-                $('#tablerow_' + index).remove();
-                counter--;
-            }
+        if (quantity > BalanceQty) {
+            alert("Order quantity cannot be greater then indent balance quantity!");
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            return;
         }
-        CalculateTotalBeforeTax();
-        return false;
+        else {
+            var tempBalanceQty = BalanceQty - quantity;
+            if (quantity == 0) {
+                var ActualBalQty = $("#ActualBalanceQuantity_" + rowNo).val().split(" ")[0];
+                ActualBalQty = parseFloat(ActualBalQty);
+                $("#BalanceQuantity_" + rowNo).val(ActualBalQty);
+            }
+            else {
+                $("#BalanceQuantity_" + rowNo).val(tempBalanceQty);
+            }
 
-        //var length = document.getElementById("submissionTable").rows.length;
-        //length = parseFloat(length) - 1;
-        ////console.log("Length: " + length + counter);
-        //if (counter > 1 & length == index) {
-        //    $('#tablerow_' + index).remove();
-        //    counter--;
-        //}
-        //else {
-        //    $('#tablerow_' + index).remove();
-        //}
-        //CalculateTotalBeforeTax();
-        //return false;
-    }
+            var price = $("#ItemUnitPrice_" + rowNo).val();
+            var tempTax = $("#ItemTax_" + rowNo).val().split(" %");
+            var tax = tempTax[0];
+
+            //Set total price in item grid.
+            var totalPrice = quantity * price;
+            totalPrice = Math.round(totalPrice);
+            $("#TotalItemCost_" + rowNo).val(totalPrice);
+
+            var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
+            $("#TotalBeforeTax").val(totalPrice);
+
+            var itemTaxVal = tax / 100 * totalPrice;
+            itemTaxVal = Math.round(itemTaxVal);
+            totalPriceAfterTax = Math.round(totalPriceAfterTax);
+
+            $("#TotalTax").val(itemTaxVal);
+            $("#TotalAfterTax").val(totalPriceAfterTax);
+            $("#GrandTotal").val(totalPriceAfterTax);
+
+            CalculateTotalBeforeTax();
+            document.getElementById(id).setAttribute("style", "border-color:none;");
+        }
+    };
 
     function fileValidation() {
         var fileInput =
@@ -796,27 +596,19 @@
         }
     }
 
-    $("#btn_SaveDraft").click(function () {
-        $("#DraftFlag").val('true');
-        //var ab=$("#DraftFlag").val();
-        //console.log("abc:" + ab);
-    });
-
     /*Rahul : Add Javascript validation on 12 Oct 2022.*/
-        function isNumberKey(evt) {
-            var keycode = (evt.which) ? evt.which : evt.keyCode;
-            if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
-                return false;
-            }
-            else {
-                var parts = evt.srcElement.value.split('.');
-                if (parts.length > 1 && keycode == 46)
-                    return false;
-                else
-                    return true;
-            }
-            return true;
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
         }
-
-
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
 </script>
