@@ -59,7 +59,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control", @readonly = "readonly" })
+                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
@@ -95,13 +95,13 @@
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <div class="col-md-2 mb-1">
+                @*<div class="col-md-2 mb-1">
                     @Html.Label("Indent Summary")
                 </div>
                 <div class="col-md-4">
                     @Html.TextAreaFor(modal => modal.IndentDescription, new { @class = "form-control form-control-sm", @readonly = "readonly", id = "IndentDescription" })
                     @Html.ValidationMessageFor(model => model.IndentDescription, "", new { @class = "error mt-2 text-danger" })
-                </div>
+                </div>*@
                 <div class="col-md-4 d-none">
                     @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
                 </div>
@@ -447,7 +447,7 @@
                         i++;
                     }
                 }
-                $('#IndentDescription').val(finalResult);
+               // $('#IndentDescription').val(finalResult);
             },
             error: function (err) {
                 alert('Not able to get the selected indent summary!');

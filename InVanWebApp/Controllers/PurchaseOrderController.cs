@@ -32,10 +32,6 @@ namespace InVanWebApp.Controllers
             _indentRepository = new IndentRepository();
             _inwardNoteRepository = new InwardNoteRepository();
             _termsConditionRepository = new TermsConditionRepository();
-
-            //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-            //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-            //ViewData["itemListForDD"] = dd;
         }
         /// <summary>
         /// Rahul: Constructor with parameters for initializing the interface object.
@@ -186,7 +182,7 @@ namespace InVanWebApp.Controllers
         }
 
         /// <summary>
-        /// Rahul: Pass the data to the repository for insertion from it's view.
+        /// Rahul: Pass the data to the repository for insertion from it's view. (Not in use currently)
         /// </summary>
         /// <param name="model"></param>
         /// <param name="modelpoItemsDetail"></param> 
@@ -757,7 +753,7 @@ namespace InVanWebApp.Controllers
         {
             var result = _purchaseOrderRepository.GetCurrencyPriceList();
             var resultList = new SelectList(result.ToList(), "CurrencyID", "CurrencyName");
-            ViewData["CurrencyName1"] = resultList;
+            ViewData["CurrencyList"] = resultList;
         }
         #endregion
 

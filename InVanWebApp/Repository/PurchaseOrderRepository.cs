@@ -330,7 +330,6 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@LastModifiedBy", item.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                        cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@RequiredQty", item.RequiredQuantity);
                         cmdNew.Parameters.AddWithValue("@BalanceQty", item.BalanceQuantity);
 

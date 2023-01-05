@@ -1,5 +1,7 @@
 ﻿//==================Set value in txtItemDetails onCick of Save/Update button======--------
 function SaveBtnClick() {
+    var CurrencyName = $("#CurrencyID option:selected").text();
+    $("#CurrencyName").val(CurrencyName);
     createJson();
 };
 //==========end===============
@@ -26,15 +28,18 @@ function SelectedIndexChangedTerms(id) {
 function SelectedIndexChangedIndent(id) {
 
     //Check whether the currency dropdown is selected or not
+ 
     var CurrencyIDCheck = $('#CurrencyID').val();
     if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
         $('#CurrencyID').focus();
         document.getElementById('IndentID').selectedIndex = 0;
         return;
     }
-    else
-        document.getElementById('CurrencyID').setAttribute("disabled", "true");
-
+    else {
+        $("#tempCurrencyID").val(CurrencyIDCheck);
+        $("#CurrencyID").prop("disabled", "true");
+    }
+        
     //For deleting the rows of Item table if exist.
 
     var table = document.getElementById('submissionTable');
@@ -245,10 +250,8 @@ function CalculateTotalBeforeTax() {
 
         i++;
     }
-    total = Math.round(total);
-    totalTax = Math.round(totalTax);
 
-    $('#TotalBeforeTax').val(total);
+    $('#TotalBeforeTax').val(total.toFixed(2));
     $('#TotalTax').val(totalTax.toFixed(2));
     var tempGrandTotal = total + totalTax;
     $('#TotalAfterTax').val(tempGrandTotal.toFixed(2));

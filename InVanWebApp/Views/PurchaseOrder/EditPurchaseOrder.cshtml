@@ -59,7 +59,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control", @readonly = "readonly" })
+                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
@@ -135,7 +135,7 @@
                     @Html.Label("Indent Number")
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.IndentID, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control listbox", @readonly="readonly" })
+                    @Html.DropDownListFor(model => model.IndentID, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control listbox", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.IndentID, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -186,46 +186,46 @@
                                                         <td>
                                                             @*@Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
                                                                 new { @class = "form-control", id = "Item_ID_" + c, style = "height:30px;width:130px;", onchange = "getitemDetailsJSTbl('" + c + "')" })*@
-                                                            @Html.TextBox("ItemCode_" + c, item.Item_Code, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })
+                                                            @Html.TextBox("ItemCode_" + c, item.Item_Code, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
                                                         </td>
                                                         <td class="col-md-4 d-none">
-                                                            @Html.TextBox("ItemID_" + c, item.Item_ID, new { @class = "form-control", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                            @Html.TextBox("ItemID_" + c, item.Item_ID, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                            @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("RequiredQuantity_" + c, item.RequiredQuantity, new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                            @Html.TextBox("RequiredQuantity_" + c, item.RequiredQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
                                                             {
-                                                                @class = "form-control",
+                                                                @class = "form-control form-control-sm",
                                                            style = "height:30px;width:100px;",
                                                                 onkeypress = "return isNumberKey(event)",
                                                            onchange = "OnChangeQty($(this).val(),id)"
                                                             })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("BalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                            @Html.TextBox("BalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly", onchange = "OnChangeUnitPrice($(this).val(),id)" })
+                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control", style = "height:30px;width:80px;", @readonly = "readonly" })
+                                                            @Html.TextBox("ItemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control form-control-sm", style = "height:30px;width:80px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("TotalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                            @Html.TextBox("TotalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
-                                                         <td>
-                                                            @Html.TextBox("ActualBalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control d-none", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        <td>
+                                                            @Html.TextBox("ActualBalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm d-none", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                     </tr>
                                                     { c++; }
@@ -327,7 +327,8 @@
                                 </div>
                                 <div class="row mb-2">
                                     <label>Advanced To Pay:</label>
-                                    @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control  form-control-sm text-right", maxlength = "8", onkeypress = "return isNumberKey(event)" })
+                                    @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control  form-control-sm text-right", maxlength = "8", onkeyup = "ValidateAdvancePayment($(this).val(),id)", onkeypress = "return isNumberKey(event)" })
+                                    <span id="ValMsgAdvancePayment" style="display:none; color:red"></span>
                                 </div>
                             </div>
                             <br />
@@ -352,10 +353,15 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
+        var CurrencyName = $("#CurrencyID option:selected").text();
+        $("#CurrencyName").val(CurrencyName);
         createJson();
     };
     //==========end===============
@@ -407,6 +413,20 @@
     }
 
     //=============End==============
+
+    function ValidateAdvancePayment(value, id) {
+        var GrandTotal = parseFloat($("#GrandTotal").val());
+        value = parseFloat(value);
+        if (value > GrandTotal) {
+            $("#ValMsgAdvancePayment").text("Advance payment cannot be greater than Grand total!");
+            $('#ValMsgAdvancePayment').show();
+            document.getElementById(id).focus();
+            return;
+        }
+        else
+            $('#ValMsgAdvancePayment').hide();
+
+    }
 
     function SelectedIndexChanged(id) {
         var selectedOption, companyName;
@@ -478,11 +498,11 @@
         $('#TotalBeforeTax').val('');
         $('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;
-        length = parseFloat(length) - 2;
+        length = parseFloat(length);
         var total = 0;
         var totalTax = 0;
-        var i = 0;
-        while (i <= length) {
+        var i = 1;
+        while (i < length) {
             var temp = document.getElementById("TotalItemCost_" + i).value;
             var tempTotalTax = document.getElementById("ItemTax_" + i).value;
             total = parseFloat(temp) + total;
@@ -491,11 +511,9 @@
             totalTax = parseFloat(tempTotalTax) + totalTax;
             i++;
         }
-        total = Math.round(total);
-        totalTax = Math.round(totalTax);
 
-        $('#TotalBeforeTax').val(total);
-        $('#TotalTax').val(totalTax);
+        $('#TotalBeforeTax').val(total.toFixed(2));
+        $('#TotalTax').val(totalTax.toFixed(2));
         var tempGrandTotal = total + totalTax;
         $('#TotalAfterTax').val(tempGrandTotal.toFixed(2));
         $('#GrandTotal').val(tempGrandTotal.toFixed(2));
