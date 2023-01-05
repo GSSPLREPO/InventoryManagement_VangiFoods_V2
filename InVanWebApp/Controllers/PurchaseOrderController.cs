@@ -181,73 +181,6 @@ namespace InVanWebApp.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Rahul: Pass the data to the repository for insertion from it's view. (Not in use currently)
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="modelpoItemsDetail"></param> 
-        /// <returns></returns>
-        [HttpPost]
-        public ActionResult SaveDraft(PurchaseOrderBO model, HttpPostedFileBase Signature)
-        {
-            try
-            {
-                if (Session[ApplicationSession.USERID] != null)
-                {
-                    ResponseMessageBO response = new ResponseMessageBO();
-
-                    if (Signature != null)
-                    {
-                        UploadSignature(Signature);
-                        model.Signature = Signature.FileName.ToString();
-                    }
-                    else
-                        model.Signature = null;
-
-                    if (ModelState.IsValid)
-                    {
-                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                        response = _purchaseOrderRepository.Insert(model);
-                        if (response.Status)
-                            TempData["Success"] = "<script>alert('Purchase Order details saved as draft.!');</script>";
-                        else
-                        {
-                            TempData["Success"] = "<script>alert('Duplicate Purchase Order as draft.! Can not be saved as draft.!');</script>";
-                            BindCompany();
-                            BindTermsAndCondition();
-                            BindCurrencyPrice();
-                            BindLocationName();
-                            BindIndentDropDown();
-                            UploadSignature(Signature);
-                            return RedirectToAction("AddPurchaseOrder", "PurchaseOrder", model);
-                        }
-
-                        return RedirectToAction("Index", "PurchaseOrder");
-
-                    }
-                    else
-                    {
-                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-                        BindCompany();
-                        BindIndentDropDown();
-                        BindTermsAndCondition();
-                        BindCurrencyPrice();
-                        //BindOrganisations();
-                        BindLocationName();
-                        UploadSignature(Signature);
-                        return View(model);
-                    }
-                }
-                else
-                    return RedirectToAction("Index", "Login");
-
-            }
-            catch (Exception ex)
-            {
-                log.Error("Error", ex);
-            }
-            return View();
-        }
         #endregion
        
         #region  Update function
@@ -444,26 +377,26 @@ namespace InVanWebApp.Controllers
 
                     PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
                     //Binding item grid with sell type item.
-                    var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                    var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                    string itemListForDD = "itemListForDD";
+                    //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                    //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                    //string itemListForDD = "itemListForDD";
 
-                    if (model != null)
-                    {
-                        var ItemCount = model.itemDetails.Count;
-                        var i = 0;
-                        while (i < ItemCount)
-                        {
-                            itemListForDD = "itemListForDD";
-                            itemListForDD = itemListForDD + i;
-                            dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.itemDetails[i].Item_ID);
-                            ViewData[itemListForDD] = dd;
-                            i++;
-                        }
+                    //if (model != null)
+                    //{
+                    //    var ItemCount = model.itemDetails.Count;
+                    //    var i = 0;
+                    //    while (i < ItemCount)
+                    //    {
+                    //        itemListForDD = "itemListForDD";
+                    //        itemListForDD = itemListForDD + i;
+                    //        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.itemDetails[i].Item_ID);
+                    //        ViewData[itemListForDD] = dd;
+                    //        i++;
+                    //    }
 
-                    }
+                    //}
 
-                    ViewData[itemListForDD] = dd;
+                    //ViewData[itemListForDD] = dd;
 
                     model.Amendment = model.Amendment + 1;
 
@@ -525,26 +458,26 @@ namespace InVanWebApp.Controllers
 
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
                             //Binding item grid with sell type item.
-                            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                            string itemListForDD = "itemListForDD";
+                            //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                            //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                            //string itemListForDD = "itemListForDD";
 
-                            if (model1 != null)
-                            {
-                                var ItemCount = model1.itemDetails.Count;
-                                var i = 0;
-                                while (i < ItemCount)
-                                {
-                                    itemListForDD = "itemListForDD";
-                                    itemListForDD = itemListForDD + i;
-                                    dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
-                                    ViewData[itemListForDD] = dd;
-                                    i++;
-                                }
+                            //if (model1 != null)
+                            //{
+                            //    var ItemCount = model1.itemDetails.Count;
+                            //    var i = 0;
+                            //    while (i < ItemCount)
+                            //    {
+                            //        itemListForDD = "itemListForDD";
+                            //        itemListForDD = itemListForDD + i;
+                            //        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
+                            //        ViewData[itemListForDD] = dd;
+                            //        i++;
+                            //    }
 
-                            }
+                            //}
 
-                            ViewData[itemListForDD] = dd;
+                            //ViewData[itemListForDD] = dd;
 
                             return View(model1);
                         }
@@ -560,26 +493,26 @@ namespace InVanWebApp.Controllers
                         BindIndentDropDown("POAmendment");
                         PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
                         //Binding item grid with sell type item.
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                        string itemListForDD = "itemListForDD";
+                        //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                        //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                        //string itemListForDD = "itemListForDD";
 
-                        if (model1 != null)
-                        {
-                            var ItemCount = model1.itemDetails.Count;
-                            var i = 0;
-                            while (i < ItemCount)
-                            {
-                                itemListForDD = "itemListForDD";
-                                itemListForDD = itemListForDD + i;
-                                dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
-                                ViewData[itemListForDD] = dd;
-                                i++;
-                            }
+                        //if (model1 != null)
+                        //{
+                        //    var ItemCount = model1.itemDetails.Count;
+                        //    var i = 0;
+                        //    while (i < ItemCount)
+                        //    {
+                        //        itemListForDD = "itemListForDD";
+                        //        itemListForDD = itemListForDD + i;
+                        //        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
+                        //        ViewData[itemListForDD] = dd;
+                        //        i++;
+                        //    }
 
-                        }
+                        //}
 
-                        ViewData[itemListForDD] = dd;
+                        //ViewData[itemListForDD] = dd;
 
                         return View(model1);
                     }

@@ -368,6 +368,8 @@
 
     //===========The below function is for updating the draft flag value if user clicked it as save the PO as draft====//
     $("#btn_SaveDraft").click(function () {
+        var CurrencyName = $("#CurrencyID option:selected").text();
+        $("#CurrencyName").val(CurrencyName);
         $("#DraftFlag").val('true');
         createJson();
     });

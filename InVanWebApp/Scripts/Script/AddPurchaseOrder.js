@@ -375,6 +375,8 @@ function ValidateAdvancePayment(value, id) {
 }
 
 $("#btn_SaveDraft").click(function () {
+    var CurrencyName = $("#CurrencyID option:selected").text();
+    $("#CurrencyName").val(CurrencyName);
     $("#DraftFlag").val('true');
     createJson();
 });
