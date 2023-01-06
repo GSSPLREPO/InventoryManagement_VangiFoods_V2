@@ -1,9 +1,9 @@
-﻿
+﻿<!-- Rahul added PurchaseOrderBO 04-01-2023. -->
+@model InVanWebApp_BO.PurchaseOrderBO
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
-
 <!DOCTYPE html>
 
 <html>
@@ -34,34 +34,38 @@
 
                                 @using (Html.BeginForm("ExprotAsPDF", "Report", FormMethod.Post))
                                 {
-
-                                    <div class="row">
+                                    <!--Rahul added class inline 04-01-2023.-->
+                                    <div class="row-inline">
                                         <div class="col-md-2">
                                             <label>From Date:</label>
                                         </div>
                                         <div class="col-md-3">
-                                            @Html.TextBox("fromDate", "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date" })
-                                            @Html.ValidationMessage("fromDate", "", new { @class = "col-form-label error mt-2 text-danger" })
+                                            <!--Rahul added fromDate 04-01-2023.-->
+                                            @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()" })
+                                            @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                            <!--Rahul added fromDateValidate 06-01-2023.-->
                                         </div>
                                         &nbsp;
                                         <div class="col-md-2">
                                             <label>To Date:</label>
                                         </div>
                                         <div class="col-md-3">
-                                            @Html.TextBox("toDate", "{0:yyyy-MM-dd}",  new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date" })
-                                            @Html.ValidationMessage("toDate", "", new { @class = "col-form-label error mt-2 text-danger" })
+                                            <!--Rahul added toDate 04-01-2023.-->
+                                            @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()" })
+                                            @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                            <!--Rahul added toDateValidate 06-01-2023.-->
                                         </div>
                                         &nbsp;
-
-                                        <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
+                                        <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
                                         &nbsp;
                                         <a id="ExportPdf" href="@Url.Action("ExprotAsPDF", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                         &nbsp;
                                         <a id="ExportExcel" href="@Url.Action("ExportAsExcel", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                     </div>
-                                    
-                                    <div class="row" style="padding-top: 0.5%;">
-                                        <div class="col-md-2">
+                                    <br />
+                                    <!--Rahul added class inline,ms-1 04-01-2023.-->
+                                    <div class="row-inline">
+                                        <div class="col-md-2 ms-1">
                                             <label>Status:</label>
                                         </div>
                                         <div class="col-md-3">
@@ -71,23 +75,24 @@
                                                 new SelectListItem { Text = "In Progress", Value = "In Progress" }}, new { @class = "form-control", @id = "Status" })
 
                                         </div>
-                                        &nbsp;
+
                                         <div class="col-md-2">
                                             <label>Vendors:</label>
                                         </div>
                                         <div class="col-md-3">
-                                            @Html.DropDownList("Vendors", (IEnumerable<SelectListItem>)ViewData["Vendors"], "--Select--", new { @class = "form-control", @id = "Vendors" })
-                                            @Html.ValidationMessage("Vendors", "", new { @class = "col-form-label error mt-2 text-danger" })
+                                            @Html.DropDownList("Vendors", (IEnumerable<SelectListItem>)ViewData["Vendors"], "--Select--", new { @class = "form-control", @id = "Vendors", onchange = "SelectedIndexChangedVendor()" })
+                                            @Html.ValidationMessage("Vendors", "", new { id = "VendorValidate", @class = "col-form-label error mt-2 text-danger" })
+                                            <!--Rahul added id=VendorValidate 06-01-2023.-->
                                         </div>
-                                        &nbsp;
+
                                     </div>
                                     <br />
 
                                 }
                                 <div style="margin-top:25px;">
-                                    <table class="ui celled table table-striped table-bordered hover table-sm" id="tblInward">
+                                    <!--Rahul added class  display nowrap, style="width:100%" 05-01-2023.-->
+                                    <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblInward" style="width:100%">
                                         <thead>
-                                            <tr>
                                             <tr>
                                                 <th style="text-align:center">Sr.No.</th>
                                                 <th style="text-align:center">PO Date</th>
@@ -95,6 +100,7 @@
                                                 <th style="text-align:center">Indent Number</th>
                                                 <th style="text-align:center">PO Status</th>
                                                 <th style="text-align:center">Vendor Name</th>
+                                            </tr>
                                         </thead>
                                         <tbody class="text-center"></tbody>
                                     </table>
@@ -127,20 +133,63 @@
             $('#tblInward').hide();
         });
 
+        ///Rahul added id = VendorValidate 06-01-2023.
+        function SelectedIndexChangedVendor() {
+            $('#VendorValidate').hide();
+        }
+
+        function OnChangedFromDate() {
+            $('#fromDateValidate').hide();
+        }
+
+        function OnChangedToDate() {
+            $('#toDateValidate').hide();
+        }
+        //==========================================
+
         $("#btnGo").on('click', function () {
+
+            ///Rahul added id = VendorValidate 06-01-2023.
+            //===========OnChange of item if Vendors is not selected================
+            var VendorsCheck = $('#Vendors').val();
+            if (VendorsCheck == '' || VendorsCheck == null) {
+                $('#VendorValidate').text("Select Vendor!");
+                $('#VendorValidate').show();
+                $('#Vendors').focus();
+                document.getElementById('Vendors').selectedIndex = 0;
+                return;
+            }
+            else {
+                SelectedIndexChangedVendor();
+            }
+            //==================end======================
+            ///Rahul added id = VendorValidate 06-01-2023.
+            //===========OnChange of item if From date is not selected================
+            var fromDateCheck = $('#fromDate').val();
+            var toDateCheck = $('#toDate').val();
+            if (fromDateCheck == '' || fromDateCheck == null) {
+                $('#fromDateValidate').text("Select from date!");
+                $('#fromDateValidate').show();
+                $('#fromDate').focus();
+                return;
+            }
+            else if (toDateCheck == '' || toDateCheck == null) {
+                $('#toDateValidate').text("Select to date!");
+                $('#toDateValidate').show();
+                $('#toDate').focus();
+                return;
+            }
+
+            //==================end======================
+
             $('#ExportPdf').show();
             $('#ExportExcel').show();
             $('#tblInward').show();
-
-            //$("#fromDate").disabled=true;
-            //$("#toDate").disabled=true;
 
             var fromDate = $("#fromDate").val();
             var toDate = $("#toDate").val();
             var Status = $('#Status').val();
             var Vendor = $('#Vendors').val();
-
-
 
             $('#tblInward').dataTable().fnDestroy();
             var t = $('#tblInward').DataTable({
@@ -148,7 +197,18 @@
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "sAjaxSource": "/Report/GetPOReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&status=" + Status + "&vendor=" + Vendor,
-
+                "initComplete": function (settings, json) {
+                    var flag = (document.getElementById("tblInward").rows.length);
+                    flag = parseFloat(flag);
+                    if (flag > 2) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
                 "pageLength": 20,
                 "scrollX": true,
                 "columns": [
@@ -170,6 +230,5 @@
 
         });
 
-                  
     </script>
 }

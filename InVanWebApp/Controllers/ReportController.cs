@@ -46,16 +46,19 @@ namespace InVanWebApp.Controllers
 
         #region  PO report
 
-        #region Binding the PO report data
+        #region Binding the PO report data 
 
         public ActionResult Index()
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                var model = _repositoryCompany.GetAll();
-                var dd = new SelectList(model.ToList(), "ID", "CompanyName");
+                var model1 = _repositoryCompany.GetAll(); 
+                var dd = new SelectList(model1.ToList(), "ID", "CompanyName");
                 ViewData["Vendors"] = dd;
-                return View();
+                PurchaseOrderBO model = new PurchaseOrderBO(); 
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                return View(model);                 
             }
             else
                 return RedirectToAction("Index", "Login");
@@ -75,7 +78,6 @@ namespace InVanWebApp.Controllers
             Session["Status"] = status;
             Session["Vendor"] = vendor;
             var poReport = _repository.getPOReportData(fromDate, toDate, status, VendorId);
-
             return Json(new { data = poReport }, JsonRequestBehavior.AllowGet);
         }
 
@@ -105,7 +107,7 @@ namespace InVanWebApp.Controllers
 
             if (purchaseOrders.Count < 0)
                 return View("Index");
-            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo-mini.png";
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
             //string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
             string ReportName = "PO Report";
             string name = "Vangi Foods";
@@ -150,11 +152,11 @@ namespace InVanWebApp.Controllers
 
                 sb.Append("<tr style='text-align:center;padding: 10px;'>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PODate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PurchaseOrderDate + "</td>");  //Rahul updated PurchaseOrderDate 06-01-2023. 
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PONumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.IndentNumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PurchaseOrderStatus + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.VendorsID + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.CompanyName + "</td>");
 
                 sb.Append("</tr>");
             }
@@ -208,7 +210,7 @@ namespace InVanWebApp.Controllers
             {
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = st.SrNo.ToString();
-                dr["PO Date"] = st.PODate.ToString();
+                dr["PO Date"] = st.PurchaseOrderDate.ToString(); //Rahul updated PurchaseOrderDate 06-01-2023. 
                 dr["PO Number"] = st.PONumber.ToString();
                 dr["Indent Number"] = st.IndentNumber.ToString();
                 dr["PO Status"] = st.PurchaseOrderStatus.ToString();
@@ -287,7 +289,7 @@ namespace InVanWebApp.Controllers
         {
             var ItemId = Convert.ToInt32(item);
             var WearhouseId = Convert.ToInt32(wearhouse);
-
+            
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
             Session["ItemId"] = ItemId;
@@ -439,7 +441,7 @@ namespace InVanWebApp.Controllers
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = st.SrNo.ToString();
                 dr["GRN No"] = st.GRNCode.ToString();
-                dr["GRN Date"] = st.GRNDate.ToString();
+                dr["GRN Date"] = st.GRN_Date.ToString();
                 dr["Item Code"] = st.ItemCode.ToString();
                 dr["Item Name"] = st.ItemName.ToString();
                 dr["Price Per Unit (RS)"] = st.ItemUnitPrice.ToString();

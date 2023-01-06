@@ -119,6 +119,12 @@ namespace InVanWebApp_BO
         //Added the below field for PO Report
         public int SrNo { get; set; }
         public string PurchaseOrderDate { get; set; }
+
+        [Required(ErrorMessage = "Please Select From Date ")]
+        public DateTime fromDate { get; set; }
+
+        [Required(ErrorMessage = "Please Select From Date ")]
+        public DateTime toDate { get; set; }
     }
 
     public class PurchaseOrderItemsDetails

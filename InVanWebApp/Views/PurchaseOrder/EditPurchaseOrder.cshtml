@@ -338,11 +338,22 @@
                 <br />
             </div>
 
-            <a href="@Url.Action("Index","PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
-                Back To List
-            </a>
-            <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
-            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col-3">
+                        <button type="submit" id="btnSave" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
+                    </div>
+                    <div class="col-4">
+                        <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 

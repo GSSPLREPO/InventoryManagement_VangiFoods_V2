@@ -63,8 +63,8 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("Currency", (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", id= "CurrencyID" })
-                    @Html.HiddenFor(model => model.CurrencyID,new { id="tempCurrencyID"})
+                    @Html.DropDownList("Currency", (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", id = "CurrencyID" })
+                    @Html.HiddenFor(model => model.CurrencyID, new { id = "tempCurrencyID" })
                     @Html.HiddenFor(model => model.CurrencyName)
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
 
@@ -289,8 +289,8 @@
                                     @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
                                 </div>
                                 @*<div class="col-md-4 d-none">
-                                    @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                                </div>*@
+                                        @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                                    </div>*@
                             </div>
                             <br />
                             @*Rahul set ''T&C'' from top to here 02/12/2022.*@
@@ -355,12 +355,21 @@
                 <br />
                 <br />
             </div>
-
-            <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                Back To List
-            </a>
-            <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
-            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col-3">
+                        <button type="submit" id="btnSave" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                    </div>
+                    <div class="col-4">
+                        <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
+                    </div>
+                    <div class="col-4">
+                        <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

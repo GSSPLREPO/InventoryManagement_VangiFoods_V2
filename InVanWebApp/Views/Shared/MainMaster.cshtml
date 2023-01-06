@@ -331,10 +331,22 @@
                         @RenderBody()
                     </div>
                     <!-- content-wrapper ends -->
+                    
+                    @*///Rahul added 29-12-2022 Back to top" button will appear in the bottom right corner*@
+                    <!--start Back to top" button bottom right corner-->
+                    <div>
+                        <button type="button"
+                                class="btn btn-primary btn-floating btn-lg btn-rounded"
+                                id="btn-back-to-top" style="background: linear-gradient(85deg, #392c70, #6a005b); box-shadow: 0px 0px 31px 6px rgb(0 0 0 / 17%);">
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                    </div>
+                    <!--Back to top" button bottom right corner-->
+
                     <!-- partial:../../partials/_footer.html -->
                     <footer class="footer">
                         <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022 <a href="https://garimasystem.com/" target="_blank"></a>. All rights reserved.</span>
+                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a href="https://garimasystem.com/" target="_blank"></a>. All rights reserved.</span>
                             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
                                 Powered by @*<i class="far fa-heart text-danger"></i>*@
                                 <a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
@@ -384,3 +396,11 @@
 
 </body>
 </html>
+<style>
+    #btn-back-to-top {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        display: none;
+    }
+</style>
