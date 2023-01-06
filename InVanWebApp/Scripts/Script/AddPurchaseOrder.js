@@ -287,12 +287,12 @@ function createJson() {
         var Tax = (document.getElementById("ItemTax_" + i)).innerHTML.split(" ")[0];
         var TotalItemCost = $("#TotalItemCost_" + i).val();
         TotalItemCost = (TotalItemCost == null || TotalItemCost == '') ? 0 : TotalItemCost;
+        var CurrencyName = $("#CurrencyID option:selected").text();
 
-
-        TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID + ", \"Item_Code\":\"" + ItemCode +
-            "\", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty + ", \"ItemUnit\": \"" + Unit +
-            "\", \"ItemUnitPrice\": " + PricePerUnit + ",\"ItemTaxValue\": " + Tax +
-            ", \"TotalItemCost\": " + TotalItemCost + ", \"BalanceQty\": " + BalanceQty + ", \"RequiredQty\": " + RequiredQty;
+        TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID  +
+            ", \"ItemName\": \"" + ItemName + "\", \"RequiredQty\": " + RequiredQty + ", \"OrderQty\": " + OrderQty + ", \"BalanceQty\": " + BalanceQty
+            + ", \"ItemUnit\": \"" + Unit + "\", \"ItemUnitPrice\": " + PricePerUnit + ", \"CurrencyName\": \"" + CurrencyName + "\",\"ItemTaxValue\": " + Tax +
+            ", \"TotalItemCost\": " + TotalItemCost;
 
         if (i == (rowCount - 2))
             TxtItemDetails = TxtItemDetails + "}";

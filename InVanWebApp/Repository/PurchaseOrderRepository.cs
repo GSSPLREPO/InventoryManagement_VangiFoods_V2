@@ -151,16 +151,16 @@ namespace InVanWebApp.Repository
                     {
                         PurchaseOrderItemsDetails objItemDetails = new PurchaseOrderItemsDetails();
                         objItemDetails.PurchaseOrderId = PurchaseOrderId;
-                        objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
-                        objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
+                        objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
+                        objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
                         objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
-                        objItemDetails.ItemTaxValue = item.ElementAt(6).Value.ToString();
-                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
-                        objItemDetails.BalanceQuantity = float.Parse(item.ElementAt(8).Value);
-                        objItemDetails.RequiredQuantity = float.Parse(item.ElementAt(9).Value);
+                        objItemDetails.RequiredQuantity = float.Parse(item.ElementAt(3).Value);
+                        objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(4).Value);
+                        objItemDetails.BalanceQuantity = float.Parse(item.ElementAt(5).Value);
+                        objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
+                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(7).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(9).Value.ToString();
+                        objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(10).Value);
                         objItemDetails.CreatedBy = purchaseOrderMaster.CreatedBy;
                         //Added the below field for Currency
                         objItemDetails.CurrencyID = purchaseOrderMaster.CurrencyID;

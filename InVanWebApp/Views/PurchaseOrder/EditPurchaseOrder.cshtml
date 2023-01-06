@@ -527,9 +527,7 @@
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
-        console.log(res);
         var TxtItemDetails = JSON.stringify(res);
-        console.log(TxtItemDetails);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 

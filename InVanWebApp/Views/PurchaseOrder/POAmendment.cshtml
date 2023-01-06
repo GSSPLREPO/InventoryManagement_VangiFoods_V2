@@ -108,20 +108,6 @@
                 </div>
             </div>
             <br />
-            @*<div class="row">
-                    <div class="col-md-2">
-                        @Html.Label("Terms And Condition")
-                        <span style="color:red">*</span>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["Terms"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
-                        @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
-                    </div>
-                    <div class="col-md-4 d-none">
-                        @Html.TextBoxFor(model => model.Terms, new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                </div>
-                <br />*@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Location Name")
@@ -184,33 +170,17 @@
                                     <table class="table table-striped" id="submissionTable">
                                         <thead>
                                             <tr>
-                                                <th class="sortStyle">
-                                                    Item Code
-                                                </th>
-                                                <th class="sortStyle d-none">
-                                                    Item ID
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Item
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Required Quantity
-                                                </th>
+                                                <th class="sortStyle">Item Code</th>
+                                                <th class="sortStyle d-none">Item ID</th>
+                                                <th class="sortStyle">Item</th>
+                                                <th class="sortStyle">Required Quantity</th>
                                                 <th class="sortStyle">Order Quantity</th>
                                                 <th class="sortStyle">Balance Quantity</th>
-                                                <th class="sortStyle">
-                                                    Units
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Price (Per Unit)
-                                                </th>
+                                                <th class="sortStyle">Units</th>
+                                                <th class="sortStyle">Price (Per Unit)</th>
                                                 <th class="sortStyle">Currency</th>
-                                                <th class="sortStyle">
-                                                    Tax
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Total before tax
-                                                </th>
+                                                <th class="sortStyle">Tax</th>
+                                                <th class="sortStyle">Total before tax</th>
                                                 <th class="sortStyle d-none">Actual Balance Quantity</th>
                                             </tr>
                                         </thead>
@@ -218,8 +188,9 @@
                                             @{ int c = 1;
                                                 foreach (var item in Model.itemDetails)
                                                 {
-                                                    //string itemListForDD = "itemListForDD";
-                                                    //itemListForDD = itemListForDD + (c - 1);
+                                                    //Here all item grid fields must be disable, since if we edit then
+                                                    //there will be problem of mismatch quantity of indent.
+
                                                     <tr id="tablerow_@c">
                                                         <td>
                                                             @Html.TextBox("ItemCode_" + c, item.Item_Code, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
@@ -235,13 +206,13 @@
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
-                                                            {
-                                                                @class = "form-control",
-                                                                style = "height:30px;width:100px;",
-                                                                value = "0",
-                                                                onkeypress = "return isNumberKey(event)",
-                                                           onchange = "CalItemTotalPrice($(this).val(),id)"
-                                                            })
+                                                       {
+                                                           @class = "form-control",
+                                                           style = "height:30px;width:100px;",
+                                                           value = "0", @readonly="readonly",
+                                                           onkeypress = "return isNumberKey(event)",
+                                                           onchange = "OnChangeQty($(this).val(),id)"
+                                                       })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("BalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
@@ -250,7 +221,7 @@
                                                             @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, "", new { @class = "form-control", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
@@ -362,6 +333,7 @@
                                 <div class="row">
                                     <label>Advanced To Pay:</label>
                                     @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control  form-control-sm text-right", onkeyup = "ValidateAdvancePayment($(this).val(),id)", onkeypress = "return isNumberKey(event)" })
+                                    <span id="ValMsgAdvancePayment" style="display:none; color:red"></span>
                                 </div>
                             </div>
                             <br />
@@ -542,9 +514,7 @@
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
-        console.log(res);
         var TxtItemDetails = JSON.stringify(res);
-        console.log(TxtItemDetails);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
