@@ -285,11 +285,11 @@
                 </div>
             </div>
             <br />
-            <a href="@Url.Action("Index","RequestForQuotation")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
+            <a href="@Url.Action("Index","RequestForQuotation")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
                 Back To List
             </a>
             @*<button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>*@
-            <button type="submit" id="btnSave" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
+            <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
         </div>
     </div>
         
@@ -535,7 +535,7 @@
             '<input type="text" id="' + remarks + '" onchange="createJson()"; class="form-control form-control-sm  text-right" style = "height:30px;width:200px;" name="' + remarks + '"  />' +
             '</td>' +
             '<td>' +
-            '<button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
+            '<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
             '</td>' +
             '</tr>').appendTo('#submissionTable');
 

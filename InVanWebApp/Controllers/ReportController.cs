@@ -108,10 +108,10 @@ namespace InVanWebApp.Controllers
             if (purchaseOrders.Count < 0)
                 return View("Index");
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
-            //string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
             string ReportName = "PO Report";
-            string name = "Vangi Foods";
-            string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
             sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
@@ -238,8 +238,8 @@ namespace InVanWebApp.Controllers
             string ReportName = "&nbsp &nbsp&nbsp &nbsp PO &nbsp Report";/* The Stock Movement Report name are given here  */
             string Fromdate = "From Date : ";/* The From Date are given here  */
             string Todate = "To Date:";/* The To Date are given here  */
-            string name = "Vangi Foods";/* The Vangi Foods are given here  */
-            string address = "Sr No 673, Opp Surya Gate, Gana Rd, Karamsad, Gujarat 388325";/* The Address are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
@@ -274,7 +274,10 @@ namespace InVanWebApp.Controllers
             {
                 BindItemDropDown();
                 BindLocationDropDown();
-                return View();
+                PurchaseOrderBO model = new PurchaseOrderBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                return View(model);
             }
             else
                 return RedirectToAction("Index", "Login");
@@ -334,8 +337,8 @@ namespace InVanWebApp.Controllers
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
             //string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
             string ReportName = "Raw Material Received Report";
-            string name = "Vangi Foods";
-            string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
             sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
@@ -470,8 +473,8 @@ namespace InVanWebApp.Controllers
             string ReportName = "Raw Material Received Report";/* The Stock Movement Report name are given here  */
             string Fromdate = "From Date : ";/* The From Date are given here  */
             string Todate = "To Date:";/* The To Date are given here  */
-            string name = "Vangi Foods";/* The Vangi Foods are given here  */
-            string address = "Sr No 673, Opp Surya Gate, Gana Rd, Karamsad, Gujarat 388325";/* The Address are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +

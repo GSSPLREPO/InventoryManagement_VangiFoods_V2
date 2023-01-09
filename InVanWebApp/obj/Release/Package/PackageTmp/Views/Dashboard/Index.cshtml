@@ -120,12 +120,13 @@
                                 @*<img src="~/Theme/MainContent/images/faces/face5.jpg" alt="profile" />*@
                                 <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                            @*Added class mt-5 in the below div as a part of making page responsive.*@
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
                                 @*<a class="dropdown-item">
-            <i class="fas fa-cog text-primary"></i>
-            Settings
-        </a>*@
-                                <div class="dropdown-divider"></div> 
+                                        <i class="fas fa-cog text-primary"></i>
+                                        Settings
+                                    </a>*@
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
                                     <i class="fas fa-power-off text-primary"></i>
                                     Logout
@@ -141,25 +142,26 @@
             <!-- partial -->
             <div class="container-fluid page-body-wrapper">
                 <!-- partial:partials/_settings-panel.html -->
-                <div class="theme-setting-wrapper">
-                    <div id="settings-trigger"><i class="fas fa-fill-drip"></i></div>
-                    <div id="theme-settings" class="settings-panel">
-                        <i class="settings-close fa fa-times"></i>
-                        <p class="settings-heading">SIDEBAR SKINS</p>
-                        <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
-                        <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
-                        <p class="settings-heading mt-2">HEADER SKINS</p>
-                        <div class="color-tiles mx-0 px-4">
-                            <div class="tiles primary"></div>
-                            <div class="tiles success"></div>
-                            <div class="tiles warning"></div>
-                            <div class="tiles danger"></div>
-                            <div class="tiles info"></div>
-                            <div class="tiles dark"></div>
-                            <div class="tiles default"></div>
+                @*-----------commenting the theme settings here, instead of that we put a floating button for directing the user to the top of the page.-------*@
+                @*<div class="theme-setting-wrapper">
+                        <div id="settings-trigger"><i class="fas fa-fill-drip"></i></div>
+                        <div id="theme-settings" class="settings-panel">
+                            <i class="settings-close fa fa-times"></i>
+                            <p class="settings-heading">SIDEBAR SKINS</p>
+                            <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+                            <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+                            <p class="settings-heading mt-2">HEADER SKINS</p>
+                            <div class="color-tiles mx-0 px-4">
+                                <div class="tiles primary"></div>
+                                <div class="tiles success"></div>
+                                <div class="tiles warning"></div>
+                                <div class="tiles danger"></div>
+                                <div class="tiles info"></div>
+                                <div class="tiles dark"></div>
+                                <div class="tiles default"></div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div>*@
                 <div id="right-sidebar" class="settings-panel">
                     <i class="settings-close fa fa-times"></i>
                     <ul class="nav nav-tabs" id="setting-panel" role="tablist">
@@ -313,10 +315,10 @@
                 <!-- partial -->
                 <!-- partial:partials/_sidebar.html -->
                 <!--
-                    Name : Arpit Shah
-                    Date : 02-02-2022
-                    Description: Make and Calling Partial View for Side Nav Bar and using All Master Page [SideNavBar.cshtml].
-                 -->
+                   Name : Arpit Shah
+                   Date : 02-02-2022
+                   Description: Make and Calling Partial View for Side Nav Bar and using All Master Page [SideNavBar.cshtml].
+                -->
                 <nav class="sidebar sidebar-offcanvas" id="sidebar">
                     @Html.Partial("SideNavBar")
                 </nav>
@@ -331,14 +333,14 @@
                         <div class="row grid-margin">
                             <div class="col-12">
                                 <div class="card card-statistics">
-                                    <div class="card-body">
+                                    <div class="card-body text-white">
                                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
                                             <div class="statistics-item">
                                                 <p class="dashboardfontsize">
                                                     <i class="icon-sm fas fa-chart-line mr-2"></i>
                                                     Purchase
                                                 </p>
-                                                <h3>821.00</h3>
+                                                <h3 class="text-white">821.00</h3>
                                                 @*<label class="badge badge-outline-success badge-pill">821069.00</label>*@
                                             </div>
                                             <div class="statistics-item">
@@ -346,7 +348,7 @@
                                                     <i class="icon-sm fa fa-user mr-2"></i>
                                                     Inventory
                                                 </p>
-                                                <h3>95</h3>
+                                                <h3 class="text-white">95</h3>
                                                 @*<label class="badge badge-outline-success badge-pill">2.7% increase</label>*@
                                             </div>
                                             <div class="statistics-item">
@@ -354,7 +356,7 @@
                                                     <i class="icon-sm fas fa-circle-notch mr-2"></i>
                                                     Sales
                                                 </p>
-                                                <h3>197.45</h3>
+                                                <h3 class="text-white">197.45</h3>
                                                 @*<label class="badge badge-outline-danger badge-pill">16% decrease</label>*@
                                             </div>
                                             <div class="statistics-item">
@@ -362,7 +364,7 @@
                                                     <i class="icon-sm fas fa-cloud-download-alt mr-2"></i>
                                                     Profit
                                                 </p>
-                                                <h3>190.20</h3>
+                                                <h3 class="text-white">190.20</h3>
                                                 @*<label class="badge badge-outline-success badge-pill">12% increase</label>*@
                                             </div>
                                             @*<div class="statistics-item">
@@ -389,14 +391,14 @@
                         <div class="row grid-margin">
                             <div class="col-12">
                                 <div class="card card-statistics">
-                                    <div class="card-body">
+                                    <div class="card-body text-white">
                                         <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
                                             <div class="statistics-item">
                                                 <p class="dashboardfontsize">
                                                     <i class="icon-sm fas fa-chart-line mr-2"></i>
                                                     Sales Order
                                                 </p>
-                                                <h3>168</h3>
+                                                <h3 class="text-white">168</h3>
                                                 @*<label class="badge badge-outline-success badge-pill">10% increase</label>*@
                                             </div>
                                             <div class="statistics-item">
@@ -404,7 +406,7 @@
                                                     <i class="icon-sm fa fa-user mr-2"></i>
                                                     Purchase Order
                                                 </p>
-                                                <h3>19</h3>
+                                                <h3 class="text-white">19</h3>
                                                 @*<label class="badge badge-outline-success badge-pill">2.7% increase</label>*@
                                             </div>
                                             <div class="statistics-item">
@@ -412,7 +414,7 @@
                                                     <i class="icon-sm fas fa-circle-notch mr-2"></i>
                                                     Suppliers
                                                 </p>
-                                                <h3>21</h3>
+                                                <h3 class="text-white">21</h3>
                                                 @*<label class="badge badge-outline-danger badge-pill">16% decrease</label>*@
                                             </div>
                                             <div class="statistics-item">
@@ -420,7 +422,7 @@
                                                     <i class="icon-sm fas fa-cloud-download-alt mr-2"></i>
                                                     Profit
                                                 </p>
-                                                <h3>73</h3>
+                                                <h3 class="text-white">73</h3>
                                                 @*<label class="badge badge-outline-success badge-pill">12% increase</label>*@
                                             </div>
                                             @*<div class="statistics-item">
@@ -471,41 +473,41 @@
                             </div>
                         </div>
                         <!--<div class="row">
-                            <div class="col-md-4 grid-margin stretch-card">
-                                <div class="card">
-                                    <div class="card-body d-flex flex-column">
-                                        <h4 class="card-title">
-                                            <i class="fas fa-chart-pie"></i>
-                                            Sales status
-                                        </h4>
-                                        <div class="flex-grow-1 d-flex flex-column justify-content-between">
-                                            <canvas id="sales-status-chart" class="mt-3"></canvas>
-                                            <div class="pt-4">
-                                                <div id="sales-status-chart-legend" class="sales-status-chart-legend"></div>
-                                            </div>
+                        <div class="col-md-4 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body d-flex flex-column">
+                                    <h4 class="card-title">
+                                        <i class="fas fa-chart-pie"></i>
+                                        Sales status
+                                    </h4>
+                                    <div class="flex-grow-1 d-flex flex-column justify-content-between">
+                                        <canvas id="sales-status-chart" class="mt-3"></canvas>
+                                        <div class="pt-4">
+                                            <div id="sales-status-chart-legend" class="sales-status-chart-legend"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 grid-margin stretch-card">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">
-                                            <i class="far fa-futbol"></i>
-                                            Production Status
-                                        </h4>
-                                        <ul class="solid-bullet-list">
-                                            <li>
-                                                <h5>
-                                                    4 people shared a post
-                                                    <span class="float-right text-muted font-weight-normal small">8:30 AM</span>
-                                                </h5>
-                                                <p class="text-muted">It was an awesome work!</p>
-                                                <div class="image-layers">
-                                                    <div class="img-sm profile-image-text bg-warning rounded-circle image-layer-item">M</div>
-                                                    <img class="img-sm rounded-circle image-layer-item" src="~/Theme/MainContent/images/faces/face3.jpg" alt="profile" />-->
-                                                    @*<img class="img-sm rounded-circle image-layer-item" src="~/Theme/MainContent/images/faces/face5.jpg" alt="profile" />*@
-                                                    <!--<img class="img-sm rounded-circle image-layer-item" src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
+                        </div>
+                        <div class="col-md-4 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <i class="far fa-futbol"></i>
+                                        Production Status
+                                    </h4>
+                                    <ul class="solid-bullet-list">
+                                        <li>
+                                            <h5>
+                                                4 people shared a post
+                                                <span class="float-right text-muted font-weight-normal small">8:30 AM</span>
+                                            </h5>
+                                            <p class="text-muted">It was an awesome work!</p>
+                                            <div class="image-layers">
+                                                <div class="img-sm profile-image-text bg-warning rounded-circle image-layer-item">M</div>
+                                                <img class="img-sm rounded-circle image-layer-item" src="~/Theme/MainContent/images/faces/face3.jpg" alt="profile" />-->
+                        @*<img class="img-sm rounded-circle image-layer-item" src="~/Theme/MainContent/images/faces/face5.jpg" alt="profile" />*@
+                        <!--<img class="img-sm rounded-circle image-layer-item" src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
                                                     <img class="img-sm rounded-circle image-layer-item" src="~/Theme/MainContent/images/faces/face8.jpg" alt="profile" />
                                                 </div>
                                             </li>
@@ -653,14 +655,37 @@
                     </div>
                     <!-- content-wrapper ends -->
                     <!-- partial:partials/_footer.html -->
+
                     <footer class="footer">
                         <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright &copy; 2021  All rights reserved by GARIMA SYSTEM SOLUTIONS PVT LTD.</span>
+                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a href="https://garimasystem.com/" target="_blank"></a>. All rights reserved.</span>
+                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+                                Powered by @*<i class="far fa-heart text-danger"></i>*@
+                                <a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
+                            </span>
                         </div>
                     </footer>
+
+                    @*<footer class="footer">
+                            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright &copy; 2023  All rights reserved by GARIMA SYSTEM SOLUTIONS PVT LTD.</span>
+                            </div>
+                        </footer>*@
+
                     <!-- partial -->
                 </div>
                 <!-- main-panel ends -->
+                @*///Rahul added 29-12-2022 Back to top" button will appear in the bottom right corner*@
+                <!--start Back to top" button bottom right corner-->
+                <div>
+                    <button type="button"
+                            class="btn btn-primary btn-floating btn-lg btn-rounded"
+                            id="btn-back-to-top" style="background: linear-gradient(85deg, #392c70, #6a005b); box-shadow: 0px 0px 31px 6px rgb(0 0 0 / 17%);">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+                <!--Back to top" button bottom right corner-->
+
             </div>
             <!-- page-body-wrapper ends -->
         </div>
@@ -686,4 +711,11 @@
 </body>
 </html>
 
-
+<style>
+    #btn-back-to-top {
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        display: none;
+    }
+</style>

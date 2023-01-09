@@ -97,10 +97,10 @@ namespace InVanWebApp.Controllers
             string Fromdate = "From Date:";
             string Todate = "To Date:";
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
-            //string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
             string ReportName = "Stock Movement Report";
             string name = "Vangi Foods";
-            string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
+            string address = ApplicationSession.ORGANISATIONADDRESS;
             sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
@@ -311,7 +311,7 @@ namespace InVanWebApp.Controllers
             string Fromdate = "From Date : ";/* The From Date are given here  */
             string Todate = "To Date:";/* The To Date are given here  */
             string name = "Vangi Foods";/* The Vangi Foods are given here  */
-            string address = "Sr No 673, Opp Surya Gate, Gana Rd, Karamsad, Gujarat 388325";/* The Address are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td><td colspan='3' rowspan='5'> <img height='150' width='150' src='" + strPath + "'/></td></td>" +

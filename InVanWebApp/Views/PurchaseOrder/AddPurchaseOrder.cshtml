@@ -233,7 +233,7 @@
                                                         @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                     </td>
                                                     <td>
-                                                        <button type="button" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
+                                                        <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
                                                     </td>
                                                 </tr>
                                             </tbody>*@
@@ -358,13 +358,13 @@
             <div class="col d-flex justify-content-end" style="margin-left: auto;">
                 <div class="row">
                     <div class="col-3">
-                        <button type="submit" id="btnSave" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
                     </div>
                     <div class="col-4">
-                        <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
+                        <button type="submit" id="btn_SaveDraft" class="btn btn-sm btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
                     </div>
                     <div class="col-4">
-                        <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                        <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-sm btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                             Back To List
                         </a>
                     </div>

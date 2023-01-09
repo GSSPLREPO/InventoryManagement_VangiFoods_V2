@@ -13,10 +13,10 @@
         @Html.ValidationSummary(true)
         <div class="row">
             <div class="col-md-2 text-right">
-                <button class="btn btn-primary mr-2" id="btnAdd" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Single Company</button>
+                <button class="btn btn-sm btn-primary mr-2" id="btnAdd" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Single Company</button>
             </div>&nbsp;&nbsp;&nbsp;
             <div class="col-md-2 text-right">
-                <button class="btn btn-primary mr-2" id="btnAddMultiple" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Multiple Companies</button>
+                <button class="btn btn-sm btn-primary mr-2" id="btnAddMultiple" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Multiple Companies</button>
             </div>
         </div>
         @using (Html.BeginForm())
@@ -147,19 +147,19 @@
                     <div class="row">
                         <div class="col-lg-12">
                             @*<button type="button" class="btn btn-info" id="btnViewExcel"><i class="icon-eye2"></i> View Excel</button>*@ @*uploadexcel*@
-                            <a href="~/ExcelFileFormat/Download-Format-Company.xlsx" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" download><i class="icon-cloud-download2"></i> Download Excel File Format</a>
+                            <a href="~/ExcelFileFormat/Download-Format-Company.xlsx" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" download><i class="icon-cloud-download2"></i> Download Excel File Format</a>
                             <span> </span>
-                            <button type="submit" class="btn btn-primary mr-2" id="uploadexcel" style="display: none; background: linear-gradient(85deg, #392c70, #6a005b);"> Upload</button>
+                            <button type="submit" class="btn btn-sm btn-primary mr-2" id="uploadexcel" style="display: none; background: linear-gradient(85deg, #392c70, #6a005b);"> Upload</button>
                             <input type="hidden" id="hdnExcelRecord" name="hdnExcelRecord" />
                         </div>
                     </div>
                 </fieldset>
             </div>
             <br />
-            <a href="@Url.Action("Index", "Company")" class="btn btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
+            <a href="@Url.Action("Index", "Company")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
                 Back To List
             </a>
-            <button id="btnSave" type="submit" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;display:none;">Save</button>
+            <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;display:none;">Save</button>
         }
     </div>
 

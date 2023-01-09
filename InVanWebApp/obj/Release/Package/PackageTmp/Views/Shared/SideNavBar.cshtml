@@ -52,6 +52,7 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>
+                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Stock Avaliblity</a></li>
                         <li class="nav-item"> <a class="nav-link" href="#">Utlity</a></li>
                         <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Order Summary</a></li>
@@ -83,6 +84,12 @@
                             <a class="nav-link" href="@Url.Action("Index","Indent")">Indent</a>
                         </div>
                     </li>
+                    @*Rahul added Request For Quotation 02-01-2023.*@
+                    <li class="nav-item">
+                        <div id="InquiryForm">
+                            <a class="nav-link" href="~/InquiryForm">Inquiry Form</a>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <div id="InwardNote">
                             <a class="nav-link" href="@Url.Action("Index","InwardNote")">Inward Note</a>
@@ -105,24 +112,24 @@
                         </div>
                     </li>
                     @*<li class="nav-item"> <a class="nav-link" href="~/Material/OutwardNote">Outward Note</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="~/Material/IssueNote">IssueNote</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">IssueNoteDetails</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">MaterialRequirement</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">SalesOrder</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="~/Material/WorkOrder">WorkOrder</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">WorkOrderDetails</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">IssueReturnNote</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">IssueReturnNoteDetails</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="~/Material/DebitNote">DebitNote</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">DebitNoteDetails</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="~/Material/CreditNote">CreditNote</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="~/Material/PRequestForQuotation">Request Quatation</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="~/Material/QuatationComparision">QuatationComparision</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="~/Material/UpdateStock">UpdateStock</a></li>
+        <li class="nav-item"> <a class="nav-link" href="~/Material/IssueNote">IssueNote</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">IssueNoteDetails</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">MaterialRequirement</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">SalesOrder</a></li>
+        <li class="nav-item"> <a class="nav-link" href="~/Material/WorkOrder">WorkOrder</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">WorkOrderDetails</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">IssueReturnNote</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">IssueReturnNoteDetails</a></li>
+        <li class="nav-item"> <a class="nav-link" href="~/Material/DebitNote">DebitNote</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">DebitNoteDetails</a></li>
+        <li class="nav-item"> <a class="nav-link" href="~/Material/CreditNote">CreditNote</a></li>
+        <li class="nav-item"> <a class="nav-link" href="~/Material/PRequestForQuotation">Request Quatation</a></li>
+        <li class="nav-item"> <a class="nav-link" href="~/Material/QuatationComparision">QuatationComparision</a></li>
+        <li class="nav-item"> <a class="nav-link" href="~/Material/UpdateStock">UpdateStock</a></li>
 
-                        <li class="nav-item"> <a class="nav-link" href="#">RequestForQuotation</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="~/Material/RejectionNote">Rejection Note</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Delivery Challan</a></li>*@
+        <li class="nav-item"> <a class="nav-link" href="#">RequestForQuotation</a></li>
+        <li class="nav-item"> <a class="nav-link" href="~/Material/RejectionNote">Rejection Note</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">Delivery Challan</a></li>*@
 
                 </ul>
             </div>
@@ -249,6 +256,17 @@
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item"> <a class="nav-link" href="@Url.Action("Report_OC_Index","TransactionsPOandOC")">Sales Order Report</a></li>*@
                     <li class="nav-item">
+                        <div id="POReport">
+                            <a class="nav-link" href="~/Report">PO Report</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="RawMaterialReceivedReport">
+                            <a class="nav-link" href="~/Report/RawMaterialIndex">Raw Material Received Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div id="StockReport">
                             <a class="nav-link" href="~/StockReport">Stock Report</a>
                         </div>
@@ -259,16 +277,16 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                            <div id="InventoryControlReport">
-                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-                            </div>
-                        </li>*@
+            <div id="InventoryControlReport">
+                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+            </div>
+        </li>*@
 
                     @*<li class="nav-item"> <a class="nav-link" href="#">Material</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Production</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">QC</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Daily Operations</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Accounts</a></li>*@
+        <li class="nav-item"> <a class="nav-link" href="#">Production</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">QC</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">Daily Operations</a></li>
+        <li class="nav-item"> <a class="nav-link" href="#">Accounts</a></li>*@
                 </ul>
             </div>
         </li>

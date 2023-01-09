@@ -25,6 +25,8 @@ namespace InVanWebApp.Common
         public const string AREAID = "area";
         public const string ORGANISATIONLOGO = "OrganisationId";
         public const string ORGANISATIONNAME = "OrganisationName";
+        public const string ORGANISATIONTIITLE = "Vangi Foods";
+        public const string ORGANISATIONADDRESS = "Sr No 673, Opp Surya Gate, Gana Rd, Karamsad, Gujarat 388325";
         #endregion
 
         public static void ClearAllSessions()

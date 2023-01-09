@@ -82,10 +82,10 @@ namespace InVanWebApp.Controllers
             if (stockReport.Count < 0)
                 return View("Index");
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
-            //string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
             string ReportName = "Inventory Control Report";
             string name = "Vangi Foods";
-            string address = "SR NO 673, OPP SURYA GATE, Gana Rd, Karamsad, Gujarat 388325";
+            string address = ApplicationSession.ORGANISATIONADDRESS;
             sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
