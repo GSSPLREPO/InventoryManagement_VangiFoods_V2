@@ -20,13 +20,6 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select inward number!")]
         public int InwardNote_Id { get; set; }
         public string InwardNumber { get; set; }
-        public Nullable<int> InwardQC_Id { get; set; }
-
-        [Required(ErrorMessage = "Enter QC number!")]
-        public string InwardQCNo { get; set; }
-        [Required(ErrorMessage = "Select QC date!")]
-        [DataType(DataType.Date)]
-        public DateTime InwardQCDate { get; set; }
         public Nullable<float> InwardQuantity { get; set; }
         public Nullable<float> RejectedQuantity { get; set; }
         [Required(ErrorMessage = "Select supplier name!")]
@@ -40,7 +33,8 @@ namespace InVanWebApp_BO
         public string WastageQuantities { get; set; }
         public string ReasonsForRejection { get; set; }
         //Added the below property for saving the item table details. 
-        public List<RejectionDataSheetMasterDetailBO> itemDetails { get; set; }
+        public List<RejectionNoteItemDetailsBO> itemDetails { get; set; }
+        public Nullable<int> SupplierID { get; set; }  ///Rahul added 10-01-2023. 
 
         //Added the below field for Rejection note Report
 
@@ -49,8 +43,10 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Please Select From Date ")]
         public DateTime toDate { get; set; }
+
+
     }
-    public class RejectionDataSheetMasterDetailBO 
+    public class RejectionNoteItemDetailsBO
     {
         public int RejectionID { get; set; }
         public DateTime RejectionDate { get; set; }

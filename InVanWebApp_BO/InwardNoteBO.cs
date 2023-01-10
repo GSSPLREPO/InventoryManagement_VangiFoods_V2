@@ -71,6 +71,9 @@ namespace InVanWebApp_BO
         
         //This field is used in Inward QC.
         public string ItemTaxValue { get; set; }
+
+        //Below field is added for Rejection note.
+        public Nullable<int> SupplierID { get; set; }  ///Rahul added 10-01-2023. 
     }
 
     public class InwardNoteDetailBO

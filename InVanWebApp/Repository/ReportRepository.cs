@@ -123,9 +123,9 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Rejection note data
-        public List<RejectionDataSheetMasterDetailBO> getRejectionReportData(DateTime fromDate, DateTime toDate)
+        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate)
         {
-            List<RejectionDataSheetMasterDetailBO> resultList = new List<RejectionDataSheetMasterDetailBO>();
+            List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
             try
             {
                 using (SqlConnection con = new SqlConnection(conStr))
@@ -139,7 +139,7 @@ namespace InVanWebApp.Repository
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
                     {
-                        var result = new RejectionDataSheetMasterDetailBO()
+                        var result = new RejectionNoteItemDetailsBO()
                         {
                             SrNo = Convert.ToInt32(reader["SrNo"]),
                             RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy hh:mm:ss"),

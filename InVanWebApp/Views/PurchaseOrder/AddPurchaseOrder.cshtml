@@ -6,7 +6,6 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
-@*@using (Html.BeginForm())*@
 @using (Html.BeginForm("AddPurchaseOrder", "PurchaseOrder", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -200,48 +199,7 @@
                                                 <th class="sortStyle d-none">Actual Balance Quantity</th>
                                             </tr>
                                         </thead>
-                                        @*<tbody id="myTableBody">
-                                                <tr id="tablerow">
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.Item_Code,  new { @class = "form-control", style = "height:30px;width:100px;"})
-                                                    </td>
-                                                    <td class="col-md-4 d-none">
-                                                        @Html.TextBoxFor(model => model.Item_ID, new { @class = "form-control", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("ItemName", "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.RequiredQuantity, new { @class = "form-control text-right", style = "height:30px;width:100px;", MaxLength = "8" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("ItemUnit", "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("ItemUnitPrice", "", new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("CurrencyName", "", new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("ItemTaxValue", "", new { @class = "form-control text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>*@
                                     </table>
-                                    @*<br />
-                                        <button type="button" class="btn btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
-                                            + Add Item
-                                        </button>*@
                                 </div>
                             </div>
                         </div>

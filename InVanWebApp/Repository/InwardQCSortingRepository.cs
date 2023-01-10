@@ -273,7 +273,8 @@ namespace InVanWebApp.Repository
                                 ID = Convert.ToInt32(dataReader["ID"]),
                                 InwardDate = Convert.ToDateTime(dataReader["InwardDate"]),
                                 PONumber = dataReader["PONumber"].ToString(),
-                                SupplierDetails = dataReader["SupplierDetails"].ToString()
+                                SupplierDetails = dataReader["SupplierDetails"].ToString(),
+                                SupplierID = Convert.ToInt32(dataReader["SupplierID"])  ///Rahul added 10-01-2023. 
                             };
                             resultList.Add(result);
                         }

@@ -15,6 +15,7 @@ namespace InVanWebApp.Controllers
     {
         private ICreditNoteRepository _repository;
         private IGRNRepository _GRNrepository;
+        private IPurchaseOrderRepository _purchaseOrderRepository;
         private static ILog log = LogManager.GetLogger(typeof(GRNController));
 
         #region Initializing Constructor
@@ -27,6 +28,7 @@ namespace InVanWebApp.Controllers
         {
             _repository = new CreditNoteRepository();
             _GRNrepository = new GRNRepository();
+            _purchaseOrderRepository = new PurchaseOrderRepository();
         }
 
         /// <summary>
@@ -47,7 +49,7 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
 
             var model = _repository.GetAll();
-            return View();
+            return View(model);
         }
         #endregion
 
@@ -62,6 +64,9 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindGRNNumber();
+                BindLocationName();
+                BindCurrencyPrice();
+                BindCompany();
                 CreditNoteBO model = new CreditNoteBO();
                 model.CreditNoteDate = DateTime.Today;
                 //==========Document number for GRN note============//
@@ -100,6 +105,8 @@ namespace InVanWebApp.Controllers
                         {
                             TempData["Success"] = "<script>alert('Duplicate Credit note! Can not be inserted!');</script>";
                             BindGRNNumber();
+                            BindLocationName();
+                            BindCurrencyPrice();
                             model.CreditNoteDate = DateTime.Today;
 
                             GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -115,6 +122,8 @@ namespace InVanWebApp.Controllers
                     else
                     {
                         BindGRNNumber();
+                        BindLocationName();
+                        BindCurrencyPrice();
                         model.CreditNoteDate = DateTime.Today;
 
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -134,6 +143,8 @@ namespace InVanWebApp.Controllers
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
                 BindGRNNumber();
+                BindLocationName();
+                BindCurrencyPrice();
                 model.CreditNoteDate = DateTime.Today;
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -198,6 +209,24 @@ namespace InVanWebApp.Controllers
             var result = _GRNrepository.GetAll();
             var resultList = new SelectList(result.ToList(), "ID", "GRNCode");
             ViewData["GRNList"] = resultList;
+        }
+        public void BindLocationName()
+        {
+            var result = _purchaseOrderRepository.GetLocationNameList();
+            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
+            ViewData["LocationName"] = resultList;
+        }
+        public void BindCurrencyPrice()
+        {
+            var result = _purchaseOrderRepository.GetCurrencyPriceList();
+            var resultList = new SelectList(result.ToList(), "CurrencyID", "CurrencyName");
+            ViewData["CurrencyList"] = resultList;
+        }
+        public void BindCompany()
+        {
+            var result = _purchaseOrderRepository.GetCompanyList();
+            var resultList = new SelectList(result.ToList(), "VendorsID", "CompanyName");
+            ViewData["CompanyName"] = resultList;
         }
         #endregion
 

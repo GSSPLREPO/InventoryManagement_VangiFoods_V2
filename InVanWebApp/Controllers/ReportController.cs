@@ -552,7 +552,7 @@ namespace InVanWebApp.Controllers
             }
 
             StringBuilder sb = new StringBuilder();
-            List<RejectionDataSheetMasterDetailBO> resultList = TempData["RejectionReportDataTemp"] as List<RejectionDataSheetMasterDetailBO>;
+            List<RejectionNoteItemDetailsBO> resultList = TempData["RejectionReportDataTemp"] as List<RejectionNoteItemDetailsBO>;
 
             if (resultList.Count < 0)
                 return View("Index");
@@ -644,7 +644,7 @@ namespace InVanWebApp.Controllers
         public void ExportAsExcelForRejection()
         {
             GridView gv = new GridView();
-            List<RejectionDataSheetMasterDetailBO> resultList = _repository.getRejectionReportData(Convert.ToDateTime(Session["FromDate"]), Convert.ToDateTime(Session["toDate"]));
+            List<RejectionNoteItemDetailsBO> resultList = _repository.getRejectionReportData(Convert.ToDateTime(Session["FromDate"]), Convert.ToDateTime(Session["toDate"]));
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("PO Date");
@@ -653,7 +653,7 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("PO Status");
             dt.Columns.Add("Vendor Name");
 
-            foreach (RejectionDataSheetMasterDetailBO st in resultList)
+            foreach (RejectionNoteItemDetailsBO st in resultList)
             {
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = st.SrNo.ToString();
