@@ -48,7 +48,8 @@ namespace InVanWebApp.Repository
                             FromLocation_BeforeTransferQty = Convert.ToInt32(reader["FromLocation_BeforeTransferQty"]),
                             TransferQuantity = Convert.ToInt32(reader["TransferQuantity"]),
                             FinalQuantity = Convert.ToInt32(reader["BalanceQty_FromLocation"]),
-                            InwardDateOfItem = Convert.ToDateTime(reader["InwardDateOfItem"])
+                            InwardDateOfItem = Convert.ToDateTime(reader["InwardDateOfItem"]),
+                            CreatedDate = Convert.ToDateTime(reader["Date"])
 
                         };
                         stockTransferMastersList.Add(StockTransferMasters);

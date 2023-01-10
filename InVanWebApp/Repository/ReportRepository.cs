@@ -11,12 +11,12 @@ using System.Data;
 
 namespace InVanWebApp.Repository
 {
-    public class ReportRepository:IReportRepository
+    public class ReportRepository : IReportRepository
     {
         private readonly string conStr = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private static ILog log = LogManager.GetLogger(typeof(ReportRepository));
 
-
+        #region PO report
 
         /// Repository for Get PO Report Data 
         /// Developed by  - Siddharth Purohit on 30-12-2022
@@ -32,9 +32,9 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
                     cmd.Parameters.AddWithValue("@Status", Status);
-                    cmd.Parameters.AddWithValue("@Vendors",VendorId);
+                    cmd.Parameters.AddWithValue("@Vendors", VendorId);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    
+
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
@@ -46,7 +46,7 @@ namespace InVanWebApp.Repository
                             PONumber = reader["PO_Number"].ToString(),
                             IndentNumber = reader["Indent_Number"].ToString(),
                             PurchaseOrderStatus = reader["PO_Status"].ToString(),
-                            CompanyName= reader["Vendor_Name"].ToString()
+                            CompanyName = reader["Vendor_Name"].ToString()
                         };
                         resultList.Add(result);
                     }
@@ -64,6 +64,9 @@ namespace InVanWebApp.Repository
             return resultList;
         }
 
+        #endregion
+
+        #region Raw material received data
 
         /// Repository for Raw Material Received Report Data 
         /// Developed by  - Siddharth Purohit on 02-01-2023
@@ -116,5 +119,55 @@ namespace InVanWebApp.Repository
 
 
         }
+
+        #endregion
+
+        #region Rejection note data
+        public List<RejectionDataSheetMasterDetailBO> getRejectionReportData(DateTime fromDate, DateTime toDate)
+        {
+            List<RejectionDataSheetMasterDetailBO> resultList = new List<RejectionDataSheetMasterDetailBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_RejectionNote_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new RejectionDataSheetMasterDetailBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy hh:mm:ss"),
+                            Item_Name=reader["ItemName"].ToString(),
+                            Item_Code=reader["ItemCode"].ToString(),
+                            ItemUnitPrice=Convert.ToDecimal(reader["ItemUnitPrice"]),
+                            TotalRecevingQuantiy=Convert.ToDouble(reader["TotalRecevingQuantiy"]),
+                            TotalRejectedQuantity=Convert.ToDouble(reader["TotalRejectedQuantity"]),
+                            RejectionNoteNo = reader["RejectionNoteNo"].ToString(),
+                            InwardNumber = reader["InwardNumber"].ToString(),
+                            ApprovedBy= reader["ApprovedBy"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
     }
 }
