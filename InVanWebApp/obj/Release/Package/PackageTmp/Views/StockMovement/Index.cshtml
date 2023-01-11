@@ -34,7 +34,7 @@
                                 @using (Html.BeginForm("ExprotAsPDF", "StockMovement", FormMethod.Post))
                                 {
 
-                                    <div class="row">
+                                    <div class="row-inline">
                                         <div class="col-md-2">
                                             <label>From Date:</label>
                                             <span style="color:red">*</span>
@@ -160,9 +160,12 @@
                 "sAjaxSource": "/StockMovement/GetStockMovementDate?fromDate=" + fromDate + "&toDate=" + toDate,
                 ///Rahul added initComplete function for export buttons hide/show 09-01-2023.
                 "initComplete": function (settings, json) {
-                    var flag = (document.getElementById("tblInward").rows.length);
-                    flag = parseFloat(flag);
-                    if (flag > 2) {
+                    //var flag = (document.getElementById("tblInward").rows.length);
+                    //flag = parseFloat(flag);
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
                         $('#ExportPdf').show();
                         $('#ExportExcel').show();
                     }

@@ -224,9 +224,13 @@
                 "sAjaxSource": "/Report/getRawMaterialReceivedData?fromDate=" + fromDate + "&toDate=" + toDate + "&item=" + item + "&wearhouse=" + wearhouse,
                 ///Rahul added initComplete function for export buttons hide/show 09-01-2023.
                 "initComplete": function (settings, json) {
-                    var flag = (document.getElementById("tblInward").rows.length);
-                    flag = parseFloat(flag);
-                    if (flag > 2) {
+                    //var flag = (document.getElementById("tblInward").rows.length);
+                    //flag = parseFloat(flag);
+
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
                         $('#ExportPdf').show();
                         $('#ExportExcel').show();
                     }

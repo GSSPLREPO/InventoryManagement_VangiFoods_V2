@@ -15,7 +15,8 @@
                 <ul class="list-inline items">
                     <li class="list-inline-item items-list">
                         <div class="px-4">
-                            <div class="event-date badge bg-info font-weight-bold" style="color:white">
+                            <!-- Rahul added  py-2 30-12-2022. -->
+                            <div class="event-date badge bg-info font-weight-bold py-2" style="color:white">
                                 @Model.PODate.ToString("dd/MM/yyyy")
                                 @*@Html.DisplayFor(model => model.PODate, "{0:yyyy-MM-dd}")*@
                             </div>
@@ -30,12 +31,14 @@
                     </li>
                     <li class="list-inline-item items-list">
                         <div class="px-4">
-                            <div class="event-date badge bg-success font-weight-bold" style="color:white">
+                            <!-- Rahul added  py-2 30-12-2022. -->
+                            <div class="event-date badge bg-success font-weight-bold py-2" style="color:white">
                                 @*@Model.InwardDate.ToString("dd/MM/yyyy")*@
 
                                 @{ if ((DateTime.Compare(Model.InwardDate, Convert.ToDateTime("01-01-0001 00:00:00")) == 0))
                                     {
-                                        <div class="mb-2 font-weight-bold">Not yet done</div>
+                                        <!-- Rahul updated  mb-2 to mb-0 30-12-2022. -->
+                                        <div class="mb-0 text-white font-weight-bold">Not yet done</div>
                                     }
                                     else
                                     {
@@ -52,7 +55,8 @@
                                     }
                                     else
                                     {
-                                        <div class="mb-2 text-muted font-weight-bold">Inward is pending!</div>
+                                        <!-- <div class="mb-2 text-muted font-weight-bold">Inward is pending!</div> -->
+                                        <div class="mb-2 text-muted font-weight-bold">Pending</div>
                                     } }
                             </p>
                             <div>
@@ -62,10 +66,12 @@
                     </li>
                     <li class="list-inline-item items-list">
                         <div class="px-4">
-                            <div class="event-date badge bg-danger font-weight-bold" style="color:white">
+                            <!-- Rahul added  py-2 30-12-2022. -->
+                            <div class="event-date badge bg-danger font-weight-bold py-2" style="color:white">
                                 @{ if ((DateTime.Compare(Model.GRNDate, Convert.ToDateTime("01-01-0001 00:00:00")) == 0))
                                     {
-                                        <div class="mb-2 text-white font-weight-bold">Not yet done</div>
+                                        <!-- Rahul updated  mb-2 to mb-0 30-12-2022. -->
+                                        <div class="mb-0 text-white font-weight-bold">Not yet done</div>
                                     }
                                     else
                                     {
@@ -80,7 +86,8 @@
                                     }
                                     else
                                     {
-                                <div class="mb-2 text-muted font-weight-bold">GRN is pending!</div>
+                                        <!-- <div class="mb-2 text-muted font-weight-bold">GRN is pending!</div> -->
+                                        <div class="mb-2 text-muted font-weight-bold">Pending</div>
                                     } }
                             </p>
                             <div>
@@ -90,11 +97,13 @@
                     </li>
                     <li class="list-inline-item items-list">
                         <div class="px-4">
-                            <div class="event-date badge bg-warning font-weight-bold text-white">
+                            <!-- Rahul added  py-2 30-12-2022. -->
+                            <div class="event-date badge bg-warning font-weight-bold text-white py-2">
                                 @*@Model.PaymentDate.ToString("dd/MM/yyyy")*@
                                 @{ if ((DateTime.Compare(Model.PaymentDate, Convert.ToDateTime("01-01-0001 00:00:00")) == 0))
                                     {
-                                        <div class="mb-2 text-white font-weight-bold">Not yet done</div>
+                                        <!-- Rahul updated  mb-2 to mb-0 30-12-2022. -->
+                                        <div class="mb-0 text-white font-weight-bold">Not yet done</div>
                                     }
                                     else
                                     {
@@ -110,7 +119,8 @@
                                     }
                                     else
                                     {
-                                        <div class="mb-2 text-muted font-weight-bold">PO payment is pending!</div>
+                                        <!-- <div class="mb-2 text-muted font-weight-bold">PO payment is pending!</div> -->
+                                        <div class="mb-2 text-muted font-weight-bold">Pending</div>
                                     } }
                             </p>
                             <div>

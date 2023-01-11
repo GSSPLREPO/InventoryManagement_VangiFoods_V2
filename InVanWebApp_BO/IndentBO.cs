@@ -12,7 +12,9 @@ namespace InVanWebApp_BO
         public int ID { get; set; }
         [Required(ErrorMessage ="Please enter the indent no!")]
         public string IndentNo { get; set; }
+
         [Required(ErrorMessage ="Select the indent date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> IndentDate { get; set; }
         public Nullable<System.DateTime> IndentDueDate { get; set; }
         [Required(ErrorMessage ="Select user!")]

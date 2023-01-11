@@ -44,22 +44,14 @@
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
-                                    <tbody style="overflow-wrap: anywhere;">
+                                    <tbody>
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.IndentNo)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.IndentDate)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.IndentStatus)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.Description)
-                                                </td>
+                                                <td>@Html.DisplayFor(modelItem => item.IndentNo)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.IndentDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                                 <td>
                                                     @if (item.IndentCount == 0)
                                                     {

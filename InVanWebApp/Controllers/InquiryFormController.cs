@@ -39,7 +39,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-
         #region  Bind grid
         /// <summary>
         ///Rahul: Get data and rendered it in it's view. 
@@ -99,7 +98,6 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
         #endregion
-
 
         #region Bind dropdowns Currency Price
         public void BindCurrencyPrice()

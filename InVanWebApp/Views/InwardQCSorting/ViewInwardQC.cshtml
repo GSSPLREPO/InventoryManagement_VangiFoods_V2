@@ -24,41 +24,20 @@
         {
             @Html.AntiForgeryToken()
             <div class="row" id="printV" width="1000px">
-                <div class="row" style="margin-bottom: 1%;">
-                    <div class="col-md-12" style="margin-left: 1560%;">
-                        <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" style="width:45px;height:45px" />
-                    </div>
-                </div>
-                <br />
                 <div class="col-md-12  grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" style="width:50px;height:50px;">
-                                &nbsp;&nbsp;&nbsp;<h3 class="card-title font-weight-bold" style="font-size: 16pt;">Inward QC Sorting</h3>
-
-                            </div>
-                            @*<hr />
-                            <div class="col-md-12">
-                                <div class="row">
-
-                                    <div class="col-md-6">
-                                        <label class="font-weight-bold">Goods Received By</label>
-                                        @Html.TextAreaFor(model => model.ShippingDetails, new { style = "border:none; width:100%" })
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="font-weight-bold">Goods Send By</label>
-                                        @Html.TextAreaFor(model => model.SupplierDetails, new { style = "border:none; width:100%" })
+                                <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
+                                <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Inward QC Sorting</h3>
+                                <div class="col">
+                                    <div class="col-md-12">
+                                        <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" />
                                     </div>
                                 </div>
                             </div>
-                            <br />*@
                             <hr />
                             <div class="row">
-                                <div class="col-md-12">
-                                    <Center><h5 class="font-weight-bold">QC Details</h5></Center>
-                                    <hr />
-                                </div>
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-lg-2">
@@ -82,11 +61,11 @@
                                             @Html.DisplayFor(model => model.InwardNumber)
                                         </div>
                                         @*<div class="col-lg-2">
-                                            <p class="font-weight-bold">Inward Quantity</p>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
-                                        </div>*@
+                                                <p class="font-weight-bold">Inward Quantity</p>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
+                                            </div>*@
                                     </div>
                                 </div>
                             </div>
@@ -175,7 +154,7 @@
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                 console.log(time);
                 var today = formatDate(currentDate);
-                doc.save('InwardQC_' + today + '_'+time+'.pdf');
+                doc.save('InwardQC_' + today + '_' + time + '.pdf');
                 $("#btnExport").show();
                 $("#btnBack").show();
                 //$("#btnPrint").show();
@@ -215,12 +194,12 @@
 
             $.ajax({
                 type: "POST",
-                url: `/InwardQCSorting/BindInwDetails?id=` + InwardQC_Id + "&InwNote_Id=" + InwardNote_Id ,
+                url: `/InwardQCSorting/BindInwDetails?id=` + InwardQC_Id + "&InwNote_Id=" + InwardNote_Id,
                 data: "{}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
-                    
+
                     //===================Create dynamic table for binding Item details====================//
                     var table = document.getElementById('ItemTable');
                     for (var j = 0; j < result.length; j++) {
@@ -237,7 +216,7 @@
                                 cell.innerHTML = result[j].Item_Code;
                             }
                             else if (i == 2) {
-                                cell.innerHTML = result[j].InwardQuantity+" Kg";
+                                cell.innerHTML = result[j].InwardQuantity + " Kg";
                             }
                             else if (i == 3) {
                                 cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
@@ -246,7 +225,7 @@
                                 cell.innerHTML = result[j].QuantityTookForSorting + " Kg";
                             }
                             else if (i == 5) {
-                                cell.innerHTML = result[j].RejectedQuantity+" Kg";
+                                cell.innerHTML = result[j].RejectedQuantity + " Kg";
                             }
                             else if (i == 6) {
                                 cell.innerHTML = result[j].Remarks;

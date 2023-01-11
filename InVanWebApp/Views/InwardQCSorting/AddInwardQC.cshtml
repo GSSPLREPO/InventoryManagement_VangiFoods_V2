@@ -249,7 +249,7 @@
                             var cellData = document.getElementById("DeliveredQty" + j);
                             var temp_itemQty = cellData.innerHTML.split(' ');
                             var deliveredQty = parseFloat(temp_itemQty[0]);
-
+                            t6.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
                             if (result[j].QuantityTookForSorting == deliveredQty) {
                                 t6.setAttribute("disabled", "true");
                                 //flag = 1;
@@ -268,11 +268,13 @@
                             t7.id = "txtBalanceQty" + j;
                             t7.setAttribute("disabled", "true");
                             t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
+                            t7.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
                             cell.appendChild(t7);
                         }
                         else if (i == 7) {
                             var t7 = document.createElement("input");
                             t7.id = "txtRejectedQty" + j;
+                            t7.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
                             if (result[j].QuantityTookForSorting == deliveredQty) {
                                 t7.setAttribute("value", result[j].RejectedQuantity != 0 ? result[j].RejectedQuantity : '0');
                                 t7.setAttribute("disabled", "true");
@@ -300,6 +302,7 @@
                         else if (i == 9) {
                             var t7 = document.createElement("input");
                             t7.id = "txtRemarks_" + j;
+                            t7.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
                             if (result[j].QuantityTookForSorting == deliveredQty) {
                                 t7.setAttribute("value", result[j].Remarks);
                                 t7.setAttribute("disabled", "true");
@@ -318,6 +321,7 @@
                             t7.setAttribute("value", result[j].ItemId);
                             t7.setAttribute("disabled", "true");
                             t7.setAttribute("class", "d-none");
+                            cell.setAttribute("class", "d-none")
                             cell.appendChild(t7);
                         }
                         else if (i == 11) {
@@ -326,6 +330,7 @@
                             t7.setAttribute("value", result[j].ItemTaxValue);
                             t7.setAttribute("disabled", "true");
                             t7.setAttribute("class", "d-none");
+                            cell.setAttribute("class", "d-none");
                             cell.appendChild(t7);
                         }
 
@@ -406,11 +411,13 @@
             if (rejectedQty > sortingQty) {
                 alert("Rejected quantity cannot be greater then sorting quantity!");
                 document.getElementById(id).focus();
-                document.getElementById(id).setAttribute("style", "border-color:red;");
+                document.getElementById(id).setAttribute("class", "border border-1 border-danger");
+                //document.getElementById(id).setAttribute("style", "border-color:red;");
                 return;
             }
             else {
                 document.getElementById(id).setAttribute("style", "border-color:none;");
+                document.getElementById(id).removeAttribute("class", "border border-1 border-danger");
                 RejectedQuantities = RejectedQuantities + "txtRejectedQty" + rowNo + "*" + rejectedQty + ",";
                 if (rejectedQty == 0 && sortingQty == 0) {
                     document.getElementById("txtWastagePer" + rowNo).value = 0;
@@ -426,6 +433,7 @@
             }
 
         }
+        document.getElementById(id).setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
     }
 
     function OnChangeQCQty(value, id) {
@@ -442,7 +450,8 @@
         if (value > (InwQty - balQty)) {
             alert("QC quantity cannot be greater then Inward quantity!");
             document.getElementById(id).focus();
-            document.getElementById(id).setAttribute("style", "border-color:red;");
+            //document.getElementById(id).setAttribute("style", "border-color:red;");
+            document.getElementById(id).setAttribute("class", "border border-1 border-danger");
             return;
         }
         else {
@@ -453,8 +462,10 @@
 
             var BalQty = document.getElementById("txtBalanceQty" + rowNo).value;
             BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" + BalQty + ",";
-            document.getElementById(id).setAttribute("style", "border-color:none;");
+            document.getElementById(id).removeAttribute("class", "border border-1 border-danger");
+            
         }
+            document.getElementById(id).setAttribute("style", "background-color:#9999994d;border-radius:5px;");
     }
 
     function SetInwardQty() {
@@ -469,5 +480,3 @@
     }
 
 </script>
-
-@Html.Raw(TempData["Success"])

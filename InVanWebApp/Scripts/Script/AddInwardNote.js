@@ -157,6 +157,7 @@ function SelectedIndexChanged(id) {
                             t6.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
                         }
                         t6.setAttribute("type", "number");
+                        t6.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
                         cell.appendChild(t6);
                     }
                     else if (i == 7) {
@@ -164,6 +165,7 @@ function SelectedIndexChanged(id) {
                         t7.id = "txtBalanceQty" + j;
                         t7.setAttribute("disabled", "true");
                         t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
+                        t7.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
                         cell.appendChild(t7);
                     }
                     else if (i == 8) {
@@ -172,6 +174,7 @@ function SelectedIndexChanged(id) {
                         t8.setAttribute("disabled", "true");
                         t8.setAttribute("class", "d-none");
                         t8.setAttribute("value", result[j].Item_ID);
+                        cell.setAttribute("class", "d-none");
                         cell.appendChild(t8);
                         //cell.innerHTML = result[j].Item_ID;
                         // cell.setAttribute("id", "ItemID_" + j);
@@ -197,7 +200,8 @@ function OnChangeIWQty(value, id) {
     if (value > itemQty) {
         alert("Inwarding quantity cannot be greater then balanced quantity!");
         document.getElementById(id).focus();
-        document.getElementById(id).setAttribute("style", "border-color:red;");
+        //document.getElementById(id).setAttribute("style", "border-color:red;");
+        document.getElementById(id).setAttribute("class", "border border-1 border-danger");
         return;
     }
     else {
@@ -208,8 +212,10 @@ function OnChangeIWQty(value, id) {
 
         var BalQty = document.getElementById("txtBalanceQty" + rowNo).value;
         BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" + BalQty + ",";
-        document.getElementById(id).setAttribute("style", "border-color:none;");
+        //document.getElementById(id).setAttribute("style", "border-color:none;");
+        document.getElementById(id).removeAttribute("class", "border border-1 border-danger");
     }
+    document.getElementById(id).setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
 }
 
 
