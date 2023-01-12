@@ -169,5 +169,61 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region Finished Goods Dispatch report
+
+        /// Repository for Finished Goods Dispatch report
+        /// Developed by  - Farheen 12 Jan'23
+
+        public List<OutwardNoteItemDetailsBO> getFinishedGoodsReportData(DateTime fromDate, DateTime toDate, int LocationId, int itemId)
+        {
+            List<OutwardNoteItemDetailsBO> resultList = new List<OutwardNoteItemDetailsBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_GetRawMaterialReceived_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@ItemID", LocationId);
+                    cmd.Parameters.AddWithValue("@WearhouseId", itemId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new OutwardNoteItemDetailsBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            OutwardNoteNumber = reader["GRN_Number"].ToString(),
+                            OutwardDate = Convert.ToDateTime(reader["GRN_Date"]).ToString("dd/MM/yyyy hh:mm:ss"),
+                            Item_Code = reader["Item_Code"].ToString(),
+                            ItemName = reader["Item_Name"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(reader["Price_Per_unit"]),
+                            DispatchQuantity = float.Parse(reader["DispatchQuantity"].ToString())
+                            
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+
+
+
+
+        }
+
+        #endregion
     }
 }

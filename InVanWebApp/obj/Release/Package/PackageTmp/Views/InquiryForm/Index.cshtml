@@ -37,11 +37,12 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.DisplayName("Inquiry Number")</th>
+                                            <th>@Html.DisplayName("Date Of Inquiry")</th>
                                             <th>@Html.DisplayName("Inquiry Status")</th>
                                             <th>@Html.DisplayName("Company Name")</th>
                                             <th>@Html.DisplayName("Contact Person Name")</th>
-                                            <th>@Html.DisplayName("Date Of Inquiry")</th>
                                             <th>@Html.DisplayName("Client Email")</th>
+                                            <th>@Html.DisplayName("Contact Number")</th> 
                                             <th>@Html.DisplayName("Created By Date")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
@@ -49,76 +50,79 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.InquiryNumber)</td>
-                                                <td class="text-center">
-                                                    @if (item.InquiryStatus == "Close")
-                                                    {
-                                                        <p style="color: #17d317;font-weight:bold" class="btn border rounded-pill border-1 border-success shadow-lg">
-                                                            @Html.DisplayFor(modelItem => item.InquiryStatus, new { style = "color:green" })
-                                                        </p>
-                                                    }
-                                                    else if (item.InquiryStatus == "Open")
-                                                    {
-                                                        <p style="color: darkorange; font-weight: bold" class="btn border rounded-pill border-1 border-warning shadow-lg">
-                                                            @Html.DisplayFor(modelItem => item.InquiryStatus, new { style = "color:#c900e1" })
-                                                        </p>
-                                                    }
-                                                    else if (item.InquiryStatus == "Cancelled")
-                                                    {
-                                                        <p style="color:red;font-weight:bold" class="btn border rounded-pill border-1 border-danger shadow-lg">
-                                                            @Html.DisplayFor(modelItem => item.InquiryStatus, new { style = "color:red" })
-                                                        </p>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p style="color: #ffc800; font-weight: bold" class="btn border rounded-pill border-1 border-primary shadow-lg">
-                                                            @Html.DisplayFor(modelItem => item.InquiryStatus, new { style = "color:#ffbc00" })
-                                                        </p>
-                                                    }
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.CompanyName)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.ContactPersonName)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.DateOfInquiry)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.ClientEmail)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                                                </td>
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.InquiryNumber)</td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.DateOfInquiry)
+                                            </td>
+                                            <td class="text-center">
+                                                @if (item.InquiryStatus == "Close")
+                                                {
+                                                    <p style="color: #17d317;font-weight:bold" class="btn border rounded-pill border-1 border-success shadow-lg">
+                                                        @Html.DisplayFor(modelItem => item.InquiryStatus, new { style = "color:green" })
+                                                    </p>
+                                                }
+                                                else if (item.InquiryStatus == "Open")
+                                                {
+                                                    <p style="color: darkorange; font-weight: bold" class="btn border rounded-pill border-1 border-warning shadow-lg">
+                                                        @Html.DisplayFor(modelItem => item.InquiryStatus, new { style = "color:#c900e1" })
+                                                    </p>
+                                                }
+                                                else if (item.InquiryStatus == "Cancelled")
+                                                {
+                                                    <p style="color:red;font-weight:bold" class="btn border rounded-pill border-1 border-danger shadow-lg">
+                                                        @Html.DisplayFor(modelItem => item.InquiryStatus, new { style = "color:red" })
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <p style="color: #ffc800; font-weight: bold" class="btn border rounded-pill border-1 border-primary shadow-lg">
+                                                        @Html.DisplayFor(modelItem => item.InquiryStatus, new { style = "color:#ffbc00" })
+                                                    </p>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CompanyName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ContactPersonName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ClientEmail)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ContactNo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                                            </td>
 
-                                                <td>
-                                                    @if (item.InquiryStatus == "Open")
-                                                    {
-                                                        <a href=@Url.Action("EditInquiryForm", new { InquiryID = item.InquiryID }) title="Edit Inquiry">
-                                                            <i class="fa fa-edit text-primary"></i>
-                                                        </a>
-                                                        <span>&nbsp;&nbsp;</span>
-                                                        <a href=@Url.Action("DeleteInquiryForm", new { InquiryID = item.InquiryID }) onclick="return confirm('Are you sure want to delete the Inquiry Form?');" title="Delete Inquiry">
-                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                        </a><span>&nbsp;&nbsp;</span>
-                                                    }
-                                                    @if (item.InquiryStatus == "Cancelled")
-                                                    {
-                                                        <a href=@Url.Action("DeleteInquiryForm", new { InquiryID = item.InquiryID }) onclick="return confirm('Are you sure want to delete the Inquiry Form?');" title="Delete Inquiry">
-                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                        </a><span>&nbsp;&nbsp;</span>
-                                                    }
-                                                    @if (item.InquiryStatus == "Close")
-                                                    {
-                                                        <a href=@Url.Action("ViewInquiryForm", new { InquiryID = item.InquiryID }) title="View Inquiry">
-                                                            <i class="fa fa-eye text-primary"></i>
-                                                        </a><span>&nbsp;&nbsp;</span>
-                                                    }
-                                                </td>
-                                                
-                                            </tr>
+                                            <td>
+                                                @if (item.InquiryStatus == "Open")
+                                                {
+                                                    <a href=@Url.Action("EditInquiryForm", new { InquiryID = item.InquiryID }) title="Edit Inquiry">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a>
+                                                    <span>&nbsp;&nbsp;</span>
+                                                    <a href=@Url.Action("DeleteInquiryForm", new { InquiryID = item.InquiryID }) onclick="return confirm('Are you sure want to delete the Inquiry Form?');" title="Delete Inquiry">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
+                                                }
+                                                @if (item.InquiryStatus == "Cancelled")
+                                                {
+                                                    <a href=@Url.Action("DeleteInquiryForm", new { InquiryID = item.InquiryID }) onclick="return confirm('Are you sure want to delete the Inquiry Form?');" title="Delete Inquiry">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
+                                                }
+                                                @if (item.InquiryStatus == "Close")
+                                                {
+                                                    <a href=@Url.Action("ViewInquiryForm", new { InquiryID = item.InquiryID }) title="View Inquiry">
+                                                        <i class="fa fa-eye text-primary"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
+                                                }
+                                            </td>
+
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>

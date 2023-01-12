@@ -37,7 +37,9 @@ namespace InVanWebApp.Repository
                             ItemName = reader["ItemName"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
                             ItemId= Convert.ToInt32(reader["ItemId"]),
-                            Quantity = Convert.ToDouble(reader["Quantity"])
+                            Quantity = Convert.ToDouble(reader["Quantity"]),
+                            ItemUnit = (reader["ItemUnit"].ToString()),
+                            CurrencyName = (reader["CurrencyName"].ToString())
                         };
                         resultList.Add(result);
                     }

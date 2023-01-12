@@ -15,6 +15,10 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> DateOfInquiry { get; set; }
         public string ContactPersonName { get; set; }
         public string ClientEmail { get; set; }
+
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
+        public string ContactNo { get; set; } //Rahul added 12-01-2023. 
+
         [Required(ErrorMessage = "Select vendors name!")]
         public Nullable<int> VendorsID { get; set; }
         public string CompanyName { get; set; }

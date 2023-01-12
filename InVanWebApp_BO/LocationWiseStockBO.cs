@@ -27,6 +27,8 @@ namespace InVanWebApp_BO
         public string LocationName { get; set; }
         public string ItemName { get; set; }
         public decimal ItemUnitPrice { get; set; }
+        public string ItemUnit { get; set; }
+        public string CurrencyName { get; set; }
 
     }
 }

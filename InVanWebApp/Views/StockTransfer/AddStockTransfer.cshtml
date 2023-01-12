@@ -214,39 +214,43 @@
         locationName = document.getElementById("ToLocationId").options[selectedOptionLocationName].innerText;
         document.getElementById("ToLocationName").value = locationName;
     }
-
+    var flag = 0; //This flag is for checking whether the add Item details or not. 
     function SelectedIndexChangedItemList(id) {
-        debugger
+       
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
 
         if (FromLocationCheck == '' || FromLocationCheck == null) {
-            debugger
+            
             $('#FromLocationId').focus();
             alert('Select Different FromLocation and ToLocation');
             document.getElementById('Item_ID').selectedIndex = 0;
+            flag = 1;
             return;
         }
         else if (ToLocationCheck == '' || ToLocationCheck == null) {
-            debugger
+            
             $('#ToLocationId').focus();
             alert('Select Different ToLocation and FromLocation');
             document.getElementById('Item_ID').selectedIndex = 0;
+            flag = 1;
             return;
         }
         ///Rahul added 09/12/2022.
         else if (FromLocationCheck == ToLocationCheck) {
-            debugger
+           
             $('#ToLocationId').focus();
             alert('Select Different ToLocation and FromLocation');
             document.getElementById('Item_ID').selectedIndex = 0;
+            flag = 1;
             return;
         }///Rahul added 09/12/2022.
         else if (ToLocationCheck == FromLocationCheck) {
-            debugger
+           
             $('#FromLocationId').focus();
             alert('Select Different FromLocation and ToLocation');
             document.getElementById('Item_ID').selectedIndex = 0;
+            flag = 1;
             return;
         }
         else {
@@ -254,6 +258,7 @@
             selectedOptionItems = document.getElementById("Item_ID").selectedIndex;
             itemCode = document.getElementById("Item_ID").options[selectedOptionItems].innerText;
             document.getElementById("Item_Code").value = itemCode;
+            flag = 0;
         }
 
     }
@@ -312,6 +317,15 @@
                     $("#Item_Name").val(itemDescription.Item_Name);
                     $("#ItemUnit").val(itemDescription.UnitCode);
                     $("#RequiredQuantity").val(itemDescription.RequiredQuantity);
+                    var RQty = $("#RequiredQuantity").val();
+                    if (RQty == 0) {
+                        alert('Current quantity are 0 for the selected item!');
+                        $('#btnSave').prop('disabled', 'true');
+                    }
+                    else {
+                        $('#btnSave').prop('disabled', false);
+                    }
+
                     $("#TransferQuantity").val('0');
                     $("#FinalQuantity").val('0');
                 },
@@ -325,7 +339,6 @@
     }
 
     $("#TransferQuantity").change(function () {
-        debugger
         var transferQuantity = $("#TransferQuantity").val();
         var requiredQuantity = $("#RequiredQuantity").val();
 
@@ -337,9 +350,6 @@
     var counter = 1;
 
     $("#AddItem").click(function () {
-        debugger
-        //'<select id="ItemID" class="form-control form-control-sm" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
-        //var nameItem = "Item_ID['" + counter + "']";
         var itemId = "ItemID_" + counter;
         var itemCode = "itemCode_" + counter;
         var itemDescription = "itemDescription_" + counter;
@@ -350,8 +360,6 @@
         var remarks = "remarks_" + counter;
         var inwardDateOfItem = "InwardDateOfItem_" + counter;
         $('<tr id="tablerow' + counter + '">' + '<td>' +
-            //'<select id="ItemID" class="form-control form-control-sm" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" required="required" /></select>' +
-            //'<input type="text" id="ItemID" class="form-control form-control-sm" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" value="" required="required" />' +
             '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:100px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
             '</td>' +
             '<td>' +
@@ -364,8 +372,6 @@
             '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemDescription + '" value="" required="required" readonly="readonly"/>' +
             '</td>' +
             '<td>' +
-            /*'<input type="text" id="' + itemQuantity + '" onkeyup="calcTax(' + counter + ',' + this.value + ')"; class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
-        /*'<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
             '<input type="text" id="' + itemQuantity + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="" required="required" readonly="readonly"/>' +
             '</td>' +
             '<td>' +

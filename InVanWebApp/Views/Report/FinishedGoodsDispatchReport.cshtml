@@ -1,0 +1,230 @@
+﻿@model InVanWebApp_BO.OutwardNoteBO
+@{
+    ViewBag.Title = "FinishedGoodsDispatchReport";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>PO Report</title>
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Finished Goods Received Report</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Reports</a>
+                    </li>
+                    <li class="breadcrumb-item active">Finished Goods Received Report</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="padding-top:15px;">
+
+                                <!--Rahul added class inline 04-01-2023.-->
+                                <div class="row-inline">
+                                    <div class="col-md-2">
+                                        <label>From Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!--Rahul added fromDate 04-01-2023.-->
+                                        @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()" })
+                                        @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                        <!--Rahul added fromDateValidate 06-01-2023.-->
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>To Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!--Rahul added toDate 04-01-2023.-->
+                                        @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()" })
+                                        @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                        <!--Rahul added toDateValidate 06-01-2023.-->
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
+                                        <a id="ExportPdf" href="@Url.Action("ExprotAsPDFForFinishedGoods", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForFinishedGoods", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row-inline">
+                                    <div class="col-md-2 ms-1">
+                                        <label>Item:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.DropDownList("Item", (IEnumerable<SelectListItem>)ViewData["Item"], "--Select--", new { @class = "form-control", @id = "ItemId", onchange = "SelectedIndexChangedItem()" })
+                                        @Html.ValidationMessage("Item", "", new { id = "ItemValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label>Wearhouse Location:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.DropDownList("Wearhouse", (IEnumerable<SelectListItem>)ViewData["WearhouseLocation"], "--Select--", new { @class = "form-control", @id = "Wearhouse", onchange = "SelectedIndexChangedWearhouse()" })
+                                        @Html.ValidationMessage("Wearhouse", "", new { id = "WearhouseValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div style="margin-top:25px;">
+                                    <!--Rahul added class  display nowrap, style="width:100%" 05-01-2023.-->
+                                    <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblInward" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center">Sr.No.</th>
+                                                <th style="text-align:center">PO Date</th>
+                                                <th style="text-align:center">PO Number</th>
+                                                <th style="text-align:center">Indent Number</th>
+                                                <th style="text-align:center">PO Status</th>
+                                                <th style="text-align:center">Vendor Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+@Html.Raw(TempData["Success"])
+
+@section scripts{
+
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#ExportPdf').hide();
+            $('#ExportExcel').hide();
+            $('#tblInward').hide();
+        });
+
+        ///Rahul added id = VendorValidate 06-01-2023.
+        function SelectedIndexChangedVendor() {
+            $('#VendorValidate').hide();
+        }
+
+        function OnChangedFromDate() {
+            $('#fromDateValidate').hide();
+        }
+
+        function OnChangedToDate() {
+            $('#toDateValidate').hide();
+        }
+        //==========================================
+
+        $("#btnGo").on('click', function () {
+
+            ///Rahul added id = VendorValidate 06-01-2023.
+            //===========OnChange of item if Vendors is not selected================
+            var VendorsCheck = $('#Vendors').val();
+            if (VendorsCheck == '' || VendorsCheck == null) {
+                $('#VendorValidate').text("Select Vendor!");
+                $('#VendorValidate').show();
+                $('#Vendors').focus();
+                document.getElementById('Vendors').selectedIndex = 0;
+                return;
+            }
+            else {
+                SelectedIndexChangedVendor();
+            }
+            //==================end======================
+            ///Rahul added id = VendorValidate 06-01-2023.
+            //===========OnChange of item if From date is not selected================
+            var fromDateCheck = $('#fromDate').val();
+            var toDateCheck = $('#toDate').val();
+            if (fromDateCheck == '' || fromDateCheck == null) {
+                $('#fromDateValidate').text("Select from date!");
+                $('#fromDateValidate').show();
+                $('#fromDate').focus();
+                return;
+            }
+            else if (toDateCheck == '' || toDateCheck == null) {
+                $('#toDateValidate').text("Select to date!");
+                $('#toDateValidate').show();
+                $('#toDate').focus();
+                return;
+            }
+
+            //==================end======================
+
+            $('#ExportPdf').show();
+            $('#ExportExcel').show();
+            $('#tblInward').show();
+
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+            var item = $('#ItemId').val();
+            var wearhouse = $('#Wearhouse').val();
+
+            $('#tblInward').dataTable().fnDestroy();
+            var t = $('#tblInward').DataTable({
+                //"processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "sAjaxSource": "/Report/GetFinishedGoodsDispatchReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&LocationId=" + warehouse + "&ItemId=" + item,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "pageLength": 20,
+                "scrollX": true,
+                "columns": [
+                    { "data": "SrNo", "autoWidth": true },
+                    { "data": "PurchaseOrderDate", "autoWidth": true },
+                    { "data": "PONumber", "autoWidth": true },
+                    { "data": "IndentNumber", "autoWidth": true },
+                    { "data": "PurchaseOrderStatus", "autoWidth": true },
+                    { "data": "CompanyName", "autoWidth": true }
+                ]
+            });
+            t.on('order.dt search.dt', function () {
+                let i = 1;
+
+                t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+
+        });
+
+    </script>
+}
+

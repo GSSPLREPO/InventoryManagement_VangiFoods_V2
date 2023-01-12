@@ -83,6 +83,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@DateOfInquiry", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@ContactPersonName", inquiryFormBOMaster.ContactPersonName);
                     cmd.Parameters.AddWithValue("@ClientEmail", inquiryFormBOMaster.ClientEmail);
+                    cmd.Parameters.AddWithValue("@ContactNo", inquiryFormBOMaster.ContactNo); 
                     cmd.Parameters.AddWithValue("@VendorsID", inquiryFormBOMaster.VendorsID); 
                     cmd.Parameters.AddWithValue("@CompanyName", inquiryFormBOMaster.CompanyName);
                     cmd.Parameters.AddWithValue("@LocationId", inquiryFormBOMaster.LocationId);
@@ -225,6 +226,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@DateOfInquiry", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@ContactPersonName", model.ContactPersonName);
                     cmd.Parameters.AddWithValue("@ClientEmail", model.ClientEmail);
+                    cmd.Parameters.AddWithValue("@ContactNo", model.ContactNo); 
                     cmd.Parameters.AddWithValue("@VendorsID", model.VendorsID);
                     cmd.Parameters.AddWithValue("@CompanyName", model.CompanyName);
                     cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
