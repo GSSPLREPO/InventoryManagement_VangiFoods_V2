@@ -28,7 +28,12 @@ namespace InVanWebApp_BO
         public string PO_Number { get; set; }
         public string SaledOrder_Number { get; set; }
         public Nullable<int> SO_Id { get; set; }
-        
+        public string CurrencyName { get; set; }
+        public decimal ItemUnitPrice { get; set; }
+
+        //Added for dashboard
+        public float MinimumStock { get; set; }
+
 
     }
 }

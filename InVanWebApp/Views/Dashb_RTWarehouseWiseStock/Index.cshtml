@@ -175,8 +175,13 @@
 
                     var serial2 = {
                         name: "Stock",
+                        type: 'column',
                         data: [],
-                        color: []
+                        color: [],
+                        tooltip: {
+                            valueSuffix: ' KG'
+                        }
+
                     };
 
                     $.each(parsed, function (i, jsondata) {
@@ -188,8 +193,6 @@
                             return "rgb(" + r + "," + g + "," + b + ")";
                         }
 
-
-
                         var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
                         if (jsondata.Quantity != null) {
                             serial2.data.push(parseFloat(jsondata.Quantity));
@@ -199,7 +202,7 @@
 
                         coloR.push(dynamicColors());
                         serial2.color = getRandomColor();
-                        xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName+')');
+                        xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
 
                     });
                     population.push(serial2);
@@ -234,25 +237,23 @@
                                         Highcharts.defaultOptions.title.style.color
                                     ) || 'gray'
                                 }
-                            },
-
+                            }
                         },
                         credits: {
                             enabled: false
                         },
                         tooltip: {
-                            formatter: function () {
-                                return this.points.reduce(function (s, point) {
-                                    return s + '<br/>' +
-                                        '<b>Quantity: ' + point.y + ' KG</b>';
-                                }, '<b>Item: ' + this.x + '</b>');
-                            },
+                            //formatter: function () {
+                            //    return this.points.reduce(function (s, point) {
+                            //        return s + '<br/>' +
+                            //            '<b>Quantity: ' + point.y + '</b>';
+                            //    }, '<b>Item: ' + this.x + '</b>');
+                            //},
                             shared: true
                         },
-
                         plotOptions: {
                             column: {
-                                stacking: 'normal',  //'percent',
+                                stacking: 'normal',
                                 dataLabels: {
                                     enabled: false
                                 }
@@ -298,8 +299,6 @@
 
 
             while (count < length) {
-                debugger;
-
                 var LocationId = ($('#ID')[0].options[count].value);
                 var Location = $('#ID')[0].options[count].text;
                 //-----------Bind all warehouse data in the graph Start-----------------------------------------------------------
@@ -320,7 +319,10 @@
                             var serialFinal1 = {
                                 name: "Stock",
                                 data: [],
-                                color: []
+                                color: [],
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
                             };
                             $.each(parsed, function (i, jsondata) {
 
@@ -340,7 +342,7 @@
 
                                 coloR.push(dynamicColors());
                                 serialFinal1.color = getRandomColor();
-                                xAxisData1.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' Rs)');
+                                xAxisData1.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
 
                             });
                             population1.push(serialFinal1);
@@ -357,7 +359,7 @@
                                 yAxis: {
                                     min: 0,
                                     title: {
-                                         style: {
+                                        style: {
                                             fontWeight: 'bold'
                                         },
                                         text: 'Quantity (Kg)'
@@ -378,12 +380,6 @@
                                     enabled: false
                                 },
                                 tooltip: {
-                                    formatter: function () {
-                                        return this.points.reduce(function (s, point) {
-                                            return s + '<br/>' +
-                                                '<b>Quantity: ' + point.y + ' KG</b>';
-                                        }, '<b>Item: ' + this.x + '</b>');
-                                    },
                                     shared: true
                                 },
 
@@ -426,7 +422,10 @@
                             var serialFinal2 = {
                                 name: "Stock",
                                 data: [],
-                                color: []
+                                color: [],
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
                             };
                             $.each(parsed, function (i, jsondata) {
 
@@ -446,7 +445,7 @@
 
                                 coloR.push(dynamicColors());
                                 serialFinal2.color = getRandomColor();
-                                xAxisData2.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' Rs)');
+                                xAxisData2.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
 
                             });
                             population2.push(serialFinal2);
@@ -484,12 +483,6 @@
                                     enabled: false
                                 },
                                 tooltip: {
-                                    formatter: function () {
-                                        return this.points.reduce(function (s, point) {
-                                            return s + '<br/>' +
-                                                '<b>Quantity: ' + point.y + ' KG</b>';
-                                        }, '<b>Item: ' + this.x + '</b>');
-                                    },
                                     shared: true
                                 },
 
@@ -530,7 +523,10 @@
                             var serialFinal3 = {
                                 name: "Stock",
                                 data: [],
-                                color: []
+                                color: [],
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
                             };
                             $.each(parsed, function (i, jsondata) {
 
@@ -550,7 +546,7 @@
 
                                 coloR.push(dynamicColors());
                                 serialFinal3.color = getRandomColor();
-                                xAxisData3.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' Rs)');
+                                xAxisData3.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
 
                             });
                             population3.push(serialFinal3);
@@ -588,12 +584,6 @@
                                     enabled: false
                                 },
                                 tooltip: {
-                                    formatter: function () {
-                                        return this.points.reduce(function (s, point) {
-                                            return s + '<br/>' +
-                                                '<b>Quantity: ' + point.y + ' KG</b>';
-                                        }, '<b>Item: ' + this.x + '</b>');
-                                    },
                                     shared: true
                                 },
 
@@ -635,7 +625,10 @@
                             var serialFinal4 = {
                                 name: "Stock",
                                 data: [],
-                                color: []
+                                color: [],
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
                             };
                             $.each(parsed, function (i, jsondata) {
 
@@ -655,7 +648,7 @@
 
                                 coloR.push(dynamicColors());
                                 serialFinal4.color = getRandomColor();
-                                xAxisData4.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' Rs)');
+                                xAxisData4.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
 
                             });
                             population4.push(serialFinal4);
@@ -693,12 +686,6 @@
                                     enabled: false
                                 },
                                 tooltip: {
-                                    formatter: function () {
-                                        return this.points.reduce(function (s, point) {
-                                            return s + '<br/>' +
-                                                '<b>Quantity: ' + point.y + ' KG</b>';
-                                        }, '<b>Item: ' + this.x + '</b>');
-                                    },
                                     shared: true
                                 },
 
@@ -740,7 +727,10 @@
                             var serialFinal5 = {
                                 name: "Stock",
                                 data: [],
-                                color: []
+                                color: [],
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
                             };
                             $.each(parsed, function (i, jsondata) {
 
@@ -760,7 +750,7 @@
 
                                 coloR.push(dynamicColors());
                                 serialFinal5.color = getRandomColor();
-                                xAxisData5.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' Rs)');
+                                xAxisData5.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
 
                             });
                             population5.push(serialFinal5);
@@ -798,12 +788,6 @@
                                     enabled: false
                                 },
                                 tooltip: {
-                                    formatter: function () {
-                                        return this.points.reduce(function (s, point) {
-                                            return s + '<br/>' +
-                                                '<b>Quantity: ' + point.y + ' KG</b>';
-                                        }, '<b>Item: ' + this.x + '</b>');
-                                    },
                                     shared: true
                                 },
 

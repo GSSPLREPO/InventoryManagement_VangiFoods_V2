@@ -16,6 +16,8 @@ namespace InVanWebApp.Repository
     {
         private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private static ILog log = LogManager.GetLogger(typeof(ItemTypeRepository));
+
+        #region Function for real time warehouse wise stock
         public List<LocationWiseStockBO> GetDashboardData(int id)
         {
             List<LocationWiseStockBO> resultList = new List<LocationWiseStockBO>();
@@ -54,5 +56,47 @@ namespace InVanWebApp.Repository
 
             return resultList;
         }
+
+        #endregion
+
+        #region Function for reorder point of available total stock
+        public List<StockMasterBO> GetReorderPointDashboardData()
+        {
+            List<StockMasterBO> resultList = new List<StockMasterBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_dashb_ReorderPointOnAvailableStock", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); 
+                    while (reader.Read())
+                    {
+                        var result = new StockMasterBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            ItemName = reader["ItemName"].ToString(),
+                            ItemUnit = reader["ItemUnit"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
+                            StockQuantity = Convert.ToDouble(reader["StockQuantity"]),
+                            CurrencyName = (reader["CurrencyName"].ToString()),
+                            MinimumStock=float.Parse(reader["MinStock"].ToString())
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+
+            return resultList;
+        }
+
+        #endregion
     }
 }

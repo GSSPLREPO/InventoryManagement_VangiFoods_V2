@@ -37,8 +37,8 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region Bind dashboard data
-        // GET: Dashb_RTWarehouseWiseStock
+        #region Bind real time warehouse wise dashboard
+       
         public ActionResult Index()
         {
             if (Session[ApplicationSession.USERID] == null)
@@ -54,6 +54,29 @@ namespace InVanWebApp.Controllers
             string jsonstring = string.Empty;
 
             var result = _repository.GetDashboardData(LocationId);
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
+        #region Bind data reorder point of available total stock
+
+        public ActionResult ReorderPointOfStocks()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            return View();
+        }
+
+        public JsonResult GetDashboardDataReorderPointOfStocks()
+        {
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetReorderPointDashboardData();
             jsonstring = JsonConvert.SerializeObject(result);
 
             var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
