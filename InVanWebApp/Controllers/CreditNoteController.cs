@@ -14,6 +14,7 @@ namespace InVanWebApp.Controllers
     public class CreditNoteController : Controller
     {
         private ICreditNoteRepository _repository;
+        private IInwardNoteRepository _InwardRepository;
         private IGRNRepository _GRNrepository;
         private IPurchaseOrderRepository _purchaseOrderRepository;
         private static ILog log = LogManager.GetLogger(typeof(GRNController));
@@ -29,6 +30,7 @@ namespace InVanWebApp.Controllers
             _repository = new CreditNoteRepository();
             _GRNrepository = new GRNRepository();
             _purchaseOrderRepository = new PurchaseOrderRepository();
+            _InwardRepository = new InwardNoteRepository();
         }
 
         /// <summary>
@@ -63,7 +65,7 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                BindGRNNumber();
+                BindPONumber();
                 BindLocationName();
                 BindCurrencyPrice();
                 BindCompany();
@@ -104,7 +106,7 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate Credit note! Can not be inserted!');</script>";
-                            BindGRNNumber();
+                           BindPONumber();
                             BindLocationName();
                             BindCurrencyPrice();
                             model.CreditNoteDate = DateTime.Today;
@@ -121,7 +123,7 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        BindGRNNumber();
+                        BindPONumber();
                         BindLocationName();
                         BindCurrencyPrice();
                         model.CreditNoteDate = DateTime.Today;
@@ -142,7 +144,7 @@ namespace InVanWebApp.Controllers
                 log.Error("Error", ex);
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
-                BindGRNNumber();
+                BindPONumber();
                 BindLocationName();
                 BindCurrencyPrice();
                 model.CreditNoteDate = DateTime.Today;
@@ -204,11 +206,11 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind dropdowns 
-        public void BindGRNNumber()
+        public void BindPONumber()
         {
-            var result = _GRNrepository.GetAll();
-            var resultList = new SelectList(result.ToList(), "ID", "GRNCode");
-            ViewData["GRNList"] = resultList;
+            var result = _repository.GetPONumberForDropdown();
+            var resultList = new SelectList(result.ToList(), "PurchaseOrderId", "PONumber");
+            ViewData["PONumberAndId"] = resultList;
         }
         public void BindLocationName()
         {
@@ -230,5 +232,16 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Fetch PO details for creditNote
+        public JsonResult GetPODetails(string id)
+        {
+            int POId = 0;
+            if (id != "" && id != null)
+                POId = Convert.ToInt32(id);
+            
+            var result = _repository.GetPODetailsById(POId);
+            return Json(result);
+        }
+        #endregion
     }
 }

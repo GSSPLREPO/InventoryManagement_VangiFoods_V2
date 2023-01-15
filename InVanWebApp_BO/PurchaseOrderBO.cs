@@ -125,6 +125,9 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Please Select From Date ")]
         public DateTime toDate { get; set; }
+
+        //Added below field is used in Credit note
+        public decimal RejectedQuantity { get; set; }
     }
 
     public class PurchaseOrderItemsDetails

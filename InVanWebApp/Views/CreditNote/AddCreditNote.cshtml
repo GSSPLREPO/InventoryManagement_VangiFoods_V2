@@ -11,7 +11,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h4>Add Purchase Order</h4>
+            <h4>Add Credit Note</h4>
             <hr />
             @Html.ValidationSummary(true)
 
@@ -37,19 +37,19 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("GRN Number")
+                    @Html.Label("PO Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.GRNId, (IEnumerable<SelectListItem>)ViewData["GRNList"], "---Select---", new { @class = "form-control", id = "CurrencyID" })
-                    @Html.HiddenFor(model => model.GRN_No)
+                    @Html.DropDownListFor(model => model.PO_ID, (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedPO(id)" })
+                    @Html.HiddenFor(model => model.PO_Number)
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Currency")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", id = "CurrencyID" })
+                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control" })
                     @Html.HiddenFor(model => model.CurrencyName)
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
 
@@ -110,7 +110,7 @@
                             </h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.VendorAddress, new { id = "SupplierAddress", @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
+                                @Html.TextAreaFor(model => model.VendorAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
                                 @Html.ValidationMessageFor(model => model.VendorAddress, "", new { @class = "error mt-2 text-danger" })
 
                             </div>
@@ -120,15 +120,10 @@
             </div>
             <br />
             <div class="row">
-                <div class="col-md-2 mb-1">
-                    @Html.Label("Remarks")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                </div>
+            <h5 class="font-bold">Item Details</h5>
             </div>
-            <br />
+            <hr />
+
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
@@ -142,12 +137,12 @@
                                                 <th class="sortStyle d-n d-none">Item Id</th>
                                                 <th class="sortStyle">Item</th>
                                                 <th class="sortStyle">PO Quantity</th>
-                                                <th class="sortStyle">GRN Quantity</th>
                                                 <th class="sortStyle">Waste Quantity</th>
                                                 <th class="sortStyle">Units</th>
                                                 <th class="sortStyle">Price (Per Unit)</th>
                                                 <th class="sortStyle">Currency</th>
                                                 <th class="sortStyle">Tax</th>
+                                                <th class="sortStyle">Total Item Cost</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -161,14 +156,25 @@
                 </div>
             </div>
             <br />
+            <br />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
             <hr />
+
             <div class="col d-flex justify-content-end" style="margin-left: auto;">
                 <div class="row">
-                    <div class="col-3">
-                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
                     </div>
-                    <div class="col-4">
-                        <a href="@Url.Action("Index", "CreditNote")" class="btn btn-sm btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                    <div class="col">
+                        <a href="@Url.Action("Index", "CreditNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                             Back To List
                         </a>
                     </div>
@@ -189,28 +195,72 @@
 
 <script type="text/javascript">
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
-        function SaveBtnClick() {
+    function SaveBtnClick() {
         var CurrencyName = $("#CurrencyID option:selected").text();
         $("#CurrencyName").val(CurrencyName);
+        var PONumber = $("#PO_ID option:selected").text();
+        $("#PO_Number").val(PONumber);
+
         createJson();
     };
     //==========end===============
 
-    //=====================Onchange of Indent description===========================
-        function SelectedIndexChangedIndent(id) {
+    //=====================Onchange of Location name===========================
+    function SelectedIndexChangedLocation(id) {
+        var selectedOptionLocationName, locationName;
+        selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
+        locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
+        document.getElementById("LocationName").value = locationName;
 
-        //Check whether the currency dropdown is selected or not
+        $.ajax({
+            type: "POST",
+            url: `/PurchaseOrder/BindLocationMaster?id=` + id,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var deliveryAdd = result[0].DeliveryAddress;
+                $("#DeliveryAddress").val(deliveryAdd);
+            }
+        });
+    }
+    //=============End==============
 
-        var CurrencyIDCheck = $('#CurrencyID').val();
-        if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
-            $('#CurrencyID').focus();
-            document.getElementById('IndentID').selectedIndex = 0;
-            return;
-        }
-        else {
-            $("#tempCurrencyID").val(CurrencyIDCheck);
-            $("#CurrencyID").prop("disabled", "true");
-        }
+    //=====================Onchange of Company/Vendor name===========================
+    function SelectedIndexChanged(id) {
+        var selectedOption, companyName;
+        selectedOption = document.getElementById("VendorID").selectedIndex;
+        companyName = document.getElementById("VendorID").options[selectedOption].innerText;
+        document.getElementById("VendorName").value = companyName;
+
+        $.ajax({
+            type: "POST",
+            url: `/PurchaseOrder/BindCompanyAddress?id=` + id,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //console.log(result);
+                var suplierAdd = result[0].SupplierAddress;
+                $("#SupplierAddress").val(suplierAdd);
+            }
+        });
+    }
+    //=============End==============
+
+    //=====================Onchange of PO===========================
+    function SelectedIndexChangedPO(id) {
+
+        //======Check whether the currency dropdown is selected or not=======//
+        //var CurrencyIDCheck = $('#CurrencyID').val();
+        //if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
+        //    $('#CurrencyID').focus();
+        //    document.getElementById(id).selectedIndex = 0;
+        //    return;
+        //}
+        //else {
+        //    $("#CurrencyID").prop("disabled", "true");
+        //}
 
         //For deleting the rows of Item table if exist.
 
@@ -221,18 +271,27 @@
             rowCount--;
         }
 
-        var IdentNumber = $("#IndentID option:selected").text();
-        $('#IndentNumber').val(IdentNumber);
-        var CurrencyName = $("#CurrencyID option:selected").text();
+        var PO_Id = $("#PO_ID").val();
+       // var CurrencyName = $("#CurrencyID option:selected").text();
 
         $.ajax({
-            url: '/PurchaseOrder/GetIndentDescription',
+            url: '/CreditNote/GetPODetails',
             type: "POST",
-            data: { id: id, tempCurrencyId: CurrencyIDCheck },
+            data: { id: PO_Id },
             success: function (result) {
+                $("#PO_Number").val(result[0].PONumber);
+                $("#CurrencyID").val(result[0].CurrencyID);
+                $("#CurrencyName").val(result[0].CurrencyName);
+                $("#CurrencyPrice").val(result[0].CurrencyPrice);
+                $("#LocationId").val(result[0].LocationId);
+                $("#LocationName").val(result[0].LocationName);
+                $("#VendorID").val(result[0].VendorsID);
+                $("#VendorName").val(result[0].CompanyName);
+                $('#DeliveryAddress').val(result[0].DeliveryAddress);
+                $('#VendorAddress').val(result[0].SupplierAddress);
 
                 var table = document.getElementById('submissionTable');
-                for (var j = 0; j < result.length; j++) {
+                for (var j = 1; j < result.length; j++) {
                     var rowCount = table.rows.length;
                     var cellCount = table.rows[0].cells.length;
                     var row = table.insertRow(rowCount);
@@ -256,73 +315,33 @@
 
                         }
                         else if (i == 3) {
-                            cell.innerHTML = result[j].RequiredQuantity + " " + result[j].ItemUnit;
-                            cell.setAttribute("id", "RequiredQuantity_" + j);
+                            cell.innerHTML = result[j].ItemQuantity + " " + result[j].ItemUnit;
+                            cell.setAttribute("id", "POQty_" + j);
 
                         }
                         else if (i == 4) {
-                            var t6 = document.createElement("input");
-                            t6.id = "txtItemQty_" + j;
-                            t6.removeAttribute("disabled", "false");
-                            t6.removeAttribute("disabled", "true");
-                            t6.setAttribute("maxlength", "8");
-                            t6.setAttribute("onkeypress", "return isNumberKey(event)");
-
-                            if (parseFloat(result[j].BalanceQuantity) == 0) {
-                                t6.setAttribute("disabled", "true");
-                            }
-                            else {
-                                t6.removeAttribute("disabled", "false");
-                                t6.removeAttribute("disabled", "true");
-                                t6.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-                            }
-                            //t6.setAttribute("type", "number");
-                            t6.setAttribute("class", "form-control form-control-sm");
-                            cell.appendChild(t6);
+                            cell.innerHTML = result[j].RejectedQuantity;
+                            cell.setAttribute("id", "RejectedQuantity_" + j);
                         }
                         else if (i == 5) {
-                            var t4 = document.createElement("input");
-                            t4.id = "BalanceQuantity_" + j;
-                            t4.setAttribute("value", result[j].BalanceQuantity);
-                            t4.setAttribute("readonly", "readonly");
-                            t4.setAttribute("class", "form-control form-control-sm");
-                            cell.appendChild(t4);
-
-                        }
-                        else if (i == 6) {
                             cell.innerHTML = result[j].ItemUnit;
                             cell.setAttribute("id", "ItemUnit_" + j);
                         }
-                        else if (i == 7) {
-                            var t4 = document.createElement("input");
-                            t4.id = "ItemUnitPrice_" + j;
-                            t4.setAttribute("value", result[j].ItemUnitPrice);
-                            t4.setAttribute("class", "form-control form-control-sm");
-                            t4.setAttribute("maxlength", "8");
-                            t4.setAttribute("onchange", "OnChangeUnitPrice($(this).val(),id)");
-                            cell.appendChild(t4);
+                        else if (i == 6) {
+                            cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
+                            cell.setAttribute("id", "ItemUnitPrice_" + j);
                         }
-
-                        else if (i == 8) {
-                            cell.innerHTML = CurrencyName
+                        else if (i == 7) {
+                            cell.innerHTML = result[j].CurrencyName
                             cell.setAttribute("id", "CurrencyName_" + j);
                         }
-                        else if (i == 9) {
-                            cell.innerHTML = result[j].ItemTax + " %";
+                        else if (i == 8) {
+                            cell.innerHTML = result[j].ItemTaxValue + " %";
                             cell.setAttribute("id", "ItemTax_" + j);
                         }
-                        else if (i == 10) {
-                            var t4 = document.createElement("input");
-                            t4.id = "TotalItemCost_" + j;
-                            t4.setAttribute("class", "form-control form-control-sm");
-                            t4.setAttribute("readonly", "readonly");
-                            t4.setAttribute("value", 0);
-                            cell.appendChild(t4);
-                        }
-                        else if (i == 11) {
-                            cell.innerHTML = result[j].BalanceQuantity;
-                            cell.setAttribute("class", "d-none");
-                            cell.setAttribute("id", "ActualBalanceQuantity_" + j);
+                        else if (i == 9) {
+                            cell.innerHTML = result[j].TotalItemCost + " " + result[j].CurrencyName;
+                            cell.setAttribute("id", "TotalItemCost_" + j);
                         }
                     }
 
@@ -336,48 +355,6 @@
     }
     //=============End==============
 
-    //=====================Onchange of Location name===========================
-        function SelectedIndexChangedLocation(id) {
-        var selectedOptionLocationName, locationName;
-        selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
-        locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
-        document.getElementById("LocationName").value = locationName;
-
-        $.ajax({
-            type: "POST",
-            url: `/PurchaseOrder/BindLocationMaster?id=` + id,
-            data: "{}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                var deliveryAdd = result[0].DeliveryAddress;
-                $("#DeliveryAddress").val(deliveryAdd);
-            }
-        });
-    }
-    //=============End==============
-
-    //=====================Onchange of Company/Vendor name===========================
-        function SelectedIndexChanged(id) {
-        var selectedOption, companyName;
-        selectedOption = document.getElementById("VendorID").selectedIndex;
-        companyName = document.getElementById("VendorID").options[selectedOption].innerText;
-        document.getElementById("VendorName").value = companyName;
-
-        $.ajax({
-            type: "POST",
-            url: `/PurchaseOrder/BindCompanyAddress?id=` + id,
-            data: "{}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                //console.log(result);
-                var suplierAdd = result[0].SupplierAddress;
-                $("#SupplierAddress").val(suplierAdd);
-            }
-        });
-    }
-    //=============End==============
 
     var TxtItemDetails = "";
 

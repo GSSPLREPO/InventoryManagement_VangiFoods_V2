@@ -155,7 +155,7 @@ namespace InVanWebApp.Repository
                         result = new CreditNoteBO()
                         {
                             ID = Convert.ToInt32(reader["ID"]),
-                            CreditNoteNo=reader["CreditNoteNo"].ToString(),
+                            CreditNoteNo = reader["CreditNoteNo"].ToString(),
                             CreditNoteDate = Convert.ToDateTime(reader["CreditNoteDate"]),
                             GRN_No = reader["GRN_No"].ToString(),
                             LocationName = reader["LocationName"].ToString(),
@@ -212,6 +212,112 @@ namespace InVanWebApp.Repository
             return resultList;
         }
 
+        #endregion
+
+        #region Function for dropdown binding
+        public List<PurchaseOrderBO> GetPONumberForDropdown()
+        {
+            List<PurchaseOrderBO> resultList = new List<PurchaseOrderBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_PONumberForCreditNote_GetAll",con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        PurchaseOrderBO result = new PurchaseOrderBO()
+                        {
+                            PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderId"]),
+                            PONumber = reader["PONumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Bind all PO details 
+        public IEnumerable<PurchaseOrderBO> GetPODetailsById(int PO_Id)
+        {
+            List<PurchaseOrderBO> resultList = new List<PurchaseOrderBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_PODetails_GetByID", con);
+                    cmd.Parameters.AddWithValue("@ID", PO_Id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new PurchaseOrderBO()
+                        {
+                            PurchaseOrderId = Convert.ToInt32(dataReader["PurchaseOrderId"]),
+                            PONumber=dataReader["PONumber"].ToString(),
+                            CurrencyID=Convert.ToInt32(dataReader["CurrencyID"]),
+                            CurrencyName=dataReader["CurrencyName"].ToString(),
+                            CurrencyPrice=Convert.ToDouble(dataReader["CurrencyPrice"]),
+                            LocationId=Convert.ToInt32(dataReader["LocationId"]),
+                            LocationName=dataReader["LocationName"].ToString(),
+                            VendorsID= Convert.ToInt32(dataReader["VendorsID"]),
+                            CompanyName = dataReader["CompanyName"].ToString(),
+                            DeliveryAddress = dataReader["DeliveryAddress"].ToString(),
+                            SupplierAddress = dataReader["SupplierAddress"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                    //==========This is for fetching Item details".===========///
+                   
+                        SqlCommand cmd2 = new SqlCommand("usp_tbl_POItemDetailsForCreditNote_GetByID", con);
+                        cmd2.Parameters.AddWithValue("@PO_Id", PO_Id);
+                        cmd2.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+                        SqlDataReader dataReader2 = cmd2.ExecuteReader();
+
+                        while (dataReader2.Read())
+                        {
+                            var result = new PurchaseOrderBO()
+                            {
+                                Item_ID = Convert.ToInt32(dataReader2["Item_ID"]),
+                                Item_Code = dataReader2["Item_Code"].ToString(),
+                                ItemName = dataReader2["ItemName"].ToString(),
+                                ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                                ItemUnit = dataReader2["ItemUnit"].ToString(),
+                                ItemTaxValue = Convert.ToDecimal(dataReader2["ItemTaxValue"]),
+                                ItemQuantity = Convert.ToDecimal(dataReader2["POQty"]),
+                                RejectedQuantity = ((dataReader2["RejectedQuantity"] != null) ? Convert.ToDecimal(dataReader2["RejectedQuantity"]) : 0),
+                                CurrencyName = dataReader2["CurrencyName"].ToString(),
+                                CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"]),
+                                Remarks= dataReader2["Remarks"].ToString(),
+                                TotalItemCost=Convert.ToDecimal(dataReader2["TotalItemCost"])
+                            };
+                            resultList.Add(result);
+                        }
+                        con.Close();
+                    
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
         #endregion
     }
 }

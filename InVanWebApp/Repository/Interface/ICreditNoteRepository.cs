@@ -14,5 +14,7 @@ namespace InVanWebApp.Repository.Interface
         void Delete(int Id, int userId);
         List<CreditNoteDetailsBO> GetCreditNoteDetails(int Id);
         CreditNoteBO GetById(int ID);
+        List<PurchaseOrderBO> GetPONumberForDropdown();
+        IEnumerable<PurchaseOrderBO> GetPODetailsById(int POId);
     }
 }
