@@ -16,11 +16,12 @@ namespace InVanWebApp_BO
         public string ItemTaxValue { get; set; }
         public string ItemUnit { get; set; }
         public Nullable<decimal> ItemUnitPrice { get; set; }
-        public Nullable<double> ItemQuantity { get; set; }
+        public Nullable<double> POQuantity { get; set; }
         public Nullable<double> ItemTotalAmount { get; set; }
         public Nullable<int> CurrencyID { get; set; }
         public string CurrencyName { get; set; }
         public float CurrencyPrice { get; set; }
+        public decimal RejectedQuantity { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

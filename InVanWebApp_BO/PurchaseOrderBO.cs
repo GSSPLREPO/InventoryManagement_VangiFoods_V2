@@ -102,6 +102,8 @@ namespace InVanWebApp_BO
         public DateTime PaymentDate { get; set; }
         public string InvoiceNumber { get; set; }
 
+        public decimal OtherTax { get; set; }
+
         //==============Rahul: These fields are for PO Currency details 02/12/2022==============//
         [Required(ErrorMessage = "Select Currency!")]
         public int CurrencyID { get; set; }

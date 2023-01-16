@@ -1843,8 +1843,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Script\AddCreditNote.js" />
     <Content Include="Scripts\Script\AddInwardNote.js" />
     <Content Include="Scripts\Script\AddPurchaseOrder.js" />
+    <Content Include="Scripts\Script\CommonScripts.js" />
     <Content Include="Signatures\aaron-burden-wPy71r8Hi_s-unsplash.jpg" />
     <Content Include="Signatures\johannes-plenio-hvrpOmuMrAI-unsplash.jpg" />
     <Content Include="Theme\MainContent\css\select2.css" />
@@ -2853,6 +2855,7 @@
     <Content Include="Views\CreditNote\AddCreditNote.cshtml" />
     <Content Include="Views\Report\FinishedGoodsDispatchReport.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\ReorderPointOfStocks.cshtml" />
+    <Content Include="Views\CreditNote\ViewCreditNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

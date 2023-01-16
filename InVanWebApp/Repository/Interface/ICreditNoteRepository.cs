@@ -12,7 +12,7 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<CreditNoteBO> GetAll();
         ResponseMessageBO Insert(CreditNoteBO model);
         void Delete(int Id, int userId);
-        List<CreditNoteDetailsBO> GetCreditNoteDetails(int Id);
+        //List<CreditNoteDetailsBO> GetCreditNoteDetails(int Id);
         CreditNoteBO GetById(int ID);
         List<PurchaseOrderBO> GetPONumberForDropdown();
         IEnumerable<PurchaseOrderBO> GetPODetailsById(int POId);

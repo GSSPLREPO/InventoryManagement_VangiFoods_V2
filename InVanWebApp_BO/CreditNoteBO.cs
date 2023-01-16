@@ -27,11 +27,19 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
         public string LocationName { get; set; }
+        public int TermsAndConditionID { get; set; }
+        public string Terms { get; set; }
+        public decimal OtherTax { get; set; }
+
+        public decimal TotalBeforeTax { get; set; }
+        public decimal TotalTax { get; set; }
+        public decimal GrandTotal { get; set; }
 
         //Added the below fields for insertion
         public Nullable<int> CurrencyID { get; set; }
         public string CurrencyName { get; set; }
         public float CurrencyPrice { get; set; }
         public string TxtItemDetails { get; set; }
+        public List<CreditNoteDetailsBO> creditNoteDetails { get; set; }
     }
 }

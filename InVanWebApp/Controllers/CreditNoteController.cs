@@ -14,9 +14,6 @@ namespace InVanWebApp.Controllers
     public class CreditNoteController : Controller
     {
         private ICreditNoteRepository _repository;
-        private IInwardNoteRepository _InwardRepository;
-        private IGRNRepository _GRNrepository;
-        private IPurchaseOrderRepository _purchaseOrderRepository;
         private static ILog log = LogManager.GetLogger(typeof(GRNController));
 
         #region Initializing Constructor
@@ -28,9 +25,6 @@ namespace InVanWebApp.Controllers
         public CreditNoteController()
         {
             _repository = new CreditNoteRepository();
-            _GRNrepository = new GRNRepository();
-            _purchaseOrderRepository = new PurchaseOrderRepository();
-            _InwardRepository = new InwardNoteRepository();
         }
 
         /// <summary>
@@ -66,9 +60,6 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindPONumber();
-                BindLocationName();
-                BindCurrencyPrice();
-                BindCompany();
                 CreditNoteBO model = new CreditNoteBO();
                 model.CreditNoteDate = DateTime.Today;
                 //==========Document number for GRN note============//
@@ -106,9 +97,7 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate Credit note! Can not be inserted!');</script>";
-                           BindPONumber();
-                            BindLocationName();
-                            BindCurrencyPrice();
+                            BindPONumber();
                             model.CreditNoteDate = DateTime.Today;
 
                             GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -118,14 +107,12 @@ namespace InVanWebApp.Controllers
                             return View(model);
                         }
 
-                        return RedirectToAction("Index", "GRN");
+                        return RedirectToAction("Index", "CreditNote");
 
                     }
                     else
                     {
                         BindPONumber();
-                        BindLocationName();
-                        BindCurrencyPrice();
                         model.CreditNoteDate = DateTime.Today;
 
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -145,8 +132,6 @@ namespace InVanWebApp.Controllers
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
                 BindPONumber();
-                BindLocationName();
-                BindCurrencyPrice();
                 model.CreditNoteDate = DateTime.Today;
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -194,15 +179,6 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
 
-        public JsonResult BindCreditNoteDetails(string id)
-        {
-            int CreditNoteId = 0;
-            if (id != "" && id != null)
-                CreditNoteId = Convert.ToInt32(id);
-
-            var result = _repository.GetCreditNoteDetails(CreditNoteId);
-            return Json(result);
-        }
         #endregion
 
         #region Bind dropdowns 
@@ -212,24 +188,6 @@ namespace InVanWebApp.Controllers
             var resultList = new SelectList(result.ToList(), "PurchaseOrderId", "PONumber");
             ViewData["PONumberAndId"] = resultList;
         }
-        public void BindLocationName()
-        {
-            var result = _purchaseOrderRepository.GetLocationNameList();
-            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
-            ViewData["LocationName"] = resultList;
-        }
-        public void BindCurrencyPrice()
-        {
-            var result = _purchaseOrderRepository.GetCurrencyPriceList();
-            var resultList = new SelectList(result.ToList(), "CurrencyID", "CurrencyName");
-            ViewData["CurrencyList"] = resultList;
-        }
-        public void BindCompany()
-        {
-            var result = _purchaseOrderRepository.GetCompanyList();
-            var resultList = new SelectList(result.ToList(), "VendorsID", "CompanyName");
-            ViewData["CompanyName"] = resultList;
-        }
         #endregion
 
         #region Fetch PO details for creditNote
@@ -238,7 +196,7 @@ namespace InVanWebApp.Controllers
             int POId = 0;
             if (id != "" && id != null)
                 POId = Convert.ToInt32(id);
-            
+
             var result = _repository.GetPODetailsById(POId);
             return Json(result);
         }
