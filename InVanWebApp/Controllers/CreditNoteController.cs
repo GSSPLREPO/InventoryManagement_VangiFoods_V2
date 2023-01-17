@@ -114,7 +114,6 @@ namespace InVanWebApp.Controllers
                     {
                         BindPONumber();
                         model.CreditNoteDate = DateTime.Today;
-
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
                         var DocumentNumber = objDocNo.GetDocumentNo(7);
                         ViewData["DocumentNo"] = DocumentNumber;

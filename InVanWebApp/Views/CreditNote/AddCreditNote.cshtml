@@ -42,6 +42,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.PO_ID, (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedPO(id)" })
+                    @Html.ValidationMessageFor(model => model.PO_ID, "", new { @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.PO_Number)
                 </div>
                 <div class="col-md-2">
@@ -234,11 +235,11 @@
                     </div>
                 </div>
             </div>
-            @Html.HiddenFor(model=>model.TxtItemDetails)
+            @Html.HiddenFor(model => model.TxtItemDetails)
         </div>
     </div>
 }
-
+@Html.Raw(TempData["Success"])
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @*<script src="https://cdn.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js" integrity="sha256-H8xrCe0tZFi/C2CgxkmiGksqVaxhW0PFcUKZJZo1yNU=" crossorigin="anonymous"></script>*@

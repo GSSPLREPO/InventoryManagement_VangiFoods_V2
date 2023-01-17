@@ -83,6 +83,8 @@ namespace InVanWebApp_BO
         public string OutwardNoteNumber { get; set; }
         public string OutwardDate { get; set; }
         public float DispatchQuantity { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string ApprovedBy { get; set; }
 
     }
 }

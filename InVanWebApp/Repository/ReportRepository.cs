@@ -182,26 +182,30 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(conStr))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_rpt_GetRawMaterialReceived_Report", con);
+                    SqlCommand cmd = new SqlCommand("usp_rpt_FinishGoodDispatch_Report", con);
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.Parameters.AddWithValue("@ItemID", LocationId);
-                    cmd.Parameters.AddWithValue("@WearhouseId", itemId);
+                    cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    cmd.Parameters.AddWithValue("@WearhouseId", LocationId);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    SqlDataReader reader = cmd.ExecuteReader(); 
                     while (reader.Read())
                     {
                         var result = new OutwardNoteItemDetailsBO()
                         {
                             SrNo = Convert.ToInt32(reader["SrNo"]),
-                            OutwardNoteNumber = reader["GRN_Number"].ToString(),
-                            OutwardDate = Convert.ToDateTime(reader["GRN_Date"]).ToString("dd/MM/yyyy hh:mm:ss"),
-                            Item_Code = reader["Item_Code"].ToString(),
-                            ItemName = reader["Item_Name"].ToString(),
-                            ItemUnitPrice = Convert.ToDecimal(reader["Price_Per_unit"]),
-                            DispatchQuantity = float.Parse(reader["DispatchQuantity"].ToString())
+                            OutwardNoteNumber = reader["OutwardNoteNumber"].ToString(),
+                            OutwardDate = Convert.ToDateTime(reader["OutwardDate"]).ToString("dd/MM/yyyy hh:mm:ss"),
+                            DeliveryAddress = reader["FGLocation"].ToString(),
+                            ApprovedBy = reader["ApprovedBy"].ToString(),
+                            Item_Code = reader["ItemCode"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(reader["PricePerUnit"]),
+                            ItemUnit = reader["ItemUnit"].ToString(),
+                            DispatchQuantity = float.Parse(reader["QuantityDispatched"].ToString()),
+                            CurrencyName=reader["CurrencyName"].ToString()
                             
                         };
                         resultList.Add(result);

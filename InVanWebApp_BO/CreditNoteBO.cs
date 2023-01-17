@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
@@ -13,6 +14,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreditNoteDate { get; set; }
         public Nullable<int> GRNId { get; set; }
         public string GRN_No { get; set; }
+        [Required(ErrorMessage ="Select PO number!")]
         public Nullable<int> PO_ID { get; set; }
         public string PO_Number { get; set; }
         public Nullable<int> LocationId { get; set; }

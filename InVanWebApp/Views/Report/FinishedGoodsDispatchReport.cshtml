@@ -32,7 +32,6 @@
                         <div class="card-body">
                             <div style="padding-top:15px;">
 
-                                <!--Rahul added class inline 04-01-2023.-->
                                 <div class="row-inline">
                                     <div class="col-md-2">
                                         <label>From Date:</label>
@@ -89,11 +88,16 @@
                                         <thead>
                                             <tr>
                                                 <th style="text-align:center">Sr.No.</th>
-                                                <th style="text-align:center">PO Date</th>
-                                                <th style="text-align:center">PO Number</th>
-                                                <th style="text-align:center">Indent Number</th>
-                                                <th style="text-align:center">PO Status</th>
-                                                <th style="text-align:center">Vendor Name</th>
+                                                <th style="text-align:center">Outward Note Number</th>
+                                                <th style="text-align:center">Outward Date</th>
+                                                <th style="text-align:center">FG Stored At Location</th>
+                                                <th style="text-align:center">ApprovedBy</th>
+                                                <th style="text-align:center">Item Code</th>
+                                                <th style="text-align:center">Item</th>
+                                                <th style="text-align:center">Price Per Unit</th>
+                                                <th style="text-align:center">Currency</th>
+                                                <th style="text-align:center">Dispatch Quantity</th>
+                                                <th style="text-align:center">UOM</th>
                                             </tr>
                                         </thead>
                                         <tbody class="text-center"></tbody>
@@ -127,9 +131,12 @@
             $('#tblInward').hide();
         });
 
-        ///Rahul added id = VendorValidate 06-01-2023.
-        function SelectedIndexChangedVendor() {
-            $('#VendorValidate').hide();
+        function SelectedIndexChangedWearhouse() {
+            $('#WearhouseValidate').hide();
+        }
+
+        function SelectedIndexChangedItem() {
+            $('#ItemValidate').hide();
         }
 
         function OnChangedFromDate() {
@@ -139,25 +146,40 @@
         function OnChangedToDate() {
             $('#toDateValidate').hide();
         }
-        //==========================================
 
         $("#btnGo").on('click', function () {
+            var flag = 0;
 
-            ///Rahul added id = VendorValidate 06-01-2023.
-            //===========OnChange of item if Vendors is not selected================
-            var VendorsCheck = $('#Vendors').val();
-            if (VendorsCheck == '' || VendorsCheck == null) {
-                $('#VendorValidate').text("Select Vendor!");
-                $('#VendorValidate').show();
-                $('#Vendors').focus();
-                document.getElementById('Vendors').selectedIndex = 0;
-                return;
+            var Check = $('#Wearhouse').val();
+            if (Check == '' || Check == null) {
+                $('#WearhouseValidate').text("Select Location!");
+                $('#WearhouseValidate').show();
+                $('#Wearhouse').focus();
+                document.getElementById('Wearhouse').selectedIndex = 0;
+                flag = 1;
+                //return;
             }
             else {
-                SelectedIndexChangedVendor();
+                SelectedIndexChangedWearhouse();
             }
-            //==================end======================
-            ///Rahul added id = VendorValidate 06-01-2023.
+
+            var CheckItem = $('#ItemId').val();
+            if (CheckItem == '' || CheckItem == null) {
+                $('#ItemValidate').text("Select Item!");
+                $('#ItemValidate').show();
+                $('#ItemId').focus();
+                document.getElementById('ItemId').selectedIndex = 0;
+                flag = 1;
+                //return;
+            }
+            else {
+                SelectedIndexChangedItem();
+            }
+
+            if (flag == 1) {
+                return;
+            }
+
             //===========OnChange of item if From date is not selected================
             var fromDateCheck = $('#fromDate').val();
             var toDateCheck = $('#toDate').val();
@@ -183,7 +205,7 @@
             var fromDate = $("#fromDate").val();
             var toDate = $("#toDate").val();
             var item = $('#ItemId').val();
-            var wearhouse = $('#Wearhouse').val();
+            var warehouse = $('#Wearhouse').val();
 
             $('#tblInward').dataTable().fnDestroy();
             var t = $('#tblInward').DataTable({
@@ -208,11 +230,16 @@
                 "scrollX": true,
                 "columns": [
                     { "data": "SrNo", "autoWidth": true },
-                    { "data": "PurchaseOrderDate", "autoWidth": true },
-                    { "data": "PONumber", "autoWidth": true },
-                    { "data": "IndentNumber", "autoWidth": true },
-                    { "data": "PurchaseOrderStatus", "autoWidth": true },
-                    { "data": "CompanyName", "autoWidth": true }
+                    { "data": "OutwardNoteNumber", "autoWidth": true },
+                    { "data": "OutwardDate", "autoWidth": true },
+                    { "data": "DeliveryAddress", "autoWidth": true },
+                    { "data": "ApprovedBy", "autoWidth": true },
+                    { "data": "Item_Code", "autoWidth": true },
+                    { "data": "ItemName", "autoWidth": true },
+                    { "data": "ItemUnitPrice", "autoWidth": true },
+                    { "data": "CurrencyName", "autoWidth": true },
+                    { "data": "DispatchQuantity", "autoWidth": true },
+                    { "data": "ItemUnit", "autoWidth": true }
                 ]
             });
             t.on('order.dt search.dt', function () {
