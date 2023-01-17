@@ -34,7 +34,7 @@
                                 <span class="fa fa-plus"></span>  Add Terms
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
-                                <table class="table table-striped table-bordered" style="table-layout:fixed;">
+                                <table class="table table-striped table-bordered">
                                     <tr>
                                         <th>
                                             @Html.DisplayName("Sr No")
@@ -45,9 +45,6 @@
                                         <th>
                                             @Html.DisplayName("Description")
                                         </th>
-                                        @*<th>
-                                                @Html.DisplayName("Description")
-                                            </th>*@
                                         <th>
                                             @Html.DisplayName("Edit/Delete")
                                         </th>
@@ -56,19 +53,10 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.SrNo)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TermName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TermDescription)
-                                            </td>
-                                            @*<td>
-                                                    @Html.DisplayFor(modelItem => item.Description)
-                                                </td>*@
-                                            <td>
+                                            <td class="text-wrap">@Html.DisplayFor(modelItem => item.SrNo)</td>
+                                            <td class="text-wrap">@Html.DisplayFor(modelItem => item.TermName)</td>
+                                            <td class="text-wrap">@Html.DisplayFor(modelItem => item.TermDescription)</td>
+                                            <td class="text-wrap">
                                                 <a href=@Url.Action("EditTerms", "TermsAndCondition", new { ID = item.TermsConditionID })>
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </a> &emsp;

@@ -1,0 +1,223 @@
+﻿@model InVanWebApp_BO.StockMasterBO
+@{
+    ViewBag.Title = "ReorderPointOfStocks";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Reorder Point of Stock</title>
+    <style>
+        table {
+            border-spacing: 0px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td {
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Reorder Point of Stocks</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Reorder Point of Stocks</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="mainWarehouse" style="width:100%;"></div>
+                                    <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+
+<script type="text/javascript">
+
+    function getRandomColor() {
+        var Letters = '0123456789ABCDEF';
+        var Color = '#';
+        for (var i = 0; i < 6; i++) {
+            Color += Letters[Math.floor(Math.random() * 16)];
+        }
+        return Color;
+    }
+
+
+    $(document).ready(function () {
+        $(".spinner-wrapper").fadeIn("slow");
+
+        population = [];
+        xAxisData = [];
+        var coloR = [];
+
+        function convertDhms(h, m, s) {
+            h <= 0 ? h = 1 : h = h * 60 * 60 * 1000;
+            m <= 0 ? m = 1 : m = m * 60 * 1000;
+            s <= 0 ? s = 1 : s = s * 1000;
+            return h + m + s;
+        }
+
+        //-----------Bind individual warehouse data in the graph Start-----------------------------------------------------------
+        var request = $.ajax({
+            url: "/Dashb_RTWarehouseWiseStock/GetDashboardDataReorderPointOfStocks",
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: "POST",
+            success: function (result) {
+                ond = result;
+                var parsed = $.parseJSON(result);
+                var dataLength = parsed.length;
+
+                var serial2 = {
+                    name: "Stock",
+                    type: 'column',
+                    yAxis: 1,
+                    data: [],
+                    color: [],
+                    tooltip: {
+                        valueSuffix: ' KG'
+                    }
+
+                };
+                var serialForMinStock = {
+                    name: "Minimum Stock",
+                    type: 'spline',
+                    data: [],
+                    color: 'black',
+                    tooltip: {
+                        valueSuffix: ' KG'
+                    }
+
+                };
+
+                $.each(parsed, function (i, jsondata) {
+
+                    var dynamicColors = function () {
+                        var r = Math.floor(Math.random() * 255);
+                        var g = Math.floor(Math.random() * 255);
+                        var b = Math.floor(Math.random() * 255);
+                        return "rgb(" + r + "," + g + "," + b + ")";
+                    }
+
+                    var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
+                    if (jsondata.StockQuantity != null) {
+                        serial2.data.push(parseFloat(jsondata.StockQuantity));
+                    } else {
+                        serial2.data.push(parseFloat(0));
+                    }
+                    //FN
+                    if (jsondata.MinimumStock != null) {
+                        serialForMinStock.data.push(parseFloat(jsondata.MinimumStock));
+                    } else {
+                        serialForMinStock.data.push(parseFloat(0));
+                    }
+
+                    coloR.push(dynamicColors());
+                    serial2.color = getRandomColor();
+                    xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
+
+                });
+
+                var finalSeries = [serial2, serialForMinStock];
+
+                Highcharts.chart('mainWarehouse', {
+                    chart: {
+                        zoomType: 'xy'
+                    },
+                    title: {
+                        text: 'Reorder Point of Available Stocks'
+                    },
+                    xAxis: {
+                        categories: xAxisData,
+                        crosshair: true 
+                    },
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value} KG',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck'
+                            }
+                        },
+                        title: {
+                            text: 'Minimum Stock Value (KG)',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck'
+                            }
+                        }
+                    }, { // Secondary yAxis
+                        title: {
+                            text: 'Quantity (KG)',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Black'
+                            }
+                        },
+                        labels: {
+                            format: '{value} KG',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck'
+                            }
+                        },
+                        opposite: true
+                    }],
+                    tooltip: {
+                        shared: true
+                    },
+                    series: finalSeries
+                });
+
+                if (dataLength > 0) {
+                    $("#mainWarehouse").show();
+                    $("#NoDataFound").hide();
+                } else {
+                    $("#mainWarehouse").hide();
+                    $("#NoDataFound").show();
+
+                }
+
+            }
+
+        });
+        //-----------Bind individual warehouse data in the graph End-------------------------------------------------------------
+
+
+        $(".spinner-wrapper").fadeOut("slow");
+
+    });
+
+</script>

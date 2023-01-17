@@ -53,6 +53,7 @@
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
+                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a></li>
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Stock Avaliblity</a></li>
                         <li class="nav-item"> <a class="nav-link" href="#">Utlity</a></li>
                         <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Order Summary</a></li>
@@ -240,6 +241,11 @@
             <div class="collapse" id="tables">
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item"> <a class="nav-link" href="@Url.Action("Report_OC_Index","TransactionsPOandOC")">Sales Order Report</a></li>*@
+                    <li class="nav-item">
+                        <div id="FinishedGoodsDispatchReport">
+                            <a class="nav-link" href="~/Report/FinishedGoodsDispatchReport">Finished Goods Dispatch Report</a>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <div id="POReport">
                             <a class="nav-link" href="~/Report">PO Report</a>

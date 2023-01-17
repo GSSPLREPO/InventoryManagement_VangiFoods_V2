@@ -181,6 +181,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestForQuotationController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
+    <Compile Include="Controllers\StockAdjustmentController.cs" />
     <Compile Include="Controllers\StockMovementController.cs" />
     <Compile Include="Controllers\StockReportController.cs" />
     <Compile Include="Controllers\StockTransferController.cs" />
@@ -2862,6 +2863,7 @@
     <Folder Include="Content\SignatureImages\" />
     <Folder Include="ExcelUploads\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\StockAdjustment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

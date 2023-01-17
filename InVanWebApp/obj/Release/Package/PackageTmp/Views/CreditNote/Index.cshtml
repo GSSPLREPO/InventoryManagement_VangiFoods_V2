@@ -39,7 +39,8 @@
                                         <tr>
                                             <th>@Html.Label("Credit Note Number")</th>
                                             <th>@Html.Label("Credit Note Date")</th>
-                                            <th>@Html.Label("GRN Number")</th>
+                                            <th>@Html.Label("PO Number")</th>
+                                            <th>@Html.Label("Vendor")</th>
                                             <th>@Html.Label("Remarks")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
@@ -50,7 +51,8 @@
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.CreditNoteNo)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.CreditNoteDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.GRN_No)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.PO_Number)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.VendorName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Remarks)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewCreditNote", "CreditNote", new { ID = item.ID })>
@@ -65,6 +67,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <h7 class="text-danger font-bold" style="font-size:x-small;float:right;">NOTE*: Please note credit note can be created of PO whose inward and inward QC are completed!</h7>
                         </div>
                     </div>
                 </div>

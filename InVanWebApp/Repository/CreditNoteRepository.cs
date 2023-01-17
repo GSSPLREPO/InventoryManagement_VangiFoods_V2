@@ -16,7 +16,7 @@ namespace InVanWebApp.Repository
     {
 
         private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-        private static ILog log = LogManager.GetLogger(typeof(GRNRepository));
+        private static ILog log = LogManager.GetLogger(typeof(CreditNoteRepository));
 
         #region  Bind grid
         /// <summary>

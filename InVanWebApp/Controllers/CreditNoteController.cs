@@ -14,7 +14,7 @@ namespace InVanWebApp.Controllers
     public class CreditNoteController : Controller
     {
         private ICreditNoteRepository _repository;
-        private static ILog log = LogManager.GetLogger(typeof(GRNController));
+        private static ILog log = LogManager.GetLogger(typeof(CreditNoteController));
 
         #region Initializing Constructor
 

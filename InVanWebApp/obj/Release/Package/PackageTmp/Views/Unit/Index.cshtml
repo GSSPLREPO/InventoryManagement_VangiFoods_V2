@@ -34,47 +34,27 @@
                                 <span class="fa fa-plus"></span>  Add Unit
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
-                                <table class="table table-striped table-bordered" style="table-layout:fixed;">
+                                <table class="table table-striped table-bordered">
                                     <tr>
-                                        <th>
-                                            @*@Html.DisplayNameFor(model => model.UnitName)*@
-                                            @Html.DisplayName("Unit")
-                                        </th>
-                                        <th>
-                                            @*@Html.DisplayNameFor(model => model.UnitCode)*@
-                                            @Html.DisplayName("Unit Code")
-                                        </th>
-                                        <th>
-                                            @*@Html.DisplayNameFor(model => model.Description)*@
-                                            @Html.DisplayName("Description")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Edit/Delete")
-                                        </th>
+                                        <th>@Html.DisplayName("Unit")</th>
+                                        <th>@Html.DisplayName("Unit Code")</th>
+                                        <th>@Html.DisplayName("Description")</th>
+                                        <th>@Html.DisplayName("Edit/Delete")</th>
                                     </tr>
 
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.UnitName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.UnitCode)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Description)
-                                            </td>
-                                            <td>
+                                            <td class="text-wrap">@Html.DisplayFor(modelItem => item.UnitName)</td>
+                                            <td class="text-wrap">@Html.DisplayFor(modelItem => item.UnitCode)</td>
+                                            <td class="text-wrap">@Html.DisplayFor(modelItem => item.Description)</td>
+                                            <td class="text-wrap">
                                                 <a href=@Url.Action("EditUnit", "Unit", new { UnitID = item.UnitID})>
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </a> &emsp;
                                                 <a href=@Url.Action("DeleteUnit", "Unit", new { UnitId = item.UnitID }) onclick="return confirm('Are you sure want to delete?');">
                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                 </a>
-                                                @*@Html.ActionLink("Edit", "EditUnit", new { UnitID = item.UnitID }) |
-                                                    @Html.ActionLink("Delete", "DeleteUnit", new { UnitId = item.UnitID, },
-                                                       new { onclick = "return confirm('Are you sure, you wants to delete?');" })*@
                                             </td>
                                         </tr>
                                     }
