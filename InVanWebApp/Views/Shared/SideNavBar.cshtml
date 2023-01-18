@@ -51,7 +51,7 @@
             <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
+                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a></li>
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Stock Avaliblity</a></li>
@@ -128,9 +128,16 @@
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <div id="StockTransfer">
-                        <a class="nav-link" href="@Url.Action("Index","StockTransfer")">Stock Transfer</a>
-                    </div>
+                    <li class="nav-item">
+                        <div id="StockTransfer">
+                            <a class="nav-link" href="@Url.Action("Index","StockTransfer")">Stock Transfer</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="StockAdjustment">
+                            <a class="nav-link" href="~/StockAdjustment">Stock Adjustment</a>
+                        </div>
+                    </li>
                     @*<li class="nav-item"> <a class="nav-link" href="~/StockTransfer">Stock Transfer</a></li>*@
                 </ul>
             </div>

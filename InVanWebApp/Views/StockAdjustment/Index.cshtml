@@ -1,24 +1,25 @@
-﻿@model IEnumerable<InVanWebApp_BO.CreditNoteBO>
+﻿@model IEnumerable<InVanWebApp_BO.StockAdjustmentBO>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
+
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>Credit Note</title>
+    <title>Stock Adjustment</title>
 </head>
 <body>
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Credit Note</h4>
+            <h4 class="page-title">Stock Adjustment</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Transactions</a>
                     </li>
-                    <li class="breadcrumb-item active">Credit Note</li>
+                    <li class="breadcrumb-item active">Stock Adjustment</li>
                 </ol>
             </nav>
         </div>
@@ -29,18 +30,17 @@
                     <div class="card">
                         <div class="card-body">
                             @*<h1 class="card-title">@Html.ActionLink("Add Item Type", "AddItemType")</h1>*@
-                            <a href="@Url.Action("AddCreditNote","CreditNote")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span> Credit Note
+                            <a href="@Url.Action("AddStockadjustment","StockAdjustment")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span> Adjust Stock
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
                                 @*<table class="table table-striped table-bordered" id="tblInward">*@
                                 <table class="table table-striped table-bordered hover table-sm" id="tblCreditNote">
                                     <thead>
                                         <tr>
-                                            <th>@Html.Label("Credit Note Number")</th>
-                                            <th>@Html.Label("Credit Note Date")</th>
-                                            <th>@Html.Label("PO Number")</th>
-                                            <th>@Html.Label("Vendor")</th>
+                                            <th>@Html.Label("Document Number")</th>
+                                            <th>@Html.Label("Document Date")</th>
+                                            <th>@Html.Label("Location")</th>
                                             <th>@Html.Label("Remarks")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
@@ -49,16 +49,15 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.CreditNoteNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.CreditNoteDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.PO_Number)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.VendorName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.DocumentNo)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.DocumentDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Remarks)</td>
                                                 <td>
-                                                    <a href=@Url.Action("ViewCreditNote", "CreditNote", new { ID = item.ID })>
+                                                    <a href=@Url.Action("ViewStockAdjustment", "Stockadjustment", new { ID = item.ID })>
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
-                                                    <a href=@Url.Action("DeleteCreditNote", "CreditNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("DeleteStockAdjustment", "Stockadjustment", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>
@@ -67,7 +66,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <h7 class="text-danger font-bold" style="font-size:x-small;float:right;">NOTE*: Please note credit note can be created of PO whose inward and inward QC of all items are completed!</h7>
                         </div>
                     </div>
                 </div>

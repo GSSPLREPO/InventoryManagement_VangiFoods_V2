@@ -146,11 +146,13 @@ namespace InVanWebApp.Repository
                             Item_Name=reader["ItemName"].ToString(),
                             Item_Code=reader["ItemCode"].ToString(),
                             ItemUnitPrice=Convert.ToDecimal(reader["ItemUnitPrice"]),
-                            TotalRecevingQuantiy=Convert.ToDouble(reader["TotalRecevingQuantiy"]),
-                            TotalRejectedQuantity=Convert.ToDouble(reader["TotalRejectedQuantity"]),
+                            TotalRecevingQuantiy=Convert.ToDouble(reader["QuantityTookForSorting"]),
+                            RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
                             RejectionNoteNo = reader["RejectionNoteNo"].ToString(),
-                            InwardNumber = reader["InwardNumber"].ToString(),
-                            ApprovedBy= reader["ApprovedBy"].ToString()
+                            InwardQCNumber = reader["InwardQCNumber"].ToString(),
+                            ApprovedBy= reader["ApprovedBy"].ToString(),
+                            CurrencyName=reader["CurrencyName"].ToString(),
+                            ItemUnit=reader["ItemUnit"].ToString()
                         };
                         resultList.Add(result);
                     }

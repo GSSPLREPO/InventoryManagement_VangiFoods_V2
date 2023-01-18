@@ -1,5 +1,7 @@
 ﻿/*---------------------This function is for exporting the page into pdf format using Canvas.----------------*/
 
+
+
 function ExportPdfFunction(divId, pdfName) {
     var printD = document.getElementById(divId);
     $("#btnExport").hide();

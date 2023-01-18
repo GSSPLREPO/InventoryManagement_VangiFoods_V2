@@ -2859,13 +2859,14 @@
     <Content Include="Views\Report\FinishedGoodsDispatchReport.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\ReorderPointOfStocks.cshtml" />
     <Content Include="Views\CreditNote\ViewCreditNote.cshtml" />
+    <Content Include="Views\StockAdjustment\Index.cshtml" />
+    <Content Include="Views\StockAdjustment\AddStockadjustment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\SignatureImages\" />
     <Folder Include="ExcelUploads\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\StockAdjustment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

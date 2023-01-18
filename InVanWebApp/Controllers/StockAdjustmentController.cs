@@ -14,6 +14,7 @@ namespace InVanWebApp.Controllers
     public class StockAdjustmentController : Controller
     {
         private IStockAdjustmentRepository _repository;
+        private IPurchaseOrderRepository _purchaseOrderRepository;
         private static ILog log = LogManager.GetLogger(typeof(StockAdjustmentController));
 
         #region Initializing Constructor
@@ -25,6 +26,7 @@ namespace InVanWebApp.Controllers
         public StockAdjustmentController()
         {
             _repository = new StockAdjustmentRepository();
+            _purchaseOrderRepository = new PurchaseOrderRepository();
         }
 
         /// <summary>
@@ -59,9 +61,10 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                //BindLocation();
+                BindLocationName();
+                GenerateDocumentNo();
                 StockAdjustmentBO model = new StockAdjustmentBO();
-                model.DocumentDate= DateTime.Today;
+                model.DocumentDate = DateTime.Today;
                 return View(model);
             }
             else
@@ -90,8 +93,9 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Error! Can not be inserted!');</script>";
-                            //BindLocation();
-                            model.DocumentDate= DateTime.Today;
+                            BindLocationName();
+                            GenerateDocumentNo();
+                            model.DocumentDate = DateTime.Today;
                             return View(model);
                         }
 
@@ -100,7 +104,9 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        //BindLocation();
+                        BindLocationName();
+                        GenerateDocumentNo();
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         model.DocumentDate = DateTime.Today;
                         return View(model);
                     }
@@ -114,7 +120,8 @@ namespace InVanWebApp.Controllers
                 log.Error("Error", ex);
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
-                //BindLocation();
+                BindLocationName();
+                GenerateDocumentNo();
                 model.DocumentDate = DateTime.Today;
                 return View(model);
             }
@@ -157,6 +164,37 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
 
+        #endregion
+
+        #region Fetch location stocks details for stock adjustment
+        public JsonResult GetLocationStocksDetails(string id)
+        {
+            int Location_Id = 0;
+            if (id != "" && id != null)
+                Location_Id = Convert.ToInt32(id);
+
+            var result = _repository.GetLocationStocksDetailsById(Location_Id);
+            return Json(result);
+        }
+        #endregion
+
+        #region Bind dropdowns 
+        public void BindLocationName()
+        {
+            var result = _purchaseOrderRepository.GetLocationNameList();
+            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
+            ViewData["LocationList"] = resultList;
+        }
+
+        public void GenerateDocumentNo()
+        {
+            //==========Document number for Stock adjustment============//
+            GetDocumentNumber objDocNo = new GetDocumentNumber();
+
+            //=========here document type=12 i.e. for generating the Stock adjustment (logic is in SP).====//
+            var DocumentNumber = objDocNo.GetDocumentNo(12);
+            ViewData["DocumentNo"] = DocumentNumber;
+        }
         #endregion
     }
 }

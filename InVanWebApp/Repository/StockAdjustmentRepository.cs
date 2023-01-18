@@ -6,13 +6,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using Dapper;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
 
 namespace InVanWebApp.Repository
 {
-    public class StockAdjustmentRepository:IStockAdjustmentRepository
+    public class StockAdjustmentRepository : IStockAdjustmentRepository
     {
         private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private static ILog log = LogManager.GetLogger(typeof(StockAdjustmentRepository));
@@ -25,33 +26,18 @@ namespace InVanWebApp.Repository
         public IEnumerable<StockAdjustmentBO> GetAll()
         {
             List<StockAdjustmentBO> resultList = new List<StockAdjustmentBO>();
+            string stockAdjustment = "Select * from StockAdjustment where IsDeleted=0";
+
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_CreditNote_GetAll", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                    while (reader.Read())
-                    {
-                        var result = new StockAdjustmentBO()
-                        {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            //CreditNoteNo = reader["CreditNoteNo"].ToString(),
-                            //CreditNoteDate = Convert.ToDateTime(reader["CreditNoteDate"]),
-                            //PO_Number = reader["PO_Number"].ToString(),
-                            //VendorName = reader["VendorName"].ToString(),
-                            Remarks = reader["Remarks"].ToString()
-                        };
-                        resultList.Add(result);
-                    }
-                    con.Close();
-
+                    resultList = con.Query<StockAdjustmentBO>(stockAdjustment).ToList();
                 }
             }
             catch (Exception ex)
             {
+                resultList = null;
                 log.Error(ex.Message, ex);
             }
             return resultList;
@@ -259,7 +245,7 @@ namespace InVanWebApp.Repository
                 };
 
                 var CreditNoteDetails = GetCreditNoteDetails(ID);
-               // result.creditNoteDetails = CreditNoteDetails.ToList();
+                // result.creditNoteDetails = CreditNoteDetails.ToList();
             }
             catch (Exception ex)
             {
@@ -311,6 +297,15 @@ namespace InVanWebApp.Repository
             return resultList;
         }
 
+        #endregion
+
+        #region Fetch Location stock details for adjustment
+        public IEnumerable<StockAdjustmentDetailsBO> GetLocationStocksDetailsById(int LocationId)
+        {
+            List<StockAdjustmentDetailsBO> resultList = new List<StockAdjustmentDetailsBO>();
+
+            return resultList;
+        }
         #endregion
 
     }

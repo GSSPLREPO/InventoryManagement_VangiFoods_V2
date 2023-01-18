@@ -64,7 +64,7 @@ namespace InVanWebApp_BO
         public string ItemUnit { get; set; }//
         public string ItemTaxValue { get; set; }//
         public Nullable<double> TotalRecevingQuantiy { get; set; }
-        public Nullable<double> TotalRejectedQuantity { get; set; }
+        public Nullable<double> RejectedQuantity { get; set; }
         public Nullable<double> PostRejectedQuantity { get; set; }
         public string ReasonForRejection { get; set; }
         public string CurrectiveAction { get; set; }
@@ -83,6 +83,9 @@ namespace InVanWebApp_BO
         public string ApprovedBy { get; set; }
         public string RejectionNoteNo { get; set; }
         public string InwardNumber { get; set; }
+        public Nullable<double> InwardQuantity { get; set; }
+        public string InwardQCNumber { get; set; }
+
 
     }
 

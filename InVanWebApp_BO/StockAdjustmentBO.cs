@@ -10,6 +10,7 @@ namespace InVanWebApp_BO
     {
         public int ID { get; set; }
         public DateTime DocumentDate { get; set; }
+        public string DocumentNo { get; set; }
         public int LocationId { get; set; }
         public string LocationName { get; set; }
         public string Remarks { get; set; }
