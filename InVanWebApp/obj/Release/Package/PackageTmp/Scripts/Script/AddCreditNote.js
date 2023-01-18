@@ -10,6 +10,8 @@ function SaveBtnClick() {
 //=====================Onchange of PO===========================
 function SelectedIndexChangedPO(id) {
 
+    $('#btnSave').prop('disabled', false);
+
     //For deleting the rows of Item table if exist.
 
     var table = document.getElementById('submissionTable');
@@ -103,6 +105,15 @@ function SelectedIndexChangedPO(id) {
             }
 
             CalculateTotalBeforeTax();
+            var grandTotal = $('#GrandTotal').val()
+            grandTotal = parseFloat(grandTotal);
+            if (grandTotal == 0) {
+                alert('Wastage of all listed items are zero, Cannot create its credit note!');
+                $('#btnSave').prop('disabled', true);
+            }
+            else {
+                $('#btnSave').prop('disabled', false);
+            }
         },
         error: function (err) {
             alert('Not able to fetch indent item details!');

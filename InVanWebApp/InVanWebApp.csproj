@@ -454,6 +454,7 @@
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
     <Compile Include="Repository\Interface\IReportRepository.cs" />
     <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
+    <Compile Include="Repository\Interface\IStockAdjustmentRepository.cs" />
     <Compile Include="Repository\Interface\ITermsConditionRepository.cs" />
     <Compile Include="Repository\Interface\IOrganisationRepository.cs" />
     <Compile Include="Repository\Interface\IPOPaymentRepository.cs" />
@@ -484,6 +485,7 @@
     <Compile Include="Repository\RequestForQuotationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
+    <Compile Include="Repository\StockAdjustmentRepository.cs" />
     <Compile Include="Repository\StockMasterRepository.cs" />
     <Compile Include="Repository\StockMovementRepository.cs" />
     <Compile Include="Repository\StockTransferRepository.cs" />

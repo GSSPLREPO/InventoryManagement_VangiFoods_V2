@@ -71,7 +71,8 @@ namespace InVanWebApp.Controllers
                         ViewData["message"] = "1";
                         ViewData["Username"] = Session[ApplicationSession.USERNAME].ToString();
                         //GetRollRightList();
-                        return RedirectToAction("Index", "Dashboard");
+                        //return RedirectToAction("Index", "Dashboard");
+                        return RedirectToAction("ReorderPointOfStocks", "Dashb_RTWarehouseWiseStock");
                     }
                     else
                     {

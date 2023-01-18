@@ -10,7 +10,7 @@ namespace InVanWebApp_BO
     {
         public int TermsConditionID { get; set; }
 
-        [Required(ErrorMessage ="Please enter term!")]
+        [Required(ErrorMessage ="Please enter term name!")]
         [StringLength(50, ErrorMessage = "Legth of term is exceeded!")]
         public string TermName { get; set; }
 
