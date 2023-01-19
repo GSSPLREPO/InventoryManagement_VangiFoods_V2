@@ -58,28 +58,12 @@ namespace InVanWebApp.Repository
                 DataTable dt = new DataTable();
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_CreditNote_Insert", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_StockAdjustment_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    //cmd.Parameters.AddWithValue("@CreditNoteNo", model.CreditNoteNo);
-                    //cmd.Parameters.AddWithValue("@CreditNoteDate", model.CreditNoteDate);
-                    //cmd.Parameters.AddWithValue("@PO_ID", model.PO_ID);
-                    //cmd.Parameters.AddWithValue("@PO_Number", model.PO_Number);
-                    //cmd.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
-                    //cmd.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
-                    //cmd.Parameters.AddWithValue("@CurrencyPrice", model.CurrencyPrice);
+                    cmd.Parameters.AddWithValue("@DocumentNo", model.DocumentNo);
+                    cmd.Parameters.AddWithValue("@DocumentDate", model.DocumentDate);
                     cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
                     cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
-                    //cmd.Parameters.AddWithValue("@DeliveryAddress", model.DeliveryAddress);
-                    //cmd.Parameters.AddWithValue("@VendorID", model.VendorID);
-                    //cmd.Parameters.AddWithValue("@VendorName", model.VendorName);
-                    //cmd.Parameters.AddWithValue("@VendorAddress", model.VendorAddress);
-                    //cmd.Parameters.AddWithValue("@TotalBeforeTax", model.TotalBeforeTax);
-                    //cmd.Parameters.AddWithValue("@TotalTax", model.TotalTax);
-                    //cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
-                    //cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
-                    //cmd.Parameters.AddWithValue("@TermsAndConditionID", model.TermsAndConditionID);
-                    //cmd.Parameters.AddWithValue("@Terms", model.Terms);
-
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -87,77 +71,71 @@ namespace InVanWebApp.Repository
                     con.Open();
 
                     SqlDataReader dataReader = cmd.ExecuteReader();
-                    int CreditNoteId = 0;
+                    int StockAdjustmentId = 0;
 
                     while (dataReader.Read())
                     {
-                        CreditNoteId = Convert.ToInt32(dataReader["ID"]);
+                        StockAdjustmentId = Convert.ToInt32(dataReader["ID"]);
                         response.Status = Convert.ToBoolean(dataReader["Status"]);
                     }
                     con.Close();
 
-                    var json = new JavaScriptSerializer();
-                    var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
-
-                    List<CreditNoteDetailsBO> itemDetails = new List<CreditNoteDetailsBO>();
-
-                    foreach (var item in data)
+                    if (StockAdjustmentId != 0)
                     {
-                        CreditNoteDetailsBO objItemDetails = new CreditNoteDetailsBO();
-                        objItemDetails.CreditNote_ID = CreditNoteId;
-                        objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
-                        objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
-                        objItemDetails.Item_Name = item.ElementAt(2).Value.ToString();
-                        objItemDetails.POQuantity = float.Parse(item.ElementAt(3).Value.ToString());
-                        objItemDetails.RejectedQuantity = Convert.ToDecimal(item.ElementAt(4).Value);
-                        objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString();
-                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(6).Value);
-                        objItemDetails.CurrencyName = item.ElementAt(7).Value.ToString();
-                        objItemDetails.ItemTaxValue = item.ElementAt(8).Value.ToString();
-                        objItemDetails.ItemTotalAmount = float.Parse(item.ElementAt(9).Value.ToString());
-                        objItemDetails.Remarks = item.ElementAt(10).Value.ToString();
-                        objItemDetails.CreatedBy = model.CreatedBy;
+                        var json = new JavaScriptSerializer();
+                        var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
 
-                        //Added the below field for Currency
-                        //objItemDetails.CurrencyID = model.CurrencyID;
-                        //objItemDetails.CurrencyPrice = model.CurrencyPrice;
+                        List<StockAdjustmentDetailsBO> itemDetails = new List<StockAdjustmentDetailsBO>();
 
-                        itemDetails.Add(objItemDetails);
-                    }
-
-                    foreach (var item in itemDetails)
-                    {
-                        con.Open();
-                        SqlCommand cmdNew = new SqlCommand("usp_tbl_CreditNoteDetails_Insert", con);
-                        cmdNew.CommandType = CommandType.StoredProcedure;
-
-                        cmdNew.Parameters.AddWithValue("@CreditNote_ID", item.CreditNote_ID);
-                        cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);
-                        cmdNew.Parameters.AddWithValue("@Item_Name", item.Item_Name);
-                        cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
-                        cmdNew.Parameters.AddWithValue("@POQuantity", item.POQuantity);
-                        cmdNew.Parameters.AddWithValue("@RejectedQuantity", item.RejectedQuantity);
-                        cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
-                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
-                        cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
-                        cmdNew.Parameters.AddWithValue("@ItemTotalAmount", item.ItemTotalAmount);
-                        cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks);
-                        cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
-                        cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-
-                        //Added the below field for Indent, currency and terms description
-                        cmdNew.Parameters.AddWithValue("@CurrencyID", item.CurrencyID);
-                        cmdNew.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
-                        cmdNew.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice);
-
-
-                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
-
-                        while (dataReaderNew.Read())
+                        foreach (var item in data)
                         {
-                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                            StockAdjustmentDetailsBO objItemDetails = new StockAdjustmentDetailsBO();
+                            objItemDetails.StockAdjustmentID = StockAdjustmentId;
+                            objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
+                            objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
+                            objItemDetails.Item_Name = item.ElementAt(2).Value.ToString();
+                            objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(3).Value);
+                            objItemDetails.CurrencyName = item.ElementAt(4).Value.ToString();
+                            objItemDetails.AvailableStock = Convert.ToDecimal(item.ElementAt(5).Value);
+                            objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
+                            objItemDetails.PhysicalStock = Convert.ToDecimal(item.ElementAt(7).Value);
+                            objItemDetails.DifferenceInStock = Convert.ToDecimal(item.ElementAt(8).Value);
+                            objItemDetails.TransferPrice = Convert.ToDecimal(item.ElementAt(9).Value);
+                            objItemDetails.Remarks = item.ElementAt(10).Value.ToString();
+                            objItemDetails.CreatedBy = model.CreatedBy;
+                            itemDetails.Add(objItemDetails);
                         }
-                        con.Close();
+
+                        foreach (var item in itemDetails)
+                        {
+                            con.Open();
+                            SqlCommand cmdNew = new SqlCommand("usp_tbl_StockAdjustmentDetails_Insert", con);
+                            cmdNew.CommandType = CommandType.StoredProcedure;
+
+                            cmdNew.Parameters.AddWithValue("@StockAdjustment_ID", item.StockAdjustmentID);
+                            cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);
+                            cmdNew.Parameters.AddWithValue("@Item_Name", item.Item_Name);
+                            cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                            cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
+                            cmdNew.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
+                            cmdNew.Parameters.AddWithValue("@AvailableStock", item.AvailableStock);
+                            cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                            cmdNew.Parameters.AddWithValue("@PhysicalStock", item.PhysicalStock);
+                            cmdNew.Parameters.AddWithValue("@DifferenceInStock", item.DifferenceInStock);
+                            cmdNew.Parameters.AddWithValue("@TransferPrice", item.TransferPrice);
+                            cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks);
+                            cmdNew.Parameters.AddWithValue("@LocationId", model.LocationId);
+                            cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                            cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+
+                            SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                            while (dataReaderNew.Read())
+                            {
+                                response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                            }
+                            con.Close();
+                        }
                     }
                 }
 
@@ -304,6 +282,39 @@ namespace InVanWebApp.Repository
         {
             List<StockAdjustmentDetailsBO> resultList = new List<StockAdjustmentDetailsBO>();
 
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+
+                    SqlCommand cmd1 = new SqlCommand("usp_tbl_LocationStockDetailsForStockAdjustment_GetByID", con);
+                    cmd1.Parameters.AddWithValue("@Location_Id", LocationId);
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader2 = cmd1.ExecuteReader();
+
+                    while (dataReader2.Read())
+                    {
+                        var result = new StockAdjustmentDetailsBO()
+                        {
+                            ID = Convert.ToInt32(dataReader2["ID"]),
+                            ItemId = Convert.ToInt32(dataReader2["ItemId"]),
+                            Item_Code = dataReader2["Item_Code"].ToString(),
+                            Item_Name = dataReader2["Item_Name"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                            ItemUnit = dataReader2["ItemUnit"].ToString(),
+                            AvailableStock = Convert.ToDecimal(dataReader2["AvailableStock"]),
+                            CurrencyName = dataReader2["CurrencyName"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
             return resultList;
         }
         #endregion

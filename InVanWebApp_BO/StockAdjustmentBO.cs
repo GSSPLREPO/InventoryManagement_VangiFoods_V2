@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
@@ -11,6 +12,7 @@ namespace InVanWebApp_BO
         public int ID { get; set; }
         public DateTime DocumentDate { get; set; }
         public string DocumentNo { get; set; }
+        [Required(ErrorMessage ="Select Location!")]
         public int LocationId { get; set; }
         public string LocationName { get; set; }
         public string Remarks { get; set; }
@@ -28,6 +30,7 @@ namespace InVanWebApp_BO
     public class StockAdjustmentDetailsBO
     {
         public int ID { get; set; }
+        public int StockAdjustmentID { get; set; }
         public Nullable<int> ItemId { get; set; }
         public string Item_Name { get; set; }
         public string Item_Code { get; set; }
@@ -37,6 +40,8 @@ namespace InVanWebApp_BO
         public decimal PhysicalStock { get; set; }
         public decimal DifferenceInStock { get; set; }
         public decimal TransferPrice { get; set; }
+
+        [StringLength(100,ErrorMessage ="Length is exceeding!")]
         public string Remarks { get; set; }
         public int CurrencyID { get; set; }
         public string CurrencyName { get; set; }
