@@ -260,19 +260,19 @@
         $('<tr id="tablerow' + counter + '">' + '<td>' +
             //'<select id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" required="required" /></select>' +
             //'<input type="text" id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" value="" required="required" />' +
-            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID_1').html() + '</select>' +
+            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID_1').html() + '</select>' +
             '</td>' +
             '<td class="d-none">' +
-            '<input type="text" id="' + itemCode + '" class="form-control" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
+            '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
+            '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-           '<input type="text" id="' + itemQuantity + '" class="form-control text-right" style = "height:30px;" name="' + itemQuantity + '" value="0"     required="required" />' +
+            '<input type="text" id="' + itemQuantity + '" class="form-control form-control-sm text-right" style = "height:30px;" name="' + itemQuantity + '" value="0"     required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
+            '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
             '<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +

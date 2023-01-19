@@ -189,7 +189,7 @@
                                                     <tr id="tablerow_@c">
                                                         <td>
                                                             @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
-                                                                new { @class = "form-control form-control-sm ", id = "Item_ID_" + c, style = "height:30px;width:130px;", onchange = "getitemDetailsJSTbl('" + c + "')" })
+                                                                new { @class = "form-control form-control-sm ", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
                                                         </td>
                                                         <td class="col-md-4 d-none">
                                                             @Html.TextBox("Item_Code_" + c, item.Item_Code, new { @class = "form-control form-control-sm ", @readonly = "readonly", style = "height:30px;width:200px;" })
@@ -510,19 +510,19 @@
         var remarks = "remarks_" + counter;
         
         $('<tr id="tablerow_' + counter + '">' + '<td>'+
-            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:130px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID_1').html()+'</select>' +
+            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:auto;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID_1').html()+'</select>' +
             '</td>' +
             '<td class="d-none">' +
-            '<input type="text" id="' + itemCode + '" class="form-control" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
+            '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemDescription + '" class="form-control" style = "height:30px;width:200px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
+            '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + Quantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control" style = "height:30px;width:100px;" name="' + Quantity + '" value="0"     required="required" />' +
+            '<input type="text" id="' + Quantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + Quantity + '" value="0"     required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemUnit + '" class="form-control" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
+            '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +            
             '<td>' +
             //Rahul added 03/12/2022.

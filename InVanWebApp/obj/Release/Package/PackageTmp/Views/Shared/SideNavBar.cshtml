@@ -51,19 +51,9 @@
             <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
+                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a></li>
-                    @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Stock Avaliblity</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Utlity</a></li>
-                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Order Summary</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Yield Dashboard</a></li>
-                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Reorder Point</a></li>
-                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Inquiry Order</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Stock </a></li>
-                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">FIFO Dashboard</a></li>
-                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="#">Utitlity batch,order</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Analitical Dashboard</a></li>*@
                 </ul>
             </div>
         </li>
@@ -111,6 +101,11 @@
                             <a class="nav-link" href="~/POPayment">PO Payment Details</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="RejectionNote">
+                            <a class="nav-link" href="~/RejectionNote">Rejection Note</a>
+                        </div>
+                    </li>
                     @*Rahul added Request For Quotation 14-12-2022.*@
                     <li class="nav-item">
                         <div id="RequestForQuotation">
@@ -128,9 +123,16 @@
             </a>
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                    <div id="StockTransfer">
-                        <a class="nav-link" href="@Url.Action("Index","StockTransfer")">Stock Transfer</a>
-                    </div>
+                    <li class="nav-item">
+                        <div id="StockTransfer">
+                            <a class="nav-link" href="@Url.Action("Index","StockTransfer")">Stock Transfer</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="StockAdjustment">
+                            <a class="nav-link" href="~/StockAdjustment">Stock Adjustment</a>
+                        </div>
+                    </li>
                     @*<li class="nav-item"> <a class="nav-link" href="~/StockTransfer">Stock Transfer</a></li>*@
                 </ul>
             </div>
@@ -143,15 +145,12 @@
             </a>
             <div class="collapse" id="ui-advanced">
                 <ul class="nav flex-column sub-menu">
-                    <div id="InwardQC">
-                        <a class="nav-link" href="@Url.Action("Index","InwardQCSorting")">Inward QC Sorting</a>
-                    </div>
-                    @*<li class="nav-item">
-                            <a class="nav-link" href="~/QC/QCSorting">QC Sorting</a>
-                        </li>*@
-                    @*<li class="nav-item"> <a class="nav-link" href="~/QC/QCProductSpecification">Q CProduction<br /> SpecificationMaster</a></li>
-                        <li class="nav-item"> <a class="nav-link" href="#">QC Rejection</a></li>*@
-                    @*<li class="nav-item"> <a class="nav-link" href="~/QC/QCSorting.cshtml">LabMaster</a></li>*@
+                    <li class="nav-item">
+                        <div id="InwardQC">
+                            <a class="nav-link" href="@Url.Action("Index","InwardQCSorting")">Inward QC Sorting</a>
+                        </div>
+                    </li>
+                   
                 </ul>
             </div>
         </li>

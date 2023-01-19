@@ -178,6 +178,7 @@
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
+    <Compile Include="Controllers\RejectionNoteController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestForQuotationController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
@@ -452,6 +453,7 @@
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
+    <Compile Include="Repository\Interface\IRejectionNoteRepository.cs" />
     <Compile Include="Repository\Interface\IReportRepository.cs" />
     <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
     <Compile Include="Repository\Interface\IStockAdjustmentRepository.cs" />
@@ -481,6 +483,7 @@
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
     <Compile Include="Repository\PurchaseOrderRepository.cs" />
+    <Compile Include="Repository\RejectionNoteRepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
     <Compile Include="Repository\RequestForQuotationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
@@ -1831,6 +1834,9 @@
     <Content Include="Highcharts-10.3.1\code\themes\sand-signika.js.map" />
     <Content Include="Highcharts-10.3.1\code\themes\skies.js.map" />
     <Content Include="Highcharts-10.3.1\code\themes\sunset.js.map" />
+    <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
+    <Content Include="Views\RejectionNote\Index.cshtml" />
+    <Content Include="Views\RejectionNote\ViewRejectionNote.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
