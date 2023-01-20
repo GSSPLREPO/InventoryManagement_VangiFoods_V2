@@ -32,6 +32,7 @@ namespace InVanWebApp.Common
         public static void ClearAllSessions()
         {
             mvarSesion.Remove(USERNAME);
+            mvarSesion.Remove(USERID);
         }
     }
 }

@@ -11,7 +11,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h4>Adjust Stock</h4>
+            <h4>Stock Adjustment</h4>
             <hr />
             @Html.ValidationSummary(true)
 
@@ -45,6 +45,13 @@
                     @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.LocationName)
                 </div>
+                @*<div class="col-md-2">
+                    @Html.Label("Item")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("ItemId", (IEnumerable<SelectListItem>)ViewData["ItemList"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation(id)" })
+                </div>*@
             </div>
             <br />
             <hr />
@@ -72,8 +79,8 @@
                                                 <th class="sortStyle">UOM</th>
                                                 <th class="sortStyle">Physical Stock</th>
                                                 <th class="sortStyle">Difference</th>
-                                                <th class="sortStyle">Transfer Price</th>
-                                                <th class="sortStyle">Remarks</th>
+                                                <th class="sortStyle">Price (Adjusted Difference)</th>
+                                                <th class="sortStyle">Comments</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -147,8 +154,10 @@
             else
                 $('#btnSave').prop('disabled', false);
         }
+        var LocationName = $("#LocationId option:selected").text();
+        $('#LocationName').val(LocationName);
         createJson();
-        alert(TxtItemDetails);
+       // alert(TxtItemDetails);
     };
     //==========end===============
 
@@ -224,6 +233,8 @@
                             t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                             t5.setAttribute("value", "0");
                             t5.setAttribute("type", "number");
+                            t5.setAttribute("onkeypress", "return isNumberKey(event)");
+                            t5.setAttribute("maxlength", "8");
                             t5.setAttribute("class", "form-control form-control-sm");
                             cell.appendChild(t5);
                         }
@@ -247,7 +258,7 @@
                         else if (i == 10) {
                             var t5 = document.createElement("input");
                             t5.id = "txtRemarks_" + j;
-                            t5.setAttribute("value", "Physical stock updated.");
+                            t5.setAttribute("maxlength", "80");
                             t5.setAttribute("style", "width:auto;");
                             t5.setAttribute("class", "form-control form-control-sm");
                             cell.appendChild(t5);
@@ -343,5 +354,20 @@
             TxtItemDetails = tempTxt + "]";
 
         $('#TxtItemDetails').val(TxtItemDetails);
+    }
+
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
     }
 </script>

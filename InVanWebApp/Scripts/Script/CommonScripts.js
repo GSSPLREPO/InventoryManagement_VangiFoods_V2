@@ -2,7 +2,7 @@
 
 
 
-function ExportPdfFunction(divId, pdfName) {
+function ExportPdfFunction(divId, pdfName, height=580, width=480) {
     var printD = document.getElementById(divId);
     $("#btnExport").hide();
     $("#btnBack").hide();
@@ -18,8 +18,8 @@ function ExportPdfFunction(divId, pdfName) {
                 return true;
             }
         };
-
-        doc.addImage(img, 'JPEG', 5, 5, 580, 480);
+        
+        doc.addImage(img, 'JPEG', 5, 5, height, width);
         doc.fromHTML(printD, 15, 15, {
             'width': 200,
             'elementHandlers': specialElementHandlers

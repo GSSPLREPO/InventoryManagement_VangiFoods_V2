@@ -11,7 +11,7 @@ namespace InVanWebApp.Repository.Interface
     {
         IEnumerable<StockAdjustmentBO> GetAll();
         ResponseMessageBO Insert(StockAdjustmentBO model);
-        void Delete(int Id, int userId);
+        ResponseMessageBO Delete(int Id, int userId);
         StockAdjustmentBO GetById(int ID);
         IEnumerable<StockAdjustmentDetailsBO> GetLocationStocksDetailsById(int LocationId);
     }

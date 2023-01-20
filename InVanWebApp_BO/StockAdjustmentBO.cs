@@ -21,7 +21,7 @@ namespace InVanWebApp_BO
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModificationDate { get; set; }
         public Nullable<int> LastModificationBy { get; set; }
-
+        public string UserName { get; set; }
         //Added for insertion
         public string TxtItemDetails { get; set; }
         public List<StockAdjustmentDetailsBO> stockAdjustmentDetails { get; set; }

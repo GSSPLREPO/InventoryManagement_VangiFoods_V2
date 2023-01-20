@@ -42,6 +42,7 @@
                                             <th>@Html.Label("Document Date")</th>
                                             <th>@Html.Label("Location")</th>
                                             <th>@Html.Label("Remarks")</th>
+                                            <th>@Html.Label("Adjust By")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
@@ -53,6 +54,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.DocumentDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Remarks)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewStockAdjustment", "Stockadjustment", new { ID = item.ID })>
                                                         <i class="fa fa-eye text-primary"></i>

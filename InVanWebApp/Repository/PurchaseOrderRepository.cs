@@ -187,7 +187,7 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@BalanceQty", item.BalanceQuantity);
-                        cmdNew.Parameters.AddWithValue("@RequiredQty", item.RequiredQuantity);    
+                        cmdNew.Parameters.AddWithValue("@RequiredQty", item.RequiredQuantity);
 
                         //Added the below field for Indent, currency and terms description
                         cmdNew.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
@@ -224,13 +224,22 @@ namespace InVanWebApp.Repository
         {
             string purchaseOrderQuery = "SELECT * FROM PurchaseOrder WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
             string purchaseOrderItemQuery = "SELECT * FROM PurchaseOrderItemsDetails WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
-            using (SqlConnection con = new SqlConnection(connString))
+            PurchaseOrderBO purchaseOrder = new PurchaseOrderBO();
+            try
             {
-                var purchaseOrder = con.Query<PurchaseOrderBO>(purchaseOrderQuery, new { @purchaseOrderId = PurchaseOrderId }).FirstOrDefault();
-                var purchaseOrderList = con.Query<PurchaseOrderItemsDetails>(purchaseOrderItemQuery, new { @purchaseOrderId = PurchaseOrderId }).ToList();
-                purchaseOrder.itemDetails = purchaseOrderList;
-                return purchaseOrder;
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    purchaseOrder = con.Query<PurchaseOrderBO>(purchaseOrderQuery, new { @purchaseOrderId = PurchaseOrderId }).FirstOrDefault();
+                    var purchaseOrderList = con.Query<PurchaseOrderItemsDetails>(purchaseOrderItemQuery, new { @purchaseOrderId = PurchaseOrderId }).ToList();
+                    purchaseOrder.itemDetails = purchaseOrderList;
+                }
+
             }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return purchaseOrder;
         }
 
         /// <summary>
@@ -297,9 +306,9 @@ namespace InVanWebApp.Repository
                         objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
                         objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
                         objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.RequiredQuantity =float.Parse(item.ElementAt(3).Value);
+                        objItemDetails.RequiredQuantity = float.Parse(item.ElementAt(3).Value);
                         objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(4).Value);
-                        objItemDetails.BalanceQuantity =float.Parse(item.ElementAt(5).Value);
+                        objItemDetails.BalanceQuantity = float.Parse(item.ElementAt(5).Value);
                         objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
                         objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(7).Value);
                         objItemDetails.ItemTaxValue = item.ElementAt(9).Value.ToString();

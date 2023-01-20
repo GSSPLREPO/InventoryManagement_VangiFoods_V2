@@ -142,8 +142,14 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                _repository.Delete(ID, userID);
-                TempData["Success"] = "<script>alert('Stock adjustment doument is deleted successfully!');</script>";
+                ResponseMessageBO result = new ResponseMessageBO();
+                result = _repository.Delete(ID, userID);
+
+                if (result.Status)
+                    TempData["Success"] = "<script>alert('Adjusted stock is deleted successfully!');</script>";
+                else
+                    TempData["Success"] = "<script>alert('Error while deleting!');</script>";
+
                 return RedirectToAction("Index", "StockAdjustment");
             }
             else

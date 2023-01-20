@@ -26,7 +26,7 @@ namespace InVanWebApp.Repository
         public IEnumerable<StockAdjustmentBO> GetAll()
         {
             List<StockAdjustmentBO> resultList = new List<StockAdjustmentBO>();
-            string stockAdjustment = "Select * from StockAdjustment where IsDeleted=0";
+            string stockAdjustment = "select SA.ID,SA.DocumentNo, SA.DocumentDate, SA.LocationName, SA.Remarks,UD.UserName as UserName, Remarks from StockAdjustment SA inner join UserDetails UD on UD.EmployeeID=SA.CreatedBy where SA.IsDeleted=0 and UD.IsDeleted=0";
 
             try
             {
@@ -37,7 +37,7 @@ namespace InVanWebApp.Repository
             }
             catch (Exception ex)
             {
-                resultList = null;
+                //resultList = null;
                 log.Error(ex.Message, ex);
             }
             return resultList;
@@ -156,8 +156,9 @@ namespace InVanWebApp.Repository
         /// Delete record by ID
         /// </summary>
         /// <param name="ID"></param>
-        public void Delete(int Id, int userId)
+        public ResponseMessageBO Delete(int Id, int userId)
         {
+            ResponseMessageBO responseMessage = new ResponseMessageBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
@@ -169,13 +170,16 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     cmd.ExecuteNonQuery();
+                    responseMessage.Status = true;
                     con.Close();
                 }
             }
             catch (Exception ex)
             {
+                responseMessage.Status = false;
                 log.Error(ex.Message, ex);
             }
+            return responseMessage;
         }
         #endregion
 
@@ -188,91 +192,23 @@ namespace InVanWebApp.Repository
 
         public StockAdjustmentBO GetById(int ID)
         {
-            var result = new StockAdjustmentBO();
+            StockAdjustmentBO result = new StockAdjustmentBO();
             try
             {
+                string stockAdjustmentQuery = "SELECT * FROM StockAdjustment WHERE ID = @ID AND IsDeleted = 0";
+                string stockAdjustmentItemQuery = "SELECT * FROM StockAdjustmentDetails WHERE StockAdjustmentID = @ID AND IsDeleted = 0";
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_CreditNote_GetByID", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ID", ID);
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        result = new StockAdjustmentBO()
-                        {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            //CreditNoteNo = reader["CreditNoteNo"].ToString(),
-                            //CreditNoteDate = Convert.ToDateTime(reader["CreditNoteDate"]),
-                            //PO_Number = reader["PO_Number"].ToString(),
-                            //CurrencyName = reader["CurrencyName"].ToString(),
-                            LocationName = reader["LocationName"].ToString(),
-                            //VendorName = reader["VendorName"].ToString(),
-                            //DeliveryAddress = reader["DeliveryAddress"].ToString(),
-                            //VendorAddress = reader["VendorAddress"].ToString(),
-                            //Terms = reader["Terms"].ToString(),
-                            //OtherTax = Convert.ToDecimal(reader["OtherTax"]),
-                            //TotalBeforeTax = Convert.ToDecimal(reader["TotalBeforeTax"]),
-                            //TotalTax = Convert.ToDecimal(reader["TotalTax"]),
-                            //GrandTotal = Convert.ToDecimal(reader["GrandTotal"]),
-                            Remarks = reader["Remarks"].ToString()
-                        };
-                    }
-                    con.Close();
-                };
-
-                var CreditNoteDetails = GetCreditNoteDetails(ID);
-                // result.creditNoteDetails = CreditNoteDetails.ToList();
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-            }
-            return result;
-        }
-
-        public List<StockAdjustmentDetailsBO> GetCreditNoteDetails(int Id)
-        {
-            var resultList = new List<StockAdjustmentDetailsBO>();
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connString))
-                {
-
-                    SqlCommand cmd1 = new SqlCommand("usp_tbl_CreditNoteDetails_GetByID", con);
-                    cmd1.Parameters.AddWithValue("@ID", Id);
-                    cmd1.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    SqlDataReader dataReader2 = cmd1.ExecuteReader();
-
-                    while (dataReader2.Read())
-                    {
-                        var result = new StockAdjustmentDetailsBO()
-                        {
-                            ItemId = Convert.ToInt32(dataReader2["ItemId"]),
-                            Item_Code = dataReader2["Item_Code"].ToString(),
-                            Item_Name = dataReader2["Item_Name"].ToString(),
-                            ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
-                            ItemUnit = dataReader2["ItemUnit"].ToString(),
-                            //ItemTaxValue = dataReader2["ItemTaxValue"].ToString(),
-                            //POQuantity = Convert.ToDouble(dataReader2["POQuantity"]),
-                            //RejectedQuantity = ((dataReader2["RejectedQuantity"] != null) ? Convert.ToDecimal(dataReader2["RejectedQuantity"]) : 0),
-                            CurrencyName = dataReader2["CurrencyName"].ToString(),
-                            CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"]),
-                            Remarks = dataReader2["Remarks"].ToString(),
-                            //ItemTotalAmount = Convert.ToDouble(dataReader2["ItemTotalAmount"])
-                        };
-                        resultList.Add(result);
-                    }
-                    con.Close();
+                    result = con.Query<StockAdjustmentBO>(stockAdjustmentQuery, new { @ID = ID }).FirstOrDefault();
+                    var stockAdjustmentItemList = con.Query<StockAdjustmentDetailsBO>(stockAdjustmentItemQuery, new { @ID = ID }).ToList();
+                    result.stockAdjustmentDetails = stockAdjustmentItemList;
                 }
             }
             catch (Exception ex)
             {
                 log.Error(ex.Message, ex);
             }
-            return resultList;
+            return result;
         }
 
         #endregion
