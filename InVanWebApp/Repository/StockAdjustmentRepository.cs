@@ -195,7 +195,7 @@ namespace InVanWebApp.Repository
             StockAdjustmentBO result = new StockAdjustmentBO();
             try
             {
-                string stockAdjustmentQuery = "SELECT * FROM StockAdjustment WHERE ID = @ID AND IsDeleted = 0";
+                string stockAdjustmentQuery = "select SA.ID,SA.DocumentNo, SA.DocumentDate, SA.LocationName, SA.Remarks,UD.UserName as UserName, Remarks from StockAdjustment SA inner join UserDetails UD on UD.EmployeeID=SA.CreatedBy where SA.IsDeleted=0 and SA.ID = @ID and UD.IsDeleted=0"; //"SELECT * FROM StockAdjustment WHERE ID = @ID AND IsDeleted = 0";
                 string stockAdjustmentItemQuery = "SELECT * FROM StockAdjustmentDetails WHERE StockAdjustmentID = @ID AND IsDeleted = 0";
                 using (SqlConnection con = new SqlConnection(connString))
                 {
@@ -214,7 +214,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Fetch Location stock details for adjustment
-        public IEnumerable<StockAdjustmentDetailsBO> GetLocationStocksDetailsById(int LocationId)
+        public IEnumerable<StockAdjustmentDetailsBO> GetLocationStocksDetailsById(int LocationId,int ItemId)
         {
             List<StockAdjustmentDetailsBO> resultList = new List<StockAdjustmentDetailsBO>();
 
@@ -225,6 +225,7 @@ namespace InVanWebApp.Repository
 
                     SqlCommand cmd1 = new SqlCommand("usp_tbl_LocationStockDetailsForStockAdjustment_GetByID", con);
                     cmd1.Parameters.AddWithValue("@Location_Id", LocationId);
+                    cmd1.Parameters.AddWithValue("@Item_Id", ItemId);
                     cmd1.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader2 = cmd1.ExecuteReader();
@@ -245,6 +246,26 @@ namespace InVanWebApp.Repository
                         resultList.Add(result);
                     }
                     con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Fetch Item list by location id.
+        public IEnumerable<ItemBO> GetItemListByLocationId(int LocationId) {
+            List<ItemBO> resultList = new List<ItemBO>();
+            string itemQuery = "select distinct(LS.ItemId) as ID, (Select I.Item_Name from Item I where I.IsDeleted=0 and I.ID=LS.ItemId) as Item_Name from LocationWiseStock LS where LS.IsDeleted = 0 and LS.LocationID = @ID";
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    resultList = con.Query<ItemBO>(itemQuery,new { @ID=LocationId}).ToList();
                 }
             }
             catch (Exception ex)

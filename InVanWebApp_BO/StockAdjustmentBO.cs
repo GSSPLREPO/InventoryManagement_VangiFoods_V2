@@ -15,6 +15,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage ="Select Location!")]
         public int LocationId { get; set; }
         public string LocationName { get; set; }
+        [StringLength(95, ErrorMessage ="Length is exceeding!")]
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

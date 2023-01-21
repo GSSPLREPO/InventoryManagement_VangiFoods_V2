@@ -67,6 +67,14 @@
                                     @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Adjust By</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.UserName, new { style = "color:black;" })
+                                </div>
+                            </div>
                             <br />
                             <hr />
                             <div class="row">
@@ -132,7 +140,7 @@
                                                                     @Html.TextBoxFor(x => item.ItemTotalAmount, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
                                                                 </td>*@
                                                                 <td style="width:auto;">
-                                                                    @Html.DisplayFor(x => item.Remarks)
+                                                                    @Html.TextAreaFor(x => item.Remarks, new { style = "border:none;background: none; height:65px;width: 210px", @readonly = "readonly" })
                                                                 </td>
                                                             </tr>
                                                             { c++; }

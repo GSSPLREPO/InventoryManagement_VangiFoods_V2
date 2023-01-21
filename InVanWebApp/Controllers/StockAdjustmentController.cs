@@ -173,13 +173,16 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Fetch location stocks details for stock adjustment
-        public JsonResult GetLocationStocksDetails(string id)
+        public JsonResult GetLocationStocksDetails(string id, string itemId=null)
         {
             int Location_Id = 0;
             if (id != "" && id != null)
                 Location_Id = Convert.ToInt32(id);
+            int Item_Id = 0;
+            if (itemId != null && itemId != "")
+                Item_Id = Convert.ToInt32(itemId);
 
-            var result = _repository.GetLocationStocksDetailsById(Location_Id);
+            var result = _repository.GetLocationStocksDetailsById(Location_Id,Item_Id);
             return Json(result);
         }
         #endregion
@@ -200,6 +203,16 @@ namespace InVanWebApp.Controllers
             //=========here document type=12 i.e. for generating the Stock adjustment (logic is in SP).====//
             var DocumentNumber = objDocNo.GetDocumentNo(12);
             ViewData["DocumentNo"] = DocumentNumber;
+        }
+
+        public JsonResult GetItemList(string id)
+        {
+            int Location_Id = 0;
+            if (id != "" && id != null)
+                Location_Id = Convert.ToInt32(id);
+
+            var result = _repository.GetItemListByLocationId(Location_Id);
+            return Json(result);
         }
         #endregion
     }
