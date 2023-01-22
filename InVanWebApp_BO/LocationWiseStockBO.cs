@@ -30,5 +30,12 @@ namespace InVanWebApp_BO
         public string ItemUnit { get; set; }
         public string CurrencyName { get; set; }
 
+        //Added the below fields for report Total Inventory code warehouse wise
+        public DateTime fromDate { get; set; }
+        public DateTime toDate { get; set; }
+        public string ItemUnitPriceWithCurrency { get; set; }
+        public int SrNo { get; set; }
+        public string TotalInventoryValue { get; set; }
+
     }
 }

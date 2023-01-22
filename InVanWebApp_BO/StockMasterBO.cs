@@ -34,6 +34,11 @@ namespace InVanWebApp_BO
         //Added for dashboard
         public float MinimumStock { get; set; }
 
-
+        //Added below field for Inventory FIFO report
+        public DateTime fromDate { get; set; }
+        public DateTime toDate { get; set; }
+        public string ItemUnitPriceWithCurrency { get; set; }
+        public int SrNo { get; set; }
+        public string InwardDate { get; set; }
     }
 }

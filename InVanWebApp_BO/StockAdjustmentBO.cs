@@ -26,6 +26,10 @@ namespace InVanWebApp_BO
         //Added for insertion
         public string TxtItemDetails { get; set; }
         public List<StockAdjustmentDetailsBO> stockAdjustmentDetails { get; set; }
+        
+        //Added the below fields for report Stock Reconciliation
+        public DateTime fromDate { get; set; }
+        public DateTime toDate { get; set; }
     }
 
     public class StockAdjustmentDetailsBO
@@ -52,6 +56,12 @@ namespace InVanWebApp_BO
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModificationDate { get; set; }
         public Nullable<int> LastModificationBy { get; set; }
+
+        //Added the below fields for report Stock Reconciliation
+        public string ItemUnitPriceWithCurrency { get; set; }
+        public int SrNo { get; set; }
+        public string UserName { get; set; }
+        public string StockAdjustedDate { get; set; }
 
     }
 }

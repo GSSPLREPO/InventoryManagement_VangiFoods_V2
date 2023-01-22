@@ -174,9 +174,14 @@ namespace InVanWebApp.Repository
 
         #region Finished Goods Dispatch report
 
+        /// <summary>
         /// Repository for Finished Goods Dispatch report
         /// Developed by  - Farheen 12 Jan'23
-
+        /// </summary>
+        /// <param name="fromDate">From Date of report</param>
+        /// <param name="toDate">To Date of Report</param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
         public List<OutwardNoteItemDetailsBO> getFinishedGoodsReportData(DateTime fromDate, DateTime toDate, int LocationId, int itemId)
         {
             List<OutwardNoteItemDetailsBO> resultList = new List<OutwardNoteItemDetailsBO>();
@@ -224,12 +229,178 @@ namespace InVanWebApp.Repository
 
             }
             return resultList;
+        }
+        #endregion
 
+        #region Inventory FIFO report
 
+        /// <summary>
+        /// Repository for Inventory FIFO report
+        /// Developed by  - Farheen 21 Jan'23
+        /// </summary>
+        /// <param name="fromDate">From Date of report</param>
+        /// <param name="toDate">To Date of Report</param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public List<StockMasterBO> getInventoryFIFOReportData(DateTime fromDate, DateTime toDate, int itemId)
+        {
+            List<StockMasterBO> resultList = new List<StockMasterBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_Inventory_FIFO_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); 
+                    while (reader.Read())
+                    {
+                        var result = new StockMasterBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            Item_Code = reader["Item_Code"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            ItemUnitPriceWithCurrency =reader["ItemPrice"].ToString(),
+                            ItemUnit = reader["ItemUnit"].ToString(),
+                            StockQuantity = Convert.ToDouble(reader["StockQuantity"]),
+                            InwardDate = reader["CreatedDate"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
 
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
         }
 
+        #endregion
+
+        #region Total Inventory Cost Warehouse wise report data 
+
+        /// <summary>
+        /// Repository for Total Inventory Cost Warehouse wise report
+        /// Developed by  - Farheen 12 Jan'23
+        /// </summary>
+        /// <param name="fromDate">From Date of report</param>
+        /// <param name="toDate">To Date of Report</param>
+        /// <param name="LocationId"></param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public List<LocationWiseStockBO> getTotalInventoryCostData(DateTime fromDate, DateTime toDate, int LocationId, int itemId)
+        {
+            List<LocationWiseStockBO> resultList = new List<LocationWiseStockBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_TotalInventoryCostWarehouseWiseStock", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    cmd.Parameters.AddWithValue("@LocationId", LocationId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new LocationWiseStockBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            Item_Code = reader["Item_Code"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            ItemUnitPriceWithCurrency = reader["ItemUnitPrice"].ToString(),
+                            Quantity = Convert.ToDouble(reader["Quantity"]),
+                            ItemUnit = reader["ItemUnit"].ToString(),
+                            TotalInventoryValue = reader["TotalInventoryValue"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Stock Reconciliation data 
+
+        /// <summary>
+        /// Repository for Stock Reconciliation report
+        /// Developed by  - Farheen 12 Jan'23
+        /// </summary>
+        /// <param name="fromDate">From Date of report</param>
+        /// <param name="toDate">To Date of Report</param>
+        /// <param name="LocationId"></param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public List<StockAdjustmentDetailsBO> getStockReconciliationData(DateTime fromDate, DateTime toDate, int LocationId, int itemId)
+        {
+            List<StockAdjustmentDetailsBO> resultList = new List<StockAdjustmentDetailsBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_StockReconciliation_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    cmd.Parameters.AddWithValue("@WearhouseId", LocationId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new StockAdjustmentDetailsBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            StockAdjustedDate=reader["StockAdjustedDate"].ToString(),
+                            Item_Code = reader["Item_Code"].ToString(),
+                            Item_Name = reader["Item_Name"].ToString(),
+                            ItemUnitPriceWithCurrency = reader["ItemUnitPrice"].ToString(),
+                            AvailableStock = Convert.ToDecimal(reader["PreviousStock"]),
+                            DifferenceInStock = Convert.ToDecimal(reader["StockAdjusted"]),
+                            PhysicalStock = Convert.ToDecimal(reader["FinalStock"]),
+                            ItemUnit = reader["ItemUnit"].ToString(),
+                            Remarks= reader["Remarks"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
         #endregion
     }
 }

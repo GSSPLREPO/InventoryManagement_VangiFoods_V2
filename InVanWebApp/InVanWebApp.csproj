@@ -2869,6 +2869,9 @@
     <Content Include="Views\StockAdjustment\Index.cshtml" />
     <Content Include="Views\StockAdjustment\AddStockadjustment.cshtml" />
     <Content Include="Views\StockAdjustment\ViewStockAdjustment.cshtml" />
+    <Content Include="Views\Report\InventoryFIFOReport.cshtml" />
+    <Content Include="Views\Report\TotalInventoryCostReport.cshtml" />
+    <Content Include="Views\Report\StockReconciliationReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
