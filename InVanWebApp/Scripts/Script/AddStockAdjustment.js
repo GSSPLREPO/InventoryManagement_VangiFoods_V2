@@ -42,7 +42,8 @@ function SaveBtnClick() {
 
 //=====================Onchange of Location===========================
 function SelectedIndexChangedLocation(id) {
-
+    $('#ddlItem').val(0);
+    $("#ddlItem option").remove();
     $('#btnSave').prop('disabled', false);
 
     //For deleting the rows of Item table if exist.
@@ -64,6 +65,7 @@ function SelectedIndexChangedLocation(id) {
         data: { id: Location_ID },
         success: function (result) {
             var i = 1;
+            $("#ddlItem").append($("<option></option>").val(result[0].ID).html("--Select--"));
             while (i < result.length) {
                 $("#ddlItem").append($("<option></option>").val(result[i].ID).html(result[i].Item_Name));
                 i++;

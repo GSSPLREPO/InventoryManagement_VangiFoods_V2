@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Branch.cs" />
     <Compile Include="CityMaster.cs" />
+    <Compile Include="IssueNoteBO.cs" />
     <Compile Include="OutwardNoteBO.cs" />
     <Compile Include="CompanyBO.cs" />
     <Compile Include="CountryMaster.cs" />

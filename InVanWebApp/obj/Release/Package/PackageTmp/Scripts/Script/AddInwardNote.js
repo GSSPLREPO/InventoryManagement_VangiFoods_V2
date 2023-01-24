@@ -193,26 +193,22 @@ function OnChangeIWQty(value, id) {
     var temp_itemQty = cell.innerHTML.split(' ');
     cell = document.getElementById("DeliveredQty" + rowNo);
     var deliveredQty = cell.innerHTML;
-    //console.log(deliveredQty);
     var itemQty = parseFloat(temp_itemQty[0]) - parseFloat(deliveredQty);
     value = parseFloat(value);
 
     if (value > itemQty) {
         alert("Inwarding quantity cannot be greater then balanced quantity!");
         document.getElementById(id).focus();
-        //document.getElementById(id).setAttribute("style", "border-color:red;");
         document.getElementById(id).setAttribute("class", "border border-1 border-danger");
         return;
     }
     else {
         var tempInwQty = document.getElementById("txtInwardQty" + rowNo).value;
-        //console.log(tempInwQty + " " + temp_itemQty[0] + " " + deliveredQty);
         document.getElementById("txtBalanceQty" + rowNo).value = parseFloat(temp_itemQty[0]) - (parseFloat(deliveredQty) + parseFloat(tempInwQty));
         InwardQuantities = InwardQuantities + "txtInwardQty" + rowNo + "*" + value + ",";
 
         var BalQty = document.getElementById("txtBalanceQty" + rowNo).value;
         BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" + BalQty + ",";
-        //document.getElementById(id).setAttribute("style", "border-color:none;");
         document.getElementById(id).removeAttribute("class", "border border-1 border-danger");
     }
     document.getElementById(id).setAttribute("style", "background-color: #9999994d;border-radius: 5px;");

@@ -62,7 +62,15 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="navbar-nav navbar-nav-right">
+                    <ul class="navbar-nav navbar-nav-right d-flex justify-content-end">
+                        <li class="nav-item navbar navbar-menu-wrapper" style="border-right:1px solid #e0e0ef">
+
+                            @if (@Session["UserName"] != null)
+                            {
+                                <h6 style="font-family:'Comic Sans MS'">Welcome @Session["UserName"] !</h6>
+                            }
+
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
                                 <i class="fas fa-bell mx-0"></i>
@@ -121,14 +129,9 @@
                         </li>
                         <li class="nav-item nav-profile dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                                @*<img src="~/Theme/MainContent/images/faces/face5.jpg" alt="profile" />*@
                                 <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                                @*<a class="dropdown-item">
-                                        <i class="fas fa-cog text-primary"></i>
-                                        Settings
-                                    </a>*@
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
                                     <i class="fas fa-power-off text-primary"></i>

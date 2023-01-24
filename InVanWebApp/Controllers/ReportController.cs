@@ -1016,6 +1016,9 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExprotAsPDFForInventoryFIFO()
         {
+            string Fromdate = "From Date : ";
+            string Todate = "To Date : ";
+
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
             var itemId = Convert.ToInt32(Session["ItemId"]);
@@ -1038,27 +1041,23 @@ namespace InVanWebApp.Controllers
             string ReportName = "Inventory Report (FIFO)";
             string name = ApplicationSession.ORGANISATIONTIITLE;
             string address = ApplicationSession.ORGANISATIONADDRESS;
-            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
-            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<div style='padding-top:20px; padding-left:10px;padding-right:10px;padding-bottom:20px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;page-break-inside: auto;'>");
             sb.Append("<thead>");
-            sb.Append("<tr >");
-            sb.Append("<th  style='text-align:right;padding-right:-80px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
-            sb.Append("</th></tr>");
-            sb.Append("<tr >");
-            sb.Append("<th colspan=9 style='text-align:right;padding-right:10px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:left'>" + "<img height='120' width='160' src='" + strPath + "'/></th>");
+            sb.Append("<th colspan='5' style='text-align:center'>");
+            sb.Append("<label style='font-size:22px;font-family:Verdana;text-align:center;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Arial'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:10px;font-family:Arial'>" + address + "</label>");
             sb.Append("</th></tr>");
             sb.Append("<tr>");
-            sb.Append("<th style='text-align:center;' Colspan='1'>" +
-                "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
-            //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
-            sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
-            //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
-
-            sb.Append("</th></tr>");
+            sb.Append("<th colspan=3 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th>");
+            sb.Append("<th colspan=3 style='text-align:right;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th>");
+            sb.Append("</tr>");
 
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
@@ -1169,11 +1168,11 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-                "<tr><td></td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
-                "<tr><td><td></td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-                "<tr><td><td></td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
                 "<tr><tr><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-                + "<td><td><td></td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "<td><td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
                 + "</td></tr>" + "</table>"
                 + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 
@@ -1264,28 +1263,27 @@ namespace InVanWebApp.Controllers
             //string address = ApplicationSession.ORGANISATIONADDRESS;
             string ReportName = "Total Inventory Cost Report";
             string name = ApplicationSession.ORGANISATIONTIITLE;
+            string Fromdate = "From Date : ";
+            string Todate = "To Date : ";
             string address = ApplicationSession.ORGANISATIONADDRESS;
-            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
-            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<div style='padding-top:20px; padding-left:10px;padding-right:10px;padding-bottom:20px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;page-break-inside: auto;'>");
             sb.Append("<thead>");
-            sb.Append("<tr >");
-            sb.Append("<th  style='text-align:right;padding-right:-80px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
-            sb.Append("</th></tr>");
-            sb.Append("<tr >");
-            sb.Append("<th colspan=9 style='text-align:right;padding-right:10px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:left'>" + "<img height='120' width='160' src='" + strPath + "'/></th>");
+            sb.Append("<th colspan='5' style='text-align:center'>");
+            sb.Append("<label style='font-size:22px;font-family:Verdana;text-align:center;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Arial'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:10px;font-family:Arial'>" + address + "</label>");
             sb.Append("</th></tr>");
             sb.Append("<tr>");
-            sb.Append("<th style='text-align:center;' Colspan='1'>" +
-                "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
-            //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
-            sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
-            //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+            sb.Append("<th colspan=3 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th>");
+            sb.Append("<th colspan=3 style='text-align:right;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th>");
+            sb.Append("</tr>");
 
-            sb.Append("</th></tr>");
 
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
@@ -1397,11 +1395,11 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-                "<tr><td></td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
-                "<tr><td><td></td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-                "<tr><td><td></td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td></td></td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td></td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
                 "<tr><tr><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-                + "<td><td><td></td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "<td><td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
                 + "</td></tr>" + "</table>"
                 + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 
@@ -1469,6 +1467,9 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExprotAsPDFForStockReconciliation()
         {
+            string Fromdate = "From Date : ";
+            string Todate = "To Date : ";
+
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
             var itemId = Convert.ToInt32(Session["ItemId"]);
@@ -1493,27 +1494,24 @@ namespace InVanWebApp.Controllers
             string ReportName = "Stock Reconciliation Report";
             string name = ApplicationSession.ORGANISATIONTIITLE;
             string address = ApplicationSession.ORGANISATIONADDRESS;
-            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
-            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<div style='padding-top:20px; padding-left:10px;padding-right:10px;padding-bottom:20px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;page-break-inside: auto;'>");
             sb.Append("<thead>");
-            sb.Append("<tr >");
-            sb.Append("<th  style='text-align:right;padding-right:-80px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
-            sb.Append("</th></tr>");
-            sb.Append("<tr >");
-            sb.Append("<th colspan=9 style='text-align:right;padding-right:10px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:left'>" + "<img height='120' width='160' src='" + strPath + "'/></th>");
+            sb.Append("<th colspan='9' style='text-align:center'>");
+            sb.Append("<label style='font-size:22px;font-family:Verdana;text-align:center;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Arial'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:10px;font-family:Arial'>" + address + "</label>");
             sb.Append("</th></tr>");
             sb.Append("<tr>");
-            sb.Append("<th style='text-align:center;' Colspan='1'>" +
-                "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
-            //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
-            sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
-            //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+            sb.Append("<th colspan=5 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th>");
+            sb.Append("<th colspan=5 style='text-align:right;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th>");
+            sb.Append("</tr>");
 
-            sb.Append("</th></tr>");
 
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
@@ -1641,11 +1639,11 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-                "<tr><td></td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
-                "<tr><td><td></td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-                "<tr><td><td></td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><td></td><td></td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td></td><td></td><td></td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td></td><td></td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
                 "<tr><tr><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-                + "<td><td><td></td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "<td><td><td></td><td></td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
                 + "</td></tr>" + "</table>"
                 + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 
