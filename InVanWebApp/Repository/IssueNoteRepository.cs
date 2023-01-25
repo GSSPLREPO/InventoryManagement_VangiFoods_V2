@@ -99,9 +99,9 @@ namespace InVanWebApp.Repository
                             objItemDetails.Item_Name = item.ElementAt(2).Value.ToString();
                             objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(3).Value);
                             objItemDetails.CurrencyName = item.ElementAt(4).Value.ToString();
-                            objItemDetails.QuantityRequested = Convert.ToDouble(item.ElementAt(5).Value);
+                            objItemDetails.AvailableStockBeforeIssue = Convert.ToDouble(item.ElementAt(5).Value);
                             objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
-                            objItemDetails.AvailableStockBeforeIssue = Convert.ToDouble(item.ElementAt(7).Value);
+                            objItemDetails.QuantityRequested = Convert.ToDouble(item.ElementAt(7).Value);
                             objItemDetails.StockAfterIssuing = Convert.ToDouble(item.ElementAt(8).Value);
                             objItemDetails.QuantityIssued = Convert.ToDouble(item.ElementAt(9).Value);
                             objItemDetails.Description = item.ElementAt(10).Value.ToString();
@@ -127,6 +127,7 @@ namespace InVanWebApp.Repository
                             cmdNew.Parameters.AddWithValue("@StockAfterIssuing", item.StockAfterIssuing);
                             cmdNew.Parameters.AddWithValue("@QuantityIssued", item.QuantityIssued);
                             cmdNew.Parameters.AddWithValue("@Description", item.Description);
+                            cmdNew.Parameters.AddWithValue("@LocationId", model.LocationId);
                             cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
                             cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
 
@@ -183,6 +184,36 @@ namespace InVanWebApp.Repository
             }
             return responseMessage;
         }
+        #endregion
+
+        #region This function is for pdf export/view
+        /// <summary>
+        /// Farheen: This function is for fetch data for editing by ID and for downloading pdf
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+
+        public IssueNoteBO GetById(int ID)
+        {
+            IssueNoteBO result = new IssueNoteBO();
+            try
+            {
+                string stringQuery = "Select * from IssueNote where IsDeleted=0 and ID=@ID";
+                string stringItemQuery = "Select * from IssueNoteDetails where IsDeleted=0 and IssueNoteId=@ID";
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    result = con.Query<IssueNoteBO>(stringQuery, new { @ID = ID }).FirstOrDefault();
+                    var ItemList = con.Query<IssueNoteDetailsBO>(stringItemQuery, new { @ID = ID }).ToList();
+                    result.IssueNoteDetails = ItemList;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
+
         #endregion
 
         #region Bind Dropdown 

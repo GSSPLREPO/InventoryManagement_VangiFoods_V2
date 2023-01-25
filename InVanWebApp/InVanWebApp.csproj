@@ -1837,6 +1837,7 @@
     <Content Include="Highcharts-10.3.1\code\themes\sand-signika.js.map" />
     <Content Include="Highcharts-10.3.1\code\themes\skies.js.map" />
     <Content Include="Highcharts-10.3.1\code\themes\sunset.js.map" />
+    <Content Include="Scripts\Script\AddIssueNote.js" />
     <Content Include="Scripts\Script\AddStockAdjustment.js" />
     <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
     <Content Include="Views\RejectionNote\Index.cshtml" />
@@ -2877,6 +2878,7 @@
     <Content Include="Views\Report\StockReconciliationReport.cshtml" />
     <Content Include="Views\IssueNote\Index.cshtml" />
     <Content Include="Views\IssueNote\AddIssueNote.cshtml" />
+    <Content Include="Views\IssueNote\ViewIssueNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

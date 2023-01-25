@@ -1,0 +1,685 @@
+﻿@model InVanWebApp_BO.IssueNoteBO
+@{
+    ViewBag.Title = "AddIssueNote";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm("AddStockadjustment", "StockAdjustment"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Stock Adjustment</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Issue Note Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.IssueNoteNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.IssueNoteNo, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Issue Note Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.IssueNoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.IssueNoteDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Issued By")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.IssueBy, (IEnumerable<SelectListItem>)ViewData["UserList"], "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IssueBy, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.IssueByName)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Location")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationList"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation(id)" })
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.LocationName)
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Item")
+                </div>
+                <div class="col-md-4">
+                    <select id="ddlItem" class="form-control" onchange="SelectedIndexChangedItem(id)"><option value="0">--Select--</option></select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Purpose")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Purpose, new List<SelectListItem>{
+                    new SelectListItem{ Text="---Select---", Value = "" },
+                    new SelectListItem{ Text="Production", Value = "Production" },
+                    new SelectListItem{ Text="QC", Value = "QC" },
+                    new SelectListItem{ Text="Dispatch", Value = "Dispatch" },
+                    new SelectListItem{ Text="Others", Value = "Others" },}, new { @class = "form-control", onchange = "OnChangePurpose(id)" })
+
+                    @Html.ValidationMessageFor(model => model.Purpose, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.IssueByName)
+                </div>
+                <div class="col-md-2 dvProduction" style="display:none;">
+                    @Html.Label("Work Order Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4 dvProduction" style="display:none;">
+                    @Html.TextBoxFor(model => model.WorkOrderNumber, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumeric(event,1)", maxlength = "15" })
+                    <span id="valMsgWorkOrder" style="display:none;"></span>
+                </div>
+                <div class="col-md-2 dvQC" style="display:none;">
+                    @Html.Label("QC Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4 dvQC" style="display:none;">
+                    @Html.TextBoxFor(model => model.QCNumber, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumeric(event,2)", maxlength = "15" })
+                    <span id="valMsgQC" style="display:none;"></span>
+                </div>
+                <div class="col-md-2 dvDispatch" style="display:none;">
+                    @Html.Label("Sales Order Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4 dvDispatch" style="display:none;">
+                    @Html.TextBoxFor(model => model.SONumber, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumeric(event,3)", maxlength = "15" })
+                    <span id="valMsgSONo" style="display:none;"></span>
+                </div>
+                <div class="col-md-2 dvOthers" style="display:none;">
+                    @Html.Label("Other Document Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4 dvOthers" style="display:none;">
+                    @Html.TextBoxFor(model => model.OtherPurpose, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumeric(event,4)", maxlength = "30" })
+                    <span id="valMsgOther" style="display:none;"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "96" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <h4 style="color:darkcyan">Item Details</h4>
+            </div>
+            <hr />
+
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                    <table class="table table-striped" id="submissionTable">
+                                        <thead>
+                                            <tr style="background-color:rgba(0, 0, 0, 0.05);">
+                                                @*<th class="sortStyle">Sr. No.</th>*@
+                                                <th class="sortStyle">Item Code</th>
+                                                <th class="sortStyle d-n d-none">Item Id</th>
+                                                <th class="sortStyle">Item Name</th>
+                                                <th class="sortStyle">Price (Per Unit)</th>
+                                                <th class="sortStyle">Currency</th>
+                                                <th class="sortStyle">Available Stock</th>
+                                                <th class="sortStyle">UOM</th>
+                                                <th class="sortStyle">Requested Quantity</th>
+                                                <th class="sortStyle">Issued Quantity</th>
+                                                <th class="sortStyle">Comments</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <hr />
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "IssueNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.txtItemDetails)
+        </div>
+    </div>
+}
+@Html.Raw(TempData["Success"])
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @*<script src="https://cdn.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js" integrity="sha256-H8xrCe0tZFi/C2CgxkmiGksqVaxhW0PFcUKZJZo1yNU=" crossorigin="anonymous"></script>*@
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    //===============On change function for purpose of issuing the note=============//
+    function OnChangePurpose(id) {
+        var purpose = $('#' + id).val();
+        $('.dvProduction').hide();
+        $('.dvQC').hide();
+        $('.dvDispatch').hide();
+        $('.dvOthers').hide();
+
+        if (purpose == 'Production')
+            $('.dvProduction').show();
+        else if (purpose == 'QC')
+            $('.dvQC').show();
+        else if (purpose == 'Dispatch')
+            $('.dvDispatch').show();
+        else if (purpose == 'Others')
+            $('.dvOthers').show();
+    }
+    //===================end============================//
+
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 0;
+        if (tableLength > 1) {
+            while (i < tableLength - 1) {
+                var PhyQty = document.getElementById("txtIssuedQty_" + i).value; //Change this with Requested qty
+                PhyQty = parseFloat(PhyQty);
+
+                if (PhyQty != 0) {
+                    flag = 1;
+                    var Comments = document.getElementById("txtRemarks_" + i).value;
+                    if (Comments == '' || Comments == null) {
+                        $('#spanRemark_' + i).text('Comment is mandatory!');
+                        document.getElementById('spanRemark_' + i).setAttribute('style', 'color:red;');
+                        document.getElementById("txtRemarks_" + i).focus();
+
+                        event.preventDefault();
+                        return;
+                    }
+                    document.getElementById("txtRemarks_" + i).setAttribute("required", "required");
+                }
+                $('#spanRemark_' + i).text('');
+
+                i++;
+            }
+
+            if (flag != 1) {
+                alert("No item issued, Cannot create issue note!");
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
+        var LocationName = $("#LocationId option:selected").text();
+        $('#LocationName').val(LocationName);
+        createJson();
+        // alert(TxtItemDetails);
+    };
+    //==========end===============
+
+    //=====================Onchange of Location===========================
+    function SelectedIndexChangedLocation(id) {
+        $('#ddlItem').val(0);
+        $("#ddlItem option").remove();
+        $('#btnSave').prop('disabled', false);
+
+        //For deleting the rows of Item table if exist.
+
+        var table = document.getElementById('submissionTable');
+        var rowCount = table.rows.length;
+        while (rowCount != '1') {
+            var row = table.deleteRow(rowCount - 1);
+            rowCount--;
+        }
+
+        var Location_ID = $("#LocationId").val();
+
+        ///This call is for binding the item list on that location.
+
+        $.ajax({
+            url: '/StockAdjustment/GetItemList',
+            type: "POST",
+            data: { id: Location_ID },
+            success: function (result) {
+                var i = 1;
+                $("#ddlItem").append($("<option></option>").val(result[0].ID).html("--Select--"));
+                while (i < result.length) {
+                    $("#ddlItem").append($("<option></option>").val(result[i].ID).html(result[i].Item_Name));
+                    i++;
+                }
+            },
+            error: function (err) {
+                alert('Not able to fetch item list of that warehouse!');
+
+            }
+        });
+
+        ///This call is for binding item details of that location
+        $.ajax({
+            url: '/StockAdjustment/GetLocationStocksDetails',
+            type: "POST",
+            data: { id: Location_ID },
+            success: function (result) {
+
+                var table = document.getElementById('submissionTable');
+                for (var j = 0; j < result.length; j++) {
+                    var rowCount = table.rows.length;
+                    var cellCount = table.rows[0].cells.length;
+                    var row = table.insertRow(rowCount);
+                    if (j % 2 != 0) {
+                        row.setAttribute("style", "background-color:rgba(0, 0, 0, 0.05);");
+                    }
+
+                    for (var i = 0; i < cellCount; i++) {
+                        var cell = 'cell' + i;
+                        cell = row.insertCell(i);
+
+                        if (i == 0) {
+                            cell.innerHTML = result[j].Item_Code;
+                            cell.setAttribute("id", "ItemCode_" + j);
+                        }
+                        else if (i == 1) {
+                            cell.innerHTML = result[j].ItemId;
+                            cell.setAttribute("class", "d-none");
+                            cell.setAttribute("id", "ItemID_" + j);
+                        }
+                        else if (i == 2) {
+                            cell.innerHTML = result[j].Item_Name;
+                            cell.setAttribute("id", "ItemName_" + j);
+
+                        }
+                        else if (i == 3) {
+                            cell.innerHTML = result[j].ItemUnitPrice;
+                            cell.setAttribute("id", "ItemUnitPrice_" + j);
+                        }
+                        else if (i == 4) {
+                            cell.innerHTML = result[j].CurrencyName;
+                            cell.setAttribute("id", "CurrencyName_" + j);
+                        }
+                        else if (i == 5) {
+                            cell.innerHTML = result[j].AvailableStock;
+                            cell.setAttribute("id", "AvailableStock_" + j);
+                        }
+                        else if (i == 6) {
+
+                            cell.innerHTML = result[j].ItemUnit;
+                            cell.setAttribute("id", "ItemUnit_" + j);
+                        }
+                        else if (i == 7) {
+                            var t5 = document.createElement("input");
+                            t5.id = "txtRequestedQty_" + j;
+                            //t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                            t5.setAttribute("value", "0");
+                            t5.setAttribute("type", "number");
+                            t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                            t5.setAttribute("class", "form-control form-control-sm");
+                            cell.appendChild(t5);
+                        }
+                        else if (i == 8) {
+                            var t5 = document.createElement("input");
+                            t5.id = "txtIssuedQty_" + j; //change: txtDifference_
+                            t5.setAttribute("value", "0");
+                            t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                            t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                            t5.setAttribute("class", "form-control form-control-sm");
+                            cell.appendChild(t5);
+                            var t6 = document.createElement('span');
+                            t6.id = "spanIssueQty_" + j;
+                            cell.appendChild(t6);
+                        }
+                        else if (i == 9) {
+                            var t5 = document.createElement("input");
+                            t5.id = "txtFinalStock_" + j;
+                            t5.setAttribute("readonly", "readonly");
+                            t5.setAttribute("value", "0");
+                            t5.setAttribute("type", "number");
+                            t5.setAttribute("class", "form-control form-control-sm");
+                            cell.appendChild(t5);
+                        }
+                        else if (i == 10) {
+                            var t5 = document.createElement("input");
+                            t5.id = "txtRemarks_" + j;
+                            t5.setAttribute("maxlength", "90");
+                            t5.setAttribute("style", "width:auto;");
+                            t5.setAttribute("class", "form-control form-control-sm");
+                            t5.setAttribute("onkeyup", "OnChangeComment($(this).val(),id)");
+                            cell.appendChild(t5);
+                            var t6 = document.createElement('span');
+                            t6.id = "spanRemark_" + j;
+                            cell.appendChild(t6);
+                        }
+                    }
+
+                }
+            },
+            error: function (err) {
+                alert('Not able to fetch item details!');
+
+            }
+
+        });
+
+    }
+    //=============End==============
+
+    //=====================Onchange of Item===========================
+    function SelectedIndexChangedItem(id) {
+
+        $('#btnSave').prop('disabled', false);
+
+        //For deleting the rows of Item table if exist.
+
+        var table = document.getElementById('submissionTable');
+        var rowCount = table.rows.length;
+        while (rowCount != '1') {
+            var row = table.deleteRow(rowCount - 1);
+            rowCount--;
+        }
+
+        var Location_ID = $("#LocationId").val();
+        var Item_ID = $('#' + id).val();
+        ///This call is for binding item details of that location
+        $.ajax({
+            url: '/StockAdjustment/GetLocationStocksDetails',
+            type: "POST",
+            data: { id: Location_ID, itemId: Item_ID },
+            success: function (result) {
+                var table = document.getElementById('submissionTable');
+                for (var j = 0; j < result.length; j++) {
+                    var rowCount = table.rows.length;
+                    var cellCount = table.rows[0].cells.length;
+                    var row = table.insertRow(rowCount);
+                    if (j % 2 != 0) {
+                        row.setAttribute("style", "background-color:rgba(0, 0, 0, 0.05);");
+                    }
+
+                    for (var i = 0; i < cellCount; i++) {
+                        var cell = 'cell' + i;
+                        cell = row.insertCell(i);
+
+                        if (i == 0) {
+                            cell.innerHTML = result[j].Item_Code;
+                            cell.setAttribute("id", "ItemCode_" + j);
+                        }
+                        else if (i == 1) {
+                            cell.innerHTML = result[j].ItemId;
+                            cell.setAttribute("class", "d-none");
+                            cell.setAttribute("id", "ItemID_" + j);
+                        }
+                        else if (i == 2) {
+                            cell.innerHTML = result[j].Item_Name;
+                            cell.setAttribute("id", "ItemName_" + j);
+
+                        }
+                        else if (i == 3) {
+                            cell.innerHTML = result[j].ItemUnitPrice;
+                            cell.setAttribute("id", "ItemUnitPrice_" + j);
+                        }
+                        else if (i == 4) {
+                            cell.innerHTML = result[j].CurrencyName;
+                            cell.setAttribute("id", "CurrencyName_" + j);
+                        }
+                        else if (i == 5) {
+                            cell.innerHTML = result[j].AvailableStock;
+                            cell.setAttribute("id", "AvailableStock_" + j);
+                        }
+                        else if (i == 6) {
+
+                            cell.innerHTML = result[j].ItemUnit;
+                            cell.setAttribute("id", "ItemUnit_" + j);
+                        }
+                        else if (i == 7) {
+                            var t5 = document.createElement("input");
+                            t5.id = "txtRequestedQty_" + j;
+                            //t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                            t5.setAttribute("value", "0");
+                            t5.setAttribute("type", "number");
+                            t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                            t5.setAttribute("class", "form-control form-control-sm");
+                            cell.appendChild(t5);
+                        }
+                        else if (i == 8) {
+                            var t5 = document.createElement("input");
+                            t5.id = "txtIssuedQty_" + j; //change: txtDifference_
+                            t5.setAttribute("value", "0");
+                            t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                            t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                            t5.setAttribute("class", "form-control form-control-sm");
+                            cell.appendChild(t5);
+                            var t6 = document.createElement('span');
+                            t6.id = "spanIssueQty_" + j;
+                            cell.appendChild(t6);
+                        }
+                        else if (i == 9) {
+                            var t5 = document.createElement("input");
+                            t5.id = "txtFinalStock_" + j;
+                            t5.setAttribute("readonly", "readonly");
+                            t5.setAttribute("value", "0");
+                            t5.setAttribute("type", "number");
+                            t5.setAttribute("class", "form-control form-control-sm");
+                            cell.appendChild(t5);
+                        }
+                        else if (i == 10) {
+                            var t5 = document.createElement("input");
+                            t5.id = "txtRemarks_" + j;
+                            t5.setAttribute("maxlength", "90");
+                            t5.setAttribute("style", "width:auto;");
+                            t5.setAttribute("class", "form-control form-control-sm");
+                            t5.setAttribute("onkeyup", "OnChangeComment($(this).val(),id)");
+                            cell.appendChild(t5);
+                            var t6 = document.createElement('span');
+                            t6.id = "spanRemark_" + j;
+                            cell.appendChild(t6);
+                        }
+                    }
+
+                }
+            },
+            error: function (err) {
+                alert('Not able to fetch item details!');
+
+            }
+
+        });
+
+    }
+    //=============End==============
+
+    function OnChangeComment(value, id) {
+        var rowNo = id.split('_')[1];
+        $('#spanRemark_' + rowNo).text('');
+
+    }
+
+    function OnChangeQty(value, id) {
+        $('#btnSave').prop('disabled', false);
+        var rowNo = id.split('_')[1];
+        var RequestedQty = document.getElementById("AvailableStock_" + rowNo).value;
+        if (RequestedQty == 0 || RequestedQty == '') {
+            document.getElementById("txtRequestedQty_" + rowNo).focus();
+            return;
+        }
+
+        var avalQty = document.getElementById("AvailableStock_" + rowNo).innerHTML;
+        var IssueValue = parseFloat(value);
+        avalQty = parseFloat(avalQty);
+        RequestedQty = parseFloat(RequestedQty);
+
+        var DiffQty = 0;
+
+        if (IssueValue > avalQty) {
+            $('#spanIssueQty_' + rowNo).text('You cannot issue more than available stock!');
+            document.getElementById('spanIssueQty_' + rowNo).setAttribute('style', 'color:red;');
+            document.getElementById(id).focus();
+            return;
+
+            //DiffQty = value - avalQty;
+            //DiffQty = parseFloat(DiffQty);
+            //document.getElementById("txtDifference_" + rowNo).value = "+" + DiffQty;
+
+        }
+        else if (IssueValue > RequestedQty) {
+            $('#spanIssueQty_' + rowNo).text('You cannot issue more than requested quantity!');
+            document.getElementById('spanIssueQty_' + rowNo).setAttribute('style', 'color:red;');
+            document.getElementById(id).focus();
+            return;
+        }
+        else {
+            $('#spanIssueQty_' + rowNo).text('');
+            DiffQty = avalQty - IssueValue;
+            DiffQty = parseFloat(DiffQty);
+            document.getElementById("txtFinalStock_" + rowNo).value(DiffQty);
+        }
+
+        $('#spanRemark_' + rowNo).text('Comment is mandatory!');
+        document.getElementById('spanRemark_' + rowNo).setAttribute('style', 'color:red;');
+        document.getElementById("txtRemarks_" + rowNo).focus();
+    }
+
+    var TxtItemDetails = "";
+
+    function createJson() {
+        var table = document.getElementById('submissionTable');
+        var rowCount = table.rows.length;
+        var i = 0, flag = 0;
+        TxtItemDetails = "[";
+        while (i < rowCount - 1) {
+            var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
+            var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
+            var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
+            var PricePerUnit = (document.getElementById("ItemUnitPrice_" + i)).innerHTML;
+            var CurrencyName = (document.getElementById("CurrencyName_" + i)).innerHTML;
+            var AvailableStock = (document.getElementById("AvailableStock_" + i)).innerHTML;
+            var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
+
+            var PhyQty = (document.getElementById("txtPhysicalStock_" + i)).value;
+            var DiffQty = (document.getElementById("txtDifference_" + i)).value;
+            var TransPrice = (document.getElementById("txtTransferPrice_" + i)).value;
+
+            var Remarks = (document.getElementById("txtRemarks_" + i)).value;
+
+            if (PhyQty == 0) {
+                i++;
+                continue;
+            }
+
+            TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
+                ", \"ItemName\": \"" + ItemName + "\", \"ItemUnitPrice\": " + PricePerUnit +
+                ", \"CurrencyName\": \"" + CurrencyName + "\", \"AvlStock\": " + AvailableStock + ", \"ItemUnit\": \"" + Unit +
+                "\", \"PhyQty\": " + PhyQty + ",\"DiffQty\": " + DiffQty +
+                ", \"TransPrice\": " + TransPrice + ",\"Remarks\": \"" + Remarks + "\"";
+
+            if (i == (rowCount - 1)) {
+                TxtItemDetails = TxtItemDetails + "}";
+                flag = 1;
+            }
+            else
+                TxtItemDetails = TxtItemDetails + "},";
+
+            i++;
+        }
+        TxtItemDetails = TxtItemDetails + "]"
+        var tempTxt = TxtItemDetails.split(',]')[0];
+
+        if (flag == 0)
+            TxtItemDetails = tempTxt + "]";
+
+        $('#TxtItemDetails').val(TxtItemDetails);
+    }
+
+    function isNumberKey(evt, id) {
+        var len = $('#' + id).val().length;
+        len = parseFloat(len);
+        if (len > 8)
+            return false;
+        else
+            return true;
+
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+
+        }
+        return true;
+    }
+
+    function isAlphaNumeric(evt, id) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95))) {
+            var valMsg = 'Only \"/, -,_\" are allowed!';
+
+            if (id == 1) {
+                $('#valMsgWorkOrder').text(valMsg);
+                $('#valMsgWorkOrder').css('display', 'contents');
+            }
+            else if (id == 2) {
+                $('#valMsgQC').text(valMsg);
+                $('#valMsgQC').css('display', 'contents');
+            }
+            else if (id == 3) {
+                $('#valMsgSONo').text(valMsg);
+                $('#valMsgSONo').css('display', 'contents');
+            }
+            else if (id == 4) {
+                $('#valMsgOther').text(valMsg);
+                $('#valMsgOther').css('display', 'contents');
+            }
+
+            return false;
+        }
+        else {
+            if (id == 1)
+                $('#valMsgWorkOrder').css('display', 'none');
+
+            else if (id == 2)
+                $('#valMsgQC').css('display', 'none');
+
+            else if (id == 3)
+                $('#valMsgSONo').css('display', 'none');
+
+            else if (id == 4)
+                $('#valMsgOther').css('display', 'none');
+
+            return true;
+
+        }
+    }
+
+</script>

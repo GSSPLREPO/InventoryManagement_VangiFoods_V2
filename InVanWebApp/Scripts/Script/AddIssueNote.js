@@ -1,20 +1,103 @@
-﻿//==================Set value in txtItemDetails onCick of Save/Update button======--------
+﻿//===============On change function for purpose of issuing the note=============//
+function OnChangePurpose(id) {
+    var purpose = $('#' + id).val();
+    $('.dvProduction').hide();
+    $('.dvQC').hide();
+    $('.dvDispatch').hide();
+    $('.dvOthers').hide();
+
+    if (purpose == 'Production')
+        $('.dvProduction').show();
+    else if (purpose == 'QC')
+        $('.dvQC').show();
+    else if (purpose == 'Dispatch')
+        $('.dvDispatch').show();
+    else if (purpose == 'Others')
+        $('.dvOthers').show();
+}
+//===================end============================//
+
+//==================Set value in txtItemDetails onCick of Save/Update button======--------
 function SaveBtnClick() {
     var tableLength = document.getElementById('submissionTable').rows.length;
+
+    //======Check whether the pupose number is written or not=======//
+    var Purpose = $('#Purpose').val();
+    if (Purpose == 'Production') {
+        var tempNo = $('#WorkOrderNumber').val();
+        if (tempNo == '' || tempNo == null) {
+            $('#valMsgWorkOrder').text('Enter the order number!');
+            $('#valMsgWorkOrder').css('display', 'contents');
+            $('#valMsgWorkOrder').css('color', 'red');
+            event.preventDefault();
+            return;
+        }
+        else
+            $('#valMsgWorkOrder').css('display', 'none');
+    }
+    else if (Purpose == 'QC') {
+        var tempNo = $('#QCNumber').val();
+        if (tempNo == '' || tempNo == null) {
+            $('#valMsgQC').text('Enter the order number!');
+            $('#valMsgQC').css('display', 'contents');
+            $('#valMsgQC').css('color', 'red');
+            event.preventDefault();
+            return;
+        }
+        else
+            $('#valMsgQC').css('display', 'none');
+    }
+    else if (Purpose == 'Dispatch') {
+        var tempNo = $('#SONumber').val();
+        if (tempNo == '' || tempNo == null) {
+            $('#valMsgSONo').text('Enter the order number!');
+            $('#valMsgSONo').css('display', 'contents');
+            $('#valMsgSONo').css('color', 'red');
+            event.preventDefault();
+            return;
+        }
+        else
+            $('#valMsgSONo').css('display', 'none');
+    }
+    else if (Purpose == 'Others') {
+        var tempNo = $('#OtherPurpose').val();
+        if (tempNo == '' || tempNo == null) {
+            $('#valMsgOther').text('Enter the order number!');
+            $('#valMsgOther').css('display', 'contents');
+            $('#valMsgOther').css('color', 'red');
+            event.preventDefault();
+            return;
+        }
+        else
+            $('#valMsgOther').css('display', 'none');
+    }
+
     var flag = 0, i = 0;
     if (tableLength > 1) {
         while (i < tableLength - 1) {
-            var PhyQty = document.getElementById("txtPhysicalStock_" + i).value;
+            var PhyQty = document.getElementById("txtIssuedQty_" + i).value; //Change this with Requested qty
             PhyQty = parseFloat(PhyQty);
+            var AvlQty = document.getElementById("AvailableStock_" + i).innerHTML;
+            AvlQty = parseFloat(AvlQty);
 
             if (PhyQty != 0) {
                 flag = 1;
                 var Comments = document.getElementById("txtRemarks_" + i).value;
+                var IssueQty = document.getElementById("txtIssuedQty_" + i).value;
+                IssueQty = parseFloat(IssueQty);
+
                 if (Comments == '' || Comments == null) {
                     $('#spanRemark_' + i).text('Comment is mandatory!');
                     document.getElementById('spanRemark_' + i).setAttribute('style', 'color:red;');
                     document.getElementById("txtRemarks_" + i).focus();
 
+                    event.preventDefault();
+                    return;
+                }
+                else if (IssueQty > AvlQty) {
+                    document.getElementById("txtIssuedQty_" + i).value = 0;
+                    $('#spanIssueQty_' + i).text('');
+                    document.getElementById("txtIssuedQty_" + i).focus();
                     event.preventDefault();
                     return;
                 }
@@ -26,17 +109,20 @@ function SaveBtnClick() {
         }
 
         if (flag != 1) {
-            alert("adjustment is not done! Cannot adjust the stock!");
+            alert("No item issued, Cannot create issue note!");
             $('#btnSave').prop('disabled', true);
             return;
         }
         else
             $('#btnSave').prop('disabled', false);
     }
+
     var LocationName = $("#LocationId option:selected").text();
     $('#LocationName').val(LocationName);
+
+    var IssueByName = $("#IssueBy option:selected").text();
+    $('#IssueByName').val(IssueByName);
     createJson();
-    // alert(TxtItemDetails);
 };
 //==========end===============
 
@@ -130,8 +216,7 @@ function SelectedIndexChangedLocation(id) {
                     }
                     else if (i == 7) {
                         var t5 = document.createElement("input");
-                        t5.id = "txtPhysicalStock_" + j;
-                        t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                        t5.id = "txtRequestedQty_" + j;
                         t5.setAttribute("value", "0");
                         t5.setAttribute("type", "number");
                         t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
@@ -140,15 +225,20 @@ function SelectedIndexChangedLocation(id) {
                     }
                     else if (i == 8) {
                         var t5 = document.createElement("input");
-                        t5.id = "txtDifference_" + j;
-                        t5.setAttribute("readonly", "readonly");
+                        t5.id = "txtIssuedQty_" + j;
                         t5.setAttribute("value", "0");
+                        t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                        t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
+                        var t6 = document.createElement('span');
+                        t6.id = "spanIssueQty_" + j;
+                        t6.setAttribute("class", "text-wrap");
+                        cell.appendChild(t6);
                     }
                     else if (i == 9) {
                         var t5 = document.createElement("input");
-                        t5.id = "txtTransferPrice_" + j;
+                        t5.id = "txtFinalStock_" + j;
                         t5.setAttribute("readonly", "readonly");
                         t5.setAttribute("value", "0");
                         t5.setAttribute("type", "number");
@@ -249,8 +339,7 @@ function SelectedIndexChangedItem(id) {
                     }
                     else if (i == 7) {
                         var t5 = document.createElement("input");
-                        t5.id = "txtPhysicalStock_" + j;
-                        t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                        t5.id = "txtRequestedQty_" + j;
                         t5.setAttribute("value", "0");
                         t5.setAttribute("type", "number");
                         t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
@@ -259,15 +348,20 @@ function SelectedIndexChangedItem(id) {
                     }
                     else if (i == 8) {
                         var t5 = document.createElement("input");
-                        t5.id = "txtDifference_" + j;
-                        t5.setAttribute("readonly", "readonly");
+                        t5.id = "txtIssuedQty_" + j;
                         t5.setAttribute("value", "0");
+                        t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                        t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
+                        var t6 = document.createElement('span');
+                        t6.id = "spanIssueQty_" + j;
+                        t6.setAttribute("class", "text-wrap");
+                        cell.appendChild(t6);
                     }
                     else if (i == 9) {
                         var t5 = document.createElement("input");
-                        t5.id = "txtTransferPrice_" + j;
+                        t5.id = "txtFinalStock_" + j;
                         t5.setAttribute("readonly", "readonly");
                         t5.setAttribute("value", "0");
                         t5.setAttribute("type", "number");
@@ -308,34 +402,51 @@ function OnChangeComment(value, id) {
 
 function OnChangeQty(value, id) {
     $('#btnSave').prop('disabled', false);
+    $('#spanIssueQty_' + rowNo).text('');
     var rowNo = id.split('_')[1];
-    var avalQty = document.getElementById("AvailableStock_" + rowNo).innerHTML;
-    value = parseFloat(value);
-    avalQty = parseFloat(avalQty);
+    var RequestedQty = document.getElementById("txtRequestedQty_" + rowNo).value;
+    if (RequestedQty == 0 || RequestedQty == '') {
+        document.getElementById("txtRequestedQty_" + rowNo).focus();
+        document.getElementById('txtIssuedQty_' + rowNo).value = 0;
+        return;
+    }
 
-    var UnitPrice = document.getElementById("ItemUnitPrice_" + rowNo).innerHTML;
+    var avalQty = document.getElementById("AvailableStock_" + rowNo).innerHTML;
+    var IssueValue = parseFloat(value);
+    avalQty = parseFloat(avalQty);
+    RequestedQty = parseFloat(RequestedQty);
+
     var DiffQty = 0;
 
-    if (value > avalQty) {
-        DiffQty = value - avalQty;
-        DiffQty = parseFloat(DiffQty);
-        document.getElementById("txtDifference_" + rowNo).value = "+" + DiffQty;
-
+    if (IssueValue > avalQty) {
+        $('#spanIssueQty_' + rowNo).text('You cannot issue more than available stock!');
+        document.getElementById('spanIssueQty_' + rowNo).setAttribute('style', 'color:red;');
+        document.getElementById(id).focus();
+        return;
+    }
+    else if (IssueValue > RequestedQty) {
+        $('#spanIssueQty_' + rowNo).text('You cannot issue more than requested quantity!');
+        document.getElementById('spanIssueQty_' + rowNo).setAttribute('style', 'color:red;');
+        document.getElementById(id).focus();
+        return;
     }
     else {
-        DiffQty = avalQty - value;
+        $('#spanIssueQty_' + rowNo).text('');
+        DiffQty = avalQty - IssueValue;
         DiffQty = parseFloat(DiffQty);
-        document.getElementById("txtDifference_" + rowNo).value = "-" + DiffQty;
+        document.getElementById("txtFinalStock_" + rowNo).value = DiffQty;
     }
-
-    var TransferPrice = (UnitPrice * DiffQty);
-    document.getElementById("txtTransferPrice_" + rowNo).value = TransferPrice;
-
-    $('#spanRemark_' + rowNo).text('Comment is mandatory!');
-    document.getElementById('spanRemark_' + rowNo).setAttribute('style', 'color:red;');
     document.getElementById("txtRemarks_" + rowNo).focus();
-}
 
+    var remarks = $('#txtRemarks_' + rowNo).val();
+    if (remarks == '' && remarks == null) {
+        $('#spanRemark_' + rowNo).text('Comment is mandatory!');
+        document.getElementById('spanRemark_' + rowNo).setAttribute('style', 'color:red;');
+    }
+    else
+        $('#spanRemark_' + rowNo).text('');
+
+}
 
 var TxtItemDetails = "";
 
@@ -353,13 +464,13 @@ function createJson() {
         var AvailableStock = (document.getElementById("AvailableStock_" + i)).innerHTML;
         var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
 
-        var PhyQty = (document.getElementById("txtPhysicalStock_" + i)).value;
-        var DiffQty = (document.getElementById("txtDifference_" + i)).value;
-        var TransPrice = (document.getElementById("txtTransferPrice_" + i)).value;
+        var ReqQty = (document.getElementById("txtRequestedQty_" + i)).value;
+        var IssueQty = (document.getElementById("txtIssuedQty_" + i)).value;
+        var DiffQty = (document.getElementById("txtFinalStock_" + i)).value;
 
         var Remarks = (document.getElementById("txtRemarks_" + i)).value;
 
-        if (PhyQty == 0) {
+        if (IssueQty == 0) {
             i++;
             continue;
         }
@@ -367,8 +478,8 @@ function createJson() {
         TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
             ", \"ItemName\": \"" + ItemName + "\", \"ItemUnitPrice\": " + PricePerUnit +
             ", \"CurrencyName\": \"" + CurrencyName + "\", \"AvlStock\": " + AvailableStock + ", \"ItemUnit\": \"" + Unit +
-            "\", \"PhyQty\": " + PhyQty + ",\"DiffQty\": " + DiffQty +
-            ", \"TransPrice\": " + TransPrice + ",\"Remarks\": \"" + Remarks + "\"";
+            "\", \"ReqQty\": " + ReqQty + ",\"FinalQty\": " + DiffQty + ", \"IssueQty\": " + IssueQty +
+            ",\"Remarks\": \"" + Remarks + "\"";
 
         if (i == (rowCount - 1)) {
             TxtItemDetails = TxtItemDetails + "}";
@@ -385,7 +496,9 @@ function createJson() {
     if (flag == 0)
         TxtItemDetails = tempTxt + "]";
 
-    $('#TxtItemDetails').val(TxtItemDetails);
+    $('#txtItemDetails').val(TxtItemDetails);
+
+    //alert(TxtItemDetails);
 }
 
 function isNumberKey(evt, id) {
@@ -409,4 +522,50 @@ function isNumberKey(evt, id) {
 
     }
     return true;
+}
+
+function isAlphaNumeric(evt, id) {
+    var keycode = (evt.which) ? evt.which : evt.keyCode;
+    if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95))) {
+        var valMsg = 'Only \"/, -,_\" are allowed!';
+
+        if (id == 1) {
+            $('#valMsgWorkOrder').text(valMsg);
+            $('#valMsgWorkOrder').css('display', 'contents');
+            $('#valMsgWorkOrder').css('color', 'red');
+        }
+        else if (id == 2) {
+            $('#valMsgQC').text(valMsg);
+            $('#valMsgQC').css('display', 'contents');
+            $('#valMsgQC').css('color', 'red');
+        }
+        else if (id == 3) {
+            $('#valMsgSONo').text(valMsg);
+            $('#valMsgSONo').css('display', 'contents');
+            $('#valMsgSONo').css('color', 'red');
+        }
+        else if (id == 4) {
+            $('#valMsgOther').text(valMsg);
+            $('#valMsgOther').css('display', 'contents');
+            $('#valMsgOther').css('color', 'red');
+        }
+
+        return false;
+    }
+    else {
+        if (id == 1)
+            $('#valMsgWorkOrder').css('display', 'none');
+
+        else if (id == 2)
+            $('#valMsgQC').css('display', 'none');
+
+        else if (id == 3)
+            $('#valMsgSONo').css('display', 'none');
+
+        else if (id == 4)
+            $('#valMsgOther').css('display', 'none');
+
+        return true;
+
+    }
 }

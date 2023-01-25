@@ -93,10 +93,10 @@ namespace InVanWebApp.Controllers
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _repository.Insert(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Stock adjusted successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Material issue note is created successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error! Can not be inserted!');</script>";
+                            TempData["Success"] = "<script>alert('Error! Can not be created note!');</script>";
                             BindLocationName();
                             GenerateDocumentNo();
                             BindUserName();
@@ -165,6 +165,21 @@ namespace InVanWebApp.Controllers
             else
                 return RedirectToAction("Index", "Login");
         }
+        #endregion
+
+        #region This method is for View the Issue Note
+        [HttpGet]
+        public ActionResult ViewIssueNote(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                IssueNoteBO model = _repository.GetById(ID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
         #endregion
 
         #region Bind dropdowns 
