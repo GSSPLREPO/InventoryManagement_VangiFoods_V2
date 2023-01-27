@@ -1219,8 +1219,6 @@ namespace InVanWebApp.Controllers
         {
             List<LocationWiseStockBO> ReportResult = new List<LocationWiseStockBO>();
 
-            //DateTime dtFromDateTime = DateTime.ParseExact(fromDate+ " " + "00:00:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-            //DateTime dtToDateTime = DateTime.ParseExact(toDate + " " + "23:59:59", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
             Session["ItemId"] = ItemId;
@@ -1446,8 +1444,6 @@ namespace InVanWebApp.Controllers
         {
             List<StockAdjustmentDetailsBO> ReportResult = new List<StockAdjustmentDetailsBO>();
 
-            //DateTime dtFromDateTime = DateTime.ParseExact(fromDate+ " " + "00:00:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-            //DateTime dtToDateTime = DateTime.ParseExact(toDate + " " + "23:59:59", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
             Session["ItemId"] = ItemId;

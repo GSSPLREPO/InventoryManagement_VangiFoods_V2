@@ -27,17 +27,12 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    //var p = new DynamicParameters();
-                    //p.Add("@fromDate", fromDate);
-                    //p.Add("@toDate", toDate);
-                    //resultList = con.Query<StockMovementBO>("usp_rpt_StockMovement", p, commandType: System.Data.CommandType.StoredProcedure).ToList();
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
                     {
                         var result = new StockMovementBO()
                         {
-                            //ID = Convert.ToInt32(reader["Item_Id"]),
                             SrNo = Convert.ToInt32(reader["SrNo"]),
                             Item_Code = reader["Item_Code"].ToString(),
                             Item_Name = reader["Item_Name"].ToString(),

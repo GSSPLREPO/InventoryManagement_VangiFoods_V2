@@ -1,13 +1,13 @@
-﻿@model InVanWebApp_BO.StockAdjustmentBO
+﻿@model InVanWebApp_BO.IssueNoteBO
 @{
-    ViewBag.Title = "ViewStockAdjustment";
+    ViewBag.Title = "ViewIssueNote";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Stock Adjustment</title>
+    <title>Material Issue Note</title>
     <style>
         html2canvas-container {
             width: 3000px !important;
@@ -26,11 +26,11 @@
                     <div class="card-body">
                         <div class="row">
                             <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
-                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Stock Adjustment</h3>
+                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Material Issue Note</h3>
 
                             <div class="col">
                                 <div class="col-md-12">
-                                    <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" onclick="ExportPdfFunction('printV','StockAdjustment',590, 220)" />
+                                    <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" onclick="ExportPdfFunction('printV','MaterialIssueNote',590, 220)" />
                                 </div>
                             </div>
                         </div>
@@ -39,18 +39,75 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label class="font-weight-bold">Document Number</label>
+                                    <label class="font-weight-bold">Issue Note Number</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.DocumentNo, new { style="color:black;"})
+                                    @Html.DisplayFor(model => model.IssueNoteNo, new { style = "color:black;" })
                                 </div>
                                 <br />
                                 <div class="col-md-2">
-                                    <label class="font-weight-bold">Document Date</label>
+                                    <label class="font-weight-bold">Issue Note Date</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.DocumentDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.IssueNoteDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                                 </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Issue By</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.IssueByName, new { style = "color:black;" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Purpose</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.Purpose, new { style = "color:black;" })
+                                </div>
+                                <br />
+                                @{
+                                    if (Model.Purpose == "Production")
+                                    {
+                                        <div class="col-md-2">
+                                            <label class="font-weight-bold">Work Order Number</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.DisplayFor(model => model.WorkOrderNumber, new { style = "color:black;" })
+                                        </div>
+                                    }
+                                    else if (Model.Purpose == "QC")
+                                    {
+                                        <div class="col-md-2">
+                                            <label class="font-weight-bold">QC Number</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.DisplayFor(model => model.QCNumber, new { style = "color:black;" })
+                                        </div>
+                                    }
+                                    else if (Model.Purpose == "Dispatch")
+                                    {
+                                        <div class="col-md-2">
+                                            <label class="font-weight-bold">Sales Order Number</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.DisplayFor(model => model.SONumber, new { style = "color:black;" })
+                                        </div>
+                                    }
+                                    else if (Model.Purpose == "Others")
+                                    {
+                                        <div class="col-md-2">
+                                            <label class="font-weight-bold">Other Document Number</label>
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.DisplayFor(model => model.OtherPurpose, new { style = "color:black;" })
+                                        </div>
+                                    }
+
+                                }
+
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
@@ -65,14 +122,6 @@
                                 </div>
                                 <div class="col-md-4">
                                     @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Adjust By</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.UserName, new { style = "color:black;" })
                                 </div>
                             </div>
                             <br />
@@ -95,16 +144,16 @@
                                                         <th class="sortStyle">Item</th>
                                                         <th class="sortStyle">Price (Per Unit)</th>
                                                         <th class="sortStyle">Availabled Stock</th>
-                                                        <th class="sortStyle">Physical Stock</th>
-                                                        <th class="sortStyle">Difference</th>
+                                                        <th class="sortStyle">Requested Quantity</th>
+                                                        <th class="sortStyle">Issued Quantity</th>
+                                                        <th class="sortStyle">Final Stock</th>
                                                         <th class="sortStyle">UOM</th>
-                                                        <th class="sortStyle">Transfer Price</th>
-                                                        <th class="sortStyle">Remarks</th>
+                                                        <th class="sortStyle">Comments</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody id="myTableBody">
                                                     @{ int c = 1;
-                                                        foreach (var item in Model.stockAdjustmentDetails)
+                                                        foreach (var item in Model.IssueNoteDetails)
                                                         {
                                                             <tr id="tablerow_@c">
                                                                 <td>
@@ -117,32 +166,27 @@
                                                                     @Html.DisplayFor(x => item.Item_Name)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(x => item.ItemUnitPrice) 
+                                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
                                                                     @Html.DisplayFor(x => item.CurrencyName)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(x => item.AvailableStock)
+                                                                    @Html.DisplayFor(x => item.AvailableStockBeforeIssue)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(x => item.PhysicalStock)
+                                                                    @Html.DisplayFor(x => item.QuantityRequested)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(x => item.DifferenceInStock)
+                                                                    @Html.DisplayFor(x => item.QuantityIssued)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.StockAfterIssuing)
                                                                 </td>
                                                                 <td>
                                                                     @Html.DisplayFor(x => item.ItemUnit)
                                                                 </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x=>item.TransferPrice) 
-                                                                    @Html.DisplayFor(x=>item.CurrencyName)
+                                                                <td style="width:auto;">
+                                                                    <label style="border:none;background:none;height:65px;width:210px" class="text-wrap">@item.Description</label>
                                                                 </td>
-                                                                @*<td>
-                                                                    @Html.TextBoxFor(x => item.ItemTotalAmount, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
-                                                                </td>*@
-                                                            <td style="width:auto;">
-                                                                @*@Html.TextAreaFor(x => item.Remarks, new { style = "border:none;background: none; height:65px;width: 210px", @readonly = "readonly" })*@
-                                                                <label style="border:none;background:none;height:65px;width:210px" class="text-wrap">@item.Remarks</label>
-                                                            </td>
                                                             </tr>
                                                             { c++; }
                                                         }
@@ -158,7 +202,7 @@
                             </div>
                             <br />
                             <br />
-                            <a href="@Url.Action("Index", "StockAdjustment")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                            <a href="@Url.Action("Index", "IssueNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
                                 Back To List
                             </a>
                         </div>

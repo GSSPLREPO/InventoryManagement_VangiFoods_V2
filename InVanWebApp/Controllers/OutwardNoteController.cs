@@ -11,34 +11,32 @@ using InVanWebApp_BO;
 
 namespace InVanWebApp.Controllers
 {
-    public class IssueNoteController : Controller
+    public class OutwardNoteController : Controller
     {
-        private IIssueNoteRepository _repository;
+        private IOutwardNoteRepository _repository;
         private IPurchaseOrderRepository _purchaseOrderRepository;
-        private IStockAdjustmentRepository _stockAdjustmentRepository;
-        private static ILog log = LogManager.GetLogger(typeof(StockAdjustmentController));
+        private static ILog log = LogManager.GetLogger(typeof(OutwardNoteController));
 
         #region Initializing Constructor
 
         /// <summary>
         /// Created By: Farheen
-        /// Created Date: 24 Jan'23
+        /// Created Date: 27 Jan'23
         /// </summary>
-        public IssueNoteController()
+        public OutwardNoteController()
         {
-            _repository = new IssueNoteRepository();
+            _repository = new OutwardNoteRepository();
             _purchaseOrderRepository = new PurchaseOrderRepository();
-            _stockAdjustmentRepository = new StockAdjustmentRepository();
         }
 
         /// <summary>
         /// Created By: Farheen
-        /// Created Date: 24 Jan'23
+        /// Created Date: 27 Jan'23
         /// </summary>
-        /// <param name="stockAdjustmentRepository"></param>
-        public IssueNoteController(IIssueNoteRepository issueNoteRepository)
+        /// <param name="outwardNoteRepository"></param>
+        public OutwardNoteController(IOutwardNoteRepository outwardNoteRepository)
         {
-            _repository = issueNoteRepository;
+            _repository = outwardNoteRepository;
         }
         #endregion
 
@@ -55,20 +53,19 @@ namespace InVanWebApp.Controllers
 
         #region Insert functions
         /// <summary>
-        /// Farheen: Rendered the user to the add Stock adjustment note.
+        /// Farheen: Rendered the user to the add outward note.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddIssueNote()
+        public ActionResult AddOutwardNote()
         {
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindLocationName();
                 GenerateDocumentNo();
-                BindUserName();
 
-                IssueNoteBO model = new IssueNoteBO();
-                model.IssueNoteDate = DateTime.Today;
+                OutwardNoteBO model = new OutwardNoteBO();
+                model.OutwardDate = DateTime.Today;
                 return View(model);
             }
             else
@@ -81,7 +78,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddIssueNote(IssueNoteBO model)
+        public ActionResult AddOutwardNote(OutwardNoteBO model)
         {
             try
             {
@@ -96,9 +93,8 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('No item is isssued! Material issue note cannot be created!');</script>";
                             BindLocationName();
                             GenerateDocumentNo();
-                            BindUserName();
 
-                            model.IssueNoteDate = DateTime.Today;
+                            model.OutwardDate = DateTime.Today;
                             return View(model);
                         }
                         else
@@ -111,9 +107,8 @@ namespace InVanWebApp.Controllers
                                 TempData["Success"] = "<script>alert('Error! Material issue note cannot be created!');</script>";
                                 BindLocationName();
                                 GenerateDocumentNo();
-                                BindUserName();
 
-                                model.IssueNoteDate = DateTime.Today;
+                                model.OutwardDate = DateTime.Today;
                                 return View(model);
                             }
                         }
@@ -125,10 +120,9 @@ namespace InVanWebApp.Controllers
                     {
                         BindLocationName();
                         GenerateDocumentNo();
-                        BindUserName();
 
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-                        model.IssueNoteDate = DateTime.Today;
+                        model.OutwardDate = DateTime.Today;
                         return View(model);
                     }
                 }
@@ -143,56 +137,11 @@ namespace InVanWebApp.Controllers
 
                 BindLocationName();
                 GenerateDocumentNo();
-                BindUserName();
 
-                model.IssueNoteDate = DateTime.Today;
+                model.OutwardDate = DateTime.Today;
                 return View(model);
             }
         }
-        #endregion
-
-        #region Delete function
-        /// <summary>
-        /// Date: 24 Jan'23
-        /// Farheen: Delete the perticular record
-        /// </summary>
-        /// <param name="ID">record Id</param>
-        /// <returns></returns>
-
-        [HttpGet]
-        public ActionResult DeleteIssueNote(int ID)
-        {
-            if (Session[ApplicationSession.USERID] != null)
-            {
-                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                ResponseMessageBO result = new ResponseMessageBO();
-                result = _repository.Delete(ID, userID);
-
-                if (result.Status)
-                    TempData["Success"] = "<script>alert('Issue note deleted successfully!');</script>";
-                else
-                    TempData["Success"] = "<script>alert('Error while deleting!');</script>";
-
-                return RedirectToAction("Index", "IssueNote");
-            }
-            else
-                return RedirectToAction("Index", "Login");
-        }
-        #endregion
-
-        #region This method is for View the Issue Note
-        [HttpGet]
-        public ActionResult ViewIssueNote(int ID)
-        {
-            if (Session[ApplicationSession.USERID] != null)
-            {
-                IssueNoteBO model = _repository.GetById(ID);
-                return View(model);
-            }
-            else
-                return RedirectToAction("Index", "Login");
-        }
-
         #endregion
 
         #region Bind dropdowns 
@@ -202,32 +151,26 @@ namespace InVanWebApp.Controllers
             var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
             ViewData["LocationList"] = resultList;
         }
-        public void BindUserName()
-        {
-            var result = _repository.GetUserNameList();
-            var resultList = new SelectList(result.ToList(), "UserId", "Username");
-            ViewData["UserList"] = resultList;
-        }
 
         public void GenerateDocumentNo()
         {
             //==========Document number for Stock adjustment============//
             GetDocumentNumber objDocNo = new GetDocumentNumber();
 
-            //=========here document type=13 i.e. for generating the Issue Note (logic is in SP).====//
-            var DocumentNumber = objDocNo.GetDocumentNo(13);
+            //=========here document type=14 i.e. for generating the Outward Note (logic is in SP).====//
+            var DocumentNumber = objDocNo.GetDocumentNo(14);
             ViewData["DocumentNo"] = DocumentNumber;
         }
 
-        public JsonResult GetItemList(string id)
-        {
-            int Location_Id = 0;
-            if (id != "" && id != null)
-                Location_Id = Convert.ToInt32(id);
+        //public JsonResult GetItemList(string id)
+        //{
+        //    int Location_Id = 0;
+        //    if (id != "" && id != null)
+        //        Location_Id = Convert.ToInt32(id);
 
-            var result = _stockAdjustmentRepository.GetItemListByLocationId(Location_Id);
-            return Json(result);
-        }
+        //    var result = _stockAdjustmentRepository.GetItemListByLocationId(Location_Id);
+        //    return Json(result);
+        //}
         #endregion
     }
 }

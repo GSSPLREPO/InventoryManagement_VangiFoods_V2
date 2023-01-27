@@ -34,13 +34,13 @@
                                 @using (Html.BeginForm("ExprotAsPDF", "StockMovement", FormMethod.Post))
                                 {
 
-                                    <div class="row-inline">
+                                    <div class="row">
                                         <div class="col-md-2">
                                             <label>From Date:</label>
                                             <span style="color:red">*</span>
                                         </div>
                                         <div class="col-md-3">
-                                            @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()" })
+                                            @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                                             @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
                                         </div>
                                         <div class="col-md-2">
@@ -48,7 +48,7 @@
                                             <span style="color:red">*</span>
                                         </div>
                                         <div class="col-md-3">
-                                            @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()" })
+                                            @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                                             @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
                                         </div>
                                         <div class="col-md-2">
@@ -122,6 +122,15 @@
 
         $("#btnGo").on('click', function () {
 
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+
+            if (fromDate > toDate) {
+                alert('Invalid date selection!');
+                $('#fromDate').focus();
+                return;
+            }
+
             ///Rahul added id = VendorValidate 06-01-2023.
             //===========OnChange of item if From date is not selected================
             var fromDateCheck = $('#fromDate').val();
@@ -144,12 +153,6 @@
             $('#ExportPdf').show();
             $('#ExportExcel').show();
             $('#tblInward').show();
-
-            //$("#fromDate").disabled=true;
-            //$("#toDate").disabled=true;
-
-            var fromDate = $("#fromDate").val();
-            var toDate = $("#toDate").val();
 
             $('#tblInward').dataTable().fnDestroy();
             var t = $('#tblInward').DataTable({
