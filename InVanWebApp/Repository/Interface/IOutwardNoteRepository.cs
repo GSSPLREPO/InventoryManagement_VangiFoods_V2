@@ -11,5 +11,9 @@ namespace InVanWebApp.Repository.Interface
     {
         IEnumerable<OutwardNoteBO> GetAll();
         ResponseMessageBO Insert(OutwardNoteBO model);
+        IEnumerable<SalesOrderBO> GetSONumberList();
+        IEnumerable<SalesOrderBO> GetSODetailsById(int SOId);
+        ResponseMessageBO Delete(int Id, int userId);
+        OutwardNoteBO GetById(int ID);
     }
 }

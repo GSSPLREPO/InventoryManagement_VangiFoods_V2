@@ -10,10 +10,13 @@ namespace InVanWebApp_BO
     public class OutwardNoteBO
     {
         public int ID { get; set; }
+        [Required(ErrorMessage ="Enter the ouwtward note number!")]
         public string OutwardNoteNumber { get; set; }
 
+        [Required(ErrorMessage ="Select outward date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> OutwardDate { get; set; }
+        [Required(ErrorMessage ="Select SO number!")]
         public Nullable<int> SO_Id { get; set; }
         public string SONumber { get; set; }
         public Nullable<System.DateTime> SODate { get; set; }
@@ -21,7 +24,7 @@ namespace InVanWebApp_BO
         public string IndentNo { get; set; }
         public int LocationId { get; set; }
         public string LocationName { get; set; }
-        public string DeliveryAddress { get; set; }
+        public string SupplierAddress { get; set; }
         public int VendorsID { get; set; }
         public string CompanyName { get; set; }
         public string ShippingAddress { get; set; }
@@ -31,7 +34,12 @@ namespace InVanWebApp_BO
         public float CurrencyPrice { get; set; }
         public float GrandTotal { get; set; }
         public float TotalAfterTax { get; set; }
+        public float OtherTax { get; set; }
+        public int TermsAndCondition_ID { get; set; }
+        public string Terms { get; set; }
         public string Remarks { get; set; }
+        [Required(ErrorMessage ="Select one returnable/not-returnable!")]
+        public bool IsReturnable { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -63,8 +71,9 @@ namespace InVanWebApp_BO
         public string ItemUnit { get; set; }
         public decimal OutwardQuantity { get; set; }
         public decimal OrderedQuantity { get; set; }
+        public decimal BalanceQuantity { get; set; }
         public string ItemTaxValue { get; set; }
-        public float TotalItemCost { get; set; }
+        public decimal TotalItemCost { get; set; }
         public string HSN_Code { get; set; }
         public string Remarks { get; set; }
         public int CurrencyID { get; set; }

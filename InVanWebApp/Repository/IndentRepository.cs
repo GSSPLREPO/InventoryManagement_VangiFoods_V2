@@ -16,7 +16,6 @@ namespace InVanWebApp.Repository
 {
     public class IndentRepository : IIndentRepository
     {
-        //private readonly InVanDBContext _context;
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private static ILog log = LogManager.GetLogger(typeof(IndentRepository));
 

@@ -2883,6 +2883,8 @@
     <Content Include="Views\IssueNote\AddIssueNote.cshtml" />
     <Content Include="Views\IssueNote\ViewIssueNote.cshtml" />
     <Content Include="Views\OutwardNote\Index.cshtml" />
+    <Content Include="Views\OutwardNote\AddOutwardNote.cshtml" />
+    <Content Include="Views\OutwardNote\ViewOutwardNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

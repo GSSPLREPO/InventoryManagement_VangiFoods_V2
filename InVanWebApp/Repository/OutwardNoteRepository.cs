@@ -57,57 +57,64 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_IssueNote_Insert", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_OutwardNote_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IssueNoteNo", model.OutwardNoteNumber);
-                    cmd.Parameters.AddWithValue("@IssueNoteDate", model.OutwardNoteDate);
-                    //cmd.Parameters.AddWithValue("@IssueBy", model.IssueBy);
-                    //cmd.Parameters.AddWithValue("@IssueByName", model.IssueByName);
-                    cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
-                    cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
-                    cmd.Parameters.AddWithValue("@Purpose", model.VendorsID);
-                    cmd.Parameters.AddWithValue("@Purpose", model.CompanyName);
-                    //cmd.Parameters.AddWithValue("@WorkOrderNumber", model.WorkOrderNumber);
+                    cmd.Parameters.AddWithValue("@OutwardNoteNumber", model.OutwardNoteNumber);
+                    cmd.Parameters.AddWithValue("@OutwardNoteDate", model.OutwardDate);
                     cmd.Parameters.AddWithValue("@SO_Id", model.SO_Id);
                     cmd.Parameters.AddWithValue("@SONumber", model.SONumber);
-                    //cmd.Parameters.AddWithValue("@OtherPurpose", model.OtherPurpose);
+                    cmd.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
+                    cmd.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
+                    cmd.Parameters.AddWithValue("@CurrencyPrice", model.CurrencyPrice);
+                    cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
+                    cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
+                    cmd.Parameters.AddWithValue("@VendorsID", model.VendorsID);
+                    cmd.Parameters.AddWithValue("@CompanyName", model.CompanyName);
+                    cmd.Parameters.AddWithValue("@SupplierAddress", model.SupplierAddress);
+                    cmd.Parameters.AddWithValue("@ShippingAddress", model.ShippingAddress);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@IsReturnable", model.IsReturnable);
+                    cmd.Parameters.AddWithValue("@TermsAndCondition_ID", model.TermsAndCondition_ID);
+                    cmd.Parameters.AddWithValue("@Terms", model.Terms);
+                    cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
+                    cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
+                    cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
 
                     SqlDataReader dataReader = cmd.ExecuteReader();
-                    int IssueNote_Id = 0;
+                    int OutwardNote_Id = 0;
 
                     while (dataReader.Read())
                     {
-                        IssueNote_Id = Convert.ToInt32(dataReader["ID"]);
+                        OutwardNote_Id = Convert.ToInt32(dataReader["ID"]);
                         response.Status = Convert.ToBoolean(dataReader["Status"]);
                     }
                     con.Close();
 
-                    if (IssueNote_Id != 0)
+                    if (OutwardNote_Id != 0)
                     {
                         var json = new JavaScriptSerializer();
                         var data = json.Deserialize<Dictionary<string, string>[]>(model.txtItemDetails);
 
-                        List<IssueNoteDetailsBO> itemDetails = new List<IssueNoteDetailsBO>();
+                        List<OutwardNoteItemDetailsBO> itemDetails = new List<OutwardNoteItemDetailsBO>();
 
                         foreach (var item in data)
                         {
-                            IssueNoteDetailsBO objItemDetails = new IssueNoteDetailsBO();
-                            objItemDetails.IssueNoteId = IssueNote_Id;
+                            OutwardNoteItemDetailsBO objItemDetails = new OutwardNoteItemDetailsBO();
+                            objItemDetails.OutwardNoteID = OutwardNote_Id;
                             objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
-                            objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
-                            objItemDetails.Item_Name = item.ElementAt(2).Value.ToString();
-                            objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(3).Value);
-                            objItemDetails.CurrencyName = item.ElementAt(4).Value.ToString();
-                            objItemDetails.AvailableStockBeforeIssue = Convert.ToDouble(item.ElementAt(5).Value);
+                            objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
+                            objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                            objItemDetails.OrderedQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                            objItemDetails.BalanceQuantity = Convert.ToDecimal(item.ElementAt(4).Value);
+                            objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(5).Value);
                             objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
-                            objItemDetails.QuantityRequested = Convert.ToDouble(item.ElementAt(7).Value);
-                            objItemDetails.StockAfterIssuing = Convert.ToDouble(item.ElementAt(8).Value);
-                            objItemDetails.QuantityIssued = Convert.ToDouble(item.ElementAt(9).Value);
-                            objItemDetails.Description = item.ElementAt(10).Value.ToString();
+                            objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(7).Value);
+                            objItemDetails.CurrencyName = item.ElementAt(8).Value.ToString();
+                            objItemDetails.ItemTaxValue = item.ElementAt(9).Value.ToString();
+                            objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(10).Value);
                             objItemDetails.CreatedBy = model.CreatedBy;
                             itemDetails.Add(objItemDetails);
                         }
@@ -115,22 +122,23 @@ namespace InVanWebApp.Repository
                         foreach (var item in itemDetails)
                         {
                             con.Open();
-                            SqlCommand cmdNew = new SqlCommand("usp_tbl_IssueNoteDetails_Insert", con);
+                            SqlCommand cmdNew = new SqlCommand("usp_tbl_OutwardNoteDetails_Insert", con);
                             cmdNew.CommandType = CommandType.StoredProcedure;
 
-                            cmdNew.Parameters.AddWithValue("@IssueNoteId", item.IssueNoteId);
-                            cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);
-                            cmdNew.Parameters.AddWithValue("@Item_Name", item.Item_Name);
+                            cmdNew.Parameters.AddWithValue("@OutwardNoteID", item.OutwardNoteID);
+                            cmdNew.Parameters.AddWithValue("@ItemId", item.Item_ID);
+                            cmdNew.Parameters.AddWithValue("@Item_Name", item.ItemName);
                             cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                            cmdNew.Parameters.AddWithValue("@OrderedQuantity", item.OrderedQuantity);
+                            cmdNew.Parameters.AddWithValue("@BalanceQuantity", item.BalanceQuantity);
+                            cmdNew.Parameters.AddWithValue("@OutwardQuantity", item.OutwardQuantity);
+                            cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
                             cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
                             cmdNew.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
-                            cmdNew.Parameters.AddWithValue("@QuantityRequested", item.QuantityRequested);
-                            cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
-                            cmdNew.Parameters.AddWithValue("@AvailableStockBeforeIssue", item.AvailableStockBeforeIssue);
-                            cmdNew.Parameters.AddWithValue("@StockAfterIssuing", item.StockAfterIssuing);
-                            cmdNew.Parameters.AddWithValue("@QuantityIssued", item.QuantityIssued);
-                            cmdNew.Parameters.AddWithValue("@Description", item.Description);
+                            cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
+                            cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
                             cmdNew.Parameters.AddWithValue("@LocationId", model.LocationId);
+                            cmdNew.Parameters.AddWithValue("@SO_Id", model.SO_Id);
                             cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
                             cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
 
@@ -154,6 +162,166 @@ namespace InVanWebApp.Repository
             return response;
         }
 
+        #endregion
+
+        #region Delete function
+
+        /// <summary>
+        /// Delete record by ID
+        /// </summary>
+        /// <param name="ID"></param>
+        public ResponseMessageBO Delete(int Id, int userId)
+        {
+            ResponseMessageBO responseMessage = new ResponseMessageBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_OutwardNote_Delete", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", Id);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    responseMessage.Status = true;
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                responseMessage.Status = false;
+                log.Error(ex.Message, ex);
+            }
+            return responseMessage;
+        }
+        #endregion
+
+        #region This function is for pdf export/view
+        /// <summary>
+        /// Farheen: This function is for fetch data for editing by ID and for downloading pdf
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+
+        public OutwardNoteBO GetById(int ID)
+        {
+            OutwardNoteBO result = new OutwardNoteBO();
+            try
+            {
+                string stringQuery = "Select * from OutwardNote where IsDeleted=0 and ID=@ID";
+                string stringItemQuery = "Select * from OutwardNoteItemDetails where IsDeleted=0 and OutwardNoteID=@ID";
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    result = con.Query<OutwardNoteBO>(stringQuery, new { @ID = ID }).FirstOrDefault();
+                    var ItemList = con.Query<OutwardNoteItemDetailsBO>(stringItemQuery, new { @ID = ID }).ToList();
+                    result.outwardNoteItemDetails = ItemList;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
+
+        #endregion
+
+        #region Bind dropdowns
+        public IEnumerable<SalesOrderBO> GetSONumberList() 
+        {
+            List<SalesOrderBO> resultList = new List<SalesOrderBO>();
+            string queryString = "usp_tbl_SalesOrder_GetAll";
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    resultList = con.Query<SalesOrderBO>(queryString).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Bind all SO details 
+        public IEnumerable<SalesOrderBO> GetSODetailsById(int SOId)
+        {
+            List<SalesOrderBO> resultList = new List<SalesOrderBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_SODetails_GetByID", con);
+                    cmd.Parameters.AddWithValue("@ID", SOId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new SalesOrderBO()
+                        {
+                            SalesOrderId = Convert.ToInt32(dataReader["SalesOrderId"]),
+                            SONo = dataReader["SONo"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader["CurrencyID"]),
+                            CurrencyName = dataReader["CurrencyName"].ToString(),
+                            CurrencyPrice = Convert.ToDecimal(dataReader["CurrencyPrice"]),
+                            LocationId = Convert.ToInt32(dataReader["LocationId"]),
+                            LocationName = dataReader["LocationName"].ToString(),
+                            ClientID = Convert.ToInt32(dataReader["ClientID"]),
+                            CompanyName = dataReader["CompanyName"].ToString(),
+                            DeliveryAddress = dataReader["DeliveryAddress"].ToString(),
+                            SupplierAddress = dataReader["SupplierAddress"].ToString(),
+                            TermsAndConditionID = Convert.ToInt32(dataReader["TermsAndConditionID"]),
+                            Terms = dataReader["Terms"].ToString(),
+                            OtherTax = Convert.ToDecimal(dataReader["OtherTax"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                    //==========This is for fetching Item details".===========///
+
+                    SqlCommand cmd2 = new SqlCommand("usp_tbl_SOItemDetailsForOutwardNote_GetByID", con);
+                    cmd2.Parameters.AddWithValue("@SO_Id", SOId);
+                    cmd2.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader2 = cmd2.ExecuteReader();
+
+                    while (dataReader2.Read())
+                    {
+                        var result = new SalesOrderBO()
+                        {
+                            Item_ID = Convert.ToInt32(dataReader2["Item_ID"]),
+                            Item_Code = dataReader2["Item_Code"].ToString(),
+                            ItemName = dataReader2["ItemName"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                            ItemUnit = dataReader2["ItemUnit"].ToString(),
+                            ItemTaxValue = Convert.ToDecimal(dataReader2["ItemTaxValue"]),
+                            ItemQuantity = Convert.ToDecimal(dataReader2["ItemQuantity"]),
+                            BalanceQuantity = Convert.ToDecimal(dataReader2["BalanceQuantity"]),
+                            CurrencyName = dataReader2["CurrencyName"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"]),
+                            TotalItemCost = Convert.ToDecimal(dataReader2["TotalItemCost"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
         #endregion
     }
 }
