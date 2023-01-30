@@ -8,14 +8,15 @@ using InVanWebApp.Repository;
 using log4net;
 using InVanWebApp.Common;
 using InVanWebApp_BO;
+using System.IO;
 
 namespace InVanWebApp.Controllers
 {
-    public class OutwardNoteController : Controller
+    public class DeliveryChallanController : Controller
     {
-        private IOutwardNoteRepository _repository;
+        private IDeliveryChallanRepository _repository;
         private IPurchaseOrderRepository _purchaseOrderRepository;
-        private static ILog log = LogManager.GetLogger(typeof(OutwardNoteController));
+        private static ILog log = LogManager.GetLogger(typeof(DeliveryChallanController));
 
         #region Initializing Constructor
 
@@ -23,9 +24,9 @@ namespace InVanWebApp.Controllers
         /// Created By: Farheen
         /// Created Date: 27 Jan'23
         /// </summary>
-        public OutwardNoteController()
+        public DeliveryChallanController()
         {
-            _repository = new OutwardNoteRepository();
+            _repository = new DeliveryChallanRepository();
             _purchaseOrderRepository = new PurchaseOrderRepository();
         }
 
@@ -33,10 +34,10 @@ namespace InVanWebApp.Controllers
         /// Created By: Farheen
         /// Created Date: 27 Jan'23
         /// </summary>
-        /// <param name="outwardNoteRepository"></param>
-        public OutwardNoteController(IOutwardNoteRepository outwardNoteRepository)
+        /// <param name="deliveryChallanRepository"></param>
+        public DeliveryChallanController(IDeliveryChallanRepository deliveryChallanRepository)
         {
-            _repository = outwardNoteRepository;
+            _repository = deliveryChallanRepository;
         }
         #endregion
 
@@ -57,7 +58,7 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddOutwardNote()
+        public ActionResult AddDeliveryChallan()
         {
             if (Session[ApplicationSession.USERID] != null)
             {
@@ -65,8 +66,8 @@ namespace InVanWebApp.Controllers
                 GenerateDocumentNo();
                 BindSONumber();
 
-                OutwardNoteBO model = new OutwardNoteBO();
-                model.OutwardDate = DateTime.Today;
+                DeliveryChallanBO model = new DeliveryChallanBO();
+                model.DeliveryChallanDate = DateTime.Today;
                 return View(model);
             }
             else
@@ -79,33 +80,41 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddOutwardNote(OutwardNoteBO model)
+        public ActionResult AddDeliveryChallan(DeliveryChallanBO model, HttpPostedFileBase Signature)
         {
             try
             {
                 if (Session[ApplicationSession.USERID] != null)
                 {
                     ResponseMessageBO response = new ResponseMessageBO();
+                    if (Signature != null)
+                    {
+                        UploadSignature(Signature);
+                        model.Signature = Signature.FileName.ToString();
+                    }
+                    else
+                        model.Signature = null;
+
                     if (ModelState.IsValid)
                     {
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _repository.Insert(model);
 
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Outward note is created successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Delivery Challan is created successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error! Outward note cannot be created!');</script>";
+                            TempData["Success"] = "<script>alert('Error! Delivery Challan cannot be created!');</script>";
                             BindLocationName();
                             GenerateDocumentNo();
                             BindSONumber();
 
-                            model.OutwardDate = DateTime.Today;
+                            model.DeliveryChallanDate = DateTime.Today;
                             return View(model);
                         }
 
 
-                        return RedirectToAction("Index", "OutwardNote");
+                        return RedirectToAction("Index", "DeliveryChallan");
 
                     }
                     else
@@ -115,7 +124,7 @@ namespace InVanWebApp.Controllers
                         BindSONumber();
 
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-                        model.OutwardDate = DateTime.Today;
+                        model.DeliveryChallanDate = DateTime.Today;
                         return View(model);
                     }
                 }
@@ -131,7 +140,7 @@ namespace InVanWebApp.Controllers
                 BindLocationName();
                 GenerateDocumentNo();
                 BindSONumber();
-                model.OutwardDate = DateTime.Today;
+                model.DeliveryChallanDate = DateTime.Today;
                 return View(model);
             }
         }
@@ -146,7 +155,7 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public ActionResult DeleteOutwardNote(int ID)
+        public ActionResult DeleteDeliveryChallan(int ID)
         {
             if (Session[ApplicationSession.USERID] != null)
             {
@@ -155,11 +164,11 @@ namespace InVanWebApp.Controllers
                 result = _repository.Delete(ID, userID);
 
                 if (result.Status)
-                    TempData["Success"] = "<script>alert('Outward note deleted successfully!');</script>";
+                    TempData["Success"] = "<script>alert('Delivery challan deleted successfully!');</script>";
                 else
                     TempData["Success"] = "<script>alert('Error while deleting!');</script>";
 
-                return RedirectToAction("Index", "OutwardNote");
+                return RedirectToAction("Index", "DeliveryChallan");
             }
             else
                 return RedirectToAction("Index", "Login");
@@ -168,11 +177,11 @@ namespace InVanWebApp.Controllers
 
         #region This method is for View the Outward Note
         [HttpGet]
-        public ActionResult ViewOutwardNote(int ID)
+        public ActionResult ViewDeliveryChallan(int ID)
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                OutwardNoteBO model = _repository.GetById(ID);
+                DeliveryChallanBO model = _repository.GetById(ID);
                 return View(model);
             }
             else
@@ -226,6 +235,26 @@ namespace InVanWebApp.Controllers
             var result = _repository.GetSODetailsById(SOId);
             return Json(result);
         }
+        #endregion
+
+        #region Function for uploading the signature
+        /// <summary>
+        /// Date: 30 Jan 2023
+        /// Farheen: Upload Signature File items.
+        /// </summary>
+        /// <returns></returns>
+
+        public void UploadSignature(HttpPostedFileBase Signature)
+        {
+            if (Signature != null)
+            {
+                string SignFilename = Signature.FileName;
+                SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
+                Signature.SaveAs(SignFilename);
+
+            }
+        }
+
         #endregion
     }
 }

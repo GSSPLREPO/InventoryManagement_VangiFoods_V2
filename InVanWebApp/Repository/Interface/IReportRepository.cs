@@ -16,7 +16,7 @@ namespace InVanWebApp.Repository.Interface
         //Calling Method For Raw Material Received Report
         List<GRN_BO> getRawMaterialReceivedData(DateTime fromDate, DateTime toDate, int item, int wearhouse);
         List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate);
-        List<OutwardNoteItemDetailsBO> getFinishedGoodsReportData(DateTime fromDate, DateTime toDate, int LocationId,int itemId);
+        List<DeliveryChallanItemDetailsBO> getFinishedGoodsReportData(DateTime fromDate, DateTime toDate,int itemId);
         List<StockMasterBO> getInventoryFIFOReportData(DateTime fromDate, DateTime toDate, int itemId);
         List<LocationWiseStockBO> getTotalInventoryCostData(DateTime fromDate, DateTime toDate, int LocationId, int itemId);
         List<StockAdjustmentDetailsBO> getStockReconciliationData(DateTime fromDate, DateTime toDate, int LocationId, int itemId);

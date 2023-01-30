@@ -7,15 +7,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
-    public class OutwardNoteBO
+    public class DeliveryChallanBO
     {
         public int ID { get; set; }
-        [Required(ErrorMessage ="Enter the ouwtward note number!")]
-        public string OutwardNoteNumber { get; set; }
+        [Required(ErrorMessage ="Enter the delivery challan number!")]
+        public string DeliveryChallanNumber { get; set; }
 
-        [Required(ErrorMessage ="Select outward date!")]
+        [Required(ErrorMessage ="Select delivery challan date!")]
         [DataType(DataType.Date)]
-        public Nullable<System.DateTime> OutwardDate { get; set; }
+        public Nullable<System.DateTime> DeliveryChallanDate { get; set; }
         [Required(ErrorMessage ="Select SO number!")]
         public Nullable<int> SO_Id { get; set; }
         public string SONumber { get; set; }
@@ -47,7 +47,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
         public string txtItemDetails { get; set; }
-        public List<OutwardNoteItemDetailsBO> outwardNoteItemDetails { get; set; }
+        public List<DeliveryChallanItemDetailsBO> deliveryChallanItemDetails{ get; set; }
 
         //Added the below field for Outward report
         public string OutwardNoteDate { get; set; }
@@ -60,10 +60,10 @@ namespace InVanWebApp_BO
 
     }
 
-    public class OutwardNoteItemDetailsBO
+    public class DeliveryChallanItemDetailsBO
     {
         public int ID { get; set; }
-        public int OutwardNoteID { get; set; }
+        public int DeliveryChallanID { get; set; }
         public int Item_ID { get; set; }
         public string ItemName { get; set; }
         public string Item_Code { get; set; }
@@ -86,7 +86,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         //Added the below field for Outward report
         public int SrNo { get; set; }
-        public string OutwardNoteNumber { get; set; }
+        public string DeliveryChallanNumber { get; set; }
         public string OutwardDate { get; set; }
         public float DispatchQuantity { get; set; }
         public string DeliveryAddress { get; set; }

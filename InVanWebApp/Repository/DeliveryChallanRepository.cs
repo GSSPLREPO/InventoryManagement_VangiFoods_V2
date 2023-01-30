@@ -14,26 +14,26 @@ using log4net;
 
 namespace InVanWebApp.Repository
 {
-    public class OutwardNoteRepository:IOutwardNoteRepository
+    public class DeliveryChallanRepository: IDeliveryChallanRepository
     {
         private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-        private static ILog log = LogManager.GetLogger(typeof(OutwardNoteRepository));
+        private static ILog log = LogManager.GetLogger(typeof(DeliveryChallanRepository));
 
         #region  Bind grid
         /// <summary>
         /// Farheen: This function is for fecthing list of outward note.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<OutwardNoteBO> GetAll()
+        public IEnumerable<DeliveryChallanBO> GetAll()
         {
-            List<OutwardNoteBO> resultList = new List<OutwardNoteBO>();
-            string queryString = "Select * from OutwardNote where IsDeleted=0";
+            List<DeliveryChallanBO> resultList = new List<DeliveryChallanBO>();
+            string queryString = "Select * from DeliveryChallan where IsDeleted=0";
 
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    resultList = con.Query<OutwardNoteBO>(queryString).ToList();
+                    resultList = con.Query<DeliveryChallanBO>(queryString).ToList();
                 }
             }
             catch (Exception ex)
@@ -50,17 +50,17 @@ namespace InVanWebApp.Repository
         /// Farheen: Insert record.
         /// </summary>
         /// <param name="model"></param>
-        public ResponseMessageBO Insert(OutwardNoteBO model)
+        public ResponseMessageBO Insert(DeliveryChallanBO model)
         {
             ResponseMessageBO response = new ResponseMessageBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_OutwardNote_Insert", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_DeliveryChallan_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@OutwardNoteNumber", model.OutwardNoteNumber);
-                    cmd.Parameters.AddWithValue("@OutwardNoteDate", model.OutwardDate);
+                    cmd.Parameters.AddWithValue("@DeliveryChallanNumber", model.DeliveryChallanNumber);
+                    cmd.Parameters.AddWithValue("@DeliveryChallanDate", model.DeliveryChallanDate);
                     cmd.Parameters.AddWithValue("@SO_Id", model.SO_Id);
                     cmd.Parameters.AddWithValue("@SONumber", model.SONumber);
                     cmd.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
@@ -81,29 +81,30 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                    cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     con.Open();
 
                     SqlDataReader dataReader = cmd.ExecuteReader();
-                    int OutwardNote_Id = 0;
+                    int DeliveryChallan_Id = 0;
 
                     while (dataReader.Read())
                     {
-                        OutwardNote_Id = Convert.ToInt32(dataReader["ID"]);
+                        DeliveryChallan_Id = Convert.ToInt32(dataReader["ID"]);
                         response.Status = Convert.ToBoolean(dataReader["Status"]);
                     }
                     con.Close();
 
-                    if (OutwardNote_Id != 0)
+                    if (DeliveryChallan_Id != 0)
                     {
                         var json = new JavaScriptSerializer();
                         var data = json.Deserialize<Dictionary<string, string>[]>(model.txtItemDetails);
 
-                        List<OutwardNoteItemDetailsBO> itemDetails = new List<OutwardNoteItemDetailsBO>();
+                        List<DeliveryChallanItemDetailsBO> itemDetails = new List<DeliveryChallanItemDetailsBO>();
 
                         foreach (var item in data)
                         {
-                            OutwardNoteItemDetailsBO objItemDetails = new OutwardNoteItemDetailsBO();
-                            objItemDetails.OutwardNoteID = OutwardNote_Id;
+                            DeliveryChallanItemDetailsBO objItemDetails = new DeliveryChallanItemDetailsBO();
+                            objItemDetails.DeliveryChallanID = DeliveryChallan_Id;
                             objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
                             objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
                             objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
@@ -122,10 +123,10 @@ namespace InVanWebApp.Repository
                         foreach (var item in itemDetails)
                         {
                             con.Open();
-                            SqlCommand cmdNew = new SqlCommand("usp_tbl_OutwardNoteDetails_Insert", con);
+                            SqlCommand cmdNew = new SqlCommand("usp_tbl_DeliveryChallanDetails_Insert", con);
                             cmdNew.CommandType = CommandType.StoredProcedure;
 
-                            cmdNew.Parameters.AddWithValue("@OutwardNoteID", item.OutwardNoteID);
+                            cmdNew.Parameters.AddWithValue("@DeliveryChallanID", item.DeliveryChallanID);
                             cmdNew.Parameters.AddWithValue("@ItemId", item.Item_ID);
                             cmdNew.Parameters.AddWithValue("@Item_Name", item.ItemName);
                             cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
@@ -177,7 +178,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_OutwardNote_Delete", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_DeliveryChallan_Delete", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", Id);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
@@ -204,18 +205,18 @@ namespace InVanWebApp.Repository
         /// <param name="ID"></param>
         /// <returns></returns>
 
-        public OutwardNoteBO GetById(int ID)
+        public DeliveryChallanBO GetById(int ID)
         {
-            OutwardNoteBO result = new OutwardNoteBO();
+            DeliveryChallanBO result = new DeliveryChallanBO();
             try
             {
-                string stringQuery = "Select * from OutwardNote where IsDeleted=0 and ID=@ID";
-                string stringItemQuery = "Select * from OutwardNoteItemDetails where IsDeleted=0 and OutwardNoteID=@ID";
+                string stringQuery = "Select * from DeliveryChallan where IsDeleted=0 and ID=@ID";
+                string stringItemQuery = "Select * from DeliveryChallanItemDetails where IsDeleted=0 and DeliveryChallanID=@ID";
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    result = con.Query<OutwardNoteBO>(stringQuery, new { @ID = ID }).FirstOrDefault();
-                    var ItemList = con.Query<OutwardNoteItemDetailsBO>(stringItemQuery, new { @ID = ID }).ToList();
-                    result.outwardNoteItemDetails = ItemList;
+                    result = con.Query<DeliveryChallanBO>(stringQuery, new { @ID = ID }).FirstOrDefault();
+                    var ItemList = con.Query<DeliveryChallanItemDetailsBO>(stringItemQuery, new { @ID = ID }).ToList();
+                    result.deliveryChallanItemDetails = ItemList;
                 }
             }
             catch (Exception ex)

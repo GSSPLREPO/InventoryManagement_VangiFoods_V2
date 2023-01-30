@@ -7,13 +7,13 @@ using InVanWebApp_BO;
 
 namespace InVanWebApp.Repository.Interface
 {
-    public interface IOutwardNoteRepository
+    public interface IDeliveryChallanRepository
     {
-        IEnumerable<OutwardNoteBO> GetAll();
-        ResponseMessageBO Insert(OutwardNoteBO model);
+        IEnumerable<DeliveryChallanBO> GetAll();
+        ResponseMessageBO Insert(DeliveryChallanBO model);
         IEnumerable<SalesOrderBO> GetSONumberList();
         IEnumerable<SalesOrderBO> GetSODetailsById(int SOId);
         ResponseMessageBO Delete(int Id, int userId);
-        OutwardNoteBO GetById(int ID);
+        DeliveryChallanBO GetById(int ID);
     }
 }

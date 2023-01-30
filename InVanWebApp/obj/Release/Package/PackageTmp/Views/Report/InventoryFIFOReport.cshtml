@@ -124,6 +124,15 @@
         $("#btnGo").on('click', function () {
             var flag = 0;
 
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+
+            if (fromDate > toDate) {
+                alert('Invalid date selection!');
+                $('#fromDate').focus();
+                return;
+            }
+
             var CheckItem = $('#ItemId').val();
             if (CheckItem == '' || CheckItem == null) {
                 $('#ItemValidate').text("Select Item!");
@@ -162,8 +171,6 @@
             $('#ExportExcel').show();
             $('#tblInward').show();
 
-            var fromDate = $("#fromDate").val();
-            var toDate = $("#toDate").val();
             var item = $('#ItemId').val();
 
             $('#tblInward').dataTable().fnDestroy();

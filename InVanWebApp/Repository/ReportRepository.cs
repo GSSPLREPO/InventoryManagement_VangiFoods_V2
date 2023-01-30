@@ -182,9 +182,9 @@ namespace InVanWebApp.Repository
         /// <param name="toDate">To Date of Report</param>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public List<OutwardNoteItemDetailsBO> getFinishedGoodsReportData(DateTime fromDate, DateTime toDate, int LocationId, int itemId)
+        public List<DeliveryChallanItemDetailsBO> getFinishedGoodsReportData(DateTime fromDate, DateTime toDate, int itemId)
         {
-            List<OutwardNoteItemDetailsBO> resultList = new List<OutwardNoteItemDetailsBO>();
+            List<DeliveryChallanItemDetailsBO> resultList = new List<DeliveryChallanItemDetailsBO>();
             try
             {
                 using (SqlConnection con = new SqlConnection(conStr))
@@ -193,17 +193,17 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
                     cmd.Parameters.AddWithValue("@ItemID", itemId);
-                    cmd.Parameters.AddWithValue("@WearhouseId", LocationId);
+                    //cmd.Parameters.AddWithValue("@WearhouseId", LocationId);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); 
                     while (reader.Read())
                     {
-                        var result = new OutwardNoteItemDetailsBO()
+                        var result = new DeliveryChallanItemDetailsBO()
                         {
                             SrNo = Convert.ToInt32(reader["SrNo"]),
-                            OutwardNoteNumber = reader["OutwardNoteNumber"].ToString(),
+                            DeliveryChallanNumber = reader["DeliveryChallanNumber"].ToString(),
                             OutwardDate = Convert.ToDateTime(reader["OutwardDate"]).ToString("dd/MM/yyyy hh:mm:ss"),
                             DeliveryAddress = reader["FGLocation"].ToString(),
                             ApprovedBy = reader["ApprovedBy"].ToString(),

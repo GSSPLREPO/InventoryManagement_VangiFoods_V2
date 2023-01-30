@@ -738,7 +738,7 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                OutwardNoteBO model = new OutwardNoteBO();
+                DeliveryChallanBO model = new DeliveryChallanBO();
                 model.fromDate = DateTime.Today;
                 model.toDate = DateTime.Today;
                 BindLocationDropDown();
@@ -755,13 +755,13 @@ namespace InVanWebApp.Controllers
         /// Calling method for Finished Goods Dispatch Report data
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetFinishedGoodsDispatchReportData(DateTime fromDate, DateTime toDate, int LocationId, int ItemId)
+        public JsonResult GetFinishedGoodsDispatchReportData(DateTime fromDate, DateTime toDate, int ItemId)
         {
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
-            Session["LocationId"] = LocationId;
+            //Session["LocationId"] = LocationId;
             Session["ItemId"] = ItemId;
-            var rejectionNoteReport = _repository.getFinishedGoodsReportData(fromDate, toDate, LocationId, ItemId);
+            var rejectionNoteReport = _repository.getFinishedGoodsReportData(fromDate, toDate, ItemId);
             return Json(new { data = rejectionNoteReport }, JsonRequestBehavior.AllowGet);
         }
 
@@ -778,9 +778,9 @@ namespace InVanWebApp.Controllers
         {
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
-            var locationId = Convert.ToInt32(Session["LocationId"]);
+            //var locationId = Convert.ToInt32(Session["LocationId"]);
             var itemId = Convert.ToInt32(Session["ItemId"]);
-            var resultDetails = _repository.getFinishedGoodsReportData(fromDate, toDate, locationId, itemId);
+            var resultDetails = _repository.getFinishedGoodsReportData(fromDate, toDate, itemId);
 
             TempData["ReportDataTemp"] = resultDetails;
             if (TempData["ReportDataTemp"] == null)
@@ -789,7 +789,7 @@ namespace InVanWebApp.Controllers
             }
 
             StringBuilder sb = new StringBuilder();
-            List<OutwardNoteItemDetailsBO> resultList = TempData["ReportDataTemp"] as List<OutwardNoteItemDetailsBO>;
+            List<DeliveryChallanItemDetailsBO> resultList = TempData["ReportDataTemp"] as List<DeliveryChallanItemDetailsBO>;
 
             if (resultList.Count < 0)
                 return RedirectToAction("FinishedGoodsDispatchReport", "Report");
@@ -823,8 +823,8 @@ namespace InVanWebApp.Controllers
 
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Outward Note Number</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Outward Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Delivery Challan Number</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Delivery Challan Date</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>FG Stored At Location</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Approved By</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</ th>");
@@ -843,7 +843,7 @@ namespace InVanWebApp.Controllers
 
                 sb.Append("<tr style='text-align:center;padding: 10px;'>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.OutwardNoteNumber + "</td>");  //Rahul updated PurchaseOrderDate 06-01-2023. 
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.DeliveryChallanNumber + "</td>");  //Rahul updated PurchaseOrderDate 06-01-2023. 
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.OutwardDate + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.DeliveryAddress + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ApprovedBy + "</td>");
@@ -892,15 +892,15 @@ namespace InVanWebApp.Controllers
             GridView gv = new GridView();
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
-            var locationId = Convert.ToInt32(Session["LocationId"]);
+            //var locationId = Convert.ToInt32(Session["LocationId"]);
             var itemId = Convert.ToInt32(Session["ItemId"]);
 
-            List<OutwardNoteItemDetailsBO> resultList = _repository.getFinishedGoodsReportData(fromDate, toDate, locationId, itemId);
+            List<DeliveryChallanItemDetailsBO> resultList = _repository.getFinishedGoodsReportData(fromDate, toDate, itemId);
 
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
-            dt.Columns.Add("Outward Note Number");
-            dt.Columns.Add("Outward Date");
+            dt.Columns.Add("Delivery Challan Number");
+            dt.Columns.Add("Delivery Challan Date");
             dt.Columns.Add("FG Stored At Location");
             dt.Columns.Add("ApprovedBy");
             dt.Columns.Add("Item Code");
@@ -909,12 +909,12 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Dispatch Quantity");
             //dt.Columns.Add("Approved By");
 
-            foreach (OutwardNoteItemDetailsBO st in resultList)
+            foreach (DeliveryChallanItemDetailsBO st in resultList)
             {
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = st.SrNo.ToString();
-                dr["Outward Note Number"] = st.OutwardNoteNumber.ToString();
-                dr["Outward Date"] = st.OutwardDate.ToString();
+                dr["Delivery Challan Number"] = st.DeliveryChallanNumber.ToString();
+                dr["Delivery Challan Date"] = st.OutwardDate.ToString();
                 dr["FG Stored At Location"] = st.DeliveryAddress.ToString();
                 dr["ApprovedBy"] = st.ApprovedBy.ToString();
                 dr["Item Code"] = st.Item_Code.ToString();

@@ -34,7 +34,7 @@
 
                                 @using (Html.BeginForm("ExprotAsPDF", "Report", FormMethod.Post))
                                 {
-                                    <div class="row-inline">
+                                    <div class="row">
                                         <div class="col-md-2">
                                             <label>From Date:</label>
                                             <span style="color:red">*</span>
@@ -58,8 +58,7 @@
                                         </div>
 
                                     </div>
-                                    <br />
-                                    <div class="row-inline">
+                                    <div class="row">
                                         <div class="col-md-2 ms-1">
                                             <label>Status:</label>
                                             <span style="color:red">*</span>
@@ -142,6 +141,14 @@
         //==========================================
 
         $("#btnGo").on('click', function () {
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+
+            if (fromDate > toDate) {
+                alert('Invalid date selection!');
+                $('#fromDate').focus();
+                return;
+            }
 
             //===========OnChange of item if Vendors is not selected================
             var VendorsCheck = $('#Vendors').val();
@@ -178,8 +185,6 @@
             $('#ExportExcel').show();
             $('#tblInward').show();
 
-            var fromDate = $("#fromDate").val();
-            var toDate = $("#toDate").val();
             var Status = $('#Status').val();
             var Vendor = $('#Vendors').val();
 
