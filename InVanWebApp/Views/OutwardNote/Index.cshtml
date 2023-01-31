@@ -36,10 +36,10 @@
                                 <table class="table table-striped table-bordered hover table-sm" id="tblIssueNote">
                                     <thead>
                                         <tr>
-                                            <th>@Html.Label("Outward Note Number")</th>
-                                            <th>@Html.Label("Outward Note Date")</th>
-                                            <th>@Html.Label("SO Number")</th>
+                                            <th>@Html.Label("Delivery Challan Number")</th>
+                                            <th>@Html.Label("Delivery Challan Date")</th>
                                             <th>@Html.Label("Location")</th>
+                                            <th>@Html.Label("Verified By")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
@@ -47,15 +47,15 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.OutwardNoteNumber)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.OutwardNumber)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.OutwardDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.SONumber)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.VerifiedByName)</td>
                                                 <td>
-                                                    <a href=@Url.Action("ViewOutwardNote", "OutwardNote", new { ID = item.ID })>
+                                                    <a href=@Url.Action("ViewOutwardNote", "OutwardNote", new { ID = item.ID}) title="View Outward Note">
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
-                                                    <a href=@Url.Action("DeleteOutwardNote", "OutwardNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("DeleteOutwardNote", "OutwardNote", new { ID = item.ID}) onclick="return confirm('Are you sure want to delete?');" title="Delete Outward Note">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>
@@ -100,5 +100,3 @@
         });
     </script>
 }
-
-

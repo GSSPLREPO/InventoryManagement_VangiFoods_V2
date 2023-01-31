@@ -1,4 +1,4 @@
-﻿@model InVanWebApp_BO.OutwardNoteBO
+﻿@model InVanWebApp_BO.DeliveryChallanBO
 @{
     ViewBag.Title = "ViewOutwardNote";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Outward Note</title>
+    <title>Delivery Challan</title>
     <style>
         html2canvas-container {
             width: 3000px !important;
@@ -26,11 +26,11 @@
                     <div class="card-body">
                         <div class="row">
                             <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
-                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Outward Note</h3>
+                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Delivery Challan</h3>
 
                             <div class="col">
                                 <div class="col-md-12">
-                                    <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" onclick="ExportPdfFunction('printV','OutwardNote',590, 430)" />
+                                    <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" onclick="ExportPdfFunction('printV','DeliveryChallan',590, 430)" />
                                 </div>
                             </div>
                         </div>
@@ -39,17 +39,17 @@
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label class="font-weight-bold">Outward Note Number</label>
+                                    <label class="font-weight-bold">Delivery Challan Number</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.OutwardNoteNumber, new { style = "color:black;" })
+                                    @Html.DisplayFor(model => model.DeliveryChallanNumber, new { style = "color:black;" })
                                 </div>
                                 <br />
                                 <div class="col-md-2">
-                                    <label class="font-weight-bold">Outward Note Date</label>
+                                    <label class="font-weight-bold">Delivery Challan Date</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.OutwardDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                    @Html.TextBoxFor(model => model.DeliveryChallanDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                                 </div>
                             </div>
                             <div class="row">
@@ -136,7 +136,7 @@
                                                 </thead>
                                                 <tbody id="myTableBody">
                                                     @{ int c = 1;
-                                                        foreach (var item in Model.outwardNoteItemDetails)
+                                                        foreach (var item in Model.deliveryChallanItemDetails)
                                                         {
                                                             <tr id="tablerow_@c">
                                                                 <td>
@@ -258,7 +258,20 @@
                             </div>
                             <br />
                             <br />
-                            <a href="@Url.Action("Index", "OutwardNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                            <div class="row">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
+
+                                    <div id="imagePreview">
+                                        <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
+                                        @Html.HiddenFor(x => x.Signature)
+                                    </div>
+                                    @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
+                                    <p class="font-weight-bold"> Authorized Signature</p>
+                                </div>
+                            </div>
+                            <br />
+                            <a href="@Url.Action("Index", "DeliveryChallan")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
                                 Back To List
                             </a>
                         </div>

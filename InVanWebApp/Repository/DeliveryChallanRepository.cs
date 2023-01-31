@@ -21,7 +21,7 @@ namespace InVanWebApp.Repository
 
         #region  Bind grid
         /// <summary>
-        /// Farheen: This function is for fecthing list of outward note.
+        /// Farheen: This function is for fecthing list of delivery challan.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<DeliveryChallanBO> GetAll()

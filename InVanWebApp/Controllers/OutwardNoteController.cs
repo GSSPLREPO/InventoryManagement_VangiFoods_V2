@@ -5,39 +5,41 @@ using System.Web;
 using System.Web.Mvc;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp.Repository;
+using InVanWebApp_BO;
 using log4net;
 using InVanWebApp.Common;
-using InVanWebApp_BO;
 using System.IO;
 
 namespace InVanWebApp.Controllers
 {
-    public class DeliveryChallanController : Controller
+    public class OutwardNoteController : Controller
     {
-        private IDeliveryChallanRepository _repository;
+        private IOutwardNoteRepository _repository;
         private IPurchaseOrderRepository _purchaseOrderRepository;
+        private IUserDetailsRepository _userDetailsRepository;
         private static ILog log = LogManager.GetLogger(typeof(DeliveryChallanController));
 
         #region Initializing Constructor
 
         /// <summary>
         /// Created By: Farheen
-        /// Created Date: 27 Jan'23
+        /// Created Date: 31 Jan'23
         /// </summary>
-        public DeliveryChallanController()
+        public OutwardNoteController()
         {
-            _repository = new DeliveryChallanRepository();
+            _repository = new OutwardNoteRepository();
             _purchaseOrderRepository = new PurchaseOrderRepository();
+            _userDetailsRepository = new UserDetailsRepository();
         }
 
         /// <summary>
         /// Created By: Farheen
-        /// Created Date: 27 Jan'23
+        /// Created Date: 31 Jan'23
         /// </summary>
-        /// <param name="deliveryChallanRepository"></param>
-        public DeliveryChallanController(IDeliveryChallanRepository deliveryChallanRepository)
+        /// <param name="outwardNoteRepository"></param>
+        public OutwardNoteController(IOutwardNoteRepository outwardNoteRepository)
         {
-            _repository = deliveryChallanRepository;
+            _repository = outwardNoteRepository;
         }
         #endregion
 
@@ -58,16 +60,21 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddDeliveryChallan()
+        public ActionResult AddOutwardNote()
         {
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindLocationName();
                 GenerateDocumentNo();
-                BindSONumber();
+                BindUsers();
 
-                DeliveryChallanBO model = new DeliveryChallanBO();
-                model.DeliveryChallanDate = DateTime.Today;
+                //Binding item grid with sell type item.
+                var itemList = _repository.GetItemDetailsForDD();
+                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                ViewData["itemListForDD"] = dd;
+
+                OutwardNoteBO model = new OutwardNoteBO();
+                model.OutwardDate = DateTime.Today;
                 return View(model);
             }
             else
@@ -80,7 +87,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddDeliveryChallan(DeliveryChallanBO model, HttpPostedFileBase Signature)
+        public ActionResult AddOutwardNote(OutwardNoteBO model, HttpPostedFileBase Signature)
         {
             try
             {
@@ -101,30 +108,30 @@ namespace InVanWebApp.Controllers
                         response = _repository.Insert(model);
 
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Delivery Challan is created successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Outward Note is created successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error! Delivery Challan cannot be created!');</script>";
+                            TempData["Success"] = "<script>alert('Error! Outward Note cannot be created!');</script>";
                             BindLocationName();
                             GenerateDocumentNo();
-                            BindSONumber();
+                            BindUsers();
 
-                            model.DeliveryChallanDate = DateTime.Today;
+                            model.OutwardDate = DateTime.Today;
                             return View(model);
                         }
 
 
-                        return RedirectToAction("Index", "DeliveryChallan");
+                        return RedirectToAction("Index", "OutwardNote");
 
                     }
                     else
                     {
                         BindLocationName();
                         GenerateDocumentNo();
-                        BindSONumber();
+                        BindUsers();
 
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-                        model.DeliveryChallanDate = DateTime.Today;
+                        model.OutwardDate = DateTime.Today;
                         return View(model);
                     }
                 }
@@ -139,97 +146,42 @@ namespace InVanWebApp.Controllers
 
                 BindLocationName();
                 GenerateDocumentNo();
-                BindSONumber();
-                model.DeliveryChallanDate = DateTime.Today;
+                BindUsers();
+                model.OutwardDate = DateTime.Today;
                 return View(model);
             }
         }
-        #endregion
-
-        #region Delete function
-        /// <summary>
-        /// Date: 29 Jan'23
-        /// Farheen: Delete the perticular record
-        /// </summary>
-        /// <param name="ID">record Id</param>
-        /// <returns></returns>
-
-        [HttpGet]
-        public ActionResult DeleteDeliveryChallan(int ID)
-        {
-            if (Session[ApplicationSession.USERID] != null)
-            {
-                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                ResponseMessageBO result = new ResponseMessageBO();
-                result = _repository.Delete(ID, userID);
-
-                if (result.Status)
-                    TempData["Success"] = "<script>alert('Delivery challan deleted successfully!');</script>";
-                else
-                    TempData["Success"] = "<script>alert('Error while deleting!');</script>";
-
-                return RedirectToAction("Index", "DeliveryChallan");
-            }
-            else
-                return RedirectToAction("Index", "Login");
-        }
-        #endregion
-
-        #region This method is for View the Outward Note
-        [HttpGet]
-        public ActionResult ViewDeliveryChallan(int ID)
-        {
-            if (Session[ApplicationSession.USERID] != null)
-            {
-                DeliveryChallanBO model = _repository.GetById(ID);
-                return View(model);
-            }
-            else
-                return RedirectToAction("Index", "Login");
-        }
-
         #endregion
 
         #region Bind dropdowns 
+        public void BindUsers()
+        {
+            var result = _userDetailsRepository.GetAll();
+            var resultList = new SelectList(result.ToList(), "EmployeeID", "EmployeeName");
+            ViewData["EmployeeName"] = resultList;
+        }
+
         public void BindLocationName()
         {
             var result = _purchaseOrderRepository.GetLocationNameList();
             var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
             ViewData["LocationList"] = resultList;
         }
-        public void BindSONumber()
-        {
-            var result = _repository.GetSONumberList();
-            var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONo");
-            ViewData["SONumberList"] = resultList;
-        }
 
         public void GenerateDocumentNo()
         {
             GetDocumentNumber objDocNo = new GetDocumentNumber();
 
-            //=========here document type=14 i.e. for generating the Delivery challan (logic is in SP).====//
-            var DocumentNumber = objDocNo.GetDocumentNo(14);
+            //=========here document type=15 i.e. for generating the Outward Note (logic is in SP).====//
+            var DocumentNumber = objDocNo.GetDocumentNo(15);
             ViewData["DocumentNo"] = DocumentNumber;
         }
 
         #endregion
 
-        #region Fetch SO details for Outward note
-        public JsonResult GetSODetails(string id)
-        {
-            int SOId = 0;
-            if (id != "" && id != null)
-                SOId = Convert.ToInt32(id);
-
-            var result = _repository.GetSODetailsById(SOId);
-            return Json(result);
-        }
-        #endregion
-
         #region Function for uploading the signature
         /// <summary>
-        /// Date: 30 Jan 2023
+        /// Date: 31 Jan 2023
         /// Farheen: Upload Signature File items.
         /// </summary>
         /// <returns></returns>
