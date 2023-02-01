@@ -55,6 +55,9 @@
                                                     <a href=@Url.Action("ViewOutwardNote", "OutwardNote", new { ID = item.ID}) title="View Outward Note">
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
+                                                    <a href=@Url.Action("EditOutwardNote", "OutwardNote", new { ID = item.ID}) title="Edit Outward Note">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a>&emsp;
                                                     <a href=@Url.Action("DeleteOutwardNote", "OutwardNote", new { ID = item.ID}) onclick="return confirm('Are you sure want to delete?');" title="Delete Outward Note">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>

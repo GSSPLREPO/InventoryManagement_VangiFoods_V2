@@ -175,7 +175,7 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region This method is for View the Outward Note
+        #region This method is for View the Delivery Challan
         [HttpGet]
         public ActionResult ViewDeliveryChallan(int ID)
         {
@@ -215,7 +215,7 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region Fetch SO details for Outward note
+        #region Fetch SO details for DeliveryChallan
         public JsonResult GetSODetails(string id)
         {
             int SOId = 0;

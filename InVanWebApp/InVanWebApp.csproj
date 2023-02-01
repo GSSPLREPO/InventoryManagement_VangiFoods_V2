@@ -1845,6 +1845,7 @@
     <Content Include="Highcharts-10.3.1\code\themes\sunset.js.map" />
     <Content Include="Scripts\Script\AddDeliveryChallan.js" />
     <Content Include="Scripts\Script\AddIssueNote.js" />
+    <Content Include="Scripts\Script\AddOutwardNote.js" />
     <Content Include="Scripts\Script\AddStockAdjustment.js" />
     <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
     <Content Include="Views\RejectionNote\Index.cshtml" />
@@ -2891,6 +2892,8 @@
     <Content Include="Views\DeliveryChallan\ViewDeliveryChallan.cshtml" />
     <Content Include="Views\OutwardNote\Index.cshtml" />
     <Content Include="Views\OutwardNote\AddOutwardNote.cshtml" />
+    <Content Include="Views\OutwardNote\ViewOutwardNote.cshtml" />
+    <Content Include="Views\OutwardNote\EditOutwardNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

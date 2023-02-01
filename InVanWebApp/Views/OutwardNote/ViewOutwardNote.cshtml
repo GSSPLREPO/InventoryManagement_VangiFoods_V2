@@ -1,0 +1,256 @@
+﻿@model InVanWebApp_BO.OutwardNoteBO
+@{
+    ViewBag.Title = "ViewOutwardNote";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Outward Note</title>
+    <style>
+        html2canvas-container {
+            width: 3000px !important;
+            height: 2000px !important;
+        }
+    </style>
+</head>
+<body>
+    @Html.HiddenFor(model => model.ID)
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row" id="printV" width="1000px">
+            <div class="col-md-12  grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
+                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Outward Note</h3>
+
+                            <div class="col">
+                                <div class="col-md-12">
+                                    <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" onclick="ExportPdfFunction('printV','OutwardNote',590, 430)" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Outward Note Number</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.OutwardNumber, new { style = "color:black;" })
+                                </div>
+                                <br />
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Outward Note Date</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.OutwardDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Is Retunable</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @{if (Model.IsReturnable == true)
+                                        {
+                                            <label>Returnable</label>
+
+                                        }
+                                        else
+                                        {
+                                            <label>Not-Returnable</label>
+
+                                        }
+                                    }
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Purpose</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Supplier Details</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.LocationName, new { style = "color:black;" })
+                                    @Html.DisplayFor(model => model.LocationAddress)
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Delivery Details</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.DeliveryAddress, new { style = "color:black;" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Verified By</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.VerifiedByName, new { style = "color:black;" })
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Contact Person</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.ContactPerson, new { style = "color:black;" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Contact Information</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.ContactInformation, new { style = "color:black;" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Dispatch Through</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.DispatchThrough, new { style = "color:black;" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Docket/LR Number</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.DocketNumber, new { style = "color:black;" })
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                            <table class="table table-striped" id="submissionTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sortStyle">Sr. No.</th>
+                                                        <th class="sortStyle">Item Code</th>
+                                                        <th class="sortStyle">Item</th>
+                                                        <th class="sortStyle">Shipping Quantity</th>
+                                                        <th class="sortStyle">UOM</th>
+                                                        <th class="sortStyle">Comments</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="myTableBody">
+                                                    @{ int c = 1;
+                                                        foreach (var item in Model.outwardNoteDetails)
+                                                        {
+                                                            <tr id="tablerow_@c">
+                                                                <td>
+                                                                    <label>@c.</label>
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.ItemCode)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.ItemName)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.OutwardQuantity)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.ItemUnit)
+                                                                </td>
+                                                                <td>
+                                                                   @Html.DisplayFor(x=>item.Remarks)
+                                                                </td>
+                                                            </tr>
+                                                            { c++; }
+                                                        }
+
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                            <br />
+                           
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div id="imagePreview">
+                                        <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
+                                        @Html.HiddenFor(x => x.Signature)
+                                    </div>
+                                    @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
+                                    <p class="font-weight-bold"> Authorized Signature</p>
+                                </div>
+                                <div class="col-md-10">
+                                    <p class="font-weight-bold" style="float:right;padding-top:30px"> Receiver's Signature</p>
+                                </div>
+                            </div>
+                            <br />
+                            <a href="@Url.Action("Index", "OutwardNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                Back To List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+@*These below scripts are used for expoting this page in pdf format.*@
+<script src="~/Theme/MainContent/js/jquery.min.js"></script>
+<script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/jspdf.min.js"></script>
+<script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/html2canvas.js"></script>
+
+<script src="~/Scripts/Script/CommonScripts.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        CalculateTotalBeforeTax();
+    });
+
+    function CalculateTotalBeforeTax() {
+        //$('#TotalBeforeTax').val('');
+        //$('#TotalTax').val('');
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        var total = 0;
+        var totalTax = 0;
+        var i = 1;
+        while (i <= length) {
+            var temp = document.getElementById("totalItemCost_" + i).value;
+            var tempTotalTax = document.getElementById("itemTax_" + i).value;
+            total = parseFloat(temp) + total;
+
+            tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
+            totalTax = parseFloat(tempTotalTax) + totalTax;
+            i++;
+        }
+
+        $('#TotalBeforeTax').val(total);
+        $('#TotalTax').val(totalTax);
+    }
+</script>

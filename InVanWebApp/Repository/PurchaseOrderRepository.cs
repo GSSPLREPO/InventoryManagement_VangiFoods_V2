@@ -243,7 +243,7 @@ namespace InVanWebApp.Repository
         }
 
         /// <summary>
-        /// Rahul: Update record
+        /// Farheen: Update record
         /// </summary>
         /// <param name="model"></param>
         public ResponseMessageBO Update(PurchaseOrderBO model)

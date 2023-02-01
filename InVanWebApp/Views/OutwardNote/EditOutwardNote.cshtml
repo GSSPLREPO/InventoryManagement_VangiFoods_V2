@@ -1,0 +1,530 @@
+﻿@model InVanWebApp_BO.OutwardNoteBO
+@{
+    ViewBag.Title = "EditOutwardNote";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm("EditOutwardNote", "OutwardNote", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Outward Note</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Outward Note Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.OutwardNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.OutwardNumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Outward Note Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.OutwardDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.OutwardDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Is Returnable")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.IsReturnable, new List<SelectListItem>{
+                    new SelectListItem{ Text="Not-Returnable", Value = "false" },
+                    new SelectListItem{ Text="Returnable", Value = "true" }
+                    }, new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.IsReturnable, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Verified By")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.VerifiedBy, (IEnumerable<SelectListItem>)ViewData["EmployeeName"], "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.VerifiedBy, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                @Html.HiddenFor(model => model.VerifiedByName)
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Location Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+
+                    @Html.DropDownListFor(model => model.LocationID, (IEnumerable<SelectListItem>)ViewData["LocationList"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val())" })
+                    @Html.ValidationMessageFor(model => model.LocationID, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.HiddenFor(model => model.LocationName)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">
+                                Location Address
+                                <span style="color:red">*</span>
+                            </h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.LocationAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.LocationAddress, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">
+                                Delivery Address
+                                <span style="color:red">*</span>
+                            </h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.DeliveryAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
+                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Dispatch Through")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.DispatchThrough, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.DispatchThrough, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Docket/LR Number")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.DocketNumber, new { @class = "form-control form-control-sm", maxlength = "30", onkeypress = "return isAlphaNumeric(event)" })
+                    <span id="valDocketNumber" style="display:none;"></span>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Contact Person")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ContactPerson, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.ContactPerson, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Contact Number")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ContactInformation, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.ContactInformation, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Perpose")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "100" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <hr />
+            <div class="row">
+                <h4 style="color:darkcyan">Item Details</h4>
+            </div>
+            <hr />
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                    <table class="table table-striped" id="submissionTable">
+                                        <thead>
+                                            <tr style="background-color:rgba(0, 0, 0, 0.10);">
+                                                <th class="sortStyle">Item Code</th>
+                                                <th class="sortStyle d-n d-none">Item Id</th>
+                                                <th class="sortStyle">Item</th>
+                                                <th class="sortStyle">Shipping Quantity</th>
+                                                <th class="sortStyle">Units</th>
+                                                <th class="sortStyle">Comments</th>
+                                                <th class="sortStyle"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myTableBody">
+                                            @{ int c = 1;
+                                                foreach (var item in Model.outwardNoteDetails)
+                                                {
+                                                    string itemListForDD = "itemListForDD" + (c - 1);
+                                                    <tr id="tablerow_@c">
+                                                        <td>
+                                                            @Html.DropDownList("ItemId_" + c, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
+                                                            @*@Html.TextBox("ItemCode_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })*@
+                                                        </td>
+                                                        <td class="col-md-4 d-none">
+                                                            @Html.TextBox("itemCode_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("itemDescription_" + c, item.ItemName, new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("shippedQuantity_" + c, item.OutwardQuantity, new
+                                                       {
+                                                           @class = "form-control form-control-sm",
+                                                           style = "height:30px;",
+                                                           onkeypress = "return isNumberKey(event)",
+                                                                maxlength = "8",
+                                                           onchange = "onShippedQtyChange()"
+                                                       })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("itemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("comments_" + c, item.Remarks, new { @class = "form-control form-control-sm text-wrap", style = "height:30px;width:auto;" })
+                                                        </td>
+                                                        @if (c == 1)
+                                                        {
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" disabled>Delete</button>
+                                                        </td>
+                                                        }
+                                                        else { 
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
+                                                        </td>
+                                                        }
+                                                    </tr>
+                                                    { c++; }
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                    <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
+                                        + Add Item
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.TextBoxFor(x => x.Signature, new { id = "file", type = "file", onchange = "return fileValidation()" })
+                                <span style="color:green">@ViewBag.Message</span>
+                                <br />
+                                <br />
+                                <center>
+                                    <div id="imagePreview">
+                                        <img src="/Signatures/@Model.Signature" style="height:10%;width:20%" />
+                                        @Html.HiddenFor(x => x.Signature, new { id = "tempSign" })
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                        <label style="color:red;font-size:12px; float:left;">(Note: Only .png,.jpeg and jpg are allowed!)</label>
+
+                    </div>
+                </div>
+                <br />
+            </div>
+            <br />
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "OutwardNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.txtItemDetails)
+        </div>
+    </div>
+}
+@Html.Raw(TempData["Success"])
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @*<script src="https://cdn.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js" integrity="sha256-H8xrCe0tZFi/C2CgxkmiGksqVaxhW0PFcUKZJZo1yNU=" crossorigin="anonymous"></script>*@
+}
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    //=======The below function is for fetching the files value in the textbox of file type============//
+    $(document).ready(function () {
+        var fileName = $('#tempSign').val();
+
+        //Get a reference to our file input
+        const fileInput = document.querySelector('input[type="file"]');
+        var filePath = '/Signatures/' + fileName;
+
+        // Create a new File object
+        const myFile = new File([filePath], fileName, {
+            type: 'image/jpeg/jpg/png'
+        });
+
+        // Now let's create a DataTransfer to get a FileList
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(myFile);
+        fileInput.files = dataTransfer.files;
+    });
+    //===================end=======================//
+
+//==================Set value in txtItemDetails onCick of Save/Update button======--------
+function SaveBtnClick() {
+    var VerifiedName = $("#VerifiedBy option:selected").text();
+    $("#VerifiedByName").val(VerifiedName);
+
+    var LocaitonName = $("#LocationID option:selected").text();
+    $("#LocationName").val(LocaitonName);
+
+    var flag = 0;
+    PhyQty = document.getElementById("shippedQuantity_1").value;
+    if (PhyQty == '')
+        flag = 1;
+    else
+        PhyQty = parseFloat(PhyQty);
+
+    if (PhyQty == 0) {
+        flag = 1;
+    }
+
+    if (flag == 1) {
+        alert("No item shipped, Cannot create outward note!");
+        $('#btnSave').prop('disabled', true);
+        return;
+    }
+    else
+        $('#btnSave').prop('disabled', false);
+
+    createJson();
+};
+//==========end===============
+
+function onShippedQtyChange() {
+    $('#btnSave').prop('disabled', false);
+}
+
+//==========================On location change==================================
+function SelectedIndexChangedLocation(id) {
+    $('#btnSave').prop('disabled', false);
+
+    var selectedOptionLocationName, locationName;
+    selectedOptionLocationName = document.getElementById("LocationID").selectedIndex;
+    locationName = document.getElementById("LocationID").options[selectedOptionLocationName].innerText;
+    document.getElementById("LocationName").value = locationName;
+
+    $.ajax({
+        type: "POST",
+        url: `/PurchaseOrder/BindLocationMaster?id=` + id,
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            ////debugger;
+            //console.log(result);
+            var deliveryAdd = result[0].DeliveryAddress;
+            $("#LocationAddress").val(deliveryAdd);
+        }
+    });
+}
+//===========================end=================================
+
+function getitemDetailsJSTbl(count) {
+        $('#btnSave').prop('disabled', false);
+    var itemId = "ItemID_" + count;
+    var selectedItemId = $("#" + itemId).val();
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("GetitemDetails","PurchaseOrder")', // we are calling json method
+
+        dataType: 'json',
+        data: { id: selectedItemId, currencyId: '0' },
+
+        success: function (itemDescription) {
+            var description = JSON.stringify(itemDescription);
+            $("#itemCode_" + count).val(itemDescription.Item_Code);
+            $("#itemDescription_" + count).val(itemDescription.Item_Name);
+            $("#itemUnit_" + count).val(itemDescription.UnitCode);
+            $("#shippedQuantity_" + count).val('0');
+            $("#comments_" + count).val('');
+        },
+        failure: function () {
+            alert('Failed to retrieved item detals!');
+        },
+        error: function (ex) {
+            alert('Failed to retrieve Item description.' + ex);
+        }
+    });
+}
+
+///Finding the length of existing table
+var table = document.getElementById('submissionTable');
+var counter = table.rows.length;
+
+$("#AddItem").click(function () {
+    var itemId = "ItemID_" + counter;
+    var itemCode = "itemCode_" + counter;
+    var itemDescription = "itemDescription_" + counter;
+    var itemQuantity = "shippedQuantity_" + counter;
+    var itemUnit = "itemUnit_" + counter;
+    var comment = "comments_" + counter;
+    $('<tr id="tablerow_' + counter + '">' + '<td>' +
+        '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:auto;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#ItemId_1').html() + '</select>' +
+        '</td>' +
+        '<td class="d-none">' +
+        '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
+        '</td>' +
+        '<td>' +
+        '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;width:auto;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
+        '</td>' +
+        '<td>' +
+        '<input type="text" id="' + itemQuantity + '" class="form-control form-control-sm" style = "height:30px;" name="' + itemQuantity + '" value="0" onkeypress = "return isNumberKey(event)" required="required" maxlength="8", onchange="onShippedQtyChange()" />' +
+        '</td>' +
+        '<td>' +
+        '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;width:auto;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
+        '</td>' +
+        '<td>' +
+        '<input type="text" id="' + comment + '" class="form-control form-control-sm" style = "height:30px;width:auto;" name="' + comment + '"value="" maxLength = "95" />' +
+        '</td>' +
+        '<td>' +
+        '<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
+        '</td>' +
+        '</tr>').appendTo('#submissionTable');
+
+    /////////////This is piece of code is for de-selecting the Item list in the dropdown of newly created/added row//////////////////////
+    document.getElementById('ItemID_' + counter).selectedIndex = 0;
+        /////////////////////end.../////////////////
+
+    counter++;
+    return false;
+});
+
+function removeTr(index) {
+    /////Finding the length of existing table
+
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        //console.log("Length: " + length + counter);
+        if (counter > 1 & length == index) {
+            $('#tablerow_' + index).remove();
+            counter--;
+        }
+        else {
+            $('#tablerow_' + index).remove();
+        }
+        //CalculateTotalBeforeTax();
+        return false;
+}
+
+var TxtItemDetails = "";
+
+function createJson() {
+        let res = [...document.getElementById("myTableBody").children].map(tr =>
+            Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
+                [el.name, el.value])));
+        console.log(res);
+        var TxtItemDetails = JSON.stringify(res);
+        console.log(TxtItemDetails);
+    $('#txtItemDetails').val(TxtItemDetails);
+
+}
+
+function isNumberKey(evt) {
+    var keycode = (evt.which) ? evt.which : evt.keyCode;
+    if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+        return false;
+    }
+    else {
+        var parts = evt.srcElement.value.split('.');
+        if (parts.length > 1 && keycode == 46)
+            return false;
+        else
+            return true;
+    }
+    return true;
+}
+
+function fileValidation() {
+    var fileInput =
+        document.getElementById('file');
+
+    var filePath = fileInput.value;
+
+    // Allowing file type
+    var allowedExtensions =
+        /(\.jpg|\.jpeg|\.png)$/i;
+
+    if (!allowedExtensions.exec(filePath)) {
+        alert('Invalid file type');
+        fileInput.value = '';
+        return false;
+    }
+    else {
+
+        // Image preview
+        if (fileInput.files && fileInput.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById(
+                    'imagePreview').innerHTML =
+                    '<img src="' + e.target.result
+                    + '" style="height:10%;width:20%" />';
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+}
+
+function isAlphaNumeric(evt) {
+    var keycode = (evt.which) ? evt.which : evt.keyCode;
+    if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95) || (keycode == 32))) {
+        var valMsg = 'Only \"/, -,_\" are allowed!';
+
+        $('#valDocketNumber').text(valMsg);
+        $('#valDocketNumber').css('display', 'contents');
+        $('#valDocketNumber').css('color', 'red');
+        return false;
+    }
+    else {
+        $('#valDocketNumber').css('display', 'none');
+        return true;
+    }
+}
+</script>

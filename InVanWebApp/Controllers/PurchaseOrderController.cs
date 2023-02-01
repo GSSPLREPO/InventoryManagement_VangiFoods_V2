@@ -185,7 +185,7 @@ namespace InVanWebApp.Controllers
        
         #region  Update function
         /// <summary>
-        ///Rahul: Rendered the user to the edit page with details of a perticular record.
+        ///Farheen: Rendered the user to the edit page with details of a perticular record.
         /// </summary>
         /// <param name="PurchaseOrderId"></param>
         /// <returns></returns>
@@ -232,7 +232,7 @@ namespace InVanWebApp.Controllers
         }
 
         /// <summary>
-        /// Rahul:  Pass the data to the repository for updating that record.
+        /// Farheen:  Pass the data to the repository for updating that record.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>

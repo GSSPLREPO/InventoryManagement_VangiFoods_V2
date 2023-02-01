@@ -153,6 +153,166 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region  Update function
+        /// <summary>
+        ///Farheen: Rendered the user to the edit page with details of a perticular record.
+        /// </summary>
+        /// <param name="PurchaseOrderId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditOutwardNote(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                BindLocationName();
+                BindUsers();
+
+                OutwardNoteBO model = _repository.GetById(ID);
+
+                //Binding item grid with sell type item.
+                var itemList = _repository.GetItemDetailsForDD();
+                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                string itemListForDD = "itemListForDD";
+
+                if (model != null)
+                {
+                    var ItemCount = model.outwardNoteDetails.Count;
+                    var i = 0;
+                    while (i < ItemCount)
+                    {
+                        itemListForDD = "itemListForDD";
+                        itemListForDD = itemListForDD + i;
+                        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.outwardNoteDetails[i].ItemID);
+                        ViewData[itemListForDD] = dd;
+                        i++;
+                    }
+
+                }
+
+                ViewData[itemListForDD] = dd;
+
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+
+        }
+
+        /// <summary>
+        /// Farheen:  Pass the data to the repository for updating that record.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditOutwardNote(OutwardNoteBO model, HttpPostedFileBase Signature)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+
+            try
+            {
+                if (Session[ApplicationSession.USERID] != null)
+                {
+                    if (Signature != null && Signature.ContentLength > 1000)
+                    {
+                        UploadSignature(Signature);
+                        model.Signature = Signature.FileName.ToString();
+                    }
+                    else if (Signature.ContentLength < 1000 && Signature != null)
+                        model.Signature = Signature.FileName.ToString();
+                    else
+                        model.Signature = null;
+
+                    if (ModelState.IsValid)
+                    {
+                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _repository.Update(model);
+                        if (response.Status)
+                        {
+                            TempData["Success"] = "<script>alert('Outward Note updated successfully!');</script>";
+                            return RedirectToAction("Index", "OutwardNote");
+                        }
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+
+                            BindLocationName();
+                            BindUsers();
+
+                            OutwardNoteBO model1 = _repository.GetById(model.ID);
+
+                            //Binding item grid with sell type item.
+                            var itemList = _repository.GetItemDetailsForDD();
+                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                            string itemListForDD = "itemListForDD";
+
+                            if (model != null)
+                            {
+                                var ItemCount = model.outwardNoteDetails.Count;
+                                var i = 0;
+                                while (i < ItemCount)
+                                {
+                                    itemListForDD = "itemListForDD";
+                                    itemListForDD = itemListForDD + i;
+                                    dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.outwardNoteDetails[i].ItemID);
+                                    ViewData[itemListForDD] = dd;
+                                    i++;
+                                }
+
+                            }
+
+                            ViewData[itemListForDD] = dd;
+
+                            return View(model1);
+                        }
+
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        BindLocationName();
+                        BindUsers();
+
+                        OutwardNoteBO model1 = _repository.GetById(model.ID);
+
+                        //Binding item grid with sell type item.
+                        var itemList = _repository.GetItemDetailsForDD();
+                        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                        string itemListForDD = "itemListForDD";
+
+                        if (model != null)
+                        {
+                            var ItemCount = model.outwardNoteDetails.Count;
+                            var i = 0;
+                            while (i < ItemCount)
+                            {
+                                itemListForDD = "itemListForDD";
+                                itemListForDD = itemListForDD + i;
+                                dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.outwardNoteDetails[i].ItemID);
+                                ViewData[itemListForDD] = dd;
+                                i++;
+                            }
+
+                        }
+
+                        ViewData[itemListForDD] = dd;
+
+                        return View(model1);
+                    }
+                }
+                else
+                    return RedirectToAction("Index", "Login");
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
+                return RedirectToAction("Index", "OutwardNote");
+            }
+        }
+
+        #endregion
+
         #region Bind dropdowns 
         public void BindUsers()
         {
@@ -195,6 +355,50 @@ namespace InVanWebApp.Controllers
                 Signature.SaveAs(SignFilename);
 
             }
+        }
+
+        #endregion
+
+        #region Delete function
+        /// <summary>
+        /// Date: 01 Feb'23
+        /// Farheen: Delete the perticular record
+        /// </summary>
+        /// <param name="ID">record Id</param>
+        /// <returns></returns>
+
+        [HttpGet]
+        public ActionResult DeleteOutwardNote(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                ResponseMessageBO result = new ResponseMessageBO();
+                result = _repository.Delete(ID, userID);
+
+                if (result.Status)
+                    TempData["Success"] = "<script>alert('Outward Note deleted successfully!');</script>";
+                else
+                    TempData["Success"] = "<script>alert('Error while deleting!');</script>";
+
+                return RedirectToAction("Index", "OutwardNote");
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+        #endregion
+
+        #region This method is for View the Outward Note
+        [HttpGet]
+        public ActionResult ViewOutwardNote(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                OutwardNoteBO model = _repository.GetById(ID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
 
         #endregion
