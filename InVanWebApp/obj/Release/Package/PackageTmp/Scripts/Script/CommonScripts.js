@@ -52,3 +52,20 @@ function formatDate(date) {
 }
 
 /*-----------------------------------End of the exporting function---------------------------*/
+
+//Function for validating alpha numeric text with the mentioned special characters.
+function isAlphaNumeric(evt,spanId) {
+    var keycode = (evt.which) ? evt.which : evt.keyCode;
+    if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95) || (keycode == 32))) {
+        var valMsg = 'Only \"/, -,_\, space" are allowed!';
+
+        $('#' + spanId).text(valMsg);
+        $('#' + spanId).css('display', 'contents');
+        $('#'+spanId).css('color', 'red');
+        return false;
+    }
+    else {
+        $('#' + spanId).css('display', 'none');
+        return true;
+    }
+}

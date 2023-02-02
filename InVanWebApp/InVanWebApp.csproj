@@ -1847,6 +1847,7 @@
     <Content Include="Scripts\Script\AddIssueNote.js" />
     <Content Include="Scripts\Script\AddOutwardNote.js" />
     <Content Include="Scripts\Script\AddStockAdjustment.js" />
+    <Content Include="Scripts\Script\EditOutwardNote.js" />
     <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
     <Content Include="Views\RejectionNote\Index.cshtml" />
     <Content Include="Views\RejectionNote\ViewRejectionNote.cshtml" />
@@ -2894,6 +2895,7 @@
     <Content Include="Views\OutwardNote\AddOutwardNote.cshtml" />
     <Content Include="Views\OutwardNote\ViewOutwardNote.cshtml" />
     <Content Include="Views\OutwardNote\EditOutwardNote.cshtml" />
+    <Content Include="Views\DebitNote\ViewDebitNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

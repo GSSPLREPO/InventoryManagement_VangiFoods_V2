@@ -14,6 +14,7 @@ namespace InVanWebApp_BO
         public string OutwardNumber { get; set; }
 
         [Required(ErrorMessage ="Select outward date!")]
+        [DataType(DataType.Date)]
         public DateTime OutwardDate { get; set; }
 
         [Required(ErrorMessage ="Select location!")]

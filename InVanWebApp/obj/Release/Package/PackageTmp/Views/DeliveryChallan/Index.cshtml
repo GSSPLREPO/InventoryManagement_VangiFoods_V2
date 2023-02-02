@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <title>Outward Note</title>
+    <title>Delivery Challan</title>
 </head>
 <body>
     <div class="content-wrapper" runat="server" id="divPanel1">
@@ -52,10 +52,10 @@
                                                 <td>@Html.DisplayFor(modelItem => item.SONumber)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
                                                 <td>
-                                                    <a href=@Url.Action("ViewDeliveryChallan", "DeliveryChallan", new { ID = item.ID })>
+                                                    <a href=@Url.Action("ViewDeliveryChallan", "DeliveryChallan", new { ID = item.ID }) title="View Delivery Challan">
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
-                                                    <a href=@Url.Action("DeleteDeliveryChallan", "DeliveryChallan", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("DeleteDeliveryChallan", "DeliveryChallan", new { ID = item.ID}) onclick="return confirm('Are you sure want to delete?')" title="Delete Delivery Challan">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>

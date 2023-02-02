@@ -62,7 +62,7 @@ namespace InVanWebApp.Controllers
                 BindPONumber();
                 CreditNoteBO model = new CreditNoteBO();
                 model.CreditNoteDate = DateTime.Today;
-                //==========Document number for GRN note============//
+                //==========Document number for Credit note============//
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
 
                 //=========here document type=11 i.e. for generating the Credit note (logic is in SP).====//
@@ -101,7 +101,7 @@ namespace InVanWebApp.Controllers
                             model.CreditNoteDate = DateTime.Today;
 
                             GetDocumentNumber objDocNo = new GetDocumentNumber();
-                            var DocumentNumber = objDocNo.GetDocumentNo(7);
+                            var DocumentNumber = objDocNo.GetDocumentNo(11);
                             ViewData["DocumentNo"] = DocumentNumber;
 
                             return View(model);
@@ -115,7 +115,7 @@ namespace InVanWebApp.Controllers
                         BindPONumber();
                         model.CreditNoteDate = DateTime.Today;
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
-                        var DocumentNumber = objDocNo.GetDocumentNo(7);
+                        var DocumentNumber = objDocNo.GetDocumentNo(11);
                         ViewData["DocumentNo"] = DocumentNumber;
 
                         return View(model);
@@ -134,7 +134,7 @@ namespace InVanWebApp.Controllers
                 model.CreditNoteDate = DateTime.Today;
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
-                var DocumentNumber = objDocNo.GetDocumentNo(7);
+                var DocumentNumber = objDocNo.GetDocumentNo(11);
                 ViewData["DocumentNo"] = DocumentNumber;
                 return View(model);
             }

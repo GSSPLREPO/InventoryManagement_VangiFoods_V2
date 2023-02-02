@@ -108,10 +108,10 @@ namespace InVanWebApp.Controllers
                         response = _repository.Insert(model);
 
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Outward Note is created successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Gate Pass is generated successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error! Outward Note cannot be created!');</script>";
+                            TempData["Success"] = "<script>alert('Error! Gate Pass cannot be generated!');</script>";
                             BindLocationName();
                             GenerateDocumentNo();
                             BindUsers();
@@ -228,7 +228,7 @@ namespace InVanWebApp.Controllers
                         response = _repository.Update(model);
                         if (response.Status)
                         {
-                            TempData["Success"] = "<script>alert('Outward Note updated successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Gate Pass updated successfully!');</script>";
                             return RedirectToAction("Index", "OutwardNote");
                         }
                         else
@@ -377,7 +377,7 @@ namespace InVanWebApp.Controllers
                 result = _repository.Delete(ID, userID);
 
                 if (result.Status)
-                    TempData["Success"] = "<script>alert('Outward Note deleted successfully!');</script>";
+                    TempData["Success"] = "<script>alert('Gate Pass is deleted successfully!');</script>";
                 else
                     TempData["Success"] = "<script>alert('Error while deleting!');</script>";
 
