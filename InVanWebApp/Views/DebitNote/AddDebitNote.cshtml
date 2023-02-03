@@ -11,13 +11,13 @@
 
     <div class="card">
         <div class="card-body">
-            <h4>Add Credit Note</h4>
+            <h4>Add Debit Note</h4>
             <hr />
             @Html.ValidationSummary(true)
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Credit Note Number")
+                    @Html.Label("Debit Note Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -25,7 +25,7 @@
                     @Html.ValidationMessageFor(model => model.DebitNoteNo, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Credit Note Date")
+                    @Html.Label("Debit Note Date")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -140,7 +140,7 @@
                                                 <th class="sortStyle d-n d-none">Item Id</th>
                                                 <th class="sortStyle">Item</th>
                                                 <th class="sortStyle">PO Quantity</th>
-                                                <th class="sortStyle">Waste Quantity</th>
+                                                <th class="sortStyle">Debited Quantity</th>
                                                 <th class="sortStyle">Units</th>
                                                 <th class="sortStyle">Price (Per Unit)</th>
                                                 <th class="sortStyle">Currency</th>
@@ -163,7 +163,7 @@
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength="95" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

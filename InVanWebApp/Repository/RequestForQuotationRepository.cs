@@ -44,9 +44,7 @@ namespace InVanWebApp.Repository
                             Date = Convert.ToDateTime(reader["Date"]),
                             DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
                             BiddingStartDate = Convert.ToDateTime(reader["BiddingStartDate"]),
-                            BiddingEndDate = Convert.ToDateTime(reader["BiddingEndDate"]), 
-                            HSN_Code = reader["HSN_Code"].ToString(), 
-                            Quantity = Convert.ToDecimal(reader["Quantity"]),
+                            BiddingEndDate = Convert.ToDateTime(reader["BiddingEndDate"]),                             
                             CreatedByDate = Convert.ToDateTime(reader["CreatedByDate"]),
 
                         };
@@ -85,6 +83,10 @@ namespace InVanWebApp.Repository
                             Item_Name = reader["Item_Name"].ToString(),
                             Item_Code = reader["Item_Code"].ToString(),
                             UnitCode = reader["UnitID"].ToString(),                            
+                            UnitPrice = Convert.ToInt32(reader["UnitPrice"]),   ///added                          
+                            IndianCurrencyValue = reader["IndianCurrencyValue"].ToString(),   ///added 
+                            ItemTaxValue = Convert.ToInt32(reader["ItemTaxValue"]),   ///added 
+                            
                         };
                     }
                     con.Close();
@@ -105,13 +107,10 @@ namespace InVanWebApp.Repository
                 }
                 throw;
             }
-
         }
-
         #endregion
 
-
-        #region Insert function
+        #region Insert function fro RFQ. 
         /// <summary>
         /// Rahul: Insert record.
         /// </summary>
@@ -121,7 +120,7 @@ namespace InVanWebApp.Repository
 
             ResponseMessageBO response = new ResponseMessageBO();
             try
-            {
+            {                
                 using (SqlConnection con = new SqlConnection(connString))
                 {
 
@@ -131,22 +130,27 @@ namespace InVanWebApp.Repository
                     //cmd.Parameters.AddWithValue("@VendorsID", requestForQuotationMaster.VendorsID);                    
                     cmd.Parameters.AddWithValue("@VendorIDs", requestForQuotationMaster.VendorIDs);                    
                     cmd.Parameters.AddWithValue("@LocationId", requestForQuotationMaster.LocationId);                                                                         
+                    cmd.Parameters.AddWithValue("@LocationName", requestForQuotationMaster.LocationName);                                                                         
+                    cmd.Parameters.AddWithValue("@DeliveryAddress", requestForQuotationMaster.DeliveryAddress);                                                                         
                     cmd.Parameters.AddWithValue("@Date", Convert.ToDateTime(System.DateTime.Now));  
                     cmd.Parameters.AddWithValue("@DeliveryDate", Convert.ToDateTime(System.DateTime.Now));  
                     cmd.Parameters.AddWithValue("@BiddingStartDate", requestForQuotationMaster.BiddingStartDate);  
                     cmd.Parameters.AddWithValue("@BiddingEndDate", requestForQuotationMaster.BiddingEndDate);
-                    cmd.Parameters.AddWithValue("@Quantity", requestForQuotationMaster.Quantity);
-                    cmd.Parameters.AddWithValue("@HSN_Code", requestForQuotationMaster.HSN_Code); 
-                    cmd.Parameters.AddWithValue("@Attachment", requestForQuotationMaster.Attachment);
+                    cmd.Parameters.AddWithValue("@IndentID", requestForQuotationMaster.IndentID);
+                    cmd.Parameters.AddWithValue("@IndentNumber", requestForQuotationMaster.IndentNumber);
                     cmd.Parameters.AddWithValue("@Signature", requestForQuotationMaster.Signature);
-                    cmd.Parameters.AddWithValue("@Remarks", requestForQuotationMaster.Remarks);                    
+                    cmd.Parameters.AddWithValue("@Remarks", requestForQuotationMaster.Remarks);
+                    cmd.Parameters.AddWithValue("@CGST", requestForQuotationMaster.CGST);
+                    cmd.Parameters.AddWithValue("@SGST", requestForQuotationMaster.SGST);
+                    cmd.Parameters.AddWithValue("@IGST", requestForQuotationMaster.IGST);
+                    cmd.Parameters.AddWithValue("@CurrencyID", requestForQuotationMaster.CurrencyID);
+                    cmd.Parameters.AddWithValue("@CurrencyName", requestForQuotationMaster.CurrencyName);
                     cmd.Parameters.AddWithValue("@CreatedByID", requestForQuotationMaster.CreatedByID);
-                    cmd.Parameters.AddWithValue("@CreatedByDate", Convert.ToDateTime(System.DateTime.Now));                                        
-
+                    cmd.Parameters.AddWithValue("@CreatedByDate", Convert.ToDateTime(System.DateTime.Now));                    
                     con.Open();                     
                     SqlDataReader dataReader = cmd.ExecuteReader();
                     int RequestForQuotationId = 0;
-                    //response.Status = false;
+                    
                     while (dataReader.Read())
                     {                        
                         response.Status = Convert.ToBoolean(dataReader["Status"]);
@@ -167,13 +171,10 @@ namespace InVanWebApp.Repository
                         objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
                         objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
                         objItemDetails.Quantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                        //objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
-                        //objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
-                        //objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(7).Value);
+                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();                                                                      
                         objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(5).Value);
                         objItemDetails.HSN_Code = item.ElementAt(6).Value.ToString();
-                        objItemDetails.Remarks = item.ElementAt(7).Value.ToString();
+                        //objItemDetails.Remarks = item.ElementAt(7).Value.ToString();
                         
                         itemDetails.Add(objItemDetails);
                     }
@@ -186,15 +187,13 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@RequestForQuotationId", item.RequestForQuotationId);
                         cmdNew.Parameters.AddWithValue("@Item_ID", item.Item_ID);
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
-                        cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);                        
-                        //cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
-                        cmdNew.Parameters.AddWithValue("@ItemQuantity", item.Quantity);
-                        //cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
-                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
-                        //cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
+                        cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);                                                
+                        cmdNew.Parameters.AddWithValue("@ItemQuantity", item.Quantity);                        
+                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);                                                
                         cmdNew.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);                        
                         cmdNew.Parameters.AddWithValue("@DeliveryDate", item.DeliveryDate); 
-                        cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks); 
+                        cmdNew.Parameters.AddWithValue("@Remarks", requestForQuotationMaster.Remarks); 
+                        //cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks); 
                         //cmdNew.Parameters.AddWithValue("@CreatedByID", item.CreatedByID);
                         cmdNew.Parameters.AddWithValue("@CreatedByID", requestForQuotationMaster.CreatedByID); 
                         cmdNew.Parameters.AddWithValue("@CreatedByDate", Convert.ToDateTime(System.DateTime.Now));
@@ -216,25 +215,6 @@ namespace InVanWebApp.Repository
                 log.Error(ex.Message, ex);
             }
             return response;
-        }
-        #endregion
-
-        #region GetRFQbyId function for Request For Quotation 
-        /// <summary>
-        /// GetRFQbyId record by ID, Rahul 19/12/2022.  
-        /// </summary>
-        /// <param name="ID"></param>
-        public RequestForQuotationBO GetRFQbyId(int RequestForQuotationId)  
-        {
-            string rfqQuery = "SELECT * FROM RequestForQuotation WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0";
-            string rfqItemQuery = "SELECT * FROM RequestForQuotationItemDetails WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0";
-            using (SqlConnection con = new SqlConnection(connString)) 
-            {
-                var rfq = con.Query<RequestForQuotationBO>(rfqQuery, new { @RequestForQuotationId = RequestForQuotationId }).FirstOrDefault();
-                var rfqitemList = con.Query<RequestForQuotationItemDetailsBO>(rfqItemQuery, new { @RequestForQuotationId = RequestForQuotationId }).ToList();
-                rfq.itemDetails = rfqitemList;  
-                return rfq; 
-            }
         }
         #endregion
 
@@ -266,8 +246,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@BiddingStartDate", model.BiddingStartDate);
                     cmd.Parameters.AddWithValue("@BiddingEndDate", model.BiddingEndDate);
                     cmd.Parameters.AddWithValue("@Quantity", model.Quantity); 
-                    cmd.Parameters.AddWithValue("@HSN_Code", model.HSN_Code); 
-                    //cmd.Parameters.AddWithValue("@Attachment", model.Attachment);
+                    cmd.Parameters.AddWithValue("@HSN_Code", model.HSN_Code);                     
                     //cmd.Parameters.AddWithValue("@Signature", model.Signature);                    
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@LastModifiedByDate", Convert.ToDateTime(System.DateTime.Now));
@@ -299,6 +278,9 @@ namespace InVanWebApp.Repository
                         //objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
                         //objItemDetails.ItemTaxValue = item.ElementAt(7).Value.ToString();
                         //objItemDetails.TotalItemCost = Convert.ToDouble(item.ElementAt(8).Value);
+                        objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(5).Value);
+                        objItemDetails.HSN_Code = item.ElementAt(6).Value.ToString();
+                        objItemDetails.Remarks = item.ElementAt(7).Value.ToString();
                         objItemDetails.CreatedByID = model.LastModifiedByID;
 
                         itemDetails.Add(objItemDetails);
@@ -315,7 +297,8 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@RequestForQuotationId", item.RequestForQuotationId);
                         cmdNew.Parameters.AddWithValue("@Item_ID", item.Item_ID);
                         cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
-                        cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);                        
+                        cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                        cmdNew.Parameters.AddWithValue("@ItemQuantity", item.Quantity);
                         cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
                         cmdNew.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
                         cmdNew.Parameters.AddWithValue("@DeliveryDate", model.DeliveryDate);
@@ -347,38 +330,224 @@ namespace InVanWebApp.Repository
             }
             return response;            
         }
-        #endregion
 
-
-        #region GetPOById function for timeline view 
+        //---GetDetailsForRFQView function for update RFQ details. 
         /// <summary>
         /// GetPOById record by ID, Rahul 17/12/2022.  
         /// </summary>
         /// <param name="ID"></param>
-        public RequestForQuotationItemDetailsBO GetDetailsForRFQView(int RequestForQuotationId) 
-        {
-            RequestForQuotationItemDetailsBO rfqItemBo = new RequestForQuotationItemDetailsBO();            
-            string rfqItemDetailsQuery = "SELECT TOP(1) * FROM RequestForQuotationItemDetails WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0 order by CreatedByDate desc ";
-            using (SqlConnection con = new SqlConnection(connString))
-            {                
-                var rfqItemDetailsResult = con.Query<RequestForQuotationItemDetailsBO>(rfqItemDetailsQuery, new { @RequestForQuotationId = RequestForQuotationId }).FirstOrDefault(); 
-                if (rfqItemDetailsResult == null)
-                {
-                    rfqItemBo.HSN_Code = null;
-                }
-                else
-                {
-                    rfqItemBo.DeliveryDate = (DateTime)rfqItemDetailsResult.DeliveryDate;
-                    rfqItemBo.Item_Code = rfqItemDetailsResult.Item_Code;
-                    rfqItemBo.ItemName = rfqItemDetailsResult.ItemName;
-                    rfqItemBo.ItemUnit = rfqItemDetailsResult.ItemUnit;
-                    rfqItemBo.Quantity = rfqItemDetailsResult.Quantity;
 
+        public RequestForQuotationBO GetDetailsForRFQView(int RequestForQuotationId)
+        {
+            string rfqQuery = "SELECT * FROM RequestForQuotation WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0";
+            string rfqItemQuery = "SELECT * FROM RequestForQuotationItemDetails WHERE RequestForQuotationId = @RequestForQuotationId AND IsDeleted = 0;";
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                var rfq = con.Query<RequestForQuotationBO>(rfqQuery, new { @RequestForQuotationId = RequestForQuotationId }).FirstOrDefault();
+                var rfqList = con.Query<RequestForQuotationItemDetailsBO>(rfqItemQuery, new { @RequestForQuotationId = RequestForQuotationId }).ToList();
+                rfq.itemDetails = rfqList;
+                return rfq;
+            }
+        }
+
+        #endregion
+
+        #region Get details of Items by ID
+        public IEnumerable<RequestForQuotationBO> GetCompanyNameForRFQView(int ID)
+        {
+            try
+            {
+                List<RequestForQuotationBO> RFQCompanyDetails = new List<RequestForQuotationBO>();
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_CompanyList_RFQview_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RFQ_ID", ID); 
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var CompanyDetails = new RequestForQuotationBO()  
+                        {
+                            VendorsID = Convert.ToInt32(reader["ID"]),
+                            CompanyName = reader["CompanyName"].ToString()
+                            
+                        };
+                        RFQCompanyDetails.Add(CompanyDetails); 
+                    }
+                    con.Close();
+                    return RFQCompanyDetails;
                 }
-                return rfqItemBo;
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+
+        }
+
+        #endregion
+
+        #region GetRFQbyId,VendorsID function for RFQ Vendor details  
+        /// <summary>
+        /// GetRFQbyId record by ID, Rahul 19/12/2022.    
+        /// </summary>
+        /// <param name="RequestForQuotationId"></param>
+        public RequestForQuotationBO GetRFQbyId(int RequestForQuotationId, int VendorsID)
+        {
+            string rfqQuery = "select  RF.*, (Select LM.Address from LocationMaster LM where LM.ID=RF.LocationId and LM.IsDeleted=0) as LocationAddress " + 
+                ", (Select LM.LocationName from LocationMaster LM where LM.ID=RF.LocationId and LM.IsDeleted=0) as LocationName " + 
+                "from RequestForQuotation RF where RF.IsDeleted=0 and RF.RequestForQuotationId=@RequestForQuotationId";
+            string rfqItemQuery = "select  RFITM.*, (Select ITM.ItemTaxValue from ItemTaxMaster ITM where ITM.ItemId = RFITM.Item_ID and ITM.IsDeleted = 0) as ItemTaxValue from RequestForQuotationItemDetails RFITM where RFITM.IsDeleted = 0 and RFITM.RequestForQuotationId = @RequestForQuotationId";
+            string rfqSupplierQuery = "SELECT * FROM Company WHERE ID = @VendorsID AND IsDeleted = 0";
+            using (SqlConnection con = new SqlConnection(connString))
+            {
+                var rfq = con.Query<RequestForQuotationBO>(rfqQuery, new { @RequestForQuotationId = RequestForQuotationId }).FirstOrDefault();
+                var rfqitemList = con.Query<RequestForQuotationItemDetailsBO>(rfqItemQuery, new { @RequestForQuotationId = RequestForQuotationId }).ToList();
+                var rfqSupplierList = con.Query<CompanyBO>(rfqSupplierQuery, new { @VendorsID = VendorsID }).ToList();  
+                
+                rfq.itemDetails = rfqitemList; 
+                rfq.companyDetails = rfqSupplierList;  
+                  
+                return rfq; 
             }
         }
         #endregion
+
+        #region Insert function fro RFQ Supplier Details. 
+        /// <summary>
+        /// Rahul: Insert record Supplier Details.
+        /// </summary>
+        /// <param name="RFQSupplierDetailsMater"></param>                
+        public ResponseMessageBO InsertRFQSupplierDetails(RFQ_VendorDetailsBO rfqSupplierDetailsMater) 
+        {
+
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
+            {
+                
+                using (SqlConnection con = new SqlConnection(connString))
+                {                    
+                    SqlCommand cmdSupDtl = new SqlCommand("usp_tbl_RFQSupplierDetails_Insert", con); //created  
+                    cmdSupDtl.CommandType = CommandType.StoredProcedure;
+                    cmdSupDtl.Parameters.AddWithValue("@RequestForQuotationId", rfqSupplierDetailsMater.RequestForQuotationId); 
+                    cmdSupDtl.Parameters.AddWithValue("@RFQNO", rfqSupplierDetailsMater.RFQNO);
+                    cmdSupDtl.Parameters.AddWithValue("@Date", Convert.ToDateTime(System.DateTime.Now));
+                    cmdSupDtl.Parameters.AddWithValue("@DeliveryDate", Convert.ToDateTime(System.DateTime.Now));                     
+                    cmdSupDtl.Parameters.AddWithValue("@CurrencyID", rfqSupplierDetailsMater.CurrencyID);
+                    cmdSupDtl.Parameters.AddWithValue("@CurrencyName", rfqSupplierDetailsMater.CurrencyName);
+                    cmdSupDtl.Parameters.AddWithValue("@CurrencyPrice", rfqSupplierDetailsMater.IndianCurrencyValue); 
+                    cmdSupDtl.Parameters.AddWithValue("@LocationId", rfqSupplierDetailsMater.LocationId);
+                    cmdSupDtl.Parameters.AddWithValue("@LocationName", rfqSupplierDetailsMater.LocationName); 
+                    cmdSupDtl.Parameters.AddWithValue("@DeliveryAddress", rfqSupplierDetailsMater.LocationAddress);                   
+                    cmdSupDtl.Parameters.AddWithValue("@VendorsID", rfqSupplierDetailsMater.VendorsID);
+                    cmdSupDtl.Parameters.AddWithValue("@CompanyName", rfqSupplierDetailsMater.CompanyName); 
+                    cmdSupDtl.Parameters.AddWithValue("@Address", rfqSupplierDetailsMater.SupplierAddress);  
+                    cmdSupDtl.Parameters.AddWithValue("@TotalAfterTax", rfqSupplierDetailsMater.TotalAfterTax);
+                    cmdSupDtl.Parameters.AddWithValue("@GrandTotal", rfqSupplierDetailsMater.GrandTotal);
+                    cmdSupDtl.Parameters.AddWithValue("@AdvancedPayment", rfqSupplierDetailsMater.AdvancedPayment);
+                    cmdSupDtl.Parameters.AddWithValue("@Remarks", rfqSupplierDetailsMater.Remarks);
+                    cmdSupDtl.Parameters.AddWithValue("@CGST", rfqSupplierDetailsMater.CGST);
+                    cmdSupDtl.Parameters.AddWithValue("@SGST", rfqSupplierDetailsMater.SGST);
+                    cmdSupDtl.Parameters.AddWithValue("@IGST", rfqSupplierDetailsMater.IGST);
+                    cmdSupDtl.Parameters.AddWithValue("@TermsAndConditionID", 1);  
+                    cmdSupDtl.Parameters.AddWithValue("@Terms", "First Term");  
+                    cmdSupDtl.Parameters.AddWithValue("@CreatedByID", rfqSupplierDetailsMater.CreatedByID);
+                    cmdSupDtl.Parameters.AddWithValue("@CreatedByDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    SqlDataReader dataReaderSupDtl = cmdSupDtl.ExecuteReader(); 
+                    int RequestForQuotationId = 0;
+                    int RFQ_VendorDetailsId = 0;    
+                    while (dataReaderSupDtl.Read()) 
+                    {
+                        response.Status = Convert.ToBoolean(dataReaderSupDtl["Status"]);    
+                        RequestForQuotationId = Convert.ToInt32(dataReaderSupDtl["RequestForQuotationId"]);
+                        RFQ_VendorDetailsId = Convert.ToInt32(dataReaderSupDtl["RFQ_VendorDetailsId"]);                            
+                    }
+                    con.Close();    
+
+                    var json = new JavaScriptSerializer();  
+                    var data = json.Deserialize<Dictionary<string, string>[]>(rfqSupplierDetailsMater.TxtItemDetails);
+
+                    List<RFQ_Vendor_ItemDetailsBO> rfqVendorItemDetails = new List<RFQ_Vendor_ItemDetailsBO>(); 
+
+                    foreach (var item in data)
+                    {
+                        RFQ_Vendor_ItemDetailsBO objItemDetails = new RFQ_Vendor_ItemDetailsBO();                         
+                        objItemDetails.RFQ_VendorDetailsId = RFQ_VendorDetailsId;   
+                        objItemDetails.RequestForQuotationId = RequestForQuotationId;
+                        objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
+                        objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
+                        objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                        objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
+                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
+                        //objItemDetails.CurrencyName = item.ElementAt(7).Value.ToString();
+                        objItemDetails.CurrencyID = Convert.ToInt32(item.ElementAt(6).Value);
+                        objItemDetails.CurrencyPrice = Convert.ToDouble(item.ElementAt(7).Value);
+                        objItemDetails.ItemTaxValue = item.ElementAt(8).Value.ToString();
+                        objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(9).Value); 
+                        objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(10).Value);
+                        objItemDetails.HSN_Code = item.ElementAt(11).Value.ToString();
+                        objItemDetails.Remarks = item.ElementAt(12).Value.ToString();
+
+                        rfqVendorItemDetails.Add(objItemDetails);
+                    }
+
+                    foreach (var item in rfqVendorItemDetails) 
+                    {
+                        con.Open();
+                        SqlCommand cmdNew = new SqlCommand("usp_tbl_RFQ_Vendor_ItemDetails_Insert", con); //CREATED 
+                        cmdNew.CommandType = CommandType.StoredProcedure;
+                        cmdNew.Parameters.AddWithValue("@RFQ_VendorDetailsId", item.RFQ_VendorDetailsId); 
+                        cmdNew.Parameters.AddWithValue("@RequestForQuotationId", item.RequestForQuotationId);
+                        cmdNew.Parameters.AddWithValue("@Item_ID", item.Item_ID);
+                        cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                        cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
+                        cmdNew.Parameters.AddWithValue("@ItemQuantity", item.ItemQuantity);
+                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                        cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
+                        cmdNew.Parameters.AddWithValue("@CurrencyID", rfqSupplierDetailsMater.CurrencyID);
+                        cmdNew.Parameters.AddWithValue("@CurrencyName", rfqSupplierDetailsMater.@CurrencyName);
+                        cmdNew.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice); 
+                        cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
+                        cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
+                        cmdNew.Parameters.AddWithValue("@DeliveryDate", item.DeliveryDate);
+                        cmdNew.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
+                        cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks);                        
+                        cmdNew.Parameters.AddWithValue("@CreatedByID", rfqSupplierDetailsMater.CreatedByID);
+                        cmdNew.Parameters.AddWithValue("@CreatedByDate", Convert.ToDateTime(System.DateTime.Now));
+                        //cmdNew.Parameters.AddWithValue("@LastModifiedBy", 1);
+                        //cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));    
+
+                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();                        
+
+                        while (dataReaderNew.Read())
+                        {
+                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);                            
+                        }
+                        con.Close();    
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return response;
+        }
+        #endregion
+
 
         #region Delete function  
         /// <summary>

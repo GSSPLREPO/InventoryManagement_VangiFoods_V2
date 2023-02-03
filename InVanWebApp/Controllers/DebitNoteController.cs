@@ -45,8 +45,8 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] == null)
                 return RedirectToAction("Index", "Login");
 
-            _repository.GetAll();
-            return View();
+            var model=_repository.GetAll();
+            return View(model);
         }
         #endregion
 

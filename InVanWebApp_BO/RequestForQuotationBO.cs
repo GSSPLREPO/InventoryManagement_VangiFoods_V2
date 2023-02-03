@@ -25,10 +25,13 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> BiddingStartDate { get; set; }
         [Required(ErrorMessage = "Please select the Bidding End date!")]
         public Nullable<System.DateTime> BiddingEndDate { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
+        public Nullable<decimal> Quantity { get; set; } 
         public string Signature { get; set; }
         [Required(ErrorMessage = "Enter remakrs!")] ////added 
         public string Remarks { get; set; }
+        //Added below fields for Indent dropdown in RFQ 02-02-2023. 
+        public int IndentID { get; set; }
+        public string IndentNumber { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedByID { get; set; }
         public Nullable<System.DateTime> CreatedByDate { get; set; }
@@ -38,21 +41,118 @@ namespace InVanWebApp_BO
         public string LocationName { get; set; }
         public Nullable<int> VendorsID { get; set; } 
         public string VendorIDs { get; set; }         
-        public string CompanyName { get; set; }
-        [Required(ErrorMessage = "Enter delivery address!")]
+        public string CompanyName { get; set; } 
+        
         //public string BuyerAddress { get; set; } 
+        [Required(ErrorMessage = "Select Location Name to enter delivery address!")] 
         public string DeliveryAddress { get; set; }
-
-        //[Required(ErrorMessage = "Enter supplier address!")]
-        //public string SupplierAddress { get; set; }
+        public string LocationAddress { get; set; } //added         
         public Nullable<int> Item_ID { get; set; } ///Rahul added 19-12-2022.   
         public string ItemName { get; set; }        
         public string Item_Code { get; set; }        
         public string ItemUnit { get; set; }
         public Nullable<decimal> TotalItemCost { get; set; }
         public string HSN_Code { get; set; }         
-        public string TxtItemDetails { get; set; }
-        public List<RequestForQuotationItemDetailsBO> itemDetails { get; set; } ///Rahul added 17-12-2022.  
-        public string Attachment { get; set; } 
+        public string TxtItemDetails { get; set; } 
+        public List<RequestForQuotationItemDetailsBO> itemDetails { get; set; } ///Rahul added 17-12-2022.          
+        public int vendorIdLength { get; set; }  /// 
+        //==============Rahul: These fields are for PO Currency details 23/01/2023==============//
+        [Required(ErrorMessage = "Select Currency!")]
+        public int CurrencyID { get; set; }
+        public int CountryID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public Nullable<double> IndianCurrencyValue { get; set; }
+        public float CGST { get; set; }
+        public float SGST { get; set; }
+        public float IGST { get; set; }
+        public Nullable<decimal> TotalAfterTax { get; set; } ///Rahul added 24-01-2023. 
+        public Nullable<decimal> GrandTotal { get; set; } ///Rahul added 24-01-2023. 
+        public float AdvancedPayment { get; set; } ///Rahul added 24-01-2023. 
+        public string SupplierAddress { get; set; } //Rahul added 25-01-2023 for edit.
+        public List<CompanyBO> companyDetails { get; set; } ///Rahul added 25-01-2023 for edit.   
+        public List<RFQ_VendorDetailsBO> rfqVendorDetails { get; set; }     ///Rahul added 23-01-2023.                  
+
     }
+
+    public class RFQ_VendorDetailsBO 
+    {
+        public int RFQ_VendorDetailsId { get; set; }
+        public Nullable<int> RequestForQuotationId { get; set; }
+        public string RFQNO { get; set; }
+        [Required(ErrorMessage = "Please select the RFQ Date!")]
+        public Nullable<System.DateTime> Date { get; set; }
+        [Required(ErrorMessage = "Please select the Delivery date!")]
+        public Nullable<System.DateTime> DeliveryDate { get; set; } 
+        public Nullable<int> VendorsID { get; set; }
+        public string CompanyName { get; set; } 
+        public string Address { get; set; }
+        public string SupplierAddress { get; set; } //Rahul added 31-01-2023 for post data. 
+        public Nullable<int> LocationId { get; set; } 
+        public string LocationName { get; set; }
+        public string DeliveryAddress { get; set; }
+        //[Required(ErrorMessage = "Enter delivery address!")]
+        public string LocationAddress { get; set; } //added
+        public float CGST { get; set; }
+        public float SGST { get; set; }
+        public float IGST { get; set; }
+        public Nullable<int> TermsAndConditionID { get; set; }
+        public string Terms { get; set; } 
+        public Nullable<decimal> TotalAfterTax { get; set; }
+        public Nullable<decimal> GrandTotal { get; set; }
+        public float AdvancedPayment { get; set; } ///Rahul added 28-01-2023. 
+
+        //==============Rahul: These fields are for PO Currency details 28/01/2023==============//
+        //[Required(ErrorMessage = "Select Currency!")]
+        public int CurrencyID { get; set; }
+        public int CountryID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public Nullable<double> IndianCurrencyValue { get; set; }        
+
+        [Required(ErrorMessage = "Enter remakrs!")] ////added 
+        public string Remarks { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> CreatedByID { get; set; }
+        public Nullable<System.DateTime> CreatedByDate { get; set; }
+        public Nullable<int> LastModifiedByID { get; set; }
+        public Nullable<System.DateTime> LastModifiedByDate { get; set; }
+        public string TxtItemDetails { get; set; } 
+        public List<RFQ_Vendor_ItemDetailsBO> rfqVendorItemDetails { get; set; }     ///Rahul added 28-01-2023.      
+
+    }
+
+    public class RFQ_Vendor_ItemDetailsBO
+    {
+        public int RFQ_Vendor_ItemDetailsId { get; set; }
+        public Nullable<int> RFQ_VendorDetailsId { get; set; }
+        public Nullable<int> RequestForQuotationId { get; set; } 
+        public Nullable<int> Item_ID { get; set; } ///Rahul added 19-12-2022.   
+        public string ItemName { get; set; }
+        public string Item_Code { get; set; }
+        public decimal ItemUnitPrice { get; set; } //added 
+        public Nullable<decimal> ItemQuantity { get; set; } //added         
+        public string ItemTaxValue { get; set; } //added 
+        public string ItemUnit { get; set; }
+        public Nullable<decimal> TotalItemCost { get; set; }
+        public string HSN_Code { get; set; }
+        [Required(ErrorMessage = "Please select the Delivery Start date!")]
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
+        //Added the below field for currency details in RFQ Vendor Item details 
+        public int CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        [Required(ErrorMessage = "Enter remakrs!")] ////added 
+        public string Remarks { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> CreatedByID { get; set; }
+        public Nullable<System.DateTime> CreatedByDate { get; set; }
+        public Nullable<int> LastModifiedByID { get; set; }
+        public Nullable<System.DateTime> LastModifiedByDate { get; set; }
+        public string TxtItemDetails { get; set; }
+
+
+    }
+
+
 }

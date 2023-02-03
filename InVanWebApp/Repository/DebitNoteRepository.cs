@@ -28,7 +28,7 @@ namespace InVanWebApp.Repository
             List<DebitNoteBO> resultList = new List<DebitNoteBO>();
             try
             {
-                string queryString = "Select * from DebitNote where IsDeleted=0";
+                string queryString = "Select dn.ID,dn.DebitNoteNo, dn.DebitNoteDate, dn.PO_Number, dn.VendorName, (Select ud.UserName from UserDetails ud where ud.IsDeleted=0 and ud.EmployeeID=dn.CreatedBy) as UserName from DebitNote dn where dn.IsDeleted=0";
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     resultList = con.Query<DebitNoteBO>(queryString).ToList();
@@ -99,64 +99,66 @@ namespace InVanWebApp.Repository
                     var data = json.Deserialize<Dictionary<string, string>[]>(model.txtItemDetails);
 
                     List<DebitNoteDetailsBO> itemDetails = new List<DebitNoteDetailsBO>();
-
-                    foreach (var item in data)
+                    if (DebitNoteID != 0)
                     {
-                        DebitNoteDetailsBO objItemDetails = new DebitNoteDetailsBO();
-                        objItemDetails.DebitNoteId = DebitNoteID;
-                        objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
-                        objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
-                        objItemDetails.Item_Name = item.ElementAt(2).Value.ToString();
-                        objItemDetails.POQuantity = float.Parse(item.ElementAt(3).Value.ToString());
-                        objItemDetails.DebitedQuantity = Convert.ToDouble(item.ElementAt(4).Value);
-                        objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString();
-                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(6).Value);
-                        objItemDetails.CurrencyName = item.ElementAt(7).Value.ToString();
-                        objItemDetails.ItemTaxValue = item.ElementAt(8).Value.ToString();
-                        objItemDetails.ItemTotalAmount = float.Parse(item.ElementAt(9).Value.ToString());
-                        objItemDetails.Remarks = item.ElementAt(10).Value.ToString();
-                        objItemDetails.CreatedBy = model.CreatedBy;
-
-                        //Added the below field for Currency
-                        objItemDetails.CurrencyID = model.CurrencyID;
-                        objItemDetails.CurrencyPrice = model.CurrencyPrice;
-
-                        itemDetails.Add(objItemDetails);
-                    }
-
-                    foreach (var item in itemDetails)
-                    {
-                        con.Open();
-                        SqlCommand cmdNew = new SqlCommand("usp_tbl_CreditNoteDetails_Insert", con);
-                        cmdNew.CommandType = CommandType.StoredProcedure;
-
-                        cmdNew.Parameters.AddWithValue("@DebitNoteId", item.DebitNoteId);
-                        cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);
-                        cmdNew.Parameters.AddWithValue("@Item_Name", item.Item_Name);
-                        cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
-                        cmdNew.Parameters.AddWithValue("@POQuantity", item.POQuantity);
-                        cmdNew.Parameters.AddWithValue("@DebitedQuantity", item.DebitedQuantity);
-                        cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
-                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
-                        cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
-                        cmdNew.Parameters.AddWithValue("@ItemTotalAmount", item.ItemTotalAmount);
-                        cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks);
-                        cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
-                        cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-
-                        //Added the below field for Indent, currency and terms description
-                        cmdNew.Parameters.AddWithValue("@CurrencyID", item.CurrencyID);
-                        cmdNew.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
-                        cmdNew.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice);
-
-
-                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
-
-                        while (dataReaderNew.Read())
+                        foreach (var item in data)
                         {
-                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                            DebitNoteDetailsBO objItemDetails = new DebitNoteDetailsBO();
+                            objItemDetails.DebitNoteId = DebitNoteID;
+                            objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
+                            objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
+                            objItemDetails.Item_Name = item.ElementAt(2).Value.ToString();
+                            objItemDetails.POQuantity = float.Parse(item.ElementAt(3).Value.ToString());
+                            objItemDetails.DebitedQuantity = Convert.ToDouble(item.ElementAt(4).Value);
+                            objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString();
+                            objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(6).Value);
+                            objItemDetails.CurrencyName = item.ElementAt(7).Value.ToString();
+                            objItemDetails.ItemTaxValue = item.ElementAt(8).Value.ToString();
+                            objItemDetails.ItemTotalAmount = float.Parse(item.ElementAt(9).Value.ToString());
+                            objItemDetails.Remarks = item.ElementAt(10).Value.ToString();
+                            objItemDetails.CreatedBy = model.CreatedBy;
+
+                            //Added the below field for Currency
+                            objItemDetails.CurrencyID = model.CurrencyID;
+                            objItemDetails.CurrencyPrice = model.CurrencyPrice;
+
+                            itemDetails.Add(objItemDetails);
                         }
-                        con.Close();
+
+                        foreach (var item in itemDetails)
+                        {
+                            con.Open();
+                            SqlCommand cmdNew = new SqlCommand("usp_tbl_DebitNoteDetails_Insert", con);
+                            cmdNew.CommandType = CommandType.StoredProcedure;
+
+                            cmdNew.Parameters.AddWithValue("@DebitNoteId", item.DebitNoteId);
+                            cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);
+                            cmdNew.Parameters.AddWithValue("@Item_Name", item.Item_Name);
+                            cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                            cmdNew.Parameters.AddWithValue("@POQuantity", item.POQuantity);
+                            cmdNew.Parameters.AddWithValue("@DebitedQuantity", item.DebitedQuantity);
+                            cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
+                            cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                            cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
+                            cmdNew.Parameters.AddWithValue("@ItemTotalAmount", item.ItemTotalAmount);
+                            cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks);
+                            cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                            cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+
+                            //Added the below field for Indent, currency and terms description
+                            cmdNew.Parameters.AddWithValue("@CurrencyID", item.CurrencyID);
+                            cmdNew.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
+                            cmdNew.Parameters.AddWithValue("@CurrencyPrice", item.CurrencyPrice);
+
+
+                            SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                            while (dataReaderNew.Read())
+                            {
+                                response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                            }
+                            con.Close();
+                        }
                     }
                 }
 
@@ -212,8 +214,8 @@ namespace InVanWebApp.Repository
             DebitNoteBO result = new DebitNoteBO();
             try
             {
-                string stringQuery = "Select * from DebitNote where IsDeleted=0 and ID=@ID";
-                string stringItemQuery = "Select * from DebitNoteDetails where IsDeleted=0 and DebitNoteId=@ID";
+                string stringQuery = "Select dn.DebitNoteNo, dn.DebitNoteDate, dn.PO_Number,dn.Remarks, dn.CurrencyName, dn.LocationName, dn.VendorName, (Select ud.UserName from UserDetails ud where ud.IsDeleted=0 and ud.EmployeeID=dn.CreatedBy) as UserName, dn.DeliveryAddress, dn.VendorAddress, dn.TotalBeforeTax, dn.TotalTax, dn.OtherTax, dn.GrandTotal, dn.Terms from DebitNote dn where dn.IsDeleted=0 and dn.ID=@ID";
+                string stringItemQuery = "Select Item_Code, Item_Name, POQuantity, DebitedQuantity, ItemUnit, ItemUnitPrice, CurrencyName, Round(ItemTaxValue,2) as ItemTaxValue, ItemTotalAmount, Remarks from DebitNoteDetails where IsDeleted=0 and DebitNoteId=@ID";
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     result = con.Query<DebitNoteBO>(stringQuery, new { @ID = ID }).FirstOrDefault();
@@ -223,6 +225,7 @@ namespace InVanWebApp.Repository
             }
             catch (Exception ex)
             {
+                result = null;
                 log.Error(ex.Message, ex);
             }
             return result;

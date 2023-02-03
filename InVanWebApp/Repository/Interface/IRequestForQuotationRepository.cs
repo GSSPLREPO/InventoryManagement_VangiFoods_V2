@@ -13,15 +13,20 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<RequestForQuotationBO> GetAll();
         //Function define for: Insert record. 
         ResponseMessageBO Insert(RequestForQuotationBO requestForQuotationMaster);
+        //Function define for: Insert record into  RFQ Supplier Details.  
+        ResponseMessageBO InsertRFQSupplierDetails(RFQ_VendorDetailsBO rfqSupplierDetailsMater); 
 
         //Fetch the details of Item by it's ID
         ItemBO GetItemDetails(int itemID);
-        //Fetch the details of Item by it's RequestForQuotationId 
-        RequestForQuotationBO GetRFQbyId(int RequestForQuotationId);
+        //Fetch the details of Item by it's RequestForQuotationId and Vendor details  by it's VendorsID 
+        RequestForQuotationBO GetRFQbyId(int RequestForQuotationId, int VendorsID);
         //Function define for: Update master record.
-        ResponseMessageBO Update(RequestForQuotationBO model); 
+        ResponseMessageBO Update(RequestForQuotationBO model);        
+
         //Fetch the details of RFQ Item by it's ID 
-        RequestForQuotationItemDetailsBO GetDetailsForRFQView(int RequestForQuotationId);
+        RequestForQuotationBO GetDetailsForRFQView(int RequestForQuotationId);
+        IEnumerable<RequestForQuotationBO> GetCompanyNameForRFQView(int ID);        
+        
         //Function define for: Delete record of item type using it's RequestForQuotationId 
         void Delete(int RequestForQuotationId, int userId); 
     }

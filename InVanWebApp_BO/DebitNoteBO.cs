@@ -42,6 +42,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public string txtItemDetails { get; set; }
         public List<DebitNoteDetailsBO> debitNoteDetails { get; set; }
+        public string UserName { get; set; }
     }
 
     public class DebitNoteDetailsBO

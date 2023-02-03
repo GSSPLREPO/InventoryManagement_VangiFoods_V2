@@ -115,15 +115,12 @@ function SelectedIndexChangedSO(id) {
                         cell.setAttribute("id", "BalQty_" + j);
                     }
                     else if (i == 5) {
-                        cell.innerHTML = result[j].ItemUnit;
-                        cell.setAttribute("id", "ItemUnit_" + j);
-                    }
-                    else if (i == 6) {
                         var t5 = document.createElement("input");
                         t5.id = "txtShippingQty_" + j;
                         t5.setAttribute("value", "0");
                         t5.setAttribute("type", "number");
                         t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                        t5.setAttribute("maxlength", "8");
                         t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                         t5.setAttribute("class", "form-control form-control-sm");
                         if (result[j].BalanceQuantity == 0)
@@ -135,6 +132,10 @@ function SelectedIndexChangedSO(id) {
                         t6.setAttribute("class", "text-wrap");
                         cell.appendChild(t6);
 
+                    }
+                    else if (i == 6) {
+                        cell.innerHTML = result[j].ItemUnit;
+                        cell.setAttribute("id", "ItemUnit_" + j);
                     }
                     else if (i == 7) {
                         cell.innerHTML = result[j].ItemUnitPrice;
@@ -179,7 +180,6 @@ function SelectedIndexChangedSO(id) {
 //=============End==============
 
 function OnChangeQty(value, id) {
-    debugger;
     $('#btnSave').prop('disabled', false);
     $('#spanShippingQty_' + rowNo).text('');
     var rowNo = id.split('_')[1];
@@ -190,6 +190,8 @@ function OnChangeQty(value, id) {
 
     var SOQty = document.getElementById("SOQty_" + rowNo).innerHTML;
     SOQty = parseFloat(SOQty);
+    if (value == '')
+        value = 0;
 
     var OutwardQty = parseFloat(value);
 
@@ -215,7 +217,6 @@ function OnChangeQty(value, id) {
 }
 
 function CalculateTotalBeforeTax() {
-    debugger;
     $('#TotalBeforeTax').val('');
     $('#TotalTax').val('');
     var length = document.getElementById("submissionTable").rows.length;
@@ -223,6 +224,10 @@ function CalculateTotalBeforeTax() {
     var total = 0;
     var totalTax = 0;
     var OtherTax = document.getElementById("OtherTax").value;
+
+    if (OtherTax == '')
+        OtherTax = 0;
+
     OtherTax = parseFloat(OtherTax);
     var i = 1;
     while (i <= length) {
@@ -287,13 +292,6 @@ function createJson() {
 }
 
 function isNumberKey(evt, id) {
-    var len = $('#' + id).val().length;
-    len = parseFloat(len);
-    if (len > 8)
-        return false;
-    else
-        return true;
-
     var keycode = (evt.which) ? evt.which : evt.keyCode;
     if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
         return false;
@@ -304,7 +302,6 @@ function isNumberKey(evt, id) {
             return false;
         else
             return true;
-
     }
     return true;
 }

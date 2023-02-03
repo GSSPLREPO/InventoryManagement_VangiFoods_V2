@@ -38,7 +38,7 @@
                                             <th>@Html.Label("Debit Note Date")</th>
                                             <th>@Html.Label("PO Number")</th>
                                             <th>@Html.Label("Vendor")</th>
-                                            <th>@Html.Label("Remarks")</th>
+                                            <th>@Html.Label("Created By")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
@@ -50,7 +50,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.DebitNoteDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PO_Number)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.VendorName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Remarks)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewDebitNote", "DebitNote", new { ID = item.ID })>
                                                         <i class="fa fa-eye text-primary"></i>

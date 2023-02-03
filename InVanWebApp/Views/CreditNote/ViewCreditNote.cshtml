@@ -54,10 +54,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label class="font-weight-bold">Remarks</label>
+                                    <label class="font-weight-bold">Created By</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.Remarks)
+                                    @Html.DisplayFor(model => model.UserName)
                                 </div>
                                 <br />
                                 <div class="col-md-2">
@@ -66,6 +66,14 @@
                                 <div class="col-md-4">
                                     @Html.DisplayFor(model => model.CurrencyName)
 
+                                </div>
+                            </div>
+                             <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Remarks</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.Remarks)
                                 </div>
                             </div>
 

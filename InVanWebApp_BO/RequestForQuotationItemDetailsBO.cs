@@ -27,10 +27,20 @@ namespace InVanWebApp_BO
         public string ItemName { get; set; }        
         public string Item_Code { get; set; }        
         public string ItemUnit { get; set; }
+        public decimal ItemUnitPrice { get; set; } //added 
+        public Nullable<decimal> ItemQuantity { get; set; } //added         
+        public string ItemTaxValue { get; set; } //added 
+
+        //Added the below field for currency details in RFQ Item details 
+        public int CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; } 
         public Nullable<decimal> TotalItemCost { get; set; }
-        public string HSN_Code { get; set; }            
-        
-        
-        
+        public string HSN_Code { get; set; }
+        //added 
+        public Nullable<int> VendorsID { get; set; }
+        public string VendorIDs { get; set; }
+        public string CompanyName { get; set; }
+
     }
 }

@@ -198,31 +198,9 @@ namespace InVanWebApp.Controllers
                 BindTermsAndCondition();
                 BindCurrencyPrice();
                 BindLocationName();
-                BindIndentDropDown();
+                //BindIndentDropDown("POAmendment");
 
                 PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
-
-                ////Binding item grid with sell type item.
-                //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                //string itemListForDD = "itemListForDD";
-
-                //if (model != null)
-                //{
-                //    var ItemCount = model.itemDetails.Count;
-                //    var i = 0;
-                //    while (i < ItemCount)
-                //    {
-                //        itemListForDD = "itemListForDD";
-                //        itemListForDD = itemListForDD + i;
-                //        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.itemDetails[i].Item_ID);
-                //        ViewData[itemListForDD] = dd;
-                //        i++;
-                //    }
-
-                //}
-
-                //ViewData[itemListForDD] = dd;
 
                 return View(model);
             }
@@ -274,7 +252,7 @@ namespace InVanWebApp.Controllers
                             BindTermsAndCondition();
                             BindCurrencyPrice();
                             BindLocationName();
-                            BindIndentDropDown();
+                            //BindIndentDropDown("POAmendment");
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
 
                             return View(model1);
@@ -289,29 +267,8 @@ namespace InVanWebApp.Controllers
                         BindTermsAndCondition();
                         BindCurrencyPrice();
                         BindLocationName();
-                        BindIndentDropDown();
+                        //BindIndentDropDown("POAmendment");
                         PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
-                        //Binding item grid with sell type item.
-                        //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                        //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                        //string itemListForDD = "itemListForDD";
-
-                        //if (model1 != null)
-                        //{
-                        //    var ItemCount = model1.itemDetails.Count;
-                        //    var i = 0;
-                        //    while (i < ItemCount)
-                        //    {
-                        //        itemListForDD = "itemListForDD";
-                        //        itemListForDD = itemListForDD + i;
-                        //        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
-                        //        ViewData[itemListForDD] = dd;
-                        //        i++;
-                        //    }
-
-                        //}
-
-                        //ViewData[itemListForDD] = dd;
 
                         return View(model1);
                     }
