@@ -20,7 +20,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", placeholder = "Purchase Order For Vangi Foods", type = "text" })
+                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", type = "text" })
                     @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <br />
@@ -269,7 +269,7 @@
                                 </center>
                             </div>
                         </div>
-                        <p style="padding-left: 5%;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
+                        <p style="padding-left: 5%; color:red;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
                     </div>
 
                     <div class="card h-50">
@@ -310,20 +310,21 @@
                                 <div class="row mb-2">
                                     <label>Total (before tax): </label>
                                     <input class="form-control form-control-sm text-right" id="TotalBeforeTax" name="TotalItemCost" readonly="readonly" />
-                                    @*@Html.TextBoxFor(x=>x.TotalItemCost, new { @class = "form-control"})*@
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total tax: </label>
                                     <input class="form-control form-control-sm text-right" id="TotalTax" name="TotalTax" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
+                                    <label><b>Other Tax: </b></label>
+                                    @Html.TextBox("OtherTax", Model.OtherTax, new { @class = "form-control form-control-sm text-right", onkeypress = "return isNumberKey(event)", onchange = "CalculateTotalBeforeTax()", maxlength="8" })
+                                </div>
+                                <div class="row mb-2">
                                     <label>Total (after tax):</label>
-                                    @*<input class="form-control" id="TotalAfterTax" name="TotalAfterTax" />*@
                                     @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right", @readonly = "readonly" })
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Grand Total:</b></label>
-                                    @*<input class="form-control" id="GrandTotal" name="GrandTotal" />*@
                                     @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control form-control-sm text-right", @readonly = "readonly" })
                                 </div>
                                 <div class="row mb-2">
@@ -486,6 +487,9 @@
 
     function OnChangeUnitPrice(value, id) {
         var rowNo = id.split('_')[1];
+        if (value == '')
+            value = 0;
+
         var UnitPrice = parseFloat(value);
         if (UnitPrice <= 0 || value == null || value == '') {
             alert("Price cannot be negative, null or zero!");
@@ -515,6 +519,11 @@
         length = parseFloat(length);
         var total = 0;
         var totalTax = 0;
+        var OtherTax = document.getElementById("OtherTax").value;
+        if (OtherTax == '')
+            OtherTax = 0;
+        OtherTax = parseFloat(OtherTax);
+
         var i = 1;
         while (i < length) {
             var temp = document.getElementById("TotalItemCost_" + i).value;
@@ -528,9 +537,11 @@
 
         $('#TotalBeforeTax').val(total.toFixed(2));
         $('#TotalTax').val(totalTax.toFixed(2));
-        var tempGrandTotal = total + totalTax;
-        $('#TotalAfterTax').val(tempGrandTotal.toFixed(2));
-        $('#GrandTotal').val(tempGrandTotal.toFixed(2));
+        var tempGrandTotal = total + totalTax + OtherTax;
+        tempGrandTotal = Math.round(tempGrandTotal);
+
+        $('#TotalAfterTax').val(tempGrandTotal);
+        $('#GrandTotal').val(tempGrandTotal);
 
         createJson();
     }
@@ -546,6 +557,9 @@
     function OnChangeQty(value, id) {
         var rowNo = id.split('_')[1];
         var quantity = value;
+        if (quantity == '')
+            quantity = 0;
+
         var BalanceQty = $("#BalanceQuantity_" + rowNo).val();
         BalanceQty = parseFloat(BalanceQty);
         quantity = parseFloat(quantity);

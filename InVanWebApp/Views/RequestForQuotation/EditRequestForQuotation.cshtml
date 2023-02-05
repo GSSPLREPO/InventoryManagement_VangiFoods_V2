@@ -130,8 +130,9 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.IndentID, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control listbox" })
-                    @Html.ValidationMessageFor(model => model.IndentID, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.HiddenFor(model => model.IndentID)
+                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
                     @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
@@ -146,21 +147,21 @@
                                 <div class="table-sorter-wrapper col-lg-12 table-responsive">
                                     <table class="table table-hover" id="submissionTable">
                                         <thead>
-                                            <tr>                                                
-                                                <th class="sortStyle d-none">Item Id</th>                                                
-                                                <th class="sortStyle">Item Code</th>                                                
+                                            <tr>
+                                                <th class="sortStyle d-none">Item Id</th>
+                                                <th class="sortStyle">Item Code</th>
                                                 <th class="sortStyle">Item</th>
                                                 <th class="sortStyle">Quantity<span style="color:red">*</span></th>
                                                 <th class="sortStyle">Units</th>
                                                 <th class="sortStyle">Delivery Date<span style="color:red">*</span></th>
-                                                <th class="sortStyle">HSN Code</th>                                                
+                                                <th class="sortStyle">HSN Code</th>
                                             </tr>
                                         </thead>
                                         <tbody id="myTableBody">
                                             @{ int c = 1;
                                                 foreach (var item in Model.itemDetails)
-                                                {                                                    
-                                                    <tr id="tablerow_@c">      
+                                                {
+                                                    <tr id="tablerow_@c">
                                                         <td class="col-md-4 d-none">
                                                             @Html.TextBox("ItemID_" + c, item.Item_ID, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                         </td>
@@ -171,19 +172,19 @@
                                                             @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("RequiredQuantity_"+c,item.ItemQuantity, new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", onmouseleave= "OnChangeQuantity($(this).val(),id)" })
+                                                            @Html.TextBox("RequiredQuantity_" + c, item.ItemQuantity, new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", onchange = "OnChangeQuantity($(this).val(),id)", maxlength = "8" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new
-                                                            {
-                                                                @id = "DeliveryDate_" + c,
-                                                                @class = "form-control form-control-sm date1",
+                                                            @Html.TextBox("DeliveryDate_" + c, item.DeliveryDate, "{0:yyyy-MM-dd}", new
+                                                       {
+                                                           @id = "DeliveryDate_" + c,
+                                                           @class = "form-control form-control-sm date1",
                                                            type = "date",
-                                                                style = "height:30px;width:130px;"
-                                                            })
+                                                           style = "height:30px;width:130px;"
+                                                       })
                                                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                                                         </td>
                                                         <td>
@@ -196,7 +197,7 @@
                                             }
 
                                         </tbody>
-                                    </table>                                    
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -223,12 +224,12 @@
                 <div class="col-md-6 grid-margin stretch-card flex-wrap">
                     <div class="card h-100 mb-2">
                         <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Attach Signature<span style="color:red">*</span></h4>
+                            <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
                             <hr />
                             <div class="form-group">
                                 @Html.TextBoxFor(x => x.Signature, new { id = "file", type = "file", onchange = "return fileValidation()" })
                                 @*<input type="file" id="file" name="Signature"
-                            onchange="return fileValidation()"/>*@
+                                    onchange="return fileValidation()"/>*@
                                 <!-- Image preview -->
                                 <span style="color:green">@ViewBag.Message</span>
                                 <br />
@@ -238,10 +239,11 @@
                                         <img src="/Signatures/@Model.Signature" style="height:10%;width:20%" />
                                         @Html.HiddenFor(x => x.Signature, new { id = "tempSign" })
                                     </div>
+
                                 </center>
                             </div>
                         </div>
-                        <p style="padding-left: 5%;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
+                        <p style="padding-left: 5%;color:red;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
                     </div>
 
                 </div>
@@ -254,7 +256,7 @@
             <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="UpdateBtnClick()">Update</button>
         </div>
     </div>
-        
+
 }
 @Html.Raw(TempData["Success"])
 @section Scripts {
@@ -266,29 +268,56 @@
     $(document).ready(function () {
         //alert('multiple called!')
         $('.js-example-basic-multiple').select2();
+
+        var fileName = $('#tempSign').val();
+
+        //Get a reference to our file input
+        const fileInput = document.querySelector('input[type="file"]');
+        var filePath = '/Signatures/' + fileName;
+
+        // Create a new File object
+        const myFile = new File([filePath], fileName, {
+            type: 'image/jpeg/jpg/png'
+        });
+
+        // Now let's create a DataTransfer to get a FileList
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(myFile);
+        fileInput.files = dataTransfer.files;
     });
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     var TxtItemDetails = "";
 
     function UpdateBtnClick() {
-        var CurrencyName = $("#CurrencyID option:selected").text();
-        $("#CurrencyName").val(CurrencyName);
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 1, rowNo = 0;
+        if (tableLength > 1) {
+            while (i <= tableLength - 1) {
+                var PhyQty = document.getElementById("RequiredQuantity_" + i).value; //Change this with Requested qty
+                PhyQty = parseFloat(PhyQty);
+
+                if (PhyQty != 0) {
+                    flag = 1;
+                }
+
+                i++;
+            }
+
+            if (flag != 1) {
+                alert("Required quantity is zero for listed items, Cannot create RFQ!");
+                $("#RequiredQuantity_1").focus();
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
         createJson();
     };
     //==========end===============
 
-    function SelectedIndexChanged(id) {
-        //alert(id);
-        debugger
-        var selectedOption, companyName;
-        selectedOption = document.getElementById("CompanyName").selectedIndex;
-        document.getElementById("VendorIDs").value = id;
-        //console.log(id);
-    }
-
     function SelectedIndexChangedLocation(id) {
-        debugger
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
         locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
@@ -309,82 +338,11 @@
         });
     }
 
-    //=====================Onchange of Indent description===========================
-
-    //=====================Onchange of Indent description end===========================
-
     //---OnChangeQuantity start ------
     function OnChangeQuantity(value, id) {
-        debugger
-        var rowNo = id.split('_')[1];
-        var RequiredQuantity = parseFloat(value);
-        if (RequiredQuantity <= 0 || value == null || value == '') {
-            alert("Quantity cannot be negative, null or zero!");
-            document.getElementById(id).focus();
-            document.getElementById(id).setAttribute("style", "border-color:red;");
-            return;
-        }
-        else {
-            //Set Required Quantity in item grid.
-            $("#RequiredQuantity_" + rowNo).val();
-            document.getElementById(id).setAttribute("style", "none");
-        }
+        $('#btnSave').prop('disabled', false);
     }
     //---OnChangeQuantity end ------
-
-    //==================createJson Set value in txtItemDetails onCick of Save/Update button======--------
-    function getitemDetailsJSTbl(count) {
-        var itemId = "Item_ID_" + count;
-        var currencyID = $('#CurrencyID').val();
-        var selectedItemId = $("#" + itemId).val();
-                    $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetitemDetails")', // we are calling json method
-
-                dataType: 'json',
-                        data: { id: selectedItemId, currencyId: currencyID },
-                // here we are get value of selected item and passing same value
-                //as input to json method GetitemDetails.
-
-                        success: function (itemDescription) {
-
-                            var description = JSON.stringify(itemDescription);
-                            $("#Item_Code_" + count).val(itemDescription.Item_Code);
-                            $("#ItemName_" + count).val(itemDescription.Item_Name);
-                            $("#ItemUnit_" + count).val(itemDescription.UnitCode);
-                            $("#RequiredQuantity_" + count).val('0');
-                },
-                failure: function () {
-                    alert('Failed to retrieved item detals!');
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve Item description.' + ex);
-                }
-            });
-    }
-    //==================createJson Set value in txtItemDetails onCick of Save/Update button end======--------
-
-
-    //=======The below function is for fetching the files value in the textbox of file type============//
-    $(document).ready(function () {
-
-        var fileName = $('#tempSign').val();
-
-        //Get a reference to our file input
-        const fileInput = document.querySelector('input[type="file"]');
-        var filePath = '/Signatures/' + fileName;
-
-        // Create a new File object
-        const myFile = new File([filePath], fileName, {
-            type: 'image/jpeg/jpg/png'
-        });
-
-        // Now let's create a DataTransfer to get a FileList
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(myFile);
-        fileInput.files = dataTransfer.files;
-
-    });
 
     function fileValidation() {
         var fileInput =
@@ -420,38 +378,50 @@
     //===================end=======================//
 
     /*Rahul : Add Javascript validation on 12 Oct 2022.*/
-        function isNumberKey(evt) {
-            var keycode = (evt.which) ? evt.which : evt.keyCode;
-            if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
-                return false;
-            }
-            else {
-                var parts = evt.srcElement.value.split('.');
-                if (parts.length > 1 && keycode == 46)
-                    return false;
-                else
-                    return true;
-            }
-            return true;
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
         }
-
-    //=====================Onchange of Terms and Condition===========================
-    function SelectedIndexChangedTerms(id) {
-        $.ajax({
-            url: '/RequestForQuotation/GetTermsDescription',
-            type: "POST",
-            data: { id: id },
-            success: function (result) {
-                console.log(result.TermDescription);
-                $('#TermDescription').val(result.TermDescription);
-            },
-            error: function (err) {
-                alert('Not able to get the selected terms and condition value!');
-
-            }
-        });
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
     }
 
-    //=============End==============
+    //==================createJson Set value in txtItemDetails onCick of Save/Update button======--------
+    function createJson() {
+        debugger
+        var table = document.getElementById('submissionTable');
+        var rowCount = table.rows.length;
+        var i = 0;
+        TxtItemDetails = "[";
+        for (i = 1; i <= rowCount - 1; i++) {
+            var ItemID = (document.getElementById("ItemID_" + i)).value;
+            var ItemCode = (document.getElementById("Item_Code_" + i)).value;
+            var ItemName = (document.getElementById("ItemName_" + i)).value;
+            //var RequiredQty = (document.getElementById("RequiredQuantity_" + i)).innerHTML.split(" ")[0];
+            var RequiredQty = $("#RequiredQuantity_" + i).val();
+            RequiredQty = (RequiredQty == null || RequiredQty == '') ? 0 : RequiredQty;
+            var Unit = (document.getElementById("ItemUnit_" + i)).value;
+            var DeliveryDate = $("#DeliveryDate_" + i).val();
+            var HSNCode = $("#HSN_Code_" + i).val();
 
+            TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID + ", \"Item_Code\":\"" + ItemCode +
+                "\", \"ItemName\": \"" + ItemName + "\", \"RequiredQty\": " + RequiredQty +
+                ", \"ItemUnit\": \"" + Unit + "\", \"DeliveryDate\": \"" + DeliveryDate + "\", \"HSNCode\": \"" + HSNCode + "\"";
+
+            if (i == (rowCount - 1))
+                TxtItemDetails = TxtItemDetails + "}";
+            else
+                TxtItemDetails = TxtItemDetails + "},";
+        }
+        TxtItemDetails = TxtItemDetails + "]";
+        $('#TxtItemDetails').val(TxtItemDetails);
+    }
+    //==================createJson Set value in txtItemDetails onCick of Save/Update button end======--------
 </script>

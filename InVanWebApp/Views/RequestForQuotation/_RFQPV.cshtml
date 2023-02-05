@@ -41,16 +41,16 @@
                                             <table class="table table-hover table-sm" id="submissionTable" style="table-layout: fixed;">
                                                 <thead>
                                                     <tr>
-                                                        <th class="sortStyle text-sm">
+                                                        <th class="text-left">
                                                             Description
                                                         </th>
                                                         @{
                                                             int c1 = 1;
                                                             while (c1 <= Model.vendorIdLength)
                                                             {
-                                                                <th id="tableHeader_@c1" class="sortStyle text-sm">
+                                                                <th id="tableHeader_@c1" class="text-left">
                                                                     <span><label id="CompanyName_@c1"></label></span>
-                                                                    <span><label id="VendorsID_@c1"></label></span>
+                                                                    <span class="d-none"><label id="VendorsID_@c1"></label></span>
                                                                 </th>
 
                                                                 { c1++; }
@@ -64,45 +64,69 @@
                                                     @{ int c = 1;
                                                         foreach (var item in Model.itemDetails)
                                                         {
-                                                            <tr id="tablerow_@c" class="d-inline-flex flex-nowrap">
-                                                                
-                                                                <td class="text-sm d-grid text-left">                                                                    
+                                                            @*<tr id="tablerow_@c" class="d-inline-flex flex-nowrap">*@
+                                                            <tr id="tablerow_@c">
+                                                                <td class="text-left">
+                                                                    <label>Item Code:</label>
+                                                                    @Html.DisplayFor(x => item.Item_Code)<br />
+                                                                    <label>Item Name: </label>
+                                                                    @Html.DisplayFor(x => item.ItemName)<br />
+                                                                    <label>Requested Quantity: </label>
+                                                                    @Html.DisplayFor(x => item.ItemQuantity)
+                                                                </td>
+
+                                                                <!--<td class="text-sm d-grid text-left">
                                                                     <div class="d-flex flex-row">
-                                                                        <div class="d-flex flex-column pe-1">
-                                                                            <span class="p-1">Item Code: </span>
-                                                                            <span class="p-1">Item Name: </span>
-                                                                            <span class="p-1">Requested Quantity: </span>
-                                                                            <span class="p-1">Item Comment: </span>
+                                                                        <div class="d-flex flex-column pe-1">-->
+                                                                @*<span class="p-1">Item Code: </span>*@
+                                                                <!--<span>Item Code: </span>
+                                                                            <span>Item Name: </span>
+                                                                            <span>Requested Quantity: </span>
                                                                         </div>
                                                                         <div class="d-flex flex-column ps-1">
-                                                                            <span class="p-1">@Html.DisplayFor(x => item.Item_Code)</span>
-                                                                            <span class="p-1">@Html.DisplayFor(x => item.ItemName)</span>
-                                                                            <span class="p-1">@Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)</span>
-                                                                            <span class="p-1">@Html.DisplayFor(x => item.Remarks)</span>
+                                                                            <span>@Html.DisplayFor(x => item.Item_Code)</span>
+                                                                            <span>@Html.DisplayFor(x => item.ItemName)</span>
+                                                                            <span>@Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)</span>
                                                                         </div>
                                                                     </div>
-                                                                </td>
+                                                                </td>-->
 
                                                                 @{
                                                                     int c2 = 1;
                                                                     while (c2 <= Model.vendorIdLength)
                                                                     {
-                                                                        <td class="text-sm d-grid text-left">
-                                                                            <div class="d-flex flex-row">
-                                                                                <div class="d-flex flex-column pe-1">
-                                                                                    <span class="p-1">Quoted Quantity: </span>
-                                                                                    <span class="p-1">Price: </span>
-                                                                                    <span class="p-1">Amount: </span>
-                                                                                    <span class="p-1">Comment: </span>
-                                                                                </div>
-                                                                                <div class="d-flex flex-column ps-1">
-                                                                                    <span class="p-1">@Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)</span>
-                                                                                    <span class="p-1">@Html.DisplayFor(x => item.CurrencyName) @Html.DisplayFor(x => item.CurrencyName)</span>
-                                                                                    <span class="p-1">@Html.DisplayFor(x => item.TotalItemCost)</span>
-                                                                                    <span class="p-1">@Html.DisplayFor(x => item.Remarks)</span>
-                                                                                </div>
-                                                                            </div>
+                                                                        <td class="text-left">
+                                                                            <label>Quoted Quantity: </label>
+                                                                            @Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)<br />
+
+                                                                            <label>Price: </label>
+                                                                            <span id="UnitPrice_@c2@c">0</span>
+                                                                            @Html.DisplayFor(modal => modal.CurrencyName)<br />
+
+                                                                            <label>Amount: </label>
+                                                                            <span id="TotalItemCost_@c2@c">0</span>
+                                                                            @Html.DisplayFor(modal => modal.CurrencyName)<br />
+
+                                                                            <label>Comment: </label>
+                                                                            <span id="Remarks_@c2@c"></span>
                                                                         </td>
+
+                                                                        @*<td class="text-sm d-grid text-left">
+                                                                                <div class="d-flex flex-row">
+                                                                                    <div class="d-flex flex-column pe-1">
+                                                                                        <span>Quoted Quantity: </span>
+                                                                                        <span>Price: </span>
+                                                                                        <span>Amount: </span>
+                                                                                        <span>Comment: </span>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <span>@Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)</span>
+                                                                                        <span>@Html.DisplayFor(x => item.CurrencyName) @Html.DisplayFor(x => item.CurrencyName)</span>
+                                                                                        <span>@Html.DisplayFor(x => item.TotalItemCost)</span>
+                                                                                        <span>@Html.DisplayFor(x => item.Remarks)</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>*@
 
                                                                         { c2++; }
                                                                     }
@@ -122,7 +146,7 @@
                                                                 int c3 = 1;
                                                                 while (c3 <= Model.vendorIdLength)
                                                                 {
-                                                                    <td>
+                                                                    <td class="text-left">
                                                                         @*<a href=@Url.Action("RFQSupplierDetails", new { RequestForQuotationId = Model.RequestForQuotationId })
                                                                                class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);" >
                                                                                 <i class="fa fa-reply me-1" aria-hidden="true"></i>Punch Quotation
@@ -148,9 +172,18 @@
                                                                 int c4 = 1;
                                                                 while (c4 <= Model.vendorIdLength)
                                                                 {
-                                                                    <td>
-                                                                        <a id="BtnPunchQuotView" href="#" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);">View</a>
-                                                                    </td>
+                                                                    if (Model.countQuotation > 0)
+                                                                    {
+                                                                        <td class="text-left">
+                                                                            <a id="BtnPunchQuotView_@c4" href="@Url.Action("ViewRFQSupplierDetails","RequestForQuotation",new { ID = c4,RfqID=Model.RequestForQuotationId })" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);">View</a>
+                                                                        </td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td class="text-left">
+                                                                            <a id="BtnPunchQuotView_@c4" href="#" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);display:none;">View</a>
+                                                                        </td>
+                                                                    }
                                                                     { c4++; }
                                                                 }
                                                             }
@@ -173,9 +206,6 @@
                                                         </div>
                                                         <div class="modal-body">
                                                         </div>
-                                                        @*<div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            </div>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -202,7 +232,7 @@
     }
 </body>
 </html>
-
+@Html.Raw(TempData["Success"])
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
@@ -214,7 +244,7 @@
 @*<script src="~/Theme/MainContent/js/jquery.min.js"></script>*@
 
 <script type="text/javascript">
-    $(document).ready(function () {        
+    $(document).ready(function () {
         var id = $("#RequestForQuotationId").val();
         CompanyName(id);
     });
@@ -228,21 +258,61 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                //console.log(result);
                 const myObj = result;
                 var myJSON = JSON.stringify(myObj);
                 localStorage.setItem("testJSON", myJSON);
 
                 for (var i = 0 in myObj) {
                     i = parseFloat(i);
-                    //console.log(myObj[i].CompanyName);
                     $("#CompanyName_" + (i + 1)).text(myObj[i].CompanyName);
                     $("#VendorsID_" + (i + 1)).text(myObj[i].VendorsID);
-                } 
+                    var vendorId = myObj[i].VendorsID;
+                    setItemPrice(vendorId,(i+1),id);
+                }
             },
             error: function (data) {
                 alert("Bind Company details failed!");
                 Success = false;
+            }
+        });
+    }
+
+    function setItemPrice(vendorId, i, rfqId) {
+        //alert(vendorId + " " + i);
+        $.ajax({
+            type: "POST",
+            url: `/RequestForQuotation/FetchItemDetailsVendorWise?id=` + vendorId+"&RFQId="+rfqId,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result != null) {
+
+                    var UnitPrice = 0;
+                    var TotalItemPrice = 0;
+                    var Remarks = '';
+                    for (var j = 0; j < result.rfqVendorItemDetails.length; j++) {
+                        UnitPrice = result.rfqVendorItemDetails[j].ItemUnitPrice;
+                        if (UnitPrice == '' && UnitPrice == null)
+                            UnitPrice = 0;
+
+                        TotalItemPrice = result.rfqVendorItemDetails[j].TotalItemCost;
+                        if (TotalItemPrice == '' && TotalItemPrice == null)
+                            TotalItemPrice = 0;
+
+                        Remarks = result.rfqVendorItemDetails[j].Remarks;
+                        if (Remarks == '' && Remarks == null)
+                            Remarks = '';
+
+                        $("#UnitPrice_" + i + (j + 1)).text(UnitPrice);
+                        $("#TotalItemCost_" + i + (j + 1)).text(TotalItemPrice);
+                        $("#Remarks_" + i + (j + 1)).text(Remarks);
+                    }
+                }
+            },
+            error: function (data) {
+                //alert("Failed to bind item details vendor wise!");
+                //Success = false;
             }
         });
     }
@@ -268,7 +338,7 @@
                 var modal = $(this)
                 //modal.find('.modal-title').text('New message to ' + recipient)
                 modal.find('.modal-body input').val(recipient)
-            });        
+            });
     }
 
     //==================/Function of RFQSupplierDetails modal/////////////=============================
@@ -288,24 +358,34 @@
         return true;
     }
 
-    //change on price call functiion 
-    function changeItemUnitPrice(value, id) {        
-        CalItemTotalPrice(value, id);        
+    //change on price call functiion
+    function changeItemUnitPrice(value, id) {
+        CalItemTotalPrice(value, id);
     };
 
-    function CalItemTotalPrice(value, id) {        
+    function CalItemTotalPrice(value, id) {
         var temp_rowNo = id.split('_');
         var rowNo = temp_rowNo[1];
+        if (value == '')
+            value = 0;
+
         value = parseFloat(value);
         if (value != 0) {
             var price = $("#ItemUnitPrice_" + rowNo).val();
+            if (price == '')
+                price = 0;
             price = parseFloat(price);
-            var quantity = $("#Quantity_" + rowNo).val();
-            quantity = parseFloat(quantity);
-            var tempTax = $("#itemTax_" + rowNo).val();
-            var tax = tempTax[0];
 
-            var totalPrice = price * quantity; 
+            var quantity = $("#Quantity_" + rowNo).val();
+            if (quantity == '')
+                quantity = 0;
+            quantity = parseFloat(quantity);
+
+            var tempTax = $("#itemTax_" + rowNo).val();
+            if (tempTax == '')
+                tempTax = 0;
+
+            var totalPrice = price * quantity;
             totalPrice = Math.round(totalPrice);
             $("#totalItemCost_" + rowNo).val(totalPrice);
         }
@@ -313,11 +393,11 @@
     }
 
     //changeItemTax
-    function changeItemTax(value, id) {                
+    function changeItemTax(value, id) {
         CalItemTotalPrice(value, id);
     }
-    
-    function CalculateTotalBeforeTax() {        
+
+    function CalculateTotalBeforeTax() {
         $('#TotalBeforeTax').val('');
         $('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;
@@ -348,8 +428,7 @@
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
-        //alert("createJson called!")
-        createJson();
+       createJson();
     };
     //==========end===============
 
@@ -363,7 +442,7 @@
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
-    
+
 </script>
 
 <style>

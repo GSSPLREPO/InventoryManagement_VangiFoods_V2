@@ -195,7 +195,7 @@
                 <div class="col-md-6 grid-margin stretch-card flex-wrap">
                     <div class="card h-100 mb-2">
                         <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Attach Signature<span style="color:red"> * </span></h4>
+                            <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
 
                             <hr />
                             <div class="form-group">
@@ -211,6 +211,7 @@
                                 </center>
                             </div>
                         </div>
+                        <p style="padding-left: 5%;color:red;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
                     </div>
                 </div>
 
@@ -229,7 +230,7 @@
     </div>
 
 }
-
+@Html.Raw(TempData["Success"])
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
@@ -271,17 +272,17 @@
         $("#" + id).val(tempDate);
         document.getElementById(id).setAttribute("min", tempDate.toString());
     }
-    //---BiddingStartDate todaysDate end ------ 
+    //---BiddingStartDate todaysDate end ------
 
     //---BiddingEndDate todaysDate start ------
     function biddingEndDate() {
-        debugger 
+        debugger
         const d = new Date();
-        d.setYear(d.getFullYear());                
+        d.setYear(d.getFullYear());
         var id = "BiddingEndDate";
-            var tempDate = d.toISOString().split("T")[0];
-            $("#" + id).val(tempDate);
-            document.getElementById(id).setAttribute("min", tempDate.toString());            
+        var tempDate = d.toISOString().split("T")[0];
+        $("#" + id).val(tempDate);
+        document.getElementById(id).setAttribute("min", tempDate.toString());
     }
     //---BiddingEndDate todaysDate end ------
 
@@ -291,13 +292,37 @@
     function SaveBtnClick() {
         var CurrencyName = $("#CurrencyID option:selected").text();
         $("#CurrencyName").val(CurrencyName);
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 0, rowNo = 0;
+        if (tableLength > 1) {
+            while (i < tableLength - 1) {
+                var PhyQty = document.getElementById("RequiredQuantity_" + i).value; //Change this with Requested qty
+                PhyQty = parseFloat(PhyQty);
+
+                if (PhyQty != 0) {
+                    flag = 1;
+                }
+
+                i++;
+            }
+
+            if (flag != 1) {
+                alert("Required quantity is zero for listed items, Cannot create RFQ!");
+                $("#RequiredQuantity_0").focus();
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
+
         createJson();
     };
     //==========end===============
 
     //=====================Onchange of Indent description===========================
     function SelectedIndexChangedIndent(id) {
-
+        $('#btnSave').prop('disabled', false);
         //Check whether the currency dropdown is selected or not
 
         var CurrencyIDCheck = $('#CurrencyID').val();
@@ -340,37 +365,38 @@
                         var cell = 'cell' + i;
                         cell = row.insertCell(i);
 
-                        if(i == 0) {
+                        if (i == 0) {
                             cell.innerHTML = result[j].ItemId;
                             cell.setAttribute("class", "d-none");
-                            cell.setAttribute("id", "ItemID_" + j);                            
+                            cell.setAttribute("id", "ItemID_" + j);
                         }
                         else if (i == 1) {
                             cell.innerHTML = result[j].ItemCode;
-                            cell.setAttribute("id", "ItemCode_" + j);                            
+                            cell.setAttribute("id", "ItemCode_" + j);
                         }
                         else if (i == 2) {
                             cell.innerHTML = result[j].ItemName;
-                            cell.setAttribute("id", "ItemName_" + j);                            
+                            cell.setAttribute("id", "ItemName_" + j);
                         }
-                        else if (i == 3) {                           
+                        else if (i == 3) {
                             var t4 = document.createElement("input");
                             t4.id = "RequiredQuantity_" + j;
                             t4.setAttribute("type", "text");
                             t4.setAttribute("maxlength", "8");
                             t4.setAttribute("value", 0);
                             t4.setAttribute("class", "form-control form-control-sm text-right");
-                            t4.setAttribute("onmouseleave", "OnChangeQuantity($(this).val(),id)"); //or use onmouseleave event
+                            t4.setAttribute("onchange", "OnChangeQuantity($(this).val(),id)");
+                            t4.setAttribute("onkeypress", "return isNumberKey(event)");
                             cell.appendChild(t4);
                         }
                         else if (i == 4) {
                             cell.innerHTML = result[j].ItemUnit;
-                            cell.setAttribute("id", "ItemUnit_" + j);                            
+                            cell.setAttribute("id", "ItemUnit_" + j);
                         }
                         else if (i == 5) {
                             var t4 = document.createElement("input");
                             t4.id = "DeliveryDate_" + j;
-                            t4.setAttribute("type", "date");                            
+                            t4.setAttribute("type", "date");
                             t4.setAttribute("class", "form-control form-control-sm");
                             cell.appendChild(t4);
                         }
@@ -378,7 +404,7 @@
                             var t4 = document.createElement("input");
                             t4.id = "HSNCode_" + j;
                             t4.setAttribute("class", "form-control form-control-sm");
-                            t4.setAttribute("type", "text");                            
+                            t4.setAttribute("type", "text");
                             cell.appendChild(t4);
                         }
                     }
@@ -393,28 +419,30 @@
     }
     //=====================Onchange of Indent description end===========================
 
-    //---OnChangeQuantity start ------
+    ////---OnChangeQuantity start ------
     function OnChangeQuantity(value, id) {
-        debugger
-        var rowNo = id.split('_')[1];
-        var RequiredQuantity = parseFloat(value);
-        if (RequiredQuantity <= 0 || value == null || value == '') {
-            alert("Quantity cannot be negative, null or zero!"); 
-            document.getElementById(id).focus();
-            document.getElementById(id).setAttribute("style", "border-color:red;");
-            return;
-        }
-        else {
-            //Set Required Quantity in item grid.
-            $("#RequiredQuantity_" + rowNo).val();
-            document.getElementById(id).setAttribute("style", "none");
-        }
+        $('#btnSave').prop('disabled', false);
+        //var rowNo = id.split('_')[1];
+        //if (value == '')
+        //    value = 0;
+
+        //var RequiredQuantity = parseFloat(value);
+        //if (RequiredQuantity <= 0 || value == null || value == '') {
+        //    alert("Quantity cannot be negative, null or zero!");
+        //    document.getElementById(id).focus();
+        //    document.getElementById(id).setAttribute("style", "border-color:red;");
+        //    return;
+        //}
+        //else {
+        //    //$("#RequiredQuantity_" + rowNo).val();
+        //    document.getElementById(id).setAttribute("style", "none");
+        //}
     }
     //---OnChangeQuantity end ------
 
     //---DeliveryDate todaysDate start ------
     function todaysDate(rowCount) {
-        //debugger 
+        //debugger
         const d = new Date();
         d.setYear(d.getFullYear());
         var i = 0;
@@ -422,17 +450,15 @@
             var id = "DeliveryDate_" + i;
             var tempDate = d.toISOString().split("T")[0];
             $("#" + id).val(tempDate);
-            document.getElementById(id).setAttribute("min", tempDate.toString()); 
+            document.getElementById(id).setAttribute("min", tempDate.toString());
             i++;
         }
     }
     //---DeliveryDate todaysDate end ------
 
-//=============End==============
+    //=============End==============
 
     function SelectedIndexChanged(id) {
-        //alert(id);
-        debugger
         var selectedOption;
         selectedOption = document.getElementById("CompanyName").selectedIndex;
         document.getElementById("VendorIDs").value = id;
@@ -440,8 +466,6 @@
     }
 
     function SelectedIndexChangedLocation(id) {
-        //alert(id);
-        //debugger
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
         locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
@@ -462,61 +486,6 @@
         });
     }
 
-    $('#uploadexcel').show();
-    $('#uploadexcel').attr("disabled", true);
-
-    $('#uploadexcel').click(function () {
-
-        // Checking whether FormData is available in browser
-        if (window.FormData !== undefined) {
-
-            var fileUpload = $("#fileupload").get(0);
-            var files = fileUpload.files;
-
-            // Create FormData object
-            var fileData = new FormData();
-
-            // Looping over all files and add it to FormData object
-            for (var i = 0; i < files.length; i++) {
-                fileData.append(files[i].name, files[i]);
-            }
-
-            // Adding one more key to FormData object
-            //fileData.append('username', ‘Manas’);
-
-            $.ajax({
-                url: '/RequestForQuotation/UploadSignature',
-                type: "POST",
-                contentType: false, // Not to set any content header
-                processData: false, // Not to process data
-                data: fileData,
-                success: function (result) {
-                    alert(result);
-                    window.location.href = "/RequestForQuotation/AddRequestForQuotation";
-                },
-                error: function (err) {
-                    alert('Format of data uploaded is incorrect.');
-
-                }
-            });
-        } else {
-            alert("FormData is not supported.");
-        }
-    });
-
-    $('#fileupload').change(function () {
-        var fileExtension = ['jpg', 'jpeg', 'png'];
-        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
-            // $('#uploadexcel').attr("disabled", true);
-            alert("Only '.jpg','.jpeg','png' formats are allowed.");
-            $('#fileupload').val('');
-            //$('#<%= myLabel.ClientID %>').html("Only '.jpeg','.jpg' formats are allowed.");
-        }
-        else {
-            $('#uploadexcel').attr("disabled", false);
-        }
-    });
-    
     function fileValidation() {
         var fileInput =
             document.getElementById('file');
@@ -550,24 +519,23 @@
     }
 
     /*Rahul : Add Javascript validation on 12 Oct 2022.*/
-        function isNumberKey(evt) {
-            var keycode = (evt.which) ? evt.which : evt.keyCode;
-            if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
-                return false;
-            }
-            else {
-                var parts = evt.srcElement.value.split('.');
-                if (parts.length > 1 && keycode == 46)
-                    return false;
-                else
-                    return true;
-            }
-            return true;
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
         }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
 
     //==================createJson Set value in txtItemDetails onCick of Save/Update button======--------
     function createJson() {
-        debugger
         var table = document.getElementById('submissionTable');
         var rowCount = table.rows.length;
         var i = 0;
@@ -583,22 +551,18 @@
             var DeliveryDate = $("#DeliveryDate_" + i).val();
             var HSNCode = $("#HSNCode_" + i).val();
 
-            TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID + ", \"Item_Code\":\"" + ItemCode + 
-                "\", \"ItemName\": \"" + ItemName + "\", \"RequiredQty\": " + RequiredQty + 
-                ", \"ItemUnit\": \"" + Unit + "\", \"DeliveryDate\": \"" + DeliveryDate + "\", \"HSNCode\": \"" + HSNCode +"\"";
+            TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID + ", \"Item_Code\":\"" + ItemCode +
+                "\", \"ItemName\": \"" + ItemName + "\", \"RequiredQty\": " + RequiredQty +
+                ", \"ItemUnit\": \"" + Unit + "\", \"DeliveryDate\": \"" + DeliveryDate + "\", \"HSNCode\": \"" + HSNCode + "\"";
 
             if (i == (rowCount - 2))
                 TxtItemDetails = TxtItemDetails + "}";
             else
                 TxtItemDetails = TxtItemDetails + "},";
         }
-        TxtItemDetails = TxtItemDetails + "]"   
-        console.log(TxtItemDetails);
+        TxtItemDetails = TxtItemDetails + "]";
         $('#TxtItemDetails').val(TxtItemDetails);
     }
     //==================createJson Set value in txtItemDetails onCick of Save/Update button end======--------
 
 </script>
-
-@Html.Raw(TempData["Success"])
-

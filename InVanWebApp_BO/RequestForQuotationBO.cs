@@ -25,11 +25,12 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> BiddingStartDate { get; set; }
         [Required(ErrorMessage = "Please select the Bidding End date!")]
         public Nullable<System.DateTime> BiddingEndDate { get; set; }
-        public Nullable<decimal> Quantity { get; set; } 
+        public Nullable<decimal> Quantity { get; set; }
         public string Signature { get; set; }
         [Required(ErrorMessage = "Enter remakrs!")] ////added 
         public string Remarks { get; set; }
         //Added below fields for Indent dropdown in RFQ 02-02-2023. 
+        [Required(ErrorMessage = "Select indent number!")] ////added 
         public int IndentID { get; set; }
         public string IndentNumber { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
@@ -39,21 +40,22 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedByDate { get; set; }
         //==============Rahul: These fields are for Request For Quotation details 14/12/2022==============//
         public string LocationName { get; set; }
-        public Nullable<int> VendorsID { get; set; } 
-        public string VendorIDs { get; set; }         
-        public string CompanyName { get; set; } 
-        
+        public Nullable<int> VendorsID { get; set; }
+        public string VendorIDs { get; set; }
+        [Required(ErrorMessage = "Select Vendors!")] ////added 
+        public string CompanyName { get; set; }
+
         //public string BuyerAddress { get; set; } 
-        [Required(ErrorMessage = "Select Location Name to enter delivery address!")] 
+        [Required(ErrorMessage = "Select Location Name to enter delivery address!")]
         public string DeliveryAddress { get; set; }
         public string LocationAddress { get; set; } //added         
         public Nullable<int> Item_ID { get; set; } ///Rahul added 19-12-2022.   
-        public string ItemName { get; set; }        
-        public string Item_Code { get; set; }        
+        public string ItemName { get; set; }
+        public string Item_Code { get; set; }
         public string ItemUnit { get; set; }
         public Nullable<decimal> TotalItemCost { get; set; }
-        public string HSN_Code { get; set; }         
-        public string TxtItemDetails { get; set; } 
+        public string HSN_Code { get; set; }
+        public string TxtItemDetails { get; set; }
         public List<RequestForQuotationItemDetailsBO> itemDetails { get; set; } ///Rahul added 17-12-2022.          
         public int vendorIdLength { get; set; }  /// 
         //==============Rahul: These fields are for PO Currency details 23/01/2023==============//
@@ -71,11 +73,14 @@ namespace InVanWebApp_BO
         public float AdvancedPayment { get; set; } ///Rahul added 24-01-2023. 
         public string SupplierAddress { get; set; } //Rahul added 25-01-2023 for edit.
         public List<CompanyBO> companyDetails { get; set; } ///Rahul added 25-01-2023 for edit.   
-        public List<RFQ_VendorDetailsBO> rfqVendorDetails { get; set; }     ///Rahul added 23-01-2023.                  
+        public List<RFQ_VendorDetailsBO> rfqVendorDetails { get; set; }     ///Rahul added 23-01-2023.      
+
+        //Added the below field for enabling the view button in punch quotation modal.
+        public int countQuotation { get; set; }
 
     }
 
-    public class RFQ_VendorDetailsBO 
+    public class RFQ_VendorDetailsBO
     {
         public int RFQ_VendorDetailsId { get; set; }
         public Nullable<int> RequestForQuotationId { get; set; }
@@ -83,12 +88,13 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Please select the RFQ Date!")]
         public Nullable<System.DateTime> Date { get; set; }
         [Required(ErrorMessage = "Please select the Delivery date!")]
-        public Nullable<System.DateTime> DeliveryDate { get; set; } 
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
         public Nullable<int> VendorsID { get; set; }
-        public string CompanyName { get; set; } 
+        public string CompanyName { get; set; }
+        [Required(ErrorMessage = "Please enter client address!")]
         public string Address { get; set; }
         public string SupplierAddress { get; set; } //Rahul added 31-01-2023 for post data. 
-        public Nullable<int> LocationId { get; set; } 
+        public Nullable<int> LocationId { get; set; }
         public string LocationName { get; set; }
         public string DeliveryAddress { get; set; }
         //[Required(ErrorMessage = "Enter delivery address!")]
@@ -97,7 +103,7 @@ namespace InVanWebApp_BO
         public float SGST { get; set; }
         public float IGST { get; set; }
         public Nullable<int> TermsAndConditionID { get; set; }
-        public string Terms { get; set; } 
+        public string Terms { get; set; }
         public Nullable<decimal> TotalAfterTax { get; set; }
         public Nullable<decimal> GrandTotal { get; set; }
         public float AdvancedPayment { get; set; } ///Rahul added 28-01-2023. 
@@ -108,7 +114,7 @@ namespace InVanWebApp_BO
         public int CountryID { get; set; }
         public string CurrencyName { get; set; }
         public Nullable<double> CurrencyPrice { get; set; }
-        public Nullable<double> IndianCurrencyValue { get; set; }        
+        public Nullable<double> IndianCurrencyValue { get; set; }
 
         [Required(ErrorMessage = "Enter remakrs!")] ////added 
         public string Remarks { get; set; }
@@ -117,8 +123,17 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedByDate { get; set; }
         public Nullable<int> LastModifiedByID { get; set; }
         public Nullable<System.DateTime> LastModifiedByDate { get; set; }
-        public string TxtItemDetails { get; set; } 
+        public string TxtItemDetails { get; set; }
         public List<RFQ_Vendor_ItemDetailsBO> rfqVendorItemDetails { get; set; }     ///Rahul added 28-01-2023.      
+
+        //Added below fields for generating PO
+        [Required(ErrorMessage ="Please enter title!")]
+        public string Tittle { get; set; }
+        public string PONumber { get; set; }
+        public DateTime PODate { get; set; }
+        public int Amendment { get; set; }
+        public string Signature { get; set; }
+        public decimal OtherTax { get; set; }
 
     }
 
@@ -126,7 +141,7 @@ namespace InVanWebApp_BO
     {
         public int RFQ_Vendor_ItemDetailsId { get; set; }
         public Nullable<int> RFQ_VendorDetailsId { get; set; }
-        public Nullable<int> RequestForQuotationId { get; set; } 
+        public Nullable<int> RequestForQuotationId { get; set; }
         public Nullable<int> Item_ID { get; set; } ///Rahul added 19-12-2022.   
         public string ItemName { get; set; }
         public string Item_Code { get; set; }
@@ -150,7 +165,8 @@ namespace InVanWebApp_BO
         public Nullable<int> LastModifiedByID { get; set; }
         public Nullable<System.DateTime> LastModifiedByDate { get; set; }
         public string TxtItemDetails { get; set; }
-
+        //Added the below field for generating PO
+        public int PurchaseOrderId { get; set; }
 
     }
 

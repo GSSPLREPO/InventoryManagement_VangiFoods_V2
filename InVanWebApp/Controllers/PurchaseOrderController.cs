@@ -330,7 +330,7 @@ namespace InVanWebApp.Controllers
                     BindTermsAndCondition();
                     BindCurrencyPrice();
                     BindLocationName();
-                    BindIndentDropDown("POAmendment");
+                    //BindIndentDropDown("POAmendment");
 
                     PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
 
@@ -390,7 +390,7 @@ namespace InVanWebApp.Controllers
                             BindTermsAndCondition();
                             BindCurrencyPrice();
                             BindLocationName();
-                            BindIndentDropDown("POAmendment");
+                            //BindIndentDropDown("POAmendment");
 
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
 
@@ -405,7 +405,7 @@ namespace InVanWebApp.Controllers
                         BindTermsAndCondition();
                         BindCurrencyPrice();
                         BindLocationName();
-                        BindIndentDropDown("POAmendment");
+                        //BindIndentDropDown("POAmendment");
                         PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
                         
                         return View(model1);
@@ -440,7 +440,7 @@ namespace InVanWebApp.Controllers
             BindTermsAndCondition();
             BindCurrencyPrice();
             BindLocationName();
-            BindIndentDropDown("POAmendment");
+            //BindIndentDropDown("POAmendment");
 
             PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID);
             return View(model);

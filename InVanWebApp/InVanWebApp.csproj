@@ -2897,6 +2897,8 @@
     <Content Include="Views\OutwardNote\EditOutwardNote.cshtml" />
     <Content Include="Views\DebitNote\ViewDebitNote.cshtml" />
     <Content Include="Views\RequestForQuotation\AddRFQSupplierDetails.cshtml" />
+    <Content Include="Views\RequestForQuotation\ViewRFQSupplierDetails.cshtml" />
+    <Content Include="Views\RequestForQuotation\GeneratePO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

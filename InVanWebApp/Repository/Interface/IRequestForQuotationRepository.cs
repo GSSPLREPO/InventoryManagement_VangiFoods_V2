@@ -29,5 +29,9 @@ namespace InVanWebApp.Repository.Interface
         
         //Function define for: Delete record of item type using it's RequestForQuotationId 
         void Delete(int RequestForQuotationId, int userId); 
+
+        //Added the below function for setting the item details in the puch quotation view 
+        RFQ_VendorDetailsBO ItemDetailsVendorWise(int RFQ_ID, int ID = 0, int VenColNo = 0);
+        ResponseMessageBO InsertPO(RFQ_VendorDetailsBO model);
     }
 }
