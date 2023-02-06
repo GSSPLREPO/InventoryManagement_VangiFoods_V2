@@ -424,7 +424,8 @@ namespace InVanWebApp.Repository
                         ID = Convert.ToInt32(tempVen[VenColNo]);
                     }
                 }
-                string queryString = "Select * from RFQ_VendorDetails where IsDeleted=0 and VendorsID=@ID and RequestForQuotationId=@RFQId";
+                //string queryString = "Select * from RFQ_VendorDetails where IsDeleted=0 and VendorsID=@ID and RequestForQuotationId=@RFQId";
+                string queryString = "Select rv.*, (Select rfq.IndentID from RequestForQuotation rfq where rfq.IsDeleted=0 and rfq.RequestForQuotationId=rv.RequestForQuotationId) as IndentID, (Select rfq.IndentNumber from RequestForQuotation rfq where rfq.IsDeleted=0 and rfq.RequestForQuotationId=rv.RequestForQuotationId) as IndentNumber from RFQ_VendorDetails rv where rv.IsDeleted=0 and rv.VendorsID=@ID and rv.RequestForQuotationId=@RFQId";
                 string itemQuery = "Select rfqV.* from RFQ_Vendor_ItemDetails rfqV where rfqV.IsDeleted=0 and rfqV.RFQ_VendorDetailsId=(Select rfq.RFQ_VendorDetailsId from RFQ_VendorDetails rfq where rfq.VendorsID=@ID and rfq.RequestForQuotationId=@RFQId and rfq.IsDeleted=0)";
                 using (SqlConnection con = new SqlConnection(connString))
                 {
@@ -452,50 +453,42 @@ namespace InVanWebApp.Repository
                 using (SqlConnection con = new SqlConnection(connString))
                 {
 
-                    SqlCommand cmd = new SqlCommand("usp_tbl_PurchaseOrder_Insert", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_PurchaseOrderForRFQ_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     cmd.Parameters.AddWithValue("@Tittle", model.Tittle);
                     cmd.Parameters.AddWithValue("@PONumber", model.PONumber);
                     cmd.Parameters.AddWithValue("@PODate", model.PODate);
                     cmd.Parameters.AddWithValue("@DeliveryDate", model.DeliveryDate);
+                    cmd.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
+                    cmd.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
+                    cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
+                    cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
+                    cmd.Parameters.AddWithValue("@DeliveryAddress", model.DeliveryAddress);
                     cmd.Parameters.AddWithValue("@VendorsID", model.VendorsID);
                     cmd.Parameters.AddWithValue("@CompanyName", model.CompanyName);
-                    //cmd.Parameters.AddWithValue("@DiscountValue", model.DiscountValue);
+                    cmd.Parameters.AddWithValue("@SupplierAddress", model.Address);
+                    cmd.Parameters.AddWithValue("@Amendment", model.Amendment);
+                    cmd.Parameters.AddWithValue("@RFQ_ID", model.RequestForQuotationId);
+                    cmd.Parameters.AddWithValue("@RFQ_No", model.RFQNO);
+                    cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@Signature", model.Signature);
+                    cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
+                    cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
+                    cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
+                    cmd.Parameters.AddWithValue("@AdvancedPayment", model.AdvancedPayment);
+                    cmd.Parameters.AddWithValue("@TermsAndConditionID", model.TermsAndConditionID);
+                    cmd.Parameters.AddWithValue("@TermDescription", model.Terms);
+                    cmd.Parameters.AddWithValue("@DraftFlag", 0);
+                    cmd.Parameters.AddWithValue("@PurchaseOrderStatus", "Open");
                     cmd.Parameters.AddWithValue("@CGST", model.CGST);
                     cmd.Parameters.AddWithValue("@SGST", model.SGST);
                     cmd.Parameters.AddWithValue("@IGST", model.IGST);
-                    cmd.Parameters.AddWithValue("@TermsAndConditionID", model.TermsAndConditionID);
-                    cmd.Parameters.AddWithValue("@PurchaseOrderStatus", "Open");
-                    //cmd.Parameters.AddWithValue("@Cancelled", model.Cancelled);
-                    //cmd.Parameters.AddWithValue("@ReasonForCancellation", model.ReasonForCancellation);
-                    //cmd.Parameters.AddWithValue("@DraftFlag", purchaseOrderMaster.DraftFlag);
-                    cmd.Parameters.AddWithValue("@Amendment", model.Amendment);
-                    cmd.Parameters.AddWithValue("@DeliveryAddress", model.DeliveryAddress);
-                    cmd.Parameters.AddWithValue("@SupplierAddress", model.SupplierAddress);
-                    cmd.Parameters.AddWithValue("@AdvancedPayment", model.AdvancedPayment);
-                    //cmd.Parameters.AddWithValue("@Attachment", model.Attachment);
-                    cmd.Parameters.AddWithValue("@Signature", model.Signature);
-                    //cmd.Parameters.AddWithValue("@IndentNumber", model.IndentNumber);
-                    cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
-                    cmd.Parameters.AddWithValue("@ApprovedBy", model.CreatedByID);
-                    //cmd.Parameters.AddWithValue("@ApprovedDate", Convert.ToDateTime(System.DateTime.Now));
-                    //cmd.Parameters.AddWithValue("@CheckedBy", model.CreatedBy);
-                    //cmd.Parameters.AddWithValue("@CheckedDate", Convert.ToDateTime(System.DateTime.Now));
-                    //cmd.Parameters.AddWithValue("@CreatedBy", purchaseOrderMaster.CreatedBy);
+                    cmd.Parameters.AddWithValue("@Cancelled", 0);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-                    cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
-                    cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
-                    cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
-                    cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
-                    cmd.Parameters.AddWithValue("@TermDescription", model.Terms);
-                    cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
-                    //FN: Added the below field for Indent, currency and terms description
-                    //cmd.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
-                    cmd.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
-                    cmd.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
-                    cmd.Parameters.AddWithValue("@RFQNO", model.RFQNO);
-                    cmd.Parameters.AddWithValue("@RequestForQuotationId", model.RequestForQuotationId);
+                    cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedByID);
+                    cmd.Parameters.AddWithValue("@IndentID", model.IndentID);
+                    cmd.Parameters.AddWithValue("@IndentNumber", model.IndentNumber);
 
                     //con.Open();
 
@@ -530,11 +523,11 @@ namespace InVanWebApp.Repository
 
                             itemDetails.Add(objItemDetails);
                         }
-                        
+
                         foreach (var item in itemDetails)
                         {
                             con.Open();
-                            SqlCommand cmdNew = new SqlCommand("usp_tbl_PurchaseOrderItemsDetails_Insert", con);
+                            SqlCommand cmdNew = new SqlCommand("usp_tbl_PurchaseOrderForRFQItemsDetails_Insert", con);
                             cmdNew.CommandType = CommandType.StoredProcedure;
 
                             cmdNew.Parameters.AddWithValue("@PurchaseOrderId", item.PurchaseOrderId);
@@ -548,13 +541,15 @@ namespace InVanWebApp.Repository
                             cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
                             cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedByID);
                             cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-                            
+
                             //Added the below field for Indent, currency and terms description
                             cmdNew.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
                             cmdNew.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
 
                             cmdNew.Parameters.AddWithValue("@RequestForQuotationId", model.RequestForQuotationId);
                             cmdNew.Parameters.AddWithValue("@VendorsID", model.VendorsID);
+                            cmdNew.Parameters.AddWithValue("@IndentID", model.IndentID);
+                            cmdNew.Parameters.AddWithValue("@IndentNumber", model.IndentNumber);
 
                             SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
 

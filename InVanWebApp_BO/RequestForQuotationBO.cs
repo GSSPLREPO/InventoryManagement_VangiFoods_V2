@@ -91,7 +91,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public Nullable<int> VendorsID { get; set; }
         public string CompanyName { get; set; }
-        [Required(ErrorMessage = "Please enter client address!")]
+        //[Required(ErrorMessage = "Please enter client address!")]
         public string Address { get; set; }
         public string SupplierAddress { get; set; } //Rahul added 31-01-2023 for post data. 
         public Nullable<int> LocationId { get; set; }
@@ -127,13 +127,14 @@ namespace InVanWebApp_BO
         public List<RFQ_Vendor_ItemDetailsBO> rfqVendorItemDetails { get; set; }     ///Rahul added 28-01-2023.      
 
         //Added below fields for generating PO
-        [Required(ErrorMessage ="Please enter title!")]
         public string Tittle { get; set; }
         public string PONumber { get; set; }
         public DateTime PODate { get; set; }
         public int Amendment { get; set; }
         public string Signature { get; set; }
         public decimal OtherTax { get; set; }
+        public int IndentID { get; set; }
+        public string IndentNumber { get; set; }
 
     }
 

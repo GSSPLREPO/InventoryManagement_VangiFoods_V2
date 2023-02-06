@@ -36,22 +36,6 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Is Returnable")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.IsReturnable, new List<SelectListItem>{
-                    new SelectListItem{ Text="Not-Returnable", Value = "false" },
-                    new SelectListItem{ Text="Returnable", Value = "true" }
-                    }, new { @class = "form-control" })
-
-                    @Html.ValidationMessageFor(model => model.IsReturnable, "", new { @class = "error mt-2 text-danger" })
-
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
                     @Html.Label("Sales Order Number")
                     <span style="color:red">*</span>
                 </div>
@@ -156,8 +140,8 @@
                                                 <th class="sortStyle">Item</th>
                                                 <th class="sortStyle">SO Quantity</th>
                                                 <th class="sortStyle">Balance Quantity</th>
-                                                <th class="sortStyle">Units</th>
                                                 <th class="sortStyle">Shipping Quantity</th>
+                                                <th class="sortStyle">Units</th>
                                                 <th class="sortStyle">Price (Per Unit)</th>
                                                 <th class="sortStyle">Currency</th>
                                                 <th class="sortStyle">Item Tax</th>

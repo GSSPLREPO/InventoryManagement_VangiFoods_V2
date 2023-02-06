@@ -90,22 +90,6 @@
                                 <div class="col-md-4">
                                     @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
                                 </div>
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Is Returnable</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @{if (Model.IsReturnable == true)
-                                        {
-                                            <label>Returnable</label>
-
-                                        }
-                                        else
-                                        {
-                                            <label>Not-Returnable</label>
-
-                                        }
-                                    }
-                                </div>
                             </div>
                             <br />
                             <hr />
@@ -154,6 +138,7 @@
                                                                 </td>
                                                                 <td>
                                                                     @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; width:30px;height:25px", @readonly = "readonly" })
+                                                                    %
                                                                     @*@Html.DisplayFor(x => item.ItemTaxValue, new { id = "itemTax_" + c })*@
                                                                 </td>
                                                                 <td>
@@ -261,12 +246,14 @@
                             <div class="row">
                                 <div class="col-md-10"></div>
                                 <div class="col-md-2">
-
-                                    <div id="imagePreview">
-                                        <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
-                                        @Html.HiddenFor(x => x.Signature)
-                                    </div>
-                                    @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
+                                    @{if (Model.Signature != null)
+                                        {
+                                            <div id="imagePreview">
+                                                <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
+                                                @Html.HiddenFor(x => x.Signature)
+                                            </div>
+                                        }
+                                    }
                                     <p class="font-weight-bold"> Authorized Signature</p>
                                 </div>
                             </div>

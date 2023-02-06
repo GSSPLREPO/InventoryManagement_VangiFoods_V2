@@ -218,8 +218,9 @@ function SelectedIndexChangedLocation(id) {
                         var t5 = document.createElement("input");
                         t5.id = "txtRequestedQty_" + j;
                         t5.setAttribute("value", "0");
-                        t5.setAttribute("type", "number");
-                        t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                        t5.setAttribute("type", "text");
+                        t5.setAttribute("maxlength", "8");
+                        t5.setAttribute("onkeypress", "return isNumberKey(event)");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
                     }
@@ -228,7 +229,8 @@ function SelectedIndexChangedLocation(id) {
                         t5.id = "txtIssuedQty_" + j;
                         t5.setAttribute("value", "0");
                         t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-                        t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                        t5.setAttribute("maxlength", "8");
+                        t5.setAttribute("onkeypress", "return isNumberKey(event)");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
                         var t6 = document.createElement('span');
@@ -341,8 +343,9 @@ function SelectedIndexChangedItem(id) {
                         var t5 = document.createElement("input");
                         t5.id = "txtRequestedQty_" + j;
                         t5.setAttribute("value", "0");
-                        t5.setAttribute("type", "number");
-                        t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                        t5.setAttribute("type", "text");
+                        t5.setAttribute("maxlength", "8");
+                        t5.setAttribute("onkeypress", "return isNumberKey(event)");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
                     }
@@ -350,8 +353,10 @@ function SelectedIndexChangedItem(id) {
                         var t5 = document.createElement("input");
                         t5.id = "txtIssuedQty_" + j;
                         t5.setAttribute("value", "0");
+                        t5.setAttribute("maxlength", "8");
+                        t5.setAttribute("type", "text");
+                        t5.setAttribute("onkeypress", "return isNumberKey(event)");
                         t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-                        t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
                         var t6 = document.createElement('span');
@@ -501,14 +506,7 @@ function createJson() {
     //alert(TxtItemDetails);
 }
 
-function isNumberKey(evt, id) {
-    var len = $('#' + id).val().length;
-    len = parseFloat(len);
-    if (len > 8)
-        return false;
-    else
-        return true;
-
+function isNumberKey(evt) {
     var keycode = (evt.which) ? evt.which : evt.keyCode;
     if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
         return false;
@@ -519,10 +517,32 @@ function isNumberKey(evt, id) {
             return false;
         else
             return true;
-
     }
     return true;
 }
+
+//function isNumberKey(evt, id) {
+//    //var len = $('#' + id).val().length;
+//    //len = parseFloat(len);
+//    //if (len > 8)
+//    //    return false;
+//    //else
+//    //    return true;
+
+//    var keycode = (evt.which) ? evt.which : evt.keyCode;
+//    if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+//        return false;
+//    }
+//    else {
+//        var parts = evt.srcElement.value.split('.');
+//        if (parts.length > 1 && keycode == 46)
+//            return false;
+//        else
+//            return true;
+
+//    }
+//    return true;
+//}
 
 function isAlphaNumeric(evt, id) {
     var keycode = (evt.which) ? evt.which : evt.keyCode;

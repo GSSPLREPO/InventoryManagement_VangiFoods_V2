@@ -10,12 +10,15 @@ namespace InVanWebApp_BO
     public class StockTransferBO 
     {
         public int ID { get; set; }
+        [Required(ErrorMessage = "Select Different From Location!")]
         public Nullable<int> FromLocationId { get; set; }
+        [Required(ErrorMessage = "Select Different To Location!")]
         public Nullable<int> ToLocationId { get; set; }
-        public Nullable<int> ItemId { get; set; }        
+        public Nullable<int> ItemId { get; set; }
+        [Required(ErrorMessage = "Enter Required Quantity!")]
         public Nullable<double> TransferQuantity { get; set; }
         public Nullable<double> RequiredQuantity { get; set; } 
-        [Required(ErrorMessage = "Enter remakrs!")]
+        [Required(ErrorMessage = "Enter remarks!")]
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -26,6 +29,7 @@ namespace InVanWebApp_BO
         public string Item_Code { get; set; }
 
         public string ItemUnit { get; set; } //Rahul added on 09/11/2022
+        public decimal ItemUnitPrice { get; set; }
         public Nullable<double> FinalQuantity { get; set; }  //Rahul added on 09/11/2022 
         public string FromLocationName { get; set; }  //Rahul added on 09/11/2022  
         public string ToLocationName { get; set; }  //Rahul added on 09/11/2022  

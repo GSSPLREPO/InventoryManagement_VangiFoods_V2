@@ -214,8 +214,8 @@
                             t7.setAttribute("value", result[j].ItemId);
                             t7.setAttribute("disabled", "true");
                             t7.setAttribute("class", "d-none");
-                            cell.setAttribute("class", "d-none"); //Rahul added 12-01-2023.
                             cell.appendChild(t7);
+                            cell.setAttribute("style", "display:none"); //Rahul added 12-01-2023.
                         }
                         else if (i == 11) {
                             var t7 = document.createElement("input");
@@ -223,8 +223,8 @@
                             t7.setAttribute("value", result[j].ItemTaxValue);
                             t7.setAttribute("disabled", "true");
                             t7.setAttribute("class", "d-none");
-                            cell.setAttribute("class", "d-none"); //Rahul added 12-01-2023.
                             cell.appendChild(t7);
+                            cell.setAttribute("style", "display:none"); //Rahul added 12-01-2023.
                         }
                     }
 

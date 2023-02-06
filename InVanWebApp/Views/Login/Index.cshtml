@@ -23,22 +23,34 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link href="~/Theme/MainContent/css/style.css" rel="stylesheet" />
+    <link href="~/Theme/MainContent/css/customLogin.css" rel="stylesheet" />
+
 
     <!-- endinject -->
     <link rel="shortcut icon" href="~/Theme/MainContent/images/favicon.png" />
 </head>
 
+@*<body>
+    </body>*@
+
 <body>
+
+
+
     <div class="container-scroller">
         <div class="container-fluid page-body-wrapper full-page-wrapper">
             <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
+
                 <div class="row">
-                    <div class="col-md-7 d-flex align-items-center justify-content-center">
-                        <div class="auth-form-transparent text-left p-3">
-                            <div class="brand-logo">
-                                <img src="~/Theme/MainContent/images/Logo.svg" alt="Vangi Foods" class="d-none" />
-                            </div>
-                            <div class="shadow-lg p-4 pb-5 bg-white rounded" style="padding-bottom:1rem !important; padding: 2rem!important">
+                    @*<div class="col-md-7 d-flex align-items-center justify-content-center">*@
+                    <div class="justify-content-center">
+                        <div class="">
+                            @*<div class="shadow-lg p-4 pb-5 bg-white rounded boxShadow" style="padding-bottom:1rem !important; padding: 2rem!important">*@
+                            <div class="shadow-lg p-4 pb-5 bg-white rounded boxShadow formcontent">
+                                <div class="pb-2">
+                                    @*<img src="../Theme/MainContent/images/Logo.svg" alt="Vangi Foods" class="d-none" />*@
+                                    <img src="~/Theme/MainContent/images/logoForLogin.png" alt="Vangi Foods" style="height:20%;width:20%" />
+                                </div>
                                 @*rahul code 08/09/2022*@
                                 @using (Html.BeginForm("Index", "Login", FormMethod.Post))
                                 {
@@ -72,21 +84,27 @@
                                             <button id="btnLogin" type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style="background: linear-gradient(85deg, #392c70, #6a005b); line-height: 0.5;">Login</button>
 
                                         </div>
+                                        <div class=" justify-content-space-between mb-4">
+                                            <span class="float-left mt-1" style="font-size:12px;">Version: 1.1.0</span>
+                                            <a class="float-right brand-logo-mini mb-3" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
+                                            <span class="float-right mt-1" style="font-size:12px;">Powered by:</span>
+                                            
+                                        </div>
 
                                     </form>
-                                    <div class=" justify-content-space-between mb-5">
-                                        <span class="float-left" style="font-size:12px;">Version: 1.1.0</span>
-                                        <div class="float-right">
-                                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center" style="font-size:12px;">
-                                                <span>
-                                                    Powered by
+                                    @*<div class=" justify-content-space-between mb-5">
+                                            <span class="float-left" style="font-size:12px;">Version: 1.1.0</span>
+                                            <div class="float-right">
+                                                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center" style="font-size:12px;">
+                                                    <span>
+                                                        Powered by
+                                                    </span>
+                                                    <span>
+                                                        <a class="brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
+                                                    </span>
                                                 </span>
-                                                <span>
-                                                <a style="margin-right:0rem !important" class="brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
+                                            </div>
+                                        </div>*@
                                 }
                             </div>
                             <br />
@@ -94,7 +112,7 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <img src="~/Theme/MainContent/images/auth/login-bg1.jpg" />
+                        @*<img src="~/Theme/MainContent/images/auth/login-bg1.jpg" />*@
                     </div>
 
                 </div>
@@ -105,6 +123,7 @@
     </div>
 
 </body>
+
 
 
 <!-- Mirrored from www.urbanui.com/melody/template/pages/samples/login-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 15 Sep 2018 06:08:53 GMT -->

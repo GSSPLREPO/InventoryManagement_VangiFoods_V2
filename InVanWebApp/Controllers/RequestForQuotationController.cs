@@ -601,7 +601,7 @@ namespace InVanWebApp.Controllers
                         response = _requestForQuotationRepository.InsertPO(model);
                         if (response.Status)
                         {
-                            TempData["Success"] = "<script>alert('Purchase Order inserted successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Purchase Order generated successfully!');</script>";
                         }
                         else
                         {

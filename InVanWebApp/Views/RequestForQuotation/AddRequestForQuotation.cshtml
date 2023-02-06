@@ -252,7 +252,6 @@
 
     //---BiddingStartDate todaysDate start ------
     function deliveryDate() {
-        debugger
         const d = new Date();
         d.setYear(d.getFullYear());
         var id = "DeliveryDate";
@@ -383,7 +382,7 @@
                             t4.id = "RequiredQuantity_" + j;
                             t4.setAttribute("type", "text");
                             t4.setAttribute("maxlength", "8");
-                            t4.setAttribute("value", 0);
+                            t4.setAttribute("value", result[j].RequiredQuantity);
                             t4.setAttribute("class", "form-control form-control-sm text-right");
                             t4.setAttribute("onchange", "OnChangeQuantity($(this).val(),id)");
                             t4.setAttribute("onkeypress", "return isNumberKey(event)");
