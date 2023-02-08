@@ -36,7 +36,9 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    Inward Number
+                    @*Inward Number*@   @*Rahul added Label+span 08-02-23.*@
+                    @Html.Label("Inward QC Number")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",

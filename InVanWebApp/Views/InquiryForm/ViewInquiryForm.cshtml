@@ -49,7 +49,9 @@
                                 <label class="font-weight-bold">Inquiry Date</label>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.DateOfInquiry, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                @*@Html.TextBoxFor(model => model.DateOfInquiry, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })*@
+                                @*Rahul updated TextBoxFor(model => model.DateOfInquiry, "{0:dd-MM-yyyy}" 07-02-23.*@
+                                @Html.TextBoxFor(model => model.DateOfInquiry, "{0:dd-MM-yyyy}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                             </div>
                         </div>
 
@@ -109,7 +111,8 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                        <table class="table table-striped" id="submissionTable">
+                                        @*Rahul updated class table-hover and added style in table tag 07-02-23.*@
+                                        <table class="table table-hover" id="submissionTable" style="table-layout: auto;width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th class="sortStyle">
@@ -121,30 +124,36 @@
                                                     <th class="sortStyle">
                                                         Item Description
                                                     </th>
-                                                    <th class="sortStyle">
+                                                    @*Rahul added style in Quantity (Kg) tag 07-02-23.*@
+                                                    <th class="sortStyle text-wrap" style="width:66px;">
                                                         Quantity (Kg)
                                                     </th>
                                                     <th class="sortStyle">
                                                         Units
                                                     </th>
-                                                    <th class="sortStyle">
+                                                    @*Rahul added class 07-02-23.*@
+                                                    <th class="sortStyle text-wrap">
                                                         Price Per Unit (Rs)
                                                     </th>
-                                                    <th class="sortStyle">
+                                                    @*Rahul added class 07-02-23.*@
+                                                    <th class="sortStyle text-wrap">
                                                         Quoted Price (Per Unit)
                                                     </th>
-                                                    <th class="sortStyle">
+                                                    @*Rahul added class 07-02-23.*@
+                                                    <th class="sortStyle text-wrap">
                                                         Expected Price (Per Unit)
                                                     </th>
-                                                    <th class="sortStyle">
+                                                    @*Rahul added class 07-02-23.*@
+                                                    <th class="sortStyle text-wrap">
                                                         Closer Price (Per Unit)
                                                     </th>
                                                     <th>Currency</th>
                                                     <th class="sortStyle">
                                                         Tax (%)
                                                     </th>
-                                                    <th class="sortStyle">
-                                                        Total before tax
+                                                    @*Rahul added class 08-02-23.*@
+                                                    <th class="sortStyle text-wrap">
+                                                        Total Before Tax
                                                     </th>
                                                     <th class="sortStyle">
                                                         Delivery Date
@@ -153,7 +162,7 @@
                                                         HSN Code
                                                     </th>
                                                     <th class="sortStyle">
-                                                        Remarks                                                        
+                                                        Remarks
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -187,25 +196,28 @@
                                                                 @Html.DisplayFor(x => item.ExpectedPrice)
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(x => item.CloserPrice) 
+                                                                @Html.DisplayFor(x => item.CloserPrice)
                                                             </td>
                                                             <td>
                                                                 @Html.DisplayFor(x => item.CurrencyName)
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                @*Rahul added style width:80px; 08-02-23.*@
+                                                                @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; width:80px;line-height: 30px;", @readonly = "readonly" })
                                                             </td>
                                                             <td>
-                                                                @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                @*Rahul added style width:80px; 08-02-23.*@
+                                                                @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none; width:80px;line-height: 30px;", @readonly = "readonly" })
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(x => item.DeliveryDate) 
+                                                                @*@Html.DisplayFor(x => item.DeliveryDate)*@    @*Rahul added TextBoxFor x => item.DeliveryDate, "{0:yyyy-MM-dd}" 08-02-23.*@
+                                                                @Html.TextBoxFor(x => item.DeliveryDate, "{0:dd-MM-yyyy}", new { style = "border:none; color:black; font-size: 100%; width:80px; line-height: 30px;", @readonly = "readonly" })
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(x => item.HSN_Code) 
+                                                                @Html.DisplayFor(x => item.HSN_Code)
                                                             </td>
                                                             <td>
-                                                                @Html.DisplayFor(x => item.Remarks) 
+                                                                @Html.DisplayFor(x => item.Remarks)
                                                             </td>
                                                         </tr>
                                                         { c++; }
