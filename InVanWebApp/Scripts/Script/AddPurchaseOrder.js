@@ -170,6 +170,9 @@ var TxtItemDetails = "";
 
 function OnChangeUnitPrice(value, id) {
     var rowNo = id.split('_')[1];
+    if (value == '')
+        value = 0;
+
     var UnitPrice = parseFloat(value);
     if (UnitPrice <= 0 || value == null || value == '') {
         alert("Price cannot be negative, null or zero!");
@@ -239,6 +242,13 @@ function CalculateTotalBeforeTax() {
     var totalTax = 0;
     totalTax = Math.round(totalTax);
 
+    var OtherTax = document.getElementById("OtherTax").value;
+
+    if (OtherTax == '')
+        OtherTax = 0;
+
+    OtherTax = parseFloat(OtherTax);
+
     var i = 0;
     while (i <= length) {
         var temp = document.getElementById("TotalItemCost_" + i).value;
@@ -253,9 +263,11 @@ function CalculateTotalBeforeTax() {
 
     $('#TotalBeforeTax').val(total.toFixed(2));
     $('#TotalTax').val(totalTax.toFixed(2));
-    var tempGrandTotal = total + totalTax;
-    $('#TotalAfterTax').val(tempGrandTotal.toFixed(2));
-    $('#GrandTotal').val(tempGrandTotal.toFixed(2));
+    var tempGrandTotal = total + totalTax + OtherTax;
+    tempGrandTotal = Math.round(tempGrandTotal);
+    //var tempGrandTotal = total + totalTax;
+    $('#TotalAfterTax').val(tempGrandTotal);
+    $('#GrandTotal').val(tempGrandTotal);
 
     createJson();
 }
@@ -310,6 +322,9 @@ function OnChangeQty(value, id) {
     var quantity = value;
     var BalanceQty = $("#BalanceQuantity_" + rowNo).val();
     BalanceQty = parseFloat(BalanceQty);
+    if (quantity == '')
+        quantity = 0;
+
     quantity = parseFloat(quantity);
     var RequiredQty = (document.getElementById("RequiredQuantity_" + rowNo)).innerHTML.split(" ")[0];
     RequiredQty = parseFloat(RequiredQty);

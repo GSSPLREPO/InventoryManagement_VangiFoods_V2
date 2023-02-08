@@ -21,7 +21,7 @@ namespace InVanWebApp.Repository
 
         #region  Bind grid
         /// <summary>
-        /// Farheen: This function is for fecthing list of outward note.
+        /// Farheen: This function is for fecthing list of delivery challan.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<DeliveryChallanBO> GetAll()
@@ -73,7 +73,6 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@SupplierAddress", model.SupplierAddress);
                     cmd.Parameters.AddWithValue("@ShippingAddress", model.ShippingAddress);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
-                    cmd.Parameters.AddWithValue("@IsReturnable", model.IsReturnable);
                     cmd.Parameters.AddWithValue("@TermsAndCondition_ID", model.TermsAndCondition_ID);
                     cmd.Parameters.AddWithValue("@Terms", model.Terms);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);

@@ -43,5 +43,6 @@ namespace InVanWebApp_BO
         public float CurrencyPrice { get; set; }
         public string TxtItemDetails { get; set; }
         public List<CreditNoteDetailsBO> creditNoteDetails { get; set; }
+        public string UserName { get; set; }
     }
 }

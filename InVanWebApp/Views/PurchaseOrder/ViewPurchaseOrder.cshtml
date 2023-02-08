@@ -74,6 +74,12 @@
                                 <div class="col-md-4">
                                     @Html.DisplayFor(model => model.Amendment)
                                 </div>
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Indent Number</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.IndentNumber)
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-2">
@@ -224,6 +230,15 @@
                                         <div class="col-md-6">
                                             <input class="text-right" id="TotalTax" name="TotalTax" style="border:none;" readonly="readonly" />
                                             <input class="text-left font-weight-bold CurrencyType" id="CurrencyType1" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="font-weight-bold">Other Tax:</label>&emsp;
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(model => model.OtherTax, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType2" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
                                         </div>
                                     </div>
                                     <div class="row">

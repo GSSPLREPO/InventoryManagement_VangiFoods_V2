@@ -17,7 +17,7 @@
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Transactions</a>
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("Index","Dashboard")">Transactions</a>
                     </li>
                     <li class="breadcrumb-item active">Request For Quotation</li>
                 </ol>
@@ -40,11 +40,8 @@
                                             <th>@Html.DisplayName("Date")</th>
                                             <th>@Html.DisplayName("Delivery Date")</th>
                                             <th>@Html.DisplayName("Bidding Start Date")</th>
-                                            <th>@Html.DisplayName("Bidding End Date")</th>
-                                            <th>@Html.DisplayName("HSN_Code")</th>
-                                            <th>@Html.DisplayName("Quantity")</th>
-                                            <th>@Html.DisplayName("Created By Date")</th>
-                                            @*<th>@Html.DisplayName("")</th>*@
+                                            <th>@Html.DisplayName("Bidding End Date")</th>                                            
+                                            <th>@Html.DisplayName("Created By Date")</th>                                            
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
@@ -52,22 +49,19 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>
-                                                    @*@Html.DisplayFor(modelItem => item.RFQNO)*@
+                                                <td>                                                    
                                                     <button type="button" class="btn btn-sm btn-link" style="background-color:transparent" data-toggle="modal" title="RFQ Summary View" data-target="#myModal" id="@item.RequestForQuotationId" onclick="RFQItemViewDetails(this.id)">@Html.DisplayFor(modelItem => item.RFQNO)</button>
                                                 </td>
                                                 <td>@Html.DisplayFor(modelItem => item.Date)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.DeliveryDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.BiddingStartDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.BiddingEndDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.HSN_Code)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.BiddingEndDate)</td>                                                
                                                 <td>@Html.DisplayFor(modelItem => item.CreatedByDate)</td>
                                                 <td>                                                    
-                                                    @*<a href=@Url.Action("EditRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId }) title="Edit RFQ">
+                                                    <a href=@Url.Action("EditRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId }) title="Edit RFQ">
                                                         <i class="fa fa-edit text-primary"></i>
                                                     </a> 
-                                                    <span>&nbsp;&nbsp;</span>*@  
+                                                    <span>&nbsp;&nbsp;</span>  
                                                     <a href=@Url.Action("DeleteRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId, }) onclick="return confirm('Are you sure want to delete the RFQ?');" title="Delete RFQ">                                                           
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a><span>&nbsp;&nbsp;</span>                                                    
@@ -77,8 +71,8 @@
                                     </tbody>
                                 </table>
                                 @*Model Started*@
-                                <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">                                    
-                                    <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal fade" id="myModal"  data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">                                    
+                                    <div class="modal-dialog modal-xl" role="document">
 
                                         <!-- Modal content-->
                                         <div class="modal-content">                                            
@@ -90,9 +84,9 @@
                                             </div>
                                             <div class="modal-body">
                                             </div>
-                                            <div class="modal-footer">
+                                            @*<div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
+                                            </div>*@ 
                                         </div>
                                     </div>
                                 </div>
@@ -133,8 +127,7 @@
             "pageLength": 20
         });
 
-        function RFQItemViewDetails(ID) {
-            debugger
+        function RFQItemViewDetails(ID) {            
             $.get("@Url.Action("RequestForQuotationView", "RequestForQuotation")/" + ID,
                 function (data) {
                     $('.modal-body').html(data);

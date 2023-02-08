@@ -178,6 +178,7 @@
     <Compile Include="Controllers\IssueNoteController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\DeliveryChallanController.cs" />
+    <Compile Include="Controllers\OutwardNoteController.cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RejectionNoteController.cs" />
@@ -457,6 +458,7 @@
     <Compile Include="Repository\Interface\IIssueNoteRepository.cs" />
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
     <Compile Include="Repository\Interface\IDeliveryChallanRepository.cs" />
+    <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IRejectionNoteRepository.cs" />
     <Compile Include="Repository\Interface\IReportRepository.cs" />
     <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
@@ -487,6 +489,7 @@
     <Compile Include="Repository\LoginRepository.cs" />
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\DeliveryChallanRepository.cs" />
+    <Compile Include="Repository\OutwardNoteRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
     <Compile Include="Repository\PurchaseOrderRepository.cs" />
     <Compile Include="Repository\RejectionNoteRepository.cs" />
@@ -1840,8 +1843,13 @@
     <Content Include="Highcharts-10.3.1\code\themes\sand-signika.js.map" />
     <Content Include="Highcharts-10.3.1\code\themes\skies.js.map" />
     <Content Include="Highcharts-10.3.1\code\themes\sunset.js.map" />
+    <Content Include="Scripts\Script\AddDeliveryChallan.js" />
     <Content Include="Scripts\Script\AddIssueNote.js" />
+    <Content Include="Scripts\Script\AddOutwardNote.js" />
     <Content Include="Scripts\Script\AddStockAdjustment.js" />
+    <Content Include="Scripts\Script\EditOutwardNote.js" />
+    <Content Include="Theme\MainContent\css\customLogin.css" />
+    <Content Include="Theme\MainContent\images\LoginBackImg.jpg" />
     <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
     <Content Include="Views\RejectionNote\Index.cshtml" />
     <Content Include="Views\RejectionNote\ViewRejectionNote.cshtml" />
@@ -2885,6 +2893,14 @@
     <Content Include="Views\DeliveryChallan\Index.cshtml" />
     <Content Include="Views\DeliveryChallan\AddDeliveryChallan.cshtml" />
     <Content Include="Views\DeliveryChallan\ViewDeliveryChallan.cshtml" />
+    <Content Include="Views\OutwardNote\Index.cshtml" />
+    <Content Include="Views\OutwardNote\AddOutwardNote.cshtml" />
+    <Content Include="Views\OutwardNote\ViewOutwardNote.cshtml" />
+    <Content Include="Views\OutwardNote\EditOutwardNote.cshtml" />
+    <Content Include="Views\DebitNote\ViewDebitNote.cshtml" />
+    <Content Include="Views\RequestForQuotation\AddRFQSupplierDetails.cshtml" />
+    <Content Include="Views\RequestForQuotation\ViewRFQSupplierDetails.cshtml" />
+    <Content Include="Views\RequestForQuotation\GeneratePO.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

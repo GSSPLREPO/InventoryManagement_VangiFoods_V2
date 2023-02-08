@@ -265,7 +265,8 @@ namespace InVanWebApp.Repository
                             InwardNoteNumber = reader["InwardNoteNumber"].ToString(),
                             LocationName = reader["LocationName"].ToString(),
                             DeliveryAddress = reader["DeliveryAddress"].ToString(),
-                            SupplierAddress = reader["SupplierAddress"].ToString()
+                            SupplierAddress = reader["SupplierAddress"].ToString(),
+                            Remark = reader["Remark"].ToString()
                         };
                     }
                     con.Close();

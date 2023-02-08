@@ -1,6 +1,4 @@
-﻿
-@model InVanWebApp_BO.PurchaseOrderBO
-
+﻿@model InVanWebApp_BO.PurchaseOrderBO
 @{
     ViewBag.Title = "AddPurchaseOrder";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -22,7 +20,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", placeholder = "Purchase Order For Vangi Foods", type = "text" })
+                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", type = "text" })
                     @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -229,7 +227,7 @@
                                 </center>
                             </div>
                         </div>
-                        <p style="padding-left: 5%;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
+                        <p style="padding-left: 5%;color:red;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
                     </div>
                     <div class="card" h-50>
                         <div class="card-body">
@@ -287,8 +285,12 @@
                                     <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
-                                    <label><b>Total tax: </b></label>
+                                    <label><b>Total tax (on items): </b></label>
                                     <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" readonly="readonly" />
+                                </div>
+                                <div class="row mb-2">
+                                    <label><b>Other Tax: </b></label>
+                                    <input class="form-control text-right form-control-sm" id="OtherTax" maxlength="8" name="OtherTax" value="0" onkeypress="return isNumberKey(event)" onchange="CalculateTotalBeforeTax()" />
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Total (after tax): </b></label>

@@ -175,7 +175,7 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region This method is for View the Outward Note
+        #region This method is for View the Delivery Challan
         [HttpGet]
         public ActionResult ViewDeliveryChallan(int ID)
         {
@@ -206,26 +206,16 @@ namespace InVanWebApp.Controllers
 
         public void GenerateDocumentNo()
         {
-            //==========Document number for Stock adjustment============//
             GetDocumentNumber objDocNo = new GetDocumentNumber();
 
-            //=========here document type=14 i.e. for generating the Outward Note (logic is in SP).====//
+            //=========here document type=14 i.e. for generating the Delivery challan (logic is in SP).====//
             var DocumentNumber = objDocNo.GetDocumentNo(14);
             ViewData["DocumentNo"] = DocumentNumber;
         }
 
-        //public JsonResult GetItemList(string id)
-        //{
-        //    int Location_Id = 0;
-        //    if (id != "" && id != null)
-        //        Location_Id = Convert.ToInt32(id);
-
-        //    var result = _stockAdjustmentRepository.GetItemListByLocationId(Location_Id);
-        //    return Json(result);
-        //}
         #endregion
 
-        #region Fetch SO details for Outward note
+        #region Fetch SO details for DeliveryChallan
         public JsonResult GetSODetails(string id)
         {
             int SOId = 0;

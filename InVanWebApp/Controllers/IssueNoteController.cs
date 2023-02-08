@@ -93,7 +93,7 @@ namespace InVanWebApp.Controllers
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         if (model.txtItemDetails == null || model.txtItemDetails == "[]]")
                         {
-                            TempData["Success"] = "<script>alert('No item is isssued! Material issue note cannot be created!');</script>";
+                            TempData["Success"] = "<script>alert('No item is issued! Material issue note cannot be created!');</script>";
                             BindLocationName();
                             GenerateDocumentNo();
                             BindUserName();

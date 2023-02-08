@@ -124,7 +124,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@TotalAfterTax", purchaseOrderMaster.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", purchaseOrderMaster.GrandTotal);
                     cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.Terms);
-
+                    cmd.Parameters.AddWithValue("@OtherTax",purchaseOrderMaster.OtherTax);
                     //FN: Added the below field for Indent, currency and terms description
                     cmd.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
                     cmd.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
@@ -243,7 +243,7 @@ namespace InVanWebApp.Repository
         }
 
         /// <summary>
-        /// Rahul: Update record
+        /// Farheen: Update record
         /// </summary>
         /// <param name="model"></param>
         public ResponseMessageBO Update(PurchaseOrderBO model)
@@ -279,6 +279,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
+                    cmd.Parameters.AddWithValue("@OtherTax",model.OtherTax);
                     //FN: Added the below field for Indent, currency and terms description
 
                     cmd.Parameters.AddWithValue("@IndentID", model.IndentID);

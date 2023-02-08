@@ -221,7 +221,8 @@ namespace InVanWebApp.Repository
                             Item_Name = reader["Item_Name"].ToString(),
                             Item_Code = reader["Item_Code"].ToString(),
                             UnitCode = reader["ItemUnit"].ToString(),
-                            RequiredQuantity = Convert.ToDouble(reader["RequiredQuantity"])
+                            RequiredQuantity = Convert.ToDouble(reader["RequiredQuantity"]),
+                            UnitPrice = Convert.ToDouble(reader["ItemUnitPrice"])//added 06-02-2023. 
                         };
 
                     }
@@ -266,8 +267,8 @@ namespace InVanWebApp.Repository
                     var json = new JavaScriptSerializer();
                     var data = json.Deserialize<Dictionary<string, string>[]>(stockTransferMaster.TxtItemDetails);
 
-                    List<LocationWiseStockBO> locationwsieStockDetails = new List<LocationWiseStockBO>();
                     List<StockTransferBO> transfersDetails = new List<StockTransferBO>();
+                    List<LocationWiseStockBO> locationwsieStockDetails = new List<LocationWiseStockBO>();
 
                     foreach (var item in data)
                     {
@@ -279,9 +280,11 @@ namespace InVanWebApp.Repository
                         stockTransfer.InwardDateOfItem = Convert.ToDateTime(item.ElementAt(2).Value);
                         stockTransfer.Item_Name = item.ElementAt(3).Value.ToString();
                         stockTransfer.RequiredQuantity = Convert.ToDouble(item.ElementAt(4).Value);
-                        stockTransfer.TransferQuantity = Convert.ToDouble(item.ElementAt(6).Value);
-                        stockTransfer.FinalQuantity = Convert.ToDouble(item.ElementAt(7).Value);
-                        stockTransfer.Remarks = item.ElementAt(8).Value.ToString();
+                        stockTransfer.ItemUnit = item.ElementAt(5).Value.ToString();  //Rahul added on 06-02-23. 
+                        stockTransfer.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(6).Value);  //Rahul added on 06-02-23.  
+                        stockTransfer.TransferQuantity = Convert.ToDouble(item.ElementAt(7).Value);
+                        stockTransfer.FinalQuantity = Convert.ToDouble(item.ElementAt(8).Value);
+                        stockTransfer.Remarks = item.ElementAt(9).Value.ToString();
 
                         transfersDetails.Add(stockTransfer);
 
@@ -297,6 +300,8 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);
                         cmdNew.Parameters.AddWithValue("@Item_Name", item.Item_Name);
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);  //Rahul added on 06-02-23. 
+                        cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);   //Rahul added on 06-02-23. 
                         cmdNew.Parameters.AddWithValue("@TransferQuantity", item.TransferQuantity);
                         cmdNew.Parameters.AddWithValue("@RequiredQuantity", item.RequiredQuantity);
                         cmdNew.Parameters.AddWithValue("@FinalQuantity", item.FinalQuantity);
@@ -321,10 +326,12 @@ namespace InVanWebApp.Repository
                     {
                         LocationWiseStockBO objLocationWiseStockDetails = new LocationWiseStockBO();
                         //objItemDetails.PO_Id = PO_Id;
-                        objLocationWiseStockDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
-                        objLocationWiseStockDetails.Quantity = Convert.ToDouble(item.ElementAt(7).Value);
-                        objLocationWiseStockDetails.Trans_Quantity = Convert.ToDouble(item.ElementAt(6).Value);
                         objLocationWiseStockDetails.LocationID = Convert.ToInt32(stockTransferMaster.FromLocationId);
+                        objLocationWiseStockDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
+                        objLocationWiseStockDetails.ItemUnit = item.ElementAt(5).Value.ToString();  //Rahul added on 06-02-23.  
+                        objLocationWiseStockDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(6).Value);  //Rahul added on 06-02-23.  
+                        objLocationWiseStockDetails.Trans_Quantity = Convert.ToDouble(item.ElementAt(7).Value);
+                        objLocationWiseStockDetails.Quantity = Convert.ToDouble(item.ElementAt(8).Value);
                         locationwsieStockDetails.Add(objLocationWiseStockDetails);
                     }
                     //Location Wise Stock 
@@ -337,9 +344,11 @@ namespace InVanWebApp.Repository
                         //cmdNew.Parameters.AddWithValue("@ID", item.ID);
                         cmdNew.Parameters.AddWithValue("@From_LocationID", stockTransferMaster.FromLocationId);
                         cmdNew.Parameters.AddWithValue("@To_LocationID", stockTransferMaster.ToLocationId);
-                        cmdNew.Parameters.AddWithValue("@Quantity", item.Quantity);
-                        cmdNew.Parameters.AddWithValue("@Transf_Quantity", item.Trans_Quantity);
                         cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);
+                        cmdNew.Parameters.AddWithValue("@Transf_Quantity", item.Trans_Quantity);
+                        cmdNew.Parameters.AddWithValue("@Quantity", item.Quantity);
+                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);  //Rahul added on 06-02-23. 
+                        cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);   //Rahul added on 06-02-23. 
                         cmdNew.Parameters.AddWithValue("@CreatedBy", stockTransferMaster.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@LastModifiedBy", stockTransferMaster.CreatedBy);

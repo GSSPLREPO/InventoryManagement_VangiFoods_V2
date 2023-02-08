@@ -73,7 +73,7 @@
                     @Html.ValidationMessageFor(model => model.ContactPersonName, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Email ID")                    
+                    @Html.Label("Email ID")
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.ClientEmail, new { @class = "form-control form-control-sm", type = "text", placeholder = "Client Email Id" })
@@ -249,8 +249,8 @@
                                                     @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                 </td>
                                                 @*<td>
-                                                @Html.TextBoxFor(model => model.CloserPrice, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                            </td>*@
+                                                        @Html.TextBoxFor(model => model.CloserPrice, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                    </td>*@
                                                 <td>
                                                     @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })
                                                     @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
@@ -419,7 +419,7 @@
                     $("#CurrencyName").val(itemDescription.IndianCurrencyValue);
                     $("#ItemTaxValue").val(itemDescription.ItemTaxValue);
                     $("#ItemQuantity").val('0');
-                    
+
                     $("#ItemTotalPrice").val('');
                     $("#TotalBeforeTax").val('');
                     $("#TotalTax").val('');
@@ -443,6 +443,9 @@
         var itemId = "ItemID_" + count;
         var currencyID = $('#CurrencyID').val();
         var selectedItemId = $("#" + itemId).val();
+        var delDate_Id = 'deliveryDate_' + count;
+        deliveryDate(delDate_Id);
+
                     $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetitemDetails")', // we are calling json method
@@ -478,6 +481,15 @@
 
     var counter = 1;
 
+    function deliveryDate(id) {
+        const d = new Date();
+        d.setYear(d.getFullYear());
+        //var id = "deliveryDate_";
+        var tempDate = d.toISOString().split("T")[0];
+        $("#" + id).val(tempDate);
+        document.getElementById(id).setAttribute("min", tempDate.toString());
+    }
+
     $("#AddItem").click(function () {
         ////debugger
         //'<select id="ItemID" class="form-control" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
@@ -508,7 +520,7 @@
             '</td>' +
             '<td>' +
             /*'<input type="text" id="' + itemQuantity + '" onkeyup="calcTax(' + counter + ',' + this.value + ')"; class="form-control" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +*/
-            '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0"     required="required" />' +
+            '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0" required="required" onkeypress = "return isNumberKey(event)"  MaxLength = "8"  />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
@@ -517,16 +529,16 @@
             '<input type="text" id="' + itemPrice + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemPrice + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            /// Rahul added 03/01/2023. 
+            /// Rahul added 03/01/2023.
             '<input type="text" id="' + quotedPrice + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + quotedPrice + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + expectedPrice + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + expectedPrice + '" value="" required="required" />' +
+            '<input type="text" id="' + expectedPrice + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + expectedPrice + '" value="" required="required" onkeypress = "return isNumberKey(event)" MaxLength = "8" />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + closerPrice + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + closerPrice + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
-            '<td>' +            
+            '<td>' +
             '<input type="text" id="' + currencyName + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + currencyName + '"readonly = "readonly" required="required" />' +
             '</td>' +
             '<td>' +
@@ -556,6 +568,9 @@
     function CalItemTotalPrice(value, id) {
         var temp_rowNo = id.split('_');
         var rowNo = temp_rowNo[1];
+        if (value == '')
+            value = 0;
+
         value = parseFloat(value);
         if (value != 0) {
             var price = $("#itemPrice_" + rowNo).val();
@@ -564,6 +579,8 @@
             totalPrice = Math.round(totalPrice);
             $("#totalItemCost_" + rowNo).val(totalPrice);
         }
+        else
+            $("#totalItemCost_" + rowNo).val(0);
 
         CalculateTotalBeforeTax();
     }

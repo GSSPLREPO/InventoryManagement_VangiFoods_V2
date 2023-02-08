@@ -5,144 +5,116 @@
 }
 
 
-@using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddDebitNote", "DebitNote"))
 {
     @Html.AntiForgeryToken()
+
     <div class="card">
         <div class="card-body">
-            <h4>Add Debit / Rejection Note Note</h4>
+            <h4>Add Debit Note</h4>
             <hr />
             @Html.ValidationSummary(true)
+
             <div class="row">
                 <div class="col-md-2">
-                    <label>Note Type <span style="color:red">*</span> </label>
-                </div>
-                <div class="col-md-4">
-                    <select class="form-control" id="NoteType" name="NoteType">
-                        <option value="DebitNote">Debit Note</option>
-                        <option value="RejectionNote">Rejection Note</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label id="lblNoteDate">Debit Note Date</label>
+                    @Html.Label("Debit Note Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.NoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-                    @Html.ValidationMessageFor(model => model.NoteDate, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.DebitNoteNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.DebitNoteNo, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Debit Note Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.DebitNoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.DebitNoteDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("PO Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.PO_ID, (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedPO(id)" })
+                    @Html.ValidationMessageFor(model => model.PO_ID, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.PO_Number)
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Currency")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.HiddenFor(model => model.CurrencyID)
+                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.CurrencyName, "", new { @class = "error mt-2 text-danger" })
+
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    Inward No.
+                    @Html.Label("Location Name")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("InwardNumber", new SelectList((System.Collections.IEnumerable)ViewData["InwardNoteNumbers"], "Value", "Text"), "-- Select Purchase Number -- ", new { @class = "form-control select2" })
+
+                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.HiddenFor(model => model.LocationId)
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Vendor Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VendorName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.VendorName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.HiddenFor(model => model.VendorID)
                 </div>
             </div>
             <br />
-            <!--<div class="row">
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Delivery Details</h4>
-                            <hr />
-                            <div class="form-group">
-                                <textarea class="form-control" style="height:100px;"></textarea>-->
-                                @*@Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px" })
-                                    @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })*@
-                            <!--</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Supplier Details</h4>
-                            <hr />
-                            <div class="form-group">
-                                <textarea class="form-control" style="height:100px;"></textarea>-->
-                                @*@Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
-                                    @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "error mt-2 text-danger" })*@
-
-                            <!--</div>
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <br />
-            </div>-->
-            <br />
             <div class="row">
-                <div class="col-md-12 grid-margin stretch-card">
+                <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">ITEM DETAILS</h5>
-                        </div>
                         <div class="card-body">
-                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                <table class="table table-striped" id="submissionTable">
-                                    <thead>
-                                        <tr>
-                                            <th class="sortStyle">
-                                                Sr. No
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Item Name <br /> [Code]
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Inward<br /> Quantity
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Debit<br /> Quantity
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Units
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Unit<br /> Price
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                            <th class="sortStyle">
-                                                Total<br /> Payable
-                                                <i class="fa fa-angle-down"></i>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                            <h4 class="card-title" style="color:darkcyan">
+                                Delivery Details
+                                <span style="color:red">*</span>
+                            </h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                        <tr id="tablerow">
-                                            <td>
-                                                <input class="form-control" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">
+                                Supplier Details
+                                <span style="color:red">*</span>
+                            </h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.VendorAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.VendorAddress, "", new { @class = "error mt-2 text-danger" })
+
                             </div>
                         </div>
                     </div>
@@ -150,96 +122,325 @@
             </div>
             <br />
             <hr />
-            <br />
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card h-75">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
-                            <hr />
-                            <div class="form-group">
-                                <input type="file" id="file" name="Signature"
-                                       onchange="return fileValidation()" />
+            <div class="row">
+                <h4 style="color:darkcyan">Item Details</h4>
+            </div>
+            <hr />
 
-                                <!-- Image preview -->
-                                <span style="color:green">@ViewBag.Message</span>
-                                <br />
-                                <br />
-                                <center>
-                                    <div id="imagePreview"></div>
-                                </center>
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                    <table class="table table-striped" id="submissionTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="sortStyle">Item Code</th>
+                                                <th class="sortStyle d-n d-none">Item Id</th>
+                                                <th class="sortStyle">Item</th>
+                                                <th class="sortStyle">PO Quantity</th>
+                                                <th class="sortStyle">Debited Quantity</th>
+                                                <th class="sortStyle">Units</th>
+                                                <th class="sortStyle">Price (Per Unit)</th>
+                                                <th class="sortStyle">Currency</th>
+                                                <th class="sortStyle">Tax</th>
+                                                <th class="sortStyle">Total Item Cost</th>
+                                                <th class="sortStyle">Remarks</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <br />
-                <br />
+            </div>
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength="95" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <hr />
+
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                    <div class="card" h-50>
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Terms and Conditions<span style="color:red"> * </span></h4>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    @Html.Label("Term Description")
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextAreaFor(model => model.Terms, new { @class = "form-control", placeholder = "Term Description", style = "height:100px" })
+                                    @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
+                                    @Html.HiddenFor(model => model.TermsAndConditionID)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Payment Details</h4>
                             <hr />
                             <div class="form-group">
-                                <div class="row">
-                                    <label>Total (before tax): </label>
-                                    <input class="form-control" id="TotalBeforeTax" name="TotalItemCost" />
+                                <div class="row mb-2">
+                                    <label id="lblTotalBeforeTax"><b>Total (before tax): </b></label>
+                                    <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalBeforeTax" value="" readonly="readonly" />
                                 </div>
-                                <div class="row">
-                                    <label>Total tax: </label>
-                                    @*<input class="form-control" id="TotalTax" name="Tax" />*@
-                                    <input class="form-control" id="TotalTax" name="TotalTax" />
+                                <div class="row mb-2">
+                                    <label><b>Other Tax: </b></label>
+                                    <input class="form-control text-right form-control-sm" id="OtherTax" maxlength="8" name="OtherTax" readonly="readonly" />
                                 </div>
-                                <div class="row">
-                                    <label>Total (after tax):</label>
-                                    @*<input class="form-control" id="TotalAfterTax" />*@
-                                    <input class="form-control" id="TotalAfterTax" name="TotalAfterTax" />
+                                <div class="row mb-2">
+                                    <label><b>Total tax: </b></label>
+                                    <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" readonly="readonly" />
                                 </div>
-                                <div class="row">
-                                    <label><b>Grand Total:</b></label>
-                                    <input class="form-control" id="GrandTotal" name="GrandTotal" />
+                                <div class="row mb-2">
+                                    <label><b>Grand Total: </b></label>
+                                    <input class="form-control text-right form-control-sm" id="GrandTotal" name="GrandTotal" readonly="readonly" />
                                 </div>
                             </div>
                             <br />
-                            <button type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="AddPurchaseOrder">Save</button>
-                            @Html.ActionLink("Back to List", "Index")
                         </div>
                     </div>
                 </div>
                 <br />
                 <br />
             </div>
+
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "DebitNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.txtItemDetails)
         </div>
     </div>
 }
+@Html.Raw(TempData["Success"])
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @*<script src="https://cdn.jsdelivr.net/npm/table-to-json@1.0.0/lib/jquery.tabletojson.min.js" integrity="sha256-H8xrCe0tZFi/C2CgxkmiGksqVaxhW0PFcUKZJZo1yNU=" crossorigin="anonymous"></script>*@
+}
 
-<script>
-    $('#NoteType').change(function () {
-        var noteType = $('#NoteType option:selected').attr('value');
-        if (noteType == 'DebitNote') {
-            $("#lblNoteDate").empty();
-            $("#lblNoteDate").append("Debit Note Date");
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        var PONumber = $("#PO_ID option:selected").text();
+        $("#PO_Number").val(PONumber);
+
+        createJson();
+    };
+    //==========end===============
+
+    //=====================Onchange of PO===========================
+    function SelectedIndexChangedPO(id) {
+
+        $('#btnSave').prop('disabled', false);
+
+        //For deleting the rows of Item table if exist.
+
+        var table = document.getElementById('submissionTable');
+        var rowCount = table.rows.length;
+        while (rowCount != '1') {
+            var row = table.deleteRow(rowCount - 1);
+            rowCount--;
         }
-        else {
-            $("#lblNoteDate").empty();
-            $("#lblNoteDate").append("Rejection Note Date");
+
+        var PO_Id = $("#PO_ID").val();
+
+        $.ajax({
+            url: '/CreditNote/GetPODetails',
+            type: "POST",
+            data: { id: PO_Id },
+            success: function (result) {
+                $("#PO_Number").val(result[0].PONumber);
+                $("#CurrencyID").val(result[0].CurrencyID);
+                $("#CurrencyName").val(result[0].CurrencyName);
+                $("#CurrencyPrice").val(result[0].CurrencyPrice);
+                $("#LocationId").val(result[0].LocationId);
+                $("#LocationName").val(result[0].LocationName);
+                $("#VendorID").val(result[0].VendorsID);
+                $("#VendorName").val(result[0].CompanyName);
+                $('#DeliveryAddress').val(result[0].DeliveryAddress);
+                $('#VendorAddress').val(result[0].SupplierAddress);
+
+                $('#TermsAndConditionID').val(result[0].TermsAndConditionID);
+                $('#Terms').val(result[0].Terms);
+                $('#OtherTax').val((result[0].OtherTax));
+
+                var table = document.getElementById('submissionTable');
+                for (var j = 1; j < result.length; j++) {
+                    var rowCount = table.rows.length;
+                    var cellCount = table.rows[0].cells.length;
+                    var row = table.insertRow(rowCount);
+
+                    for (var i = 0; i < cellCount; i++) {
+                        var cell = 'cell' + i;
+                        cell = row.insertCell(i);
+
+                        if (i == 0) {
+                            cell.innerHTML = result[j].Item_Code;
+                            cell.setAttribute("id", "ItemCode_" + j);
+                        }
+                        else if (i == 1) {
+                            cell.innerHTML = result[j].Item_ID;
+                            cell.setAttribute("class", "d-none");
+                            cell.setAttribute("id", "ItemID_" + j);
+                        }
+                        else if (i == 2) {
+                            cell.innerHTML = result[j].ItemName;
+                            cell.setAttribute("id", "ItemName_" + j);
+
+                        }
+                        else if (i == 3) {
+                            cell.innerHTML = result[j].ItemQuantity + " " + result[j].ItemUnit;
+                            cell.setAttribute("id", "POQty_" + j);
+
+                        }
+                        else if (i == 4) {
+                            cell.innerHTML = result[j].RejectedQuantity;
+                            cell.setAttribute("id", "RejectedQuantity_" + j);
+                        }
+                        else if (i == 5) {
+                            cell.innerHTML = result[j].ItemUnit;
+                            cell.setAttribute("id", "ItemUnit_" + j);
+                        }
+                        else if (i == 6) {
+                            cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
+                            cell.setAttribute("id", "ItemUnitPrice_" + j);
+                        }
+                        else if (i == 7) {
+                            cell.innerHTML = result[j].CurrencyName
+                            cell.setAttribute("id", "CurrencyName_" + j);
+                        }
+                        else if (i == 8) {
+                            cell.innerHTML = result[j].ItemTaxValue + " %";
+                            cell.setAttribute("id", "ItemTax_" + j);
+                        }
+                        else if (i == 9) {
+                            cell.innerHTML = result[j].TotalItemCost + " " + result[j].CurrencyName;
+                            cell.setAttribute("id", "TotalItemCost_" + j);
+                        }
+                        else if (i == 10) {
+                            cell.innerHTML = result[j].Remarks;
+                            cell.setAttribute("id", "Remarks_" + j);
+                        }
+                    }
+
+                }
+
+                CalculateTotalBeforeTax();
+                var grandTotal = $('#GrandTotal').val()
+                grandTotal = parseFloat(grandTotal);
+                if (grandTotal == 0) {
+                    alert('Wastage of all listed items are zero, Cannot create its credit note!');
+                    $('#btnSave').prop('disabled', true);
+                }
+                else {
+                    $('#btnSave').prop('disabled', false);
+                }
+            },
+            error: function (err) {
+                alert('Not able to fetch indent item details!');
+
+            }
+
+        });
+    }
+    //=============End==============
+
+    var TxtItemDetails = "";
+
+    function CalculateTotalBeforeTax() {
+        $('#TotalBeforeTax').val('');
+        $('#TotalTax').val('');
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        var total = 0;
+        var totalTax = 0;
+        var otherTax = ((document.getElementById("OtherTax").value).split(" %")[0]);
+        otherTax = parseFloat(otherTax);
+        totalTax = Math.round(totalTax);
+
+        var i = 1;
+        while (i <= length) {
+            var temp = ((document.getElementById("TotalItemCost_" + i)).innerHTML).split(" ")[0];
+            var tempTotalTax = ((document.getElementById("ItemTax_" + i)).innerHTML).split(" %")[0];
+            total = parseFloat(temp) + total;
+
+            tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
+            totalTax = parseFloat(tempTotalTax) + totalTax;
+
+            i++;
         }
-    });
+        otherTax = ((otherTax / 100) * total);
+        totalTax = totalTax + otherTax;
 
+        $('#TotalBeforeTax').val(total.toFixed(2));
+        $('#TotalTax').val(totalTax.toFixed(2));
+        var tempGrandTotal = total + totalTax;
+        $('#GrandTotal').val(tempGrandTotal.toFixed(2));
 
-    $('[id*=InwardNumber]').change(function () {
-        var InwardNumber = $(this).find('option:selected').val();
-        
-        if (InwardNumber != null && InwardNumber != '') {
-        //    $.getJSON('Home/GetEmployees', { country: selectedCountry }, function (response) {
-        //        if (response.length > 0) {
-        //            $("[id*=tblEmployees] tbody").empty();
-        //            var row;
-        //            $.each(response, function (index, item) {
-        //                row += "<tr><td>" + item.Id + "</td><td>" + item.Name + "</td></tr>"
-        //            })
-        //            $("[id*=tblEmployees] tbody").append(row);
-        //        }
-        //    });
+        createJson();
+    }
+
+    function createJson() {
+
+        var table = document.getElementById('submissionTable');
+        var rowCount = table.rows.length;
+        var i = 1;
+        TxtItemDetails = "[";
+        for (i = 1; i <= rowCount - 1; i++) {
+            var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
+            var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
+            var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
+            var POQty = (document.getElementById("POQty_" + i)).innerHTML.split(" ")[0];
+            var RejectedQty = (document.getElementById("RejectedQuantity_" + i)).innerHTML;
+            var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
+
+            var PricePerUnit = (document.getElementById("ItemUnitPrice_" + i)).innerHTML.split(" ")[0];
+            PricePerUnit = (PricePerUnit == null || PricePerUnit == '') ? 0 : PricePerUnit;
+
+            var CurrencyName = (document.getElementById("CurrencyName_" + i)).innerHTML;
+            var Tax = (document.getElementById("ItemTax_" + i)).innerHTML.split(" ")[0];
+            var TotalItemCost = (document.getElementById("TotalItemCost_" + i)).innerHTML.split(" ")[0];
+            TotalItemCost = (TotalItemCost == null || TotalItemCost == '') ? 0 : TotalItemCost;
+            var Remarks = (document.getElementById("Remarks_" + i)).innerHTML;
+
+            TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
+                ", \"ItemName\": \"" + ItemName + "\", \"POQty\": " + POQty + ", \"RejectedQty\": " + RejectedQty +
+                ", \"ItemUnit\": \"" + Unit + "\", \"ItemUnitPrice\": " + PricePerUnit + ", \"CurrencyName\": \"" + CurrencyName + "\",\"ItemTaxValue\": " + Tax +
+                ", \"TotalItemCost\": " + TotalItemCost + ",\"Remarks\": \"" + Remarks + "\"";
+
+            if (i == (rowCount - 1))
+                TxtItemDetails = TxtItemDetails + "}";
+            else
+                TxtItemDetails = TxtItemDetails + "},";
         }
-    });
-
+        TxtItemDetails = TxtItemDetails + "]"
+        $('#txtItemDetails').val(TxtItemDetails);
+    }
 </script>

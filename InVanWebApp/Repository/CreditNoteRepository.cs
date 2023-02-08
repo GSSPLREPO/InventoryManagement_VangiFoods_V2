@@ -43,7 +43,8 @@ namespace InVanWebApp.Repository
                             CreditNoteDate = Convert.ToDateTime(reader["CreditNoteDate"]),
                             PO_Number = reader["PO_Number"].ToString(),
                             VendorName = reader["VendorName"].ToString(),
-                            Remarks = reader["Remarks"].ToString()
+                            Remarks = reader["Remarks"].ToString(),
+                            UserName=reader["UserName"].ToString()
                         };
                         resultList.Add(result);
                     }
@@ -315,7 +316,8 @@ namespace InVanWebApp.Repository
                             TotalBeforeTax = Convert.ToDecimal(reader["TotalBeforeTax"]),
                             TotalTax = Convert.ToDecimal(reader["TotalTax"]),
                             GrandTotal = Convert.ToDecimal(reader["GrandTotal"]),
-                            Remarks = reader["Remarks"].ToString()
+                            Remarks = reader["Remarks"].ToString(),
+                            UserName = reader["UserName"].ToString()
                         };
                     }
                     con.Close();

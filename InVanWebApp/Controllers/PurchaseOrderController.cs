@@ -185,7 +185,7 @@ namespace InVanWebApp.Controllers
        
         #region  Update function
         /// <summary>
-        ///Rahul: Rendered the user to the edit page with details of a perticular record.
+        ///Farheen: Rendered the user to the edit page with details of a perticular record.
         /// </summary>
         /// <param name="PurchaseOrderId"></param>
         /// <returns></returns>
@@ -198,31 +198,9 @@ namespace InVanWebApp.Controllers
                 BindTermsAndCondition();
                 BindCurrencyPrice();
                 BindLocationName();
-                BindIndentDropDown();
+                //BindIndentDropDown("POAmendment");
 
                 PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
-
-                ////Binding item grid with sell type item.
-                //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                //string itemListForDD = "itemListForDD";
-
-                //if (model != null)
-                //{
-                //    var ItemCount = model.itemDetails.Count;
-                //    var i = 0;
-                //    while (i < ItemCount)
-                //    {
-                //        itemListForDD = "itemListForDD";
-                //        itemListForDD = itemListForDD + i;
-                //        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.itemDetails[i].Item_ID);
-                //        ViewData[itemListForDD] = dd;
-                //        i++;
-                //    }
-
-                //}
-
-                //ViewData[itemListForDD] = dd;
 
                 return View(model);
             }
@@ -232,7 +210,7 @@ namespace InVanWebApp.Controllers
         }
 
         /// <summary>
-        /// Rahul:  Pass the data to the repository for updating that record.
+        /// Farheen:  Pass the data to the repository for updating that record.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -274,7 +252,7 @@ namespace InVanWebApp.Controllers
                             BindTermsAndCondition();
                             BindCurrencyPrice();
                             BindLocationName();
-                            BindIndentDropDown();
+                            //BindIndentDropDown("POAmendment");
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
 
                             return View(model1);
@@ -289,29 +267,8 @@ namespace InVanWebApp.Controllers
                         BindTermsAndCondition();
                         BindCurrencyPrice();
                         BindLocationName();
-                        BindIndentDropDown();
+                        //BindIndentDropDown("POAmendment");
                         PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
-                        //Binding item grid with sell type item.
-                        //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                        //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                        //string itemListForDD = "itemListForDD";
-
-                        //if (model1 != null)
-                        //{
-                        //    var ItemCount = model1.itemDetails.Count;
-                        //    var i = 0;
-                        //    while (i < ItemCount)
-                        //    {
-                        //        itemListForDD = "itemListForDD";
-                        //        itemListForDD = itemListForDD + i;
-                        //        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.itemDetails[i].Item_ID);
-                        //        ViewData[itemListForDD] = dd;
-                        //        i++;
-                        //    }
-
-                        //}
-
-                        //ViewData[itemListForDD] = dd;
 
                         return View(model1);
                     }
@@ -373,7 +330,7 @@ namespace InVanWebApp.Controllers
                     BindTermsAndCondition();
                     BindCurrencyPrice();
                     BindLocationName();
-                    BindIndentDropDown("POAmendment");
+                    //BindIndentDropDown("POAmendment");
 
                     PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
 
@@ -433,7 +390,7 @@ namespace InVanWebApp.Controllers
                             BindTermsAndCondition();
                             BindCurrencyPrice();
                             BindLocationName();
-                            BindIndentDropDown("POAmendment");
+                            //BindIndentDropDown("POAmendment");
 
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
 
@@ -448,7 +405,7 @@ namespace InVanWebApp.Controllers
                         BindTermsAndCondition();
                         BindCurrencyPrice();
                         BindLocationName();
-                        BindIndentDropDown("POAmendment");
+                        //BindIndentDropDown("POAmendment");
                         PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
                         
                         return View(model1);
@@ -483,7 +440,7 @@ namespace InVanWebApp.Controllers
             BindTermsAndCondition();
             BindCurrencyPrice();
             BindLocationName();
-            BindIndentDropDown("POAmendment");
+            //BindIndentDropDown("POAmendment");
 
             PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID);
             return View(model);
