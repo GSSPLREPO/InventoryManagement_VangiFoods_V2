@@ -21,7 +21,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Please enter the Rejection Note number!")] 
         public string RejectionNoteNo { get; set; }
         //---------------
-        [Required(ErrorMessage = "Please select Inward QC number!")]
+        //[Required(ErrorMessage = "Please select Inward QC number!")] //Rahul commented added inline JS validation 09-02-23.
         public int InwardQCId { get; set; }
         public string InwardQCNumber { get; set; }
         [Required(ErrorMessage = "Select inward number!")]
