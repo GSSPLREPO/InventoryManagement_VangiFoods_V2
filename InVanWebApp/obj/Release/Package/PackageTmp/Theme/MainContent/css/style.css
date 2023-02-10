@@ -42500,7 +42500,8 @@ textarea[resize=horizontal] {
 }
 
     .table > :not(caption) > * > * {
-        padding: 1rem 1.5rem;
+        /*padding: 1rem 1.5rem; Rahul added padding left,right 08-02-23.*/
+        padding: 0.5rem 1rem;
         background-color: var(--x-table-bg);
         border-bottom-width: 1px;
         box-shadow: inset 0 0 0 9999px var(--x-table-accent-bg)

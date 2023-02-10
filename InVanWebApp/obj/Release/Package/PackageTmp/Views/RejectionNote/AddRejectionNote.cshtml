@@ -36,13 +36,16 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    Inward Number
+                    @*Inward Number*@   @*Rahul added Label+span 08-02-23.*@
+                    @Html.Label("Inward QC Number")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
-                   new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.InwardQCId, "", new { @class = "error mt-2 text-danger" })
-                    @Html.HiddenFor(model => model.InwardQCNumber)                    
+                   new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())", onmouseleave = "ValMsgInwardQCNumber($(this).val(),id)" })
+                    @*@Html.ValidationMessageFor(model => model.InwardQCId, "", new { @class = "error mt-2 text-danger" }) Rahul removed and added onmouseleave event 09-02-2023.*@
+                    <span id="ValMsgInwardQCNumber" style="display:none; color:red"></span>
+                    @Html.HiddenFor(model => model.InwardQCNumber)
                     @Html.HiddenFor(model => model.InwardNoteNumber)
                 </div>
                 <div class="col-md-2">
@@ -78,8 +81,10 @@
             </div>
             <hr />
             <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-striped table-responsive" id="ItemTable">
+                @*Rahul added class table-responsive in div tag 09-02-23.*@
+                <div class="col-md-12 table-responsive">
+                    @*Rahul removed class table-responsive from table tag 09-02-23.*@
+                    <table class="table table-striped" id="ItemTable">
                         <tr>
                             <th>Item</th>
                             <th>Code</th>
@@ -127,7 +132,23 @@
 <script type="text/javascript">
     var InwardQuantities = "";
 
-    function SelectedIndexChanged(id) {
+    ///---Rahul added onmouseleave event ValMsgInwardQCNumber(value, id) strart 09-02-2023.
+    function ValMsgInwardQCNumber(value, id) {
+        //debugger
+        var InwardQCNumber = $("#InwardQCId option:selected").val();
+        if (InwardQCNumber == '' || InwardQCNumber == 0) {
+            $("#ValMsgInwardQCNumber").text("Please select Inward QC number!");
+            $("#ValMsgInwardQCNumber").show();
+            document.getElementById(id).focus();
+            return
+        }
+        else {
+            $("#ValMsgInwardQCNumber").hide();
+        }
+    }
+    ///---Rahul added onmouseleave event ValMsgInwardQCNumber(value, id) end.
+
+    function SelectedIndexChanged(id) {         
         var InwardNumber = $("#InwardQCId option:selected").text();
         
         var InwNumQcNumSplit = InwardNumber.split(' (');
@@ -161,7 +182,7 @@
                 //===================Create dynamic table for binding Item details====================//
                 var table = document.getElementById('ItemTable');
                 for (var j = 1; j < result.length; j++) {
-                    debugger
+                    //debugger
                     var rowCount = table.rows.length;
                     var cellCount = table.rows[0].cells.length;
                     var row = table.insertRow(rowCount);

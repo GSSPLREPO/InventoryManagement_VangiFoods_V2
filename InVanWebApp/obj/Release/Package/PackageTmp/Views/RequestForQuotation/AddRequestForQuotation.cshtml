@@ -106,7 +106,7 @@
                             <hr />
                             <div class="form-group">
                                 @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm", placeholder = "Delivery address", style = "height:100px" })
-                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
+                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { id= "ValMsgDeliveryAddress", @class = "error mt-2 text-danger" })
                             </div>
                         </div>
                     </div>
@@ -122,8 +122,8 @@
                             <hr />
                             <div class="form-group">
                                 <div class="col-md-5">
-                                    @Html.DropDownListFor(model => model.CompanyName, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm js-example-basic-multiple", multiple = "multiple", onchange = "SelectedIndexChanged($(this).val())" })
-                                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })
+                                    @Html.DropDownListFor(model => model.CompanyName, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm js-example-basic-multiple mult-sl", multiple = "multiple", onchange = "SelectedIndexChanged($(this).val())" })
+                                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" }) @*Rahul added class mult-sl in CompanyName 09-02-23.*@
                                 </div>
                                 <div class="col-md-1">
                                     @Html.TextBoxFor(model => model.VendorIDs, new { style = "display:none" })
@@ -161,7 +161,7 @@
                                                 <th class="d-none"></th>
                                                 <th class="sortStyle">Item Code</th>
                                                 <th class="sortStyle">Item</th>
-                                                <th class="sortStyle">Quantity<span style="color:red">*</span></th>
+                                                <th class="sortStyle">Quantity@*<span style="color:red">*</span>*@</th>
                                                 <th class="sortStyle">Units</th>
                                                 <th class="sortStyle">Delivery Date<span style="color:red">*</span></th>
                                                 <th class="sortStyle">HSN Code</th>
@@ -245,6 +245,52 @@
     $(document).ready(function () {
         //alert('multiple called!')
         $('.js-example-basic-multiple').select2();
+
+        //--- '.js-example-basic-multiple .mult-sl' start rahul added 09-02-23.
+        $('.mult-sl').select2({
+            placeholder: 'Select'
+        })
+
+        $.validator.setDefaults({
+            ignore: []
+        });
+
+        $('#CompanyName').validate({            
+            errorElement: 'span',
+            errorClass: 'error',
+            rules: {
+                singleselect: 'required',
+                multipleselect: 'required',
+                name: 'required'
+            },
+
+            highlight: function (element, errorClass, validClass) {
+
+                var elem = $(element);
+
+                if (elem.hasClass('s-select2')) {
+                    var isMulti = (!!elem.attr('multiple')) ? 's' : '';
+                    elem.siblings('.mult-sl').find('.select2-choice' + isMulti + '').addClass(errorClass);
+                } else {
+                    elem.addClass(errorClass);
+                }
+
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+
+                if (elem.hasClass('mult-sl')) {
+                    elem.siblings('.mult-sl').find('.select2-choice').removeClass(errorClass);
+                } else {
+                    elem.removeClass(errorClass);
+                }
+            }
+        });
+
+        $('select').on('change', function () {
+            $(this).valid();
+        });
+        //--- '.js-example-basic-multiple .mult-sl' end rahul added 09-02-23.
         deliveryDate();
         biddingStartDate();
         biddingEndDate();
@@ -263,7 +309,7 @@
 
     //---BiddingStartDate todaysDate start ------
     function biddingStartDate() {
-        debugger
+        //debugger
         const d = new Date();
         d.setYear(d.getFullYear());
         var id = "BiddingStartDate";
@@ -275,7 +321,7 @@
 
     //---BiddingEndDate todaysDate start ------
     function biddingEndDate() {
-        debugger
+        //debugger
         const d = new Date();
         d.setYear(d.getFullYear());
         var id = "BiddingEndDate";
@@ -353,7 +399,7 @@
             type: "POST",
             data: { id: id, tempCurrencyId: CurrencyIDCheck },
             success: function (result) {
-
+                console.log(result)
                 var table = document.getElementById('submissionTable');
                 for (var j = 0; j < result.length; j++) {
                     var rowCount = table.rows.length;
@@ -378,15 +424,17 @@
                             cell.setAttribute("id", "ItemName_" + j);
                         }
                         else if (i == 3) {
-                            var t4 = document.createElement("input");
-                            t4.id = "RequiredQuantity_" + j;
-                            t4.setAttribute("type", "text");
-                            t4.setAttribute("maxlength", "8");
-                            t4.setAttribute("value", result[j].RequiredQuantity);
-                            t4.setAttribute("class", "form-control form-control-sm text-right");
-                            t4.setAttribute("onchange", "OnChangeQuantity($(this).val(),id)");
-                            t4.setAttribute("onkeypress", "return isNumberKey(event)");
-                            cell.appendChild(t4);
+                            cell.innerHTML = result[j].RequiredQuantity; //Rahul added innerHTML RequiredQuantity 09-02-23. 
+                            cell.setAttribute("id", "RequiredQuantity_" + j); //Rahul added setAttribute 09-02-23. 
+                            //var t4 = document.createElement("input"); //Rahul commented code createElement 09-02-2023. 
+                            //t4.id = "RequiredQuantity_" + j;
+                            //t4.setAttribute("type", "text");
+                            //t4.setAttribute("maxlength", "8");
+                            //t4.setAttribute("value", result[j].RequiredQuantity);
+                            //t4.setAttribute("class", "form-control form-control-sm text-right");                            
+                            //t4.setAttribute("onchange", "OnChangeQuantity($(this).val(),id)");
+                            //t4.setAttribute("onkeypress", "return isNumberKey(event)");
+                            //cell.appendChild(t4); 
                         }
                         else if (i == 4) {
                             cell.innerHTML = result[j].ItemUnit;
@@ -483,7 +531,25 @@
                 $("#DeliveryAddress").val(deliveryAdd);
             }
         });
+        ValMsgDeliveryAddress(value, id) 
     }
+
+    ///---Rahul added onmouseleave event ValMsgItemList(value, id) strart 09-02-2023.  
+    function ValMsgDeliveryAddress(value, id) {
+        //debugger        
+        $("#DeliveryAddress").val();
+        var delAdd = $("#DeliveryAddress").val();
+        if (delAdd == '' || delAdd == 0) {
+            $("#ValMsgDeliveryAddress").text("Select Location Name to enter delivery address!");
+            $("#ValMsgDeliveryAddress").show();
+            document.getElementById(id).focus();
+            return
+        }
+        else {
+            $("#ValMsgDeliveryAddress").hide();
+        }
+    }
+    ///---Rahul added onmouseleave event ValMsgItemList(value, id) end.
 
     function fileValidation() {
         var fileInput =
@@ -543,7 +609,7 @@
             var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
             var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
             var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
-            //var RequiredQty = (document.getElementById("RequiredQuantity_" + i)).innerHTML.split(" ")[0];
+            var RequiredQty = (document.getElementById("RequiredQuantity_" + i)).innerHTML.split(" ")[0]; //check
             var RequiredQty = $("#RequiredQuantity_" + i).val();
             RequiredQty = (RequiredQty == null || RequiredQty == '') ? 0 : RequiredQty;
             var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
@@ -561,6 +627,7 @@
         }
         TxtItemDetails = TxtItemDetails + "]";
         $('#TxtItemDetails').val(TxtItemDetails);
+        console.log(TxtItemDetails);
     }
     //==================createJson Set value in txtItemDetails onCick of Save/Update button end======--------
 

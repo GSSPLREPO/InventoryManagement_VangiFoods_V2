@@ -16,12 +16,12 @@ namespace InVanWebApp_BO
         public int PO_Id { get; set; } //
         public string PONumber { get; set; } // 
         public Nullable<int> SupplierID { get; set; }
-        [Required(ErrorMessage = "Select supplier name!")]
+        //[Required(ErrorMessage = "Select supplier name!")]  //Rahul commented added inline JS validation 10-02-23.
         public string SupplierName { get; set; }
         [Required(ErrorMessage = "Please enter the Rejection Note number!")] 
         public string RejectionNoteNo { get; set; }
         //---------------
-        //[Required(ErrorMessage = "Please select Inward QC number!")] //Rahul commented added inline JS validation 09-02-23.
+        [Required(ErrorMessage = "Please select Inward QC number!")] //Rahul added inline JS validation 09-02-23.
         public int InwardQCId { get; set; }
         public string InwardQCNumber { get; set; }
         [Required(ErrorMessage = "Select inward number!")]
