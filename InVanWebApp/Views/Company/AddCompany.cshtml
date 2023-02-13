@@ -28,20 +28,23 @@
                         @Html.Label("Buyer")
                     </div>
                     <div class="col-md-2">
-                        @Html.RadioButtonFor(model => model.CompanyType, "Buyer", new { @class = "form-control form-control-sm", @Value = "Buyer" })
+                        @*Rahul added class form-check-input and removed form-control-sm 10-02-2023.*@
+                        @Html.RadioButtonFor(model => model.CompanyType, "Buyer", new { @class = "form-check-input form-control", @Value = "Buyer" })
                     </div>
                     <div class="col-md-1">
                         @Html.Label("Supplier")
                     </div>
                     <div class="col-md-2">
-                        @Html.RadioButtonFor(model => model.CompanyType, "Supplier", new { @class = "form-control form-control-sm", @Value = "Supplier" })
+                        @*Rahul added class form-check-input and removed form-control-sm 10-02-2023.*@
+                        @Html.RadioButtonFor(model => model.CompanyType, "Supplier", new { @class = "form-check-input form-control", @Value = "Supplier" })
 
                     </div>
                     <div class="col-md-1">
                         @Html.Label("Both")
                     </div>
                     <div class="col-md-2">
-                        @Html.RadioButtonFor(model => model.CompanyType, "Both", new { @class = "form-control form-control-sm", @Value = "Both" })
+                        @*Rahul added class form-check-input and removed form-control-sm 10-02-2023.*@
+                        @Html.RadioButtonFor(model => model.CompanyType, "Both", new { @class = "form-check-input form-control", @Value = "Both" })
                         @*<div class="form-check">
                                 <label class="form-check-label">
                                     <input type="radio" name="CompanyType" value="Both" class="form-check-input" />
@@ -58,7 +61,7 @@
                         <span style="color:red">*</span>
                     </div>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control form-control-sm", placeholder = "Company name", maxlength="100" })
+                        @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control form-control-sm", placeholder = "Company name", maxlength = "100" })
                         @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })
                     </div>
                     <div class="col-md-2">
@@ -75,7 +78,7 @@
                         @Html.Label("Contact Person")
                     </div>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.ContactPersonName, new { @class = "form-control form-control-sm", placeholder = "Contact person name", maxlength="30" })
+                        @Html.TextBoxFor(model => model.ContactPersonName, new { @class = "form-control form-control-sm", placeholder = "Contact person name", maxlength = "30" })
                         @Html.ValidationMessageFor(model => model.ContactPersonName, "", new { @class = "error mt-2 text-danger" })
                     </div>
                     <div class="col-md-2">
@@ -94,7 +97,7 @@
                         <span style="color:red">*</span>
                     </div>
                     <div class="col-md-4">
-                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control form-control-sm", placeholder = "Address", maxlength="150" })
+                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control form-control-sm", placeholder = "Address", maxlength = "150" })
                         @Html.ValidationMessageFor(model => model.Address, "", new { @class = "error mt-2 text-danger" })
                     </div>
                     <div class="col-md-2">
@@ -121,14 +124,16 @@
                         @Html.Label("Is Active")
                     </div>
                     <div class="col-md-2" style="padding-top:0.6%;">
-                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control form-control-sm" })
+                        @*Rahul added class form-check-input and removed form-control-sm 10-02-2023.*@
+                        @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-check-input form-control" })
                     </div>
                     <div class="col-md-2"></div>
                     <div class="col-md-2">
                         @Html.Label("Is Black Listed")
                     </div>
                     <div class="col-md-2" style="padding-top:0.6%;">
-                        @Html.CheckBoxFor(model => model.IsBlackListed, new { @class = "form-control form-control-sm" })
+                        @*Rahul added class form-check-input and removed form-control-sm 10-02-2023.*@
+                        @Html.CheckBoxFor(model => model.IsBlackListed, new { @class = "form-check-input form-control" })
                     </div>
                     <div class="col-md-2"></div>
                 </div>

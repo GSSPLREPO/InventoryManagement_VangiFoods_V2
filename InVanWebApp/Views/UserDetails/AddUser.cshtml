@@ -129,7 +129,8 @@
                     @Html.Label("Is Active")
                 </div>
                 <div class="col-md-4">
-                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-control form-control-sm" })
+                    @*Rahul added class form-check-input and removed form-control-sm 10-02-2023.*@
+                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-check-input form-control" })
                 </div>
             </div>
             <br />

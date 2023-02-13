@@ -389,6 +389,9 @@
             totalPrice = Math.round(totalPrice);
             $("#totalItemCost_" + rowNo).val(totalPrice);
         }
+        else
+            $("#totalItemCost_" + rowNo).val(0);
+
         CalculateTotalBeforeTax();
     }
 
@@ -408,6 +411,11 @@
         while (i <= length) {
             var temp = document.getElementById("totalItemCost_" + i).value;
             var tempTotalTax = document.getElementById("itemTax_" + i).value;
+            if (temp == '')
+                temp = 0;
+            if (tempTotalTax == '')
+                tempTotalTax = 0;
+
             total = parseFloat(temp) + total;
 
             tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));

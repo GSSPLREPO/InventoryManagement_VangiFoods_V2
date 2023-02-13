@@ -118,7 +118,6 @@
                                 @Html.TextBoxFor(model => model.companyDetails[0].ID, new { style = "display:none" })
                                 @Html.TextBoxFor(model => model.VendorsID, new { @class = "form-control form-control-sm ", @readonly = "readonly", style = "display:none" })
                                 @Html.TextBoxFor(model => model.SupplierAddress, new { @class = "form-control form-control-sm ", @readonly = "readonly", style = "display:none" })
-
                             </div>
                         </div>
                     </div>
@@ -199,7 +198,7 @@
                                                             @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("Quantity_" + c, item.ItemQuantity, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", MaxLength = "8", onkeypress = "return isNumberKey(event)", @readonly = "readonly" })
+                                                            @Html.TextBox("Quantity_" + c, item.ItemQuantity, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", maxLength = "8", onkeypress = "return isNumberKey(event)", @readonly = "readonly" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", @readonly = "readonly" })
@@ -229,7 +228,7 @@
                                                             @*@Html.TextBox("ItemTaxValue", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })*@
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost, "0", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "8" })
+                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost,"0" ,new { @class = "form-control form-control-sm text-right",style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "8" })
                                                             @*@Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })*@
                                                         </td>
                                                         <td>

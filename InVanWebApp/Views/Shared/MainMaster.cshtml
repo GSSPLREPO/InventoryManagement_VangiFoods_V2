@@ -62,84 +62,101 @@
                             </div>
                         </li>
                     </ul>*@
-                    <ul class="navbar-nav navbar-nav-right d-flex justify-content-end">
-                        <li class="nav-item navbar navbar-menu-wrapper" style="border-right:1px solid #e0e0ef">
+                <ul class="navbar-nav navbar-nav-right d-flex justify-content-end">
+                    <li class="nav-item navbar navbar-menu-wrapper" style="border-right:1px solid #e0e0ef;width:auto;">
 
-                            @if (@Session["UserName"] != null)
-                            {
-                                <h6 style="font-family:'Comic Sans MS'">Welcome @Session["UserName"] !</h6>
-                            }
+                        @if (@Session["UserName"] != null)
+                        {
+                            <h6 style="font-family: 'Comic Sans MS'; white-space: nowrap;">Welcome @Session["UserName"] !</h6>
+                        }
 
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                                <i class="fas fa-bell mx-0"></i>
-                                <span class="count">1</span>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                            <i class="fas fa-bell mx-0"></i>
+                            <span class="count">1</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                            <a class="dropdown-item">
+                                <p class="mb-0 font-weight-normal float-left">
+                                    You have 1 new notifications
+                                </p>
+                                <span class="badge badge-pill badge-warning float-right">View all</span>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                                <a class="dropdown-item">
-                                    <p class="mb-0 font-weight-normal float-left">
-                                        You have 1 new notifications
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-danger">
+                                        <i class="fas fa-exclamation-circle mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-medium">Application Error</h6>
+                                    <p class="font-weight-light small-text">
+                                        Just now
                                     </p>
-                                    <span class="badge badge-pill badge-warning float-right">View all</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-danger">
-                                            <i class="fas fa-exclamation-circle mx-0"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <h6 class="preview-subject font-weight-medium">Application Error</h6>
-                                        <p class="font-weight-light small-text">
-                                            Just now
-                                        </p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-warning">
-                                            <i class="fas fa-wrench mx-0"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <h6 class="preview-subject font-weight-medium">Settings</h6>
-                                        <p class="font-weight-light small-text">
-                                            Private message
-                                        </p>
-                                    </div>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item preview-item">
-                                    <div class="preview-thumbnail">
-                                        <div class="preview-icon bg-info">
-                                            <i class="far fa-envelope mx-0"></i>
-                                        </div>
-                                    </div>
-                                    <div class="preview-item-content">
-                                        <h6 class="preview-subject font-weight-medium">New user registration</h6>
-                                        <p class="font-weight-light small-text">
-                                            2 days ago
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="nav-item nav-profile dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                                <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
+                                </div>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
-                                    <i class="fas fa-power-off text-primary"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="fas fa-wrench mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-medium">Settings</h6>
+                                    <p class="font-weight-light small-text">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="far fa-envelope mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-medium">New user registration</h6>
+                                    <p class="font-weight-light small-text">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown d-flex flex-column justify-content-around">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href=@Url.Action("Index","Login") onclick="return confirm('Are you sure, you wants to logout?');">
+                                <i class="fas fa-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                        @*Rahul added UserName 08-02-23.*@
+                        @if (@Session["UserName"] != null)
+                        {
+                            <h6 style="font-family:'Comic Sans MS'">@Session["UserName"]</h6>
+                        }
+                    </li>
+                    @*<li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
+                                <i class="fas fa-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>*@
+                </ul>
                     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                         <span class="fas fa-bars"></span>
                     </button>

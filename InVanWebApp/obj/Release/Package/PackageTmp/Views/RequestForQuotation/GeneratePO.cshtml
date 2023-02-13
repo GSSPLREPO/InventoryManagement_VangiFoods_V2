@@ -21,7 +21,8 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", type = "text" })
-                    @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger"})
+                    <span id="valMsgTitle"></span>
                 </div>
                 <div class="col-md-2">
                     @Html.Label("PO Number")
@@ -383,6 +384,18 @@
         else
             document.getElementById('valTermMsg').innerHTML = '';
 
+        var title = $('#Tittle').val();
+        if (title == '' || title == null) {
+            $('#Tittle').focus();
+            document.getElementById('valMsgTitle').innerHTML = 'Enter tittle!';
+            document.getElementById('valMsgTitle').setAttribute('style','color:red');
+            event.preventDefault();
+            return;
+        }
+        else
+            document.getElementById('valMsgTitle').innerHTML = '';
+
+
         createJson();
     };
 
@@ -487,7 +500,6 @@
                 TxtItemDetails = TxtItemDetails + "},";
         }
         TxtItemDetails = TxtItemDetails + "]";
-        alert(TxtItemDetails);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 

@@ -73,8 +73,9 @@
                                         <tbody id="myTableBody">
                                             <tr id="tablerow">
                                                 <td>
-                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;width:270px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
-                                                    @*@Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })*@
+                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;width:270px;", onchange = "SelectedIndexChangedItemList($(this).val())", onmouseleave = "ValMsgItemList($(this).val(),id)" })
+                                                    <span id="ValMsgItemList" style="display:none; color:red"></span>
+                                                    @*@Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" }) Rahul removed ValidationMessageFor ItemId and added ValMsgItemList in span tag onchange SelectedIndexChangedItemList 09-02-23. *@
                                                 </td>
                                                 <td>
                                                     @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:auto;" })
@@ -219,8 +220,28 @@
         selectedOptionLocationName = document.getElementById("ToLocationId").selectedIndex;
         locationName = document.getElementById("ToLocationId").options[selectedOptionLocationName].innerText;
         document.getElementById("ToLocationName").value = locationName;
-        $('#Item_ID').focus();        /// Rahul added 04-02-23
+        $('#Item_ID').focus();        /// Rahul added 04-02-23      
+        ValMsgItemList(value, id)        /// Rahul added 09-02-23      
     }
+
+    ///---Rahul added onmouseleave event ValMsgItemList(value, id) strart 09-02-2023.  
+    function ValMsgItemList(value, id) {
+        //debugger
+        var rowNo = id.split('_')[1];
+        $("#Item_ID_" + rowNo).val();
+        var ItemList = $("#Item_ID option:selected").val();
+        if (ItemList == '' || ItemList == 0) {
+            $("#ValMsgItemList").text("Please select Inward QC number!");
+            $("#ValMsgItemList").show();
+            document.getElementById(id).focus();
+            return
+        }
+        else {
+            $("#ValMsgItemList").hide();
+        }
+    }
+    ///---Rahul added onmouseleave event ValMsgItemList(value, id) end.  
+
     var flag = 0; //This flag is for checking whether the add Item details or not. 
     function SelectedIndexChangedItemList(id) {
        
@@ -267,8 +288,8 @@
             document.getElementById("Item_Code").value = itemCode;
             flag = 0;
         }
-
     }
+
     $("#Item_ID").change(function () {
         //debugger
         var FromLocationCheck = $('#FromLocationId').val();
@@ -361,15 +382,16 @@
         var rowNo = id.split('_')[1];
         var TransferQuantity = parseFloat(value);
         if (TransferQuantity <= 0 || value == null || value == '') {
-            alert("Quantity cannot be negative, null or zero!");
+            //alert("Quantity cannot be negative, null or zero!"); //rahul removed alert on 04-02-23
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
             return;
         }
         else {
             //Set transfer Quantity in item grid.
+            $("#TransferQuantity").val();
             $("#transferQuantity_" + rowNo).val();
-            document.getElementById(id).setAttribute("style", "none");
+            document.getElementById(id).setAttribute("style", "");
         }
     }
     //---OnChangeQuantity end ------
@@ -389,7 +411,7 @@
         var remarks = "remarks_" + counter;
         var inwardDateOfItem = "InwardDateOfItem_" + counter;
         $('<tr id="tablerow' + counter + '">' + '<td>' +
-            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:270px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
+            '<select id="' + itemId + '" onmouseleave = "ValMsgItemList($(this).val(),id)"; onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:270px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:auto;" name="' + itemCode + '" value="" required="required" readonly="readonly" />' +
