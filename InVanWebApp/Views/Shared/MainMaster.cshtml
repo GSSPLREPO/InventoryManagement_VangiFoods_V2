@@ -136,7 +136,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
+                            <a class="dropdown-item" href=@Url.Action("Index","Login") onclick = "return confirm('Are you sure, you wants to logout?');">
                                 <i class="fas fa-power-off text-primary"></i>
                                 Logout
                             </a>

@@ -115,8 +115,8 @@
                             <h4 class="card-title" style="color:darkcyan">@Html.Label("Vendor Name")<span style="color:red">*</span></h4>
                             <hr />
                             <div class="form-group">
-                                @Html.DropDownListFor(model => model.CompanyName, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm js-example-basic-multiple", multiple = "multiple", onchange = "SelectedIndexChanged($(this).val())" })
-                                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })
+                                @Html.DropDownListFor(model => model.CompanyName, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm js-example-basic-multiple mult-sl", multiple = "multiple", onchange = "SelectedIndexChanged($(this).val())" })
+                                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })   @*Rahul added class mult-sl in CompanyName 13-02-23.*@
                                 @Html.TextBoxFor(model => model.VendorIDs, new { style = "display:none" })
                             </div>
                         </div>
@@ -269,6 +269,52 @@
         //alert('multiple called!')
         $('.js-example-basic-multiple').select2();
 
+        //--- '.js-example-basic-multiple .mult-sl' start rahul added 13-02-23.
+        $('.mult-sl').select2({
+            placeholder: 'Select'
+        })
+
+        $.validator.setDefaults({
+            ignore: []
+        });
+
+        $('#CompanyName').validate({
+            errorElement: 'span',
+            errorClass: 'error',
+            rules: {
+                singleselect: 'required',
+                multipleselect: 'required',
+                name: 'required'
+            },
+
+            highlight: function (element, errorClass, validClass) {
+
+                var elem = $(element);
+
+                if (elem.hasClass('s-select2')) {
+                    var isMulti = (!!elem.attr('multiple')) ? 's' : '';
+                    elem.siblings('.mult-sl').find('.select2-choice' + isMulti + '').addClass(errorClass);
+                } else {
+                    elem.addClass(errorClass);
+                }
+
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+
+                if (elem.hasClass('mult-sl')) {
+                    elem.siblings('.mult-sl').find('.select2-choice').removeClass(errorClass);
+                } else {
+                    elem.removeClass(errorClass);
+                }
+            }
+        });
+
+        $('select').on('change', function () {
+            $(this).valid();
+        });
+        //--- '.js-example-basic-multiple .mult-sl' end rahul added 09-02-23.
+
         var fileName = $('#tempSign').val();
 
         //Get a reference to our file input
@@ -285,6 +331,34 @@
         dataTransfer.items.add(myFile);
         fileInput.files = dataTransfer.files;
     });
+
+    //---rahul added ValidMsgBiddingStartDate 13-02-23.
+    function ValidMsgBiddingStartDate() {
+        debugger
+        var startDate = $("#BiddingStartDate").val();
+        var endDate = $("#BiddingEndDate").val();
+
+        if (startDate > endDate) {
+            alert('Bidding start date should not be greater than to end date!');
+            $('#BiddingStartDate').focus();
+            return;
+        }
+    }
+    //---BiddingStartDate todaysDate end ------
+
+    //---rahul added ValidMsgBiddingEndDate 13-02-23.
+    function ValidMsgBiddingEndDate() {
+        debugger
+        var startDate = $("#BiddingStartDate").val();
+        var endDate = $("#BiddingEndDate").val();
+
+        if (startDate > endDate) {
+            alert('Bidding end date should not be greater than to start date!');
+            $('#BiddingEndDate').focus();
+            return;
+        }
+    }
+    //---BiddingEndDate todaysDate end ------
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     var TxtItemDetails = "";
@@ -425,3 +499,11 @@
     }
     //==================createJson Set value in txtItemDetails onCick of Save/Update button end======--------
 </script>
+
+
+<style>
+    /*//--- '.js-example-basic-multiple .mult-sl' start rahul added 13-02-23.*/
+    textarea.select2-search__field {
+        position: absolute;
+    }
+</style>

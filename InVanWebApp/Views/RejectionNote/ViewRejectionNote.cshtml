@@ -192,8 +192,8 @@
                                                                     @*Rahul added style width in ItemTaxValue tag 09-02-23.*@
                                                                     @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;width: 70px;", @readonly = "readonly" })
                                                                 </td>
-                                                                <td class=" text-sm">
-                                                                    @Html.DisplayFor(x => item.Remarks)
+                                                                <td class=" text-sm text-wrap">
+                                                                    @Html.DisplayFor(x => item.Remarks, new { style = "width: 200px;"})
                                                                 </td>
                                                             </tr>
                                                             { c++; }

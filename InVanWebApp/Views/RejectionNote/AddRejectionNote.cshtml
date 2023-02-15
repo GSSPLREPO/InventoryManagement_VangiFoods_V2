@@ -177,8 +177,8 @@
                 $('#PONumber').val(result[0].PONumber);
                 $('#SupplierName').val(result[0].SupplierName);
                 $('#SupplierID').val(result[0].SupplierID); /// Rahul added SupplierID 10-01-2023.
-
                 var ColCount = result.length
+                var flag = 0; //This flag is for checking whether the selected Inward QC is completed or not.
 
                 //===================Create dynamic table for binding Item details====================//
                 var table = document.getElementById('ItemTable');
@@ -250,6 +250,13 @@
                         }
                     }
 
+                }
+                if (flag == 0) {
+                    alert('QC is done for the selected Inward number!');
+                    $('#btnSave').prop('disabled', 'true');
+                }
+                else {
+                    $('#btnSave').prop('disabled', false);
                 }
             }
         });

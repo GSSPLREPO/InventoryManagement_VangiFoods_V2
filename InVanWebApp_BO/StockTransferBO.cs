@@ -15,7 +15,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select Different To Location!")]
         public Nullable<int> ToLocationId { get; set; }
         public Nullable<int> ItemId { get; set; }
-        [Required(ErrorMessage = "Enter Required Quantity!")]
+        [Required(ErrorMessage = "Enter Transfer Quantity!")] //Rahul updated 14-02-23. 
         public Nullable<double> TransferQuantity { get; set; }
         public Nullable<double> RequiredQuantity { get; set; } 
         [Required(ErrorMessage = "Enter remarks!")]
