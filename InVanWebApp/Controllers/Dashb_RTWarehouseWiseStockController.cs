@@ -16,6 +16,7 @@ namespace InVanWebApp.Controllers
     {
         private IDashboardRepository _repository;
         private ILocationRepository _repositoryLocation;
+        private IItemRepository _itemRepository;
         private static ILog log = LogManager.GetLogger(typeof(GRNController));
 
         #region Initializing constructor
@@ -26,6 +27,7 @@ namespace InVanWebApp.Controllers
         {
             _repository = new DashboardRepository();
             _repositoryLocation = new LocationRepository();
+            _itemRepository = new ItemRepository();
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
@@ -45,15 +47,21 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
 
             BindLocationDropdown();
+            BindItemDropDown();
             return View();
         }
 
-        public JsonResult GetDashboardData(string id)
+        public JsonResult GetDashboardData(string id, string ItemId)
         {
-            int LocationId = Convert.ToInt32(id);
+            int LocationId = 0, itemId=0;
+            if (id != null & id != "")
+                LocationId = Convert.ToInt32(id);
+            if(ItemId!=null & ItemId!="")
+                itemId = Convert.ToInt32(ItemId);
+
             string jsonstring = string.Empty;
 
-            var result = _repository.GetDashboardData(LocationId);
+            var result = _repository.GetDashboardData(LocationId,itemId);
             jsonstring = JsonConvert.SerializeObject(result);
 
             var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
@@ -93,6 +101,15 @@ namespace InVanWebApp.Controllers
             ViewData["LocationName"] = dd;
         }
 
+        #endregion
+
+        #region Bind Item dropdown
+        public void BindItemDropDown()
+        {
+            var model = _itemRepository.GetAll();
+            var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
+            ViewData["Item"] = Item_dd;
+        }
         #endregion
     }
 }

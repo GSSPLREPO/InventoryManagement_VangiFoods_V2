@@ -29,6 +29,9 @@ namespace InVanWebApp_BO
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         //Added by Rahul: For stock transfer screen
-        public string Item_Code { get; set; } 
+        public string Item_Code { get; set; }
+
+        //Added th below field for real-time dashboard
+        public int ItemID { get; set; }
     }
 }
