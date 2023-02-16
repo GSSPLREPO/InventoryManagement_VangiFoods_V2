@@ -10,6 +10,7 @@ namespace InVanWebApp_BO
     public class StockAdjustmentBO
     {
         public int ID { get; set; }
+        [DataType(DataType.Date)]
         public DateTime DocumentDate { get; set; }
         public string DocumentNo { get; set; }
         [Required(ErrorMessage ="Select Location!")]

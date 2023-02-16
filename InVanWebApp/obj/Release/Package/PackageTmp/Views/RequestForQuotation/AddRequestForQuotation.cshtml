@@ -67,8 +67,8 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BiddingStartDate, "{0:yyyy-MM-dd}", new { @id = "BiddingStartDate", @class = "form-control form-control-sm date1", type = "date" })
-                    @Html.ValidationMessageFor(model => model.BiddingStartDate, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.BiddingStartDate, "{0:yyyy-MM-dd}", new { @id = "BiddingStartDate", @class = "form-control form-control-sm date1", type = "date", onchange = "ValidMsgBiddingStartDate()" })
+                    @Html.ValidationMessageFor(model => model.BiddingStartDate, "", new { @class = "error mt-2 text-danger" })  @*Rahul added onchange = "ValidMsgBiddingStartDate()" 10-02-2023.*@
                 </div>
 
                 <div class="col-md-2">
@@ -76,8 +76,8 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BiddingEndDate, "{0:yyyy-MM-dd}", new { @id = "BiddingEndDate", @class = "form-control form-control-sm date1", type = "date" })
-                    @Html.ValidationMessageFor(model => model.BiddingEndDate, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.BiddingEndDate, "{0:yyyy-MM-dd}", new { @id = "BiddingEndDate", @class = "form-control form-control-sm date1", type = "date", onchange = "ValidMsgBiddingEndDate()" })
+                    @Html.ValidationMessageFor(model => model.BiddingEndDate, "", new { @class = "error mt-2 text-danger" })    @*Rahul added onchange = "ValidMsgBiddingEndDate()" 10-02-2023.*@
                 </div>
             </div>
 
@@ -317,6 +317,18 @@
         $("#" + id).val(tempDate);
         document.getElementById(id).setAttribute("min", tempDate.toString());
     }
+    //---rahul added 10-02-23.
+    function ValidMsgBiddingStartDate() {
+        debugger
+        var startDate = $("#BiddingStartDate").val();
+        var endDate = $("#BiddingEndDate").val();
+
+        if (startDate > endDate) {
+            alert('Bidding start date should not be greater than to end date!');
+            $('#BiddingStartDate').focus();
+            return;
+        }
+    }
     //---BiddingStartDate todaysDate end ------
 
     //---BiddingEndDate todaysDate start ------
@@ -328,6 +340,18 @@
         var tempDate = d.toISOString().split("T")[0];
         $("#" + id).val(tempDate);
         document.getElementById(id).setAttribute("min", tempDate.toString());
+    }
+    //---rahul added 10-02-23.
+    function ValidMsgBiddingEndDate() {
+        debugger
+        var startDate = $("#BiddingStartDate").val();
+        var endDate = $("#BiddingEndDate").val();
+
+        if (startDate > endDate) {
+            alert('Bidding end date should not be greater than to start date!');
+            $('#BiddingEndDate').focus();
+            return;
+        }
     }
     //---BiddingEndDate todaysDate end ------
 
@@ -632,3 +656,10 @@
     //==================createJson Set value in txtItemDetails onCick of Save/Update button end======--------
 
 </script>
+
+<style>
+    /*//--- '.js-example-basic-multiple .mult-sl' start rahul added 13-02-23.*/
+    textarea.select2-search__field {
+        position: absolute;
+    }
+</style>

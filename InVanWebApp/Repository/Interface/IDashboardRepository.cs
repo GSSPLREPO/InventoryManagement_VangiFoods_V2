@@ -9,7 +9,7 @@ namespace InVanWebApp.Repository.Interface
 {
     public interface IDashboardRepository
     {
-        List<LocationWiseStockBO> GetDashboardData(int id);
+        List<LocationWiseStockBO> GetDashboardData(int id, int ItemId=0);
         List<StockMasterBO> GetReorderPointDashboardData();
     }
 }

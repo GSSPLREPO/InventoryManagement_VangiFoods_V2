@@ -43,8 +43,8 @@
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
                    new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())", onmouseleave = "ValMsgInwardQCNumber($(this).val(),id)" })
-                    @*@Html.ValidationMessageFor(model => model.InwardQCId, "", new { @class = "error mt-2 text-danger" }) Rahul removed and added onmouseleave event 09-02-2023.*@
-                    <span id="ValMsgInwardQCNumber" style="display:none; color:red"></span>
+                    @Html.ValidationMessageFor(model => model.InwardQCId, "", new { id = "ValMsgInwardQCNumber", @class = "error mt-2 text-danger" })
+                    @*<span id="ValMsgInwardQCNumber" style="display:none; color:red"></span>*@ @*Rahul removed and added onmouseleave event 09-02-2023.*@
                     @Html.HiddenFor(model => model.InwardQCNumber)
                     @Html.HiddenFor(model => model.InwardNoteNumber)
                 </div>
@@ -130,11 +130,12 @@
 
 
 <script type="text/javascript">
+
     var InwardQuantities = "";
 
     ///---Rahul added onmouseleave event ValMsgInwardQCNumber(value, id) strart 09-02-2023.
     function ValMsgInwardQCNumber(value, id) {
-        //debugger
+        debugger
         var InwardQCNumber = $("#InwardQCId option:selected").val();
         if (InwardQCNumber == '' || InwardQCNumber == 0) {
             $("#ValMsgInwardQCNumber").text("Please select Inward QC number!");
@@ -176,8 +177,8 @@
                 $('#PONumber').val(result[0].PONumber);
                 $('#SupplierName').val(result[0].SupplierName);
                 $('#SupplierID').val(result[0].SupplierID); /// Rahul added SupplierID 10-01-2023.
-
                 var ColCount = result.length
+                var flag = 0; //This flag is for checking whether the selected Inward QC is completed or not.
 
                 //===================Create dynamic table for binding Item details====================//
                 var table = document.getElementById('ItemTable');
@@ -250,12 +251,18 @@
                     }
 
                 }
+                if (flag == 0) {
+                    alert('QC is done for the selected Inward number!');
+                    $('#btnSave').prop('disabled', 'true');
+                }
+                else {
+                    $('#btnSave').prop('disabled', false);
+                }
             }
         });
     }
 
-    function createJson() {
-        debugger
+    function createJson() {        
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
         var i = 1;

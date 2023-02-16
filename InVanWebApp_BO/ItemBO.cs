@@ -11,10 +11,10 @@ namespace InVanWebApp_BO
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Select category name!")]
-        public Nullable<int> ItemCategory_ID { get; set; }
+        [Required(ErrorMessage = "Select item category name!")] //Rahul updated ItemCategory_ID ErrorMessage 16-02-23. 
+        public Nullable<int> ItemCategory_ID { get; set; }  
 
-        [Required(ErrorMessage = "Select type name!")]
+        [Required(ErrorMessage = "Select item type name!")] //Rahul updated ItemTypeID ErrorMessage 16-02-23.
         public Nullable<int> ItemTypeID { get; set; }
 
         [Required(ErrorMessage = "Enter item code!")]

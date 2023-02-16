@@ -121,7 +121,8 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            <table class="table table-striped" id="submissionTable">
+                                            @*Rahul removed class table-striped and added class table-hover in table tag 16-02-2023.*@
+                                            <table class="table table-hover" id="submissionTable">
                                                 <thead>
                                                     <tr>
                                                         <th class="sortStyle">
@@ -178,10 +179,12 @@
                                                                     @Html.DisplayFor(x => item.CurrencyName)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                    @*Rahul added style line-height: 1.5rem; in ItemTaxValue tag 16-02-2023.*@ 
+                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;line-height: 1.5rem;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                    @*Rahul added style line-height: 1.5rem; in TotalItemCost tag 16-02-2023.*@ 
+                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;line-height: 1.5rem;", @readonly = "readonly" })
                                                                 </td>
                                                             </tr>
                                                             { c++; }

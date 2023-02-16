@@ -168,7 +168,12 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        if (model.PONumber != null && model.PONumber != "")  ///Rahul Added if condition for alert err 16-02-2023. 
+                        {
+                            TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        }
+                        else
+                        {
                         //BindInwardNoNumber();
                         BindInwardNumber(); ///Rahul Added 13-01-2023.
                         model.NoteDate = DateTime.Today;
@@ -177,7 +182,7 @@ namespace InVanWebApp.Controllers
                         //=========here document type=5 i.e. for generating the Rejection Note (logic is in SP).====// 
                         var DocumentNumber = objDocNo.GetDocumentNo(5);
                         ViewData["DocumentNo"] = DocumentNumber;
-
+                        }
                         return View(model);
                     }
                 }

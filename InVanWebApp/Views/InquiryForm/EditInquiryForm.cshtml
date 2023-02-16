@@ -159,7 +159,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-striped" id="submissionTable">
+                                    @*Rahul updated class table-hover and added style in table tag 16-02-23.*@
+                                    <table class="table table-hover" id="submissionTable">
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">
@@ -268,7 +269,7 @@
                                                             @Html.TextBox("DeliveryDate", item.DeliveryDate, "{0:yyyy-MM-dd}", new { id = "DeliveryDate", @class = "form-control form-control-sm", type = "date" })
                                                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                                                             @*@Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })
-                                                        @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })*@
+                                                                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })*@
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("HSN_Code_" + c, item.HSN_Code, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "10" })
@@ -311,7 +312,7 @@
 
 
             <div class="col-md-12 grid-margin stretch-card flex-wrap">
-                
+
                 <div class="col-md-6 grid-margin stretch-card flex-wrap">
                     @*keep for ui*@
                 </div>
@@ -397,6 +398,10 @@
 
     $(document).ready(function () {
         ///debugger
+        //---DeliveryDate todaysDate start 16-02-23.------
+        var id = "DeliveryDate";
+        deliveryDate(id);
+        //---DeliveryDate todaysDate end ------
         CalculateTotalBeforeTax();
     });
 
@@ -468,8 +473,6 @@
                     alert('Failed to retrieve Item description.' + ex);
                 }
             });
-
-
     }
 
     function getitemDetailsJSTbl(count) {
@@ -477,7 +480,20 @@
         var itemId = "ItemID_" + count;
         var currencyID = $('#CurrencyID').val();
         var selectedItemId = $("#" + itemId).val();
-                    $.ajax({
+        var delDate_Id = 'deliveryDate_' + count;
+        deliveryDate(delDate_Id);
+        debugger    //Rahul added CurrencyIDCheck if null or '' 16-02-23. 
+        var CurrencyIDCheck = $('#CurrencyID').val();
+        console.log(CurrencyIDCheck);
+        if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
+            debugger
+            alert("Select Currency!");
+            $('#CurrencyID').focus();
+            document.getElementById(itemId).selectedIndex = 0;
+            return;
+        }
+
+         $.ajax({
                 type: 'POST',
                 //url: '@Url.Action("GetitemDetails?id='+${itemId}+'")', // we are calling json method
                 url: '@Url.Action("GetitemDetails")', // we are calling json method
@@ -511,7 +527,17 @@
                 error: function (ex) {
                     alert('Failed to retrieve Item description.' + ex);
                 }
-            });
+         });
+    }
+
+    function deliveryDate(id) {
+        debugger
+        const d = new Date();
+        d.setYear(d.getFullYear());
+        //var id = "deliveryDate_";
+        var tempDate = d.toISOString().split("T")[0];
+        $("#" + id).val(tempDate);
+        document.getElementById(id).setAttribute("min", tempDate.toString());
     }
 
     var counter = 1;

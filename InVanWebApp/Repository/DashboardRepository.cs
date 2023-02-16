@@ -18,7 +18,7 @@ namespace InVanWebApp.Repository
         private static ILog log = LogManager.GetLogger(typeof(ItemTypeRepository));
 
         #region Function for real time warehouse wise stock
-        public List<LocationWiseStockBO> GetDashboardData(int id)
+        public List<LocationWiseStockBO> GetDashboardData(int id, int ItemId = 0)
         {
             List<LocationWiseStockBO> resultList = new List<LocationWiseStockBO>();
             try
@@ -28,6 +28,7 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_dashb_RealTimeWarehouseWiseStock", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@LocationId", id);
+                    cmd.Parameters.AddWithValue("@ItemId", ItemId);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())

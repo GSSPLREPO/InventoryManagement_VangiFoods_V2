@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { id = "ValMsgSupplierName", @class = "error mt-2 text-danger" }) @*//Rahul added ValMsgSupplierName 15-02-23.*@
                 </div>
             </div>
             <br />
@@ -195,7 +195,7 @@
 
         //Clearing the address textarea
         $('#SupplierName').val(' ');
-        // $('#SupplierDetails').val(' ');
+        $("#ValMsgSupplierName").hide(); //Rahul added ValMsgSupplierName 15-02-23.
 
         $.ajax({
             type: "POST",
