@@ -260,7 +260,7 @@ namespace InVanWebApp.Controllers
                 //BindIndentDropDown();
 
                 RequestForQuotationBO model = _requestForQuotationRepository.GetDetailsForRFQView(RequestForQuotationId);
-
+                
                 return View(model);
             }
             else

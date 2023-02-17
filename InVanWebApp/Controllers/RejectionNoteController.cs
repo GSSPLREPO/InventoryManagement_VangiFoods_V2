@@ -172,9 +172,8 @@ namespace InVanWebApp.Controllers
                         {
                             TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         }
-                        else
-                        {
-                        //BindInwardNoNumber();
+                       
+                        //BindInwardNoNumber(); 
                         BindInwardNumber(); ///Rahul Added 13-01-2023.
                         model.NoteDate = DateTime.Today;
                         //==========Document number for Rejection note============//
@@ -182,7 +181,7 @@ namespace InVanWebApp.Controllers
                         //=========here document type=5 i.e. for generating the Rejection Note (logic is in SP).====// 
                         var DocumentNumber = objDocNo.GetDocumentNo(5);
                         ViewData["DocumentNo"] = DocumentNumber;
-                        }
+                        
                         return View(model);
                     }
                 }
