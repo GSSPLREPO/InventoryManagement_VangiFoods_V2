@@ -35,11 +35,11 @@ namespace InVanWebApp.Repository
                     {
                         var result = new LocationWiseStockBO()
                         {
-                            ID = Convert.ToInt32(reader["ID"]),
+                            //ID = Convert.ToInt32(reader["ID"]),
                             LocationName = reader["LocationName"].ToString(),
-                            ItemName = reader["ItemName"].ToString(),
+                            ItemName = reader["Item_Name"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
-                            ItemId= Convert.ToInt32(reader["ItemId"]),
+                            ItemId= Convert.ToInt32(reader["ItemID"]),
                             Quantity = Convert.ToDouble(reader["Quantity"]),
                             ItemUnit = (reader["ItemUnit"].ToString()),
                             CurrencyName = (reader["CurrencyName"].ToString())

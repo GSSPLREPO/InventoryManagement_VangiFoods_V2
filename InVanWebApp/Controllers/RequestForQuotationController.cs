@@ -486,7 +486,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-
         #region Delete function
         /// <summary>
         /// Date: 20 Dec'22 

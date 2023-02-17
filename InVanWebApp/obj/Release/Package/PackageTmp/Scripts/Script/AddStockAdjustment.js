@@ -326,6 +326,7 @@ function OnChangeQty(value, id) {
         DiffQty = avalQty - value;
         DiffQty = parseFloat(DiffQty);
         document.getElementById("txtDifference_" + rowNo).value = "-" + DiffQty;
+        document.getElementById("txtDifference_" + rowNo).setAttribute("style", "color:red;");
     }
 
     var TransferPrice = (UnitPrice * DiffQty);

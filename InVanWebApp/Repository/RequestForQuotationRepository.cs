@@ -411,18 +411,19 @@ namespace InVanWebApp.Repository
             {
                 if (VenColNo != 0)
                 {
-                    string query = "Select VendorIDs from RequestForQuotation where IsDeleted=0 and RequestForQuotationId=@RFQId";
-                    var tempVenId = new RequestForQuotationBO();
-                    using (SqlConnection con = new SqlConnection(connString))
-                    {
-                        tempVenId = con.Query<RequestForQuotationBO>(query, new { @RFQId = RFQ_ID }).FirstOrDefault();
-                    }
-                    if (tempVenId != null)
-                    {
-                        var tempVen = tempVenId.VendorIDs.Split(',');
-                        VenColNo = VenColNo - 1;
-                        ID = Convert.ToInt32(tempVen[VenColNo]);
-                    }
+                    //string query = "Select VendorIDs from RequestForQuotation where IsDeleted=0 and RequestForQuotationId=@RFQId";
+                    //var tempVenId = new RequestForQuotationBO();
+                    //using (SqlConnection con = new SqlConnection(connString))
+                    //{
+                    //    tempVenId = con.Query<RequestForQuotationBO>(query, new { @RFQId = RFQ_ID }).FirstOrDefault();
+                    //}
+                    //if (tempVenId != null)
+                    //{
+                    //    var tempVen = tempVenId.VendorIDs.Split(',');
+                    //    VenColNo = VenColNo - 1;
+                    //    ID = Convert.ToInt32(tempVen[VenColNo]);
+                    //}
+                    ID = VenColNo;
                 }
                 //string queryString = "Select * from RFQ_VendorDetails where IsDeleted=0 and VendorsID=@ID and RequestForQuotationId=@RFQId";
                 string queryString = "Select rv.*, (Select rfq.IndentID from RequestForQuotation rfq where rfq.IsDeleted=0 and rfq.RequestForQuotationId=rv.RequestForQuotationId) as IndentID, (Select rfq.IndentNumber from RequestForQuotation rfq where rfq.IsDeleted=0 and rfq.RequestForQuotationId=rv.RequestForQuotationId) as IndentNumber from RFQ_VendorDetails rv where rv.IsDeleted=0 and rv.VendorsID=@ID and rv.RequestForQuotationId=@RFQId";

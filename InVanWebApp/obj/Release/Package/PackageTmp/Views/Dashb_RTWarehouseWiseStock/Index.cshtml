@@ -46,8 +46,14 @@
                                 <div class="col-md-1">
                                     <label>Location</label>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     @Html.DropDownListFor(model => model.ID, (IEnumerable<SelectListItem>)ViewData["LocationName"], "--All--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-1">
+                                    <label>Items</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => model.ItemID, (IEnumerable<SelectListItem>)ViewData["Item"], "--All--", new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
@@ -156,6 +162,11 @@
             return h + m + s;
         }
         var LocationId = $('#ID').val();
+        var ItemId = $('#ItemID').val();
+
+        if (ItemId == '' || ItemId == null) {
+            ItemId = 0;
+        }
 
         if (LocationId != null & LocationId != '') {
             $('#AllDashboard').hide();
@@ -164,7 +175,7 @@
             var Location = $("#ID option:selected").text();
             //-----------Bind individual warehouse data in the graph Start-----------------------------------------------------------
             var request = $.ajax({
-                url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId,
+                url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId+"&ItemId="+ItemId,
                 contentType: 'application/json;',
                 dataType: 'json',
                 type: "POST",
@@ -306,7 +317,7 @@
                 if (count == 1) {
 
                     var request = $.ajax({
-                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId,
+                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId + "&ItemId=" + ItemId,
                         contentType: 'application/json;',
                         dataType: 'json',
                         type: "POST",
@@ -408,7 +419,7 @@
                 }
                 else if (count == 2) {
                     var request = $.ajax({
-                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId,
+                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId + "&ItemId=" + ItemId,
                         contentType: 'application/json;',
                         dataType: 'json',
                         type: "POST",
@@ -510,7 +521,7 @@
                 }
                 else if (count == 3) {
                     var request = $.ajax({
-                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId,
+                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId + "&ItemId=" + ItemId,
                         contentType: 'application/json;',
                         dataType: 'json',
                         type: "POST",
@@ -611,7 +622,7 @@
                 }
                 else if (count == 4) {
                     var request = $.ajax({
-                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId,
+                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId + "&ItemId=" + ItemId,
                         contentType: 'application/json;',
                         dataType: 'json',
                         type: "POST",
@@ -713,7 +724,7 @@
                 }
                 else if (count == 5) {
                     var request = $.ajax({
-                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId,
+                        url: "/Dashb_RTWarehouseWiseStock/GetDashboardData?id=" + LocationId + "&ItemId=" + ItemId,
                         contentType: 'application/json;',
                         dataType: 'json',
                         type: "POST",

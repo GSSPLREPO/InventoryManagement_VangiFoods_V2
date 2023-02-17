@@ -39,10 +39,10 @@ namespace InVanWebApp_BO
         public float ToLocation_FinalQty { get; set; }
         public float UnitPrice { get; set; }
 
-        [Required(ErrorMessage = "Please Select From Date ")]
+        [Required(ErrorMessage = "Please Select From Date!")]
         public DateTime fromDate { get; set; }
 
-        [Required(ErrorMessage = "Please Select From Date ")]
+        [Required(ErrorMessage = "Please Select To Date!")]
         public DateTime toDate { get; set; }
         public string Date { get; set; }
 

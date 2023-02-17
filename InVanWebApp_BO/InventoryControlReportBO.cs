@@ -23,10 +23,10 @@ namespace InVanWebApp_BO
         public int UsedQuantity { get; set; }
         public decimal AvailablePrice { get; set; }
         public int AvailableQuantity { get; set; }
-        [Required(ErrorMessage = "Please Select From Date ")]
+        [Required(ErrorMessage = "Please Select From Date!")]
         public DateTime fromDate { get; set; }
 
-        [Required(ErrorMessage = "Please Select From Date ")]
+        [Required(ErrorMessage = "Please Select To Date!")]
         public DateTime toDate { get; set; }
         public DateTime IssueNoteDate { get; set; }
 

@@ -143,6 +143,20 @@
             var fromDate = $("#fromDate").val();
             var toDate = $("#toDate").val();
 
+            if (fromDate == null || fromDate == "") {
+                $('#fromDateValidate').text('Select from date!');
+                $('#fromDateValidate').show();
+                $("#fromDate").focus();
+                return;
+            }
+
+            if (toDate == null || toDate == "") {
+                $('#toDateValidate').text('Select to date!');
+                $('#toDateValidate').show();
+                $("#toDate").focus();
+                return;
+            }
+
             if (fromDate > toDate) {
                 alert('Invalid date selection!');
                 $('#fromDate').focus();
@@ -178,24 +192,6 @@
             if (flag == 1) {
                 return;
             }
-
-            //===========OnChange of item if From date is not selected================
-            var fromDateCheck = $('#fromDate').val();
-            var toDateCheck = $('#toDate').val();
-            if (fromDateCheck == '' || fromDateCheck == null) {
-                $('#fromDateValidate').text("Select from date!");
-                $('#fromDateValidate').show();
-                $('#fromDate').focus();
-                return;
-            }
-            else if (toDateCheck == '' || toDateCheck == null) {
-                $('#toDateValidate').text("Select to date!");
-                $('#toDateValidate').show();
-                $('#toDate').focus();
-                return;
-            }
-
-            //==================end======================
 
             $('#ExportPdf').show();
             $('#ExportExcel').show();

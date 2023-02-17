@@ -12,7 +12,7 @@ namespace InVanWebApp_BO
         public int CountryID { get; set; }
         public string CurrencyName { get; set; }
         public Nullable<double> CurrencyPrice { get; set; }
-        public Nullable<double> ndianCurrencyPrice { get; set; }
+        public Nullable<double> IndianCurrencyPrice { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

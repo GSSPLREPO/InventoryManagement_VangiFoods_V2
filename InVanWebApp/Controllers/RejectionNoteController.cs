@@ -15,7 +15,7 @@ namespace InVanWebApp.Controllers
     {
         private IRejectionNoteRepository _RejectionNoteRepository;
         private IInwardQCSortingRepository _QCRepository;
-        private IGRNRepository _GRNrepository; ///Rahul Added 13-01-2023.
+        private IGRNRepository _GRNrepository; 
         private static ILog log = LogManager.GetLogger(typeof(POPaymentController));
 
         #region Initializing Constructor(s)
@@ -27,18 +27,18 @@ namespace InVanWebApp.Controllers
         {
             _RejectionNoteRepository = new RejectionNoteRepository();
             _QCRepository = new InwardQCSortingRepository();
-            _GRNrepository = new GRNRepository(); ///Rahul Added 13-01-2023. 
+            _GRNrepository = new GRNRepository(); 
         }
 
         /// <summary>
         /// Raj: Constructor With Parameters for initalizing objects.
         /// </summary>
         /// <param name="RejectionNoteRepository"></param>
-        public RejectionNoteController(IRejectionNoteRepository RejectionNoteRepository,IInwardQCSortingRepository QCRepository)
+        public RejectionNoteController(IRejectionNoteRepository RejectionNoteRepository, IInwardQCSortingRepository QCRepository)
         {
             _RejectionNoteRepository = RejectionNoteRepository;
             _QCRepository = QCRepository;
-            _GRNrepository = new GRNRepository(); ///Rahul Added 13-01-2023. 
+            _GRNrepository = new GRNRepository();  
         }
         #endregion
 
@@ -53,7 +53,7 @@ namespace InVanWebApp.Controllers
                 return View(model);
             }
             else
-                return RedirectToAction("Index", "Login");                        
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 
@@ -63,14 +63,14 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AddRejectionNote() 
+        public ActionResult AddRejectionNote()
         {
             if (Session[ApplicationSession.USERID] != null)
             {
                 //BindInwardNoNumber();
-                BindInwardNumber();  ///Rahul Added 13-01-2023.
+                BindInwardNumber();  
                 RejectionNoteBO model = new RejectionNoteBO();
-                model.NoteDate = DateTime.UtcNow;                   
+                model.NoteDate = DateTime.UtcNow;
                 //==========Document number for Rejection note============//
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
 
@@ -94,7 +94,7 @@ namespace InVanWebApp.Controllers
             return Json(inwardItems);
         }
         #endregion
-        ///Rahul Added 13-01-2023.
+
         #region Get Inward number details
         public JsonResult BindInwardDetails(string id)
         {
@@ -107,7 +107,7 @@ namespace InVanWebApp.Controllers
         }
 
         #endregion
-        ///Rahul Added 13-01-2023. 
+        
         #region Bind dropdown of Inward Number
         public void BindInwardNumber()
         {
@@ -116,7 +116,7 @@ namespace InVanWebApp.Controllers
             var resultList = new SelectList(result.ToList(), "ID", "InwardNumber");
             ViewData["InwardNumber"] = resultList;
         }
-        
+
         //public void BindInwardNoNumber()
         //{
         //    var result = _QCRepository.GetInwNumberForDropdown();
@@ -125,8 +125,6 @@ namespace InVanWebApp.Controllers
         //}
         #endregion
 
-
-
         #region 
         /// <summary>
         /// Rahul: Pass the data to the repository for insertion from it's view.
@@ -134,7 +132,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddRejectionNote(RejectionNoteBO model) 
+        public ActionResult AddRejectionNote(RejectionNoteBO model)
         {
             try
             {
@@ -152,7 +150,7 @@ namespace InVanWebApp.Controllers
                         {
                             TempData["Success"] = "<script>alert('Duplicate Rejection Note! Can not be completed!');</script>";
                             //BindInwardNoNumber();
-                            BindInwardNumber(); ///Rahul Added 13-01-2023.
+                            BindInwardNumber(); 
                             model.NoteDate = DateTime.Today;
                             //==========Document number for Rejection note============//
                             GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -168,9 +166,13 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        if (model.PONumber != null && model.PONumber != "")
+                        {
+                            TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        }
+
                         //BindInwardNoNumber();
-                        BindInwardNumber(); ///Rahul Added 13-01-2023.
+                        BindInwardNumber(); 
                         model.NoteDate = DateTime.Today;
                         //==========Document number for Rejection note============//
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -191,12 +193,12 @@ namespace InVanWebApp.Controllers
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
                 //BindInwardNoNumber();
-                BindInwardNumber(); ///Rahul Added 13-01-2023.
+                BindInwardNumber(); 
                 model.NoteDate = DateTime.Today;
                 //==========Document number for Rejection note============//
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
                 //=========here document type=5 i.e. for generating the Rejection Note (logic is in SP).====// 
-                var DocumentNumber = objDocNo.GetDocumentNo(5); 
+                var DocumentNumber = objDocNo.GetDocumentNo(5);
                 ViewData["DocumentNo"] = DocumentNumber;
                 return View(model);
             }
@@ -212,20 +214,19 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <param name="InquiryID"></param>
         /// <returns></returns>
-        [HttpGet] 
-        public ActionResult ViewRejectionNote(int RejectionID)  
+        [HttpGet]
+        public ActionResult ViewRejectionNote(int RejectionID)
         {
-            if (Session[ApplicationSession.USERID] != null)               
-                {
+            if (Session[ApplicationSession.USERID] != null)
+            {
                 //Binding item grid.             
                 RejectionNoteBO model = _RejectionNoteRepository.GetRejectionNoteById(RejectionID);
                 return View(model);
             }
-            else  
-            return RedirectToAction("Index", "Login");
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
-
 
         #region Delete function
         /// <summary>
@@ -236,14 +237,14 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public ActionResult DeleteRejectionNote(int RejectionID) 
+        public ActionResult DeleteRejectionNote(int RejectionID)
         {
             if (Session[ApplicationSession.USERID] != null)
             {
                 var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                _RejectionNoteRepository.Delete(RejectionID, userID);   
+                _RejectionNoteRepository.Delete(RejectionID, userID);
                 TempData["Success"] = "<script>alert('Rejection Note deleted successfully!');</script>";
-                return RedirectToAction("Index", "RejectionNote"); 
+                return RedirectToAction("Index", "RejectionNote");
             }
             else
                 return RedirectToAction("Index", "Login");

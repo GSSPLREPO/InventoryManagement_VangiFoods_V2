@@ -42,7 +42,7 @@
                                     <label class="font-weight-bold">Document Number</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.DocumentNo, new { style="color:black;"})
+                                    @Html.DisplayFor(model => model.DocumentNo, new { style = "color:black;" })
                                 </div>
                                 <br />
                                 <div class="col-md-2">
@@ -117,7 +117,7 @@
                                                                     @Html.DisplayFor(x => item.Item_Name)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(x => item.ItemUnitPrice) 
+                                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
                                                                     @Html.DisplayFor(x => item.CurrencyName)
                                                                 </td>
                                                                 <td>
@@ -126,23 +126,34 @@
                                                                 <td>
                                                                     @Html.DisplayFor(x => item.PhysicalStock)
                                                                 </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.DifferenceInStock)
-                                                                </td>
+                                                                @{
+                                                                        if (item.DifferenceInStock < 0)
+                                                                        {
+                                                                        <td style="color:red;">
+                                                                            @Html.DisplayFor(x => item.DifferenceInStock)
+                                                                        </td>
+                                                                        }
+                                                                        else {
+                                                                        <td>
+                                                                            @Html.DisplayFor(x => item.DifferenceInStock)
+                                                                        </td>
+                                                                        }
+
+                                                                }
                                                                 <td>
                                                                     @Html.DisplayFor(x => item.ItemUnit)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.DisplayFor(x=>item.TransferPrice) 
-                                                                    @Html.DisplayFor(x=>item.CurrencyName)
+                                                                    @Html.DisplayFor(x => item.TransferPrice)
+                                                                    @Html.DisplayFor(x => item.CurrencyName)
                                                                 </td>
                                                                 @*<td>
-                                                                    @Html.TextBoxFor(x => item.ItemTotalAmount, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
-                                                                </td>*@
-                                                            <td style="width:auto;">
-                                                                @*@Html.TextAreaFor(x => item.Remarks, new { style = "border:none;background: none; height:65px;width: 210px", @readonly = "readonly" })*@
-                                                                <label style="border:none;background:none;height:65px;width:210px" class="text-wrap">@item.Remarks</label>
-                                                            </td>
+                                                                        @Html.TextBoxFor(x => item.ItemTotalAmount, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                    </td>*@
+                                                                <td style="width:auto;">
+                                                                    @*@Html.TextAreaFor(x => item.Remarks, new { style = "border:none;background: none; height:65px;width: 210px", @readonly = "readonly" })*@
+                                                                    <label style="border:none;background:none;height:65px;width:210px" class="text-wrap">@item.Remarks</label>
+                                                                </td>
                                                             </tr>
                                                             { c++; }
                                                         }

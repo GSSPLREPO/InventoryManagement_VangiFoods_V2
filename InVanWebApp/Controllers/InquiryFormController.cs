@@ -139,7 +139,7 @@ namespace InVanWebApp.Controllers
                 ViewData["DocumentNo"] = DocumentNumber;
 
                 //Binding item grid with sell type item.
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 ViewData["itemListForDD"] = dd;
 
@@ -220,7 +220,7 @@ namespace InVanWebApp.Controllers
                 InquiryFormBO model = _inquiryFormRepository.GetInquiryFormById(InquiryID);
 
                 //Binding item grid with sell type item. 
-                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 string itemListForDD = "itemListForDD";
 
@@ -276,7 +276,7 @@ namespace InVanWebApp.Controllers
                             BindLocationName();                            
                             InquiryFormBO model1 = _inquiryFormRepository.GetInquiryFormById(model.InquiryID);
                             //Binding item grid with sell type item. 
-                            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
                             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                             string itemListForDD = "itemListForDD";
 
@@ -306,7 +306,7 @@ namespace InVanWebApp.Controllers
                         BindLocationName();                        
                         InquiryFormBO model1 = _inquiryFormRepository.GetInquiryFormById(model.InquiryID);
                         //Binding item grid with sell type item. 
-                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+                        var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
                         var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                         string itemListForDD = "itemListForDD";
 
@@ -387,7 +387,7 @@ namespace InVanWebApp.Controllers
             BindLocationName();            
 
             //Binding item grid with sell type item.
-            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
             ViewData["itemListForDD"] = dd;
             InquiryFormBO model = _inquiryFormRepository.GetInquiryFormById(InquiryID); 
