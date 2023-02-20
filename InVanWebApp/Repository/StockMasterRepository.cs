@@ -14,11 +14,14 @@ namespace InVanWebApp.Repository
     {
         private string conStr = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
 
-        public IEnumerable<StockReportBO> GetAllStock()
+        public IEnumerable<StockReportBO> GetAllStock(int ItemId = 0)
         {
             using (SqlConnection con = new SqlConnection(conStr))
             {
-                var stockList = con.Query<StockReportBO>("usp_rpt_stock_report", commandType: System.Data.CommandType.StoredProcedure).ToList();
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@ItemId", ItemId);
+
+                var stockList = con.Query<StockReportBO>("usp_rpt_stock_report",parameters, commandType: System.Data.CommandType.StoredProcedure).ToList();
 
                 return stockList;
             }

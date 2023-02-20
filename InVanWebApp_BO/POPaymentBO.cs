@@ -64,6 +64,9 @@ namespace InVanWebApp_BO
         public string IFSCCode { get; set; }
         public string BranchName { get; set; }
         public string UTRNo { get; set; }
+
+        //Added the below field for view of PO payment
+        public string CurrencyName { get; set; }
     }
     public class PurchaseOrderItemsDetailBO
     {

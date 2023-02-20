@@ -77,14 +77,19 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] == null)
                 return RedirectToAction("Index", "Login");
 
+            BindItemDropDown();
             return View();
         }
 
-        public JsonResult GetDashboardDataReorderPointOfStocks()
+        public JsonResult GetDashboardDataReorderPointOfStocks(string id="")
         {
+            var ItemId = 0;
+            if (id != "")
+                ItemId = Convert.ToInt32(id);
+
             string jsonstring = string.Empty;
 
-            var result = _repository.GetReorderPointDashboardData();
+            var result = _repository.GetReorderPointDashboardData(ItemId);
             jsonstring = JsonConvert.SerializeObject(result);
 
             var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);

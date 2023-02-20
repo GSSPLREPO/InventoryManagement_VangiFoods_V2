@@ -245,6 +245,47 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region This method is for View the PO payment
+        [HttpGet]
+        public ActionResult ViewPOPayment(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var result = _POPaymentRepository.GetByID(ID);
+                var purchaseOrderItems = _POPaymentRepository.GetPOItemsByPurchaseOrderId((int)result.PurchaseOrderId);
+                List<PurchaseOrderItemsDetailBO> items = new List<PurchaseOrderItemsDetailBO>();
+                foreach (var item in purchaseOrderItems)
+                {
+                    PurchaseOrderItemsDetailBO purchaseOrderItem = new PurchaseOrderItemsDetailBO
+                    {
+                        CreatedBy = item.CreatedBy,
+                        CreatedDate = item.CreatedDate,
+                        ID = item.ID,
+                        IsDeleted = item.IsDeleted,
+                        ItemName = item.ItemName,
+                        ItemQuantity = item.ItemQuantity,
+                        ItemTaxValue = item.ItemTaxValue.ToString(),
+                        ItemUnit = item.ItemUnit,
+                        ItemUnitPrice = item.ItemUnitPrice,
+                        Item_Code = item.Item_Code,
+                        Item_ID = item.Item_ID,
+                        LastModifiedBy = item.LastModifiedBy,
+                        LastModifiedDate = item.LastModifiedDate,
+                        PurchaseOrderId = item.PurchaseOrderId,
+                        TotalItemCost = item.TotalItemCost
+                    };
+                    items.Add(purchaseOrderItem);
+                }
+                result.PurchaseOrderItems = items;
+
+                return View(result);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+        #endregion
+
         #region Remove PO Payment Details
         public ActionResult DeletePOPayment(int ID)
         {

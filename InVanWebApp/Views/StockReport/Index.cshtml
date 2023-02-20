@@ -1,4 +1,4 @@
-﻿
+﻿@model InVanWebApp_BO.StockMasterBO
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -30,9 +30,20 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label>Items</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => model.ItemID, (IEnumerable<SelectListItem>)ViewData["Item"], "--All--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
+                                </div>
+                            </div>
                             <div class="col-md-12 mb-2" style="float:left;padding-left:89.3%;">
-                                <a style="font-size: 50px;" href="@Url.Action("ExprotAsPDF", "StockReport")"><img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /></a>
-                                <a style="font-size: 50px;" href="@Url.Action("ExportAsExcel", "StockReport")"><img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px;" /></a>
+                                <a id="ExportPdf" style="font-size: 50px;" href="@Url.Action("ExprotAsPDF", "StockReport")"><img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /></a>
+                                <a id="ExportExcel" style="font-size: 50px;" href="@Url.Action("ExportAsExcel", "StockReport")"><img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px;" /></a>
                             </div>
                             <br />
 
@@ -72,8 +83,6 @@
     <script type="text/javascript">
         $(document).ready(function () {
             BindStockReport();
-            
-
         });
 
         function BindStockReport() {
@@ -108,13 +117,56 @@
                 });
             }).draw();
         }
-       
-        function RemoveCompany(id) {
-            if (confirm("Are you Sure? You want to remove this company.")) {
 
-                BindCompany();
-            }
-        }
+        $("#btnGo").on("click", function () {
+            var ItemId = $('#ItemID').val();
+            if (ItemId == '' || ItemId == null)
+                ItemId = 0;
+
+            $('#tblStockReport').dataTable().fnDestroy();
+            var t = $('#tblStockReport').DataTable({
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "sAjaxSource": "/StockReport/GetStock?id=" + ItemId,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    var flag = parseFloat(result.length);
+
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "pageLength": 20,
+                "scrollX": true,
+                "columns": [
+                    /* { "data": "ID", "autoWidth": true },*/
+                    { "data": "ID", "autoWidth": true },
+                    { "data": "Item_Code", "autoWidth": true },
+                    { "data": "ItemName", "autoWidth": true },
+                    { "data": "ItemCategory", "autoWidth": true },
+                    { "data": "ItemUnitPrice", "autoWidth": true },
+                    { "data": "StockQuantity", "autoWidth": true },
+                    { "data": "ItemUnit", "autoWidth": true },
+                    { "data": "InventoryValue", "autoWidth": true },
+                    { "data": "Reorder", "autoWidth": true },
+                    { "data": "ReOrderLevel", "autoWidth": true },
+                    { "data": "ItemReOrderQuantity", "autoWidth": true },
+                ]
+            });
+            t.on('order.dt search.dt', function () {
+                let i = 1;
+
+                t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+        });
 
     </script>
     }

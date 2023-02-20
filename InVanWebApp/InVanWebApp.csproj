@@ -2901,6 +2901,7 @@
     <Content Include="Views\RequestForQuotation\AddRFQSupplierDetails.cshtml" />
     <Content Include="Views\RequestForQuotation\ViewRFQSupplierDetails.cshtml" />
     <Content Include="Views\RequestForQuotation\GeneratePO.cshtml" />
+    <Content Include="Views\POPayment\ViewPOPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

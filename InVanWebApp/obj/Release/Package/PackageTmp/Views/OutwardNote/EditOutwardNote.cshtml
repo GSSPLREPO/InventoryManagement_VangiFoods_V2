@@ -143,6 +143,13 @@
             <br />
             <div class="row">
                 <div class="col-md-2 mb-1">
+                    @Html.Label("Vehicle No")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VehicleNo, new { @class = "form-control form-control-sm", maxlength = "11", onkeypress = "return isAlphaNumericForVehicleNo(event)" })
+                    @Html.ValidationMessageFor(model => model.VehicleNo, "", new { id = "valVehicleNumber", @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
                     @Html.Label("Perpose")
                 </div>
                 <div class="col-md-4">
@@ -288,7 +295,7 @@
 @*<script src="~/Scripts/Script/EditOutwardNote.js"></script>*@
 <script type="text/javascript">
     //=======The below function is for fetching the files value in the textbox of file type============//
-$(document).ready(function () {
+    $(document).ready(function () {
     var fileName = $('#tempSign').val();
 
     //Get a reference to our file input
@@ -305,45 +312,54 @@ $(document).ready(function () {
     dataTransfer.items.add(myFile);
     fileInput.files = dataTransfer.files;
 });
-//===================end=======================//
+    //===================end=======================//
+    
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        var VerifiedName = $("#VerifiedBy option:selected").text();
+        $("#VerifiedByName").val(VerifiedName);
+    
+        var LocaitonName = $("#LocationID option:selected").text();
+        $("#LocationName").val(LocaitonName);
+    
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 1, balQtyFlag = 0;
+        if (tableLength > 1) {
+            while (i <= tableLength - 2) {
+                if (document.getElementById("shippedQuantity_" + i) == null) {
+                    i++;
+                }
+                PhyQty = document.getElementById("shippedQuantity_" + i).value;
+                if (PhyQty == '')
+                    flag = 1;
+                else
+                    PhyQty = parseFloat(PhyQty);
 
-//==================Set value in txtItemDetails onCick of Save/Update button======--------
-function SaveBtnClick() {
-    var VerifiedName = $("#VerifiedBy option:selected").text();
-    $("#VerifiedByName").val(VerifiedName);
+                if (PhyQty == 0)
+                    flag = 1;
 
-    var LocaitonName = $("#LocationID option:selected").text();
-    $("#LocationName").val(LocaitonName);
+                i++;
+            }
 
-    var flag = 0;
-    PhyQty = document.getElementById("shippedQuantity_1").value;
-    if (PhyQty == '')
-        flag = 1;
-    else
-        PhyQty = parseFloat(PhyQty);
+            if (flag == 1) {
+                alert("No item shipped or Added items shipped quantity is zero, Cannot generate gate pass!");
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
 
-    if (PhyQty == 0) {
-        flag = 1;
-    }
-
-    if (flag == 1) {
-        alert("No item shipped, Cannot generate gate pass!");
-        $('#btnSave').prop('disabled', true);
-        return;
-    }
-    else
+        createJson();
+    };
+    //==========end===============
+    
+    function onShippedQtyChange() {
         $('#btnSave').prop('disabled', false);
-
-    createJson();
-};
-//==========end===============
-
-function onShippedQtyChange() {
-    $('#btnSave').prop('disabled', false);
-}
-
-//==========================On location change==================================
-function SelectedIndexChangedLocation(id) {
+    }
+    
+    //==========================On location change==================================
+    function SelectedIndexChangedLocation(id) {
     $('#btnSave').prop('disabled', false);
 
     var selectedOptionLocationName, locationName;
@@ -365,9 +381,9 @@ function SelectedIndexChangedLocation(id) {
         }
     });
 }
-//===========================end=================================
-
-function getitemDetailsJSTbl(count) {
+    //===========================end=================================
+    
+    function getitemDetailsJSTbl(count) {
     $('#btnSave').prop('disabled', false);
     var itemId = "ItemID_" + count;
     var selectedItemId = $("#" + itemId).val();
@@ -394,12 +410,12 @@ function getitemDetailsJSTbl(count) {
         }
     });
 }
-
-///Finding the length of existing table
-var table = document.getElementById('submissionTable');
-var counter = table.rows.length;
-
-$("#AddItem").click(function () {
+    
+    ///Finding the length of existing table
+    var table = document.getElementById('submissionTable');
+    var counter = table.rows.length;
+    
+    $("#AddItem").click(function () {
     var itemId = "ItemID_" + counter;
     var itemCode = "itemCode_" + counter;
     var itemDescription = "itemDescription_" + counter;
@@ -436,8 +452,8 @@ $("#AddItem").click(function () {
     counter++;
     return false;
 });
-
-function removeTr(index) {
+    
+    function removeTr(index) {
     /////Finding the length of existing table
 
     var length = document.getElementById("submissionTable").rows.length;
@@ -453,21 +469,20 @@ function removeTr(index) {
     //CalculateTotalBeforeTax();
     return false;
 }
-
-var TxtItemDetails = "";
-
-function createJson() {
+    
+    var TxtItemDetails = "";
+    
+    function createJson() {
     let res = [...document.getElementById("myTableBody").children].map(tr =>
         Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
             [el.name, el.value])));
     console.log(res);
     var TxtItemDetails = JSON.stringify(res);
-    console.log(TxtItemDetails);
     $('#txtItemDetails').val(TxtItemDetails);
 
 }
-
-function isNumberKey(evt) {
+    
+    function isNumberKey(evt) {
     var keycode = (evt.which) ? evt.which : evt.keyCode;
     if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
         return false;
@@ -481,8 +496,8 @@ function isNumberKey(evt) {
     }
     return true;
 }
-
-function fileValidation() {
+    
+    function fileValidation() {
     var fileInput =
         document.getElementById('file');
 
@@ -513,8 +528,8 @@ function fileValidation() {
         }
     }
 }
-
-function isAlphaNumeric(evt) {
+    
+    function isAlphaNumeric(evt) {
     var keycode = (evt.which) ? evt.which : evt.keyCode;
     if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95) || (keycode == 32))) {
         var valMsg = 'Only \"/, -,_\" are allowed!';
@@ -528,5 +543,21 @@ function isAlphaNumeric(evt) {
         $('#valDocketNumber').css('display', 'none');
         return true;
     }
-}
+    }
+
+    function isAlphaNumericForVehicleNo(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123))) {
+            var valMsg = 'Only alphanumeric value is allowed!';
+
+            $('#valVehicleNumber').text(valMsg);
+            $('#valVehicleNumber').css('display', 'contents');
+            $('#valVehicleNumber').css('color', 'red');
+            return false;
+        }
+        else {
+            $('#valVehicleNumber').css('display', 'none');
+            return true;
+        }
+    }
 </script>

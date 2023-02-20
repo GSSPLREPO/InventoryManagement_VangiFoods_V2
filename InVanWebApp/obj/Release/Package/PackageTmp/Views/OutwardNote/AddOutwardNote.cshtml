@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.DispatchThrough, new { @class = "form-control form-control-sm", onkeypress = "return isAlphabetic(event,2)", maxlength = "30" })
-                    @Html.ValidationMessageFor(model => model.DispatchThrough, "", new {id= "valDispatchThrough", @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.DispatchThrough, "", new { id = "valDispatchThrough", @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Docket/LR Number")
@@ -128,8 +128,8 @@
                     @Html.Label("Contact Person")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ContactPerson, new { @class = "form-control form-control-sm" , onkeypress = "return isAlphabetic(event,1)", maxlength="25" })
-                    @Html.ValidationMessageFor(model => model.ContactPerson, "", new { id="valContactPerson",@class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.ContactPerson, new { @class = "form-control form-control-sm", onkeypress = "return isAlphabetic(event,1)", maxlength = "25" })
+                    @Html.ValidationMessageFor(model => model.ContactPerson, "", new { id = "valContactPerson", @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Contact Number")
@@ -141,6 +141,13 @@
             </div>
             <br />
             <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Vehicle No")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VehicleNo, new { @class = "form-control form-control-sm", maxlength = "11", onkeypress = "return isAlphaNumericForVehicleNo(event)" })
+                    @Html.ValidationMessageFor(model => model.VehicleNo, "", new {id= "valVehicleNumber", @class = "error mt-2 text-danger" })
+                </div>
                 <div class="col-md-2 mb-1">
                     @Html.Label("Purpose/Remarks")
                 </div>
@@ -263,16 +270,16 @@
 @*<script src="~/Scripts/Script/AddOutwardNote.js"></script>*@
 <script type="text/javascript">
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
-function SaveBtnClick() {
-    var VerifiedName = $("#VerifiedBy option:selected").text();
-    $("#VerifiedByName").val(VerifiedName);
-
-    var LocaitonName = $("#LocationID option:selected").text();
-    $("#LocationName").val(LocaitonName);
-
-    var tableLength = document.getElementById('submissionTable').rows.length;
-    var flag = 0, i = 1, balQtyFlag = 0;
-    if (tableLength > 1) {
+    function SaveBtnClick() {
+        var VerifiedName = $("#VerifiedBy option:selected").text();
+        $("#VerifiedByName").val(VerifiedName);
+    
+        var LocaitonName = $("#LocationID option:selected").text();
+        $("#LocationName").val(LocaitonName);
+    
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 1, balQtyFlag = 0;
+        if (tableLength > 1) {
         var PhyQty = document.getElementById("ShippedQuantity").value;
         if (PhyQty == '')
             flag = 1;
@@ -283,7 +290,10 @@ function SaveBtnClick() {
             flag = 1;
         }
 
-        while (i <= tableLength - 2) {
+            while (i <= tableLength - 2) {
+                if (document.getElementById("shippedQuantity_" + i)==null) {
+                    i++;
+                }
             PhyQty = document.getElementById("shippedQuantity_" + i).value;
             if (PhyQty == '')
                 flag = 1;
@@ -297,24 +307,24 @@ function SaveBtnClick() {
         }
 
         if (flag == 1) {
-            alert("No item shipped, Cannot generate gate pass!");
+            alert("No item shipped or Added items shipped quantity is zero, Cannot generate gate pass!");
             $('#btnSave').prop('disabled', true);
             return;
         }
         else
             $('#btnSave').prop('disabled', false);
     }
+    
+        createJson();
+    };
+    //==========end===============
 
-    createJson();
-};
-//==========end===============
-
-function onShippedQtyChange() {
-    $('#btnSave').prop('disabled', false);
-}
-
-//==========================On location change==================================
-function SelectedIndexChangedLocation(id) {
+    function onShippedQtyChange() {
+        $('#btnSave').prop('disabled', false);
+    }
+    
+    //==========================On location change==================================
+    function SelectedIndexChangedLocation(id) {
     $('#btnSave').prop('disabled', false);
 
     var selectedOptionLocationName, locationName;
@@ -336,14 +346,14 @@ function SelectedIndexChangedLocation(id) {
         }
     });
 }
-//===========================end=================================
-
-$("#Item_ID").change(function () {
+    //===========================end=================================
+    
+    $("#Item_ID").change(function () {
     $('#btnSave').prop('disabled', false);
     getitemDetails();
 });
-
-function getitemDetails() {
+    
+    function getitemDetails() {
     $("#f").empty();
     $.ajax({
         type: 'POST',
@@ -373,8 +383,8 @@ function getitemDetails() {
 
 
 }
-
-function getitemDetailsJSTbl(count) {
+    
+    function getitemDetailsJSTbl(count) {
     var itemId = "ItemID_" + count;
     var selectedItemId = $("#" + itemId).val();
     $.ajax({
@@ -399,9 +409,9 @@ function getitemDetailsJSTbl(count) {
         }
     });
 }
-
-var counter = 1;
-$("#AddItem").click(function () {
+    
+    var counter = 1;
+    $("#AddItem").click(function () {
     var itemId = "ItemID_" + counter;
     var itemCode = "itemCode_" + counter;
     var itemDescription = "itemDescription_" + counter;
@@ -434,8 +444,8 @@ $("#AddItem").click(function () {
     counter++;
     return false;
 });
-
-function removeTr(index) {
+    
+    function removeTr(index) {
     var length = document.getElementById("submissionTable").rows.length;
     length = parseFloat(length) - 1;
     if (counter > 1 & length == index) {
@@ -447,55 +457,18 @@ function removeTr(index) {
     }
     return false;
 }
-
-var TxtItemDetails = "";
-
-function createJson() {
-    var table = document.getElementById('submissionTable');
-    var rowCount = table.rows.length;
-    var i = 1;
-    TxtItemDetails = "[{";
-    var ItemCode = (document.getElementById("ItemCode")).value;
-    var ItemID = (document.getElementById("Item_ID")).value;
-    var ItemName = (document.getElementById("ItemName")).value;
-    var ShippedQty = (document.getElementById("ShippedQuantity")).value;
-    var Unit = (document.getElementById("ItemUnit")).value;
-    var Comments = document.getElementById("Comments").value;
-
-    TxtItemDetails = TxtItemDetails + "\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
-        ", \"ItemName\": \"" + ItemName + "\", \"ShippedQty\": " + ShippedQty +
-        ", \"ItemUnit\": \"" + Unit + "\", \"Comments\": \""
-        + Comments + "\"";
-    if (rowCount == 2)
-        TxtItemDetails = TxtItemDetails + "}";
-    else
-        TxtItemDetails = TxtItemDetails + "},";
-
-
-    for (i = 1; i <= rowCount - 2; i++) {
-        ItemCode = (document.getElementById("itemCode_" + i)).value;
-        ItemID = (document.getElementById("ItemID_" + i)).value;
-        ItemName = (document.getElementById("itemDescription_" + i)).value;
-        ShippedQty = (document.getElementById("shippedQuantity_" + i)).value;
-        Unit = (document.getElementById("itemUnit_" + i)).value;
-        Comments = document.getElementById("comments_" + i).value;
-
-        TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
-            ", \"ItemName\": \"" + ItemName + "\", \"ShippedQty\": " + ShippedQty +
-            ", \"ItemUnit\": \"" + Unit + "\", \"Comments\": \""
-            + Comments + "\"";
-        
-
-        if (i == (rowCount - 2))
-            TxtItemDetails = TxtItemDetails + "}";
-        else
-            TxtItemDetails = TxtItemDetails + "},";
-    }
-    TxtItemDetails = TxtItemDetails + "]"
-    $('#txtItemDetails').val(TxtItemDetails);
+    
+    var TxtItemDetails = "";
+    
+    function createJson() {
+        let res = [...document.getElementById("myTableBody").children].map(tr =>
+            Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
+                [el.name, el.value])));
+        var TxtItemDetails = JSON.stringify(res);
+        $('#txtItemDetails').val(TxtItemDetails);
 }
-
-function isNumberKey(evt) {
+    
+    function isNumberKey(evt) {
     var keycode = (evt.which) ? evt.which : evt.keyCode;
     if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
         return false;
@@ -509,8 +482,8 @@ function isNumberKey(evt) {
     }
     return true;
 }
-
-function fileValidation() {
+    
+    function fileValidation() {
     var fileInput =
         document.getElementById('file');
 
@@ -542,20 +515,37 @@ function fileValidation() {
     }
 }
 
-function isAlphaNumeric(evt) {
-    var keycode = (evt.which) ? evt.which : evt.keyCode;
-    if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95) || (keycode == 32))) {
-        var valMsg = 'Only \"/, -,_\" are allowed!';
 
-        $('#valDocketNumber').text(valMsg);
-        $('#valDocketNumber').css('display', 'contents');
-        $('#valDocketNumber').css('color', 'red');
-        return false;
+    function isAlphaNumeric(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95) || (keycode == 32))) {
+            var valMsg = 'Only \"/, -,_\" are allowed!';
+    
+            $('#valDocketNumber').text(valMsg);
+            $('#valDocketNumber').css('display', 'contents');
+            $('#valDocketNumber').css('color', 'red');
+            return false;
+        }
+        else {
+            $('#valDocketNumber').css('display', 'none');
+            return true;
+        }
     }
-    else {
-        $('#valDocketNumber').css('display', 'none');
-        return true;
-    }
+
+    function isAlphaNumericForVehicleNo(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123))) {
+            var valMsg = 'Only alphanumeric value is allowed!';
+
+            $('#valVehicleNumber').text(valMsg);
+            $('#valVehicleNumber').css('display', 'contents');
+            $('#valVehicleNumber').css('color', 'red');
+            return false;
+        }
+        else {
+            $('#valVehicleNumber').css('display', 'none');
+            return true;
+        }
     }
 
     function isAlphabetic(evt, Id) {
