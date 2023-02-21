@@ -122,10 +122,10 @@ namespace InVanWebApp_BO
         public int SrNo { get; set; }
         public string PurchaseOrderDate { get; set; }
 
-        [Required(ErrorMessage = "Please Select From Date ")]
+        [Required(ErrorMessage = "Please Select From Date!")]
         public DateTime fromDate { get; set; }
 
-        [Required(ErrorMessage = "Please Select From Date ")]
+        [Required(ErrorMessage = "Please Select To Date!")]
         public DateTime toDate { get; set; }
 
         //Added below field is used in Credit note
