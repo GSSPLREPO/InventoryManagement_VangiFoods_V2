@@ -35,11 +35,11 @@ namespace InVanWebApp.Repository
                     {
                         var result = new LocationWiseStockBO()
                         {
-                            ID = Convert.ToInt32(reader["ID"]),
+                            //ID = Convert.ToInt32(reader["ID"]),
                             LocationName = reader["LocationName"].ToString(),
-                            ItemName = reader["ItemName"].ToString(),
+                            ItemName = reader["Item_Name"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
-                            ItemId= Convert.ToInt32(reader["ItemId"]),
+                            ItemId= Convert.ToInt32(reader["ItemID"]),
                             Quantity = Convert.ToDouble(reader["Quantity"]),
                             ItemUnit = (reader["ItemUnit"].ToString()),
                             CurrencyName = (reader["CurrencyName"].ToString())
@@ -61,7 +61,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Function for reorder point of available total stock
-        public List<StockMasterBO> GetReorderPointDashboardData()
+        public List<StockMasterBO> GetReorderPointDashboardData(int ItemId = 0)
         {
             List<StockMasterBO> resultList = new List<StockMasterBO>();
             try
@@ -70,6 +70,8 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_dashb_ReorderPointOnAvailableStock", con);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ItemId",ItemId);
+
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); 
                     while (reader.Read())

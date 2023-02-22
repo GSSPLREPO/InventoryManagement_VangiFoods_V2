@@ -23,11 +23,13 @@ namespace InVanWebApp.Controllers
     public class StockReportController : Controller
     {
         IStockMasterRepository _StockMasterRepository;
+        private IItemRepository _itemRepository;
 
         #region Initializing the constructors
         public StockReportController()
         {
             _StockMasterRepository = new StockMasterRepository();
+            _itemRepository = new ItemRepository();
         }
 
         public StockReportController(IStockMasterRepository stockMasterRepository)
@@ -42,6 +44,7 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
+                BindItemDropDown();
                 return View();
             }
             else
@@ -52,13 +55,28 @@ namespace InVanWebApp.Controllers
         /// to get stock details
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetStock()
+        public JsonResult GetStock(string id="")
         {
-            var stockDetails = _StockMasterRepository.GetAllStock();
+            int ItemId = 0;
+            if (id != "")
+                ItemId = Convert.ToInt32(id);
+
+            Session["ItemId"] = ItemId;
+
+            var stockDetails = _StockMasterRepository.GetAllStock(ItemId);
             TempData["StockDetailsTemp"] = stockDetails;
             return Json(new { data = stockDetails }, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Bind Item dropdown
+        public void BindItemDropDown()
+        {
+            var model = _itemRepository.GetAll();
+            var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
+            ViewData["Item"] = Item_dd;
+        }
         #endregion
 
         #region Export PDF
@@ -69,7 +87,8 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExprotAsPDF()
         {
-            var stockDetails = _StockMasterRepository.GetAllStock();
+            var itemId = Convert.ToInt32(Session["ItemId"]);
+            var stockDetails = _StockMasterRepository.GetAllStock(itemId);
             TempData["StockDetailsTemp"] = stockDetails;
             if (TempData["StockDetailsTemp"] == null)
             {
@@ -195,9 +214,9 @@ namespace InVanWebApp.Controllers
         #region Export Excel
         public void ExportAsExcel()
         {
-
+            var itemId = Convert.ToInt32(Session["ItemId"]);
             GridView gv = new GridView();
-            IEnumerable<StockReportBO> stockReports = _StockMasterRepository.GetAllStock();
+            IEnumerable<StockReportBO> stockReports = _StockMasterRepository.GetAllStock(itemId);
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("Item code");
@@ -266,10 +285,10 @@ namespace InVanWebApp.Controllers
             Response.End();
         }
 
+        #endregion
     }
-    #endregion
 
-    #region pdf Helper
+    #region pdf Helper class
     public class PageHeaderFooter : PdfPageEventHelper
     {
         private readonly Font _pageNumberFont = new Font(Font.NORMAL, 9f, Font.NORMAL, BaseColor.BLACK);
@@ -302,6 +321,4 @@ namespace InVanWebApp.Controllers
         }
     }
     #endregion
-
-
 }
