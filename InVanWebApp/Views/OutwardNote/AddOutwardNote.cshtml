@@ -271,6 +271,7 @@
 <script type="text/javascript">
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
+        debugger
         var VerifiedName = $("#VerifiedBy option:selected").text();
         $("#VerifiedByName").val(VerifiedName);
     
@@ -279,6 +280,12 @@
     
         var tableLength = document.getElementById('submissionTable').rows.length;
         var flag = 0, i = 1, balQtyFlag = 0;
+        // Rahul added 'VerifiedBy' 22-02-23.
+        var VerifiedBy = $('#VerifiedBy').val();
+        if (VerifiedBy == '' || VerifiedBy == null) {
+            flag = 1; 
+        }
+
         if (tableLength > 1) {
         var PhyQty = document.getElementById("ShippedQuantity").value;
         if (PhyQty == '')
@@ -306,7 +313,7 @@
             i++;
         }
 
-        if (flag == 1) {
+        if (flag != 1) {    // Rahul updated '==' to '!=' 22-02-23.
             alert("No item shipped or Added items shipped quantity is zero, Cannot generate gate pass!");
             $('#btnSave').prop('disabled', true);
             return;

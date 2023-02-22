@@ -40,5 +40,24 @@ namespace InVanWebApp_BO
         public string ItemUnitPriceWithCurrency { get; set; }
         public int SrNo { get; set; }
         public string InwardDate { get; set; }
+        //Added below field for Inventory Analysis FIFO report 22-02-23. 
+        public string CompanyName { get; set; }
+        public string GRNCode { get; set; }  
+        public string Outward_No { get; set; }  
+        public string GRNDate { get; set; }
+        public float StockInQty { get; set; } 
+        public decimal StockInTotalPrice { get; set; } 
+        public string DeliveryChallanDate { get; set; } 
+        public float StockOutQty { get; set; } 
+        public decimal StockOutUnitPrice { get; set; } 
+        public decimal StockOutTotalPrice { get; set; }  
+        public string StockOutCurrency { get; set; } 
+        public string AvlDate { get; set; }
+        public float AvlQty { get; set; } 
+        public float AvlUnitPrice { get; set; } 
+        public float AvlTotalPrice { get; set; }    
+        public string AvlCurrency { get; set; } 
+
+
     }
 }
