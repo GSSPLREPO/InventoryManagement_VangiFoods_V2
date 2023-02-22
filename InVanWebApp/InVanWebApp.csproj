@@ -166,6 +166,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\ApplicationSession.cs" />
     <Compile Include="Common\GetDocumentNumber.cs" />
+    <Compile Include="Controllers\DailyMonitoringController.cs" />
+    <Compile Include="Controllers\PreStartupHygieneController.cs" />
     <Compile Include="Controllers\CreditNoteController.cs" />
     <Compile Include="Controllers\Dashb_RTWarehouseWiseStockController.cs" />
     <Compile Include="Controllers\DebitNoteController.cs" />
@@ -438,6 +440,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CommonFunctions.cs" />
+    <Compile Include="Repository\Interface\IDailyMonitoringRepository.cs" />
+    <Compile Include="Repository\DailyMonitoringRepository.cs" />
+    <Compile Include="Repository\PreStartupHygieneRepository.cs" />
     <Compile Include="Repository\CreditNoteRepository.cs" />
     <Compile Include="Repository\DashboardRepository.cs" />
     <Compile Include="Repository\DebitNoteRepository.cs" />
@@ -445,6 +450,7 @@
     <Compile Include="Repository\IndentRepository.cs" />
     <Compile Include="Repository\InquiryFormRepository.cs" />
     <Compile Include="Repository\Interface\ICommonFunctions.cs" />
+    <Compile Include="Repository\Interface\IPreStartupHygieneRepository.cs" />
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
     <Compile Include="Repository\Interface\ICreditNoteRepository.cs" />
     <Compile Include="Repository\Interface\IDashboardRepository.cs" />
@@ -2901,7 +2907,13 @@
     <Content Include="Views\RequestForQuotation\AddRFQSupplierDetails.cshtml" />
     <Content Include="Views\RequestForQuotation\ViewRFQSupplierDetails.cshtml" />
     <Content Include="Views\RequestForQuotation\GeneratePO.cshtml" />
-    <Content Include="Views\POPayment\ViewPOPayment.cshtml" />
+    <Content Include="Views\PreStartupHygiene\Index.cshtml" />
+    <Content Include="Views\PreStartupHygiene\Index - Copy.cshtml" />
+    <Content Include="Views\PreStartupHygiene\AddPreStartupHygiene.cshtml" />
+    <Content Include="Views\PreStartupHygiene\EditPreStartupHygiene.cshtml" />
+    <Content Include="Views\DailyMonitoring\Index.cshtml" />
+    <Content Include="Views\DailyMonitoring\AddDailyMonitoring.cshtml" />
+    <Content Include="Views\DailyMonitoring\EditDailyMonitoring.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

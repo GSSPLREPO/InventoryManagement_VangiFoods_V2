@@ -116,11 +116,6 @@ namespace InVanWebApp.Controllers
                             GenerateDocumentNo();
                             BindUsers();
 
-                            //Binding item grid with sell type item.
-                            var itemList = _repository.GetItemDetailsForDD();
-                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                            ViewData["itemListForDD"] = dd;
-                            
                             model.OutwardDate = DateTime.Today;
                             return View(model);
                         }

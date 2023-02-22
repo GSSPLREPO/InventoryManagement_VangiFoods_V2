@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="Branch.cs" />
     <Compile Include="CityMaster.cs" />
+    <Compile Include="DailyMonitoringBO.cs" />
+    <Compile Include="PreStartupHygieneBO.cs" />
     <Compile Include="IssueNoteBO.cs" />
     <Compile Include="DeliveryChallanBO.cs" />
     <Compile Include="CompanyBO.cs" />

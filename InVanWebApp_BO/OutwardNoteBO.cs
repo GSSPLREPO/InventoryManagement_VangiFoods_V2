@@ -44,7 +44,7 @@ namespace InVanWebApp_BO
         public DateTime LastModifiedDate { get; set; }
         public string txtItemDetails { get; set; }
         public List<OutwardNoteDetailsBO> outwardNoteDetails { get; set; }
-        public string VehicleNo { get; set; }
+
         //This is for inserting the itemdetails
         public Nullable<int> Item_ID { get; set; }
         public string ItemCode { get; set; }

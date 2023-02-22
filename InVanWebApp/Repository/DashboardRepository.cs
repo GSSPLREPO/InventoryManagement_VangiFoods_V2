@@ -61,7 +61,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Function for reorder point of available total stock
-        public List<StockMasterBO> GetReorderPointDashboardData(int ItemId = 0)
+        public List<StockMasterBO> GetReorderPointDashboardData()
         {
             List<StockMasterBO> resultList = new List<StockMasterBO>();
             try
@@ -70,8 +70,6 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_dashb_ReorderPointOnAvailableStock", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ItemId",ItemId);
-
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); 
                     while (reader.Read())

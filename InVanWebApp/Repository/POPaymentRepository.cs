@@ -86,8 +86,7 @@ namespace InVanWebApp.Repository
                             BalanceAmount = Convert.ToDecimal(reader["BalancePay"]),
                             PaymentDate = Convert.ToDateTime(reader["PaymentDate"]),
                             PaymentMode = reader["PaymentMode"].ToString(),
-                            IsPaid = reader["PaymentStatus"].ToString(),
-                            PaymentDueDate= Convert.ToDateTime(reader["PaymentDueDate"])
+                            IsPaid = reader["PaymentStatus"].ToString()
                         };
                         resultList.Add(result);
                     }
@@ -282,7 +281,6 @@ namespace InVanWebApp.Repository
                         result.IsPaid = dataReader["PaymentStatus"].ToString();
                         result.Remarks = dataReader["Remarks"].ToString();
                         result.UTRNo = dataReader["UTRNo"].ToString();
-                        result.CurrencyName = dataReader["CurrencyName"].ToString();
 
                     }
                 }

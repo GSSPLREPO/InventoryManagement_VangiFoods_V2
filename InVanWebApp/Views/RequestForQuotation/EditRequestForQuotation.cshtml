@@ -56,7 +56,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm", type = "date" })
+                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
                     @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -113,12 +113,12 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title" style="color:darkcyan">@Html.Label("Vendor Name")<span style="color:red">*</span></h4>
-                            <hr />                            
-                            <div class="form-group">                                
+                            <hr />
+                            <div class="form-group">
                                 @Html.DropDownListFor(model => model.CompanyName, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm js-example-basic-multiple mult-sl", multiple = "multiple", onchange = "SelectedIndexChanged($(this).val())" })
                                 @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })   @*Rahul added class mult-sl in CompanyName 13-02-23.*@
                                 @Html.TextBoxFor(model => model.VendorIDs, new { style = "display:none" })
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -172,8 +172,7 @@
                                                             @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @*Rahul updated in TextBox "RequiredQuantity_", aded @readonly = "readonly" 17-02-23.*@ 
-                                                            @Html.TextBox("RequiredQuantity_" + c, item.ItemQuantity, new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", onchange = "OnChangeQuantity($(this).val(),id)", maxlength = "8", @readonly = "readonly" })
+                                                            @Html.TextBox("RequiredQuantity_" + c, item.ItemQuantity, new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", onchange = "OnChangeQuantity($(this).val(),id)", maxlength = "8" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", @readonly = "readonly" })
@@ -268,18 +267,7 @@
 
     $(document).ready(function () {
         //alert('multiple called!')
-        //$('.js-example-basic-multiple').select2(); //17-02-23.        
-        //=== Rahul added 'tempArr' for bind multiple 'CompanyName' by 'VendorIDs' 17-02-23 start.        
-        var tempArr=[];
-        var selectedValues = $("#VendorIDs").val().split(',');
-        var len = selectedValues.length;
-        i = 0;
-        while (i < len) {
-            tempArr.push(selectedValues[i]);
-            i++;
-        }
-        $('.js-example-basic-multiple').val(tempArr).select2();
-        //=== Rahul added 'tempArr' for bind multiple 'CompanyName' by 'VendorIDs' 17-02-23 end.
+        $('.js-example-basic-multiple').select2();
 
         //--- '.js-example-basic-multiple .mult-sl' start rahul added 13-02-23.
         $('.mult-sl').select2({
@@ -327,10 +315,6 @@
         });
         //--- '.js-example-basic-multiple .mult-sl' end rahul added 09-02-23.
 
-        deliveryDate();
-        biddingStartDate();
-        biddingEndDate();        
-
         var fileName = $('#tempSign').val();
 
         //Get a reference to our file input
@@ -348,28 +332,6 @@
         fileInput.files = dataTransfer.files;
     });
 
-    //---BiddingStartDate todaysDate start ------
-    function deliveryDate() {
-        const d = new Date();
-        d.setYear(d.getFullYear());
-        var id = "DeliveryDate";
-        var tempDate = d.toISOString().split("T")[0];
-        $("#" + id).val(tempDate);
-        document.getElementById(id).setAttribute("min", tempDate.toString());
-    }
-    //---DeliveryDate todaysDate end ------
-
-    //---BiddingStartDate todaysDate start ------
-    function biddingStartDate() {
-        //debugger
-        const d = new Date();
-        d.setYear(d.getFullYear());
-        var id = "BiddingStartDate";
-        var tempDate = d.toISOString().split("T")[0];
-        $("#" + id).val(tempDate);
-        document.getElementById(id).setAttribute("min", tempDate.toString());
-    }
-
     //---rahul added ValidMsgBiddingStartDate 13-02-23.
     function ValidMsgBiddingStartDate() {
         debugger
@@ -384,17 +346,6 @@
     }
     //---BiddingStartDate todaysDate end ------
 
-    //---BiddingEndDate todaysDate start ------
-    function biddingEndDate() {
-        //debugger
-        const d = new Date();
-        d.setYear(d.getFullYear());
-        var id = "BiddingEndDate";
-        var tempDate = d.toISOString().split("T")[0];
-        $("#" + id).val(tempDate);
-        document.getElementById(id).setAttribute("min", tempDate.toString());
-    }
-
     //---rahul added ValidMsgBiddingEndDate 13-02-23.
     function ValidMsgBiddingEndDate() {
         debugger
@@ -408,22 +359,6 @@
         }
     }
     //---BiddingEndDate todaysDate end ------
-
-    //---DeliveryDate todaysDate start ------
-    function todaysDate(rowCount) {
-        debugger
-        const d = new Date();
-        d.setYear(d.getFullYear());
-        var i = 0;
-        while (i < rowCount) {
-            var id = "DeliveryDate_" + i;
-            var tempDate = d.toISOString().split("T")[0];
-            $("#" + id).val(tempDate);
-            document.getElementById(id).setAttribute("min", tempDate.toString());
-            i++;
-        }
-    }
-    //---DeliveryDate todaysDate end ------
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     var TxtItemDetails = "";
@@ -451,7 +386,6 @@
             }
             else
                 $('#btnSave').prop('disabled', false);
-                todaysDate(rowCount);   //Rahul added 17-02-23.
         }
         createJson();
     };
