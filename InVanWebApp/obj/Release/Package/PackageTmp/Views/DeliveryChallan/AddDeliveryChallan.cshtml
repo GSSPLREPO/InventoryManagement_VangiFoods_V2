@@ -216,6 +216,10 @@
                                     <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalBeforeTax" value="" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
+                                    <label id="lblTotalBeforeTax"><b>Discount (%): </b></label>
+                                    <input class="form-control text-right form-control-sm" id="DiscountPercentage" name="DiscountPercentage" value="0" onkeypress="return isNumberKey(event,id)" onchange="CalculateTotalBeforeTax()"/>
+                                </div>
+                                <div class="row mb-2">
                                     <label><b>Other Tax: </b></label>
                                     <input class="form-control text-right form-control-sm" id="OtherTax" maxlength="8" name="OtherTax" value="0" onkeypress="return isNumberKey(event,id)" onchange="CalculateTotalBeforeTax()" />
                                 </div>

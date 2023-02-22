@@ -78,7 +78,11 @@
                                         <tbody id="myTableBody">
                                             <tr id="tablerow">
                                                 <td>
-                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;width:270px;", onchange = "SelectedIndexChangedItemList($(this).val())", onmouseleave = "ValMsgItemList($(this).val(),id)" })
+                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new
+                                                    {
+                                                        @class = "form-control form-control-sm",
+                                                        style = "height:30px;width:270px;",
+                                                        onchange = "SelectedIndexChangedItemList($(this).val())"@*onmouseleave = "ValMsgItemList($(this).val(),id)"*@})
                                                     <span id="ValMsgItemList" style="display:none; color:red"></span>
                                                     @*@Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" }) Rahul removed ValidationMessageFor ItemId and added ValMsgItemList in span tag onchange SelectedIndexChangedItemList 09-02-23. *@
                                                 </td>
@@ -122,8 +126,8 @@
                             <br />
                             <div class="row">
                                 @*<button type="button" class="btn btn-info shadow" id="AddItem">
-                                + Add Item
-                            </button>*@
+                                        + Add Item
+                                    </button>*@
                                 <button type="button" class="btn btn-primary btn-sm shadow w-auto" id="AddItem" style="background: linear-gradient(85deg, #392c70, #6a005b); margin-left: 1rem;">
                                     + Add Item
                                 </button>
@@ -164,53 +168,67 @@
 
 <script type="text/javascript">
 
-    var flag = 0; //This flag is for checking whether the add Item details or not. 
+    var flag = 0; //This flag is for checking whether the add Item details or not.
     function SelectedIndexChangedFromLocation(id) {
         //alert(id);
-        debugger
+        //debugger
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("FromLocationId").selectedIndex;
         locationName = document.getElementById("FromLocationId").options[selectedOptionLocationName].innerText;
         document.getElementById("FromLocationName").value = locationName;
-         ///Rahul added 15/02/2023 start. 
+         ///Rahul added 15/02/2023 start.
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
 
         if (FromLocationCheck == '' || FromLocationCheck == null) {
-            debugger
-            alert('Select Different ToLocation');
+            //debugger
+            if (ToLocationCheck == '' || ToLocationCheck == null) {
+                alert('Select From Location!');
+                $('#FromLocationId').focus();
+            }
+            else
+                alert('Select From Location');
+
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#ToLocationId').focus();
             flag = 1;
             return;
         }
-        else if (ToLocationCheck == '' || ToLocationCheck == null) {
-            debugger
-            alert('Select Different ToLocation');
-            document.getElementById('Item_ID').selectedIndex = 0;
-            $('#ToLocationId').focus();
-            flag = 1;
-            return;
-        }         
+        //else if (ToLocationCheck == '' || ToLocationCheck == null) {
+        //    //debugger
+        //    if (FromLocationCheck == '' || FromLocationCheck == null) {
+        //        alert('Select To Location!');
+        //    }
+        //    else
+        //        alert('Select Different From Location');
+
+        //    document.getElementById('Item_ID').selectedIndex = 0;
+        //    $('#ToLocationId').focus();
+        //    flag = 1;
+        //    return;
+        //}
         else if (FromLocationCheck == ToLocationCheck) {
-            debugger
-            alert('Select Different FromLocation');
+            //debugger
+            if (ToLocationCheck != '' || ToLocationCheck != null) {
+                alert('Select Different From Location');
+            }
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#FromLocationId').focus();
             flag = 1;
             return;
         }
-        else if (ToLocationCheck == FromLocationCheck) {
-            debugger
-            alert('Select Different ToLocation');
-            document.getElementById('Item_ID').selectedIndex = 0;
-            $('#ToLocationId').focus();
-            flag = 1;
-            return;
-        }
+        //else if (ToLocationCheck == FromLocationCheck) {
+        //    //debugger
+        //    alert('Select Different ToLocation');
+        //    document.getElementById('Item_ID').selectedIndex = 0;
+        //    $('#ToLocationId').focus();
+        //    flag = 1;
+        //    return;
+        //}
         else {
-            $('#Item_ID').focus();       
-            var selectedOptionItems, itemCode; 
+            $('#ToLocationId').focus();
+            //$('#Item_ID').focus();
+            var selectedOptionItems, itemCode;
             selectedOptionItems = document.getElementById("Item_ID").selectedIndex;
             itemCode = document.getElementById("Item_ID").options[selectedOptionItems].innerText;
             document.getElementById("Item_Code").value = itemCode;
@@ -264,34 +282,41 @@
 
     }
 
-    var flag = 0; //This flag is for checking whether the add Item details or not. 
+    var flag = 0; //This flag is for checking whether the add Item details or not.
     function SelectedIndexChangedToLocation(id) {
         //alert(id);
-        debugger
+        //debugger
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("ToLocationId").selectedIndex;
         locationName = document.getElementById("ToLocationId").options[selectedOptionLocationName].innerText;
         document.getElementById("ToLocationName").value = locationName;
-        ///Rahul added 15/02/2023 start. 
+        ///Rahul added 15/02/2023 start.
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
 
-        if (FromLocationCheck == '' || FromLocationCheck == null) {
+        //if (FromLocationCheck == '' || FromLocationCheck == null) {
 
-            alert('Select Different FromLocation');
-            document.getElementById('Item_ID').selectedIndex = 0;
-            $('#FromLocationId').focus();
-            flag = 1;
-            return;
-        }
-        else if (ToLocationCheck == '' || ToLocationCheck == null) {
+        //    alert('Select Different FromLocation');
+        //    document.getElementById('Item_ID').selectedIndex = 0;
+        //    $('#FromLocationId').focus();
+        //    flag = 1;
+        //    return;
+        //}
+        //else if (ToLocationCheck == '' || ToLocationCheck == null) {
+        if (ToLocationCheck == '' || ToLocationCheck == null) {
 
-            alert('Select Different ToLocation');
+            if (FromLocationCheck == '' || FromLocationCheck == null) {
+                alert('Select From Location!');
+                $('#ToLocationId').focus();
+            }
+            else
+                alert('Select To Location');
+
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#ToLocationId').focus();
             flag = 1;
             return;
-        }        
+        }
         else if (FromLocationCheck == ToLocationCheck) {
             alert('Select Different ToLocation');
             document.getElementById('Item_ID').selectedIndex = 0;
@@ -308,17 +333,17 @@
             return;
         }
         else {
-            $('#Item_ID').focus();        
-            var selectedOptionItems, itemCode; 
+            $('#Item_ID').focus();
+            var selectedOptionItems, itemCode;
             selectedOptionItems = document.getElementById("Item_ID").selectedIndex;
             itemCode = document.getElementById("Item_ID").options[selectedOptionItems].innerText;
             document.getElementById("Item_Code").value = itemCode;
             flag = 0;
         }
-        ///Rahul added 15/02/2023 end. 
+        ///Rahul added 15/02/2023 end.
     }
 
-    ///---Rahul added onmouseleave event ValMsgItemList(value, id) strart 09-02-2023.  
+    ///---Rahul added onmouseleave event ValMsgItemList(value, id) strart 09-02-2023.
     function ValMsgItemList(value, id) {
         //debugger
         var rowNo = id.split('_')[1]; //ItemID_1
@@ -334,7 +359,7 @@
             $("#ValMsgItemList").hide();
         }
     }
-    //Rahul added function DynValMsgItemList(value, id) 14-02-2023. 
+    //Rahul added function DynValMsgItemList(value, id) 14-02-2023.
     function DynValMsgItemList(value, id) {
         //debugger
         var rowNo = id.split('_')[1]; //ItemID_1
@@ -355,16 +380,16 @@
     }
 
 
-    ///---Rahul added onmouseleave event ValMsgItemList(value, id) end.  
+    ///---Rahul added onmouseleave event ValMsgItemList(value, id) end.
 
-    var flag = 0; //This flag is for checking whether the add Item details or not. 
+    var flag = 0; //This flag is for checking whether the add Item details or not.
     function SelectedIndexChangedItemList(id) {
         //debugger
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
 
         if (FromLocationCheck == '' || FromLocationCheck == null) {
-            
+
             alert('Select Different FromLocation and ToLocation');
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#FromLocationId').focus();
@@ -372,25 +397,25 @@
             return;
         }
         else if (ToLocationCheck == '' || ToLocationCheck == null) {
-            
+
             alert('Select Different ToLocation and FromLocation');
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#ToLocationId').focus();
             flag = 1;
             return;
         }
-        ///Rahul added 09/12/2022. 
-        else if (FromLocationCheck == ToLocationCheck) {            
+        ///Rahul added 09/12/2022.
+        else if (FromLocationCheck == ToLocationCheck) {
             alert('Select Different ToLocation and FromLocation');
-            document.getElementById('Item_ID').selectedIndex = 0;            
+            document.getElementById('Item_ID').selectedIndex = 0;
             $('#ToLocationId').focus();
             flag = 1;
             return;
         }///Rahul added 09/12/2022.
         else if (ToLocationCheck == FromLocationCheck) {
-           
+
             alert('Select Different FromLocation and ToLocation');
-            document.getElementById('Item_ID').selectedIndex = 0;            
+            document.getElementById('Item_ID').selectedIndex = 0;
             $('#FromLocationId').focus();
             flag = 1;
             return;
@@ -486,7 +511,7 @@
         var transferQuantity = $("#TransferQuantity").val();
         var requiredQuantity = $("#RequiredQuantity").val();
 
-        //Set current quantity in item grid.        
+        //Set current quantity in item grid.
         var finalQuantity = requiredQuantity - transferQuantity;
         $("#FinalQuantity").val(finalQuantity);
         if (finalQuantity < (transferQuantity - requiredQuantity)) {
@@ -511,13 +536,13 @@
             //alert("Quantity cannot be negative, null or zero!"); //rahul removed alert on 04-02-23
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
-            document.getElementById("transferQuantityErr_" + rowNo).setAttribute("style", "color:red;");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23. 
-            $("#transferQuantityErr_" + rowNo).text("Enter Transfer Quantity!");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23. 
+            document.getElementById("transferQuantityErr_" + rowNo).setAttribute("style", "color:red;");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
+            $("#transferQuantityErr_" + rowNo).text("Enter Transfer Quantity!");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             return;
         }
         else {
             //Set transfer Quantity in item grid.
-            $("#transferQuantityErr_" + rowNo).hide();//Rahul added for span tag 'transferQuantityErr_' 14-02-23. 
+            $("#transferQuantityErr_" + rowNo).hide();//Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             document.getElementById(id).setAttribute("style", "");
             $("#TransferQuantity").val();
             $("#transferQuantity_" + rowNo).val();
@@ -529,21 +554,26 @@
     var counter = 1;
 
     $("#AddItem").click(function () {
+        if ($('#FromLocationId').val() == '' || $('#ToLocationId').val() == '') {
+            ($('#FromLocationId').val() == '') ? ($('#FromLocationId').focus()) : ($('#ToLocationId').focus());
+            return;
+        }
         var itemId = "ItemID_" + counter;
-        var dynValMsgItemList = "DynValMsgItemList_" + counter; //Rahul added for span tag 'DynValMsgItemList_' 14-02-23. 
+        var dynValMsgItemList = "DynValMsgItemList_" + counter; //Rahul added for span tag 'DynValMsgItemList_' 14-02-23.
         var itemCode = "itemCode_" + counter;
         var itemDescription = "itemDescription_" + counter;
         var itemQuantity = "itemQuantity_" + counter;
         var itemUnit = "itemUnit_" + counter;
         var itemPrice = "itemPrice_" + counter;//added
         var transferQuantity = "transferQuantity_" + counter;
-        var transferQtyErrMsg = "transferQuantityErr_" + counter; //Rahul added for span tag 'transferQuantityErr_' 14-02-23. 
+        var transferQtyErrMsg = "transferQuantityErr_" + counter; //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
         var finalQuantity = "finalQuantity_" + counter;
         var remarks = "remarks_" + counter;
-        var dynValMsgRemarks = "dynValMsgRemarks_" + counter; 
+        var dynValMsgRemarks = "dynValMsgRemarks_" + counter;
         var inwardDateOfItem = "InwardDateOfItem_" + counter;
         $('<tr id="tablerow' + counter + '">' + '<td>' +
-            '<select id="' + itemId + '" onmouseleave = "DynValMsgItemList($(this).val(),id)"; onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:270px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
+            /*'<select id="' + itemId + '" onmouseleave = "DynValMsgItemList($(this).val(),id)"; onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:270px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +*/
+            '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:270px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
             '<span id="' + dynValMsgItemList + '">' +
             '</td>' +
             '<td>' +
@@ -583,7 +613,7 @@
         var id = $('#FromLocationId').val();
        // SelectedIndexChangedFromLocation(id);
         counter++;
-        return false;        
+        return false;
     });
 
     function CalItemTotalPrice(value, id) {
@@ -605,30 +635,30 @@
 
     var TxtItemDetails = "";
 
-    //Rahul implemented 'res' condition for ValMsgItemList span tag message on click Save button 15-02-23. 
+    //Rahul implemented 'res' condition for ValMsgItemList span tag message on click Save button 15-02-23.
     function createJson() {
-        //debugger        
+        //debugger
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
-        console.log(res);
+       // console.log(res);
         //var TxtItemDetails = JSON.stringify(res);
         //console.log(TxtItemDetails);
         //$('#TxtItemDetails').val(TxtItemDetails);
 
-        if ((res[0].Item_ID == null || res[0].Item_ID == '' || res[0].Item_ID == 'undefined') && 
-            (document.getElementById('FromLocationId').selectedIndex = 0))
+        if ((res[0].Item_ID == null || res[0].Item_ID == '' || res[0].Item_ID == 'undefined') &&
+            (document.getElementById('FromLocationId').selectedIndex == 0))
         {
             $('#FromLocationId').focus();
-            alert('Select Different FromLocation and ToLocation!');            
+            alert('Select Different FromLocation and ToLocation!');
         }
         else if (document.getElementById('Item_ID').selectedIndex == 0) {
-            //alert('Select Different Item!'); 
+            //alert('Select Different Item!');
             var ItemList = $("#Item_ID option:selected").val();
             if (ItemList == '' || ItemList == 0) {
                 $("#ValMsgItemList").text("Please select Inward QC number!");
                 $("#ValMsgItemList").show();
-                document.getElementById('Item_ID').focus(); 
+                document.getElementById('Item_ID').focus();
                 return
             }
             else {
@@ -673,7 +703,7 @@
                             $("#itemDescription_" + count).val(itemDescription.Item_Name);
                             $("#itemUnit_" + count).val(itemDescription.UnitCode);
                             $("#itemQuantity_" + count).val(itemDescription.RequiredQuantity);
-                            $("#itemPrice_" + count).val(itemDescription.UnitPrice);    ///rahul added 06-02-2023. 
+                            $("#itemPrice_" + count).val(itemDescription.UnitPrice);    ///rahul added 06-02-2023.
                             //$("#itemTax_" + count).val(itemDescription.ItemTaxValue);
                             $("#transferQuantity_" + count).val('0');
                             $("#finalQuantity_").val('0');
@@ -724,7 +754,7 @@
     function DynValMsgRemark(value, id) {
         debugger
         var rowNo = id.split('_')[1];
-        var rem = $("#remarks_" + rowNo).val(); 
+        var rem = $("#remarks_" + rowNo).val();
         if (rem == '' || rem == null || rem == 'undefined') {
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");

@@ -194,6 +194,15 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
+                                            <label class="font-weight-bold">Discount (%): </label>&emsp;
+                                        </div>
+                                        <div class="col-md-6">
+                                            @Html.TextBoxFor(model => model.DiscountPercentage, new { @class = "text-right", style = "border:none;", @readonly = "readonly" })
+                                            <label class="font-weight-bold" style="color:black;"><b>%</b></label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
                                             <label class="font-weight-bold">Total tax: </label>&emsp;
                                         </div>
                                         <div class="col-md-6">

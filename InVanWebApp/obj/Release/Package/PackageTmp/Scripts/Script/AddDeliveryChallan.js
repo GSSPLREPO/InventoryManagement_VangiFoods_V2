@@ -229,6 +229,14 @@ function CalculateTotalBeforeTax() {
         OtherTax = 0;
 
     OtherTax = parseFloat(OtherTax);
+
+    var DiscountVal = document.getElementById("DiscountPercentage").value;
+
+    if (DiscountVal == '')
+        DiscountVal = 0;
+
+    DiscountVal = parseFloat(DiscountVal);
+
     var i = 1;
     while (i <= length) {
         var temp = document.getElementById("txtTotalItemCost_" + i).value;
@@ -241,9 +249,11 @@ function CalculateTotalBeforeTax() {
         i++;
     }
 
+    var tempDiscountVal = total * (DiscountVal / 100);
+
     $('#TotalBeforeTax').val(total.toFixed(2));
     $('#TotalTax').val(totalTax.toFixed(2));
-    var tempGrandTotal = total + totalTax + OtherTax;
+    var tempGrandTotal = total + totalTax + OtherTax + tempDiscountVal;
     tempGrandTotal = Math.round(tempGrandTotal);
     $('#TotalAfterTax').val(tempGrandTotal);
     $('#GrandTotal').val(tempGrandTotal);
