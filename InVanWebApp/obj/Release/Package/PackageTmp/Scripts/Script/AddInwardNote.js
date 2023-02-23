@@ -187,7 +187,7 @@ function SelectedIndexChanged(id) {
 }
 
 function OnChangeIWQty(value, id) {
-
+    $('#btnSave').prop("disabled", false);
     var rowNo = id.split('y')[1];
     var cell = document.getElementById("ItemQty" + rowNo);
     var temp_itemQty = cell.innerHTML.split(' ');
@@ -197,12 +197,14 @@ function OnChangeIWQty(value, id) {
     value = parseFloat(value);
 
     if (value > itemQty) {
-        alert("Inwarding quantity cannot be greater then balanced quantity!");
+        alert("Delivered quantity cannot be greater then balanced quantity!");
         document.getElementById(id).focus();
         document.getElementById(id).setAttribute("class", "border border-1 border-danger");
+        $('#btnSave').prop("disabled", true);
         return;
     }
     else {
+        $('#btnSave').prop("disabled", false);
         var tempInwQty = document.getElementById("txtInwardQty" + rowNo).value;
         document.getElementById("txtBalanceQty" + rowNo).value = parseFloat(temp_itemQty[0]) - (parseFloat(deliveredQty) + parseFloat(tempInwQty));
         InwardQuantities = InwardQuantities + "txtInwardQty" + rowNo + "*" + value + ",";
@@ -213,7 +215,6 @@ function OnChangeIWQty(value, id) {
     }
     document.getElementById(id).setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
 }
-
 
 function fileValidation() {
     var fileInput =

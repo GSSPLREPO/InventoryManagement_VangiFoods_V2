@@ -26,7 +26,7 @@ namespace InVanWebApp.Repository
         public IEnumerable<StockAdjustmentBO> GetAll()
         {
             List<StockAdjustmentBO> resultList = new List<StockAdjustmentBO>();
-            string stockAdjustment = "select SA.ID,SA.DocumentNo, SA.DocumentDate, SA.LocationName, SA.Remarks,UD.UserName as UserName, Remarks from StockAdjustment SA inner join UserDetails UD on UD.EmployeeID=SA.CreatedBy where SA.IsDeleted=0 and UD.IsDeleted=0";
+            string stockAdjustment = "select SA.ID,SA.DocumentNo, SA.DocumentDate, SA.LocationName, SA.Remarks,UD.UserName as UserName from StockAdjustment SA inner join Users UD on UD.UserId=SA.CreatedBy where SA.IsDeleted=0 and UD.IsDeleted=0";
 
             try
             {
@@ -195,7 +195,7 @@ namespace InVanWebApp.Repository
             StockAdjustmentBO result = new StockAdjustmentBO();
             try
             {
-                string stockAdjustmentQuery = "select SA.ID,SA.DocumentNo, SA.DocumentDate, SA.LocationName, SA.Remarks,UD.UserName as UserName, Remarks from StockAdjustment SA inner join UserDetails UD on UD.EmployeeID=SA.CreatedBy where SA.IsDeleted=0 and SA.ID = @ID and UD.IsDeleted=0"; //"SELECT * FROM StockAdjustment WHERE ID = @ID AND IsDeleted = 0";
+                string stockAdjustmentQuery = "select SA.ID,SA.DocumentNo, SA.DocumentDate, SA.LocationName, SA.Remarks,UD.UserName as UserName, Remarks from StockAdjustment SA inner join Users UD on UD.UserId=SA.CreatedBy where SA.IsDeleted=0 and SA.ID = @ID and UD.IsDeleted=0"; //"SELECT * FROM StockAdjustment WHERE ID = @ID AND IsDeleted = 0";
                 string stockAdjustmentItemQuery = "SELECT * FROM StockAdjustmentDetails WHERE StockAdjustmentID = @ID AND IsDeleted = 0";
                 using (SqlConnection con = new SqlConnection(connString))
                 {

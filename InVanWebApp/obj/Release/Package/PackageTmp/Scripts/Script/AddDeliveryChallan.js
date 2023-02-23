@@ -253,7 +253,8 @@ function CalculateTotalBeforeTax() {
 
     $('#TotalBeforeTax').val(total.toFixed(2));
     $('#TotalTax').val(totalTax.toFixed(2));
-    var tempGrandTotal = total + totalTax + OtherTax + tempDiscountVal;
+    total = total - tempDiscountVal;
+    var tempGrandTotal = total + totalTax + OtherTax;
     tempGrandTotal = Math.round(tempGrandTotal);
     $('#TotalAfterTax').val(tempGrandTotal);
     $('#GrandTotal').val(tempGrandTotal);
@@ -345,5 +346,19 @@ function fileValidation() {
 
             reader.readAsDataURL(fileInput.files[0]);
         }
+    }
+}
+
+function minmax(value, min, max) {
+
+    //value = Math.round((value + Number.EPSILON) * 100) / 100;
+    min = parseFloat(min);
+    max = parseFloat(max);
+    if (parseFloat(value) < min || isNaN(parseFloat(value)))
+        return min;
+    else if (parseFloat(value) > max)
+        return min;
+    else {
+        return value;
     }
 }

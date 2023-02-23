@@ -217,7 +217,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <label id="lblTotalBeforeTax"><b>Discount (%): </b></label>
-                                    <input class="form-control text-right form-control-sm" id="DiscountPercentage" name="DiscountPercentage" value="0" onkeypress="return isNumberKey(event,id)" onchange="CalculateTotalBeforeTax()"/>
+                                    <input class="form-control text-right form-control-sm" id="DiscountPercentage" name="DiscountPercentage" value="0" onkeypress="return isNumberKey(event,id)" onchange="CalculateTotalBeforeTax()" onkeyup="this.value = minmax(this.value, 0, 100)" maxlength="8"/>
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Other Tax: </b></label>
