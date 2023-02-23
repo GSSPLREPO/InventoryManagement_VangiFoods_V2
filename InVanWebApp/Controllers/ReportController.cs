@@ -1754,7 +1754,7 @@ namespace InVanWebApp.Controllers
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
             var itemId = Convert.ToInt32(Session["ItemId"]);
-            var resultDetails = _repository.getInventoryFIFOReportData(fromDate, toDate, itemId);
+            var resultDetails = _repository.getInventoryAnalysisFIFOReportData(fromDate, toDate, itemId);
 
             TempData["ReportDataTemp"] = resultDetails;
             if (TempData["ReportDataTemp"] == null)
@@ -1903,7 +1903,7 @@ namespace InVanWebApp.Controllers
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
             var itemId = Convert.ToInt32(Session["ItemId"]);
 
-            List<StockMasterBO> resultList = _repository.getInventoryFIFOReportData(fromDate, toDate, itemId);
+            List<StockMasterBO> resultList = _repository.getInventoryAnalysisFIFOReportData(fromDate, toDate, itemId);
 
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
@@ -1976,11 +1976,11 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-                "<tr><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
-                "<tr><td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-                "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><tr><td></td><td></td><td></td><td></td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td colspan='6'><span align='center' style='font-weight:bold'>" + address + "</span></td></tr>" +
                 "<tr><tr><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-                + "<td><td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "<td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td>"
                 + "</td></tr>" + "</table>"
                 + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 

@@ -301,19 +301,20 @@
                 if (document.getElementById("shippedQuantity_" + i)==null) {
                     i++;
                 }
-            PhyQty = document.getElementById("shippedQuantity_" + i).value;
-            if (PhyQty == '')
-                flag = 1;
-            else
-                PhyQty = parseFloat(PhyQty);
+                else {
+                    PhyQty = document.getElementById("shippedQuantity_" + i).value;
+                    if (PhyQty == '')
+                        flag = 1;
+                    else
+                        PhyQty = parseFloat(PhyQty);
 
-            if (PhyQty == 0)
-                flag = 1;
-
-            i++;
+                    if (PhyQty == 0)
+                        flag = 1;
+                    i++;
+                }
         }
 
-        if (flag != 1) {    // Rahul updated '==' to '!=' 22-02-23.
+        if (flag == 1) {    // Rahul updated '!=' to '==' 23-02-23.
             alert("No item shipped or Added items shipped quantity is zero, Cannot generate gate pass!");
             $('#btnSave').prop('disabled', true);
             return;

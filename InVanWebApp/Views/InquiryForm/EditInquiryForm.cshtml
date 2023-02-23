@@ -159,8 +159,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    @*Rahul updated class table-hover and added style in table tag 16-02-23.*@
-                                    <table class="table table-hover" id="submissionTable">
+                                    <table class="table table-striped" id="submissionTable">
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">
@@ -269,7 +268,7 @@
                                                             @Html.TextBox("DeliveryDate", item.DeliveryDate, "{0:yyyy-MM-dd}", new { id = "DeliveryDate", @class = "form-control form-control-sm", type = "date" })
                                                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                                                             @*@Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })
-                                                                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })*@
+                                                        @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })*@
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("HSN_Code_" + c, item.HSN_Code, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "10" })
@@ -297,7 +296,7 @@
                                         </tbody>
                                     </table>
 
-                                    <button type="button" class="btn btn-sm btn-primary shadow btn-sm mt-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
+                                    <button type="button" class="btn btn-sm btn-primary shadow btn-sm mt-2 d-none" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem" disabled>
                                         + Add Item
                                     </button>
 
@@ -312,7 +311,7 @@
 
 
             <div class="col-md-12 grid-margin stretch-card flex-wrap">
-
+                
                 <div class="col-md-6 grid-margin stretch-card flex-wrap">
                     @*keep for ui*@
                 </div>
@@ -398,10 +397,6 @@
 
     $(document).ready(function () {
         ///debugger
-        //---DeliveryDate todaysDate start 16-02-23.------
-        var id = "DeliveryDate";
-        deliveryDate(id);
-        //---DeliveryDate todaysDate end ------
         CalculateTotalBeforeTax();
     });
 
@@ -413,87 +408,11 @@
     };
     //==========end===============
 
-    //===========OnChange of item if currency is not selected================
-    $("#Item_ID").change(function () {
-        // //debugger
-        //getitemDetails();
-        debugger
-        var CurrencyIDCheck = $('#CurrencyID').val();
-        console.log(CurrencyIDCheck);
-        if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
-            debugger
-            alert("Select Currency!");
-            $('#CurrencyID').focus();
-            document.getElementById('Item_ID').selectedIndex = 0;
-            return;
-        }
-        else { getitemDetails(); }
-
-    });
-    //==================end======================
-
-    //Dropdownlist Selectedchange event
-    function getitemDetails() {
-                    $("#f").empty();
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("GetitemDetails")', // we are calling json method
-
-                dataType: 'json',
-
-                data: { id: $("#Item_ID").val(), currencyId: $("#CurrencyID").val() },
-                // here we are get value of selected item and passing same value
-                //as inputto json method GetitemDetails.
-
-                success: function (itemDescription) {
-                    debugger
-                    console.log("itemDescription: " + itemDescription);
-                    var description = JSON.stringify(itemDescription);
-                    $("#ItemName").val(itemDescription.Item_Name);
-                    $("#ItemUnit").val(itemDescription.UnitCode);
-                    $("#ItemUnitPrice").val(itemDescription.UnitPrice);
-                    $("#QuotedPrice").val(itemDescription.UnitPrice);
-                    $("#ExpectedPrice").val('0');
-                    $("#CloserPrice").val('0');
-                    $("#CurrencyName").val(itemDescription.IndianCurrencyValue);
-                    $("#ItemTaxValue").val(itemDescription.ItemTaxValue);
-                    $("#ItemQuantity").val('0');
-
-                    $("#ItemTotalPrice").val('');
-                    $("#TotalBeforeTax").val('');
-                    $("#TotalTax").val('');
-                    $("#TotalAfterTax").val('');
-                    $("#GrandTotal").val('');
-                    $("#AdvancedPAyment").val('');
-                },
-                failure: function () {
-                    alert('Failed to retrieved item detals!');
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve Item description.' + ex);
-                }
-            });
-    }
-
     function getitemDetailsJSTbl(count) {
-        console.log(count);
-        var itemId = "ItemID_" + count;
+        var itemId = "Item_ID_" + count;
         var currencyID = $('#CurrencyID').val();
         var selectedItemId = $("#" + itemId).val();
-        var delDate_Id = 'deliveryDate_' + count;
-        deliveryDate(delDate_Id);
-        debugger    //Rahul added CurrencyIDCheck if null or '' 16-02-23. 
-        var CurrencyIDCheck = $('#CurrencyID').val();
-        console.log(CurrencyIDCheck);
-        if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
-            debugger
-            alert("Select Currency!");
-            $('#CurrencyID').focus();
-            document.getElementById(itemId).selectedIndex = 0;
-            return;
-        }
-
-         $.ajax({
+                    $.ajax({
                 type: 'POST',
                 //url: '@Url.Action("GetitemDetails?id='+${itemId}+'")', // we are calling json method
                 url: '@Url.Action("GetitemDetails")', // we are calling json method
@@ -508,16 +427,16 @@
                             var description = JSON.stringify(itemDescription);
                             console.log(description);
 
-                            $("#itemCode_" + count).val(itemDescription.Item_Code);
-                            $("#itemDescription_" + count).val(itemDescription.Item_Name);
-                            $("#itemUnit_" + count).val(itemDescription.UnitCode);
-                            $("#itemPrice_" + count).val(itemDescription.UnitPrice);
-                            $("#quotedPrice_" + count).val(itemDescription.UnitPrice);
-                            $("#expectedPrice_" + count).val('0');
-                            $("#closerPrice_" + count).val('0');
-                            $("#currencyName_" + count).val(itemDescription.IndianCurrencyValue); //Rahul added 03/12/2022.
+                            $("#Item_Code_" + count).val(itemDescription.Item_Code);
+                            $("#ItemName_" + count).val(itemDescription.Item_Name);
+                            $("#ItemUnit_" + count).val(itemDescription.UnitCode);
+                            $("#ItemUnitPrice_" + count).val(itemDescription.UnitPrice);
+                            $("#QuotedPrice_" + count).val(itemDescription.UnitPrice);
+                            $("#ExpectedPrice_" + count).val('0');
+                            $("#CloserPrice_" + count).val('0');
+                            $("#CurrencyName_" + count).val(itemDescription.IndianCurrencyValue); //Rahul added 03/12/2022.
                             $("#itemTax_" + count).val(itemDescription.ItemTaxValue);
-                            $("#itemQuantity_" + count).val('0');
+                            $("#ItemQuantity_" + count).val('0');
                             $("#totalItemCost_" + count).val('0');
 
                 },
@@ -527,35 +446,26 @@
                 error: function (ex) {
                     alert('Failed to retrieve Item description.' + ex);
                 }
-         });
+            });
     }
 
-    function deliveryDate(id) {
-        debugger
-        const d = new Date();
-        d.setYear(d.getFullYear());
-        //var id = "deliveryDate_";
-        var tempDate = d.toISOString().split("T")[0];
-        $("#" + id).val(tempDate);
-        document.getElementById(id).setAttribute("min", tempDate.toString());
-    }
-
-    var counter = 1;
+    var table = document.getElementById('submissionTable');
+    var counter = table.rows.length;
 
     $("#AddItem").click(function () {
         ////debugger
         //'<select id="ItemID" class="form-control" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
         //var nameItem = "Item_ID['" + counter + "']";
-        var itemId = "ItemID_" + counter;
-        var itemCode = "itemCode_" + counter;
-        var itemDescription = "itemDescription_" + counter;
-        var itemQuantity = "itemQuantity_" + counter;
-        var itemUnit = "itemUnit_" + counter;
-        var itemPrice = "itemPrice_" + counter;
-        var quotedPrice = "quotedPrice_" + counter;
-        var expectedPrice = "expectedPrice_" + counter;
-        var closerPrice = "closerPrice_" + counter;
-        var currencyName = "currencyName_" + counter;
+        var itemId = "Item_ID_" + counter;
+        var itemCode = "Item_Code_" + counter;
+        var itemDescription = "ItemName_" + counter;
+        var itemQuantity = "ItemQuantity_" + counter;
+        var itemUnit = "ItemUnit_" + counter;
+        var itemPrice = "ItemUnitPrice_" + counter;
+        var quotedPrice = "QuotedPrice_" + counter;
+        var expectedPrice = "ExpectedPrice_" + counter;
+        var closerPrice = "CloserPrice_" + counter;
+        var currencyName = "CurrencyName_" + counter;
         var itemTax = "itemTax_" + counter;
         var totalItemCost = "totalItemCost_" + counter;
         var deliveryDate = "deliveryDate_" + counter;
@@ -595,13 +505,13 @@
             '<input type="text" id="' + itemTax + '" class="form-control form-control-sm text-right" style = "height:30px;width:80px;" name="' + itemTax + ' "readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + totalItemCost + '" class="form-control form-control-sm text-right" style = "height:30px;width:200px;" name="' + totalItemCost + '"readonly = "readonly" value="" required="required" />' +
+            '<input type="text" id="' + totalItemCost + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + totalItemCost + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
             '<input type="date" id="' + deliveryDate + '" class="form-control form-control-sm date1" style = "height:30px;width:100%;" name="' + deliveryDate + '" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + hsnCode + '" class="form-control form-control-sm " style = "height:30px;width:200px;" name="' + hsnCode + '"  />' +
+            '<input type="text" id="' + hsnCode + '" class="form-control form-control-sm " style = "height:30px;width:100px;" name="' + hsnCode + '"  />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + remarks + '" onchange="createJson()"; class="form-control form-control-sm  text-right" style = "height:30px;width:200px;" name="' + remarks + '"  />' +
@@ -618,11 +528,15 @@
     });
 
     function CalItemTotalPrice(value, id) {
+        
         var temp_rowNo = id.split('_');
-        var rowNo = temp_rowNo[1];
+        var rowNo = temp_rowNo[1];   
+        if (value == '') {
+            value = 0;
+        }
         value = parseFloat(value);
         if (value != 0) {
-            var price = $("#itemPrice_" + rowNo).val();
+            var price = $("#ItemUnitPrice_" + rowNo).val();
             price = parseFloat(price);
             var totalPrice = price * value;
             totalPrice = Math.round(totalPrice);
@@ -633,7 +547,7 @@
     }
 
     function CalculateTotalBeforeTax() {
-        ///debugger
+        
         $('#TotalBeforeTax').val('');
         $('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;

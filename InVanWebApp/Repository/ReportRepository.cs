@@ -432,6 +432,7 @@ namespace InVanWebApp.Repository
                     {
                         var result = new StockMasterBO()
                         {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
                             CompanyName = reader["VendorName"].ToString(),
                             ItemID = reader["ItemId"] is DBNull ? 0 : Convert.ToInt32(reader["ItemId"]),
                             Item_Code = reader["ItemCode"].ToString(),
