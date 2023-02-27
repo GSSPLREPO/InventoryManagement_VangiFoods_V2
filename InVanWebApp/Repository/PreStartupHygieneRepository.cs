@@ -29,7 +29,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_PreStartupHygiene_GetAll", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_PreStartupHygieneCheck_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
@@ -246,7 +246,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_PreStartupHygiene_Delete", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_PreStartupHygieneCheck_Delete", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", Id);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
