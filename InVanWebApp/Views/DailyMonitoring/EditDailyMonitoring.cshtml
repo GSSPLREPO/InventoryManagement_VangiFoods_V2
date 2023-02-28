@@ -15,6 +15,8 @@
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Id)
 
+
+
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("User")
@@ -29,7 +31,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                     @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -37,23 +39,25 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Personal Hygine")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.PersonalHygine, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.PersonalHygine, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Cleaning and Sanitation")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.CleaningAndSanitation, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.CleaningAndSanitation, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -62,23 +66,25 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Cleaning of Equipment")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.CleaningOfEquipment, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.CleaningOfEquipment, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Water Potability")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.WaterPotability, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.WaterPotability, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -92,24 +98,26 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Allergic")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.Allergic, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.Allergic, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
                 <div class="col-md-2">
                     @Html.Label("Non Allergic")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.NonAllergic, new List<SelectListItem>{
                    new SelectListItem{ Text="Ok", Value = "Ok" },
                    new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                   }, new { @class = "form-control" })
+                   }, "---Select---", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.NonAllergic, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -118,23 +126,25 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Vegetable Processing Area")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.VegetableProcessingArea, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.VegetableProcessingArea, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Packaging Labelling Area")
+                    @Html.Label("Packaging & Labelling Area")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.PackagingLabellingArea, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.PackagingLabellingArea, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -142,12 +152,13 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("FGS Area")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.FgsArea, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.FgsArea, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -160,24 +171,26 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Inside")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.Inside, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.Inside, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
                 <div class="col-md-2">
                     @Html.Label("Outside")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.OutSide, new List<SelectListItem>{
                     new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.OutSide, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -190,24 +203,26 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Dry")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.Dry, new List<SelectListItem>{
                      new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.Dry, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
                 <div class="col-md-2">
                     @Html.Label("Wet")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.Wet, new List<SelectListItem>{
                      new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.Wet, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -220,36 +235,39 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Outsiders")
+                    @Html.Label("Out siders")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-2">
                     @Html.DropDownListFor(model => model.OutSiders, new List<SelectListItem>{
                      new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.OutSiders, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
                 <div class="col-md-2">
-                    @Html.Label("ProductionArea")
+                    @Html.Label("Production Area")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-2">
                     @Html.DropDownListFor(model => model.ProductionArea, new List<SelectListItem>{
                      new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.ProductionArea, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Office Staff")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-2">
                     @Html.DropDownListFor(model => model.OfficeStaff, new List<SelectListItem>{
                      new SelectListItem{ Text="Ok", Value = "Ok" },
                     new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                    }, new { @class = "form-control" })
+                    }, "---Select---", new { @class = "form-control" })
 
                     @Html.ValidationMessageFor(model => model.OfficeStaff, "", new { @class = "error mt-2 text-danger" })
                 </div>

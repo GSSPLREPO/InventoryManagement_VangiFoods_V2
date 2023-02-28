@@ -30,7 +30,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                     @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
