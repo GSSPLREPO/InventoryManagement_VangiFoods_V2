@@ -1,0 +1,161 @@
+﻿@model InVanWebApp_BO.VegWasherDosageLogBO
+
+@{
+    ViewBag.Title = "EditVegWasherDosageLog";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Veg Washer Dosage Log</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("User")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VerifyByName, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Solution A Ml")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VegWasher1SolutionAMl, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.VegWasher1SolutionAMl, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Solution B Ml")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VegWasher1SolutionBMl, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.VegWasher1SolutionBMl, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Name of Item-1")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.NameOfItem1, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.NameOfItem1, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Washing Time")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.WashingTime1, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.WashingTime1, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("PPM")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Ppm1, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.Ppm1, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Solution A Ml")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VegWasher2SolutionAMl, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.VegWasher2SolutionAMl, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Solution B Ml")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VegWasher2SolutionBMl, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.VegWasher2SolutionBMl, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Name of Item-2")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.NameOfItem2, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.NameOfItem2, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Washing Time")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.WashingTime2, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.WashingTime2, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("PPM")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Ppm2, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.Ppm2, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100" })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <br />
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "VegWasherDosageLog")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+

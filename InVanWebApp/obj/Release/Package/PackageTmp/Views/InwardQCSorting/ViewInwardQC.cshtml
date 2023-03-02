@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
-                                <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Inward QC Sorting</h3>
+                                <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Inward QC (Check-1)</h3>
                                 <div class="col">
                                     <div class="col-md-12">
                                         <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" />
@@ -154,7 +154,7 @@
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                 console.log(time);
                 var today = formatDate(currentDate);
-                doc.save('InwardQC_' + today + '_' + time + '.pdf');
+                doc.save('InwardQC_Check-1_' + today + '_' + time + '.pdf'); 
                 $("#btnExport").show();
                 $("#btnBack").show();
                 //$("#btnPrint").show();

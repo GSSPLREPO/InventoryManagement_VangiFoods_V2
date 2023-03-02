@@ -10,7 +10,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h4>Add Inward QC Sorting</h4>
+            <h4>Add Inward QC (Check-1)</h4>
             <hr />
             @Html.ValidationSummary(true)
 
@@ -52,7 +52,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { id = "ValMsgSupplierName", @class = "error mt-2 text-danger" }) @*//Rahul added ValMsgSupplierName 15-02-23.*@
+                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { id = "ValMsgSupplierName", @class = "error mt-2 text-danger" })
                 </div>
             </div>
             <br />
@@ -195,7 +195,7 @@
 
         //Clearing the address textarea
         $('#SupplierName').val(' ');
-        $("#ValMsgSupplierName").hide(); //Rahul added ValMsgSupplierName 15-02-23.
+        $("#ValMsgSupplierName").hide();
 
         $.ajax({
             type: "POST",

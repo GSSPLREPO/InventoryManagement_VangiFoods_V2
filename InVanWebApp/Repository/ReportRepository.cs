@@ -402,5 +402,79 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
+
+        #region Inventory Analysis Report (FIFO) 
+
+        /// <summary>
+        /// Repository for Inventory Analysis Report (FIFO) 
+        /// Developed by  - Rahul 22 Feb'23
+        /// </summary>
+        /// <param name="fromDate">From Date of report</param>
+        /// <param name="toDate">To Date of Report</param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public List<StockMasterBO> getInventoryAnalysisFIFOReportData(DateTime fromDate, DateTime toDate, int itemId)
+        {
+            List<StockMasterBO> resultList = new List<StockMasterBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_InventoryAnalysis_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new StockMasterBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            CompanyName = reader["VendorName"].ToString(),
+                            ItemID = reader["ItemId"] is DBNull ? 0 : Convert.ToInt32(reader["ItemId"]),
+                            Item_Code = reader["ItemCode"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            GRNCode = reader["GRN_No"].ToString(),
+                            PO_Number = reader["PO_No"].ToString(),
+                            Outward_No = reader["Outward_No"].ToString(),                           
+                            GRNDate = reader["StockInDate"] is DBNull ? "" : Convert.ToDateTime(reader["StockInDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                            StockInQty = reader["StockInQty"] is DBNull ? 0 : float.Parse(reader["StockInQty"].ToString()),                            
+                            ItemUnitPrice = reader["StockInUnitPrice"] is DBNull ? 0 : Convert.ToDecimal(reader["StockInUnitPrice"]),
+                            StockInTotalPrice = reader["StockInTotalPrice"] is DBNull ? 0 : Convert.ToDecimal(reader["StockInTotalPrice"]),
+                            CurrencyName = reader["StockInCurrency"].ToString(), 
+                            DeliveryChallanDate = reader["StockOutDate"] is DBNull ? "" : Convert.ToDateTime(reader["StockOutDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                            StockOutQty = reader["StockOutQty"] is DBNull ? 0 : float.Parse(reader["StockOutQty"].ToString()),
+                            StockOutUnitPrice = reader["StockOutUnitPrice"] is DBNull ? 0 : Convert.ToDecimal(reader["StockOutUnitPrice"]),
+                            StockOutTotalPrice = reader["StockOutTotalPrice"] is DBNull ? 0 : Convert.ToDecimal(reader["StockOutTotalPrice"]),
+                            StockOutCurrency = reader["StockOutCurrency"] is DBNull ? "" : reader["StockOutCurrency"].ToString(),
+                            AvlDate = reader["AvlDate"] is DBNull ? "" : Convert.ToDateTime(reader["AvlDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                            AvlQty = reader["AvlQty"] is DBNull ? 0 : float.Parse(reader["AvlQty"].ToString()),
+                            AvlUnitPrice = reader["AvlUnitPrice"] is DBNull ? 0 : float.Parse(reader["AvlUnitPrice"].ToString()),
+                            AvlTotalPrice = reader["AvlTotalPrice"] is DBNull ? 0 : float.Parse(reader["AvlTotalPrice"].ToString()),
+                            AvlCurrency = reader["AvlCurrency"] is DBNull ? "" : reader["AvlCurrency"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+
     }
 }

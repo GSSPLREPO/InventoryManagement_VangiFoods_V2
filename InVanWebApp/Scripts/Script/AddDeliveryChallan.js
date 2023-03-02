@@ -229,6 +229,14 @@ function CalculateTotalBeforeTax() {
         OtherTax = 0;
 
     OtherTax = parseFloat(OtherTax);
+
+    var DiscountVal = document.getElementById("DiscountPercentage").value;
+
+    if (DiscountVal == '')
+        DiscountVal = 0;
+
+    DiscountVal = parseFloat(DiscountVal);
+
     var i = 1;
     while (i <= length) {
         var temp = document.getElementById("txtTotalItemCost_" + i).value;
@@ -241,8 +249,11 @@ function CalculateTotalBeforeTax() {
         i++;
     }
 
+    var tempDiscountVal = total * (DiscountVal / 100);
+
     $('#TotalBeforeTax').val(total.toFixed(2));
     $('#TotalTax').val(totalTax.toFixed(2));
+    total = total - tempDiscountVal;
     var tempGrandTotal = total + totalTax + OtherTax;
     tempGrandTotal = Math.round(tempGrandTotal);
     $('#TotalAfterTax').val(tempGrandTotal);
@@ -335,5 +346,19 @@ function fileValidation() {
 
             reader.readAsDataURL(fileInput.files[0]);
         }
+    }
+}
+
+function minmax(value, min, max) {
+
+    //value = Math.round((value + Number.EPSILON) * 100) / 100;
+    min = parseFloat(min);
+    max = parseFloat(max);
+    if (parseFloat(value) < min || isNaN(parseFloat(value)))
+        return min;
+    else if (parseFloat(value) > max)
+        return min;
+    else {
+        return value;
     }
 }

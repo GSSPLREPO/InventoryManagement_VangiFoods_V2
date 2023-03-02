@@ -125,6 +125,20 @@
             var fromDate = $("#fromDate").val();
             var toDate = $("#toDate").val();
 
+            if (fromDate == null || fromDate == "") {
+                $('#fromDateValidate').text('Select from date!');
+                $('#fromDateValidate').show();
+                $('#fromDate').focus();
+                return;
+            }
+
+            if (toDate == null || toDate == "") {
+                $('#toDateValidate').text('Select to date!');
+                $('#toDateValidate').show();
+                $('#toDate').focus();
+                return;
+            }
+
             if (fromDate > toDate) {
                 alert('Invalid date selection!');
                 $('#fromDate').focus();

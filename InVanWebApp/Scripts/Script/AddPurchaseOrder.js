@@ -318,10 +318,16 @@ function createJson() {
 //======Common function which get called on change of Item ordered quantity.==========================
 
 function OnChangeQty(value, id) {
+    $('#btnSave').prop('disabled', false);
+    $('#btn_SaveDraft').prop('disabled', false);
+
     var rowNo = id.split('_')[1];
     var quantity = value;
     var BalanceQty = $("#BalanceQuantity_" + rowNo).val();
     BalanceQty = parseFloat(BalanceQty);
+    var ActualBalQty = $('#ActualBalanceQuantity_' + rowNo).text();
+    ActualBalQty = parseFloat(ActualBalQty);
+
     if (quantity == '')
         quantity = 0;
 
@@ -329,17 +335,20 @@ function OnChangeQty(value, id) {
     var RequiredQty = (document.getElementById("RequiredQuantity_" + rowNo)).innerHTML.split(" ")[0];
     RequiredQty = parseFloat(RequiredQty);
 
-    if (quantity > BalanceQty) {
+    if (quantity > ActualBalQty) {
         alert("Order quantity cannot be greater then indent balance quantity!");
         document.getElementById(id).focus();
         document.getElementById(id).setAttribute("style", "border-color:red;");
+        $('#btnSave').prop('disabled', true);
+        $('#btn_SaveDraft').prop('disabled', true);
         return;
     }
     else {
-        var tempBalanceQty = BalanceQty - quantity ;
+        $('#btnSave').prop('disabled', false);
+        $('#btn_SaveDraft').prop('disabled', false);
+
+        var tempBalanceQty = ActualBalQty - quantity ;
         if (quantity == 0) {
-            var ActualBalQty = (document.getElementById("ActualBalanceQuantity_" + rowNo)).innerHTML.split(" ")[0];
-            ActualBalQty = parseFloat(ActualBalQty);
             $("#BalanceQuantity_" + rowNo).val(ActualBalQty);
         }
         else {

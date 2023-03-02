@@ -58,7 +58,6 @@
                                                         }
 
                                                     </tr>
-
                                                 </thead>
                                                 <tbody id="myTableBody">
                                                     @{ int c = 1;
@@ -74,22 +73,6 @@
                                                                     <label>Requested Quantity: </label>
                                                                     @Html.DisplayFor(x => item.ItemQuantity)
                                                                 </td>
-
-                                                                <!--<td class="text-sm d-grid text-left">
-                                                                    <div class="d-flex flex-row">
-                                                                        <div class="d-flex flex-column pe-1">-->
-                                                                @*<span class="p-1">Item Code: </span>*@
-                                                                <!--<span>Item Code: </span>
-                                                                            <span>Item Name: </span>
-                                                                            <span>Requested Quantity: </span>
-                                                                        </div>
-                                                                        <div class="d-flex flex-column ps-1">
-                                                                            <span>@Html.DisplayFor(x => item.Item_Code)</span>
-                                                                            <span>@Html.DisplayFor(x => item.ItemName)</span>
-                                                                            <span>@Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>-->
 
                                                                 @{
                                                                     int c2 = 1;
@@ -111,23 +94,6 @@
                                                                             <span id="Remarks_@c2@c"></span>
                                                                         </td>
 
-                                                                        @*<td class="text-sm d-grid text-left">
-                                                                                <div class="d-flex flex-row">
-                                                                                    <div class="d-flex flex-column pe-1">
-                                                                                        <span>Quoted Quantity: </span>
-                                                                                        <span>Price: </span>
-                                                                                        <span>Amount: </span>
-                                                                                        <span>Comment: </span>
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <span>@Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)</span>
-                                                                                        <span>@Html.DisplayFor(x => item.CurrencyName) @Html.DisplayFor(x => item.CurrencyName)</span>
-                                                                                        <span>@Html.DisplayFor(x => item.TotalItemCost)</span>
-                                                                                        <span>@Html.DisplayFor(x => item.Remarks)</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>*@
-
                                                                         { c2++; }
                                                                     }
 
@@ -139,7 +105,7 @@
 
                                                             { c++; }
                                                         }
-
+                                                        @Html.Hidden("ItemCount", Model.itemDetails.Count() )
                                                         <tr>
                                                             <td></td>
                                                             @{
@@ -147,15 +113,7 @@
                                                                 while (c3 <= Model.vendorIdLength)
                                                                 {
                                                                     <td class="text-left">
-                                                                        @*<a href=@Url.Action("RFQSupplierDetails", new { RequestForQuotationId = Model.RequestForQuotationId })
-                                                                               class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);" >
-                                                                                <i class="fa fa-reply me-1" aria-hidden="true"></i>Punch Quotation
-                                                                            </a>*@
-                                                                        @*<a href="#" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);"
-                                                                                data-toggle="modal" data-target="#myModal"
-                                                                                    id="@Model.RequestForQuotationId" onclick="RFQSupplierDetails(this.id)">
-                                                                                <i class="fa fa-reply me-1" aria-hidden="true"></i>Punch Quotation
-                                                                            </a>*@
+                                                                                                                                              
                                                                         <button type="button" class="btn btn-sm btn-link btn-pq text-dark" style="background-color:transparent"
                                                                                 id="BtnPunchQuot_@c3" onclick="RFQSupplierDetails(this.id,@Model.RequestForQuotationId)">
                                                                             <i class="fa fa-reply me-1 text-dark" aria-hidden="true"></i>Punch Quotation
@@ -175,7 +133,8 @@
                                                                     if (Model.countQuotation > 0)
                                                                     {
                                                                         <td class="text-left">
-                                                                            <a id="BtnPunchQuotView_@c4" href="@Url.Action("ViewRFQSupplierDetails","RequestForQuotation",new { ID = c4,RfqID=Model.RequestForQuotationId })" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);">View</a>
+                                                                            <button id="BtnPunchQuotView_@c4" onclick="redirectToView(this.id,@Model.RequestForQuotationId)" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);">View</button>
+                                                                            @*<a id="BtnPunchQuotView_@c4" href="@Url.Action("ViewRFQSupplierDetails","RequestForQuotation",new { ID = c4,RfqID=Model.RequestForQuotationId })" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);">View</a>*@
                                                                         </td>
                                                                     }
                                                                     else
@@ -247,6 +206,7 @@
     $(document).ready(function () {
         var id = $("#RequestForQuotationId").val();
         CompanyName(id);
+
     });
 
     function CompanyName(id) {
@@ -267,8 +227,9 @@
                     $("#CompanyName_" + (i + 1)).text(myObj[i].CompanyName);
                     $("#VendorsID_" + (i + 1)).text(myObj[i].VendorsID);
                     var vendorId = myObj[i].VendorsID;
-                    setItemPrice(vendorId,(i+1),id);
+                    setItemPrice(vendorId, (i + 1), id);
                 }
+                console.log(tempArray);
             },
             error: function (data) {
                 alert("Bind Company details failed!");
@@ -276,9 +237,20 @@
             }
         });
     }
+   
+    //============The below function is for redirecting the user to new tab on-click of View in RFQ Summary modal.===========//
+    function redirectToView(ID, RequestForQuotationId) {
+        var rowNo = ID.split('_')[1];
+        var VendorsID = $("#VendorsID_" + rowNo).text();
+        window.open("RequestForQuotation/ViewRFQSupplierDetails?ID=" + VendorsID + "&RfqID=" + RequestForQuotationId, '_blank');
+        event.preventDefault();
+        return;       
+    }
+    //=========================================================End===================================================================//
+
+    var tempArray = []; //This variable is used for marking the low quoted price among all vendors.
 
     function setItemPrice(vendorId, i, rfqId) {
-        //alert(vendorId + " " + i);
         $.ajax({
             type: "POST",
             url: `/RequestForQuotation/FetchItemDetailsVendorWise?id=` + vendorId+"&RFQId="+rfqId,
@@ -307,6 +279,8 @@
                         $("#UnitPrice_" + i + (j + 1)).text(UnitPrice);
                         $("#TotalItemCost_" + i + (j + 1)).text(TotalItemPrice);
                         $("#Remarks_" + i + (j + 1)).text(Remarks);
+
+                        tempArray.push([result.rfqVendorItemDetails[j].Item_ID, UnitPrice, "UnitPrice_" + i + (j + 1)]);
                     }
                 }
             },

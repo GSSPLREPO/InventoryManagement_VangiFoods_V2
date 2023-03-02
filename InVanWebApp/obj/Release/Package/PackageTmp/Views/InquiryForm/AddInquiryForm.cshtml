@@ -162,7 +162,8 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-striped" id="submissionTable">
+                                    @*Rahul updated class table-hover and added style in table tag 16-02-23.*@
+                                    <table class="table table-hover" id="submissionTable">
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">
@@ -250,8 +251,8 @@
                                                     @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                 </td>
                                                 @*<td>
-                                                        @Html.TextBoxFor(model => model.CloserPrice, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                    </td>*@
+                        @Html.TextBoxFor(model => model.CloserPrice, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
+                    </td>*@
                                                 <td>
                                                     @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })
                                                     @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
@@ -367,6 +368,13 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function () {
+        //---DeliveryDate todaysDate start 16-02-23.------
+        var id = "DeliveryDate";
+        deliveryDate(id);
+        //---DeliveryDate todaysDate end ------
+    });  
+
     var TxtItemDetails = "";
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
@@ -434,9 +442,7 @@
                 error: function (ex) {
                     alert('Failed to retrieve Item description.' + ex);
                 }
-            });
-
-
+            }); 
     }
 
     function getitemDetailsJSTbl(count) {
@@ -446,8 +452,18 @@
         var selectedItemId = $("#" + itemId).val();
         var delDate_Id = 'deliveryDate_' + count;
         deliveryDate(delDate_Id);
+        debugger    //Rahul added CurrencyIDCheck if null or '' 16-02-23. 
+        var CurrencyIDCheck = $('#CurrencyID').val();
+        console.log(CurrencyIDCheck);
+        if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
+            debugger
+            alert("Select Currency!");
+            $('#CurrencyID').focus();
+            document.getElementById(itemId).selectedIndex = 0;
+            return;
+        }
 
-                    $.ajax({
+         $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetitemDetails")', // we are calling json method
 
@@ -477,12 +493,11 @@
                 error: function (ex) {
                     alert('Failed to retrieve Item description.' + ex);
                 }
-            });
+         });
     }
 
-    var counter = 1;
-
     function deliveryDate(id) {
+        //debugger
         const d = new Date();
         d.setYear(d.getFullYear());
         //var id = "deliveryDate_";
@@ -490,6 +505,8 @@
         $("#" + id).val(tempDate);
         document.getElementById(id).setAttribute("min", tempDate.toString());
     }
+
+    var counter = 1;
 
     $("#AddItem").click(function () {
         ////debugger

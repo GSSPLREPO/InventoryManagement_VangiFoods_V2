@@ -8,19 +8,22 @@
 
 <html>
 <head>
-    <title>FG Received Report</title>
+    @*Rahul updated title tag text 'Received' to 'Dispatch' 16-02-23.*@ 
+    <title>FG Dispatch Report</title>
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
 </head>
 <body>
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Finished Goods Received Report</h4>
+            @*Rahul updated heading tag text 'Received' to 'Dispatch' 16-02-23.*@
+            <h4 class="page-title">Finished Goods Dispatch Report</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Reports</a>
                     </li>
-                    <li class="breadcrumb-item active">Finished Goods Received Report</li>
+                    @*Rahul updated anchor tag text 'Received' to 'Dispatch' 16-02-23.*@ 
+                <li class="breadcrumb-item active">Finished Goods Dispatch Report</li>
                 </ol>
             </nav>
         </div>
@@ -152,6 +155,20 @@
             var fromDate = $("#fromDate").val();
             var toDate = $("#toDate").val();
 
+            if (fromDate == null || fromDate == "") {
+                $('#fromDateValidate').text('Select from date!');
+                $('#fromDateValidate').show();
+                $('#fromDate').focus();
+                return;
+            }
+
+            if (toDate == null || toDate == "") {
+                $('#toDateValidate').text('Select to date!');
+                $('#toDateValidate').show();
+                $('#toDate').focus();
+                return;
+            }
+
             if (fromDate > toDate) {
                 alert('Invalid date selection!');
                 $('#fromDate').focus();
@@ -189,20 +206,20 @@
             }
 
             //===========OnChange of item if From date is not selected================
-            var fromDateCheck = $('#fromDate').val();
-            var toDateCheck = $('#toDate').val();
-            if (fromDateCheck == '' || fromDateCheck == null) {
-                $('#fromDateValidate').text("Select from date!");
-                $('#fromDateValidate').show();
-                $('#fromDate').focus();
-                return;
-            }
-            else if (toDateCheck == '' || toDateCheck == null) {
-                $('#toDateValidate').text("Select to date!");
-                $('#toDateValidate').show();
-                $('#toDate').focus();
-                return;
-            }
+            //var fromDateCheck = $('#fromDate').val();
+            //var toDateCheck = $('#toDate').val();
+            //if (fromDateCheck == '' || fromDateCheck == null) {
+            //    $('#fromDateValidate').text("Select from date!");
+            //    $('#fromDateValidate').show();
+            //    $('#fromDate').focus();
+            //    return;
+            //}
+            //else if (toDateCheck == '' || toDateCheck == null) {
+            //    $('#toDateValidate').text("Select to date!");
+            //    $('#toDateValidate').show();
+            //    $('#toDate').focus();
+            //    return;
+            //}
 
             //==================end======================
 

@@ -167,6 +167,7 @@
     <Compile Include="Common\ApplicationSession.cs" />
     <Compile Include="Common\GetDocumentNumber.cs" />
     <Compile Include="Controllers\CreditNoteController.cs" />
+    <Compile Include="Controllers\DailyMonitoringController.cs" />
     <Compile Include="Controllers\Dashb_RTWarehouseWiseStockController.cs" />
     <Compile Include="Controllers\DebitNoteController.cs" />
     <Compile Include="Controllers\GRNController.cs" />
@@ -180,6 +181,10 @@
     <Compile Include="Controllers\DeliveryChallanController.cs" />
     <Compile Include="Controllers\OutwardNoteController.cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
+    <Compile Include="Controllers\PreStartupHygieneController.cs" />
+    <Compile Include="Controllers\ProductionIndentController.cs" />
+    <Compile Include="Controllers\ProductionRecipeController.cs" />
+    <Compile Include="Controllers\ProductMasterController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RejectionNoteController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -202,6 +207,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\TaxController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
+    <Compile Include="Controllers\VegWasherDosageLogController.cs" />
     <Compile Include="DAL\Branch.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -439,6 +445,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CommonFunctions.cs" />
     <Compile Include="Repository\CreditNoteRepository.cs" />
+    <Compile Include="Repository\DailyMonitoringRepository.cs" />
     <Compile Include="Repository\DashboardRepository.cs" />
     <Compile Include="Repository\DebitNoteRepository.cs" />
     <Compile Include="Repository\GRNRepository.cs" />
@@ -447,6 +454,7 @@
     <Compile Include="Repository\Interface\ICommonFunctions.cs" />
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
     <Compile Include="Repository\Interface\ICreditNoteRepository.cs" />
+    <Compile Include="Repository\Interface\IDailyMonitoringRepository.cs" />
     <Compile Include="Repository\Interface\IDashboardRepository.cs" />
     <Compile Include="Repository\Interface\IDebitNoteRepository.cs" />
     <Compile Include="Repository\Interface\IGRNRepository.cs" />
@@ -459,6 +467,10 @@
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
     <Compile Include="Repository\Interface\IDeliveryChallanRepository.cs" />
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
+    <Compile Include="Repository\Interface\IPreStartupHygieneRepository.cs" />
+    <Compile Include="Repository\Interface\IProductionIndentRepository.cs" />
+    <Compile Include="Repository\Interface\IProductionRecipeRepository.cs" />
+    <Compile Include="Repository\Interface\IProductMasterRepository.cs" />
     <Compile Include="Repository\Interface\IRejectionNoteRepository.cs" />
     <Compile Include="Repository\Interface\IReportRepository.cs" />
     <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
@@ -472,6 +484,7 @@
     <Compile Include="Repository\Interface\IStockTransferRepository.cs" />
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
     <Compile Include="Repository\Interface\IUserDetailsRepository.cs" />
+    <Compile Include="Repository\Interface\IVegWasherDosageLogRepository.cs" />
     <Compile Include="Repository\InventoryControlRepository.cs" />
     <Compile Include="Repository\InwardNoteRepository.cs" />
     <Compile Include="Repository\InwardQCSortingRepository.cs" />
@@ -491,6 +504,10 @@
     <Compile Include="Repository\DeliveryChallanRepository.cs" />
     <Compile Include="Repository\OutwardNoteRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
+    <Compile Include="Repository\PreStartupHygieneRepository.cs" />
+    <Compile Include="Repository\ProductionIndentRepository.cs" />
+    <Compile Include="Repository\ProductionRecipeRepository.cs" />
+    <Compile Include="Repository\ProductMasterRepository.cs" />
     <Compile Include="Repository\PurchaseOrderRepository.cs" />
     <Compile Include="Repository\RejectionNoteRepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
@@ -505,6 +522,7 @@
     <Compile Include="Repository\TermsConditionRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
     <Compile Include="Repository\UserDetailsRepository.cs" />
+    <Compile Include="Repository\VegWasherDosageLogRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker.min.css" />
@@ -2902,6 +2920,21 @@
     <Content Include="Views\RequestForQuotation\ViewRFQSupplierDetails.cshtml" />
     <Content Include="Views\RequestForQuotation\GeneratePO.cshtml" />
     <Content Include="Views\POPayment\ViewPOPayment.cshtml" />
+    <Content Include="Views\Report\InventoryAnalysisReportFIFO.cshtml" />
+    <Content Include="Views\ProductionIndent\Index.cshtml" />
+    <Content Include="Views\ProductionRecipe\AddRecipeItems.cshtml" />
+    <Content Include="Views\ProductionRecipe\Index.cshtml" />
+    <Content Include="Views\ProductionRecipe\EditRecipeItem.cshtml" />
+    <Content Include="Views\ProductMaster\Index.cshtml" />
+    <Content Include="Views\DailyMonitoring\AddDailyMonitoring.cshtml" />
+    <Content Include="Views\DailyMonitoring\EditDailyMonitoring.cshtml" />
+    <Content Include="Views\DailyMonitoring\Index.cshtml" />
+    <Content Include="Views\PreStartupHygiene\AddPreStartupHygiene.cshtml" />
+    <Content Include="Views\PreStartupHygiene\EditPreStartupHygiene.cshtml" />
+    <Content Include="Views\PreStartupHygiene\Index.cshtml" />
+    <Content Include="Views\VegWasherDosageLog\AddVegWasherDosageLog.cshtml" />
+    <Content Include="Views\VegWasherDosageLog\EditVegWasherDosageLog.cshtml" />
+    <Content Include="Views\VegWasherDosageLog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

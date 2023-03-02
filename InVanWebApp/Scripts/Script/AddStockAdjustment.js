@@ -320,13 +320,20 @@ function OnChangeQty(value, id) {
         DiffQty = value - avalQty;
         DiffQty = parseFloat(DiffQty);
         document.getElementById("txtDifference_" + rowNo).value = "+" + DiffQty;
+        document.getElementById("txtDifference_" + rowNo).setAttribute("style", "color:none;");
 
     }
-    else {
+    else if (value < avalQty) {
         DiffQty = avalQty - value;
         DiffQty = parseFloat(DiffQty);
         document.getElementById("txtDifference_" + rowNo).value = "-" + DiffQty;
         document.getElementById("txtDifference_" + rowNo).setAttribute("style", "color:red;");
+    }
+    else {
+        DiffQty = avalQty - value;
+        DiffQty = parseFloat(DiffQty);
+        document.getElementById("txtDifference_" + rowNo).value = DiffQty;
+        document.getElementById("txtDifference_" + rowNo).setAttribute("style", "color:none;");
     }
 
     var TransferPrice = (UnitPrice * DiffQty);

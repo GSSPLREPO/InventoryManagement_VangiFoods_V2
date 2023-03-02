@@ -1702,5 +1702,302 @@ namespace InVanWebApp.Controllers
             //---------------------------------------
         }
         #endregion
+
+
+        #region  Inventory Analysis Report (FIFO) 
+
+        #region Binding the Inventory Analysis Report (FIFO) data 
+
+        public ActionResult InventoryAnalysisReportFIFO() 
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                StockMasterBO model = new StockMasterBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                BindItemDropDown();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+
+        /// <summary>
+        /// Develop By Rahul on 22 Feb'23
+        /// Calling method for Inventory Analysis Report (FIFO) data  
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetInventoryAnalysisReportFIFOData(DateTime fromDate, DateTime toDate, int ItemId)
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            Session["ItemId"] = ItemId;
+            var ReportResult = _repository.getInventoryAnalysisFIFOReportData(fromDate, toDate, ItemId); 
+            return Json(new { data = ReportResult }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Export PDF Inventory FIFO
+        /// <summary>
+        /// Created by: Farheen
+        /// Creadted Date: 21 Jan'23
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete]
+        public ActionResult ExprotAsPDFForInventoryAnalysisFIFO() 
+        {
+            string Fromdate = "From Date : ";
+            string Todate = "To Date : ";
+
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            var itemId = Convert.ToInt32(Session["ItemId"]);
+            var resultDetails = _repository.getInventoryAnalysisFIFOReportData(fromDate, toDate, itemId);
+
+            TempData["ReportDataTemp"] = resultDetails;
+            if (TempData["ReportDataTemp"] == null)
+            {
+                return RedirectToAction("InventoryAnalysisReportFIFO", "Report");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<StockMasterBO> resultList = TempData["ReportDataTemp"] as List<StockMasterBO>;
+
+            if (resultList.Count < 0)
+                return RedirectToAction("InventoryAnalysisReportFIFO", "Report");
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
+            string ReportName = "Inventory Analysis Report (FIFO)";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<thead>");
+            sb.Append("<tr >");
+            sb.Append("<th colspan=2 style='text-align:left;padding-right:-60px;padding-bottom:-290px;font-size:11px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr >");
+            sb.Append("<th colspan=10 style='text-align:right;padding-right:-530px;padding-bottom:-290px;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            //sb.Append("<tr >");
+            //sb.Append("<th Colspan='9' style='text-align:right;padding-right:-370px;padding-bottom:-85px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
+            //sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center;' Colspan='1'>" +
+                "<img height='150' width='150' src='" + strPath + "'/></th>");
+            sb.Append("<th Colspan='12' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:-350px'>");
+            //sb.Append("<br/>");
+            sb.Append("<label style='font-size:22px; bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            //sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+
+            sb.Append("</th></tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th rowspan=2 style='text-align:center;padding: 5px; font-family:Times New Roman;width:10%;font-size:10px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
+            sb.Append("<th rowspan=2 style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Vendor Name</ th>");
+            sb.Append("<th rowspan=2 style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Item Name</ th>");
+            sb.Append("<th rowspan=2 style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Item Code</ th>");
+            sb.Append("<th colspan=4 style='text-align:center;padding: 5px; font-family:Times New Roman;width:75%;font-size:10px;border: 0.05px  #e2e9f3;'>Available Stock</ th>");
+            sb.Append("<th colspan=4 style='text-align:center;padding: 5px; font-family:Times New Roman;width:75%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock In</ th>");
+            sb.Append("<th colspan=4 style='text-align:center;padding: 5px; font-family:Times New Roman;width:75%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock Out</ th>");
+            sb.Append("<th rowspan=2 style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>GRN No</ th>");
+            sb.Append("<th rowspan=2 style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>PO No</ th>");
+            sb.Append("<th rowspan=2 style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Outward No</ th>");
+
+            sb.Append("</tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Quantity</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Unit Price</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Total Price</ th>");
+            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Currency</ th>");
+                                                                                                                   
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Quantity</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Unit Price</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Total Price</ th>");
+            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Currency</ th>");
+                                                                                                                   
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Quantity</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Unit Price</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Total Price</ th>");
+            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:10px;border: 0.05px  #e2e9f3;'>Currency</ th>");
+
+            sb.Append("</tr>");
+
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            resultList.Count();
+            foreach (var item in resultList)
+            {
+                sb.Append("<tr style='text-align:center;padding: 10px;'>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.CompanyName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.Item_Code + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.ItemName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.AvlDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.AvlQty + " " + "(" + item.ItemUnit + ")" + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.AvlUnitPrice + " " + "( " + item.AvlCurrency + " )"  + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.AvlTotalPrice + " " + "( " + item.AvlCurrency + " )" + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.AvlCurrency + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.GRNDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockInQty + " " + "(" + item.ItemUnit + ")" + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.ItemUnitPrice + " " + "( " + item.CurrencyName + " )" + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockInTotalPrice + " " + "( " + item.CurrencyName + " )" + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.CurrencyName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.DeliveryChallanDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockOutQty + " " + "(" + item.ItemUnit + ")" + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockOutUnitPrice + " " + "( " + item.StockOutCurrency + " )" + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockOutTotalPrice + " " + "( " + item.StockOutCurrency + " )" + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockOutCurrency + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.GRNCode + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.PO_Number + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.Outward_No + "</td>");
+
+
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+
+            using (var sr = new StringReader(sb.ToString()))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+                    pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
+
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+
+                    writer.PageEvent = new PageHeaderFooter();
+                    pdfDoc.Open();
+
+                    setBorder(writer, pdfDoc);
+
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                    pdfDoc.Close();
+                    byte[] bytes = memoryStream.ToArray();
+                    string filename = "Rpt_InventoryAnalysisReportFIFO_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    return File(memoryStream.ToArray(), "application/pdf", filename);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Excel for Inventory FIFO
+        public void ExportAsExcelForInventoryAnalysisFIFO()
+        {
+            GridView gv = new GridView();
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            var itemId = Convert.ToInt32(Session["ItemId"]);
+
+            List<StockMasterBO> resultList = _repository.getInventoryAnalysisFIFOReportData(fromDate, toDate, itemId);
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Vendor Name");
+            dt.Columns.Add("Item Code");
+            dt.Columns.Add("Item Name");
+            dt.Columns.Add("Available Stock Date");
+            dt.Columns.Add("Available Stock Quantity");
+            dt.Columns.Add("Available Stock Unit Price");
+            dt.Columns.Add("Available Stock Total Price");
+            dt.Columns.Add("Stock In Date");
+            dt.Columns.Add("Stock In Quantity");
+            dt.Columns.Add("Stock In Unit Price");
+            dt.Columns.Add("Stock In Total Price");
+            dt.Columns.Add("Stock Out Date");
+            dt.Columns.Add("Stock Out Quantity");
+            dt.Columns.Add("Stock Out Unit Price");
+            dt.Columns.Add("Stock Out Total Price");
+            dt.Columns.Add("GRN No");
+            dt.Columns.Add("PO No");
+            dt.Columns.Add("Outward No");
+
+            foreach (StockMasterBO st in resultList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["Vendor Name"] = st.CompanyName.ToString();
+                dr["Item Code"] = st.Item_Code.ToString();
+                dr["Item Name"] = st.ItemName.ToString();
+                dr["Available Stock Date"] = st.AvlDate.ToString();
+                dr["Available Stock Quantity"] = st.AvlQty.ToString();
+                dr["Available Stock Unit Price"] = st.AvlUnitPrice.ToString() + " " + "( " + st.AvlCurrency.ToString() + " )";
+                dr["Available Stock Total Price"] = st.AvlTotalPrice.ToString() + " " + "( " + st.AvlCurrency.ToString() + " )";
+                dr["Stock In Date"] = st.GRNDate.ToString();
+                dr["Stock In Quantity"] = st.StockInQty.ToString();
+                dr["Stock In Unit Price"] = st.ItemUnitPrice.ToString() + " " + "( " + st.CurrencyName.ToString() + " )";
+                dr["Stock In Total Price"] = st.StockInTotalPrice.ToString() + " " + "( " + st.CurrencyName.ToString() + " )";
+                dr["Stock Out Date"] = st.DeliveryChallanDate.ToString();
+                dr["Stock Out Quantity"] = st.StockOutQty.ToString();
+                dr["Stock Out Unit Price"] = st.StockOutUnitPrice.ToString() + " " + "( " + st.StockOutCurrency.ToString() + " )";
+                dr["Stock Out Total Price"] = st.StockOutTotalPrice.ToString() + " " + "( " + st.StockOutCurrency.ToString() + " )";
+                dr["GRN No"] = st.GRNCode.ToString();
+                dr["PO No"] = st.PO_Number.ToString();
+                dr["Outward No"] = st.Outward_No.ToString();
+
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_InventoryAnalysisReportFIFO_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Inventory Analysis Report (FIFO)";
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date : ";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
+                "<tr><tr><td></td><td></td><td></td><td></td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td colspan='6'><span align='center' style='font-weight:bold'>" + address + "</span></td></tr>" +
+                "<tr><tr><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td>"
+                + "</td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
+
+        #endregion
+
+        #endregion
+
+
     }
 }
