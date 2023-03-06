@@ -168,7 +168,7 @@
                             <a class="nav-link" href="@Url.Action("Index","InwardQCSorting")">Inward QC (Check-1)</a>
                         </div>
                     </li>
-                   
+
                 </ul>
             </div>
         </li>
@@ -180,14 +180,36 @@
             </a>
             <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
-                    @*<li class="nav-item"><a class="nav-link" href="~/DailyOperations/CalibrationLogSheetForInstruments">Calibration Log</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/Chlorination">Chlorination</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/CriticalControlPointLogSheet">CriticalControlPoint</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/PreStartupHygiene">Pre-Startup Hygiene</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/ProductEvaluationLog">ProductEvaluationLog</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/SanitizationHygine">Sanitization & Hygine</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/VegWasherDosageLog">Veg Washer Dosage Log</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/WaterAnalysis">Water Analysis</a></li>*@
+                    <li class="nav-item">
+                        <div id="DailyMonitoring">
+                            <a class="nav-link" href="@Url.Action("Index","DailyMonitoring")">Daily Monitoring</a>
+                        </div>
+                    </li>
+                    @*<li class="nav-item">
+                            <div id="VegWasherDosageLog">
+                                <a class="nav-link" href="@Url.Action("Index","VegWasherDosageLog")">Veg Washer Dosage Log</a>
+                            </div>
+                        </li>*@
+                    <li class="nav-item">
+                        <div id="ClorinationLogLog">
+                            <a class="nav-link" href="@Url.Action("Index","ClorinationLog")">Clorination Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PestControlLog">
+                            <a class="nav-link" href="@Url.Action("Index","PestControlLog")">Pest Control Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PreStartupHygiene">
+                            <a class="nav-link" href="@Url.Action("Index","PreStartupHygiene")">Pre Startup Hygiene</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="WaterAnalysis">
+                            <a class="nav-link" href="@Url.Action("Index","WaterAnalysis")">Water Analysis</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -310,10 +332,10 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-            <div id="InventoryControlReport">
-                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-            </div>
-        </li>*@
+                            <div id="InventoryControlReport">
+                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+                            </div>
+                        </li>*@
                 </ul>
             </div>
         </li>

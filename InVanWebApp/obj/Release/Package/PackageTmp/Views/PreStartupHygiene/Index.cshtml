@@ -1,0 +1,154 @@
+﻿@model IEnumerable<InVanWebApp_BO.PreStartupHygieneBO>
+@{ ViewBag.Title = "Pre Startup Hygine";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
+
+<style>
+    .table th {
+        text-align: center;
+    }
+
+    th[colspan="5"] {
+        text-align: center;
+    }
+
+    table.table-bordered.dataTable th, table.table-bordered.dataTable td {
+        text-align: center !important;
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Pre Startup Hygine</title>
+</head>
+<body>
+
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Pre Startup Hygiene</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Daily Operations</a>
+                    </li>
+                    <li class="breadcrumb-item active"> Pre Startup Hygiene</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="@Url.Action("AddPreStartupHygiene","PreStartupHygiene")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span> Pre Startup Hygiene
+                            </a>
+                            <div class="table-responsive" style="padding-top:15px;">
+
+                                <table class="table table-striped table-bordered hover table-sm" id="PreStartupHygienedt">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2">@Html.DisplayName("Date")</th>
+                                            <th rowspan="2">@Html.DisplayName("RM Receving Area")</th>
+                                            <th colspan="3">@Html.DisplayName("Crates")</th>
+                                            <th rowspan="2">@Html.DisplayName("Weighting Area")</th>
+                                            <th rowspan="2">@Html.DisplayName("Water")</th>
+                                            <th rowspan="2">@Html.DisplayName("Hygine Area")</th>
+                                            <th colspan="2">@Html.DisplayName("Storage Area")</th>
+                                            <th rowspan="2">@Html.DisplayName("Walk Way")</th>
+                                            <th rowspan="2">@Html.DisplayName("Vegetable Washing Area")</th>
+                                            <th rowspan="2">@Html.DisplayName("Peeling Machine")</th>
+                                            <th rowspan="2">@Html.DisplayName("Cold Storage")</th>
+                                            <th rowspan="2">@Html.DisplayName("Roboqubos")</th>
+                                            <th rowspan="2">@Html.DisplayName("Silo")</th>
+                                            <th rowspan="2">@Html.DisplayName("Packaging Line")</th>
+                                            <th rowspan="2">@Html.DisplayName("Chiller DC")</th>
+                                            <th rowspan="2">@Html.DisplayName("Verify By")</th>
+                                            <th rowspan="2">@Html.DisplayName("Edit/Delete")</th>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.DisplayName("Blue")</th>
+                                            <th>@Html.DisplayName("Yellow")</th>
+                                            <th>@Html.DisplayName("Red")</th>
+                                            <th>@Html.DisplayName("Raw Material")</th>
+                                            <th>@Html.DisplayName("Finish Goods")</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.RMRecevingArea)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CratesBlue)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CratesYellow)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CratesRed)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.WeightingArea)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Water)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.HygineArea)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.RawMaterial)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.FinishGoods)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.WalkWay)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.VegetableWashingArea)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.PeelingMachine)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ColdStorage)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Roboqubos)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Silo)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.PackagingLine)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Chiller)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.VerifyBy)</td>
+                                            <td>
+                                                <a href=@Url.Action("EditPreStartupHygiene", "PreStartupHygiene", new { Id = item.Id })>
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("Delete", "PreStartupHygiene", new { Id = item.Id }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
+                                            </td>
+                                        </tr>}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+@Html.Raw(TempData["Success"])
+
+@section scripts{
+
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#PreStartupHygienedt').dataTable().fnDestroy();
+            $('#PreStartupHygienedt').dataTable({
+                "iDisplayLength": 10,
+                //"columnDefs": [{ "targets": 3, "type": "date-eu" }],
+                "order": [[3, 'desc']],
+            });
+        });
+
+        var table = $('#PreStartupHygienedt').dataTable({
+            "serverSide": false,
+            "filter": true,
+            //"columnDefs": [{ "targets": 3, "type": "date-eu" }],
+            "order": [[3, 'desc']],
+            "pageLength": 20
+        });
+    </script>
+}

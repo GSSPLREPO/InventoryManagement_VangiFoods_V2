@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="Branch.cs" />
     <Compile Include="CityMaster.cs" />
+    <Compile Include="ClorinationLogBO.cs" />
+    <Compile Include="DailyMonitoringBO.cs" />
     <Compile Include="IssueNoteBO.cs" />
     <Compile Include="DeliveryChallanBO.cs" />
     <Compile Include="CompanyBO.cs" />
@@ -83,7 +85,9 @@
     <Compile Include="OrganisationGroupBO.cs" />
     <Compile Include="OrganisationsBO.cs" />
     <Compile Include="OutwardNoteBO.cs" />
+    <Compile Include="PestControlLogBO.cs" />
     <Compile Include="POPaymentBO.cs" />
+    <Compile Include="PreStartupHygieneBO.cs" />
     <Compile Include="PurchaseOrderAmendmentDetailBO.cs" />
     <Compile Include="RejectionNoteBO.cs" />
     <Compile Include="RequestForQuotationBO.cs" />
@@ -119,6 +123,7 @@
     <Compile Include="TermsAndConditionMasterBO.cs" />
     <Compile Include="UnitMaster.cs" />
     <Compile Include="UsersBO.cs" />
+    <Compile Include="WaterAnalysisBO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
