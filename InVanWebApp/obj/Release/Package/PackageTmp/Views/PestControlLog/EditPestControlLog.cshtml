@@ -1,0 +1,176 @@
+﻿@model InVanWebApp_BO.PestControlLogBO
+
+@{
+    ViewBag.Title = "EditPestControlLog";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Pest Control Log</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("User")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4" id="datetimepicker">
+                     @Html.TextBoxFor(model => model.Date, "{0:dd-MM-yyyy HH:mm:ss}", new { @class = "form-control form-control-sm"@*, @max = DateTime.Now.ToString("yyyy-MM-dd")*@, id = "date" ,@readonly="readonly"})
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Type of Pest")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TypeOfPest, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.TypeOfPest, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Method For Pest Control")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.MethodForPestControl, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.MethodForPestControl, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Area")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Area, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.Area, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Frequency")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Frequncy, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.Frequncy, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("COA Received From Pest Control")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.COARecivedFromPestControl, new { @class = "form-control form-control-sm", maxlength = "20" })
+                    @Html.ValidationMessageFor(model => model.COARecivedFromPestControl, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Effective or Not")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.EffectiveOrNot, new { @class = "form-control form-control-sm", maxlength = "20" })
+                    @Html.ValidationMessageFor(model => model.EffectiveOrNot, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Any Hazard Detected After Pest")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.AnyHazardDetectedAfterPest, new { @class = "form-control form-control-sm", maxlength = "20" })
+                    @Html.ValidationMessageFor(model => model.AnyHazardDetectedAfterPest, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100" })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+            <br />
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "PestControlLog")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+@*<script src="jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>*@
+<script src="jquery-ui-timepicker-addon.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#date").datetimepicker({
+            dateFormat: 'dd-mm-yy', timeFormat: 'hh:mm:ss'
+        });
+    });
+</script>
+
+
+<script>
+        $(document).ready(function ()
+        {
+            $("#datetimepicker").datetimepicker(
+                {
+
+                    //defaultDate: '@Model.Date',
+                    showTodayButton: true,
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    //showClose: true,
+                    //showClear: true,
+                    //toolbarPlacement: 'top',
+                    //stepping: 15
+                    lang
+                });
+
+
+
+        });
+</script>
+
+
+
+

@@ -105,8 +105,8 @@
                                                     @Html.TextBox("ItemUnitPrice", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(model => model.TransferQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onmouseleave = "OnChangeQuantity($(this).val(),id)" })
-                                                    @Html.ValidationMessageFor(model => model.TransferQuantity, "", new { @class = "error mt-2 text-danger" })
+                                                    @Html.TextBoxFor(model => model.TransferQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeQuantityForFirstRow($(this).val(),id)" })
+                                                    @Html.ValidationMessageFor(model => model.TransferQuantity, "", new { id= "transferQuantityErr", @class = "error mt-2 text-danger" })
                                                 </td>
                                                 <td>
                                                     @Html.TextBox("FinalQuantity", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
@@ -386,13 +386,15 @@
 
     var flag = 0; //This flag is for checking whether the add Item details or not.
     function SelectedIndexChangedItemList(id) {
+        $("#ValMsgItemList").hide();
+
         //debugger
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
 
         if (FromLocationCheck == '' || FromLocationCheck == null) {
 
-            alert('Select Different FromLocation and ToLocation');
+            alert('Select Different From Location and To Location');
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#FromLocationId').focus();
             flag = 1;
@@ -400,7 +402,7 @@
         }
         else if (ToLocationCheck == '' || ToLocationCheck == null) {
 
-            alert('Select Different ToLocation and FromLocation');
+            alert('Select Different To Location and From Location');
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#ToLocationId').focus();
             flag = 1;
@@ -408,7 +410,7 @@
         }
         ///Rahul added 09/12/2022.
         else if (FromLocationCheck == ToLocationCheck) {
-            alert('Select Different ToLocation and FromLocation');
+            alert('Select Different To Location and From Location');
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#ToLocationId').focus();
             flag = 1;
@@ -416,7 +418,7 @@
         }///Rahul added 09/12/2022.
         else if (ToLocationCheck == FromLocationCheck) {
 
-            alert('Select Different FromLocation and ToLocation');
+            alert('Select Different From Location and To Location');
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#FromLocationId').focus();
             flag = 1;
@@ -432,20 +434,21 @@
     }
 
     $("#Item_ID").change(function () {
+        $("#ValMsgItemList").hide();
         //debugger
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
 
         if (FromLocationCheck == '' || FromLocationCheck == null) {
             //debugger
-            alert('Select Different FromLocation and ToLocation');
+            alert('Select Different From Location and To Location');
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#FromLocationId').focus();
             return;
         }
         else if (ToLocationCheck == '' || ToLocationCheck == null) {
             //debugger
-            alert('Select Different ToLocation and FromLocation');
+            alert('Select Different To Location and From Location');
             document.getElementById('Item_ID').selectedIndex = 0;
             $('#ToLocationId').focus();
             return;
@@ -530,9 +533,41 @@
     });
 
     //---OnChangeQuantity start rahul added on 04-02-23------
+    function OnChangeQuantityForFirstRow(value, id) {
+        var itemId = $("#Item_ID").val();
+        if (itemId == '' || itemId == null) {
+            $("#Item_ID").focus();
+            $("#TransferQuantity").val(0);
+            return;
+        }
+
+        var TransferQuantity = parseFloat(value);
+        if (TransferQuantity <= 0 || value == null || value == '') {
+            //alert("Quantity cannot be negative, null or zero!"); //rahul removed alert on 04-02-23
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            document.getElementById("transferQuantityErr").setAttribute("style", "color:red;");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
+            $("#transferQuantityErr").text("Enter Transfer Quantity!");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
+            return;
+        }
+        else {
+            //Set transfer Quantity in item grid.
+            $("#transferQuantityErr").hide();//Rahul added for span tag 'transferQuantityErr_' 14-02-23.
+            document.getElementById(id).setAttribute("style", "");
+        }
+    }
+
     function OnChangeQuantity(value, id) {
         //debugger
         var rowNo = id.split('_')[1];
+
+        var itemId = $("#ItemID_"+rowNo).val();
+        if (itemId == '' || itemId == null) {
+            $("#ItemID_" + rowNo).focus;
+            $("#transferQuantity_"+rowNo).val(0);
+            return;
+        }
+
         var TransferQuantity = parseFloat(value);
         if (TransferQuantity <= 0 || value == null || value == '') {
             //alert("Quantity cannot be negative, null or zero!"); //rahul removed alert on 04-02-23
@@ -546,8 +581,8 @@
             //Set transfer Quantity in item grid.
             $("#transferQuantityErr_" + rowNo).hide();//Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             document.getElementById(id).setAttribute("style", "");
-            $("#TransferQuantity").val();
-            $("#transferQuantity_" + rowNo).val();
+            //$("#TransferQuantity").val();
+            //$("#transferQuantity_" + rowNo).val();
         }
     }
     //---OnChangeQuantity end ------
@@ -598,7 +633,7 @@
             '</td>' +
             '<td>' +
             /*'<input type="text" id="' + transferQuantity + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="" required="required" />' +*/
-            '<input type="text" id="' + transferQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="0" maxlength="8" onkeypress="return isNumberKey(event)" onmouseleave= "OnChangeQuantity($(this).val(),id)" required="required" />' +
+            '<input type="text" id="' + transferQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right valid" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="0" maxlength="8" onkeypress="return isNumberKey(event)" onchange= "OnChangeQuantity($(this).val(),id)" required="required" />' +
             '<span id="' + transferQtyErrMsg + '">' +
             '</td>' +
             '<td>' +
@@ -639,6 +674,7 @@
 
     //Rahul implemented 'res' condition for ValMsgItemList span tag message on click Save button 15-02-23.
     function createJson() {
+
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
@@ -653,10 +689,11 @@
             
             var ItemList = $("#Item_ID option:selected").val();
             if (ItemList == '' || ItemList == 0) {
-                $("#ValMsgItemList").text("Please select Inward QC number!");
+                $("#ValMsgItemList").text("Please select Item!");
                 $("#ValMsgItemList").show();
                 document.getElementById('Item_ID').focus();
-                return
+                event.preventDefault();
+                return;
             }
             else {
                 $("#ValMsgItemList").hide();
@@ -664,7 +701,7 @@
         }
         else {
             var TxtItemDetails = JSON.stringify(res);
-            console.log(TxtItemDetails);
+            //console.log(TxtItemDetails);
             $('#TxtItemDetails').val(TxtItemDetails);
         }
     }

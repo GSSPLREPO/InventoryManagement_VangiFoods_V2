@@ -184,6 +184,7 @@
     <Compile Include="Controllers\PestControlLogController.cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
     <Compile Include="Controllers\PreStartupHygieneController.cs" />
+    <Compile Include="Controllers\ProductMasterController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\RejectionNoteController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
@@ -470,6 +471,7 @@
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IPestControlLogRepository.cs" />
     <Compile Include="Repository\Interface\IPreStartupHygieneRepository.cs" />
+    <Compile Include="Repository\Interface\IProductMasterRepository.cs" />
     <Compile Include="Repository\Interface\IRejectionNoteRepository.cs" />
     <Compile Include="Repository\Interface\IReportRepository.cs" />
     <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
@@ -505,6 +507,7 @@
     <Compile Include="Repository\PestControlLogRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
     <Compile Include="Repository\PreStartupHygieneRepository.cs" />
+    <Compile Include="Repository\ProductMasterRepository.cs" />
     <Compile Include="Repository\PurchaseOrderRepository.cs" />
     <Compile Include="Repository\RejectionNoteRepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
@@ -2933,6 +2936,9 @@
     <Content Include="Views\WaterAnalysis\AddWaterAnalysis.cshtml" />
     <Content Include="Views\WaterAnalysis\EditWaterAnalysis.cshtml" />
     <Content Include="Views\WaterAnalysis\Index.cshtml" />
+    <Content Include="Views\ProductMaster\AddProductItems.cshtml" />
+    <Content Include="Views\ProductMaster\EditProductItem.cshtml" />
+    <Content Include="Views\ProductMaster\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

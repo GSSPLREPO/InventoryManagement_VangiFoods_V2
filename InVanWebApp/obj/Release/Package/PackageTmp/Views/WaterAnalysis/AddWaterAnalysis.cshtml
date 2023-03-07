@@ -1,0 +1,207 @@
+﻿@model InVanWebApp_BO.WaterAnalysisBO
+
+@{
+    ViewBag.Title = "AddWaterAnalysis";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm("AddWaterAnalysis", "WaterAnalysis", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Add Water Analysis</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("User")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Date")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4" id="datetimepicker">
+                @Html.TextBoxFor(model => model.Date, DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), new { @class = "form-control form-control-sm", @max = DateTime.Now.ToString("yyyy-MM-dd"), id = "date", @readonly ="readonly" })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+            </div>
+            @*<div class="col-md-4">
+                @Html.TextBox("fromdate", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"), new { @class = "from-date-picker", @readonly = "readonly" })
+            </div>*@
+        </div>
+            <hr />
+            <div class="row">
+                <h4 style="color:darkcyan">Production Area(Ro Water)</h4>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("PH")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PAPH, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.PAPH, "", new { @class = "error mt-2 text-danger", id = "validationMgsPAPH" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TDS")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PATDS, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.PATDS, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+                <div class="col-md-2 mb-1">
+                    @Html.Label("PAHardness")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PAHardness, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.PAHardness, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Salt Added")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PASaltAdded, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.PASaltAdded, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <hr />
+            <div class="row">
+                <h4 style="color:darkcyan">Soft Water</h4>
+            </div>
+            <hr />
+            <div class="row">
+
+                <div class="col-md-2 mb-1">
+                    @Html.Label("PH")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.SWPH, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.SWPH, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TDS")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.SWTDS, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.SWTDS, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+                <div class="col-md-2 mb-1">
+                    @Html.Label("SWHardness")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.SWHardness, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.SWHardness, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+       
+
+            <hr />
+            <div class="row">
+                <h4 style="color:darkcyan">ETP Plant</h4>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TEM")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ETPTEM, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.ETPTEM, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("PH")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ETPPH, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.ETPPH, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TDS")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ETPTDS, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.ETPTDS, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TEM")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TEM, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.ValidationMessageFor(model => model.TEM, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Gas Reading")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GasReading, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.GasReading, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100" })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+            <br />
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "WaterAnalysis")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+@*<script src="jquery.min.js"></script>
+<script src="jquery-ui.min.js"></script>*@
+<script src="jquery-ui-timepicker-addon.js"></script>
+
+
+
+
