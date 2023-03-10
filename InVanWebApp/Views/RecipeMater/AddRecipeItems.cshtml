@@ -27,7 +27,7 @@
                 <span style="color:red">*</span>
             </div>
             <div class="col-md-4">
-                @Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select unit---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val())" })
+                @Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val())" })
                 @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error mt-2 text-danger" })
                 @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
             </div>

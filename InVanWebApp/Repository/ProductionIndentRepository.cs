@@ -37,11 +37,12 @@ namespace InVanWebApp.Repository
                         var result = new ProductionIndentBO()
                         {
                             ID = Convert.ToInt32(reader["ID"]),
-                            ProductionIndentNo = reader["IndentNo"].ToString(),
-                            IssueDate = Convert.ToDateTime(reader["IndentDate"]),                            
+                            ProductionIndentNo = reader["ProductionIndentNo"].ToString(),
+                            IssueDate = Convert.ToDateTime(reader["IssueDate"]),
+                            ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),                            
                             IndentStatus = reader["IndentStatus"].ToString(),
                             Description = reader["Description"].ToString(),
-                            IndentCount = Convert.ToInt32(reader["IndentCount"])
+                            //IndentCount = Convert.ToInt32(reader["IndentCount"])
                         };
                         productionIndentList.Add(result); 
                     }

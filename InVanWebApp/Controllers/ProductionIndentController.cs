@@ -1,6 +1,7 @@
 ﻿using InVanWebApp.Common;
 using InVanWebApp.Repository;
 using InVanWebApp.Repository.Interface;
+using InVanWebApp_BO;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,9 @@ namespace InVanWebApp.Controllers
         private IProductionIndentRepository _productionIndentRepository;
         private IUserDetailsRepository _userDetailsRepository;
         private IPurchaseOrderRepository _purchaseOrderRepository;
+        private IIndentRepository _repository;
+        private IRecipeMaterRepository _productionRecipeRepository;
+        private IProductMasterRepository _productMasterRepository;
 
         private static ILog log = LogManager.GetLogger(typeof(ProductionIndentController));
 
@@ -28,6 +32,9 @@ namespace InVanWebApp.Controllers
             _productionIndentRepository = new ProductionIndentRepository();
             _userDetailsRepository = new UserDetailsRepository();
             _purchaseOrderRepository = new PurchaseOrderRepository();
+            _repository = new IndentRepository();
+            _productionRecipeRepository = new RecipeMaterRepository();
+            _productMasterRepository = new ProductMasterRepository();
         }
 
         /// <summary>
@@ -69,50 +76,48 @@ namespace InVanWebApp.Controllers
             var result = _userDetailsRepository.GetAll();
             var resultList = new SelectList(result.ToList(), "EmployeeID", "EmployeeName");
             ViewData["EmployeeName"] = resultList;
-        }
-        public void BindLocation()
+        }        
+        public void BindItemTypeCategory()
         {
-            var result = _purchaseOrderRepository.GetLocationNameList();
-            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
-            ViewData["LocationName"] = resultList;
-        }
-        public void BindDesignations()
-        {
-            var designations = _userDetailsRepository.GetDesignationForDropDown();
-            var designationsList = new SelectList(designations.ToList(), "DesignationID", "DesignationName");
-            ViewData["Designations"] = designationsList;
+            var product = _productMasterRepository.GetAll();
+            var dd4 = new SelectList(product.ToList(), "ProductID", "ProductCode", "ProductName");
+            ViewData["ProductName"] = dd4;
 
-        }
+            //Binding item grid with Recipe. 
+            var recipeList = _productionRecipeRepository.GetItemDetailsForRecipe();
+            var dd = new SelectList(recipeList.ToList(), "ID", "Item_Code", "UOM_Id");
+            ViewData["Ingredients"] = dd;
+        }     
         #endregion
 
-        //#region Insert functionality of Production Indent
-        //[HttpGet]
-        //public ActionResult AddProductionIndent() 
-        //{
-        //    if (Session[ApplicationSession.USERID] != null)
-        //    {
-        //        BindUsers();
-        //        BindLocation();
-        //        BindDesignations();
+        #region Insert functionality of Production Indent
+        [HttpGet]
+        public ActionResult AddProductionIndent()
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                BindUsers();
+                BindItemTypeCategory();
 
-        //        GetDocumentNumber objDocNo = new GetDocumentNumber();
-        //        //=========here document type=16 i.e. for generating the Production Indent (logic is in SP).====//
-        //        var DocumentNumber = objDocNo.GetDocumentNo(16);
-        //        ViewData["DocumentNo"] = DocumentNumber;
+                GetDocumentNumber objDocNo = new GetDocumentNumber();
+                //=========here document type=16 i.e. for generating the Production Indent (logic is in SP).====//
+                var DocumentNumber = objDocNo.GetDocumentNo(16);
+                ViewData["DocumentNo"] = DocumentNumber;
 
-        //        //Binding item grid with sell type item.
-        //        var itemList = _repository.GetItemDetailsForDD();
-        //        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-        //        ViewData["itemListForDD"] = dd;
+                //Binding item grid with sell type item.
+                var itemList = _repository.GetItemDetailsForDD();
+                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                ViewData["itemListForDD"] = dd;
 
-        //        IndentBO model = new IndentBO();
-        //        model.IndentDate = DateTime.Today;
+                ProductionIndentBO model = new ProductionIndentBO();
+                model.IssueDate = DateTime.Today;
+                model.ProductionDate = DateTime.Today;
 
-        //        return View(model);
-        //    }
-        //    else
-        //        return RedirectToAction("Index", "Login");
-        //}
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
 
         ///// <summary>
         ///// Create By:Farheen
@@ -197,7 +202,7 @@ namespace InVanWebApp.Controllers
         //        return View(model);
         //    }
         //}
-        //#endregion
+        #endregion
 
 
 
