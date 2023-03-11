@@ -10,7 +10,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h4>Edit Recipe Item</h4>
+            <h4>Edit Product</h4>
             <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.ProductID)
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <br />
-            <a href="@Url.Action("Index", "ProductionRecipe")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+            <a href="@Url.Action("Index", "ProductMaster")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                 Back To List
             </a>
             <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Update</button>
@@ -122,6 +122,3 @@
 </script>
 
 @Html.Raw(TempData["Success"])
-
-
-

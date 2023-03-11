@@ -28,6 +28,8 @@ namespace InVanWebApp.Controllers
         private ICompanyRepository _repositoryCompany;
         private IItemRepository _itemRepository;
         private ILocationRepository _locationRepository;
+        private IPOPaymentRepository _pOPaymentRepository;
+
 
         private static ILog log = LogManager.GetLogger(typeof(ReportController));
 
@@ -38,6 +40,7 @@ namespace InVanWebApp.Controllers
             _repositoryCompany = new CompanyRepository();
             _itemRepository = new ItemRepository();
             _locationRepository = new LocationRepository();
+            _pOPaymentRepository = new POPaymentRepository();
         }
 
         public ReportController(IReportRepository reportRepository)
@@ -1657,52 +1660,6 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region Mehtod for Bind Dropdowns
-        public void BindItemDropDown()
-        {
-            var model = _itemRepository.GetAll();
-            var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
-            ViewData["Item"] = Item_dd;
-
-
-        }
-
-        public void BindLocationDropDown()
-        {
-            var model = _locationRepository.GetAll();
-            var Wearhouse_dd = new SelectList(model.ToList(), "ID", "LocationName");
-            ViewData["WearhouseLocation"] = Wearhouse_dd;
-
-
-        }
-
-        #endregion
-
-        #region Set Border
-        /// <summary>
-        /// setting border to pdf document
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="pdfDoc"></param>
-        public void setBorder(PdfWriter writer, Document pdfDoc)
-        {
-            //---------------------------------------
-            var content = writer.DirectContent;
-            var pageBorderRect = new Rectangle(pdfDoc.PageSize);
-
-            pageBorderRect.Left += pdfDoc.LeftMargin;
-            pageBorderRect.Right -= pdfDoc.RightMargin;
-            pageBorderRect.Top -= pdfDoc.TopMargin;
-            pageBorderRect.Bottom += pdfDoc.BottomMargin;
-
-            content.SetColorStroke(BaseColor.LIGHT_GRAY);
-            content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom, pageBorderRect.Width, pageBorderRect.Height);
-            content.Stroke();
-
-            //---------------------------------------
-        }
-        #endregion
-
         #region  Inventory Analysis Report (FIFO) 
 
         #region Binding the Inventory Analysis Report (FIFO) data 
@@ -1997,5 +1954,301 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region  Purchase Invoice Report
+
+        #region Binding the Purchase Invoice Report data 
+
+        public ActionResult PurchaseInvoiceReport()
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                PurchaseOrderBO model = new PurchaseOrderBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                PurchaseOrderDropDown();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+
+        /// <summary>
+        /// Develop By Siddharth Purohit on 09 MAR'23
+        /// Calling method for Purchase Invoice Report data
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetPurchaseInvoiceReportData(DateTime fromDate, DateTime toDate, int ItemId)
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            //Session["LocationId"] = LocationId;
+            Session["ItemId"] = ItemId;
+            var POInvoice = _repository.getPurchaseInvoiceReportData(fromDate, toDate, ItemId);
+            return Json(new { data = POInvoice }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Export PDF Purchase Invoice Report
+        /// <summary>
+        /// Created by: Siddharth Purohit
+        /// Creadted Date: 09 MAR'23
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete]
+        public ActionResult ExprotAsPDFForPurchaseInvoice()
+        {
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            //var locationId = Convert.ToInt32(Session["LocationId"]);
+            var itemId = Convert.ToInt32(Session["ItemId"]);
+            var resultDetails = _repository.getPurchaseInvoiceReportData(fromDate, toDate, itemId);
+
+            TempData["ReportDataTemp"] = resultDetails;
+            if (TempData["ReportDataTemp"] == null)
+            {
+                return RedirectToAction("PurchaseInvoiceReport", "Report");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<PurchaseOrderBO> resultList = TempData["ReportDataTemp"] as List<PurchaseOrderBO>;
+
+            if (resultList.Count < 0)
+                return RedirectToAction("PurchaseInvoiceReport", "Report");
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
+            string ReportName = "Purchase Invoice Report";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<thead>");
+            sb.Append("<tr >");
+            sb.Append("<th  style='text-align:right;padding-right:-80px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr > <th></th>");
+            sb.Append("<th colspan=9 style='text-align:right;padding-right:10px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center;' Colspan='1'>" +
+                "<img height='150' width='150' src='" + strPath + "'/></th>");
+            sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
+            //sb.Append("<br/>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            //sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+
+            sb.Append("</th></tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO Number</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Delivery Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Company Name</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Invoice Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Advanced Payment</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Amount Paid</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Balance Payment</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Payment Date</ th>");
+            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Approved By</ th>");
+
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            resultList.Count();
+            //stockReport.r
+            foreach (var item in resultList)
+            {
+
+                sb.Append("<tr style='text-align:center;padding: 10px;'>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PONumber + "</td>");  //Rahul updated PurchaseOrderDate 06-01-2023. 
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PurchaseOrderDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.DelDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.CompanyName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InvoiceNumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.AdvancedPayment + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.AmountPaid + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.BalancePayment + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PayDate + "</td>");
+
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+
+            using (var sr = new StringReader(sb.ToString()))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+
+                    writer.PageEvent = new PageHeaderFooter();
+                    pdfDoc.Open();
+                    //pdfDoc.NewPage();
+
+
+                    setBorder(writer, pdfDoc);
+
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                    pdfDoc.Close();
+                    byte[] bytes = memoryStream.ToArray();
+                    string filename = "Rpt_Purchase_Invoice_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    return File(memoryStream.ToArray(), "application/pdf", filename);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Excel Purchase Invoice Report
+        public void ExportAsExcelForPurchaseInvoice()
+        {
+            GridView gv = new GridView();
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            //var locationId = Convert.ToInt32(Session["LocationId"]);
+            var itemId = Convert.ToInt32(Session["ItemId"]);
+
+            List<PurchaseOrderBO> resultList = _repository.getPurchaseInvoiceReportData(fromDate, toDate, itemId);
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("PO Number");
+            dt.Columns.Add("PO Date");
+            dt.Columns.Add("Delivery Date");
+            dt.Columns.Add("Company Name");
+            dt.Columns.Add("Invoice Amount");
+            dt.Columns.Add("Advance Amount");
+            dt.Columns.Add("Amount Paid");
+            dt.Columns.Add("Balance Payment");
+            dt.Columns.Add("Payment Date");
+            //dt.Columns.Add("Approved By");
+
+            foreach (PurchaseOrderBO st in resultList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["PO Number"] = st.PONumber.ToString();
+                dr["PO Date"] = st.PODate.ToString();
+                dr["Delivery Date"] = st.DeliveryDate.ToString();
+                dr["Company Name"] = st.CompanyName.ToString();
+                dr["Invoice Amount"] = st.InvoiceNumber.ToString();
+                dr["Advance Amount"] = st.AdvancedPayment.ToString();
+                dr["Amount Paid"] = st.AmountPaid.ToString();
+                dr["Balance Payment"] = st.BalancePayment.ToString();
+                dr["Payment Date"] = st.PaymentDate.ToString();
+
+
+
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_Purchase_Invoice_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Purchase Invoice Report";/* The Stock Movement Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date : ";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
+                "<tr><td></td><td></td><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td><td></td><td></td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td></td><td></td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><tr><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td><td></td><td></td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "</td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Mehtod for Bind Dropdowns
+        public void BindItemDropDown()
+        {
+            var model = _itemRepository.GetAll();
+            var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
+            ViewData["Item"] = Item_dd;
+
+
+        }
+
+        public void BindLocationDropDown()
+        {
+            var model = _locationRepository.GetAll();
+            var Wearhouse_dd = new SelectList(model.ToList(), "ID", "LocationName");
+            ViewData["WearhouseLocation"] = Wearhouse_dd;
+
+
+        }
+        public void PurchaseOrderDropDown()
+        {
+            var model = _pOPaymentRepository.GetAll();
+            var PurchaseOrder_dd = new SelectList(model.ToList(), "PurchaseOrderId", "PONumber");
+            ViewData["PONumberdd"] = PurchaseOrder_dd;
+        }
+
+        #endregion
+
+        #region Set Border
+        /// <summary>
+        /// setting border to pdf document
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="pdfDoc"></param>
+        public void setBorder(PdfWriter writer, Document pdfDoc)
+        {
+            //---------------------------------------
+            var content = writer.DirectContent;
+            var pageBorderRect = new Rectangle(pdfDoc.PageSize);
+
+            pageBorderRect.Left += pdfDoc.LeftMargin;
+            pageBorderRect.Right -= pdfDoc.RightMargin;
+            pageBorderRect.Top -= pdfDoc.TopMargin;
+            pageBorderRect.Bottom += pdfDoc.BottomMargin;
+
+            content.SetColorStroke(BaseColor.LIGHT_GRAY);
+            content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom, pageBorderRect.Width, pageBorderRect.Height);
+            content.Stroke();
+
+            //---------------------------------------
+        }
+        #endregion
     }
 }

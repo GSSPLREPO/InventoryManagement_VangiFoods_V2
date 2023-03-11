@@ -3,14 +3,14 @@
     Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <style>
-    .table th {
+   /* .table th {
         text-align: center;
     }
 
     th[colspan="5"] {
         text-align: center;
     }
-
+*/
     table.table-bordered.dataTable th, table.table-bordered.dataTable td {
         text-align: center !important;
     }
@@ -49,31 +49,31 @@
                                 <table class="table table-striped table-bordered hover table-sm" id="PreStartupHygienedt">
                                     <thead>
                                         <tr>
-                                            <th rowspan="2">@Html.DisplayName("Date")</th>
-                                            <th rowspan="2">@Html.DisplayName("RM Receving Area")</th>
-                                            <th colspan="3">@Html.DisplayName("Crates")</th>
-                                            <th rowspan="2">@Html.DisplayName("Weighting Area")</th>
-                                            <th rowspan="2">@Html.DisplayName("Water")</th>
-                                            <th rowspan="2">@Html.DisplayName("Hygine Area")</th>
-                                            <th colspan="2">@Html.DisplayName("Storage Area")</th>
-                                            <th rowspan="2">@Html.DisplayName("Walk Way")</th>
-                                            <th rowspan="2">@Html.DisplayName("Vegetable Washing Area")</th>
+                                            <th>@Html.DisplayName("Date")</th>
+                                            <th>@Html.DisplayName("RM Receving Area")</th>
+                                            @*<th colspan="3">@Html.DisplayName("Crates")</th>*@
+                                            <th>@Html.DisplayName("Weighting Area")</th>
+                                            <th>@Html.DisplayName("Water")</th>
+                                            <th>@Html.DisplayName("Hygine Area")</th>
+                                            @*<th colspan="2">@Html.DisplayName("Storage Area")</th>*@
+                                            <th>@Html.DisplayName("Walk Way")</th>
+                                            @*<th rowspan="2">@Html.DisplayName("Vegetable Washing Area")</th>
                                             <th rowspan="2">@Html.DisplayName("Peeling Machine")</th>
                                             <th rowspan="2">@Html.DisplayName("Cold Storage")</th>
                                             <th rowspan="2">@Html.DisplayName("Roboqubos")</th>
                                             <th rowspan="2">@Html.DisplayName("Silo")</th>
                                             <th rowspan="2">@Html.DisplayName("Packaging Line")</th>
-                                            <th rowspan="2">@Html.DisplayName("Chiller DC")</th>
-                                            <th rowspan="2">@Html.DisplayName("Verify By")</th>
-                                            <th rowspan="2">@Html.DisplayName("Edit/Delete")</th>
+                                            <th rowspan="2">@Html.DisplayName("Chiller DC")</th>*@
+                                            <th>@Html.DisplayName("Verify By")</th>
+                                            <th>@Html.DisplayName("Edit/Delete")</th>
                                         </tr>
-                                        <tr>
+                                        @*<tr>
                                             <th>@Html.DisplayName("Blue")</th>
                                             <th>@Html.DisplayName("Yellow")</th>
                                             <th>@Html.DisplayName("Red")</th>
                                             <th>@Html.DisplayName("Raw Material")</th>
                                             <th>@Html.DisplayName("Finish Goods")</th>
-                                        </tr>
+                                        </tr>*@
                                     </thead>
 
                                     <tbody>
@@ -82,22 +82,22 @@
                                         <tr>
                                             <td>@Html.DisplayFor(modelItem => item.Date)</td>
                                             <td>@Html.DisplayFor(modelItem => item.RMRecevingArea)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.CratesBlue)</td>
+                                            @*<td>@Html.DisplayFor(modelItem => item.CratesBlue)</td>
                                             <td>@Html.DisplayFor(modelItem => item.CratesYellow)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.CratesRed)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CratesRed)</td>*@
                                             <td>@Html.DisplayFor(modelItem => item.WeightingArea)</td>
                                             <td>@Html.DisplayFor(modelItem => item.Water)</td>
                                             <td>@Html.DisplayFor(modelItem => item.HygineArea)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.RawMaterial)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.FinishGoods)</td>
+                                            @*<td>@Html.DisplayFor(modelItem => item.RawMaterial)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.FinishGoods)</td>*@
                                             <td>@Html.DisplayFor(modelItem => item.WalkWay)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.VegetableWashingArea)</td>
+                                            @*<td>@Html.DisplayFor(modelItem => item.VegetableWashingArea)</td>
                                             <td>@Html.DisplayFor(modelItem => item.PeelingMachine)</td>
                                             <td>@Html.DisplayFor(modelItem => item.ColdStorage)</td>
                                             <td>@Html.DisplayFor(modelItem => item.Roboqubos)</td>
                                             <td>@Html.DisplayFor(modelItem => item.Silo)</td>
                                             <td>@Html.DisplayFor(modelItem => item.PackagingLine)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Chiller)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Chiller)</td>*@
                                             <td>@Html.DisplayFor(modelItem => item.VerifyBy)</td>
                                             <td>
                                                 <a href=@Url.Action("EditPreStartupHygiene", "PreStartupHygiene", new { Id = item.Id })>

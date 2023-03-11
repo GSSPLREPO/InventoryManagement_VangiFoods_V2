@@ -28,7 +28,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly"@*, @max = DateTime.Now.ToString("yyyy-MM-dd")*@ })
                     @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -38,7 +38,7 @@
                     @Html.Label("Foot Washer")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.FootWasher, new { @class = "form-control form-control-sm", maxlength = "30" })
+                    @Html.TextBoxFor(model => model.FootWasher, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.FootWasher, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -46,7 +46,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.RoWater, new { @class = "form-control form-control-sm", maxlength = "30" })
+                    @Html.TextBoxFor(model => model.RoWater, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.RoWater, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -56,7 +56,7 @@
                     @Html.Label("Soft Water")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.SoftWater, new { @class = "form-control form-control-sm", maxlength = "30" })
+                    @Html.TextBoxFor(model => model.SoftWater, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.SoftWater, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -64,7 +64,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.CoolingWaterTank, new { @class = "form-control form-control-sm", maxlength = "30" })
+                    @Html.TextBoxFor(model => model.CoolingWaterTank, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.CoolingWaterTank, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -74,7 +74,7 @@
                     @Html.Label("Processing Water")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ProcessingWater, new { @class = "form-control form-control-sm", maxlength = "30" })
+                    @Html.TextBoxFor(model => model.ProcessingWater, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.ProcessingWater, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -83,7 +83,8 @@
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100" })
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100",
+                   title = "Maximum length for remakrs are 100 characters" })
                     @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

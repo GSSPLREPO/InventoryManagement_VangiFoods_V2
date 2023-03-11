@@ -82,6 +82,7 @@
     <Compile Include="InwardNoteBO.cs" />
     <Compile Include="InwardQCBO.cs" />
     <Compile Include="LocationWiseStockBO.cs" />
+    <Compile Include="OilAnalysisBO.cs" />
     <Compile Include="OrganisationGroupBO.cs" />
     <Compile Include="OrganisationsBO.cs" />
     <Compile Include="OutwardNoteBO.cs" />
@@ -90,6 +91,8 @@
     <Compile Include="PreStartupHygieneBO.cs" />
     <Compile Include="ProductMasterBO.cs" />
     <Compile Include="PurchaseOrderAmendmentDetailBO.cs" />
+    <Compile Include="PurchaseOrderBO.cs" />
+    <Compile Include="RecipeMasterBO.cs" />
     <Compile Include="RejectionNoteBO.cs" />
     <Compile Include="RequestForQuotationBO.cs" />
     <Compile Include="RequestForQuotationItemDetailsBO.cs" />
@@ -110,7 +113,6 @@
     <Compile Include="LocationMasterBO.cs" />
     <Compile Include="MachineMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PurchaseOrderBO.cs" />
     <Compile Include="QCProductionSpecificationMaster.cs" />
     <Compile Include="QCProductioObservationMaste.cs" />
     <Compile Include="QCProductioObservationMaster.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="TermsAndConditionMasterBO.cs" />
     <Compile Include="UnitMaster.cs" />
     <Compile Include="UsersBO.cs" />
+    <Compile Include="VegWasherDosageLogBO.cs" />
     <Compile Include="WaterAnalysisBO.cs" />
   </ItemGroup>
   <ItemGroup>

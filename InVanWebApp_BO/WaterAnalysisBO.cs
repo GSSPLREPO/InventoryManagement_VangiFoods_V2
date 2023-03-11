@@ -18,21 +18,18 @@ namespace InVanWebApp_BO
         /*adding this flied*/
         public string Time { get; set; }
 
-        [Required(ErrorMessage = "Enter Production Area PH!")]
-        [RegularExpression(@"\d{0,2}(\.\d{1,2})?", ErrorMessage = " must be a Decimal Number.")]
-        [Range(0, 14, ErrorMessage = "Enter Production Area PH number between 0 to 14")]
+        [Required(ErrorMessage = "Enter RO water PH!")]
+        [Range(0, 14, ErrorMessage = "Enter RO water PH number between 0 to 14")]
         public string PAPH { get; set; }
 
-        [Required(ErrorMessage = "Enter Production Area TDS!")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Production Area TDS must be numeric.")]
+        [Required(ErrorMessage = "Enter RO water TDS!")]
         public string PATDS { get; set; }
 
-        [Required(ErrorMessage = "Enter Production Area Hardness!")]
-        [RegularExpression("^[0-9]*$", ErrorMessage ="Proudction Area Hradness must be numeric")]
+        [Required(ErrorMessage = "Enter Hardness!")]
         public string PAHardness { get; set; }
 
-        [Required(ErrorMessage = "Enter Production Area Salt Added!")]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "Production Area Salt Added must be alphanumeric.")]
+        [Required(ErrorMessage = "Enter RO water Salt Added!")]
+        [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "RO water Salt Added must be alphanumeric.")]
         public string PASaltAdded { get; set; }
 
 
@@ -41,15 +38,12 @@ namespace InVanWebApp_BO
         public string SWPH { get; set; }
 
         [Required(ErrorMessage = "Enter Soft Water TDS!")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Soft Water TDS must be numeric.")]
         public string SWTDS { get; set; }
 
-        [Required(ErrorMessage = "Enter Soft Water Hardness!")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = " Soft Water Hardness must be numeric.")]
+        [Required(ErrorMessage = "Enter  Hardness!")]
         public string SWHardness { get; set; }
 
         [Required(ErrorMessage = "Enter ETP Plant TEMP!")]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "ETP Plant TEMP must be alphanumeric.")]
         public string ETPTEM { get; set; }
 
         [Required(ErrorMessage = "Enter ETP Plant PH!")]
@@ -57,17 +51,15 @@ namespace InVanWebApp_BO
         public string ETPPH { get; set; }
 
         [Required(ErrorMessage = "Enter ETP Plant TDS!")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "ETP Plant TDS must be numeric.")]
         public string ETPTDS { get; set; }
 
         [Required(ErrorMessage = "Enter TEMP!")]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "TEMP must be alphanumeric.")]
         public string TEM { get; set; }
 
-        //[RegularExpression(@"\d{0,2}(\.\d{1,2})?", ErrorMessage = "{0} must be a Decimal Number.")]
+        
         [Required(ErrorMessage = "Enter Gas Reading!")]
-        [RegularExpression(@"[\d]{1,5}([.,][\d]{1,2})?", ErrorMessage = "Gas Reading must be a Decimal Number.")]
-        public decimal  GasReading { get; set; }
+        //[RegularExpression(@"[\d]{1,5}([.,][\d]{1,2})?", ErrorMessage = "Gas Reading must be a Decimal Number.")]
+        public decimal? GasReading { get; set; }
 
         [Required(ErrorMessage = "Enter name of User!")]
         public string VerifyByName { get; set; }

@@ -178,6 +178,7 @@
     <Compile Include="Controllers\InwardNoteController.cs" />
     <Compile Include="Controllers\InwardQCSortingController.cs" />
     <Compile Include="Controllers\IssueNoteController.cs" />
+    <Compile Include="Controllers\OilAnalysisController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\DeliveryChallanController.cs" />
     <Compile Include="Controllers\OutwardNoteController.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Controllers\PreStartupHygieneController.cs" />
     <Compile Include="Controllers\ProductMasterController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
+    <Compile Include="Controllers\RecipeMaterController.cs" />
     <Compile Include="Controllers\RejectionNoteController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestForQuotationController.cs" />
@@ -207,6 +209,7 @@
     <Compile Include="Controllers\CompanyController.cs" />
     <Compile Include="Controllers\TaxController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
+    <Compile Include="Controllers\VegWasherDosageLogController.cs" />
     <Compile Include="Controllers\WaterAnalysisController.cs" />
     <Compile Include="DAL\Branch.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
@@ -468,10 +471,12 @@
     <Compile Include="Repository\Interface\IIssueNoteRepository.cs" />
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
     <Compile Include="Repository\Interface\IDeliveryChallanRepository.cs" />
+    <Compile Include="Repository\Interface\IOilAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IPestControlLogRepository.cs" />
     <Compile Include="Repository\Interface\IPreStartupHygieneRepository.cs" />
     <Compile Include="Repository\Interface\IProductMasterRepository.cs" />
+    <Compile Include="Repository\Interface\IRecipeMaterRepository.cs" />
     <Compile Include="Repository\Interface\IRejectionNoteRepository.cs" />
     <Compile Include="Repository\Interface\IReportRepository.cs" />
     <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
@@ -485,6 +490,7 @@
     <Compile Include="Repository\Interface\IStockTransferRepository.cs" />
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
     <Compile Include="Repository\Interface\IUserDetailsRepository.cs" />
+    <Compile Include="Repository\Interface\IVegWasherDosageLogRepository.cs" />
     <Compile Include="Repository\Interface\IWaterAnalysisRepository.cs" />
     <Compile Include="Repository\InventoryControlRepository.cs" />
     <Compile Include="Repository\InwardNoteRepository.cs" />
@@ -501,6 +507,7 @@
     <Compile Include="Repository\Interface\IUnitRepository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />
+    <Compile Include="Repository\OilAnalysisRepository.cs" />
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\DeliveryChallanRepository.cs" />
     <Compile Include="Repository\OutwardNoteRepository.cs" />
@@ -509,6 +516,7 @@
     <Compile Include="Repository\PreStartupHygieneRepository.cs" />
     <Compile Include="Repository\ProductMasterRepository.cs" />
     <Compile Include="Repository\PurchaseOrderRepository.cs" />
+    <Compile Include="Repository\RecipeMaterRepository.cs" />
     <Compile Include="Repository\RejectionNoteRepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
     <Compile Include="Repository\RequestForQuotationRepository.cs" />
@@ -522,6 +530,7 @@
     <Compile Include="Repository\TermsConditionRepository.cs" />
     <Compile Include="Repository\UnitRepository.cs" />
     <Compile Include="Repository\UserDetailsRepository.cs" />
+    <Compile Include="Repository\VegWasherDosageLogRepository.cs" />
     <Compile Include="Repository\WaterAnalysisRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1871,6 +1880,7 @@
     <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
     <Content Include="Views\RejectionNote\Index.cshtml" />
     <Content Include="Views\RejectionNote\ViewRejectionNote.cshtml" />
+    <Content Include="ExcelFileFormat\Download-Format-Recipe-Item.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2939,6 +2949,17 @@
     <Content Include="Views\ProductMaster\AddProductItems.cshtml" />
     <Content Include="Views\ProductMaster\EditProductItem.cshtml" />
     <Content Include="Views\ProductMaster\Index.cshtml" />
+    <Content Include="Views\OilAnalysis\AddOilAnalysis.cshtml" />
+    <Content Include="Views\OilAnalysis\EditOilAnalysis.cshtml" />
+    <Content Include="Views\OilAnalysis\Index.cshtml" />
+    <Content Include="Views\Report\PurchaseInvoiceReport.cshtml" />
+    <Content Include="Views\VegWasherDosageLog\AddVegWasherDosageLog.cshtml" />
+    <Content Include="Views\VegWasherDosageLog\EditVegWasherDosageLog.cshtml" />
+    <Content Include="Views\VegWasherDosageLog\Index.cshtml" />
+    <Content Include="Views\PreStartupHygiene\Index - Copy.cshtml" />
+    <Content Include="Views\RecipeMater\AddRecipeItems.cshtml" />
+    <Content Include="Views\RecipeMater\EditRecipeItem.cshtml" />
+    <Content Include="Views\RecipeMater\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

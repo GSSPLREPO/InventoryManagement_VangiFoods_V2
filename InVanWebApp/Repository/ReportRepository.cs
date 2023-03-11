@@ -475,5 +475,58 @@ namespace InVanWebApp.Repository
 
         #endregion
 
+        #region Purchase Invoice report
+
+        /// Repository for Get Purchase Invoice Report Data 
+        /// Developed by  - Siddharth Purohit on 09-03-2023
+
+        public List<PurchaseOrderBO> getPurchaseInvoiceReportData(DateTime fromDate, DateTime toDate, int PoNumber)
+        {
+            List<PurchaseOrderBO> resultList = new List<PurchaseOrderBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_PurchaseInvoice_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@PONumber", PoNumber);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new PurchaseOrderBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            PONumber = reader["PONumber"].ToString(),
+                            PurchaseOrderDate = Convert.ToDateTime(reader["PurchaseOrderDate"]).ToString("dd/MM/yyyy"),
+                            DelDate = Convert.ToDateTime(reader["DeliveryDate"]).ToString("dd/MM/yyyy"),
+                            CompanyName = reader["CompanyName"].ToString(),
+                            InvoiceNumber = reader["InvoiceNumber"].ToString(),
+                            AdvancedPayment = float.Parse(reader["AdvancedPayment"].ToString()),
+                            AmountPaid = float.Parse(reader["AmountPaid"].ToString()),
+                            BalancePayment = float.Parse(reader["BalancePayment"].ToString()),
+                            PayDate = Convert.ToDateTime(reader["DeliveryDate"]).ToString("dd/MM/yyyy")
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
     }
 }

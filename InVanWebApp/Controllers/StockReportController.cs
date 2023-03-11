@@ -60,7 +60,7 @@ namespace InVanWebApp.Controllers
             int ItemId = 0;
             if (id != "")
                 ItemId = Convert.ToInt32(id);
-
+            
             Session["ItemId"] = ItemId;
 
             var stockDetails = _StockMasterRepository.GetAllStock(ItemId);

@@ -41,7 +41,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TypeOfPest, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.TextBoxFor(model => model.TypeOfPest, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.TypeOfPest, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2 mb-1">
@@ -49,7 +49,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.MethodForPestControl, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.TextBoxFor(model => model.MethodForPestControl, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.MethodForPestControl, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Area, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.TextBoxFor(model => model.Area, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.Area, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2 mb-1">
@@ -68,18 +68,18 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Frequncy, new { @class = "form-control form-control-sm", maxlength = "10" })
+                    @Html.TextBoxFor(model => model.Frequncy, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphaNumeric(event);" })
                     @Html.ValidationMessageFor(model => model.Frequncy, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-2 mb-1">
-                    @Html.Label("COA Received From Pest Control")
+                    @Html.Label("COA Received From Pest companyQ")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.COARecivedFromPestControl, new { @class = "form-control form-control-sm", maxlength = "20" })
+                    @Html.TextBoxFor(model => model.COARecivedFromPestControl, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.COARecivedFromPestControl, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2 mb-1">
@@ -87,7 +87,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.EffectiveOrNot, new { @class = "form-control form-control-sm", maxlength = "20" })
+                    @Html.TextBoxFor(model => model.EffectiveOrNot, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.EffectiveOrNot, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -98,7 +98,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.AnyHazardDetectedAfterPest, new { @class = "form-control form-control-sm", maxlength = "20" })
+                    @Html.TextBoxFor(model => model.AnyHazardDetectedAfterPest, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.AnyHazardDetectedAfterPest, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -109,7 +109,7 @@
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100" })
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Remarks Will be Allow 100 Charachter" })
                     @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
@@ -149,6 +149,31 @@
     });
 </script>
 
+<script type="text/javascript">
+    //Custom validation for only  alphabets, underscore and NA/na character.
+    function IsAlphabate(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || unicode == 32
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //Custom validation for only numeric, alphabets, underscore and NA/na character.
+    function IsAlphaNumeric(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+</script>
 
 <script>
         $(document).ready(function ()
