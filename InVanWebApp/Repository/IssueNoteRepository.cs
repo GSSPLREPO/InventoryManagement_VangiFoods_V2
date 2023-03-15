@@ -237,5 +237,43 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region Bind Dropdown For Issue Note
+        /// <summary>
+        /// Siddharth  : This function is for fecthing list of Issue Note Number from Issue Note.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<IssueNoteBO> GetIssueNoteNumber()
+        {
+            List<IssueNoteBO> IssueNoteNumber = new List<IssueNoteBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_InvoiceNoteNumber_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var IssueNoteMasters = new IssueNoteBO()
+                        {
+                            ID = Convert.ToInt32(reader["IssueNoteId"]),
+                            IssueNoteNo = reader["IssueNoteNO"].ToString()
+                        };
+                        IssueNoteNumber.Add(IssueNoteMasters);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return IssueNoteNumber;
+        }
+
+
+        #endregion
     }
 }

@@ -90,7 +90,7 @@ namespace InVanWebApp.Controllers
                         model.VerifyByName = Session[ApplicationSession.USERNAME].ToString();
                         response = _clorinationLogRepository.Insert(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Clorination Log Details Inserted Successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Chlorination Log Details Inserted Successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while insertion!');</script>";
@@ -149,7 +149,7 @@ namespace InVanWebApp.Controllers
                         model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _clorinationLogRepository.Update(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Clorination Log Details updated successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Chlorination Log Details updated successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while updating!');</script>";
@@ -190,7 +190,7 @@ namespace InVanWebApp.Controllers
                 var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
                 _clorinationLogRepository.Delete(Id, userID);
                 TempData["Success"] = "<script>alert('Record deleted successfully!');</script>";
-                return RedirectToAction("Index", "ClorinationLog");
+                return RedirectToAction("Index", "ChlorinationLog");
             }
             else
                 return RedirectToAction("Index", "Login");

@@ -56,5 +56,13 @@ namespace InVanWebApp_BO
         public string CityName { get; set; }
         public string StateName { get; set; }
         public string CountryName { get; set; }
+
+        //Added:Below fileds are for company report.
+
+        [Required(ErrorMessage = "Please Enter From Date!")]
+        public DateTime fromDate { get; set; }
+
+        [Required(ErrorMessage = "Please Enter To Date!")]
+        public DateTime toDate { get; set; }
     }
 }

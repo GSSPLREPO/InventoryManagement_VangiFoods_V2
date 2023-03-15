@@ -1,0 +1,127 @@
+﻿@model IEnumerable<InVanWebApp_BO.CalibrationLogBO>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+<style>
+    .table th {
+        text-align: center;
+    }
+
+    th[colspan="5"] {
+        text-align: center;
+    }
+
+    table.table-bordered.dataTable th, table.table-bordered.dataTable td {
+        text-align: center !important;
+    }
+</style>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Calibration Log</title>
+</head>
+<body>
+
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Calibration Log</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Daily Operations</a>
+                    </li>
+                    <li class="breadcrumb-item active">Calibration Log</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="@Url.Action("AddCalibrationLog","CalibrationLog")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span> Calibration Log
+                            </a>
+                            <div class="table-responsive" style="padding-top:15px;">
+                                <table id="CalibrationLogdt" class="table table-striped table-bordered hover table-sm table-responsive-md" width="100%" style="table-layout: fixed;">
+                                    <thead>
+                                        <tr style="border:medium">
+                                            <th>@*@Html.DisplayName("Sr No")*@ Sr. No</th>
+                                            <th>@Html.DisplayName("Name Of Equipment")</th>
+                                            <th>@Html.DisplayName("Department")</th>
+                                            <th>@Html.DisplayName("Calibration Done Date")</th>
+                                            <th>@Html.DisplayName("Calibration Due Date")</th>
+                                            <th>@Html.DisplayName("Verify BY")</th>
+                                            <th>@Html.DisplayName("Edit/Delete")</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @*int i=0;*@
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.NameOfEquipment)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Department)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CalibrationDoneDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CalibrationDueDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.VerifyByName)</td>
+                                                <td>
+                                                    <a href=@Url.Action("EditCalibrationLog", "CalibrationLog", new { Id = item.Id })>
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a> &emsp;
+                                                    <a href=@Url.Action("Delete", "CalibrationLog", new { Id = item.Id }) onclick="return confirm('Are you sure want to delete?');">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+@Html.Raw(TempData["Success"])
+
+@section scripts{
+
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>*@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#CalibrationLogdt').dataTable().fnDestroy();
+            $('#CalibrationLogdt').dataTable({
+                "iDisplayLength": 10,
+                "columnDefs": [{ "targets": 3, "type": "date-eu" }],
+                /*"order": [[3, 'desc']],*/
+                "columnDefs": [
+                    // Center align the header content of column 1
+                    { "className": "dt-head-center", targets: -1 },
+                ]
+            });
+        });
+
+        var table = $('#CalibrationLogdt').dataTable({
+            "serverSide": false,
+            "filter": true,
+            //"columnDefs": [{ "targets": 3, "type": "date-eu" }],
+            /*"order": [[3, 'desc']],*/
+            "pageLength": 10
+        });</script>
+}
+

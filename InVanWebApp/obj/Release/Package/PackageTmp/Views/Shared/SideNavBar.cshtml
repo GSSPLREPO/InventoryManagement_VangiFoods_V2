@@ -190,6 +190,11 @@
                             <a class="nav-link" href="@Url.Action("Index","ClorinationLog")">Chlorination Log</a>
                         </div>
                     </li>
+                    @*<li class="nav-item">
+                        <div id="CalibrationLog">
+                            <a class="nav-link" href="@Url.Action("Index","CalibrationLog")">Calibration Log</a>
+                        </div>
+                    </li>*@
                     <li class="nav-item">
                         <div id="OilAnalysis">
                             <a class="nav-link" href="@Url.Action("Index","OilAnalysis")">Oil Analysis</a>
@@ -203,6 +208,11 @@
                     <li class="nav-item">
                         <div id="PreStartupHygiene">
                             <a class="nav-link" href="@Url.Action("Index","PreStartupHygiene")">Pre Startup Hygiene</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SanitizationAndHygine">
+                            <a class="nav-link" href="@Url.Action("Index","SanitizationAndHygine")">Sanitization & Hygine</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -296,10 +306,21 @@
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item"> <a class="nav-link" href="@Url.Action("Report_OC_Index","TransactionsPOandOC")">Sales Order Report</a></li>*@
                     <li class="nav-item">
+                        <div id="CompanyReport">
+                            <a class="nav-link" href="~/Report/CompanyReport">Company</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div id="FinishedGoodsDispatchReport">
                             <a class="nav-link" href="~/Report/FinishedGoodsDispatchReport">Finished Goods Dispatch</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="GRNReport">
+                            <a class="nav-link" href="~/Report/GRNReport">GRN Report</a>
+                        </div>
+                    </li>
+
                     <li class="nav-item">
                         <div id="InventoryAnalysisReportFIFO">
                             <a class="nav-link" href="~/Report/InventoryAnalysisReportFIFO">Inventory Analysis (FIFO)</a>
@@ -311,10 +332,18 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <div id="IssueNoteReport">
+                            <a class="nav-link" href="~/Report/IssueNoteReport">Issue Note Report</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
                         <div id="PurchaseInvoiceReport">
                             <a class="nav-link" href="~/Report/PurchaseInvoiceReport">Purchase Invoice Report</a>
                         </div>
                     </li>
+
+
                     <li class="nav-item">
                         <div id="POReport">
                             <a class="nav-link" href="~/Report">Purchase Order</a>
@@ -325,9 +354,14 @@
                             <a class="nav-link" href="~/Report/RawMaterialIndex">Raw Material Received</a>
                         </div>
                     </li>
+                    @*<li class="nav-item">
+                            <div id="RejectionNoteReport">
+                                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+                            </div>
+                        </li>*@
                     <li class="nav-item">
                         <div id="RejectionNoteReport">
-                            <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+                            <a class="nav-link" href="~/Report/RejectionReport">Rejection Report</a>
                         </div>
                     </li>
                     <li class="nav-item">

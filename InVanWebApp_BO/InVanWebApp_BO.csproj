@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Branch.cs" />
+    <Compile Include="CalibrationLogBO.cs" />
     <Compile Include="CityMaster.cs" />
     <Compile Include="ClorinationLogBO.cs" />
     <Compile Include="DailyMonitoringBO.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="RequestForQuotationItemDetailsBO.cs" />
     <Compile Include="RoleRightBO.cs" />
     <Compile Include="SalesOrderBO.cs" />
+    <Compile Include="SanitizationAndHygineBO.cs" />
     <Compile Include="ScreenNameBO.cs" />
     <Compile Include="StockAdjustmentBO.cs" />
     <Compile Include="StockMasterBO.cs" />
