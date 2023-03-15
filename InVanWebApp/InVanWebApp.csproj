@@ -193,6 +193,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestForQuotationController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
+    <Compile Include="Controllers\SalesOrderController.cs" />
     <Compile Include="Controllers\SanitizationAndHygineController.cs" />
     <Compile Include="Controllers\StockAdjustmentController.cs" />
     <Compile Include="Controllers\StockMovementController.cs" />
@@ -497,6 +498,7 @@
     <Compile Include="Repository\Interface\IUserDetailsRepository.cs" />
     <Compile Include="Repository\Interface\IVegWasherDosageLogRepository.cs" />
     <Compile Include="Repository\Interface\IWaterAnalysisRepository.cs" />
+    <Compile Include="Repository\Interface\ISalesOrderRepository.cs" />
     <Compile Include="Repository\InventoryControlRepository.cs" />
     <Compile Include="Repository\InwardNoteRepository.cs" />
     <Compile Include="Repository\InwardQCSortingRepository.cs" />
@@ -527,6 +529,7 @@
     <Compile Include="Repository\RequestForQuotationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
+    <Compile Include="Repository\SalesOrderRepository.cs" />
     <Compile Include="Repository\SanitizationAndHygineRepository.cs" />
     <Compile Include="Repository\StockAdjustmentRepository.cs" />
     <Compile Include="Repository\StockMasterRepository.cs" />
@@ -2983,6 +2986,7 @@
     <Folder Include="Content\SignatureImages\" />
     <Folder Include="ExcelUploads\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\SalesOrder\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
