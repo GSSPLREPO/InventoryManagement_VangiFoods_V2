@@ -39,9 +39,12 @@ namespace InVanWebApp_BO
         public string ItemName { get; set; }
         [Required(ErrorMessage = "Enter Batch Quantity!")]
         public Nullable<double> RequiredQuantity { get; set; }
+        [Required(ErrorMessage = "Enter Final Quantity!")]
+        public Nullable<double> FinalQuantity { get; set; }
         public string itemDetails { get; set; }
         public int IndentCount { get; set; }
-        public List<ProductionIndent_DetailsBO> indent_Details { get; set; } 
+        public string TxtRatio { get; set; } 
+        public List<ProductionIndent_DetailsBO> indent_Details { get; set; }
 
     }
 }

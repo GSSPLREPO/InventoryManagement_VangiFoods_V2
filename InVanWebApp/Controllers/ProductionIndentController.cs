@@ -79,15 +79,32 @@ namespace InVanWebApp.Controllers
         }        
         public void BindItemTypeCategory()
         {
-            var product = _productMasterRepository.GetAll();
-            var dd4 = new SelectList(product.ToList(), "ProductID", "ProductCode", "ProductName");
+            var product = _productionRecipeRepository.GetAll();
+            var dd4 = new SelectList(product.ToList(), "RecipeID", "RecipeName");
             ViewData["ProductName"] = dd4;
 
             //Binding item grid with Recipe. 
             var recipeList = _productionRecipeRepository.GetItemDetailsForRecipe();
             var dd = new SelectList(recipeList.ToList(), "ID", "Item_Code", "UOM_Id");
             ViewData["Ingredients"] = dd;
-        }     
+        }
+        #endregion
+
+        #region Bind all Recipe details 
+        public JsonResult BindRecipeDetails(string id, string RecipeID=null)
+        {
+            int ProductId = 0;  
+            int RecipeId = 0;  
+            
+            if (id != "" && id != null)
+                ProductId = Convert.ToInt32(id);
+
+            if (RecipeID != "" && RecipeID != null)
+                RecipeId = Convert.ToInt32(RecipeID);
+            
+            var result = _productionIndentRepository.GetRecipeDetailsById(ProductId,RecipeId);
+            return Json(result);
+        }
         #endregion
 
         #region Insert functionality of Production Indent
@@ -119,89 +136,86 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
 
-        ///// <summary>
-        ///// Create By:Farheen
-        ///// Dscription: Pass the data to the repository for insertion from it's view.
-        ///// </summary>
-        ///// <param name="model"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public ActionResult AddIndent(IndentBO model)
-        //{
-        //    try
-        //    {
-        //        if (Session[ApplicationSession.USERID] != null)
-        //        {
-        //            ResponseMessageBO response = new ResponseMessageBO();
+        /// <summary>
+        /// Create By:Rahul 
+        /// Dscription: Pass the data to the repository for insertion from it's view.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddProductionIndent(ProductionIndentBO model)
+        {
+            try
+            {
+                if (Session[ApplicationSession.USERID] != null)
+                {
+                    ResponseMessageBO response = new ResponseMessageBO();
 
-        //            if (ModelState.IsValid)
-        //            {
-        //                model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-        //                response = _repository.Insert(model);
-        //                if (response.Status)
-        //                    TempData["Success"] = "<script>alert('Indent inserted successfully!');</script>";
-        //                else
-        //                {
-        //                    TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-        //                    BindUsers();
-        //                    BindLocation();
-        //                    BindDesignations();
-        //                    GetDocumentNumber objDocNo = new GetDocumentNumber();
-        //                    //=========here document type=9 i.e. for generating the Indent (logic is in SP).====//
-        //                    var DocumentNumber = objDocNo.GetDocumentNo(9);
-        //                    ViewData["DocumentNo"] = DocumentNumber;
+                    if (ModelState.IsValid)
+                    {
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _productionIndentRepository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Production Indent inserted successfully!');</script>";
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                            BindUsers();
+                            BindItemTypeCategory();
+                            GetDocumentNumber objDocNo = new GetDocumentNumber();
+                            //=========here document type=16 i.e. for generating the Production Indent (logic is in SP).====//
+                            var DocumentNumber = objDocNo.GetDocumentNo(16);
+                            ViewData["DocumentNo"] = DocumentNumber;
 
-        //                    //Binding item grid with sell type item.
-        //                    var itemList = _repository.GetItemDetailsForDD();
-        //                    var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-        //                    ViewData["itemListForDD"] = dd;
+                            //Binding item grid with sell type item.
+                            var itemList = _repository.GetItemDetailsForDD();
+                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                            ViewData["itemListForDD"] = dd;
 
-        //                    return View(model);
-        //                }
+                            return View(model);
+                        }
 
-        //                return RedirectToAction("Index", "Indent");
+                        return RedirectToAction("Index", "Indent");
 
-        //            }
-        //            else
-        //            {
-        //                TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-        //                BindUsers();
-        //                BindLocation();
-        //                BindDesignations();
-        //                var itemList = _repository.GetItemDetailsForDD();
-        //                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-        //                ViewData["itemListForDD"] = dd;
-        //                GetDocumentNumber objDocNo = new GetDocumentNumber();
-        //                //=========here document type=9 i.e. for generating the Indent (logic is in SP).====//
-        //                var DocumentNumber = objDocNo.GetDocumentNo(9);
-        //                ViewData["DocumentNo"] = DocumentNumber;
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        BindUsers();
+                        BindItemTypeCategory();
+                        var itemList = _repository.GetItemDetailsForDD();
+                        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                        ViewData["itemListForDD"] = dd;
+                        GetDocumentNumber objDocNo = new GetDocumentNumber();
+                        //=========here document type=16 i.e. for generating the Production Indent (logic is in SP).====//
+                        var DocumentNumber = objDocNo.GetDocumentNo(16);
+                        ViewData["DocumentNo"] = DocumentNumber;
 
-        //                return View(model);
-        //            }
-        //        }
-        //        else
-        //            return RedirectToAction("Index", "Login");
+                        return View(model);
+                    }
+                }
+                else
+                    return RedirectToAction("Index", "Login");
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.Error("Error", ex);
-        //        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error", ex);
+                TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
-        //        BindUsers();
-        //        BindLocation();
-        //        BindDesignations();
-        //        var itemList = _repository.GetItemDetailsForDD();
-        //        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-        //        ViewData["itemListForDD"] = dd;
-        //        GetDocumentNumber objDocNo = new GetDocumentNumber();
-        //        //=========here document type=9 i.e. for generating the Indent (logic is in SP).====//
-        //        var DocumentNumber = objDocNo.GetDocumentNo(9);
-        //        ViewData["DocumentNo"] = DocumentNumber;
+                BindUsers();
+                BindItemTypeCategory();
+                var itemList = _repository.GetItemDetailsForDD();
+                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                ViewData["itemListForDD"] = dd;
+                GetDocumentNumber objDocNo = new GetDocumentNumber();
+                //=========here document type=16 i.e. for generating the Production Indent (logic is in SP).====//
+                var DocumentNumber = objDocNo.GetDocumentNo(16);
+                ViewData["DocumentNo"] = DocumentNumber;
 
-        //        return View(model);
-        //    }
-        //}
+                return View(model);
+            }
+        }
         #endregion
 
 

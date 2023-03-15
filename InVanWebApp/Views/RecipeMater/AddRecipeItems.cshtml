@@ -13,9 +13,10 @@
             <div class="col-md-2 text-right">
                 <button class="btn btn-sm btn-primary mr-2" id="btnAdd" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Single Recipe</button>
             </div>
-            <div class="col-md-2 text-right">
+            @*Rahul commented on 13-03-2023.*@
+            @*<div class="col-md-2 text-right">
                 <button class="btn btn-sm btn-primary mr-2" id="btnAddMultiple" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Multiple Recipe</button>
-            </div>
+            </div>*@
         </div>
         @using (Html.BeginForm("AddRecipeItems", "RecipeMater", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
@@ -83,7 +84,7 @@
         </div>
         <br />
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4" style="color:darkcyan">
                 @Html.Label("Recipe Ingredients detail")
             </div>
         </div>
@@ -113,6 +114,9 @@
                                                 Percentage (%)
                                             </th>
                                             <th class="sortStyle">
+                                                Batch Size (%)
+                                            </th>
+                                            <th class="sortStyle">
                                                 Description
                                             </th>
                                         </tr>
@@ -135,6 +139,10 @@
                                             <td>
                                                 @Html.TextBoxFor(model => model.Ratio, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeRatioForFirstRow($(this).val(),id)" })
                                                 @Html.ValidationMessageFor(model => model.Ratio, "", new { id = "RatioErr", @class = "error mt-2 text-danger" })
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(model => model.BatchSize, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeBatchSizeForFirstRow($(this).val(),id)" })
+                                                @Html.ValidationMessageFor(model => model.BatchSize, "", new { id = "batchSizeErr", @class = "error mt-2 text-danger" }) 
                                             </td>
                                             <td>
                                                 @Html.TextBoxFor(model => model.Description, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;", onkeypress = "createJson();" })
@@ -312,6 +320,8 @@
         var unitName = "UnitName_" + counter;
         var ratio = "Ratio_" + counter;
         var RatioErr = "RatioErr_" + counter;
+        var batchSize = "BatchSize_" + counter;
+        var batchSizeErr = "batchSizeErr_" + counter;
         var dscription = "dscription_" + counter;
         var DscriptionErr = "DscriptionErr_" + counter;
         $('<tr id="tablerow' + counter + '">' + '<td>' +
@@ -319,7 +329,7 @@
             '<span id="' + dynValMsgItemList + '">' +
             '</td>' +
             '<td class="d-none">' +
-            '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
+            '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" readonly="readonly"/>' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
@@ -330,6 +340,10 @@
             '<td>' +
             '<input type="text" id="' + ratio + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + ratio + ' value="" maxlength="8", onkeypress = "return isNumberKey(event)", onchange="OnChangeRatio($(this).val(),id)", required="required" />' +
             '<span id="' + RatioErr + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" id="' + batchSize + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + batchSize + ' value="" maxlength="8", onkeypress = "return isNumberKey(event)", onchange="OnChangeBatchSize($(this).val(),id)", required="required" />' +
+            '<span id="' + batchSizeErr + '">' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + dscription + '" onchange="createJson()"; class="form-control form-control-sm  text-right" style = "height:30px;width:200px;" name="' + dscription + '"  />' +
@@ -447,6 +461,57 @@
         }
     }
     //---OnChangeRatio end ------
+
+    //---OnChangeBatchSize start rahul added on 15-03-23------
+    function OnChangeBatchSizeForFirstRow(value, id) {
+        var itemId = $("#Item_ID").val();
+        if (itemId == '' || itemId == null) {
+            $("#Item_ID").focus();
+            $("#BatchSize").val(0);
+            return;
+        }
+
+        var BatchSize = parseFloat(value);
+        if (BatchSize <= 0 || value == null || value == '') {
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            document.getElementById("batchSizeErr").setAttribute("style", "color:red;");
+            $("#batchSizeErr").text("Enter Batch Size!");
+            return;
+        }
+        else {
+            //Set transfer batch Size in item grid.
+            $("#batchSizeErr").hide();
+            document.getElementById(id).setAttribute("style", "");
+        }
+    }
+
+    function OnChangeBatchSize(value, id) {
+        //debugger
+        var rowNo = id.split('_')[1];
+
+        var itemId = $("#ItemID_" + rowNo).val();
+        if (itemId == '' || itemId == null) {
+            $("#ItemID_" + rowNo).focus;
+            $("#BatchSize_" + rowNo).val(0);
+            return;
+        }
+
+        var BatchSize = parseFloat(value);
+        if (BatchSize <= 0 || value == null || value == '') {
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            document.getElementById("batchSizeErr_" + rowNo).setAttribute("style", "color:red;");
+            $("#batchSizeErr_" + rowNo).text("Enter Batch Size!");
+            return;
+        }
+        else {
+            //Set Batch Size in item grid.
+            $("#batchSizeErr_" + rowNo).hide();
+            document.getElementById(id).setAttribute("style", "");
+        }
+    }
+    //---OnChangeBatchSize end ------
 
 
     function isNumberKey(evt) {
