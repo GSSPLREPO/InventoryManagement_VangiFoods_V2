@@ -17,37 +17,37 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> Date { get; set; }
         [Required(ErrorMessage = "Enter RM Receving Area!")]
         public string RMRecevingArea { get; set; }
-        [Required(ErrorMessage = "Enter Crates Blue!")]
+        [Required(ErrorMessage = "Select Crates Blue!")]
         public string CratesBlue { get; set; }
-        [Required(ErrorMessage = "Enter Crates Yellow!")]
+        [Required(ErrorMessage = "Select Crates Yellow!")]
         public string CratesYellow { get; set; }
-        [Required(ErrorMessage = "Enter Crates Red!")]
+        [Required(ErrorMessage = "Select Crates Red!")]
         public string CratesRed { get; set; }
-        [Required(ErrorMessage = "Enter Weighting Area!")]
+        [Required(ErrorMessage = "Select Weighting Area!")]
         public string WeightingArea { get; set; }
-        [Required(ErrorMessage = "Enter Water!")]
+        [Required(ErrorMessage = "Select Water!")]
         public string Water { get; set; }
-        [Required(ErrorMessage = "Enter Hygine Area!")]
+        [Required(ErrorMessage = "Select Hygine Area!")]
         public string HygineArea { get; set; }
-        [Required(ErrorMessage = "Enter Raw Material!")]
+        [Required(ErrorMessage = "Select Raw Material!")]
         public string RawMaterial { get; set; }
-        [Required(ErrorMessage = "Enter Finish Goods!")]
+        [Required(ErrorMessage = "Select Finish Goods!")]
         public string FinishGoods { get; set; }
-        [Required(ErrorMessage = "Enter Walk Way!")]
+        [Required(ErrorMessage = "Select Walk Way!")]
         public string WalkWay { get; set; }
-        [Required(ErrorMessage = "Enter Vegetable Washing Area!")]
+        [Required(ErrorMessage = "Select Vegetable Washing Area!")]
         public string VegetableWashingArea { get; set; }
-        [Required(ErrorMessage = "Enter Peeling Machine!")]
+        [Required(ErrorMessage = "Select Peeling Machine!")]
         public string PeelingMachine { get; set; }
-        [Required(ErrorMessage = "Enter Cold Storage!")]
+        [Required(ErrorMessage = "Select Cold Storage!")]
         public string ColdStorage { get; set; }
-        [Required(ErrorMessage = "Enter Roboqubos!")]
+        [Required(ErrorMessage = "Select Roboqubos!")]
         public string Roboqubos { get; set; }
-        [Required(ErrorMessage = "Enter Silo!")]
+        [Required(ErrorMessage = "Select Silo!")]
         public string Silo { get; set; }
-        [Required(ErrorMessage = "Enter Packaging Line!")]
+        [Required(ErrorMessage = "Select Packaging Line!")]
         public string PackagingLine { get; set; }
-        [Required(ErrorMessage = "Enter Chiller!")]
+        [Required(ErrorMessage = "Select Chiller!")]
         public string Chiller { get; set; }
         public string Remark { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

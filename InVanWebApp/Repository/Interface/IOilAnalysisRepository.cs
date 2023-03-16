@@ -24,5 +24,7 @@ namespace InVanWebApp.Repository.Interface
         //Function define for: Update OilAnalysis record.
         ResponseMessageBO Update(OilAnalysisBO model);
 
+        List<OilAnalysisBO> GetAllOilAnalysisList(int flagdate, DateTime? FromDate = null, DateTime? ToDate = null);
+
     }
 }

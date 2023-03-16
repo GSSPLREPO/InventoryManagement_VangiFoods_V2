@@ -1969,8 +1969,8 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 CompanyBO model = new CompanyBO();
-                model.fromDate = DateTime.Today;
-                model.toDate = DateTime.Today;
+                //model.fromDate = DateTime.Today;
+                //model.toDate = DateTime.Today;
                 return View(model);
             }
             else
@@ -1983,15 +1983,14 @@ namespace InVanWebApp.Controllers
         /// Calling method for Company Report data
         /// </summary>
         /// <returns></returns>
-        public JsonResult getCompanyDataByType(DateTime fromDate, DateTime toDate, string CompanyType)
+        public JsonResult getCompanyDataByType(string CompanyType)
         {
             List<CompanyBO> ReportResult = new List<CompanyBO>();
 
-            Session["FromDate"] = fromDate;
-            Session["ToDate"] = toDate;
+
             Session["CompanyType"] = CompanyType;
 
-            ReportResult = _repository.getCompanyDataByType(fromDate, toDate, CompanyType);
+            ReportResult = _repository.getCompanyDataByType(CompanyType);
             return Json(new { data = ReportResult }, JsonRequestBehavior.AllowGet);
         }
 
@@ -2006,16 +2005,11 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExprotAsPDFForCompany()
         {
-            string Fromdate = "From Date : ";
-            string Todate = "To Date : ";
 
-
-            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
-            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
             var CompanyType = Convert.ToString(Session["CompanyType"]);
 
 
-            var resultDetails = _repository.getCompanyDataByType(fromDate, toDate, CompanyType);
+            var resultDetails = _repository.getCompanyDataByType(CompanyType);
 
             TempData["ReportDataTemp"] = resultDetails;
             if (TempData["ReportDataTemp"] == null)
@@ -2046,10 +2040,10 @@ namespace InVanWebApp.Controllers
             sb.Append("<br/><label style='font-size:10px;font-family:Arial'>" + address + "</label>");
             sb.Append("</th></tr>");
             sb.Append("<tr>");
-            sb.Append("<th colspan=5 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
-            sb.Append("</th>");
-            sb.Append("<th colspan=5 style='text-align:right;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
-            sb.Append("</th>");
+            //sb.Append("<th colspan=5 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
+            //sb.Append("</th>");
+            //sb.Append("<th colspan=5 style='text-align:right;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
+            //sb.Append("</th>");
             sb.Append("</tr>");
 
 
@@ -2113,12 +2107,11 @@ namespace InVanWebApp.Controllers
         public void ExportAsExcelForCompany()
         {
             GridView gv = new GridView();
-            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
-            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+
             var CompanyType = Convert.ToString(Session["CompanyType"]);
 
 
-            List<CompanyBO> resultList = _repository.getCompanyDataByType(fromDate, toDate, CompanyType);
+            List<CompanyBO> resultList = _repository.getCompanyDataByType(CompanyType);
 
             DataTable dt = new DataTable();
 
@@ -2162,18 +2155,17 @@ namespace InVanWebApp.Controllers
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
             string ReportName = "Company Report";
-            string Fromdate = "From Date : ";/* The From Date are given here  */
-            string Todate = "To Date : ";/* The To Date are given here  */
+            //string Fromdate = "From Date : ";/* The From Date are given here  */
+            //string Todate = "To Date : ";/* The To Date are given here  */
             string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
-            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
-            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            //String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            //string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
                 "<tr><td></td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + ReportName + "</span></td></tr></tr>" +
                 "<tr><td></td><td></td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-                "<tr><td><td><td></td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
-                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-                + "<td><td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                "<tr><td><td><td></td><td colspan='4'><span align='center' style='font-weight:bold'>" + address
+
                 + "</td></tr>" + "</table>"
                 + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 

@@ -695,7 +695,7 @@ namespace InVanWebApp.Repository
         /// <param name="toDate">To Date of Report</param>
         /// <param name="CompanyType"></param>
         /// <returns></returns>
-        public List<CompanyBO> getCompanyDataByType(DateTime fromDate, DateTime toDate, string CompanyType)
+        public List<CompanyBO> getCompanyDataByType(string CompanyType)
         {
             List<CompanyBO> resultList = new List<CompanyBO>();
 
@@ -706,8 +706,7 @@ namespace InVanWebApp.Repository
 
                     SqlCommand cmd1 = new SqlCommand("usp_rpt_Company_Report", con);
                     cmd1.Parameters.AddWithValue("@CompanyType", CompanyType);
-                    cmd1.Parameters.AddWithValue("@fromdate", fromDate);
-                    cmd1.Parameters.AddWithValue("@todate", toDate);
+
 
                     cmd1.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -717,7 +716,7 @@ namespace InVanWebApp.Repository
                     {
                         var result = new CompanyBO()
                         {
-                            //ID = Convert.ToInt32(dataReader2["ID"]),
+                            ID = Convert.ToInt32(dataReader2["ID"]),
                             CompanyType = Convert.ToString(dataReader2["CompanyType"]),
                             CompanyName = dataReader2["CompanyName"].ToString(),
                             ContactPersonName = dataReader2["ContactPersonName"].ToString(),

@@ -35,7 +35,7 @@ namespace InVanWebApp_BO
         public string WashingTime2 { get; set; }
         [Required(ErrorMessage = "Enter PPM!")]
         public string Ppm2 { get; set; }
-        [Required(ErrorMessage = "Enter name of User!")]
+        [Required(ErrorMessage = "Enter Name of User!")]
         public string VerifyByName { get; set; }
         public string Remark { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

@@ -87,7 +87,7 @@
                 <span style="color:red">*</span>
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.Department, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return IsAlphabate(event);" })
+                @Html.TextBoxFor(model => model.Department, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return IsAlphaNumeric(event);" })
                 @Html.ValidationMessageFor(model => model.Department, "", new { @class = "error mt-2 text-danger" })
             </div>
             <div class="col-md-2">
@@ -162,7 +162,7 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Wear Any Jwellery")
+                    @Html.Label("Wear Any Jewellery")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -281,7 +281,7 @@
     //Custom validation for only numeric, alphabets, underscore and NA/na character.
     function IsAlphaNumeric(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 46
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 46 || unicode == 45
             || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
             return true;
         }

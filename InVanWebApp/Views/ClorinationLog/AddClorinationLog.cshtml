@@ -43,7 +43,7 @@
                     @Html.ValidationMessageFor(model => model.FootWasher, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Ro Water")
+                    @Html.Label("RO Water")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -73,12 +73,20 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Processing Water")
+                    @Html.Label("Portable Water")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.ProcessingWater, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return IsAlphaNumeric(event);" })
                     @Html.ValidationMessageFor(model => model.ProcessingWater, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("CIP Water Tank")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.CIPWaterTank, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return IsAlphaNumeric(event);" })
+                    @Html.ValidationMessageFor(model => model.CIPWaterTank, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
             <div class="row">

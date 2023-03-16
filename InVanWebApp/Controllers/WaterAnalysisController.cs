@@ -64,8 +64,10 @@ namespace InVanWebApp.Controllers
             {
                 WaterAnalysisBO model = new WaterAnalysisBO();
                 model.VerifyByName = Session[ApplicationSession.USERNAME].ToString();
-                model.Date = DateTime.Today;
-                
+                model.Date = DateTime.Now;
+                model.Time = DateTime.Now.ToString("HH:mm:ss tt") ;
+                //model.Time = DateTime.Now;
+               // model.Time= DateTime.MaxValue.AddSeconds.;
                 return View(model);
             }
             else

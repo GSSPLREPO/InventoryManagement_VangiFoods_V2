@@ -39,7 +39,7 @@ namespace InVanWebApp.Repository
                         var OilAnalysis = new OilAnalysisBO()
                         {
                             Id = Convert.ToInt32(reader["Id"]),
-                            dateGridBinding = Convert.ToDateTime(reader["Date"]),
+                            Date = Convert.ToDateTime(reader["Date"]),
                             Time = (reader["Time"].ToString()),
                             VerifyByName = reader["VerifyByName"].ToString(),
                             LotNo = reader ["LotNo"].ToString(),
@@ -141,6 +141,7 @@ namespace InVanWebApp.Repository
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Date = Convert.ToDateTime(reader["Date"]),
+                            Time = reader["Time"].ToString(),
                             //Time = Convert.ToDateTime(reader["Time"]),
                             LotNo = reader["LotNo"].ToString(),
                             SampleName = reader["SampleName"].ToString(),
@@ -181,6 +182,7 @@ namespace InVanWebApp.Repository
 
                     cmd.Parameters.AddWithValue("@Id", model.Id);
                     cmd.Parameters.AddWithValue("@Date", model.Date);
+                    cmd.Parameters.AddWithValue("@Time", model.Time);
                     cmd.Parameters.AddWithValue("@LotNo", model.LotNo);
                     cmd.Parameters.AddWithValue("@SampleName", model.SampleName);
                     cmd.Parameters.AddWithValue("@ACIDValue", model.ACIDValue);
@@ -243,6 +245,62 @@ namespace InVanWebApp.Repository
             }
         }
 
+        #endregion
+
+        #region  Bind grid for datatable
+        /// <summary>
+        /// Date: 15 March'23
+        /// Yatri: This function is for fecthing list of OilAnalysis.
+        /// </summary>
+        /// <returns></returns>
+        public List<OilAnalysisBO> GetAllOilAnalysisList(int flagdate, DateTime? FromDate = null, DateTime? ToDate = null)
+        {
+           List<OilAnalysisBO> OilAnalysisList = new List<OilAnalysisBO>();
+            try
+            {
+                if (FromDate == null && ToDate == null)
+                {
+                    FromDate = DateTime.Today;
+                    ToDate = DateTime.Today;
+                }
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_OilAnalysis_GetAllByDate", con);
+                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
+                    cmd.Parameters.AddWithValue("@fromDate", FromDate);
+                    cmd.Parameters.AddWithValue("@toDate", ToDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var oilAnalysis = new OilAnalysisBO()
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Date = Convert.ToDateTime(reader["Date"]),
+                            Time = reader["Time"].ToString(),
+                            LotNo = reader["LotNo"].ToString(),
+                            SampleName= reader["SampleName"].ToString(),
+                            ACIDValue = Convert.ToDecimal(reader["ACIDValue"]),
+                            PeroxideValue = reader["PeroxideValue"].ToString(),
+                            Color = reader["Color"].ToString(),
+                            Flavour = reader["Flavour"].ToString(),
+                            Odour = reader["Odour"].ToString(),
+                            VerifyByName = reader["VerifyByName"].ToString(),
+                            Remark = reader["Remark"].ToString(),
+                        };
+                        OilAnalysisList.Add(oilAnalysis);
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return OilAnalysisList;
+        }
         #endregion
     }
 }

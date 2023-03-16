@@ -14,22 +14,24 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select Date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
-        [Required(ErrorMessage = "Enter Foot Washer!")]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "Foot Washer must be alphanumeric.")]
+        [Required(ErrorMessage = "Enter Foot Washer Dosage!")]
+        //[RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "Foot Washer must be alphanumeric.")]
         public string FootWasher { get; set; }
-        [Required(ErrorMessage = "Enter RO Washer!")]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "RO Water must be alphanumeric.")]
+        [Required(ErrorMessage = "Enter RO Water Dosage!")]
+        //[RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "RO Water must be alphanumeric.")]
         public string RoWater { get; set; }
-        [Required(ErrorMessage = "Enter Soft Washer!")]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "Soft Water must be alphanumeric.")]
+        [Required(ErrorMessage = "Enter Soft Water Dosage!")]
+        //[RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "Soft Water must be alphanumeric.")]
         public string SoftWater { get; set; }
-        [Required(ErrorMessage = "Enter Cooling Water Tank!")]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "Cooling Water Tank must be alphanumeric.")]
+        [Required(ErrorMessage = "Enter Cooling Water Tank Dosage!")]
+        //[RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "Cooling Water Tank must be alphanumeric.")]
         public string CoolingWaterTank { get; set; }
-        [Required(ErrorMessage = "EnterProcessing Water!")]
-        [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "Processing Watermust be alphanumeric.")]
+        [Required(ErrorMessage = "Enter Portable Water Dosage!")]
+        //[RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "Processing Watermust be alphanumeric.")]
         public string ProcessingWater { get; set; }
-        [Required(ErrorMessage = "Enter name of User!")]
+        [Required(ErrorMessage = "Enter CIP Water Tank!")]
+        public string CIPWaterTank { get; set; }
+        [Required(ErrorMessage = "Enter Name of User!")]
         public string VerifyByName { get; set; }
         public string Remark { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

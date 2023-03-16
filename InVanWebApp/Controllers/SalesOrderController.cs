@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InVanWebApp.Common;
-using InVanWebApp.Repository;
 using InVanWebApp.Repository.Interface;
+using InVanWebApp.Repository;
 using log4net;
 
 namespace InVanWebApp.Controllers
@@ -21,7 +21,8 @@ namespace InVanWebApp.Controllers
         /// </summary>
         public SalesOrderController()
         {
-            _repository = SalesOrderRepository();
+            _repository = new SalesOrderRepository();
+          
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.

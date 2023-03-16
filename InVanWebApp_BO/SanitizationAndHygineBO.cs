@@ -12,18 +12,17 @@ namespace InVanWebApp_BO
         public int Id { get; set; }
         /*Date*/
         [Required(ErrorMessage = "Select Date!")]
-        
+
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
 
         /*Name of Empolyee*/
-        [Required(ErrorMessage = "Enter Name of Empolyee!")]
+        [Required(ErrorMessage = "Enter Name of Employee!")]
         public string NameOfEmpolyee{ get; set; }
 
         /*Department*/
         [Required(ErrorMessage = "Enter Department!")]
         public string Department { get; set; }
-
 
 
         /*Body Temperature*/
@@ -43,39 +42,39 @@ namespace InVanWebApp_BO
         //public string High { get; set; }
 
         /*Hand Wash*/
-        [Required(ErrorMessage = "Enter Hand Wash!")]
+        [Required(ErrorMessage = "Select Hand is Wash or Not!")]
         public string HandWash { get; set; }
 
         /*Clean Nails*/
-        [Required(ErrorMessage = "Enter Clean Nails!")]
+        [Required(ErrorMessage = "Select Nails is Cleaned or Not!")]
         public string CleanNails { get; set; }
 
         /*Clean Uniform*/
-        [Required(ErrorMessage = "Enter Clean Uniform!")]
+        [Required(ErrorMessage = "Select Uniform is Cleaned or Not!")]
         public string CleanUniform { get; set; }
 
         /*Appear Any Cuts and Wounds*/
-        [Required(ErrorMessage = "Enter Appear Any Cuts and Wounds!")]
+        [Required(ErrorMessage = "Select Any Cuts and Wounds!")]
         public string AppearAnyCutsandWounds { get; set; }
 
-        /*Enter Wear Any Jwellery*/
-        [Required(ErrorMessage = "Enter Wear Any Jwellery!")]
+        /*Select Wear Any Jwellery*/
+        [Required(ErrorMessage = "Select Any Jewellery Carry by Employee!")]
         public string WearAnyJwellery { get; set; }
 
         /*Fully Coverd Hair*/
-        [Required(ErrorMessage = "Enter Fully Coverd Hair!")]
+        [Required(ErrorMessage = "Select Hair Fully Coverd or Not!!")]
         public string FullyCoverdHair { get; set; }
 
         /*Clean Shoes*/
-        [Required(ErrorMessage = "Enter No Tobaco, Chewingum!")]
+        [Required(ErrorMessage = "Select Shoes Cleaned or Not!!")]
         public string CleanShoes { get; set; }
 
         /*No Tobaco, Chewingum*/
-        [Required(ErrorMessage = "Enter No Tobaco, Chewingum!")]
+        [Required(ErrorMessage = "Select Whether Employee is Carrying and Eating any Tobacco or Chewing Gum!")]
         public string NoTobacoChewingum { get; set; }
 
         /*Any Kind Of Illness/Seakness*/
-        [Required(ErrorMessage = "Enter Any Kind Of Illness/Seakness!")]
+        [Required(ErrorMessage = "Select Employee Having Any Kind Of Illness/Seakness!")]
         public string AnyKindOfIllnessSeakness { get; set; }
 
         /*Name of User*/

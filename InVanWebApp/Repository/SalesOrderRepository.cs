@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
-using InVanWebApp.Common;
-using InVanWebApp_BO;
 using InVanWebApp.Repository.Interface;
-using System.Configuration;
 using log4net;
+using InVanWebApp_BO;
 using System.Data.SqlClient;
 using System.Data;
 
 namespace InVanWebApp.Repository
 {
-    public class SalesOrderRepository : ISalesOrderRepository
+    public class SalesOrderRepository:ISalesOrderRepository
     {
         //private readonly InVanDBContext _context;
         private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
-        private static ILog log = LogManager.GetLogger(typeof(PurchaseOrderRepository));
+        private static ILog log = LogManager.GetLogger(typeof(SalesOrderRepository));
 
         #region  Bind grid
         /// <summary>
@@ -40,6 +39,7 @@ namespace InVanWebApp.Repository
                         {
                             SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),
                             Amendment = Convert.ToInt32(reader["Amendment"]),
+                            CompanyName=reader["CompanyName"].ToString(),
                             SODate = Convert.ToDateTime(reader["SODate"]),
                             SONo = reader["SONo"].ToString(),
                             SalesOrderStatus = reader["SalesOrderStatus"].ToString(),

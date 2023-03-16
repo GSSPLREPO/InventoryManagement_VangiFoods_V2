@@ -21,13 +21,13 @@ namespace InVanWebApp_BO
         //[Required(ErrorMessage = "Enter Required Range[With Unit]!")]
         //public string RequiredRange { get; set; }
 
-        [Required(ErrorMessage = "Enter Required Range From[With Unit]!")]
+        [Required(ErrorMessage = "Enter Required from range (With Unit)!")]
         public string RangeFrom { get; set; }
 
-        [Required(ErrorMessage = "Enter Required Range To[With Unit]!")]
+        [Required(ErrorMessage = "Enter Required to range (With Unit)!")]
         public string RangeTo { get; set; }
 
-        [Required(ErrorMessage = "Enter Frequency of Calibration!")]
+        [Required(ErrorMessage = "Select Frequency of Calibration!")]
         public string FrequencyOfCalibration { get; set; }
         [Required(ErrorMessage = "Select Done Date!")]
         [DataType(DataType.Date)]

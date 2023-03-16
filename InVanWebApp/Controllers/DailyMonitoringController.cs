@@ -55,6 +55,10 @@ namespace InVanWebApp.Controllers
                 //var model = _dailyMonitoringRepository.GetAll();
                 //var model = _dailyMonitoringRepository.GetAll();
                 //return View(model);
+                //DailyMonitoringBO model = new DailyMonitoringBO();
+                //model.fromDate = DateTime.Today;
+                //model.toDate = DateTime.Today;
+                //return View(model);
                 return View();
             }
             else
@@ -273,7 +277,7 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Allergic");
             dt.Columns.Add("Non Allergic");
             dt.Columns.Add("Vegetable Processing Area");
-            dt.Columns.Add("Packaging &Labelling Area");
+            dt.Columns.Add("Packaging & Labelling Area");
             dt.Columns.Add("Fgs Area");
             dt.Columns.Add("Inside");
             dt.Columns.Add("Out Side");
@@ -298,7 +302,7 @@ namespace InVanWebApp.Controllers
                 dr["Allergic"] = st.Allergic.ToString();
                 dr["Non Allergic"] = st.NonAllergic.ToString();
                 dr["Vegetable Processing Area"] = st.VegetableProcessingArea.ToString();
-                dr["Packaging &Labelling Area"] = st.PackagingLabellingArea.ToString();
+                dr["Packaging & Labelling Area"] = st.PackagingLabellingArea.ToString();
                 dr["Fgs Area"] = st.FgsArea.ToString();
                 dr["Inside"] = st.Inside.ToString();
                 dr["Out Side"] = st.OutSide.ToString();
@@ -426,13 +430,15 @@ namespace InVanWebApp.Controllers
             string Todate = "To Date:";
             string fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
-            if (fromdate=="01-01-0001")
+            if (fromdate == "01-01-0001")
             {
                 fromdate = "";
+                Fromdate = "";
             }
             if (todate == "01-01-0001")
             {
                 todate = "";
+                Todate = "";
             }
 
             string name = ApplicationSession.ORGANISATIONTIITLE;

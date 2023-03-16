@@ -14,40 +14,39 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select Date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
-        [Required(ErrorMessage = "Enter Personal Hygine!")]
+        [Required(ErrorMessage = "Select Personal Hygine!")]
         public string PersonalHygine { get; set; }
-        [Required(ErrorMessage = "Enter Cleaning & Sanitation!")]
+        [Required(ErrorMessage = "Select Cleaning & Sanitation!")]
         public string CleaningAndSanitation { get; set; }
-        [Required(ErrorMessage = "Enter Cleaning of Equipment!")]
+        [Required(ErrorMessage = "Select Cleaning of Equipment!")]
         public string CleaningOfEquipment { get; set; }
-        [Required(ErrorMessage = "Enter Water Potability!")]
+        [Required(ErrorMessage = "Select Water Potability!")]
         public string WaterPotability { get; set; }
-        [Required(ErrorMessage = "Enter Allergic!")]
+        [Required(ErrorMessage = "Select Allergic!")]
         public string Allergic { get; set; }
-        [Required(ErrorMessage = "Enter Non Allergic!")]
+        [Required(ErrorMessage = "Select Non Allergic!")]
         public string NonAllergic { get; set; }
-        [Required(ErrorMessage = "Enter Vegetable Processing Area!")]
+        [Required(ErrorMessage = "Select Vegetable Processing Area!")]
         public string VegetableProcessingArea { get; set; }
-        [Required(ErrorMessage = "Enter Packaging & Labelling Area!")]
+        [Required(ErrorMessage = "Select Packaging & Labelling Area!")]
         public string PackagingLabellingArea { get; set; }
-        [Required(ErrorMessage = "Enter FGS Area!")]
+        [Required(ErrorMessage = "Select FGS Area!")]
         public string FgsArea { get; set; }
-        [Required(ErrorMessage = "Enter Inside!")]
+        [Required(ErrorMessage = "Select Inside!")]
         public string Inside { get; set; }
-        [Required(ErrorMessage = "Enter Out Side!")]
+        [Required(ErrorMessage = "Select Out Side!")]
         public string OutSide { get; set; }
-        [Required(ErrorMessage = "Enter Dry!")]
+        [Required(ErrorMessage = "Select Dry!")]
         public string Dry { get; set; }
-        [Required(ErrorMessage = "Enter Wet!")]
+        [Required(ErrorMessage = "Select Wet!")]
         public string Wet { get; set; }
-        [Required(ErrorMessage = "Enter Out Siders!")]
+        [Required(ErrorMessage = "Select Out Siders!")]
         public string OutSiders { get; set; }
-        [Required(ErrorMessage = "Enter Production Area!")]
+        [Required(ErrorMessage = "Select Production Area!")]
         public string ProductionArea { get; set; }
-        [Required(ErrorMessage = "Enter Office Staff!")]
+        [Required(ErrorMessage = "Select Office Staff!")]
         public string OfficeStaff { get; set; }
-
-        [Required(ErrorMessage = "Enter Name of User!")]
+        [Required(ErrorMessage = "Select Name of User!")]
         public string VerifyByName { get; set; }
         public string Remark { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

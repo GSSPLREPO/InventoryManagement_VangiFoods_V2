@@ -12,10 +12,9 @@ namespace InVanWebApp_BO
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Select Date!")]
-        [DataType(DataType.DateTime)]
-        public Nullable<System.DateTime> Date { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
 
-        /*adding this flied*/
         public string Time { get; set; }
 
         [Required(ErrorMessage = "Enter RO water PH!")]
@@ -26,6 +25,7 @@ namespace InVanWebApp_BO
         public string PATDS { get; set; }
 
         [Required(ErrorMessage = "Enter Hardness!")]
+
         public string PAHardness { get; set; }
 
         [Required(ErrorMessage = "Enter RO water Salt Added!")]
@@ -71,7 +71,9 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
         //Added the below prop for binding data in grid
-        [DataType(DataType.Date)]
-        public DateTime dateGridBinding { get; set; }
+        
+        //public DateTime dateGridBinding { get; set; }
+
+        public int SrNo { get; set; }
     }
 }

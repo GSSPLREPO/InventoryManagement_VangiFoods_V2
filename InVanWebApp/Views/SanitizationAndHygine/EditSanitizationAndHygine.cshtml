@@ -89,7 +89,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Department, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return IsAlphabate(event);" })
+                    @Html.TextBoxFor(model => model.Department, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return IsAlphaNumeric(event);" })
                     @Html.ValidationMessageFor(model => model.Department, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -164,7 +164,7 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Wear Any Jwellery")
+                    @Html.Label("Wear Any Jewellery")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">

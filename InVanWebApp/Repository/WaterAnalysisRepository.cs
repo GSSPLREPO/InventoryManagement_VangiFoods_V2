@@ -16,6 +16,7 @@ namespace InVanWebApp.Repository
     {
         private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private static ILog log = LogManager.GetLogger(typeof(WaterAnalysisRepository));
+
         #region  Bind grid
         /// <summary>
         /// Date: 27 Feb'23
@@ -37,8 +38,11 @@ namespace InVanWebApp.Repository
                     {
                         var waterAnalysis = new WaterAnalysisBO()
                         {
-                            Id = Convert.ToInt32(reader["SrNo"]),
-                            dateGridBinding = Convert.ToDateTime(reader["Date"]),
+                            Id = Convert.ToInt32(reader["ID"]),
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            //dateGridBinding = Convert.ToDateTime(reader["Date"]),
+                            Date = Convert.ToDateTime(reader["Date"]),
+                            //Time = Convert.ToDateTime(reader["Time"]),
                             Time = (reader["Time"].ToString()),
                             VerifyByName = reader["VerifyByName"].ToString(),
                             PAPH = reader["PAPH"].ToString(),
@@ -52,7 +56,7 @@ namespace InVanWebApp.Repository
                             ETPPH = reader["ETPPH"].ToString(),
                             ETPTDS = reader["ETPTDS"].ToString(),
                             TEM = reader["TEM"].ToString(),
-                            GasReading =Convert.ToDecimal( reader["GasReading"])
+                            GasReading = reader["GasReading"]==DBNull.Value?0:Convert.ToDecimal( reader["GasReading"])
                         };
                         waterAnalysisList.Add(waterAnalysis);
 
@@ -151,6 +155,7 @@ namespace InVanWebApp.Repository
                             Id = Convert.ToInt32(reader["Id"]),
                             Date = Convert.ToDateTime(reader["Date"]),
                             //Time = Convert.ToDateTime(reader["Time"]),
+                            Time = (reader["Time"].ToString()),
                             PAPH = reader["PAPH"].ToString(),
                             PATDS = reader["PATDS"].ToString(),
                             PAHardness = reader["PAHardness"].ToString(),
@@ -195,11 +200,11 @@ namespace InVanWebApp.Repository
 
                     cmd.Parameters.AddWithValue("@Id", model.Id);
                     cmd.Parameters.AddWithValue("@Date", model.Date);
+                    cmd.Parameters.AddWithValue("@Time", model.Time);
                     cmd.Parameters.AddWithValue("@PAPH", model.PAPH);
                     cmd.Parameters.AddWithValue("@PATDS", model.PATDS);
                     cmd.Parameters.AddWithValue("@PAHardness", model.PAHardness);
                     cmd.Parameters.AddWithValue("@PASaltAdded", model.PASaltAdded);
-                    
                     cmd.Parameters.AddWithValue("@SWPH", model.SWPH);
                     cmd.Parameters.AddWithValue("@SWTDS", model.SWTDS);
                     cmd.Parameters.AddWithValue("@SWHardness", model.SWHardness);

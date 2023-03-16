@@ -12,7 +12,7 @@ namespace InVanWebApp_BO
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Select Date!")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
 
         /*adding this flied*/
@@ -30,10 +30,10 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage ="Enter Peroxide Value!")]
         public string PeroxideValue { get; set; }
 
-        [Required(ErrorMessage ="Enter Color!")]
+        [Required(ErrorMessage ="Enter Color Product!")]
         public string Color { get; set; }
 
-        [Required(ErrorMessage ="Enter Flavour!")]
+        [Required(ErrorMessage ="Enter Flavour Product!")]
         public string Flavour { get; set; }
 
         [Required(ErrorMessage ="Enter Odour!")]
@@ -49,7 +49,17 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
         //Added the below prop for binding data in grid
-        [DataType(DataType.Date)]
-        public DateTime dateGridBinding { get; set; }
+        //[DataType(DataType.Date)]
+        //public DateTime dateGridBinding { get; set; }
+
+        //Date:15 March'23
+        //Author: Yatri
+        //Added:Below fileds are for report.
+
+        [Required(ErrorMessage = "Invalid date selection!")]
+        public DateTime fromDate { get; set; }
+
+        [Required(ErrorMessage = "You are selecting greater from date than to date!")]
+        public DateTime toDate { get; set; }
     }
 }
