@@ -21,7 +21,7 @@
                         @*Rahul updated anchor tag text 'Master' to 'Transactions' 16-02-23.*@
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Production</a>
                     </li>
-                    <li class="breadcrumb-item active">Indent</li>
+                    <li class="breadcrumb-item active">Production Indent</li>
                 </ol>
             </nav>
         </div>
@@ -31,7 +31,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <a href="@Url.Action("AddIndent","Indent")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                            <a href="@Url.Action("AddProductionIndent","ProductionIndent")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
                                 <span class="fa fa-plus"></span> Production Indent
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
@@ -39,7 +39,8 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.DisplayName("Indent Number")</th>
-                                            <th>@Html.DisplayName("Indent Date")</th>
+                                            <th>@Html.DisplayName("Issue Date")</th>
+                                            <th>@Html.DisplayName("Production Date")</th>
                                             <th>@Html.DisplayName("Status")</th>
                                             <th>@Html.DisplayName("Remarks")</th>
                                             <th>@Html.DisplayName("Actions")</th>
@@ -50,7 +51,8 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.ProductionIndentNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ProductionIndentDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ProductionDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Description)</td>
                                                 <td>

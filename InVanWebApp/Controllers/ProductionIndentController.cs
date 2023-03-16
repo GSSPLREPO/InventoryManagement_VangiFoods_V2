@@ -87,6 +87,17 @@ namespace InVanWebApp.Controllers
             var recipeList = _productionRecipeRepository.GetItemDetailsForRecipe();
             var dd = new SelectList(recipeList.ToList(), "ID", "Item_Code", "UOM_Id");
             ViewData["Ingredients"] = dd;
+
+            //Bind SO Number 
+            var result = _productionIndentRepository.GetSONumberForDropdown();
+            var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONumber");
+            ViewData["SONumberAndId"] = resultList;
+
+            //Bind WO Number 
+            var resultWO = _productionIndentRepository.GetSONumberForDropdown();
+            var resultListWO = new SelectList(resultWO.ToList(), "SalesOrderId", "WorkOrderNo");
+            ViewData["WONumberAndId"] = resultListWO;
+
         }
         #endregion
 

@@ -150,6 +150,42 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Bind dropdown of SO Number 
+        public IEnumerable<SalesOrderBO> GetSONumberForDropdown() 
+        {
+            List<SalesOrderBO> resultList = new List<SalesOrderBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_SalesOrder_For_Production_Indent_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new SalesOrderBO()
+                        {
+                            SalesOrderId = Convert.ToInt32(dataReader["SalesOrderId"]),
+                            SONumber = dataReader["SONumber"].ToString(),
+                            WorkOrderNo = dataReader["WorkOrderNo"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+
         #region Insert function
         public ResponseMessageBO Insert(ProductionIndentBO model)
         {
@@ -158,14 +194,20 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_Indent_Insert", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@IndentNumber", model.ProductionIndentNo);
-                    cmd.Parameters.AddWithValue("@IndentDate", model.ProductionDate);
+                    cmd.Parameters.AddWithValue("@ProductionIndentNo", model.ProductionIndentNo);
+                    cmd.Parameters.AddWithValue("@IndentDate", model.IssueDate);
+                    cmd.Parameters.AddWithValue("@ProductionDate", model.ProductionDate);
                     cmd.Parameters.AddWithValue("@IndentBy", model.RaisedBy);
-                    cmd.Parameters.AddWithValue("@UserName", model.UserName);
                     cmd.Parameters.AddWithValue("@Remarks", model.Description);
+                    cmd.Parameters.AddWithValue("@ProductID", model.ProductID);
+                    cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@SalesOrderId", model.SalesOrderId);
+                    cmd.Parameters.AddWithValue("@SONo", model.SONo);                    
+                    cmd.Parameters.AddWithValue("@WorkOrderNo", model.WorkOrderNo);
+                    cmd.Parameters.AddWithValue("@UserName", model.UserName);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
@@ -180,19 +222,21 @@ namespace InVanWebApp.Repository
                     con.Close();
 
                     var json = new JavaScriptSerializer();
-                    var data = json.Deserialize<Dictionary<string, string>[]>(model.itemDetails);
+                    var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
 
-                    List<Indent_DetailsBO> itemDetails = new List<Indent_DetailsBO>();
+                    List<ProductionIndent_DetailsBO> itemDetails = new List<ProductionIndent_DetailsBO>();
 
                     foreach (var item in data)
                     {
-                        Indent_DetailsBO objItemDetails = new Indent_DetailsBO();
-                        objItemDetails.IndentID = IndentID;
+                        ProductionIndent_DetailsBO objItemDetails = new ProductionIndent_DetailsBO();
+                        objItemDetails.ProductionIndentID = IndentID;
                         objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
                         objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
                         objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                        objItemDetails.RequiredQuantity = Convert.ToDouble(item.ElementAt(3).Value);
+                        objItemDetails.BatchQty = Convert.ToDouble(item.ElementAt(3).Value);
+                        objItemDetails.FinalQty = Convert.ToDouble(item.ElementAt(4).Value);
+                        objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString();
+                        objItemDetails.Percentage = Convert.ToDouble(item.ElementAt(6).Value);
 
                         itemDetails.Add(objItemDetails);
                     }
@@ -203,12 +247,17 @@ namespace InVanWebApp.Repository
                         SqlCommand cmdNew = new SqlCommand("usp_tbl_IndentDetails_Insert", con);
                         cmdNew.CommandType = CommandType.StoredProcedure;
 
-                        cmdNew.Parameters.AddWithValue("@IndentId", item.IndentID);
+                        cmdNew.Parameters.AddWithValue("@ProductionIndentID", item.ProductionIndentID);
+                        cmdNew.Parameters.AddWithValue("@QCcheck_1", item.QCcheck_1);
+                        cmdNew.Parameters.AddWithValue("@QCcheck_2", item.QCcheck_2);
+                        cmdNew.Parameters.AddWithValue("@QCcheck_3", item.QCcheck_3);
                         cmdNew.Parameters.AddWithValue("@Item_ID", item.ItemId);
-                        cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
+                        cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
                         cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
-                        cmdNew.Parameters.AddWithValue("@ItemQuantity", item.RequiredQuantity);
+                        cmdNew.Parameters.AddWithValue("@BatchQuantity", item.BatchQty);
+                        cmdNew.Parameters.AddWithValue("@FinalQuantity", item.FinalQty);
+                        cmdNew.Parameters.AddWithValue("@ProductionCheck", model.UserName);
                         cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
 

@@ -109,7 +109,6 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            @*Rahul removed class table-striped and added class table-hover in table tag 21-02-2023.*@
                                             <table class="table table-hover" id="submissionTable">
                                                 <thead>
                                                     <tr>
@@ -136,36 +135,28 @@
                                                                 </td>
                                                                 <td class="d-none">@Html.HiddenFor(x => item.Item_ID, new { id = "ItemID_" + c })</td>
                                                                 <td>
-                                                                    @*Rahul added style height in Item_Code tag 21-02-23.*@
                                                                     @Html.TextBoxFor(x => item.Item_Code, new { id = "ItemCode_" + c, style = "border:none;background: none;width:auto;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @*Rahul added style height in ItemName tag 21-02-23.*@
                                                                     @Html.TextBoxFor(x => item.ItemName, new { id = "ItemName_" + c, style = "border:none;background: none;width:auto;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @*Rahul added style height in ItemQuantity tag 21-02-23.*@
-                                                                    @Html.TextBoxFor(x => item.ItemQuantity, new { id = "ItemQuantity_" + c, style = "border:none;background: none;height:20px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.ItemQuantity, new { id = "ItemQuantity_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @*Rahul added style height in ItemUnit tag 21-02-23.*@
-                                                                    @Html.TextBoxFor(x => item.ItemUnit, new { id = "ItemUnit_" + c, style = "border:none;background: none;width:auto;height:20px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.ItemUnit, new { id = "ItemUnit_" + c, style = "border:none;background:none;width:auto;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @*Rahul added style height in ItemUnitPrice tag 21-02-23.*@
-                                                                    @Html.TextBoxFor(x => item.ItemUnitPrice, new { id = "ItemUnitPrice_" + c, style = "border:none;background: none;height:20px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.ItemUnitPrice, new { id = "ItemUnitPrice_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @*Rahul added style height in CurrencyName tag 21-02-23.*@
-                                                                    @Html.TextBoxFor(x => item.CurrencyName, new { id = "CurrencyName_" + c, style = "border:none;background: none;height:20px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.CurrencyName, new { id = "CurrencyName_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @*Rahul added style height in ItemTaxValue tag 21-02-23.*@
-                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;height:20px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @*Rahul added style height in TotalItemCost tag 21-02-23.*@
-                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;height:20px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                             </tr>
                                                             { c++; }

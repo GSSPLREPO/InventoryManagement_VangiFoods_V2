@@ -209,7 +209,7 @@
             </div>
         </li>
         @*Rahul added li for 'Production' 24-02-2023.*@
-        @*<li class="nav-item">
+        <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-production" aria-expanded="false" aria-controls="form-production">
                 <i class="fas fa-cogs menu-icon"></i>
                 <span class="menu-title">Production</span>
@@ -224,7 +224,7 @@
                     </li>
                 </ul>
             </div>
-        </li>*@
+        </li>
 
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#editors" aria-expanded="false" aria-controls="editors">
@@ -264,12 +264,18 @@
                             <a class="nav-link" href="@Url.Action("Index","Organisation")">Organisation</a>
                         </div>
                     </li>
-                    @*Rahul added li for 'Production Recipe' 27-02-2023.*@
-                    @*<li class="nav-item">
-                        <div id="ProductionRecipe">
-                            <a class="nav-link" href="@Url.Action("Index","ProductionRecipe")">Production Recipe</a>
+                    @*Rahul updated li for 'Production Recipe' to 'Recipe Master' 03-03-2023.*@
+                    <li class="nav-item">
+                        <div id="RecipeMater">
+                            <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
                         </div>
-                    </li>*@
+                    </li>
+                    @*Rahul added li for 'Product Master' 28-02-2023.*@
+                    <li class="nav-item">
+                        <div id="ProductMaster">
+                            <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <div id="TermsAndCondition">
                             <a class="nav-link" href="@Url.Action("Index","TermsAndCondition")">Terms and Condition</a>

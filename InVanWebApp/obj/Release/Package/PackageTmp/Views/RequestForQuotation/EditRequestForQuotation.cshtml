@@ -372,15 +372,17 @@
 
     //---rahul added ValidMsgBiddingStartDate 13-02-23.
     function ValidMsgBiddingStartDate() {
-        debugger
-        var startDate = $("#BiddingStartDate").val();
-        var endDate = $("#BiddingEndDate").val();
+        //debugger
+        //var startDate = $("#BiddingStartDate").val();
+        //var endDate = $("#BiddingEndDate").val();
 
-        if (startDate > endDate) {
-            alert('Bidding start date should not be greater than to end date!');
-            $('#BiddingStartDate').focus();
-            return;
-        }
+        //if (startDate > endDate) {
+        //    alert('Bidding start date should not be greater than to end date!');
+        //    $('#BiddingStartDate').focus();
+        //    return;
+        //}
+        //else
+        $('#BiddingEndDate').focus();
     }
     //---BiddingStartDate todaysDate end ------
 
@@ -404,6 +406,7 @@
         if (startDate > endDate) {
             alert('Bidding end date should not be greater than to start date!');
             $('#BiddingEndDate').focus();
+            event.preventDefault();
             return;
         }
     }
@@ -453,6 +456,7 @@
                 $('#btnSave').prop('disabled', false);
                 todaysDate(rowCount);   //Rahul added 17-02-23.
         }
+        ValidMsgBiddingEndDate();
         createJson();
     };
     //==========end===============

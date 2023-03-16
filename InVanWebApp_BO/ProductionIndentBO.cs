@@ -22,6 +22,9 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select the Product Name!")]
         public int ProductID { get; set; }        
         public string ProductName { get; set; }
+        public int SalesOrderId { get; set; }
+        public string SONo { get; set; }        
+        public string WorkOrderNo { get; set; } 
         [Required(ErrorMessage = "Enter Total Batches!")] 
         public Nullable<int> TotalBatches { get; set; }         
         public Nullable<bool> IsDeleted { get; set; }
@@ -35,15 +38,13 @@ namespace InVanWebApp_BO
         //This is for inserting the itemdetails
         public Nullable<int> Item_ID { get; set; }
         public string ItemCode { get; set; }
-        public string ItemUnit { get; set; }
-        public string ItemName { get; set; }
-        [Required(ErrorMessage = "Enter Batch Quantity!")]
-        public Nullable<double> RequiredQuantity { get; set; }
-        [Required(ErrorMessage = "Enter Final Quantity!")]
+        public string ItemName { get; set; }        
+        public Nullable<double> ItemQuantity { get; set; }         
         public Nullable<double> FinalQuantity { get; set; }
-        public string itemDetails { get; set; }
+        public string UnitName { get; set; }
+        public float Ratio { get; set; }
+        public string TxtItemDetails { get; set; } 
         public int IndentCount { get; set; }
-        public string TxtRatio { get; set; } 
         public List<ProductionIndent_DetailsBO> indent_Details { get; set; }
 
     }

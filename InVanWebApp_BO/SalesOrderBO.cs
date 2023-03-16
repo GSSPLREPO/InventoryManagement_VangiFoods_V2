@@ -10,6 +10,7 @@ namespace InVanWebApp_BO
     {
         public int SalesOrderId { get; set; }
         public string SONo { get; set; }
+        public string SONumber { get; set; } 
         public Nullable<System.DateTime> SODate { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public int ClientID { get; set; }
@@ -44,6 +45,10 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CheckedDate { get; set; }
         public string Remarks { get; set; }
         public string DispatchMode { get; set; }
+        public int InquiryID { get; set; }
+        public string InquiryNumber { get; set; }
+        public string WorkOrderNo { get; set; }
+        public string WorkOrderType { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedById { get; set; }

@@ -15,6 +15,8 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<RecipeMasterBO> GetRecipeDetailsById(int ProductId, int Recipe_Id);
         //Define function for inserting data into Production Indent 
         ResponseMessageBO Insert(ProductionIndentBO model);
+        //Bind dropdown of Sales Order Number 
+        IEnumerable<SalesOrderBO> GetSONumberForDropdown();
     }
 
 }
