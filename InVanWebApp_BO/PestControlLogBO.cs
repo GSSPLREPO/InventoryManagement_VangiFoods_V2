@@ -12,8 +12,11 @@ namespace InVanWebApp_BO
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Select Date!")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
+
+        /*adding this flied*/
+        //public string Time { get; set; }
 
         [Required(ErrorMessage ="Enter Type of Pest!")]
         public string TypeOfPest { get; set; }

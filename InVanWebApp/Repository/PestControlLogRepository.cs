@@ -39,6 +39,7 @@ namespace InVanWebApp.Repository
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Date = Convert.ToDateTime(reader["Date"]),
+                            //Time = reader["Time"].ToString(),
                             VerifyByName = reader["VerifyByName"].ToString(),
                             TypeOfPest = reader["TypeOfPest"].ToString(),
                             MethodForPestControl = reader["MethodForPestControl"].ToString(),
@@ -80,6 +81,7 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     
                     cmd.Parameters.AddWithValue("@Date", model.Date);
+                   // cmd.Parameters.AddWithValue("@Time", model.Time);
                     cmd.Parameters.AddWithValue("@TypeOfPest", model.TypeOfPest);
                     cmd.Parameters.AddWithValue("@MethodForPestControl", model.MethodForPestControl);
                     cmd.Parameters.AddWithValue("@Area", model.Area);
@@ -138,6 +140,7 @@ namespace InVanWebApp.Repository
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Date = Convert.ToDateTime(reader["Date"]),
+                            //Time = reader["Time"].ToString(),
                             TypeOfPest = reader["TypeOfPest"].ToString(),
                             MethodForPestControl = reader["MethodForPestControl"].ToString(),
                             Area = reader["Area"].ToString(),
@@ -177,6 +180,7 @@ namespace InVanWebApp.Repository
 
                     cmd.Parameters.AddWithValue("@Id", model.Id);
                     cmd.Parameters.AddWithValue("@Date", model.Date);
+                    //cmd.Parameters.AddWithValue("@Time", model.Time);
                     cmd.Parameters.AddWithValue("@TypeOfPest", model.TypeOfPest);
                     cmd.Parameters.AddWithValue("@MethodForPestControl", model.MethodForPestControl);
                     cmd.Parameters.AddWithValue("@Area", model.Area);

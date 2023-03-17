@@ -65,6 +65,7 @@ namespace InVanWebApp.Controllers
                 PestControlLogBO model = new PestControlLogBO();
                 model.VerifyByName = Session[ApplicationSession.USERNAME].ToString();
                 model.Date = DateTime.Today;
+                //model.Time = DateTime.Now.ToString("HH:mm:ss tt");
                 return View(model);
             }
             else
