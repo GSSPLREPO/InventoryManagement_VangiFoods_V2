@@ -270,7 +270,7 @@ namespace InVanWebApp.Controllers
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("Date");
-            dt.Columns.Add("Personal Hygine");
+            dt.Columns.Add("Personal Hygiene");
             dt.Columns.Add("Cleaning And Sanitation");
             dt.Columns.Add("Cleaning Of Equipment");
             dt.Columns.Add("Water Potability");
@@ -295,7 +295,7 @@ namespace InVanWebApp.Controllers
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = i;
                 dr["Date"] = st.Date.ToString();
-                dr["Personal Hygine"] = st.PersonalHygine.ToString();
+                dr["Personal Hygiene"] = st.PersonalHygine.ToString();
                 dr["Cleaning And Sanitation"] = st.CleaningAndSanitation.ToString();
                 dr["Cleaning Of Equipment"] = st.CleaningOfEquipment.ToString();
                 dr["Water Potability"] = st.WaterPotability.ToString();
@@ -470,7 +470,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1%;;font-size:13px;border: 0.05px  #e2e9f3;'>Sr.No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:4%;;font-size:13px;border: 0.05px  #e2e9f3;'>Personal Hygine</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:4%;;font-size:13px;border: 0.05px  #e2e9f3;'>Personal Hygiene</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Cleaning And Sanitation</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Cleaning Of Equipment</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Water Potability</th>");

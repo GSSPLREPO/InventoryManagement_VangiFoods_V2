@@ -13,27 +13,30 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select Date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> PELDate { get; set; }
-        [Required(ErrorMessage = "Enter Product Name!")]
+        [Required(ErrorMessage = "Enter the Name of Product!")]
         public string ProductName { get; set; }
         [Required(ErrorMessage = "Enter Batch Code!")]
         public string BatchCode { get; set; }
-        [Required(ErrorMessage = "Enter Ph!")]
-        [Range(0, 14, ErrorMessage = "Enter PH Number between 0 to 14")]
-        public string Ph { get; set; }
-        [Required(ErrorMessage = "Enter Tex, Col & Taste!")]
+        [Required(ErrorMessage = "Enter Ph Number!")]
+        //[Range(0, 14, ErrorMessage = "Enter PH Number between 0 to 14")]
+        //public string Ph { get; set; }
+        [Range(typeof(decimal), "0","14", ErrorMessage = "Enter PH Number between 0 to 14")]
+        public decimal? Ph { get; set; }
+        [Required(ErrorMessage = "Enter Whether Texture, Colour & Taste is OK?")]
         public string TexColTaste { get; set; }
-        [Required(ErrorMessage = "Enter Acid!")]
+        [Required(ErrorMessage = "Enter value of  Acid!")]
         public string Acid { get; set; }
-        [Required(ErrorMessage = "Enter Salt!")]
+        [Required(ErrorMessage = "Enter amount of Salt present!")]
         public string Salt { get; set; }
-        [Required(ErrorMessage = "Enter Viscosity!")]
+        [Required(ErrorMessage = "Enter Viscosity of Product!")]
         public string Viscosity { get; set; }
 
         //[Required(ErrorMessage = "Select Date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> PELDateAfter7Days { get; set; }
         //[Required(ErrorMessage = "Enter Ph!")]
-        public string PhAfter7Days { get; set; }
+        [Range(typeof(decimal), "0", "14", ErrorMessage = "Enter PH Number between 0 to 14")]
+        public decimal? PhAfter7Days { get; set; }
         //[Required(ErrorMessage = "Enter Tex, Col & Taste!")]
         public string TexColTasteAfter7Days { get; set; }
         //[Required(ErrorMessage = "Enter Acid!")]

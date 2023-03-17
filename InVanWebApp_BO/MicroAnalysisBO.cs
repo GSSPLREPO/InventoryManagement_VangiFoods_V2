@@ -27,26 +27,26 @@ namespace InVanWebApp_BO
         public string WOPO { get; set; }
 
         /*Product Name*/
-        [Required(ErrorMessage = "Enter Product Name!")]
+        [Required(ErrorMessage = "Enter the Name of Product!")]
         public string ProductName { get; set; }
 
         /*Batch No*/
-        [Required(ErrorMessage = "Enter Batch No!")]
+        [Required(ErrorMessage = "Enter Number of Batch!")]
         public string BatchNo { get; set; }
 
         /*Packing Size*/
-        [Required(ErrorMessage = "Enter Packing Size!")]
+        [Required(ErrorMessage = "Enter the Size of Packing!")]
         public string PackingSize { get; set; }
 
 
         /*Date*/
-        [Required(ErrorMessage = "Select Best Before!")]
+        [Required(ErrorMessage = "Select the Best Before Date of Product!")]
 
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> BestBeforeDate { get; set; }
 
         /*Clostridium Perfringens*/
-        [Required(ErrorMessage = "Select Clostridium Perfringens!")]
+        [Required(ErrorMessage = "Select Whether Clostridium Perfringens is present!")]
         public string ClostridiumPerfringens { get; set; }
 
         /*EscherichiaColi*/
@@ -76,7 +76,7 @@ namespace InVanWebApp_BO
         public string Coliform { get; set; }
 
         /*Verified by*/
-        [Required(ErrorMessage = "Enter Verify By Name!")]
+        [Required(ErrorMessage = "Enter the Name of Verifier!")]
         public string VerifyByName { get; set; }
 
         /*Mandentory*/

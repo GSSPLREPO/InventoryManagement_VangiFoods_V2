@@ -55,7 +55,7 @@
                                             <th>@Html.DisplayName("TEM")</th>
                                             <th>@Html.DisplayName("Gas Reading")</th>
                                             <th>@Html.DisplayName("Verify By")</th>
-                                            <th>@Html.DisplayName("Edit/Delete")</th>
+                                            <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
 
@@ -65,7 +65,8 @@
                                             {
                                         <tr>
                                             <td>@Html.DisplayFor(modelItem => SrNo)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.dateGridBinding)</td>
+                                            @*<td>@Html.DisplayFor(modelItem => item.dateGridBinding)</td>*@
+                                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
                                            <td>@Html.DisplayFor(modelItem=>item.Time)</td>
                                             @*<td>@Html.DisplayFor(modelItem => item.PAPH)</td>
                                             <td>@Html.DisplayFor(modelItem => item.PATDS)</td>
@@ -112,7 +113,7 @@
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>*@
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"/>
     @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
         <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
 

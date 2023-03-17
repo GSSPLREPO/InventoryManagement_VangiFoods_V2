@@ -1,37 +1,25 @@
 ﻿@model IEnumerable<InVanWebApp_BO.PreStartupHygieneBO>
-@{ ViewBag.Title = "Pre Startup Hygine";
+
+@{ ViewBag.Title = "Pre Start up Hygiene";
     Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
-<style>
-        /* .table th {
-            text-align: center;
-        }
-
-        th[colspan="5"] {
-            text-align: center;
-        }
-    */
-        table.table-bordered.dataTable th, table.table-bordered.dataTable td {
-            text-align: center !important;
-        }
-</style>
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>Pre Startup Hygine</title>
+    <title>Micro Analysis</title>
 </head>
 <body>
 
-    <div class="content-wrapper" runat="server" id="divPanel1">
+    <div class="content-wrapper" runat="server" id="PreStartupHygiene">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Pre Startup Hygiene</h4>
+            <h4 class="page-title">Pre Start up Hygiene</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Daily Operations</a>
                     </li>
-                    <li class="breadcrumb-item active"> Pre Startup Hygiene</li>
+                    <li class="breadcrumb-item active">Pre Start up Hygiene</li>
                 </ol>
             </nav>
         </div>
@@ -41,77 +29,61 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <a href="@Url.Action("AddPreStartupHygiene","PreStartupHygiene")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span> Pre Startup Hygiene
-                            </a>
-                            <div class="table-responsive" style="padding-top:15px;">
-
-                                @*<table class="table table-striped table-bordered hover table-sm" id="PreStartupHygienedt">*@
-                                <table id="PreStartupHygienedt" class="table table-striped table-bordered hover table-sm table-responsive-md" width="100%" style="table-layout: fixed;">
-                                    <thead>
-                                        <tr>
-                                            <th>@Html.DisplayName("Date")</th>
-                                            <th>@Html.DisplayName("RM Receving Area")</th>
-                                            @*<th colspan="3">@Html.DisplayName("Crates")</th>*@
-                                            <th>@Html.DisplayName("Weighting Area")</th>
-                                            <th>@Html.DisplayName("Water")</th>
-                                            <th>@Html.DisplayName("Hygine Area")</th>
-                                            @*<th colspan="2">@Html.DisplayName("Storage Area")</th>*@
-                                            <th>@Html.DisplayName("Walk Way")</th>
-                                            @*<th rowspan="2">@Html.DisplayName("Vegetable Washing Area")</th>
-                                                <th rowspan="2">@Html.DisplayName("Peeling Machine")</th>
-                                                <th rowspan="2">@Html.DisplayName("Cold Storage")</th>
-                                                <th rowspan="2">@Html.DisplayName("Roboqubos")</th>
-                                                <th rowspan="2">@Html.DisplayName("Silo")</th>
-                                                <th rowspan="2">@Html.DisplayName("Packaging Line")</th>
-                                                <th rowspan="2">@Html.DisplayName("Chiller DC")</th>*@
-                                            <th>@Html.DisplayName("Verify By")</th>
-                                            <th>@Html.DisplayName("Action")</th>
-                                        </tr>
-                                        @*<tr>
-                                                <th>@Html.DisplayName("Blue")</th>
-                                                <th>@Html.DisplayName("Yellow")</th>
-                                                <th>@Html.DisplayName("Red")</th>
-                                                <th>@Html.DisplayName("Raw Material")</th>
-                                                <th>@Html.DisplayName("Finish Goods")</th>
-                                            </tr>*@
-                                    </thead>
-
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                            <tr>
-                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                <td>@Html.DisplayFor(modelItem => item.RMRecevingArea)</td>
-                                @*<td>@Html.DisplayFor(modelItem => item.CratesBlue)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CratesYellow)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.CratesRed)</td>*@
-                                <td>@Html.DisplayFor(modelItem => item.WeightingArea)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Water)</td>
-                                <td>@Html.DisplayFor(modelItem => item.HygineArea)</td>
-                                @*<td>@Html.DisplayFor(modelItem => item.RawMaterial)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.FinishGoods)</td>*@
-                                <td>@Html.DisplayFor(modelItem => item.WalkWay)</td>
-                                @*<td>@Html.DisplayFor(modelItem => item.VegetableWashingArea)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.PeelingMachine)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.ColdStorage)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Roboqubos)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Silo)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.PackagingLine)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Chiller)</td>*@
-                                <td>@Html.DisplayFor(modelItem => item.VerifyBy)</td>
-                                <td>
-                                    <a href=@Url.Action("EditPreStartupHygiene", "PreStartupHygiene", new { Id = item.Id })>
-                                        <i class="fa fa-edit text-primary"></i>
-                                    </a> &emsp;
-                                    <a href=@Url.Action("Delete", "PreStartupHygiene", new { Id = item.Id }) onclick="return confirm('Are you sure want to delete?');">
-                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>From Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.TextBox("fromDate", "{0:yyyy-MM-dd }", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessage("msgfromDate", "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label>To Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.TextBox("toDate", "{0:yyyy-MM-dd }", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessage("toDate", "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-1">
+                                    <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
+                                    @*<a id="ExportPdf" style="float:right;" href="@Url.Action("PreStartupHygienePDF", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
+                                    <a id="ExportExcel" style="float:right;" href="@Url.Action("PreStartupHygieneExcel", "PreStartupHygiene")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a href="@Url.Action("AddPreStartupHygiene","PreStartupHygiene")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                        <span class="fa fa-plus"></span> Pre Start up Hygiene
                                     </a>
-                                </td>
-                            </tr>}
-                                    </tbody>
-                                </table>
+                                </div>
                             </div>
+                            <table id="tblPreStartupHygiene" class="table table-striped table-bordered hover table-sm table-responsive-md" width="100%" style="table-layout: fixed;">
+                                <thead>
+                                    <tr>
+
+                                        <th>@Html.DisplayName("Date")</th>
+                                        <th>@Html.DisplayName("RM Receving Area")</th>
+                                        @*<th colspan="3">@Html.DisplayName("Crates")</th>*@
+                                        <th>@Html.DisplayName("Weighting Area")</th>
+                                        <th>@Html.DisplayName("Water")</th>
+                                        <th>@Html.DisplayName("Hygine Area")</th>
+                                        @*<th colspan="2">@Html.DisplayName("Storage Area")</th>*@
+                                        <th>@Html.DisplayName("Walk Way")</th>
+                                        @*<th rowspan="2">@Html.DisplayName("Vegetable Washing Area")</th>
+                                            <th rowspan="2">@Html.DisplayName("Peeling Machine")</th>
+                                            <th rowspan="2">@Html.DisplayName("Cold Storage")</th>
+                                            <th rowspan="2">@Html.DisplayName("Roboqubos")</th>
+                                            <th rowspan="2">@Html.DisplayName("Silo")</th>
+                                            <th rowspan="2">@Html.DisplayName("Packaging Line")</th>
+                                            <th rowspan="2">@Html.DisplayName("Chiller DC")</th>*@
+                                        <th>@Html.DisplayName("Verify By")</th>
+                                        <th>@Html.DisplayName("Action")</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            @*</div>*@
                         </div>
                     </div>
                 </div>
@@ -119,41 +91,195 @@
         </div>
     </div>
 </body>
-
 </html>
-
 @Html.Raw(TempData["Success"])
 
+
 @section scripts{
-
-    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+    @*<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />*@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-    @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>*@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
-        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
-
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#PreStartupHygienedt').dataTable().fnDestroy();
-            $('#PreStartupHygienedt').dataTable({
-                "iDisplayLength": 10,
-                //"processing": true, // for show progress bar
-                //"serverSide": false, // for process server side
-                //"filter": true, // this is for disable filter (search box)
-                //"pageLength": 10,
-                //"columnDefs": [{ "targets": 3, "type": "date-eu" }],
-                "order": [[3, 'desc']],
-            });
+            BindMicroAnalysis();
+            setCurrentDate();
         });
 
-        var table = $('#PreStartupHygienedt').dataTable({
-            "serverSide": false,
-            "filter": true,
-            //"columnDefs": [{ "targets": 3, "type": "date-eu" }],
-            "order": [[3, 'desc']],
-            "pageLength": 20
+        function setCurrentDate() {
+            var now = new Date();
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            $('#fromDate').val(today);
+            $('#toDate').val(today);
+        }
+
+        function OnChangedFromDate() {
+            $('#fromDateValidate').hide();
+        }
+
+        function OnChangedToDate() {
+            $('#toDateValidate').hide();
+        }
+
+
+        function BindMicroAnalysis() {
+            var flagdate = 1;
+            $('#tblPreStartupHygiene').dataTable().fnDestroy();
+            var t = $('#tblPreStartupHygiene').dataTable({
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "pageLength": 10,
+                "sAjaxSource": "/PreStartupHygiene/GetPreStartupHygieneList?flagdate=" + flagdate,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "scrollX": true,
+                "columns": [
+                    {
+                        "data": "Date",
+                        "autoWidth": true,
+                        "render": function (value) {
+                            var dateString = value.substr(6);
+                            var currentTime = new Date(parseInt(dateString));
+                            var month = currentTime.getMonth() + 1;
+                            var monthString = month > 9 ? month : '0' + month;
+                            var day = currentTime.getDate();
+                            var dayString = day > 9 ? day : '0' + day;
+                            var year = currentTime.getFullYear();
+                            //var hours = currentTime.getHours();
+                            //var minutes = currentTime.getMinutes();
+                            //var seconds = currentTime.getSeconds();
+                            var date = dayString + "/" + monthString + "/" + year;
+                            return date;
+                        }
+
+                    },
+                    { "data": "RMRecevingArea", "autoWidth": true },
+                    { "data": "WeightingArea", "autoWidth": true },
+                    { "data": "Water", "autoWidth": true },
+                    { "data": "HygineArea", "autoWidth": true },
+                    { "data": "WalkWay", "autoWidth": true },
+                    { "data": "VerifyBy", "autoWidth": true },
+                    {
+                        data: "Id", "render": function (data) {
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                        }
+                    }
+                ]
+
+
+            });
+        }
+
+        $("#btnGo").on("click", function () {
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+            var flagdate = 2;
+
+            if (fromDate == null || fromDate == "") {
+                $('#fromDateValidate').text('Select from date!');
+                $('#fromDateValidate').show();
+                $("#fromDate").focus();
+                return;
+            }
+
+            if (toDate == null || toDate == "") {
+                $('#toDateValidate').text('Select to date!');
+                $('#toDateValidate').show();
+                $("#toDate").focus();
+                return;
+            }
+
+            if (fromDate > toDate) {
+                alert('Invalid date selection!');
+                $('#fromDate').focus();
+                return;
+            }
+            $('#ExportPdf').show();
+            $('#ExportExcel').show();
+
+            $('#tblPreStartupHygiene').dataTable().fnDestroy();
+            var t = $('#tblPreStartupHygiene').dataTable({
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "pageLength": 10,
+                /*"sAjaxSource": "/MicroAnalysis/GetAllMicroAnalysisList?fromDate=" + fromDate + "&toDate=" + toDate,*/
+                "sAjaxSource": "/PreStartupHygiene/GetPreStartupHygieneList?flagdate=" + flagdate + "&fromDate=" + fromDate + "&toDate=" + toDate,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    var flag = parseFloat(result.length);
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "scrollX": true,
+                "columns": [
+                    {
+                        "data": "Date",
+                        "autoWidth": true,
+                        "render": function (value) {
+                            var dateString = value.substr(6);
+                            var currentTime = new Date(parseInt(dateString));
+                            var month = currentTime.getMonth() + 1;
+                            var monthString = month > 9 ? month : '0' + month;
+                            var day = currentTime.getDate();
+                            var dayString = day > 9 ? day : '0' + day;
+                            var year = currentTime.getFullYear();
+                            //var hours = currentTime.getHours();
+                            //var minutes = currentTime.getMinutes();
+                            //var seconds = currentTime.getSeconds();
+                            var date = dayString + "/" + monthString + "/" + year;
+                            return date;
+                        }
+
+                    },
+                    { "data": "RMRecevingArea", "autoWidth": true },
+                    { "data": "WeightingArea", "autoWidth": true },
+                    { "data": "Water", "autoWidth": true },
+                    { "data": "HygineArea", "autoWidth": true },
+                    { "data": "WalkWay", "autoWidth": true },
+                    { "data": "VerifyBy", "autoWidth": true },
+                    {
+                        data: "Id", "render": function (data) {
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                        }
+                    }
+                ]
+            });
+
         });
+
+        $(document).on("click", ".btnEdit", function () {
+                    var id = $(this).attr("id");
+                    window.location.href = '@Url.Action("EditPreStartupHygiene", "PreStartupHygiene", new { Id = "Id"})'.replace("Id", parseInt(id));
+                });
+
+       $(document).on("click", ".btnDelete", function () {
+                    var id = $(this).attr("id");
+                    if (confirm("Are you sure want to delete?")) {
+                        window.location.href = '@Url.Action("Delete", "PreStartupHygiene", new { Id = "Id"})'.replace("Id", parseInt(id));
+                    }
+                })
     </script>
 }

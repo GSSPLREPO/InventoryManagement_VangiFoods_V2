@@ -37,7 +37,8 @@ namespace InVanWebApp.Repository
                     {
                         var calibrationLog = new CalibrationLogBO()
                         {
-                            Id = Convert.ToInt32(reader["SrNo"]),
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            Id = Convert.ToInt32(reader["Id"]),
                             NameOfEquipment = reader["NameOfEquipment"].ToString(),
                             IdNo = reader["IdNo"].ToString(),
                             Department = reader["Department"].ToString(),
@@ -241,6 +242,62 @@ namespace InVanWebApp.Repository
             }
         }
 
+        #endregion
+
+        #region  Bind grid for datatable
+        /// <summary>
+        /// Date: 17 March'23
+        /// Snehal: This function is for fecthing list of Calibration Log.
+        /// </summary>
+        /// <returns></returns>
+        public List<CalibrationLogBO> GetAllCalibrationLogList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+
+            List<CalibrationLogBO> calibrationLogList = new List<CalibrationLogBO>();
+            try
+            {
+                if (fromDate == null && toDate == null)
+                {
+                    fromDate = DateTime.Today;
+                    toDate = DateTime.Today;
+                }
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_CalibrationLog_GetAllByDate", con);
+                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var calibrationLog = new CalibrationLogBO()
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            NameOfEquipment = reader["NameOfEquipment"].ToString(),
+                            IdNo = reader["IdNo"].ToString(),
+                            Department = reader["Department"].ToString(),
+                            Range = reader["Range"].ToString(),
+                            RangeFrom = reader["RangeFrom"].ToString(),
+                            RangeTo = reader["RangeTo"].ToString(),
+                            FrequencyOfCalibration = reader["FrequencyOfCalibration"].ToString(),
+                            CalibrationDoneDate = Convert.ToDateTime(reader["CalibrationDoneDate"]),
+                            CalibrationDueDate = Convert.ToDateTime(reader["CalibrationDueDate"]),
+                            Remark = reader["Remark"].ToString(),
+                            VerifyByName = reader["VerifyByName"].ToString()
+                        };
+                        calibrationLogList.Add(calibrationLog);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return calibrationLogList;
+        }
         #endregion
     }
 }

@@ -101,7 +101,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.CalibrationDoneDate, "{0:yyyy-MM-dd}", new { @id = "doneDate", @class = "form-control form-control-sm", type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.TextBoxFor(model => model.CalibrationDoneDate, "{0:yyyy-MM-dd}", new { @id = "doneDate", @class = "form-control form-control-sm", type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd") , @readonly="readonly"})
                     @Html.ValidationMessageFor(model => model.CalibrationDoneDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -109,7 +109,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.CalibrationDueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.TextBoxFor(model => model.CalibrationDueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
                     @Html.ValidationMessageFor(model => model.CalibrationDueDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

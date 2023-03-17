@@ -14,37 +14,37 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select Date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
-        [Required(ErrorMessage = "Select Personal Hygine!")]
+        [Required(ErrorMessage = "Select Whether the Personal Hygiene Is Ok?")]
         public string PersonalHygine { get; set; }
-        [Required(ErrorMessage = "Select Cleaning & Sanitation!")]
+        [Required(ErrorMessage = "Select Whether the Cleaning & Sanitation Is Ok?")]
         public string CleaningAndSanitation { get; set; }
-        [Required(ErrorMessage = "Select Cleaning of Equipment!")]
+        [Required(ErrorMessage = "Select Whether the Cleaning of Equipment Is Ok?")]
         public string CleaningOfEquipment { get; set; }
-        [Required(ErrorMessage = "Select Water Potability!")]
+        [Required(ErrorMessage = "Select Potability of Water!")]
         public string WaterPotability { get; set; }
-        [Required(ErrorMessage = "Select Allergic!")]
+        [Required(ErrorMessage = "Select Whether Allergic?")]
         public string Allergic { get; set; }
-        [Required(ErrorMessage = "Select Non Allergic!")]
+        [Required(ErrorMessage = "Select Whether Non Allergic?")]
         public string NonAllergic { get; set; }
-        [Required(ErrorMessage = "Select Vegetable Processing Area!")]
+        [Required(ErrorMessage = "Select Cleaniness Of Vegetable Processing Area!")]
         public string VegetableProcessingArea { get; set; }
-        [Required(ErrorMessage = "Select Packaging & Labelling Area!")]
+        [Required(ErrorMessage = "Select Whether Packaging & Labelling Area Is Ok?")]
         public string PackagingLabellingArea { get; set; }
-        [Required(ErrorMessage = "Select FGS Area!")]
+        [Required(ErrorMessage = "Select Whether FGS Area Is Ok?")]
         public string FgsArea { get; set; }
-        [Required(ErrorMessage = "Select Inside!")]
+        [Required(ErrorMessage = "Select Whether the Pest Control is done inside?")]
         public string Inside { get; set; }
-        [Required(ErrorMessage = "Select Out Side!")]
+        [Required(ErrorMessage = "Select Whether the Pest Control is done outside?!")]
         public string OutSide { get; set; }
-        [Required(ErrorMessage = "Select Dry!")]
+        [Required(ErrorMessage = "Select Whether the waste is dry?")]
         public string Dry { get; set; }
-        [Required(ErrorMessage = "Select Wet!")]
+        [Required(ErrorMessage = "Select Whether the waste is wet?")]
         public string Wet { get; set; }
-        [Required(ErrorMessage = "Select Out Siders!")]
+        [Required(ErrorMessage = "Select Whether an Outsider?")]
         public string OutSiders { get; set; }
-        [Required(ErrorMessage = "Select Production Area!")]
+        [Required(ErrorMessage = "Select Whether Production Area Is Ok?")]
         public string ProductionArea { get; set; }
-        [Required(ErrorMessage = "Select Office Staff!")]
+        [Required(ErrorMessage = "Select Whether an Office Staff?")]
         public string OfficeStaff { get; set; }
         [Required(ErrorMessage = "Select Name of User!")]
         public string VerifyByName { get; set; }

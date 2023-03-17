@@ -18,13 +18,13 @@ namespace InVanWebApp_BO
         /*adding this flied*/
         //public string Time { get; set; }
 
-        [Required(ErrorMessage ="Enter Type of Pest!")]
+        [Required(ErrorMessage ="Enter the Type of Pest!")]
         public string TypeOfPest { get; set; }
 
         [Required(ErrorMessage = "Enter Method For Pest Control!")]
         public string MethodForPestControl { get; set; }
 
-        [Required(ErrorMessage = "Enter Area!")]
+        [Required(ErrorMessage = "Enter Area of Pest Control!")]
         public string Area { get; set; }
 
         [Required(ErrorMessage = "Enter Frequency!")]
@@ -36,7 +36,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Enter Effective Or Not!")]
         public string EffectiveOrNot { get; set; }
 
-        [Required(ErrorMessage = "Enter Any Hazard Detected After Pest!")]
+        [Required(ErrorMessage = "Enter the Name of Hazard Detected After Pest!")]
         public string AnyHazardDetectedAfterPest { get; set; }
 
         [Required(ErrorMessage = "Enter name of User!")]

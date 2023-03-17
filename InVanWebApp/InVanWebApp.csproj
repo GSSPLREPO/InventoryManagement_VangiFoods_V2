@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestForQuotationController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
+    <Compile Include="Controllers\RQCCPController.cs" />
     <Compile Include="Controllers\SalesOrderController.cs" />
     <Compile Include="Controllers\SanitizationAndHygineController.cs" />
     <Compile Include="Controllers\StockAdjustmentController.cs" />
@@ -489,6 +490,7 @@
     <Compile Include="Repository\Interface\IRejectionNoteRepository.cs" />
     <Compile Include="Repository\Interface\IReportRepository.cs" />
     <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
+    <Compile Include="Repository\Interface\IRQCCPRepository.cs" />
     <Compile Include="Repository\Interface\ISanitizationAndHygineRepository.cs" />
     <Compile Include="Repository\Interface\IStockAdjustmentRepository.cs" />
     <Compile Include="Repository\Interface\ITermsConditionRepository.cs" />
@@ -535,6 +537,7 @@
     <Compile Include="Repository\RequestForQuotationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
+    <Compile Include="Repository\RQCCPRepository.cs" />
     <Compile Include="Repository\SalesOrderRepository.cs" />
     <Compile Include="Repository\SanitizationAndHygineRepository.cs" />
     <Compile Include="Repository\StockAdjustmentRepository.cs" />
@@ -2971,7 +2974,6 @@
     <Content Include="Views\VegWasherDosageLog\AddVegWasherDosageLog.cshtml" />
     <Content Include="Views\VegWasherDosageLog\EditVegWasherDosageLog.cshtml" />
     <Content Include="Views\VegWasherDosageLog\Index.cshtml" />
-    <Content Include="Views\PreStartupHygiene\Index - Copy.cshtml" />
     <Content Include="Views\RecipeMater\AddRecipeItems.cshtml" />
     <Content Include="Views\RecipeMater\EditRecipeItem.cshtml" />
     <Content Include="Views\RecipeMater\Index.cshtml" />
@@ -2994,6 +2996,9 @@
     <Content Include="Views\MicroAnalysis\AddMicroAnalysis.cshtml" />
     <Content Include="Views\MicroAnalysis\EditMicroAnalysis.cshtml" />
     <Content Include="Views\MicroAnalysis\Index.cshtml" />
+    <Content Include="Views\RQCCP\AddRQCCP.cshtml" />
+    <Content Include="Views\RQCCP\EditRQCCP.cshtml" />
+    <Content Include="Views\RQCCP\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

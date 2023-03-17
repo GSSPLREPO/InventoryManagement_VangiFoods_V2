@@ -166,8 +166,9 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 ProductEvaluationLogBO model = new ProductEvaluationLogBO();
-                model.PELDateAfter7Days = DateTime.Today.AddDays(7);
                 model = _productEvaluationLogRepository.GetById(Id);
+                if(model.PELDateAfter7Days==null)
+                    model.PELDateAfter7Days = DateTime.Today.AddDays(7);
                 //model.Status = ;
                 
                 
@@ -309,7 +310,7 @@ namespace InVanWebApp.Controllers
             Response.ContentType = "application/vnd.ms-excel";
             Response.ContentEncoding = System.Text.Encoding.Unicode;
             Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
-            string filename = "Rpt_Product_Evaluation_Log_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            string filename = "Rpt_Product_Evaluation_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
             Response.AddHeader("content-disposition", "attachment;filename=" + filename);
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             StringWriter sw = new StringWriter();
@@ -319,7 +320,7 @@ namespace InVanWebApp.Controllers
             gv.RenderControl(hw);
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
-            string ReportName = "Product Evaluation Log Report";/* The Daily Monitoring Report name are given here  */
+            string ReportName = "Product Evaluation Report";/* The Daily Monitoring Report name are given here  */
             string Fromdate = "From Date : ";/* The From Date are given here  */
             string Todate = "To Date:";/* The To Date are given here  */
             string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
@@ -386,7 +387,7 @@ namespace InVanWebApp.Controllers
             if (productEvaluationLog .Count < 0)
                 return View("Index");
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
-            string ReportName = "Product Evaluation Log Report";
+            string ReportName = "Product Evaluation Report";
             string Fromdate = "From Date : ";
             string Todate = "To Date:";
             string fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
@@ -491,7 +492,7 @@ namespace InVanWebApp.Controllers
                     XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
                     pdfDoc.Close();
                     byte[] bytes = memoryStream.ToArray();
-                    string filename = "RPT_Product_Evaluation_Log_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    string filename = "RPT_Product_Evaluation_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
                     return File(memoryStream.ToArray(), "application/pdf", filename);
                 }
             }

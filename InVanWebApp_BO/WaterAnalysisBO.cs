@@ -17,47 +17,47 @@ namespace InVanWebApp_BO
 
         public string Time { get; set; }
 
-        [Required(ErrorMessage = "Enter RO water PH!")]
-        [Range(0, 14, ErrorMessage = "Enter RO water PH number between 0 to 14")]
-        public string PAPH { get; set; }
+        [Required(ErrorMessage = "Enter the PH of RO water!")]
+        [Range(typeof(decimal), "0", "14", ErrorMessage = "Enter PH Number between 0 to 14")]
+        public decimal? PAPH { get; set; }
 
-        [Required(ErrorMessage = "Enter RO water TDS!")]
+        [Required(ErrorMessage = "Enter the TDS of RO water!")]
         public string PATDS { get; set; }
 
-        [Required(ErrorMessage = "Enter Hardness!")]
+        [Required(ErrorMessage = "Enter the Hardness of RO Water!")]
 
         public string PAHardness { get; set; }
 
-        [Required(ErrorMessage = "Enter RO water Salt Added!")]
+        [Required(ErrorMessage = "Enter the amount of salt added in RO Water!")]
         [RegularExpression("^([a-zA-Z0-9 .&'-]+)*$", ErrorMessage = "RO water Salt Added must be alphanumeric.")]
         public string PASaltAdded { get; set; }
 
 
-        [Required(ErrorMessage = "Enter Soft Water PH!")]
-        [Range(0, 14, ErrorMessage = "Enter Soft Water PH number between 0 to 14")]
-        public string SWPH { get; set; }
+        [Required(ErrorMessage = "Enter the PH of  Soft Water!")]
+        [Range(typeof(decimal), "0", "14", ErrorMessage = "Enter PH Number between 0 to 14")]
+        public decimal? SWPH { get; set; }
 
-        [Required(ErrorMessage = "Enter Soft Water TDS!")]
+        [Required(ErrorMessage = "Enter the TDS of Soft Water!")]
         public string SWTDS { get; set; }
 
-        [Required(ErrorMessage = "Enter  Hardness!")]
+        [Required(ErrorMessage = "Enter the Hardness of Soft Water!")]
         public string SWHardness { get; set; }
 
-        [Required(ErrorMessage = "Enter ETP Plant TEMP!")]
+        [Required(ErrorMessage = "Enter the Temperature of ETP Plant!")]
         public string ETPTEM { get; set; }
 
-        [Required(ErrorMessage = "Enter ETP Plant PH!")]
-        [Range(0, 14, ErrorMessage = "Enter number between 0 to 14")]
-        public string ETPPH { get; set; }
+        [Required(ErrorMessage = "Enter the PH of ETP Plant!")]
+        [Range(typeof(decimal), "0", "14", ErrorMessage = "Enter PH Number between 0 to 14")]
+        public decimal? ETPPH { get; set; }
 
-        [Required(ErrorMessage = "Enter ETP Plant TDS!")]
+        [Required(ErrorMessage = "Enter the TDS of ETP Plant!")]
         public string ETPTDS { get; set; }
 
-        [Required(ErrorMessage = "Enter TEMP!")]
+        [Required(ErrorMessage = "Enter the Temperature!")]
         public string TEM { get; set; }
 
         
-        [Required(ErrorMessage = "Enter Gas Reading!")]
+        [Required(ErrorMessage = "Enter the Reading of Gas in ETP Plant!")]
         //[RegularExpression(@"[\d]{1,5}([.,][\d]{1,2})?", ErrorMessage = "Gas Reading must be a Decimal Number.")]
         public decimal? GasReading { get; set; }
 

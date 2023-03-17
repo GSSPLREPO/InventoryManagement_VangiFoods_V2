@@ -100,9 +100,11 @@
     <Compile Include="RequestForQuotationBO.cs" />
     <Compile Include="RequestForQuotationItemDetailsBO.cs" />
     <Compile Include="RoleRightBO.cs" />
+    <Compile Include="RQCCPBO.cs" />
     <Compile Include="SalesOrderBO.cs" />
     <Compile Include="SanitizationAndHygineBO.cs" />
     <Compile Include="ScreenNameBO.cs" />
+    <Compile Include="SiloCCPBO.cs" />
     <Compile Include="StockAdjustmentBO.cs" />
     <Compile Include="StockMasterBO.cs" />
     <Compile Include="StockMovementBO.cs" />

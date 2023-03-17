@@ -10,11 +10,11 @@ namespace InVanWebApp_BO
     public class CalibrationLogBO
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Enter Id No!")]
+        [Required(ErrorMessage = "Enter the Number of Id!")]
         public string IdNo { get; set; }
         [Required(ErrorMessage = "Enter Name of Equipment!")]
         public string NameOfEquipment { get; set; }
-        [Required(ErrorMessage = "Enter Department!")]
+        [Required(ErrorMessage = "Enter the Name of Department!")]
         public string Department { get; set; }
         [Required(ErrorMessage = "Enter Range!")]
         public string Range { get; set; }
@@ -42,5 +42,6 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public int SrNo { get; set; }
     }
 }

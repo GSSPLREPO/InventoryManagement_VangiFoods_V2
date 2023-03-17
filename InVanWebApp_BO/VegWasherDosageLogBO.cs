@@ -15,23 +15,23 @@ namespace InVanWebApp_BO
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
         //[RegularExpression(@"\d{0,5}(\.\d{1,2})?", ErrorMessage = "Solution-A ml must be a Integer or Decimal Number.")]
-        [Required(ErrorMessage = "Enter Solution-A ml!")]
+        [Required(ErrorMessage = "Enter the Proportion of Solution-A in ml!")]
         public double? VegWasher1SolutionAMl { get; set; }
-        [Required(ErrorMessage = "Enter Solution-B ml!")]
+        [Required(ErrorMessage = "Enter the Proportion of Solution-B in ml!")]
         public double? VegWasher1SolutionBMl { get; set; }
-        [Required(ErrorMessage = "Enter Name of Item!")]
+        [Required(ErrorMessage = "Enter the Name of Item!")]
         public string NameOfItem1 { get; set; }
-        [Required(ErrorMessage = "Enter Washing Time!")]
+        [Required(ErrorMessage = "Enter the time Required for Washing!")]
         public string WashingTime1 { get; set; }
         [Required(ErrorMessage = "Enter PPM!")]
         public string Ppm1 { get; set; }
-        [Required(ErrorMessage = "Enter Solution-A ml!")]
+        [Required(ErrorMessage = "Enter the Proportion of Solution-A in ml!")]
         public double? VegWasher2SolutionAMl { get; set; }
-        [Required(ErrorMessage = "Enter Solution-B ml!")]
+        [Required(ErrorMessage = "Enter the Proportion of Solution-B in ml!")]
         public double? VegWasher2SolutionBMl { get; set; }
-        [Required(ErrorMessage = "Enter Name of Item!")]
+        [Required(ErrorMessage = "Enter the Name of Item!")]
         public string NameOfItem2 { get; set; }
-        [Required(ErrorMessage = "Enter Washing Time!")]
+        [Required(ErrorMessage = "Enter the time Required for Washing!")]
         public string WashingTime2 { get; set; }
         [Required(ErrorMessage = "Enter PPM!")]
         public string Ppm2 { get; set; }

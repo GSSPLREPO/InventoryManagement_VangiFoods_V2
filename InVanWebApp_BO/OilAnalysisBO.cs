@@ -18,25 +18,25 @@ namespace InVanWebApp_BO
         /*adding this flied*/
         public string Time { get; set; }
 
-        [Required(ErrorMessage ="Enter Lot No!")]
+        [Required(ErrorMessage ="Enter Lot Number;!")]
        public string LotNo { get; set; }
 
-        [Required(ErrorMessage ="Enter Sample Name!")]
+        [Required(ErrorMessage ="Enter the Name of Sample!")]
         public string SampleName { get; set;}
 
-        [Required(ErrorMessage ="Enter ACID Value!")]
+        [Required(ErrorMessage ="Enter the Value of ACID!")]
         public decimal? ACIDValue { get; set; }
 
-        [Required(ErrorMessage ="Enter Peroxide Value!")]
+        [Required(ErrorMessage = "Enter the Value of Peroxide!")]
         public string PeroxideValue { get; set; }
 
-        [Required(ErrorMessage ="Enter Color Product!")]
+        [Required(ErrorMessage ="Enter the Color of Oil!")]
         public string Color { get; set; }
 
-        [Required(ErrorMessage ="Enter Flavour Product!")]
+        [Required(ErrorMessage ="Enter the Flavour of Oil!")]
         public string Flavour { get; set; }
 
-        [Required(ErrorMessage ="Enter Odour!")]
+        [Required(ErrorMessage ="Enter the Odour of Oil!")]
         public string Odour { get; set; }
 
         [Required(ErrorMessage = "Enter name of User!")]

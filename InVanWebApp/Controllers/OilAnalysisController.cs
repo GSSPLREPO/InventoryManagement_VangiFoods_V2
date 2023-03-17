@@ -297,12 +297,14 @@ namespace InVanWebApp.Controllers
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["ToDate"]).ToString("dd/MM/yyyy");
-            if (Fromdate == "01-01-0001")
+            if (fromdate == "01-01-0001")
             {
+                fromdate = "";
                 Fromdate = "";
             }
-            if (Todate == "01-01-0001")
+            if (todate == "01-01-0001")
             {
+                todate = "";
                 Todate = "";
             }
             //String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
@@ -388,10 +390,12 @@ namespace InVanWebApp.Controllers
             if (fromdate == "01-01-0001")
             {
                 fromdate = "";
+                Fromdate = "";
             }
             if (todate == "01-01-0001")
             {
                 todate = "";
+                Todate = "";
             }
 
             string name = ApplicationSession.ORGANISATIONTIITLE;

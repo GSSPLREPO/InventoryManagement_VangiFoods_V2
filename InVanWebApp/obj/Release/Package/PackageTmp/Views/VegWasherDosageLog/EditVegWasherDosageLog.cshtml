@@ -76,7 +76,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.WashingTime1, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphaNumeric(event);" })
+                    @Html.TextBoxFor(model => model.WashingTime1, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphaNumericRound(event);" })
                     @Html.ValidationMessageFor(model => model.WashingTime1, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -131,7 +131,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.WashingTime2, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumeric(event);" })
+                    @Html.TextBoxFor(model => model.WashingTime2, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericRound(event);" })
                     @Html.ValidationMessageFor(model => model.WashingTime2, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -199,7 +199,18 @@
     function IsAlphaNumeric(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode;
         if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
-            || unicode == 95 || unicode == 32 || unicode == 45 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            || unicode == 95 || unicode == 32 || unicode == 45 || unicode == 46 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    //Custom validation for only numeric, alphabets, underscore and NA/na character.
+    function IsAlphaNumericRound(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
+            || unicode == 95 || unicode == 32 || unicode == 45 || unicode == 46 || unicode == 40 || unicode == 41 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
             return true;
         }
         else {

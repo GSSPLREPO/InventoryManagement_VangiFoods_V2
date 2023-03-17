@@ -21,7 +21,7 @@ namespace InVanWebApp_BO
         public string NameOfEmpolyee{ get; set; }
 
         /*Department*/
-        [Required(ErrorMessage = "Enter Department!")]
+        [Required(ErrorMessage = "Enter Name of Department!")]
         public string Department { get; set; }
 
 
@@ -42,31 +42,31 @@ namespace InVanWebApp_BO
         //public string High { get; set; }
 
         /*Hand Wash*/
-        [Required(ErrorMessage = "Select Hand is Wash or Not!")]
+        [Required(ErrorMessage = "Select Whether Hand is Washed or Not!")]
         public string HandWash { get; set; }
 
         /*Clean Nails*/
-        [Required(ErrorMessage = "Select Nails is Cleaned or Not!")]
+        [Required(ErrorMessage = "Select Whether the Nails are Cleaned or Not!")]
         public string CleanNails { get; set; }
 
         /*Clean Uniform*/
-        [Required(ErrorMessage = "Select Uniform is Cleaned or Not!")]
+        [Required(ErrorMessage = "Select Whether the Uniform is Cleaned or Not!")]
         public string CleanUniform { get; set; }
 
         /*Appear Any Cuts and Wounds*/
-        [Required(ErrorMessage = "Select Any Cuts and Wounds!")]
+        [Required(ErrorMessage = "Select the presence of any Cuts and Wounds on Body!")]
         public string AppearAnyCutsandWounds { get; set; }
 
         /*Select Wear Any Jwellery*/
-        [Required(ErrorMessage = "Select Any Jewellery Carry by Employee!")]
+        [Required(ErrorMessage = "Select Whether the Employee is carrying the Jewellery!")]
         public string WearAnyJwellery { get; set; }
 
         /*Fully Coverd Hair*/
-        [Required(ErrorMessage = "Select Hair Fully Coverd or Not!!")]
+        [Required(ErrorMessage = "Select Whether the Hair is Fully Coverd or Not!")]
         public string FullyCoverdHair { get; set; }
 
         /*Clean Shoes*/
-        [Required(ErrorMessage = "Select Shoes Cleaned or Not!!")]
+        [Required(ErrorMessage = "Select Whether the Shoes are Cleaned or Not!!")]
         public string CleanShoes { get; set; }
 
         /*No Tobaco, Chewingum*/
@@ -74,7 +74,7 @@ namespace InVanWebApp_BO
         public string NoTobacoChewingum { get; set; }
 
         /*Any Kind Of Illness/Seakness*/
-        [Required(ErrorMessage = "Select Employee Having Any Kind Of Illness/Seakness!")]
+        [Required(ErrorMessage = "Select Whether the is Employee Having Any Kind Of Illness/Seakness!")]
         public string AnyKindOfIllnessSeakness { get; set; }
 
         /*Name of User*/

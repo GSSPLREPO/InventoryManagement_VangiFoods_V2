@@ -90,7 +90,7 @@ namespace InVanWebApp.Controllers
                         model.VerifyByName = Session[ApplicationSession.USERNAME].ToString();
                         response = _sanitizationAndHygineRepository.Insert(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Sanitization and Hygine Details Inserted Successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Sanitization and Hygiene Details Inserted Successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while insertion!');</script>";
@@ -152,7 +152,7 @@ namespace InVanWebApp.Controllers
                         model.Date = DateTime.Today;
                         response = _sanitizationAndHygineRepository.Update(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Sanitization and Hygine Details updated successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Sanitization and Hygiene Details updated successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while updating!');</script>";

@@ -15,7 +15,7 @@
 
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Chlorination Log 2-3 Time in Week</h4>
+            <h4 class="page-title">Chlorination Log</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
@@ -44,9 +44,10 @@
                                             <th>@Html.DisplayName("RO Water")</th>
                                             <th>@Html.DisplayName("Soft Water")</th>
                                             <th>@Html.DisplayName("Cooling Water Tank")</th>
-                                            <th>@Html.DisplayName("Processing Water")</th>
+                                            <th>@Html.DisplayName("Portable Water")</th>
+                                            <th>@Html.DisplayName("CIP Water Tank")</th>
                                             <th>@Html.DisplayName("Verify By")</th>
-                                            <th>@Html.DisplayName("Edit/Delete")</th>
+                                            <th>@Html.DisplayName("Action")</th>
                                         </tr>
                                     </thead>
 
@@ -60,6 +61,7 @@
                                             <td>@Html.DisplayFor(modelItem => item.SoftWater)</td>
                                             <td>@Html.DisplayFor(modelItem => item.CoolingWaterTank)</td>
                                             <td>@Html.DisplayFor(modelItem => item.ProcessingWater)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CIPWaterTank)</td>
                                             <td>@Html.DisplayFor(modelItem => item.VerifyByName)</td>
                                             <td>
                                                 <a href=@Url.Action("EditClorinationLog", "ClorinationLog", new { Id = item.Id })>

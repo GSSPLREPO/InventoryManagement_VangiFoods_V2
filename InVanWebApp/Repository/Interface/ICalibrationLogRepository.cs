@@ -23,5 +23,6 @@ namespace InVanWebApp.Repository.Interface
 
         //Function define for: Delete record of Calibration Log using it's Id
         void Delete(int Id, int userId);
+        List<CalibrationLogBO> GetAllCalibrationLogList(int flag, DateTime? fromDate = null, DateTime? toDate = null);
     }
 }
