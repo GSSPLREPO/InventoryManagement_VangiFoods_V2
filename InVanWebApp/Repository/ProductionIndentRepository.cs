@@ -1,4 +1,5 @@
-﻿using InVanWebApp.Repository.Interface;
+﻿using Dapper;
+using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
 using System;
@@ -29,7 +30,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_Indent_GetAllForIndent", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
@@ -185,7 +186,6 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-
         #region Insert function
         public ResponseMessageBO Insert(ProductionIndentBO model)
         {
@@ -201,13 +201,14 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@IndentDate", model.IssueDate);
                     cmd.Parameters.AddWithValue("@ProductionDate", model.ProductionDate);
                     cmd.Parameters.AddWithValue("@IndentBy", model.RaisedBy);
-                    cmd.Parameters.AddWithValue("@Remarks", model.Description);
-                    cmd.Parameters.AddWithValue("@ProductID", model.ProductID);
-                    cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@UserName", model.UserName);
                     cmd.Parameters.AddWithValue("@SalesOrderId", model.SalesOrderId);
                     cmd.Parameters.AddWithValue("@SONo", model.SONo);                    
                     cmd.Parameters.AddWithValue("@WorkOrderNo", model.WorkOrderNo);
-                    cmd.Parameters.AddWithValue("@UserName", model.UserName);
+                    cmd.Parameters.AddWithValue("@RecipeID", model.RecipeID);
+                    cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
+                    cmd.Parameters.AddWithValue("@TotalBatches", model.TotalBatches);
+                    cmd.Parameters.AddWithValue("@Remarks", model.Description);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
@@ -216,7 +217,7 @@ namespace InVanWebApp.Repository
                     var IndentID = 0;
                     while (dataReader.Read())
                     {
-                        IndentID = Convert.ToInt32(dataReader["ID"]);
+                        IndentID = Convert.ToInt32(dataReader["IndentID"]);
                         result.Status = Convert.ToBoolean(dataReader["Status"]);
                     }
                     con.Close();
@@ -233,8 +234,8 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
                         objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
                         objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.BatchQty = Convert.ToDouble(item.ElementAt(3).Value);
-                        objItemDetails.FinalQty = Convert.ToDouble(item.ElementAt(4).Value);
+                        objItemDetails.BatchQuantity = Convert.ToDouble(item.ElementAt(3).Value);
+                        objItemDetails.FinalQuantity = Convert.ToDouble(item.ElementAt(4).Value);
                         objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString();
                         objItemDetails.Percentage = Convert.ToDouble(item.ElementAt(6).Value);
 
@@ -244,7 +245,7 @@ namespace InVanWebApp.Repository
                     foreach (var item in itemDetails)
                     {
                         con.Open();
-                        SqlCommand cmdNew = new SqlCommand("usp_tbl_IndentDetails_Insert", con);
+                        SqlCommand cmdNew = new SqlCommand("usp_tbl_ProductionIndentIngredientsDetails_Insert", con);
                         cmdNew.CommandType = CommandType.StoredProcedure;
 
                         cmdNew.Parameters.AddWithValue("@ProductionIndentID", item.ProductionIndentID);
@@ -255,8 +256,9 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
                         cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
                         cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
-                        cmdNew.Parameters.AddWithValue("@BatchQuantity", item.BatchQty);
-                        cmdNew.Parameters.AddWithValue("@FinalQuantity", item.FinalQty);
+                        cmdNew.Parameters.AddWithValue("@BatchQuantity", item.BatchQuantity);
+                        cmdNew.Parameters.AddWithValue("@FinalQuantity", item.FinalQuantity);
+                        cmdNew.Parameters.AddWithValue("@Percentage", item.Percentage);
                         cmdNew.Parameters.AddWithValue("@ProductionCheck", model.UserName);
                         cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -277,6 +279,207 @@ namespace InVanWebApp.Repository
                 result.Status = false;
             }
             return result;
+        }
+        #endregion
+
+        #region Update functions
+        /// <summary>
+        /// Created By: Rahul
+        /// Description: Fetch Production Indent by it's ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ProductionIndentBO GetById(int id)
+        {
+            var result = new ProductionIndentBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_GetByID", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        result = new ProductionIndentBO()
+                        {                            
+                            ProductionIndentNo = reader["ProductionIndentNo"].ToString(),
+                            IssueDate = Convert.ToDateTime(reader["IssueDate"]),
+                            ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),
+                            RaisedBy = Convert.ToInt32(reader["RaisedBy"]),
+                            UserName = reader["UserName"].ToString(),
+                            RecipeID = Convert.ToInt32(reader["RecipeID"]),
+                            RecipeName = reader["RecipeName"].ToString(),
+                            SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),
+                            SONo = reader["SONo"].ToString(),
+                            WorkOrderNo = reader["WorkOrderNo"].ToString(),
+                            TotalBatches = Convert.ToInt32(reader["TotalBatches"]),
+                            Description = reader["Description"].ToString()                            
+                            //IndentStatus = reader["IndentStatus"].ToString(),
+                            //IndentDate= DateTime.ParseExact(reader["IndentDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture),
+
+                        };
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        ///Created By: Rahul
+        ///Description: This function is used to get the list of Items againts Production Indent ID 
+        ///using dapper for Production Indent module.
+        /// </summary>
+        /// <param name="ProductionIndentID"></param>
+        /// <returns></returns>
+        public List<ProductionIndent_DetailsBO> GetItemDetailsByProductionIndentId(int ProductionIndentID) 
+        {
+            string queryString = "select * From ProductionIndentIngredientsDetails where ProductionIndentID = @ProductionIndentID AND IsDeleted = 0";
+            using (SqlConnection con = new SqlConnection(conString))
+            {
+                var result = con.Query<ProductionIndent_DetailsBO>(queryString, new { @ProductionIndentID = ProductionIndentID }).ToList();
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Created by: Rahul
+        /// Description: Update function for Production Indent
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public ResponseMessageBO Update(ProductionIndentBO model)
+        {
+            ResponseMessageBO result = new ResponseMessageBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_Update", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@IndentID", model.ID);
+                    cmd.Parameters.AddWithValue("@ProductionIndentNo", model.ProductionIndentNo);
+                    cmd.Parameters.AddWithValue("@IssueDate", model.IssueDate);
+                    cmd.Parameters.AddWithValue("@ProductionDate", model.ProductionDate);
+                    cmd.Parameters.AddWithValue("@IndentBy", model.RaisedBy);
+                    cmd.Parameters.AddWithValue("@UserName", model.UserName);
+                    cmd.Parameters.AddWithValue("@SalesOrderId", model.SalesOrderId);
+                    cmd.Parameters.AddWithValue("@SONo", model.SONo);
+                    cmd.Parameters.AddWithValue("@WorkOrderNo", model.WorkOrderNo);
+                    cmd.Parameters.AddWithValue("@RecipeID", model.RecipeID);
+                    cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
+                    cmd.Parameters.AddWithValue("@TotalBatches", model.TotalBatches);
+                    cmd.Parameters.AddWithValue("@Remarks", model.Description);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        result.Status = Convert.ToBoolean(dataReader["Status"]);
+                    }
+                    con.Close();
+
+                    var json = new JavaScriptSerializer();
+                    var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
+
+                    List<ProductionIndent_DetailsBO> itemDetails = new List<ProductionIndent_DetailsBO>();
+
+                    foreach (var item in data)
+                    {
+                        ProductionIndent_DetailsBO objItemDetails = new ProductionIndent_DetailsBO();
+
+                        objItemDetails.ProductionIndentID = model.ID;
+                        objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
+                        objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
+                        objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                        objItemDetails.BatchQuantity = Convert.ToDouble(item.ElementAt(3).Value);
+                        objItemDetails.FinalQuantity = Convert.ToDouble(item.ElementAt(4).Value);
+                        objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString();
+                        objItemDetails.Percentage = Convert.ToDouble(item.ElementAt(6).Value);
+
+                        itemDetails.Add(objItemDetails);
+                    }
+                    var count = itemDetails.Count;
+                    var i = 1;
+                    foreach (var item in itemDetails)
+                    {
+                        con.Open();
+                        SqlCommand cmdNew = new SqlCommand("usp_tbl_ProductionIndentDetails_Update", con);
+                        cmdNew.CommandType = CommandType.StoredProcedure;
+
+                        cmdNew.Parameters.AddWithValue("@ProductionIndentID", item.ProductionIndentID);
+                        cmdNew.Parameters.AddWithValue("@QCcheck_1", item.QCcheck_1);
+                        cmdNew.Parameters.AddWithValue("@QCcheck_2", item.QCcheck_2);
+                        cmdNew.Parameters.AddWithValue("@QCcheck_3", item.QCcheck_3);
+                        cmdNew.Parameters.AddWithValue("@Item_ID", item.ItemId);
+                        cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
+                        cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
+                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                        cmdNew.Parameters.AddWithValue("@BatchQuantity", item.BatchQuantity);
+                        cmdNew.Parameters.AddWithValue("@FinalQuantity", item.FinalQuantity);
+                        cmdNew.Parameters.AddWithValue("@Percentage", item.Percentage);
+                        cmdNew.Parameters.AddWithValue("@ProductionCheck", model.UserName);
+                        cmdNew.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
+                        cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+
+                        if (count == 1)
+                            cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
+                        else
+                        {
+                            cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 0);
+                            cmdNew.Parameters.AddWithValue("@flagCheck", i);
+                        }
+                        i++;
+                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                        while (dataReaderNew.Read())
+                        {
+                            result.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                        }
+                        con.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                result.Status = false;
+            }
+            return result;
+        }
+        #endregion
+
+        #region Delete function
+        public void Delete(int ID, int userId)
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_Delete", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ProductionIndentID", ID);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
         }
         #endregion
 

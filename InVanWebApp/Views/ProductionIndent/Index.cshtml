@@ -58,10 +58,10 @@
                                                 <td>
                                                     @if (item.IndentCount == 0)
                                                     {
-                                                        <a href=@Url.Action("EditIndent", "Indent", new { ID = item.ID }) title="Edit Indent">
+                                                        <a href=@Url.Action("EditProductionIndent", "ProductionIndent", new { ID = item.ID }) title="Edit Production Indent">
                                                             <i class="fa fa-edit text-primary"></i>
                                                         </a> <span>&emsp;</span>
-                                                        <a href=@Url.Action("DeleteIndent", "Indent", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Indent">
+                                                        <a href=@Url.Action("DeleteProductionIndent", "ProductionIndent", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Production Indent">
                                                             <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                         </a>
                                                     }

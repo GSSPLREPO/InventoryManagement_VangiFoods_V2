@@ -48,7 +48,7 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region MyRegion
+        #region Bind grid 
         /// <summary>
         /// Date: 24 Feb 2023
         /// Rahul:  Get data and rendered it in it's view. 
@@ -186,7 +186,7 @@ namespace InVanWebApp.Controllers
                             return View(model);
                         }
 
-                        return RedirectToAction("Index", "Indent");
+                        return RedirectToAction("Index", "ProductionIndent");
 
                     }
                     else
@@ -229,6 +229,181 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Update Functions
+        /// <summary>
+        ///Create By: Rahul 
+        ///Description: Rendered the user to the edit page with details of a perticular record.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditProductionIndent(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                BindUsers();
+                BindItemTypeCategory();
+
+                ProductionIndentBO model = _productionIndentRepository.GetById(ID);
+                model.indent_Details = _productionIndentRepository.GetItemDetailsByProductionIndentId(ID); 
+                //Binding item grid with sell type item.
+                var itemList = _repository.GetItemDetailsForDD();
+                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                string itemListForDD = "itemListForDD";
+
+                if (model != null)
+                {
+                    var ItemCount = model.indent_Details.Count;
+                    var i = 0;
+                    while (i < ItemCount)
+                    {
+                        itemListForDD = "itemListForDD";
+                        itemListForDD = itemListForDD + i;
+                        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.indent_Details[i].ItemId);
+                        ViewData[itemListForDD] = dd;
+                        i++;
+                    }
+
+                }
+
+                ViewData[itemListForDD] = dd;
+
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+
+        }
+
+        /// <summary>
+        /// Rahul:  Pass the data to the repository for updating that record.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditProductionIndent(ProductionIndentBO model) 
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+
+            try
+            {
+                if (Session[ApplicationSession.USERID] != null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _productionIndentRepository.Update(model);
+
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Production Indent updated successfully!');</script>";
+
+
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                            BindUsers();
+                            BindItemTypeCategory();
+
+                            ProductionIndentBO model1 = _productionIndentRepository.GetById(model.ID);
+                            model1.indent_Details = _productionIndentRepository.GetItemDetailsByProductionIndentId(model.ID);
+
+                            //Binding item grid with sell type item.
+                            var itemList = _repository.GetItemDetailsForDD();
+                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                            string itemListForDD = "itemListForDD";
+
+                            if (model1 != null)
+                            {
+                                var ItemCount = model1.indent_Details.Count;
+                                var i = 0;
+                                while (i < ItemCount)
+                                {
+                                    itemListForDD = "itemListForDD";
+                                    itemListForDD = itemListForDD + i;
+                                    dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.indent_Details[i].ItemId);
+                                    ViewData[itemListForDD] = dd;
+                                    i++;
+                                }
+
+                            }
+
+                            ViewData[itemListForDD] = dd;
+
+                            return View(model1);
+                        }
+
+                        return RedirectToAction("Index", "ProductionIndent");
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        BindUsers();
+                        BindItemTypeCategory();
+
+                        ProductionIndentBO model1 = _productionIndentRepository.GetById(model.ID);
+                        model1.indent_Details = _productionIndentRepository.GetItemDetailsByProductionIndentId(model.ID);
+
+                        //Binding item grid with sell type item.
+                        var itemList = _repository.GetItemDetailsForDD();
+                        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                        string itemListForDD = "itemListForDD";
+
+                        if (model1 != null)
+                        {
+                            var ItemCount = model1.indent_Details.Count;
+                            var i = 0;
+                            while (i < ItemCount)
+                            {
+                                itemListForDD = "itemListForDD";
+                                itemListForDD = itemListForDD + i;
+                                dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.indent_Details[i].ItemId);
+                                ViewData[itemListForDD] = dd;
+                                i++;
+                            }
+
+                        }
+
+                        ViewData[itemListForDD] = dd;
+
+                        return View(model1);
+                    }
+                }
+                else
+                    return RedirectToAction("Index", "Login");
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
+                return RedirectToAction("Index", "ProductionIndent");
+            }
+        }
+        #endregion
+
+
+        #region Delete function
+        /// <summary>
+        /// Create By: Rahul
+        /// Description: This function is for deleting the Production Indent and 
+        /// Production Indent Ingredients details by using Production Indent ID.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteProductionIndent(int ID) 
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                _productionIndentRepository.Delete(ID, userID);
+                TempData["Success"] = "<script>alert('Production Indent deleted successfully!');</script>";
+                return RedirectToAction("Index", "ProductionIndent");
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+        #endregion
 
 
     }

@@ -23,8 +23,8 @@ namespace InVanWebApp_BO
         public Nullable<int> ItemId { get; set; }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }        
-        public double BatchQty { get; set; } 
-        public double FinalQty { get; set; }  
+        public double BatchQuantity { get; set; }  
+        public double FinalQuantity { get; set; }  
         public string ItemUnit { get; set; }        
         public double Percentage { get; set; } 
     }

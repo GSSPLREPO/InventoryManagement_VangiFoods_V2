@@ -20,8 +20,8 @@ namespace InVanWebApp_BO
         public string Description { get; set; }
         public Nullable<int> Status { get; set; }
         [Required(ErrorMessage = "Select the Product Name!")]
-        public int ProductID { get; set; }        
-        public string ProductName { get; set; }
+        public int RecipeID { get; set; }         
+        public string RecipeName { get; set; }
         public int SalesOrderId { get; set; }
         public string SONo { get; set; }        
         public string WorkOrderNo { get; set; } 

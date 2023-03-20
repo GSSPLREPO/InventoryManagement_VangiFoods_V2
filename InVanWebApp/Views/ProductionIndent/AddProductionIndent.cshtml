@@ -77,7 +77,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
-                   new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)" })
+                   new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })
                     @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
                     @Html.HiddenFor(model => model.WorkOrderNo)
                 </div>
@@ -90,9 +90,9 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val(),id)" })
-                    @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error mt-2 text-danger" })
-                    @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
+                    @Html.DropDownListFor(model => model.RecipeID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val(),id)" })
+                    @Html.ValidationMessageFor(model => model.RecipeID, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
                 </div>
 
                 <div class="col-md-2">
@@ -204,10 +204,10 @@
 
     function SelectedIndexChangedProductNameList(id) {
 
-        var selectedOptionProductName, productName;
-        selectedOptionProductName = document.getElementById("ProductID").selectedIndex;
-        productName = document.getElementById("ProductID").options[selectedOptionProductName].innerText;
-        document.getElementById("ProductName").value = productName;
+        var selectedOptionRecipeName, RecipeName;
+        selectedOptionRecipeName = document.getElementById("RecipeID").selectedIndex;
+        RecipeName = document.getElementById("RecipeID").options[selectedOptionRecipeName].innerText;
+        document.getElementById("RecipeName").value = RecipeName;
 
         $("#TotalBatches").val('1');
         //For deleting the rows of Item table if exist.
@@ -227,7 +227,7 @@
             dataType: "json",
             success: function (result) {
                 console.log(result);
-                //$('#ProductName').val(result[0].ProductName);
+                //$('#RecipeName').val(result[0].RecipeName);
                 var ColCount = result.length;
 
                 //===================Create dynamic table for binding Item details====================//
