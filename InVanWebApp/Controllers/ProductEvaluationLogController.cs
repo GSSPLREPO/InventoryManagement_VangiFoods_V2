@@ -268,8 +268,8 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Acid");
             dt.Columns.Add("Salt");
             dt.Columns.Add("Viscosity");
-            dt.Columns.Add("Date ");
-            dt.Columns.Add("Ph ");
+            dt.Columns.Add("Date after 7 days");
+            dt.Columns.Add("Ph after 7 days");
             dt.Columns.Add("Tex, Col & Taste ");
             dt.Columns.Add("Acid ");
             dt.Columns.Add("Salt ");
@@ -291,8 +291,8 @@ namespace InVanWebApp.Controllers
                 dr["Acid"] = st.Acid.ToString();
                 dr["Salt"] = st.Salt.ToString();
                 dr["Viscosity"] = st.Viscosity.ToString();
-                dr["Date "] = st.PELDateAfter7Days == null ? "" : st.PELDateAfter7Days.ToString(); 
-                dr["Ph "] = st.PhAfter7Days == null ? "" : st.PhAfter7Days.ToString(); 
+                dr["Date after 7 days"] = st.PELDateAfter7Days == null ? "" : st.PELDateAfter7Days.ToString(); 
+                dr["Ph after 7 days"] = st.PhAfter7Days == null ? "" : st.PhAfter7Days.ToString(); 
                 dr["Tex, Col & Taste "] = st.TexColTasteAfter7Days == null ? "" : st.TexColTasteAfter7Days.ToString();
                 dr["Acid "] = st.AcidAfter7Days == null ? "" : st.AcidAfter7Days.ToString();
                 dr["Salt "] = st.SaltAfter7Days == null ? "" : st.SaltAfter7Days.ToString();
@@ -300,6 +300,7 @@ namespace InVanWebApp.Controllers
                 dr["Work Order"] = st.WorkOrder==null?"": st.WorkOrder.ToString();
                 dr["Status"] = st.Status.ToString();
                 dr["Remark"] = st.Remark.ToString();
+                dr["Verify By"] = st.VerifyByName.ToString();
 
                 dt.Rows.Add(dr);
             }

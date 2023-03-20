@@ -606,7 +606,7 @@ namespace InVanWebApp.Repository
                         var result = new GRN_BO()
                         {
                             SrNo = Convert.ToInt32(reader["SrNo"]),
-                            itemName = reader["ItemName"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
                             ItemCode = reader["ItemCode"].ToString(),
                             GRN_Date = Convert.ToDateTime(reader["GRNDate"]).ToString("dd/MM/yyyy"),
                             GRNCode = reader["GRNCode"].ToString(),
