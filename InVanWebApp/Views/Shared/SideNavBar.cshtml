@@ -20,21 +20,21 @@
 <body>
     <ul class="nav">
         @*<li class="nav-item nav-profile">
-                <div class="nav-link">
-                    <div class="profile-image">
-                        <img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image" />
-                        <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image" />
-                    </div>
-                    <div class="profile-name">
-                        <p class="name">
-                            Welcome VangiFood
-                        </p>
-                        <p class="designation">
-                            Super Admin
-                        </p>
-                    </div>
+            <div class="nav-link">
+                <div class="profile-image">
+                    <img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image" />
+                    <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image" />
                 </div>
-            </li>*@
+                <div class="profile-name">
+                    <p class="name">
+                        Welcome VangiFood
+                    </p>
+                    <p class="designation">
+                        Super Admin
+                    </p>
+                </div>
+            </div>
+        </li>*@
         <br />
         <li class="nav-item">
             <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">
@@ -51,7 +51,7 @@
             <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
-                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
+                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a></li>
                 </ul>
@@ -245,6 +245,24 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-production" aria-expanded="false" aria-controls="form-production">
+                <i class="fas fa-cogs menu-icon"></i>
+                <span class="menu-title">Production</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-production">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="ProductionIndent">
+                            <a class="nav-link" href="@Url.Action("Index","ProductionIndent")">Production Indent</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+
+        <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#editors" aria-expanded="false" aria-controls="editors">
                 <i class="fas fa-pen-square menu-icon"></i>
                 <span class="menu-title">Masters</span>
@@ -370,10 +388,10 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                            <div id="RejectionNoteReport">
-                                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
-                            </div>
-                        </li>*@
+                        <div id="RejectionNoteReport">
+                            <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+                        </div>
+                    </li>*@
                     <li class="nav-item">
                         <div id="RejectionNoteReport">
                             <a class="nav-link" href="~/Report/RejectionReport">Rejection Report</a>
@@ -400,10 +418,10 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                            <div id="InventoryControlReport">
-                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-                            </div>
-                        </li>*@
+                        <div id="InventoryControlReport">
+                            <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+                        </div>
+                    </li>*@
                 </ul>
             </div>
         </li>

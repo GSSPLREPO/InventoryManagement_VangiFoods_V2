@@ -3,15 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
     public class SalesOrderBO
     {
         public int SalesOrderId { get; set; }
+        
+        [Required(ErrorMessage ="Enter sales order number!")]
         public string SONo { get; set; }
+
+        [Required(ErrorMessage ="Select document date!")]
         public Nullable<System.DateTime> SODate { get; set; }
+
+        [Required(ErrorMessage ="Select delivery date!")]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
+
+        [Required(ErrorMessage ="Select client date!")]
         public int ClientID { get; set; }
         public string CompanyName { get; set; }
         public decimal CGST { get; set; }
@@ -23,16 +32,25 @@ namespace InVanWebApp_BO
         public Nullable<bool> Cancelled { get; set; }
         public string ReasonForCancellation { get; set; }
         public Nullable<bool> DraftFlag { get; set; }
+        [Required(ErrorMessage ="Enter amendment no.!")]
         public Nullable<int> Amendment { get; set; }
+
+        [Required(ErrorMessage ="Enter delivery address!")]
         public string DeliveryAddress { get; set; }
+
+        [Required(ErrorMessage ="Enter supplier address!")]
         public string SupplierAddress { get; set; }
         public decimal AdvancedPayment { get; set; }
         public decimal GrandTotal { get; set; }
         public decimal TotalAfterTax { get; set; }
+
+        [Required(ErrorMessage ="Select location!")]
         public int LocationId { get; set; }
         public string LocationName { get; set; }
         public string Attachment { get; set; }
         public string QuotationRef { get; set; }
+
+        [Required(ErrorMessage ="Select currency!")]
         public int CurrencyID { get; set; }
         public string CurrencyName { get; set; }
         public decimal CurrencyPrice { get; set; }
