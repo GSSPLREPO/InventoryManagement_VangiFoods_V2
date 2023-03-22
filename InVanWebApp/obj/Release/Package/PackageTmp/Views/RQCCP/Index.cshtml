@@ -8,20 +8,20 @@
 
 <html>
 <head>
-    <title>RQ CCP</title>
+    <title>Stage-1 RQ CCP</title>
 </head>
 <body>
 
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">RQ CCP</h4>
+            <h4 class="page-title">Stage-1 RQ CCP</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         @*Rahul updated anchor tag text 'Master' to 'Transactions' 16-02-23.*@
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Productions</a>
                     </li>
-                    <li class="breadcrumb-item active">RQ CCP</li>
+                    <li class="breadcrumb-item active">Stage-1 RQ CCP</li>
                 </ol>
             </nav>
         </div>
@@ -56,28 +56,28 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Activity)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.NoBatches)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.BatchWeight)</td>
-                                            @*<td>@Html.DisplayFor(modelItem => item.MonitoringParameter)</td>*@
-                                            <td>@Html.DisplayFor(modelItem => item.BatchReleaseTimeOfRQ)</td>
-                                            @*<td>@Html.DisplayFor(modelItem => item.MandatoryTemp)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Frequency)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Responsibility)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Remarks)</td>*@
-                                            <td>@Html.DisplayFor(modelItem => item.Verification)</td>
-                                            <td>
-                                                <a href=@Url.Action("EditRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID })>
-                                                    <i class="fa fa-edit text-primary"></i>
-                                                </a> &emsp;
-                                                <a href=@Url.Action("DeleteRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID }) onclick="return confirm('Are you sure want to delete?');">
-                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Activity)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.NoBatches)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.BatchWeight)</td>
+                                                @*<td>@Html.DisplayFor(modelItem => item.MonitoringParameter)</td>*@
+                                                <td>@Html.DisplayFor(modelItem => item.BatchReleaseTimeOfRQ)</td>
+                                                @*<td>@Html.DisplayFor(modelItem => item.MandatoryTemp)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.Frequency)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.Responsibility)</td>
+                                                    <td>@Html.DisplayFor(modelItem => item.Remarks)</td>*@
+                                                <td>@Html.DisplayFor(modelItem => item.Verification)</td>
+                                                <td>
+                                                    <a href=@Url.Action("EditRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID })>
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a> &emsp;
+                                                    <a href=@Url.Action("DeleteRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID }) onclick="return confirm('Are you sure want to delete?');">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -108,7 +108,8 @@
                 //"aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
                 "iDisplayLength": 10
             });
-       
+
+        });
 
         var table = $('#tblRQCCP').dataTable({
             "serverSide": false,
@@ -120,8 +121,7 @@
             //"pageLength": 15
         });
 
-    });
-      
+
     </script>
 
-    }
+}

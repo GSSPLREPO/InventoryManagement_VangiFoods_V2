@@ -113,7 +113,7 @@
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95", onkeypress = "createJson();" })
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95"})
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -241,7 +241,6 @@
     var TxtItemDetails = "";
 
     $("#TotalBatches").change(function () {
-        debugger
         var totalBatches = $("#TotalBatches").val();
         if (totalBatches > 0) {
             var len = document.getElementById("ItemTable").rows.length;
@@ -290,7 +289,6 @@
 
         $("#TotalBatches").val('1');
         //For deleting the rows of Item table if exist.
-        debugger
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
         while (rowCount != '1') {
@@ -305,7 +303,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                console.log(result);
+              
                 //$('#RecipeName').val(result[0].RecipeName);
                 var ColCount = result.length;
 
@@ -346,12 +344,7 @@
                         else if (i == 3) {
                             cell.innerHTML = result[j].ItemQuantity.toFixed(4);
                             cell.setAttribute("id", "ItemQty_" + j);
-                            //debugger
-                            //var totalBatches = $("#TotalBatches").val();
-                            //var ratio = result[j].Ratio;
-                            //var ItemQty = totalBatches * ratio;
-                            ////cell.setAttribute("value", ItemQty);
-                            //cell.innerHTML = ItemQty;
+                           
                         }
                         else if (i == 4) {
                             var t4 = document.createElement("input");
@@ -361,14 +354,7 @@
                             t4.setAttribute("maxlength", "8");
                             t4.setAttribute("onkeypress", "return isNumberKey(event)");
                             t4.setAttribute("value", result[j].FinalQuantity.toFixed(4));
-                            //debugger
-                            //$("#TotalBatches").change(function () {
-                            //debugger
-                            //var totalBatches = $("#TotalBatches").val();
-                            //var itemQuantity = result[j].ItemQuantity;
-                            //var ItemQty = totalBatches * itemQuantity;
-                            //t4.setAttribute("value", ItemQty.toFixed(4));
-                            //});
+                           
                             t4.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
 
                             t4.setAttribute("class", "form-control form-control-sm");
@@ -416,43 +402,9 @@
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
         createJson();
-
-        //var tableLength = document.getElementById('submissionTable').rows.length;
-        //var flag = 0, i = 1;
-
-        //var RequiredQuantity = $('#RequiredQuantity').val();
-        //var IndentBy = $('#RaisedBy').val();    //Rahul added 'IndentBy' if 'flag = 1;' then '#btnSave' 'disabled' 22-02-23.
-        //if (IndentBy == '' || IndentBy == null) {
-        //    $('#RaisedBy').focus();
-        //    flag = 1;
-        //}
-        //if (RequiredQuantity != '' && RequiredQuantity != 0) {
-        //    flag = 1;
-        //}
-        //if (tableLength > 1) {
-        //    while (i < tableLength - 1) {
-        //        var PhyQty = document.getElementById("requiredQuantity_" + i).value;
-        //        PhyQty = parseFloat(PhyQty);
-
-        //        if (PhyQty != 0) {
-        //            flag = 1;
-
-        //            i++;
-        //        }
-
-        //    }
-        //    if (flag != 1) {
-        //        alert("Required quantity is zero or null! Cannot create Production Indent!");
-        //        $('#btnSave').prop('disabled', true);
-        //        return;
-        //    }
-        //    else
-        //        $('#btnSave').prop('disabled', false);
-        //}
     };
 
     function createJson() {
-        debugger
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
         var i = 1;
@@ -480,7 +432,7 @@
         }
         TxtItemDetails = TxtItemDetails + "]"
         $('#TxtItemDetails').val(TxtItemDetails);
-        console.log(TxtItemDetails);
+       
     }
     //==========end===============
 

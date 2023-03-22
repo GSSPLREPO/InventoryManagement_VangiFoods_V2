@@ -93,77 +93,202 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        //[HttpPost]
-        //public ActionResult AddSalesOrder(SalesOrderBO model, HttpPostedFileBase Signature)
-        //{
-        //    try
-        //    {
-        //        if (Session[ApplicationSession.USERID] != null)
-        //        {
-        //            ResponseMessageBO response = new ResponseMessageBO();
+        [HttpPost]
+        public ActionResult AddSalesOrder(SalesOrderBO model, HttpPostedFileBase Signature)
+        {
+            try
+            {
+                if (Session[ApplicationSession.USERID] != null)
+                {
+                    ResponseMessageBO response = new ResponseMessageBO();
 
-        //            if (Signature != null)
-        //            {
-        //                UploadSignature(Signature);
-        //                model.Signature = Signature.FileName.ToString();
-        //            }
-        //            else
-        //                model.Signature = null;
+                    if (Signature != null)
+                    {
+                        UploadSignature(Signature);
+                        model.Signature = Signature.FileName.ToString();
+                    }
+                    else
+                        model.Signature = null;
 
-        //            if (ModelState.IsValid)
-        //            {
-        //                model.CreatedById = Convert.ToInt32(Session[ApplicationSession.USERID]);
-        //                response = _purchaseOrderRepository.Insert(model);
-        //                if (response.Status)
-        //                {
-        //                    if (model.DraftFlag == true)
-        //                        TempData["Success"] = "<script>alert('Purchase order inserted as draft successfully!');</script>";
-        //                    else
-        //                        TempData["Success"] = "<script>alert('Purchase Order inserted successfully!');</script>";
+                    if (ModelState.IsValid)
+                    {
+                        model.CreatedById = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _repository.Insert(model);
+                        if (response.Status)
+                        {
+                            if (model.DraftFlag == true)
+                                TempData["Success"] = "<script>alert('Sales Order inserted as draft successfully!');</script>";
+                            else
+                                TempData["Success"] = "<script>alert('Sales Order inserted successfully!');</script>";
 
-        //                }
-        //                else
-        //                {
-        //                    TempData["Success"] = "<script>alert('Duplicate Purchase Order! Can not be inserted!');</script>";
-        //                    BindCompany();
-        //                    BindTermsAndCondition();
-        //                    BindCurrencyPrice();
-        //                    BindLocationName();
-        //                    BindIndentDropDown();
-        //                    UploadSignature(Signature);
-        //                    return View(model);
-        //                }
+                        }
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Duplicate Sales Order! Can not be inserted!');</script>";
+                            BindCompany();
+                            BindTermsAndCondition();
+                            BindLocationName();
+                            BindInquiryDropDown();
+                            BindCurrencyPrice();
 
-        //                return RedirectToAction("Index", "PurchaseOrder");
+                            UploadSignature(Signature);
+                            return View(model);
+                        }
 
-        //            }
-        //            else
-        //            {
-        //                TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-        //                BindCompany();
-        //                BindIndentDropDown();
-        //                BindTermsAndCondition();
-        //                BindCurrencyPrice();
-        //                //BindOrganisations();
-        //                BindLocationName();
-        //                UploadSignature(Signature);
-        //                //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-        //                //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-        //                //ViewData["itemListForDD"] = dd;
-        //                return View(model);
-        //            }
-        //        }
-        //        else
-        //            return RedirectToAction("Index", "Login");
+                        return RedirectToAction("Index", "SalesOrder");
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.Error("Error", ex);
-        //    }
-        //    return View();
-        //}
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        BindCompany();
+                        BindTermsAndCondition();
+                        BindLocationName();
+                        BindInquiryDropDown();
+                        BindCurrencyPrice();
 
+                        UploadSignature(Signature);
+                       
+                        return View(model);
+                    }
+                }
+                else
+                    return RedirectToAction("Index", "Login");
+
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error", ex);
+            }
+            return View();
+        }
+
+        #endregion
+
+        #region  Update function
+        /// <summary>
+        ///Farheen: Rendered the user to the edit page with details of a perticular record.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult EditSalesOrder(int Id)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                BindCompany();
+                BindTermsAndCondition();
+                BindLocationName();
+                BindInquiryDropDown();
+                BindCurrencyPrice();
+
+                SalesOrderBO model = _repository.GetSalesOrderById(Id);
+
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+
+        }
+
+        /// <summary>
+        /// Farheen:  Pass the data to the repository for updating that record.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult EditSalesOrder(PurchaseOrderBO model, HttpPostedFileBase Signature)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+
+            try
+            {
+                if (Session[ApplicationSession.USERID] != null)
+                {
+                    if (Signature != null && Signature.ContentLength > 1000)
+                    {
+                        UploadSignature(Signature);
+                        model.Signature = Signature.FileName.ToString();
+                    }
+                    else if (Signature.ContentLength < 1000 && Signature != null)
+                        model.Signature = Signature.FileName.ToString();
+                    else
+                        model.Signature = null;
+
+                    if (ModelState.IsValid)
+                    {
+                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _purchaseOrderRepository.Update(model);
+                        if (response.Status)
+                        {
+                            if (model.DraftFlag == true)
+                                TempData["Success"] = "<script>alert('Purchase order updated as draft successfully!');</script>";
+                            else
+                                TempData["Success"] = "<script>alert('Purchase order updated successfully!');</script>";
+
+                        }
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                            BindCompany();
+                            BindTermsAndCondition();
+                            BindCurrencyPrice();
+                            BindLocationName();
+                            //BindIndentDropDown("POAmendment");
+                            PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
+
+                            return View(model1);
+                        }
+
+                        return RedirectToAction("Index", "PurchaseOrder");
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        BindCompany();
+                        BindTermsAndCondition();
+                        BindCurrencyPrice();
+                        BindLocationName();
+                        //BindIndentDropDown("POAmendment");
+                        PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
+
+                        return View(model1);
+                    }
+                }
+                else
+                    return RedirectToAction("Index", "Login");
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while update!');</script>";
+                return RedirectToAction("Index", "PurchaseOrder");
+            }
+        }
+
+        #endregion
+
+        #region Delete function
+        /// <summary>
+        /// Date: 22 Mar'23
+        /// Farheen: Delete the perticular record Sales Order 
+        /// </summary>
+        /// <param name="ID">record Id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteSalesOrder(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                _repository.Delete(ID, userID);
+                TempData["Success"] = "<script>alert('Sales Order deleted successfully!');</script>";
+                return RedirectToAction("Index", "SalesOrder");
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
         #endregion
 
         #region Fetch inquiry details

@@ -192,15 +192,11 @@
                                                 <th class="sortStyle">Item Code</th>
                                                 <th class="sortStyle d-n d-none">Item Id</th>
                                                 <th class="sortStyle">Item</th>
-                                                <th class="sortStyle">Required Quantity</th>
-                                                <th class="sortStyle">Order Quantity</th>
-                                                <th class="sortStyle">Balance Quantity</th>
-                                                <th class="sortStyle">Units</th>
+                                                <th class="sortStyle">Ordered Quantity</th>
                                                 <th class="sortStyle">Price (Per Unit)</th>
                                                 <th class="sortStyle">Currency</th>
                                                 <th class="sortStyle">Tax</th>
                                                 <th class="sortStyle">Total before tax</th>
-                                                <th class="sortStyle d-none">Actual Balance Quantity</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -442,36 +438,7 @@
                                 cell.setAttribute("id", "ItemQuantity_" + j);
 
                             }
-                            //else if (i == 4) {
-                            //    var t6 = document.createElement("input");
-                            //    t6.id = "txtItemQty_" + j;
-                            //    t6.removeAttribute("disabled", "false");
-                            //    t6.removeAttribute("disabled", "true");
-                            //    t6.setAttribute("maxlength", "8");
-                            //    t6.setAttribute("onkeypress", "return isNumberKey(event)");
-
-                            //    if (parseFloat(result[j].BalanceQuantity) == 0) {
-                            //        t6.setAttribute("disabled", "true");
-                            //    }
-                            //    else {
-                            //        t6.removeAttribute("disabled", "false");
-                            //        t6.removeAttribute("disabled", "true");
-                            //        t6.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-                            //    }
-                            //    //t6.setAttribute("type", "number");
-                            //    t6.setAttribute("class", "form-control form-control-sm");
-                            //    cell.appendChild(t6);
-                            //}
-                            //else if (i == 5) {
-                            //    var t4 = document.createElement("input");
-                            //    t4.id = "BalanceQuantity_" + j;
-                            //    t4.setAttribute("value", result[j].BalanceQuantity);
-                            //    t4.setAttribute("readonly", "readonly");
-                            //    t4.setAttribute("class", "form-control form-control-sm");
-                            //    cell.appendChild(t4);
-
-                            //}
-                            else if (i == 7) {
+                            else if (i == 4) {
                                 var t4 = document.createElement("input");
                                 t4.id = "ItemUnitPrice_" + j;
                                 t4.setAttribute("value", result[j].ItemUnitPrice);
@@ -481,30 +448,31 @@
                                 cell.appendChild(t4);
                             }
 
-                            else if (i == 8) {
+                            else if (i == 5) {
                                 cell.innerHTML = CurrencyName
                                 cell.setAttribute("id", "CurrencyName_" + j);
                             }
-                            else if (i == 9) {
-                                cell.innerHTML = result[j].ItemTax + " %";
+                            else if (i == 6) {
+                                cell.innerHTML = result[j].ItemTaxValue + " %";
                                 cell.setAttribute("id", "ItemTax_" + j);
                             }
-                            else if (i == 10) {
+                            else if (i == 7) {
                                 var t4 = document.createElement("input");
                                 t4.id = "TotalItemCost_" + j;
+                                t4.setAttribute("value", result[j].TotalItemCost);
                                 t4.setAttribute("class", "form-control form-control-sm");
                                 t4.setAttribute("readonly", "readonly");
-                                t4.setAttribute("value", 0);
                                 cell.appendChild(t4);
                             }
-                            else if (i == 11) {
-                                cell.innerHTML = result[j].BalanceQuantity;
-                                cell.setAttribute("class", "d-none");
-                                cell.setAttribute("id", "ActualBalanceQuantity_" + j);
-                            }
+                            //else if (i == 8) {
+                            //    cell.innerHTML = result[j].BalanceQuantity;
+                            //    cell.setAttribute("class", "d-none");
+                            //    cell.setAttribute("id", "ActualBalanceQuantity_" + j);
+                            //}
                         }
 
                     }
+                    CalculateTotalBeforeTax();
                 },
                 error: function (err) {
                     alert('Not able to fetch indent item details!');
@@ -533,7 +501,7 @@
             else {
 
                 //Set total price in item grid.
-                var quantity = $("#txtItemQty_" + rowNo).val();
+                var quantity = (document.getElementById("ItemQuantity_" + rowNo).innerHTML).split(' ')[0];
                 var totalPrice = quantity * UnitPrice;
                 totalPrice = Math.round(totalPrice);
                 $("#TotalItemCost_" + rowNo).val(totalPrice);
@@ -623,14 +591,7 @@
         }
 
         function createJson() {
-            //let res = [...document.getElementById("myTableBody").children].map(tr =>
-            //    Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
-            //        [el.name, el.value])));
-            //console.log(res);
-            //var TxtItemDetails = JSON.stringify(res);
-            //console.log(TxtItemDetails);
-            //$('#TxtItemDetails').val(TxtItemDetails);
-
+            
             var table = document.getElementById('submissionTable');
             var rowCount = table.rows.length;
             var i = 0;
@@ -639,21 +600,19 @@
                 var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
                 var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
                 var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
-                var RequiredQty = (document.getElementById("RequiredQuantity_" + i)).innerHTML.split(" ")[0];
-                var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
-                var OrderQty = $("#txtItemQty_" + i).val();
+                var OrderQty = ((document.getElementById("ItemQuantity_" + i)).innerHTML).split(' ')[0];
+                var Unit = ((document.getElementById("ItemQuantity_" + i)).innerHTML).split(' ')[1];
                 OrderQty = (OrderQty == null || OrderQty == '') ? 0 : OrderQty;
-                var BalanceQty = $("#BalanceQuantity_" + i).val();
                 var PricePerUnit = $("#ItemUnitPrice_" + i).val();
                 PricePerUnit = (PricePerUnit == null || PricePerUnit == '') ? 0 : PricePerUnit;
+
                 var Tax = (document.getElementById("ItemTax_" + i)).innerHTML.split(" ")[0];
                 var TotalItemCost = $("#TotalItemCost_" + i).val();
                 TotalItemCost = (TotalItemCost == null || TotalItemCost == '') ? 0 : TotalItemCost;
-                var CurrencyName = $("#CurrencyID option:selected").text();
 
                 TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
-                    ", \"ItemName\": \"" + ItemName + "\", \"RequiredQty\": " + RequiredQty + ", \"OrderQty\": " + OrderQty + ", \"BalanceQty\": " + BalanceQty
-                    + ", \"ItemUnit\": \"" + Unit + "\", \"ItemUnitPrice\": " + PricePerUnit + ", \"CurrencyName\": \"" + CurrencyName + "\",\"ItemTaxValue\": " + Tax +
+                    ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty 
+                    + ", \"ItemUnit\": \"" + Unit + "\", \"ItemUnitPrice\": " + PricePerUnit+",\"ItemTaxValue\": " + Tax +
                     ", \"TotalItemCost\": " + TotalItemCost;
 
                 if (i == (rowCount - 2))
@@ -661,8 +620,8 @@
                 else
                     TxtItemDetails = TxtItemDetails + "},";
             }
-            TxtItemDetails = TxtItemDetails + "]"
-            $('#TxtItemDetails').val(TxtItemDetails);
+            TxtItemDetails = TxtItemDetails + "]";
+            $('#txtItemDetails').val(TxtItemDetails);
         }
 
         function ValidateAdvancePayment(value, id) {
@@ -718,7 +677,6 @@
             }
         }
 
-        /*Rahul : Add Javascript validation on 12 Oct 2022.*/
         function isNumberKey(evt) {
             var keycode = (evt.which) ? evt.which : evt.keyCode;
             if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {

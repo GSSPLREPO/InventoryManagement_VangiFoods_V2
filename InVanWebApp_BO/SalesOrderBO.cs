@@ -26,6 +26,7 @@ namespace InVanWebApp_BO
         public decimal CGST { get; set; }
         public decimal SGST { get; set; }
         public decimal IGST { get; set; }
+        [Required(ErrorMessage ="Select terms!")]
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
         public string SalesOrderStatus { get; set; }
@@ -53,7 +54,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage ="Select currency!")]
         public int CurrencyID { get; set; }
         public string CurrencyName { get; set; }
-        public decimal CurrencyPrice { get; set; }
+        public decimal? CurrencyPrice { get; set; }
         public decimal OtherTax { get; set; }
         public string Signature { get; set; }
         public Nullable<int> ApprovedById { get; set; }
@@ -104,7 +105,7 @@ namespace InVanWebApp_BO
         public decimal TotalItemCost { get; set; }
         public int CurrencyID { get; set; }
         public string CurrencyName { get; set; }
-        public decimal CurrencyPrice { get; set; }
+        public decimal? CurrencyPrice { get; set; }
         public decimal BalanceQuantity { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

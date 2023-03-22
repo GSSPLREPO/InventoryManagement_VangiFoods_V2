@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    @Html.Label("ItemName")
+                    @Html.Label("Item Name")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -83,7 +83,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.RandomWeight, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsNumeric(event);" })
+                    @Html.TextBoxFor(model => model.RandomWeight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKeyDecimal (event);" })
                     @Html.ValidationMessageFor(model => model.RandomWeight, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">

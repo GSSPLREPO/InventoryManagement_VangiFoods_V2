@@ -19,9 +19,9 @@
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Daily Operations</a>
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Production</a>
                     </li>
-                    <li class="breadcrumb-item active">Sanitization And Hygine</li>
+                    <li class="breadcrumb-item active">Stage-3 Packing CCP</li>
                 </ol>
             </nav>
         </div>
@@ -32,7 +32,7 @@
                     <div class="card">
                         <div class="card-body">
                             <a href="@Url.Action("AddHotFillingPackingLineLogSheetCCP","HotFillingPackingLineLogSheetCCP")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span> Stage-3 Packing CCP
+                                <span class="fa fa-plus"></span> Packing CCP
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
 
@@ -50,7 +50,7 @@
                                             @*(LEACKAGES, GAMAGES,SEAL STRENGTH)*@
                                             <th>@Html.DisplayName("Monitoring Filling Temp-93 to 95(°C)")</th>@*(PRODUCT FILLING TEMP.)*@
                                             <th>@Html.DisplayName("No of Pouches")</th>
-                                            <th>@Html.DisplayName("Remarks")</th>
+                                            @*<th>@Html.DisplayName("Remarks")</th>*@
                                             <th>@Html.DisplayName("Corrective Actions")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
@@ -72,7 +72,7 @@
                                                 @*<td>@Html.DisplayFor(modelItem => item.MonitoringParameters)</td>*@
                                                 <td>@Html.DisplayFor(modelItem => item.MonitoringFilling)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.NoOfPouches)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Remarks)</td>
+                                                @*<td>@Html.DisplayFor(modelItem => item.Remarks)</td>*@
                                                 <td>@Html.DisplayFor(modelItem => item.CorrectiveActions)</td>
                                                 <td>
                                                     <a href=@Url.Action("EditHotFillingPackingLineLogSheetCCP", "HotFillingPackingLineLogSheetCCP", new { ID = item.ID })>

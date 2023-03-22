@@ -100,7 +100,7 @@ namespace InVanWebApp.Repository
 
                     while (dataReader.Read())
                     {
-                        response.ItemName = dataReader["ItemName"].ToString();
+                       // response.ItemName = dataReader["ItemName"].ToString();
                         response.Status = Convert.ToBoolean(dataReader["Status"]);
                     }
                     con.Close();
@@ -224,7 +224,7 @@ namespace InVanWebApp.Repository
                     {
                         RQCCP = new RQCCPBO()
                         {
-                            RQCCPID = Convert.ToInt32(reader["RQCCPID"]),
+                            RQCCPID = Convert.ToInt32(reader["Id"]),
                             Date = Convert.ToDateTime(reader["Date"]),
                             Activity = reader["Activity"].ToString(),
                             ItemName = reader["ItemName"].ToString(),

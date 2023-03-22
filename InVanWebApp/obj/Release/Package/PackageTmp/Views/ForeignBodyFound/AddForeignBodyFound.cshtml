@@ -35,42 +35,76 @@
             
         </div>
             
-            <div class="row">
-                <div class="col-md-2 mb-1">
-                    @Html.Label("RawMaterial")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.RawMaterial, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphabate(event);" })
-                    @Html.ValidationMessageFor(model => model.RawMaterial, "", new { @class = "error mt-2 text-danger", id = "validationMgsPAPH" })
-                </div>
-                <div class="col-md-2 mb-1">
-                    @Html.Label("OnGoingProcessing")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.OnGoingProcessing, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphabate(event);" })
-                    @Html.ValidationMessageFor(model => model.OnGoingProcessing, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-                <div class="col-md-2 mb-1">
-                    @Html.Label("Batching")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Batching, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return IsAlphabate(event);" })
-                    @Html.ValidationMessageFor(model => model.Batching, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-                <div class="col-md-2 mb-1">
-                    @Html.Label("PostProcessing")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PostProcessing, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphabate(event);" })
-                    @Html.ValidationMessageFor(model => model.PostProcessing, "", new { @class = "error mt-2 text-danger" })
-                </div>
+        <div class="row">
+            <div class="col-md-2 mb-1">
+                @Html.Label("RawMaterial")
+                <span style="color:red">*</span>
             </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.RawMaterial, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphabate(event);" })
+                @Html.ValidationMessageFor(model => model.RawMaterial, "", new { @class = "error mt-2 text-danger", id = "validationMgsPAPH" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("OnGoingProcessing")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.OnGoingProcessing, new List<SelectListItem>{
+                new SelectListItem{ Text="Absent", Value = "Absent" },
+                new SelectListItem{ Text="Present", Value = "Present" }
+                }, "---Select---", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.OnGoingProcessing, "", new { @class = "error mt-2 text-danger" })
+            </div>
+
+            @*<div class="col-md-2 mb-1">
+            @Html.Label("OnGoingProcessing")
+            <span style="color:red">*</span>
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.OnGoingProcessing, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphabate(event);" })
+            @Html.ValidationMessageFor(model => model.OnGoingProcessing, "", new { @class = "error mt-2 text-danger" })
+        </div>*@
+
+            <div class="col-md-2">
+                @Html.Label("Batching")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.Batching, new List<SelectListItem>{
+                new SelectListItem{ Text="Absent", Value = "Absent" },
+                new SelectListItem{ Text="Present", Value = "Present" }
+                }, "---Select---", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Batching, "", new { @class = "error mt-2 text-danger" })
+            </div>
+            @*<div class="col-md-2 mb-1">
+            @Html.Label("Batching")
+            <span style="color:red">*</span>
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.Batching, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return IsAlphabate(event);" })
+            @Html.ValidationMessageFor(model => model.Batching, "", new { @class = "error mt-2 text-danger" })
+        </div>*@
+
+            <div class="col-md-2">
+                @Html.Label("PostProcessing")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.PostProcessing, new List<SelectListItem>{
+                new SelectListItem{ Text="Absent", Value = "Absent" },
+                new SelectListItem{ Text="Present", Value = "Present" }
+                }, "---Select---", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PostProcessing, "", new { @class = "error mt-2 text-danger" })
+            </div>
+            @*<div class="col-md-2 mb-1">
+            @Html.Label("PostProcessing")
+            <span style="color:red">*</span>
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.PostProcessing, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphabate(event);" })
+            @Html.ValidationMessageFor(model => model.PostProcessing, "", new { @class = "error mt-2 text-danger" })
+        </div>*@
+        </div>
 
          
             <div class="row">

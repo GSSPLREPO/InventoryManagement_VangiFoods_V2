@@ -70,7 +70,7 @@
                     @Html.DropDownList("SalesOrderId", (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "--Select--",
                    new { @class = "form-control", onchange = "SelectedIndexChangedSO($(this).val(),id)" })
                     @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
-                    @Html.HiddenFor(model => model.SONo)                    
+                    @Html.HiddenFor(model => model.SONo)
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Work Order No")
@@ -110,7 +110,7 @@
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95", onkeypress = "createJson();" })
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95" })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -149,9 +149,9 @@
     </div>
 }
 
-@*@section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
@@ -162,7 +162,7 @@
     var TxtItemDetails = "";
 
     $("#TotalBatches").change(function () {
-        
+
         var totalBatches = $("#TotalBatches").val();
         if (totalBatches > 0) {
             var len = document.getElementById("ItemTable").rows.length;
@@ -172,11 +172,11 @@
                 var totalBatches = $("#TotalBatches").val();
                 var idItemQty = document.getElementById("ItemQty_" + t).innerHTML;
                 var TotItemQty = idItemQty * totalBatches;
-                //console.log(TotItemQty);
+                
                 document.getElementById("ItemQty_" + t).innerHTML = TotItemQty.toFixed(4);
                 var idFinalQty = document.getElementById("txtFinalQty_" + t).value;
                 var TotFinalQty = idFinalQty * totalBatches;
-                //console.log(TotFinalQty);
+                
                 document.getElementById("txtFinalQty_" + t).value = TotFinalQty.toFixed(4);
                 t++;
             }
@@ -184,7 +184,7 @@
     });
 
     //SO Number Start
-    function SelectedIndexChangedSO(id) {        
+    function SelectedIndexChangedSO(id) {
         var selectedOptionSO, SONo;
         selectedOptionSO = document.getElementById("SalesOrderId").selectedIndex;
         SONo = document.getElementById("SalesOrderId").options[selectedOptionSO].innerText;
@@ -194,7 +194,7 @@
     //SO Number End
 
     //WO Number Start
-    function SelectedIndexChangedWO(id) {        
+    function SelectedIndexChangedWO(id) {
         var selectedOptionWO, WONo;
         selectedOptionWO = document.getElementById("SOId").selectedIndex = id;
         WONo = document.getElementById("SOId").options[selectedOptionWO].innerText;
@@ -226,8 +226,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                console.log(result);
-                //$('#RecipeName').val(result[0].RecipeName);
+               
                 var ColCount = result.length;
 
                 //===================Create dynamic table for binding Item details====================//
@@ -267,12 +266,7 @@
                         else if (i == 3) {
                             cell.innerHTML = result[j].ItemQuantity.toFixed(4);
                             cell.setAttribute("id", "ItemQty_" + j);
-                            //debugger
-                            //var totalBatches = $("#TotalBatches").val();
-                            //var ratio = result[j].Ratio;
-                            //var ItemQty = totalBatches * ratio;
-                            ////cell.setAttribute("value", ItemQty);
-                            //cell.innerHTML = ItemQty;
+                            
                         }
                         else if (i == 4) {
                             var t4 = document.createElement("input");
@@ -282,14 +276,7 @@
                             t4.setAttribute("maxlength", "8");
                             t4.setAttribute("onkeypress", "return isNumberKey(event)");
                             t4.setAttribute("value", result[j].FinalQuantity.toFixed(4));
-                            //debugger
-                            //$("#TotalBatches").change(function () {
-                                //debugger
-                                //var totalBatches = $("#TotalBatches").val();
-                                //var itemQuantity = result[j].ItemQuantity;
-                                //var ItemQty = totalBatches * itemQuantity;
-                                //t4.setAttribute("value", ItemQty.toFixed(4));
-                            //});
+                            
                             t4.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
 
                             t4.setAttribute("class", "form-control form-control-sm");
@@ -304,8 +291,8 @@
                             t6.id = "Percentage_" + j;
                             t6.setAttribute("disabled", "true");
                             t6.setAttribute("style", "background:transparent;border:none;");
-                            t6.setAttribute("value", result[j].Ratio.toFixed(4));                            
-                            cell.appendChild(t6);                            
+                            t6.setAttribute("value", result[j].Ratio.toFixed(4));
+                            cell.appendChild(t6);
                         }
                     }
                 }
@@ -314,8 +301,8 @@
     }
 
 
-    function OnChangeQty(value, id) {        
-        var totalBatches = $("#TotalBatches").val();        
+    function OnChangeQty(value, id) {
+        var totalBatches = $("#TotalBatches").val();
         var rowNo = id.split('_')[1];
         //console.log("PerId:", id);
         var finalQty = $("#txtFinalQty_" + rowNo).val();
@@ -323,7 +310,7 @@
         var percentage = $("#Percentage_" + rowNo).val();
         //console.log(percentage);
         var finalQuantity = totalBatches * percentage * finalQty;
-        //console.log(finalQuantity);        
+        //console.log(finalQuantity);
         $("#txtFinalQty_" + rowNo).val(finalQuantity.toFixed(4));
         $("#ItemQty_" + rowNo).val(finalQuantity.toFixed(4));
     }
@@ -336,39 +323,6 @@
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
-
-        var tableLength = document.getElementById('submissionTable').rows.length;
-        var flag = 0, i = 1;
-
-        var RequiredQuantity = $('#RequiredQuantity').val();
-        var IndentBy = $('#RaisedBy').val();    //Rahul added 'IndentBy' if 'flag = 1;' then '#btnSave' 'disabled' 22-02-23.
-        if (IndentBy == '' || IndentBy == null) {
-            $('#RaisedBy').focus();
-            flag = 1;
-        }
-        if (RequiredQuantity != '' && RequiredQuantity != 0) {
-            flag = 1;
-        }
-        if (tableLength > 1) {
-            while (i < tableLength - 1) {
-                var PhyQty = document.getElementById("requiredQuantity_" + i).value;
-                PhyQty = parseFloat(PhyQty);
-
-                if (PhyQty != 0) {
-                    flag = 1;
-
-                    i++;
-                }
-
-            }
-            if (flag != 1) {
-                alert("Required quantity is zero or null! Cannot create Production Indent!");
-                $('#btnSave').prop('disabled', true);
-                return;
-            }
-            else
-                $('#btnSave').prop('disabled', false);
-        }
         createJson();
     };
 
@@ -388,7 +342,7 @@
             FinalQty = (FinalQty == null || FinalQty == '') ? 0 : FinalQty;
             var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
             var Percentage = $("#Percentage_" + i).val();
-            
+
             TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID +
                 ", \"Item_Code\":\"" + ItemCode + "\", \"ItemName\": \"" + ItemName + "\", \"ItemQty\": " + ItemQty + ", \"FinalQty\": " + FinalQty +
                 ", \"ItemUnit\": \"" + Unit + "\", \"Percentage\": " + Percentage;
@@ -400,7 +354,7 @@
         }
         TxtItemDetails = TxtItemDetails + "]"
         $('#TxtItemDetails').val(TxtItemDetails);
-        console.log(TxtItemDetails);
+        
     }
     //==========end===============
 
