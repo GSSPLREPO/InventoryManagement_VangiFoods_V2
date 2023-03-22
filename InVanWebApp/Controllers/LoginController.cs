@@ -41,8 +41,9 @@ namespace InVanWebApp.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            UsersBO model = new UsersBO();
             Session.Abandon(); //End the current session, also remaove all the objects stored in the session.
-            return View();
+            return View(model);
         }
         #endregion
 

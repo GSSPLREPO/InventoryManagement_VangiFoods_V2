@@ -62,9 +62,13 @@
   <ItemGroup>
     <Compile Include="Branch.cs" />
     <Compile Include="CalibrationLogBO.cs" />
+    <Compile Include="CertificateOfAnalysisBO.cs" />
+    <Compile Include="ChillerCCPBO.cs" />
     <Compile Include="CityMaster.cs" />
     <Compile Include="ClorinationLogBO.cs" />
     <Compile Include="DailyMonitoringBO.cs" />
+    <Compile Include="ForeignBodyFoundBO.cs" />
+    <Compile Include="HotFillingPackingLineLogSheetCCPBO.cs" />
     <Compile Include="IssueNoteBO.cs" />
     <Compile Include="DeliveryChallanBO.cs" />
     <Compile Include="CompanyBO.cs" />
@@ -94,6 +98,7 @@
     <Compile Include="ProductEvaluationLogBO.cs" />
     <Compile Include="ProductionIndentBO.cs" />
     <Compile Include="ProductionIndent_DetailsBO.cs" />
+    <Compile Include="ProductionMaterialIssueNoteBO.cs" />
     <Compile Include="ProductMasterBO.cs" />
     <Compile Include="PurchaseOrderAmendmentDetailBO.cs" />
     <Compile Include="PurchaseOrderBO.cs" />

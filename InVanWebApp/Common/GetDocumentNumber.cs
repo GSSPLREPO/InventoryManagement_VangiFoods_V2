@@ -47,5 +47,21 @@ namespace InVanWebApp.Common
             return DocumentNumber;
         }
         #endregion
+
+        #region Get work order number
+        public string GetWorkOrderNo(int DocumentType,string WorkOrderType)
+        {
+            var DocumentNumber="";
+            try
+            {
+                DocumentNumber = _repository.GetWorkOrderNo(DocumentType, WorkOrderType);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return DocumentNumber;
+        }
+        #endregion
     }
 }

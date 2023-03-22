@@ -85,6 +85,9 @@ namespace InVanWebApp_BO
         public decimal TotalItemCost { get; set; }
         public decimal BalanceQuantity { get; set; }
         public int OutwardCount { get; set; }
+
+        //Added the below field for production indent.
+        public string SONumber { get; set; }
     }
 
     public class SalesOrderItemsDetail

@@ -20,21 +20,21 @@
 <body>
     <ul class="nav">
         @*<li class="nav-item nav-profile">
-            <div class="nav-link">
-                <div class="profile-image">
-                    <img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image" />
-                    <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image" />
+                <div class="nav-link">
+                    <div class="profile-image">
+                        <img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image" />
+                        <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image" />
+                    </div>
+                    <div class="profile-name">
+                        <p class="name">
+                            Welcome VangiFood
+                        </p>
+                        <p class="designation">
+                            Super Admin
+                        </p>
+                    </div>
                 </div>
-                <div class="profile-name">
-                    <p class="name">
-                        Welcome VangiFood
-                    </p>
-                    <p class="designation">
-                        Super Admin
-                    </p>
-                </div>
-            </div>
-        </li>*@
+            </li>*@
         <br />
         <li class="nav-item">
             <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">
@@ -51,7 +51,7 @@
             <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
+                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a></li>
                 </ul>
@@ -173,6 +173,11 @@
                             <a class="nav-link" href="@Url.Action("Index","InwardQCSorting")">Inward QC (Check-1)</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="CertificateOfAnalysisQC">
+                            <a class="nav-link" href="@Url.Action("Index","CertificateOfAnalysis")">Certificate of Analysis</a>
+                        </div>
+                    </li>
 
                 </ul>
             </div>
@@ -198,6 +203,11 @@
                     <li class="nav-item">
                         <div id="CalibrationLog">
                             <a class="nav-link" href="@Url.Action("Index","CalibrationLog")">Calibration Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ForeignBodyFound">
+                            <a class="nav-link" href="@Url.Action("Index","ForeignBodyFound")">Foreign Body Found</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -257,6 +267,32 @@
                             <a class="nav-link" href="@Url.Action("Index","ProductionIndent")">Production Indent</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="ProductionMaterialIssueNote">
+                            <a class="nav-link" href="@Url.Action("Index","ProductionMaterialIssueNote")">Production Material Issue Note</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RQCCP">
+                            <a class="nav-link" href="@Url.Action("Index","RQCCP")">Stage-1 RQ CCP</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SILOCCP">
+                            <a class="nav-link" href="@Url.Action("Index","SILOCCP")">Stage-2 SILO CCP</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PackingCCP">
+                            <a class="nav-link" href="@Url.Action("Index","HotFillingPackingLineLogSheetCCP")">Stage-3 Packing CCP</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ChillerCCP">
+                            <a class="nav-link" href="@Url.Action("Index","ChillerCCP")">Stage-4 Chiller CCP</a>
+                        </div>
+                    </li>
+
                 </ul>
             </div>
         </li>
@@ -301,15 +337,15 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                        <div id="ProductMaster">
-                            <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div id="RecipeMaster">
-                            <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
-                        </div>
-                    </li>*@
+                            <div id="ProductMaster">
+                                <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div id="RecipeMaster">
+                                <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
+                            </div>
+                        </li>*@
                     <li class="nav-item">
                         <div id="TermsAndCondition">
                             <a class="nav-link" href="@Url.Action("Index","TermsAndCondition")">Terms and Condition</a>
@@ -388,10 +424,10 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                        <div id="RejectionNoteReport">
-                            <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
-                        </div>
-                    </li>*@
+                            <div id="RejectionNoteReport">
+                                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+                            </div>
+                        </li>*@
                     <li class="nav-item">
                         <div id="RejectionNoteReport">
                             <a class="nav-link" href="~/Report/RejectionReport">Rejection Report</a>
@@ -418,10 +454,10 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                        <div id="InventoryControlReport">
-                            <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-                        </div>
-                    </li>*@
+                            <div id="InventoryControlReport">
+                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+                            </div>
+                        </li>*@
                 </ul>
             </div>
         </li>

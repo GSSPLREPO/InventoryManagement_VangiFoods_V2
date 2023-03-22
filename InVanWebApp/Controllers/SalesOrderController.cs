@@ -8,6 +8,7 @@ using InVanWebApp.Repository.Interface;
 using InVanWebApp.Repository;
 using log4net;
 using InVanWebApp_BO;
+using System.IO;
 
 namespace InVanWebApp.Controllers
 {
@@ -25,7 +26,7 @@ namespace InVanWebApp.Controllers
         {
             _repository = new SalesOrderRepository();
             _purchaseOrderRepository = new PurchaseOrderRepository();
-          
+
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
@@ -69,21 +70,16 @@ namespace InVanWebApp.Controllers
                 BindCompany();
                 BindTermsAndCondition();
                 BindLocationName();
-                //BindInquiryDropDown();
+                BindInquiryDropDown();
                 BindCurrencyPrice();
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
                 //=========here document type=3 i.e. for generating the Inward note (logic is in SP).====//
-                var DocumentNumber = objDocNo.GetDocumentNo(2);
+                var DocumentNumber = objDocNo.GetDocumentNo(1);
                 ViewData["DocumentNo"] = DocumentNumber;
 
-                //Binding item grid with sell type item.
-                //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                //ViewData["itemListForDD"] = dd;
-
-                PurchaseOrderBO model = new PurchaseOrderBO();
-                model.PODate = DateTime.Today;
+                SalesOrderBO model = new SalesOrderBO();
+                model.SODate = DateTime.Today;
                 model.DeliveryDate = DateTime.Today;
 
                 return View(model);
@@ -170,6 +166,36 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Fetch inquiry details
+        public JsonResult GetInquiryDescription(string id, string tempCurrencyId) 
+        {
+            int Id = Convert.ToInt32(id);
+            int CurrencyId = Convert.ToInt32(tempCurrencyId);
+            var result = _repository.GetInquiryFormById(Id, CurrencyId);
+            return Json(result);
+        }
+        #endregion
+
+        #region Function for uploading the signature
+        /// <summary>
+        /// Date: 21 Mar 2022
+        /// Farheen: Upload Signature File items.
+        /// </summary>
+        /// <returns></returns>
+
+        public void UploadSignature(HttpPostedFileBase Signature)
+        {
+            if (Signature != null)
+            {
+                string SignFilename = Signature.FileName;
+                SignFilename = Path.Combine(Server.MapPath("~/Signatures/"), SignFilename);
+                Signature.SaveAs(SignFilename);
+
+            }
+        }
+
+        #endregion
+
         #region Dropdowns binding functions
         public void BindCompany()
         {
@@ -195,6 +221,20 @@ namespace InVanWebApp.Controllers
             var resultList = new SelectList(result.ToList(), "CurrencyID", "CurrencyName");
             ViewData["CurrencyList"] = resultList;
         }
+        public void BindInquiryDropDown()
+        {
+            var result = _repository.GetInquiryList();
+            var resultList = new SelectList(result.ToList(), "InquiryID", "InquiryNumber");
+            ViewData["InquiryDD"] = resultList;
+        }
+        public JsonResult GetWorkOrderNumber(string workOrderNo) 
+        {
+            GetDocumentNumber objDocNo = new GetDocumentNumber();
+            //=========here document type=3 i.e. for generating the Inward note (logic is in SP).====//
+            var DocumentNumber = objDocNo.GetWorkOrderNo(18, workOrderNo);
+            return Json(DocumentNumber);
+        }
+
         #endregion
     }
 }

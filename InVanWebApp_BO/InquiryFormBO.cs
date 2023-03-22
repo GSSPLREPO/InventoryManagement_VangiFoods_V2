@@ -12,6 +12,7 @@ namespace InVanWebApp_BO
         public int InquiryID { get; set; }
         public string InquiryNumber { get; set; } //Rahul added 02-01-2023. 
         public Nullable<int> InquiryStatusID { get; set; }
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> DateOfInquiry { get; set; }
         public string ContactPersonName { get; set; }
         public string ClientEmail { get; set; }

@@ -11,5 +11,8 @@ namespace InVanWebApp.Repository.Interface
     {
         //Define function for fetching details of Sales Order.
         IEnumerable<SalesOrderBO> GetAll();
+        IEnumerable<InquiryFormBO> GetInquiryList();
+
+        List<InquiryFormItemDetailsBO> GetInquiryFormById(int id, int CurrencyId = 0);
     }
 }
