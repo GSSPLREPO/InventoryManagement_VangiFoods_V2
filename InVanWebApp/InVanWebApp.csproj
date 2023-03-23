@@ -166,6 +166,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\ApplicationSession.cs" />
     <Compile Include="Common\GetDocumentNumber.cs" />
+    <Compile Include="Controllers\BatchPlanningController.cs" />
     <Compile Include="Controllers\CalibrationLogController.cs" />
     <Compile Include="Controllers\CertificateOfAnalysisController.cs" />
     <Compile Include="Controllers\ChillerCCPController.cs" />
@@ -225,13 +226,31 @@
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Controllers\VegWasherDosageLogController.cs" />
     <Compile Include="Controllers\WaterAnalysisController.cs" />
+    <Compile Include="DAL\BatchNumberMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\BatchPlanningMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\BatchPlanning_Details.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Branch.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\CalibrationLog.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\CertificateAnalysi.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ChillerCCP.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\CityMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\ClientMaster.cs">
+    <Compile Include="DAL\ClorinationLog.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\COAMaster.cs">
@@ -243,13 +262,28 @@
     <Compile Include="DAL\CountryMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\CreditNote.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\CreditNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\CurrencyMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DailyMonitoring.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\DebitNote.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\DebitNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DeliveryChallan.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DeliveryChallanItemDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Department.cs">
@@ -261,6 +295,9 @@
     <Compile Include="DAL\FinishGoodSery.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\ForeignBodyFound.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GRNDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -270,10 +307,16 @@
     <Compile Include="DAL\GSTMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\HotFillingPackingLineLogSheetCCP.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Indent.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Indent_Details.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\InquiryFormItemDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\InquiryMaster.cs">
@@ -342,7 +385,10 @@
     <Compile Include="DAL\Log.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\MachineMaster.cs">
+    <Compile Include="DAL\MicroAnalysi.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\OilAnalysi.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Organisation.cs">
@@ -351,16 +397,46 @@
     <Compile Include="DAL\OrganisationGroup.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\OutwardNote.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\OutwardNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PestControlLog.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PreProduction_QC.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PreProduction_QC_Details.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PreStartUpHygineCheck.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\ProcessMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\ProductEvaluationLog.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductionIndent.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductionIndentIngredientsDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductionMaterialIssueNote.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductionMaterialIssueNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\PurchaseOrder.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PurchaseOrderAmendment.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PurchaseOrderAmendmentDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\PurchaseOrderItemsDetail.cs">
@@ -372,25 +448,40 @@
     <Compile Include="DAL\QCProductionSpecificationMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\QCProductioObservationMaste.cs">
+    <Compile Include="DAL\QCProductioObservationMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\QCProductioObservationMaster.cs">
+    <Compile Include="DAL\RecipeIngredientsDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\RecipeMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\RejectionDataSheetMaster.cs">
+    <Compile Include="DAL\RejectionNote.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RejectionNoteItemDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\RequestForQuotation.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RequestForQuotationItemDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RFQ_VendorDetails.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RFQ_Vendor_ItemDetails.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Role.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\RoleRight.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RQCCP.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\SalesOrder.cs">
@@ -402,10 +493,13 @@
     <Compile Include="DAL\SalesOrderPaymentDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\SanitizationAndHygine.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\ScreenName.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\SOItem.cs">
+    <Compile Include="DAL\SILOCCP.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\SOItemSchedule.cs">
@@ -420,13 +514,13 @@
     <Compile Include="DAL\StockAdjustment.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\StockAdjustmentDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\StockMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\StockTransfer.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\SupplierMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\sysdiagram.cs">
@@ -447,6 +541,12 @@
     <Compile Include="DAL\UserDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\VegWasherDosageLog.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\WaterAnalysi.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\WorkOrder.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -460,6 +560,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\BatchPlanningRepository.cs" />
     <Compile Include="Repository\CalibrationLogRepository.cs" />
     <Compile Include="Repository\CertificateOfAnalysisRepository.cs" />
     <Compile Include="Repository\ChillerCCPRepository.cs" />
@@ -475,6 +576,7 @@
     <Compile Include="Repository\HotFillingPackingLineLogSheetCCPRepository.cs" />
     <Compile Include="Repository\IndentRepository.cs" />
     <Compile Include="Repository\InquiryFormRepository.cs" />
+    <Compile Include="Repository\Interface\IBatchPlanningRepository.cs" />
     <Compile Include="Repository\Interface\ICalibrationLogRepository.cs" />
     <Compile Include="Repository\Interface\ICertificateOfAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\IChillerCCPRepository.cs" />
@@ -3059,6 +3161,8 @@
     <Content Include="Views\Report\FGLocationWiseReport.cshtml" />
     <Content Include="Views\Report\YeildReport.cshtml" />
     <Content Include="Views\Report\RawMaterialCostAnalysisReport.cshtml" />
+    <Content Include="Views\BatchPlanning\Index.cshtml" />
+    <Content Include="Views\BatchPlanning\AddBatchPlanning.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

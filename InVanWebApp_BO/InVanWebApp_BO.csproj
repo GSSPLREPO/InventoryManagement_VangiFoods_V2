@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BatchPlanningMasterBO.cs" />
     <Compile Include="Branch.cs" />
     <Compile Include="CalibrationLogBO.cs" />
     <Compile Include="CertificateOfAnalysisBO.cs" />

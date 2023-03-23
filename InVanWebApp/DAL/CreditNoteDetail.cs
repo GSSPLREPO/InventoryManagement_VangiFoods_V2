@@ -12,31 +12,31 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class PurchaseOrderAmendmentDetail
+    public partial class CreditNoteDetail
     {
-        public int PurchaseOrderAmendmentDetailsId { get; set; }
-        public Nullable<int> PurchaseOrderAmendmentId { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> CreditNote_ID { get; set; }
         public Nullable<int> ItemId { get; set; }
-        public string ItemName { get; set; }
+        public string Item_Name { get; set; }
         public string Item_Code { get; set; }
+        public string ItemTaxValue { get; set; }
+        public string ItemUnit { get; set; }
         public Nullable<decimal> ItemUnitPrice { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public Nullable<decimal> AmendQuantity { get; set; }
-        public Nullable<decimal> AmendRate { get; set; }
-        public Nullable<decimal> Discount { get; set; }
-        public Nullable<decimal> CGST { get; set; }
-        public Nullable<decimal> SGST { get; set; }
-        public Nullable<decimal> IGST { get; set; }
-        public Nullable<decimal> AmendDiscount { get; set; }
-        public Nullable<decimal> AmendCgst { get; set; }
-        public Nullable<decimal> AmendSgst { get; set; }
-        public Nullable<decimal> AmendIgst { get; set; }
+        public Nullable<double> POQuantity { get; set; }
+        public Nullable<double> RejectedQuantity { get; set; }
+        public Nullable<double> ItemTotalAmount { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
     
-        public virtual PurchaseOrderAmendment PurchaseOrderAmendment { get; set; }
+        public virtual CreditNote CreditNote { get; set; }
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

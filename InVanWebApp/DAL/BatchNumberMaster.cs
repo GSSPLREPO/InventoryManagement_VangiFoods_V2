@@ -12,23 +12,24 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class MachineMaster
+    public partial class BatchNumberMaster
     {
-        public int MachineID { get; set; }
-        public string MachineName { get; set; }
-        public Nullable<System.DateTime> InstallationDate { get; set; }
-        public Nullable<int> LocationID { get; set; }
-        public string Description { get; set; }
-        public string ManufacturerName { get; set; }
-        public string ContactPersonName { get; set; }
-        public string ContactPersonEmail { get; set; }
-        public string ContactPersonMobileNo { get; set; }
-        public Nullable<int> IsDeleted { get; set; }
+        public int ID { get; set; }
+        public Nullable<int> BatchPlanningId { get; set; }
+        public string BatchNumber { get; set; }
+        public string WorkOrderNumber { get; set; }
+        public Nullable<int> SO_Id { get; set; }
+        public Nullable<bool> flagForIndent { get; set; }
+        public Nullable<int> ProductID { get; set; }
+        public string ProductCode { get; set; }
+        public string ProductName { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
-        public virtual LocationMaster LocationMaster { get; set; }
+        public virtual BatchPlanningMaster BatchPlanningMaster { get; set; }
+        public virtual SalesOrder SalesOrder { get; set; }
     }
 }

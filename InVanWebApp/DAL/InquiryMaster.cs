@@ -14,32 +14,48 @@ namespace InVanWebApp.DAL
     
     public partial class InquiryMaster
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public InquiryMaster()
+        {
+            this.InquiryFormItemDetails = new HashSet<InquiryFormItemDetail>();
+            this.SalesOrders = new HashSet<SalesOrder>();
+        }
+    
         public int InquiryID { get; set; }
+        public string InquiryNumber { get; set; }
         public Nullable<int> InquiryStatusID { get; set; }
-        public string CompanyName { get; set; }
-        public string ContactPersonName { get; set; }
         public Nullable<System.DateTime> DateOfInquiry { get; set; }
+        public string ContactPersonName { get; set; }
         public string ClientEmail { get; set; }
-        public string ClientAddress { get; set; }
-        public Nullable<int> ClientCountry { get; set; }
-        public Nullable<int> ClientState { get; set; }
-        public Nullable<int> ClientCity { get; set; }
-        public string ClientZipCode { get; set; }
-        public Nullable<int> ItemCategoryID { get; set; }
-        public Nullable<int> ItemID { get; set; }
-        public string ItemCode { get; set; }
-        public Nullable<double> ItemQuantity { get; set; }
-        public Nullable<double> QuotedPrice { get; set; }
-        public Nullable<double> ExpectedPrice { get; set; }
-        public Nullable<double> CloserPrice { get; set; }
-        public string PONumber { get; set; }
+        public string ContactNo { get; set; }
+        public Nullable<int> VendorsID { get; set; }
+        public string CompanyName { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public string LocationName { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string SupplierAddress { get; set; }
+        public Nullable<double> CGST { get; set; }
+        public Nullable<double> SGST { get; set; }
+        public Nullable<double> IGST { get; set; }
+        public Nullable<double> GrandTotal { get; set; }
+        public Nullable<double> TotalAfterTax { get; set; }
+        public Nullable<double> AdvancedPayment { get; set; }
+        public string SONumber { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public string Remarks { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
-        public virtual ItemCategoryMaster ItemCategoryMaster { get; set; }
-        public virtual ItemType ItemType { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InquiryFormItemDetail> InquiryFormItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalesOrder> SalesOrders { get; set; }
     }
 }

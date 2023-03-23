@@ -17,18 +17,29 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Item()
         {
+            this.BatchPlanning_Details = new HashSet<BatchPlanning_Details>();
+            this.CreditNoteDetails = new HashSet<CreditNoteDetail>();
             this.DebitNoteDetails = new HashSet<DebitNoteDetail>();
+            this.DeliveryChallanItemDetails = new HashSet<DeliveryChallanItemDetail>();
             this.GRNDetails = new HashSet<GRNDetail>();
             this.Indent_Details = new HashSet<Indent_Details>();
+            this.InquiryFormItemDetails = new HashSet<InquiryFormItemDetail>();
             this.InwardNoteDetails = new HashSet<InwardNoteDetail>();
+            this.InwardQCDetails = new HashSet<InwardQCDetail>();
+            this.IssueNoteDetails = new HashSet<IssueNoteDetail>();
             this.ItemCostMasters = new HashSet<ItemCostMaster>();
             this.ItemTaxMasters = new HashSet<ItemTaxMaster>();
             this.LocationWiseStocks = new HashSet<LocationWiseStock>();
             this.PurchaseOrderItemsDetails = new HashSet<PurchaseOrderItemsDetail>();
-            this.RequestForQuotations = new HashSet<RequestForQuotation>();
+            this.OutwardNoteDetails = new HashSet<OutwardNoteDetail>();
+            this.PreProduction_QC_Details = new HashSet<PreProduction_QC_Details>();
+            this.ProductionIndentIngredientsDetails = new HashSet<ProductionIndentIngredientsDetail>();
+            this.ProductionMaterialIssueNoteDetails = new HashSet<ProductionMaterialIssueNoteDetail>();
+            this.RejectionNoteItemDetails = new HashSet<RejectionNoteItemDetail>();
+            this.RequestForQuotationItemDetails = new HashSet<RequestForQuotationItemDetail>();
+            this.RFQ_Vendor_ItemDetails = new HashSet<RFQ_Vendor_ItemDetails>();
             this.SalesOrderItemsDetails = new HashSet<SalesOrderItemsDetail>();
-            this.SOItems = new HashSet<SOItem>();
-            this.StockAdjustments = new HashSet<StockAdjustment>();
+            this.StockAdjustmentDetails = new HashSet<StockAdjustmentDetail>();
             this.StockMasters = new HashSet<StockMaster>();
             this.StockTransfers = new HashSet<StockTransfer>();
         }
@@ -49,13 +60,25 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPlanning_Details> BatchPlanning_Details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CreditNoteDetail> CreditNoteDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DebitNoteDetail> DebitNoteDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryChallanItemDetail> DeliveryChallanItemDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GRNDetail> GRNDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Indent_Details> Indent_Details { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InquiryFormItemDetail> InquiryFormItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InwardNoteDetail> InwardNoteDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InwardQCDetail> InwardQCDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IssueNoteDetail> IssueNoteDetails { get; set; }
         public virtual ItemCategoryMaster ItemCategoryMaster { get; set; }
         public virtual ItemType ItemType { get; set; }
         public virtual UnitMaster UnitMaster { get; set; }
@@ -68,13 +91,23 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
+        public virtual ICollection<OutwardNoteDetail> OutwardNoteDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PreProduction_QC_Details> PreProduction_QC_Details { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductionIndentIngredientsDetail> ProductionIndentIngredientsDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductionMaterialIssueNoteDetail> ProductionMaterialIssueNoteDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RejectionNoteItemDetail> RejectionNoteItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestForQuotationItemDetail> RequestForQuotationItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RFQ_Vendor_ItemDetails> RFQ_Vendor_ItemDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalesOrderItemsDetail> SalesOrderItemsDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SOItem> SOItems { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StockAdjustment> StockAdjustments { get; set; }
+        public virtual ICollection<StockAdjustmentDetail> StockAdjustmentDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockMaster> StockMasters { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

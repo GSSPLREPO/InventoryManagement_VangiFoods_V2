@@ -22,16 +22,23 @@ namespace InVanWebApp.DAL
     
         public int FGSID { get; set; }
         public string ProductName { get; set; }
-        public Nullable<int> PackageSize { get; set; }
+        public string PackageSize { get; set; }
         public Nullable<System.DateTime> MfgDate { get; set; }
         public Nullable<int> NoOfCartonBox { get; set; }
         public Nullable<double> QuantityInKG { get; set; }
         public string BatchNo { get; set; }
+        public Nullable<int> SalesOrderId { get; set; }
+        public string SONumber { get; set; }
         public string PONumber { get; set; }
         public string Packaging { get; set; }
         public string Sealing { get; set; }
         public string Labeling { get; set; }
         public string QCCheck { get; set; }
+        public string ActualPackets { get; set; }
+        public string ExpectedPackets { get; set; }
+        public Nullable<decimal> ExpectedYield { get; set; }
+        public Nullable<decimal> ActualYield { get; set; }
+        public string WorkOrderNo { get; set; }
         public string Remarks { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

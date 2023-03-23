@@ -12,36 +12,39 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class PurchaseOrderAmendment
+    public partial class RejectionNote
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PurchaseOrderAmendment()
+        public RejectionNote()
         {
-            this.PurchaseOrderAmendmentDetails = new HashSet<PurchaseOrderAmendmentDetail>();
+            this.RejectionNoteItemDetails = new HashSet<RejectionNoteItemDetail>();
         }
     
-        public int PurchaseOrderAmendmentId { get; set; }
-        public Nullable<int> PurchaseOrderId { get; set; }
-        public string POAmendNo { get; set; }
-        public Nullable<System.DateTime> POAmendDate { get; set; }
-        public Nullable<double> TotalAmount { get; set; }
-        public string PaymentsTerms { get; set; }
-        public string DeliveryTerms { get; set; }
-        public Nullable<int> ApprovalStatus { get; set; }
-        public string ApprovalRemarks { get; set; }
-        public Nullable<int> ApprovedById { get; set; }
-        public Nullable<System.DateTime> ApprovedByDate { get; set; }
-        public Nullable<int> CheckedById { get; set; }
-        public Nullable<System.DateTime> CheckedByDate { get; set; }
+        public int ID { get; set; }
+        public string RejectionNoteNo { get; set; }
+        public Nullable<System.DateTime> NoteDate { get; set; }
+        public Nullable<int> InwardNote_Id { get; set; }
+        public string InwardNoteNumber { get; set; }
+        public Nullable<int> InwardQCId { get; set; }
+        public string InwardQCNumber { get; set; }
+        public Nullable<int> SupplierID { get; set; }
+        public string SupplierName { get; set; }
+        public Nullable<int> PO_ID { get; set; }
+        public string PONumber { get; set; }
+        public string Attachment { get; set; }
+        public string Signature { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<int> LastModifiedby { get; set; }
     
+        public virtual Company Company { get; set; }
+        public virtual InwardNote InwardNote { get; set; }
+        public virtual InwardQC InwardQC { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrderAmendmentDetail> PurchaseOrderAmendmentDetails { get; set; }
+        public virtual ICollection<RejectionNoteItemDetail> RejectionNoteItemDetails { get; set; }
     }
 }

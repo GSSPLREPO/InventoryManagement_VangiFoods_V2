@@ -17,10 +17,10 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public InwardNote()
         {
-            this.DebitNotes = new HashSet<DebitNote>();
             this.GRN_Master = new HashSet<GRN_Master>();
             this.InwardNoteDetails = new HashSet<InwardNoteDetail>();
             this.InwardQCs = new HashSet<InwardQC>();
+            this.RejectionNotes = new HashSet<RejectionNote>();
         }
     
         public int ID { get; set; }
@@ -30,6 +30,7 @@ namespace InVanWebApp.DAL
         public string InwardNumber { get; set; }
         public Nullable<System.DateTime> InwardDate { get; set; }
         public string Signature { get; set; }
+        public string ChallanNo { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -38,12 +39,12 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DebitNote> DebitNotes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GRN_Master> GRN_Master { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InwardNoteDetail> InwardNoteDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InwardQC> InwardQCs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RejectionNote> RejectionNotes { get; set; }
     }
 }

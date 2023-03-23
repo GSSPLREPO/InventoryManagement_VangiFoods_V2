@@ -26,6 +26,9 @@ namespace InVanWebApp.DAL
         public string PO_Number { get; set; }
         public string SaledOrder_Number { get; set; }
         public Nullable<int> SO_Id { get; set; }
+        public Nullable<int> CurrencyId { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -33,6 +36,7 @@ namespace InVanWebApp.DAL
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
         public virtual GRN_Master GRN_Master { get; set; }
         public virtual Item Item { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }

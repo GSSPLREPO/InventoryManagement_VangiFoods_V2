@@ -25,23 +25,37 @@ namespace InVanWebApp.DAL
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<BatchNumberMaster> BatchNumberMasters { get; set; }
+        public virtual DbSet<BatchPlanning_Details> BatchPlanning_Details { get; set; }
+        public virtual DbSet<BatchPlanningMaster> BatchPlanningMasters { get; set; }
         public virtual DbSet<Branch> Branches { get; set; }
+        public virtual DbSet<CalibrationLog> CalibrationLogs { get; set; }
+        public virtual DbSet<CertificateAnalysi> CertificateAnalysis { get; set; }
+        public virtual DbSet<ChillerCCP> ChillerCCPs { get; set; }
         public virtual DbSet<CityMaster> CityMasters { get; set; }
-        public virtual DbSet<ClientMaster> ClientMasters { get; set; }
+        public virtual DbSet<ClorinationLog> ClorinationLogs { get; set; }
         public virtual DbSet<COAMaster> COAMasters { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<CountryMaster> CountryMasters { get; set; }
+        public virtual DbSet<CreditNote> CreditNotes { get; set; }
+        public virtual DbSet<CreditNoteDetail> CreditNoteDetails { get; set; }
         public virtual DbSet<CurrencyMaster> CurrencyMasters { get; set; }
+        public virtual DbSet<DailyMonitoring> DailyMonitorings { get; set; }
         public virtual DbSet<DebitNote> DebitNotes { get; set; }
         public virtual DbSet<DebitNoteDetail> DebitNoteDetails { get; set; }
+        public virtual DbSet<DeliveryChallan> DeliveryChallans { get; set; }
+        public virtual DbSet<DeliveryChallanItemDetail> DeliveryChallanItemDetails { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DesignationMaster> DesignationMasters { get; set; }
         public virtual DbSet<FinishGoodSery> FinishGoodSeries { get; set; }
+        public virtual DbSet<ForeignBodyFound> ForeignBodyFounds { get; set; }
         public virtual DbSet<GRN_Master> GRN_Master { get; set; }
         public virtual DbSet<GRNDetail> GRNDetails { get; set; }
         public virtual DbSet<GSTMaster> GSTMasters { get; set; }
+        public virtual DbSet<HotFillingPackingLineLogSheetCCP> HotFillingPackingLineLogSheetCCPs { get; set; }
         public virtual DbSet<Indent> Indents { get; set; }
         public virtual DbSet<Indent_Details> Indent_Details { get; set; }
+        public virtual DbSet<InquiryFormItemDetail> InquiryFormItemDetails { get; set; }
         public virtual DbSet<InquiryMaster> InquiryMasters { get; set; }
         public virtual DbSet<InvoiceMaster> InvoiceMasters { get; set; }
         public virtual DbSet<InwardNote> InwardNotes { get; set; }
@@ -59,43 +73,62 @@ namespace InVanWebApp.DAL
         public virtual DbSet<LocationMaster> LocationMasters { get; set; }
         public virtual DbSet<LocationWiseStock> LocationWiseStocks { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
-        public virtual DbSet<MachineMaster> MachineMasters { get; set; }
+        public virtual DbSet<MicroAnalysi> MicroAnalysis { get; set; }
+        public virtual DbSet<OilAnalysi> OilAnalysis { get; set; }
         public virtual DbSet<OrganisationGroup> OrganisationGroups { get; set; }
         public virtual DbSet<Organisation> Organisations { get; set; }
+        public virtual DbSet<OutwardNote> OutwardNotes { get; set; }
+        public virtual DbSet<OutwardNoteDetail> OutwardNoteDetails { get; set; }
+        public virtual DbSet<PestControlLog> PestControlLogs { get; set; }
+        public virtual DbSet<PreProduction_QC> PreProduction_QC { get; set; }
+        public virtual DbSet<PreProduction_QC_Details> PreProduction_QC_Details { get; set; }
+        public virtual DbSet<PreStartUpHygineCheck> PreStartUpHygineChecks { get; set; }
         public virtual DbSet<ProcessMaster> ProcessMasters { get; set; }
+        public virtual DbSet<ProductEvaluationLog> ProductEvaluationLogs { get; set; }
+        public virtual DbSet<ProductionIndent> ProductionIndents { get; set; }
+        public virtual DbSet<ProductionIndentIngredientsDetail> ProductionIndentIngredientsDetails { get; set; }
+        public virtual DbSet<ProductionMaterialIssueNote> ProductionMaterialIssueNotes { get; set; }
+        public virtual DbSet<ProductionMaterialIssueNoteDetail> ProductionMaterialIssueNoteDetails { get; set; }
+        public virtual DbSet<ProductMaster> ProductMasters { get; set; }
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; }
-        public virtual DbSet<PurchaseOrderAmendment> PurchaseOrderAmendments { get; set; }
-        public virtual DbSet<PurchaseOrderAmendmentDetail> PurchaseOrderAmendmentDetails { get; set; }
         public virtual DbSet<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
         public virtual DbSet<PurchaseOrderPaymentDetail> PurchaseOrderPaymentDetails { get; set; }
         public virtual DbSet<QCProductionSpecificationMaster> QCProductionSpecificationMasters { get; set; }
-        public virtual DbSet<QCProductioObservationMaste> QCProductioObservationMastes { get; set; }
         public virtual DbSet<QCProductioObservationMaster> QCProductioObservationMasters { get; set; }
+        public virtual DbSet<RecipeIngredientsDetail> RecipeIngredientsDetails { get; set; }
         public virtual DbSet<RecipeMaster> RecipeMasters { get; set; }
-        public virtual DbSet<RejectionDataSheetMaster> RejectionDataSheetMasters { get; set; }
+        public virtual DbSet<RejectionNote> RejectionNotes { get; set; }
+        public virtual DbSet<RejectionNoteItemDetail> RejectionNoteItemDetails { get; set; }
         public virtual DbSet<RequestForQuotation> RequestForQuotations { get; set; }
+        public virtual DbSet<RequestForQuotationItemDetail> RequestForQuotationItemDetails { get; set; }
+        public virtual DbSet<RFQ_Vendor_ItemDetails> RFQ_Vendor_ItemDetails { get; set; }
+        public virtual DbSet<RFQ_VendorDetails> RFQ_VendorDetails { get; set; }
         public virtual DbSet<RoleRight> RoleRights { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SalesOrder> SalesOrders { get; set; }
         public virtual DbSet<SalesOrderItemsDetail> SalesOrderItemsDetails { get; set; }
         public virtual DbSet<SalesOrderPaymentDetail> SalesOrderPaymentDetails { get; set; }
+        public virtual DbSet<SanitizationAndHygine> SanitizationAndHygines { get; set; }
         public virtual DbSet<ScreenName> ScreenNames { get; set; }
-        public virtual DbSet<SOItem> SOItems { get; set; }
+        public virtual DbSet<SILOCCP> SILOCCPs { get; set; }
         public virtual DbSet<SOItemSchedule> SOItemSchedules { get; set; }
         public virtual DbSet<StateMaster> StateMasters { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<StockAdjustment> StockAdjustments { get; set; }
+        public virtual DbSet<StockAdjustmentDetail> StockAdjustmentDetails { get; set; }
         public virtual DbSet<StockMaster> StockMasters { get; set; }
         public virtual DbSet<StockTransfer> StockTransfers { get; set; }
-        public virtual DbSet<SupplierMaster> SupplierMasters { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TaxMaster> TaxMasters { get; set; }
         public virtual DbSet<TermsAndConditionMaster> TermsAndConditionMasters { get; set; }
         public virtual DbSet<UnitMaster> UnitMasters { get; set; }
         public virtual DbSet<UserDetail> UserDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<VegWasherDosageLog> VegWasherDosageLogs { get; set; }
+        public virtual DbSet<WaterAnalysi> WaterAnalysis { get; set; }
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
         public virtual DbSet<WorkOrderDetail> WorkOrderDetails { get; set; }
         public virtual DbSet<YearMaster> YearMasters { get; set; }
+        public virtual DbSet<RQCCP> RQCCPs { get; set; }
     }
 }

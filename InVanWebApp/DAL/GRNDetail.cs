@@ -24,12 +24,16 @@ namespace InVanWebApp.DAL
         public Nullable<double> OrderQuantity { get; set; }
         public Nullable<double> ReceivedQuantity { get; set; }
         public Nullable<double> InwardQty { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
         public virtual GRN_Master GRN_Master { get; set; }
         public virtual Item Item { get; set; }
     }

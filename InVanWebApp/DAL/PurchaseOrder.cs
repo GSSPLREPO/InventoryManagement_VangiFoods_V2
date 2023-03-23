@@ -17,11 +17,12 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PurchaseOrder()
         {
+            this.CreditNotes = new HashSet<CreditNote>();
             this.DebitNotes = new HashSet<DebitNote>();
             this.GRN_Master = new HashSet<GRN_Master>();
             this.PurchaseOrderItemsDetails = new HashSet<PurchaseOrderItemsDetail>();
             this.PurchaseOrderPaymentDetails = new HashSet<PurchaseOrderPaymentDetail>();
-            this.PurchaseOrderAmendments = new HashSet<PurchaseOrderAmendment>();
+            this.RejectionNotes = new HashSet<RejectionNote>();
             this.StockMasters = new HashSet<StockMaster>();
         }
     
@@ -52,12 +53,19 @@ namespace InVanWebApp.DAL
         public string LocationName { get; set; }
         public string Attachment { get; set; }
         public string Signature { get; set; }
+        public Nullable<int> IndentID { get; set; }
         public string IndentNumber { get; set; }
         public string Remarks { get; set; }
         public Nullable<int> ApprovedBy { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public Nullable<int> CheckedBy { get; set; }
         public Nullable<System.DateTime> CheckedDate { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public Nullable<decimal> OtherTax { get; set; }
+        public string RFQNo { get; set; }
+        public Nullable<int> RFQId { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -66,16 +74,21 @@ namespace InVanWebApp.DAL
     
         public virtual Company Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CreditNote> CreditNotes { get; set; }
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DebitNote> DebitNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GRN_Master> GRN_Master { get; set; }
+        public virtual Indent Indent { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderItemsDetail> PurchaseOrderItemsDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrderPaymentDetail> PurchaseOrderPaymentDetails { get; set; }
+        public virtual RequestForQuotation RequestForQuotation { get; set; }
         public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PurchaseOrderAmendment> PurchaseOrderAmendments { get; set; }
+        public virtual ICollection<RejectionNote> RejectionNotes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StockMaster> StockMasters { get; set; }
     }

@@ -17,14 +17,13 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public QCProductionSpecificationMaster()
         {
-            this.QCProductioObservationMastes = new HashSet<QCProductioObservationMaste>();
             this.QCProductioObservationMasters = new HashSet<QCProductioObservationMaster>();
         }
     
         public int QCProductionSpecificationID { get; set; }
         public string ProductionSpecification { get; set; }
-        public int ItemCategoryID { get; set; }
-        public int ItemID { get; set; }
+        public Nullable<int> ItemCategoryID { get; set; }
+        public Nullable<int> ItemID { get; set; }
         public string ItemCode { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -34,8 +33,6 @@ namespace InVanWebApp.DAL
     
         public virtual ItemCategoryMaster ItemCategoryMaster { get; set; }
         public virtual ItemType ItemType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<QCProductioObservationMaste> QCProductioObservationMastes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QCProductioObservationMaster> QCProductioObservationMasters { get; set; }
     }

@@ -12,17 +12,23 @@ namespace InVanWebApp.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class QCProductioObservationMaste
+    public partial class RecipeIngredientsDetail
     {
-        public int QCProductionObservationID { get; set; }
-        public int QCProductionSpecificationID { get; set; }
-        public string ProductionObservation { get; set; }
-        public Nullable<int> IsDeleted { get; set; }
+        public int RecipeIngredientsDetailID { get; set; }
+        public Nullable<int> RecipeID { get; set; }
+        public string RecipeName { get; set; }
+        public Nullable<int> ItemId { get; set; }
+        public string ItemCode { get; set; }
+        public string ItemName { get; set; }
+        public Nullable<double> Ratio { get; set; }
+        public Nullable<double> BatchSize { get; set; }
+        public Nullable<int> Unit { get; set; }
+        public string UnitName { get; set; }
+        public string Description { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-    
-        public virtual QCProductionSpecificationMaster QCProductionSpecificationMaster { get; set; }
     }
 }
