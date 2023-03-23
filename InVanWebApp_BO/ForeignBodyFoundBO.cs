@@ -11,23 +11,23 @@ namespace InVanWebApp_BO
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Select Date!")]
+        [Required(ErrorMessage = "Select date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
 
-        [Required(ErrorMessage = "Enter RawMaterial!")]
+        [Required(ErrorMessage = "Enter raw material!")]
         public string RawMaterial { get; set; }
 
-        [Required(ErrorMessage = "Enter OnGoingProcessing!")]
+        [Required(ErrorMessage = "Select on going processing!")]
         public string OnGoingProcessing { get; set; }
 
-        [Required(ErrorMessage = "Enter Batching!")]
+        [Required(ErrorMessage = "Select batching!")]
         public string Batching { get; set; }
 
-        [Required(ErrorMessage = "Enter PostProcessing!")]
+        [Required(ErrorMessage = "Select post processing!")]
         public string PostProcessing { get; set; }
 
-        [Required(ErrorMessage = "Enter CorrectiveAction!")]
+        [Required(ErrorMessage = "Enter corrective action!")]
         public string CorrectiveAction { get; set; }
         public string VerifyByName { get; set; }
         public string Remark { get; set; }

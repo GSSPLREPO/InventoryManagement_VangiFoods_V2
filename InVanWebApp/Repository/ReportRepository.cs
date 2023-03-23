@@ -737,5 +737,268 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
+
+        #region Batchwise Production report data 
+        public List<ReportBO> getBatchwiseProductionCostReportData(DateTime fromDate, DateTime toDate, int batchNumber)
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_BatchwiseProductionCost_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@BatchNumber", batchNumber);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            WorkOrderNumber = reader["WorkOrderNumber"].ToString(),
+                            ProductionMaterailIssueNoteNumber = reader["POMaterialIssueNoteNumber"].ToString(),
+                            ProductName = reader["ProductName"].ToString(),
+                            BatchNumber = reader["BatchNumber"].ToString(),
+                            RawMaterialCost = Convert.ToDecimal(reader["Rawmaterialcost"])
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region  Bind BatchNumber
+        /// <summary>
+        /// Siddharth: This function is for fatching the batch number
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ReportBO> GetAll()
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_BatchNumber_Get", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            BatchNumber = reader["BatchNumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region  Bind FG Location BatchNumber
+        /// <summary>
+        /// Siddharth: This function is for fatching the batch number of FG Location
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ReportBO> GetGFLocationBatchNumber()
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_FGLocationBatchNumber_Get", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            BatchNumber = reader["BatchNumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region FG Locationwise report data 
+        public List<ReportBO> getFGLocationwiseReportData(DateTime fromDate, DateTime toDate, int locationId)
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_FGLocationwise_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@LocationId", locationId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            LocationName = reader["LocationName"].ToString(),
+                            ItemCode = reader["ItemCode"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            ItemUnit = reader["ItemUnit"].ToString(),
+                            ItemUnitPrice = reader["ItemUnitPrice"].ToString(),
+                            Quantity = reader["Quantity"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Yeild report data 
+        public List<ReportBO> getYeildReportData(DateTime fromDate, DateTime toDate, int batchNumber)
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_Yeild_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@BatchNumber", batchNumber);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            WorkOrderNumber = reader["WorkOrderNumber"].ToString(),
+                            BatchNumber = reader["BatchNumber"].ToString(),
+                            ProductName = reader["ProductName"].ToString(),
+                            ExpectedYeild = Convert.ToDecimal(reader["ExpectedYeild"]),
+                            ActualYeild = Convert.ToDecimal(reader["ActualYeild"])
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Raw Material Cost Analysisreport data 
+        public List<ReportBO> getRawMaterialCostAnalysisReportData(DateTime fromDate, DateTime toDate, int itemId)
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_RawMaterialCostAnalysis_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@itemId", itemId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            WorkOrderNumber = reader["WorkOrderNumber"].ToString(),
+                            ItemCode = reader["ItemCode"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            QuantityUsed = reader["QuantityUsed"].ToString(),
+                            ItemUnitPrice = reader["ItemUnitPrice"].ToString(),
+                            RawMaterialCost = Convert.ToDecimal(reader["Rawmaterialcost"])
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
     }
 }

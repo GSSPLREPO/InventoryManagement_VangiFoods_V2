@@ -35,5 +35,25 @@ namespace InVanWebApp.Repository.Interface
         //Calling Method For Rejection Report
         List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId);
 
+
+        ///Production Reprot
+        //Batchwise Production cost Reprot
+        List<ReportBO> getBatchwiseProductionCostReportData(DateTime fromDate, DateTime toDate, int ItemId);
+
+        //To Bind BatchNumber for Batchwise Production Cost Report
+        IEnumerable<ReportBO> GetAll();
+
+        //To Bind BatchNumber for Batchwise Production Cost Report
+        IEnumerable<ReportBO> GetGFLocationBatchNumber();
+
+        //Yeild Report 
+        List<ReportBO> getYeildReportData(DateTime fromDate, DateTime toDate, int ItemId);
+
+        //FG Locationwise Report
+        List<ReportBO> getFGLocationwiseReportData(DateTime fromDate, DateTime toDate, int LocationId);
+
+        //Batchwise Production cost Reprot
+        List<ReportBO> getRawMaterialCostAnalysisReportData(DateTime fromDate, DateTime toDate, int ItemId);
+
     }
 }

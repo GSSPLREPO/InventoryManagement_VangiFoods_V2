@@ -179,8 +179,6 @@ namespace InVanWebApp.Controllers
                 BindCompany();
                 BindTermsAndCondition();
                 BindLocationName();
-                BindInquiryDropDown();
-                BindCurrencyPrice();
 
                 SalesOrderBO model = _repository.GetSalesOrderById(Id);
 
@@ -197,7 +195,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditSalesOrder(PurchaseOrderBO model, HttpPostedFileBase Signature)
+        public ActionResult EditSalesOrder(SalesOrderBO model, HttpPostedFileBase Signature)
         {
             ResponseMessageBO response = new ResponseMessageBO();
 
@@ -217,14 +215,14 @@ namespace InVanWebApp.Controllers
 
                     if (ModelState.IsValid)
                     {
-                        model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                        response = _purchaseOrderRepository.Update(model);
+                        model.LastModifiedById = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _repository.Update(model);
                         if (response.Status)
                         {
                             if (model.DraftFlag == true)
-                                TempData["Success"] = "<script>alert('Purchase order updated as draft successfully!');</script>";
+                                TempData["Success"] = "<script>alert('Sales order updated as draft successfully!');</script>";
                             else
-                                TempData["Success"] = "<script>alert('Purchase order updated successfully!');</script>";
+                                TempData["Success"] = "<script>alert('Sales order updated successfully!');</script>";
 
                         }
                         else
@@ -235,12 +233,12 @@ namespace InVanWebApp.Controllers
                             BindCurrencyPrice();
                             BindLocationName();
                             //BindIndentDropDown("POAmendment");
-                            PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
+                            SalesOrderBO model1 = _repository.GetSalesOrderById(model.SalesOrderId);
 
                             return View(model1);
                         }
 
-                        return RedirectToAction("Index", "PurchaseOrder");
+                        return RedirectToAction("Index", "SalesOrder");
                     }
                     else
                     {
@@ -249,8 +247,8 @@ namespace InVanWebApp.Controllers
                         BindTermsAndCondition();
                         BindCurrencyPrice();
                         BindLocationName();
-                        //BindIndentDropDown("POAmendment");
-                        PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
+
+                        SalesOrderBO model1 = _repository.GetSalesOrderById(model.SalesOrderId);
 
                         return View(model1);
                     }
@@ -263,10 +261,142 @@ namespace InVanWebApp.Controllers
             {
                 log.Error(ex.Message, ex);
                 TempData["Success"] = "<script>alert('Error while update!');</script>";
-                return RedirectToAction("Index", "PurchaseOrder");
+                return RedirectToAction("Index", "SalesOrder");
             }
         }
 
+        #endregion
+
+        #region Amendment Operation
+        /// <summary>
+        /// Created By : Farheen
+        /// Created Date : 23-03-2023
+        /// Description : Get sales order Details and bind all sales order for amendment process.
+        /// </summary>
+        /// <param name="ID">paramenter contrains sales order Id.</param>
+        /// <returns></returns>
+        public ActionResult SOAmendment(int ID)
+        {
+            try
+            {
+                if (Session[ApplicationSession.USERID] == null)
+                    return RedirectToAction("Index", "Login");
+                else
+                {
+                    BindCompany();
+                    BindTermsAndCondition();
+                    BindLocationName();
+
+                    SalesOrderBO model = _repository.GetSalesOrderById(ID);
+
+                    model.Amendment = model.Amendment + 1;
+
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while amending the SO!');</script>";
+                return RedirectToAction("Index", "SalesOrder");
+            }
+
+        }
+
+        /// <summary>
+        /// Created By : Farheen
+        /// Created Date : 23-03-2023
+        /// Description: Insert Amendment Details of Sales order.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SOAmendment(SalesOrderBO model, HttpPostedFileBase Signature)
+        {
+            ResponseMessageBO response = new ResponseMessageBO();
+            try
+            {
+                if (Session[ApplicationSession.USERID] == null)
+                    return RedirectToAction("Index", "Login");
+                else
+                {
+                    if (ModelState.IsValid)
+                    {
+                        if (Signature != null && Signature.ContentLength > 1000)
+                        {
+                            UploadSignature(Signature);
+                            model.Signature = Signature.FileName.ToString();
+                        }
+                        else if (Signature.ContentLength < 1000 && Signature != null)
+                            model.Signature = Signature.FileName.ToString();
+                        else
+                            model.Signature = null;
+
+                        model.CreatedById = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        model.IsAmendmentFlag = 1;
+                        response = _repository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Amendment Details Added successfully!');</script>";
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Duplicate entry!');</script>";
+                            BindCompany();
+                            BindTermsAndCondition();
+                            BindLocationName();
+
+                            SalesOrderBO model1 = _repository.GetSalesOrderById(model.SalesOrderId);
+
+                            return View(model1);
+                        }
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        
+                        BindCompany();
+                        BindTermsAndCondition();
+                        BindLocationName();
+                        
+                        SalesOrderBO model1 = _repository.GetSalesOrderById(model.SalesOrderId);
+
+                        return View(model1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                TempData["Success"] = "<script>alert('Error while amendment of SO!');</script>";
+                return RedirectToAction("Index", "SalesOrder");
+            }
+
+        }
+
+        #endregion
+
+        #region View Sales Order
+        /// <summary>
+        /// Created By: Farheen
+        /// Created Date : 23-03-2023
+        /// Description: This method responsible for View of sales order details.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public ActionResult ViewSalesOrder(int ID)
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            BindCompany();
+            BindTermsAndCondition();
+            BindLocationName();
+
+
+            SalesOrderBO model = _repository.GetSalesOrderById(ID);
+            return View(model);
+
+        }
         #endregion
 
         #region Delete function
@@ -332,7 +462,7 @@ namespace InVanWebApp.Controllers
         {
             var result = _purchaseOrderRepository.GetTermsAndConditionList();
             var resultList = new SelectList(result.ToList(), "TermsAndConditionID", "Terms");
-            ViewData["TermsAndConditionID"] = resultList;
+            ViewData["Terms_dd"] = resultList;
         }
         public void BindLocationName()
         {

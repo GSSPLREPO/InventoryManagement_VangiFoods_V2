@@ -18,7 +18,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage ="Enter the water clorinated!")]
         public string WaterClorinated { get; set; }
 
-        [Required(ErrorMessage = "Enter totle time in chiller!")]
+        [Required(ErrorMessage = "Enter total time in chiller!")]
         public string TotleTimeInChiller { get; set; }
 
         [Required(ErrorMessage = "Enter quntity of packed product!")]

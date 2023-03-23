@@ -143,21 +143,47 @@ namespace InVanWebApp.Repository
                         foreach (var item in data)
                         {
                             SalesOrderItemsDetail objItemDetails = new SalesOrderItemsDetail();
-                            objItemDetails.SalesOrderId = SalesOrderId;
-                            objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
-                            objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
-                            objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                            objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                            objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                            objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
-                            objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
-                            objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(7).Value);
-                            objItemDetails.CreatedBy = model.CreatedById;
-                            //Added the below field for Currency
-                            objItemDetails.CurrencyID = model.CurrencyID;
-                            objItemDetails.CurrencyName = model.CurrencyName;
+                            if (model.IsAmendmentFlag == 1)
+                            {
+                                var Qty = item.ElementAt(3).Value.ToString().Split(' ')[0];
+                                var Unit = item.ElementAt(3).Value.ToString().Split(' ')[1];
+                                var tax = item.ElementAt(6).Value.ToString().Split(' ')[0];
 
+                                //SalesOrderItemsDetail objItemDetails = new SalesOrderItemsDetail();
+                                objItemDetails.SalesOrderId = SalesOrderId;
+                                objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
+                                objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
+                                objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                                //objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                                objItemDetails.ItemQuantity = Convert.ToDecimal(Qty);
+                                //objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
+                                objItemDetails.ItemUnit = Unit;
+                                objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(4).Value);
+                                objItemDetails.ItemTaxValue = Convert.ToDecimal(tax);
+                                objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(7).Value);
+                                objItemDetails.CreatedBy = model.CreatedById;
+                                //Added the below field for Currency
+                                objItemDetails.CurrencyID = model.CurrencyID;
+                                objItemDetails.CurrencyName = model.CurrencyName;
+                            }
+                            else
+                            {
+                                objItemDetails.SalesOrderId = SalesOrderId;
+                                objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
+                                objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
+                                objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                                objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                                objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
+                                objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
+                                objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
+                                objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(7).Value);
+                                objItemDetails.CreatedBy = model.CreatedById;
+                                //Added the below field for Currency
+                                objItemDetails.CurrencyID = model.CurrencyID;
+                                objItemDetails.CurrencyName = model.CurrencyName;
+                            }
                             itemDetails.Add(objItemDetails);
+
                         }
 
                         foreach (var item in itemDetails)
@@ -271,7 +297,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedById);                 
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedById);
 
 
                     con.Open();
@@ -289,20 +315,26 @@ namespace InVanWebApp.Repository
 
                     foreach (var item in data)
                     {
+                        var Qty = item.ElementAt(3).Value.ToString().Split(' ')[0];
+                        var Unit = item.ElementAt(3).Value.ToString().Split(' ')[1];
+                        var tax = item.ElementAt(6).Value.ToString().Split(' ')[0];
+
                         SalesOrderItemsDetail objItemDetails = new SalesOrderItemsDetail();
                         objItemDetails.SalesOrderId = model.SalesOrderId;
                         objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
                         objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
                         objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                        objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
-                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
-                        objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(6).Value);
+                        //objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                        objItemDetails.ItemQuantity = Convert.ToDecimal(Qty);
+                        //objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
+                        objItemDetails.ItemUnit = Unit;
+                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(4).Value);
+                        objItemDetails.ItemTaxValue = Convert.ToDecimal(tax);
                         objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(7).Value);
                         objItemDetails.LastModifiedBy = model.LastModifiedById;
                         //Added the below field for Currency
                         objItemDetails.CurrencyID = model.CurrencyID;
-                        objItemDetails.CurrencyName = model.CurrencyName;                        
+                        objItemDetails.CurrencyName = model.CurrencyName;
 
                         itemDetails.Add(objItemDetails);
                     }
@@ -324,8 +356,8 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
                         cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
                         cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
-                        cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
-                        cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                        cmdNew.Parameters.AddWithValue("@LastModifiedBy", item.LastModifiedBy);
+                        cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                         //Added the below field for Indent, currency and terms description
                         cmdNew.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
                         cmdNew.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
@@ -453,7 +485,9 @@ namespace InVanWebApp.Repository
                             ItemUnit = reader["ItemUnit"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
                             ItemTaxValue = Convert.ToDecimal(reader["ItemTax"]),
-                            TotalItemCost = Convert.ToDecimal(reader["TotalItemCost"])
+                            TotalItemCost = Convert.ToDecimal(reader["TotalItemCost"]),
+                            VendorId = Convert.ToInt32(reader["VendorsID"]),
+                            SupplierAddress = reader["SupplierAddress"].ToString()
                             //BalanceQuantity = Convert.ToDouble(reader["BalanceQuantity"])
 
                         };

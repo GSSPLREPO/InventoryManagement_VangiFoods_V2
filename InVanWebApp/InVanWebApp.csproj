@@ -174,6 +174,7 @@
     <Compile Include="Controllers\DailyMonitoringController.cs" />
     <Compile Include="Controllers\Dashb_RTWarehouseWiseStockController.cs" />
     <Compile Include="Controllers\DebitNoteController.cs" />
+    <Compile Include="Controllers\FinishedGoodSeriesController.cs" />
     <Compile Include="Controllers\ForeignBodyFoundController.cs" />
     <Compile Include="Controllers\GRNController.cs" />
     <Compile Include="Controllers\HotFillingPackingLineLogSheetCCPController.cs" />
@@ -468,6 +469,7 @@
     <Compile Include="Repository\DailyMonitoringRepository.cs" />
     <Compile Include="Repository\DashboardRepository.cs" />
     <Compile Include="Repository\DebitNoteRepository.cs" />
+    <Compile Include="Repository\FinishedGoodSeriesRepository.cs" />
     <Compile Include="Repository\ForeignBodyFoundRepository .cs" />
     <Compile Include="Repository\GRNRepository.cs" />
     <Compile Include="Repository\HotFillingPackingLineLogSheetCCPRepository.cs" />
@@ -483,6 +485,7 @@
     <Compile Include="Repository\Interface\IDailyMonitoringRepository.cs" />
     <Compile Include="Repository\Interface\IDashboardRepository.cs" />
     <Compile Include="Repository\Interface\IDebitNoteRepository.cs" />
+    <Compile Include="Repository\Interface\IFinishedGoodSeriesRepository.cs" />
     <Compile Include="Repository\Interface\IForeignBodyFoundRepository.cs" />
     <Compile Include="Repository\Interface\IGRNRepository.cs" />
     <Compile Include="Repository\Interface\IHotFillingPackingLineLogSheetCCPRepository.cs" />
@@ -3046,6 +3049,16 @@
     <Content Include="Views\ForeignBodyFound\Index - Copy.cshtml" />
     <Content Include="Views\ForeignBodyFound\Index.cshtml" />
     <Content Include="Views\SalesOrder\EditSalesOrder.cshtml" />
+    <Content Include="Views\SalesOrder\ViewSalesOrder.cshtml" />
+    <Content Include="Views\SalesOrder\SOAmendment.cshtml" />
+    <Content Include="Views\FinishedGoodSeries\AddFinishedGoodSeries.cshtml" />
+    <Content Include="Views\FinishedGoodSeries\EditFinishedGoodSeries.cshtml" />
+    <Content Include="Views\FinishedGoodSeries\Index.cshtml" />
+    <Content Include="Views\FinishedGoodSeries\ViewFinishedGoodSeries.cshtml" />
+    <Content Include="Views\Report\BatchwiseProductionCostReport.cshtml" />
+    <Content Include="Views\Report\FGLocationWiseReport.cshtml" />
+    <Content Include="Views\Report\YeildReport.cshtml" />
+    <Content Include="Views\Report\RawMaterialCostAnalysisReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

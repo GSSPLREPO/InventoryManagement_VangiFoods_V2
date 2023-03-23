@@ -63,7 +63,7 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 SILOCCPBO model = new SILOCCPBO();
-                model.Verification = Session[ApplicationSession.USERNAME].ToString();
+                //model.Verification = Session[ApplicationSession.USERNAME].ToString();
                 model.Date = DateTime.Now;
                 model.TranseferedTimeFromRQS = DateTime.Now.ToString("HH:mm:ss tt") ;
                 model.Time = DateTime.Now.ToString("HH:mm:ss tt");
@@ -93,7 +93,7 @@ namespace InVanWebApp.Controllers
                         model.Verification = Session[ApplicationSession.USERNAME].ToString();
                         response = _siloCCPRepository.Insert(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('SILOCCP Details Inserted Successfully!');</script>";
+                            TempData["Success"] = "<script>alert('SILO CCP Details Inserted Successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while insertion!');</script>";
@@ -152,7 +152,7 @@ namespace InVanWebApp.Controllers
                         model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _siloCCPRepository.Update(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('SILOCCP Details updated successfully!');</script>";
+                            TempData["Success"] = "<script>alert('SILO CCP Details updated successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while updating!');</script>";

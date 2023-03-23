@@ -101,7 +101,7 @@ namespace InVanWebApp.Controllers
                         model.VerifyByName = Session[ApplicationSession.USERNAME].ToString();
                         response = _foreignBodyFoundRepository.Insert(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('ForeignBodyFound Details Inserted Successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Foreign Body Found Details Inserted Successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while insertion!');</script>";
@@ -160,7 +160,7 @@ namespace InVanWebApp.Controllers
                         model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _foreignBodyFoundRepository.Update(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('ForeignBodyFound Details updated successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Foreign Body Found Details updated successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while updating!');</script>";

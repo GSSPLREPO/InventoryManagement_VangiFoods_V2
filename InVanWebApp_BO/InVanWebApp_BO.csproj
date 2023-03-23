@@ -67,6 +67,7 @@
     <Compile Include="CityMaster.cs" />
     <Compile Include="ClorinationLogBO.cs" />
     <Compile Include="DailyMonitoringBO.cs" />
+    <Compile Include="FinishedGoodSeriesBO.cs" />
     <Compile Include="ForeignBodyFoundBO.cs" />
     <Compile Include="HotFillingPackingLineLogSheetCCPBO.cs" />
     <Compile Include="IssueNoteBO.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="PurchaseOrderBO.cs" />
     <Compile Include="RecipeMasterBO.cs" />
     <Compile Include="RejectionNoteBO.cs" />
+    <Compile Include="ReportBO.cs" />
     <Compile Include="RequestForQuotationBO.cs" />
     <Compile Include="RequestForQuotationItemDetailsBO.cs" />
     <Compile Include="RoleRightBO.cs" />

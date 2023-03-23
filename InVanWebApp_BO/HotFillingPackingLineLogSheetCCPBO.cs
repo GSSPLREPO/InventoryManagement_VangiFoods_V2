@@ -35,7 +35,7 @@ namespace InVanWebApp_BO
         public string ProductTemp { get; set; }
 
         /*CLEANING & HYGINE CHECKS*/
-        [Required(ErrorMessage = "Select wather empolyee is cleane & hygine or not!")]
+        [Required(ErrorMessage = " Select whether the cleaning & hygiene is Ok?!")]
         public string CleaningHygine { get; set; }
 
         /*RANDOM WEIGHT*/

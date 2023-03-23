@@ -63,7 +63,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CheckedDate { get; set; }
         public string Remarks { get; set; }
         public string DispatchMode { get; set; }
-        public int InquiryID { get; set; }
+        public int? InquiryID { get; set; }
         public string InquiryNumber { get; set; }
         public string WorkOrderNo { get; set; }
         public string WorkOrderType { get; set; }
@@ -86,6 +86,9 @@ namespace InVanWebApp_BO
         public decimal TotalItemCost { get; set; }
         public decimal BalanceQuantity { get; set; }
         public int OutwardCount { get; set; }
+
+        //Below field is added for finding amendment entry or simple insert entry
+        public int IsAmendmentFlag { get; set; }
 
         //Added the below field for production indent.
         public string SONumber { get; set; }
