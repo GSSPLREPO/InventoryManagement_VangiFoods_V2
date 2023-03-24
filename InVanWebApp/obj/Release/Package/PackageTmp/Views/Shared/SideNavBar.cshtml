@@ -70,11 +70,11 @@
                             <a class="nav-link" href="~/InquiryForm">Inquiry Form</a>
                         </div>
                     </li>
-                    @*<li class="nav-item">
+                    <li class="nav-item">
                         <div id="SalesOrder">
                             <a class="nav-link" href="~/SalesOrder">Sales Order</a>
                         </div>
-                    </li>*@
+                    </li>
                     <li class="nav-item">
                         <div id="Indent">
                             <a class="nav-link" href="@Url.Action("Index","Indent")">Indent</a>
@@ -263,6 +263,12 @@
             <div class="collapse" id="form-production">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
+                        <div id="FinishedGoodSeriesQC">
+                            <a class="nav-link" href="@Url.Action("Index","FinishedGoodSeries")">Finished Good Series</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
                         <div id="ProductionIndent">
                             <a class="nav-link" href="@Url.Action("Index","ProductionIndent")">Production Indent</a>
                         </div>
@@ -380,6 +386,12 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <div id="FGLocationWiseReport">
+                            <a class="nav-link" href="~/Report/FGLocationWiseReport">FG Locationwise Report</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
                         <div id="FinishedGoodsDispatchReport">
                             <a class="nav-link" href="~/Report/FinishedGoodsDispatchReport">Finished Goods Dispatch</a>
                         </div>
@@ -419,15 +431,20 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <div id="RawMaterialCostAnalysisReport">
+                            <a class="nav-link" href="~/Report/RawMaterialCostAnalysisReport">Raw Material Cost Analysis Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div id="RawMaterialReceivedReport">
                             <a class="nav-link" href="~/Report/RawMaterialIndex">Raw Material Received</a>
                         </div>
                     </li>
                     @*<li class="nav-item">
-                            <div id="RejectionNoteReport">
-                                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
-                            </div>
-                        </li>*@
+            <div id="RejectionNoteReport">
+                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+            </div>
+        </li>*@
                     <li class="nav-item">
                         <div id="RejectionNoteReport">
                             <a class="nav-link" href="~/Report/RejectionReport">Rejection Report</a>
@@ -453,11 +470,17 @@
                             <a class="nav-link" href="~/Report/TotalInventoryCostReport">Total Inventory Cost</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="YeildReport">
+                            <a class="nav-link" href="~/Report/YeildReport">Yeild Report</a>
+                        </div>
+                    </li>
+
                     @*<li class="nav-item">
-                            <div id="InventoryControlReport">
-                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-                            </div>
-                        </li>*@
+            <div id="InventoryControlReport">
+                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+            </div>
+        </li>*@
                 </ul>
             </div>
         </li>

@@ -14,6 +14,8 @@ namespace InVanWebApp.Repository.Interface
 
         //Function define for: Insert record.
         ResponseMessageBO Insert(BatchPlanningMasterBO model);
+        SalesOrderBO GetWorkOrderNumber(int id);
+        IEnumerable<Recipe_DetailsBO> GetRecipe(int id, int locationId);
 
     }
 }

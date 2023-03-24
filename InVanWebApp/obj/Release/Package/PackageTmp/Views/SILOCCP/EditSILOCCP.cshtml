@@ -14,14 +14,14 @@
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(model => model.ID)
                         <div class="row">
-                            <div class="col-md-2">
-                                @Html.Label("User")
-                                <span style="color:red">*</span>
-                            </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Verification, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.Verification, "", new { @class = "error mt-2 text-danger" })
-                            </div>
+                            @*<div class="col-md-2">
+                @Html.Label("User")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Verification, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.Verification, "", new { @class = "error mt-2 text-danger" })
+            </div>*@
                             <div class="col-md-2">
                                 @Html.Label("Date")
                                 <span style="color:red">*</span>
@@ -32,7 +32,7 @@
                                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
-                                @Html.Label("TranseferedTimeFromRQS")
+                                @Html.Label("Transefered Time From RQS")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
@@ -44,7 +44,7 @@
 
                         <div class="row">
                             <div class="col-md-2">
-                                @Html.Label("ItemName")
+                                @Html.Label("Item Name")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
@@ -110,7 +110,7 @@
                                 @Html.ValidationMessageFor(model => model.WeightOfHoldingMaterial, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
-                                @Html.Label("CorrectiveActions")
+                                @Html.Label("Corrective Actions")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
@@ -137,8 +137,15 @@
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Remarks Will be Allow 100 Charachter" })
                                 @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                             </div>
-
+                            <div class="col-md-2">
+                            @Html.Label("Verification")
+                            <span style="color:red">*</span>
+                            </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.Verification, new { @class = "form-control form-control-sm" })
+                            @Html.ValidationMessageFor(model => model.Verification, "", new { @class = "error mt-2 text-danger" })
                         </div>
+                    </div>
                         <br />
                         <div class="col d-flex justify-content-end" style="margin-left: auto;">
                             <div class="row">

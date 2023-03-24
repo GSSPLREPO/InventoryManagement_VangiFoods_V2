@@ -20,7 +20,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage ="Select delivery date!")]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
 
-        [Required(ErrorMessage ="Select client date!")]
+        [Required(ErrorMessage ="Select client name!")]
         public int ClientID { get; set; }
         public string CompanyName { get; set; }
         public decimal CGST { get; set; }

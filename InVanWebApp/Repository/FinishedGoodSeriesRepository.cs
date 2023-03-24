@@ -56,7 +56,7 @@ namespace InVanWebApp.Repository
                             QuantityInKG = Convert.ToDouble(reader["QuantityInKG"]),
                             BatchNo = reader["BatchNo"].ToString(),
                             SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),
-                            SONo = reader["SONo"].ToString(),
+                            SONo = reader["SONumber"].ToString(),
                             Packaging = reader["Packaging"].ToString(),
                             Sealing = reader["Sealing"].ToString(),
                             Labelling = reader["Labeling"].ToString(),

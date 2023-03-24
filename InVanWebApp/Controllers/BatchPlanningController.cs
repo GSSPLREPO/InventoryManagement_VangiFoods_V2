@@ -15,6 +15,8 @@ namespace InVanWebApp.Controllers
     {
         private IBatchPlanningRepository _repository;
         private ISalesOrderRepository _salesOrderRepository;
+        private IProductMasterRepository _productMasterRepository;
+        private IPurchaseOrderRepository _purchaseOrderRepository;
         private static ILog log = LogManager.GetLogger(typeof(BatchPlanningController));
 
         #region Initializing constructor
@@ -25,6 +27,8 @@ namespace InVanWebApp.Controllers
         {
             _repository = new BatchPlanningRepository();
             _salesOrderRepository = new SalesOrderRepository();
+            _productMasterRepository = new ProductMasterRepository();
+            _purchaseOrderRepository = new PurchaseOrderRepository();
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
@@ -66,6 +70,8 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindSONumber();
+                BindProductDropDown();
+                BindLocationName();
 
                 BatchPlanningMasterBO model = new BatchPlanningMasterBO();
                 //==========Document number for Inward note============//
@@ -105,7 +111,9 @@ namespace InVanWebApp.Controllers
                         {
                             TempData["Success"] = "<script>alert('Duplicate batch document number! Can not be inserted!');</script>";
                             BindSONumber();
-                            
+                            BindProductDropDown();
+                            BindLocationName();
+
                             GetDocumentNumber objDocNo = new GetDocumentNumber();
                             var DocumentNumber = objDocNo.GetDocumentNo(20);
                             ViewData["DocumentNo"] = DocumentNumber;
@@ -119,7 +127,9 @@ namespace InVanWebApp.Controllers
                     else
                     {
                         BindSONumber();
-                        
+                        BindProductDropDown();
+                        BindLocationName();
+
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
                         var DocumentNumber = objDocNo.GetDocumentNo(20);
                         ViewData["DocumentNo"] = DocumentNumber;
@@ -137,7 +147,9 @@ namespace InVanWebApp.Controllers
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
                 BindSONumber();
-                
+                BindProductDropDown();
+                BindLocationName();
+
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
                 var DocumentNumber = objDocNo.GetDocumentNo(20);
                 ViewData["DocumentNo"] = DocumentNumber;
@@ -148,11 +160,40 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind Dropdowns
-        public void BindSONumber() 
+        public void BindSONumber()
         {
             var result = _salesOrderRepository.GetAll();
             var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONo");
             ViewData["SO_dd"] = resultList;
+        }
+
+        public void BindProductDropDown()
+        {
+            var result = _productMasterRepository.GetAll();
+            var resultList = new SelectList(result.ToList(), "ProductID", "ProductName");
+            ViewData["Product_dd"] = resultList;
+        }
+
+        public JsonResult GetWorkOrderNumber(string id)
+        {
+            var Id = Convert.ToInt32(id);
+            var result = _repository.GetWorkOrderNumber(Id);
+            return Json(result);
+        }
+
+        public JsonResult GetRecipe(string id, string LocationId)
+        {
+            int ProductId = Convert.ToInt32(id);
+            int locationId = Convert.ToInt32(LocationId);
+            var result = _repository.GetRecipe(ProductId, locationId);
+            return Json(result);
+        }
+
+        public void BindLocationName()
+        {
+            var result = _purchaseOrderRepository.GetLocationNameList();
+            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
+            ViewData["LocationName"] = resultList;
         }
         #endregion
     }

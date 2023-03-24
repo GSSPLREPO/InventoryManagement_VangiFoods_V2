@@ -9,6 +9,7 @@ using InVanWebApp_BO;
 using System.Data.SqlClient;
 using System.Data;
 using System.Web.Script.Serialization;
+using Dapper;
 
 namespace InVanWebApp.Repository
 {
@@ -164,5 +165,71 @@ namespace InVanWebApp.Repository
 
         #endregion
 
+        #region Bind Work order no
+        public SalesOrderBO GetWorkOrderNumber(int id) {
+            string purchaseOrderQuery = "SELECT WorkOrderNo FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
+            SalesOrderBO result = new SalesOrderBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    result = con.Query<SalesOrderBO>(purchaseOrderQuery, new { @Id = id }).FirstOrDefault();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result = null;
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
+        #endregion
+
+        #region Fetch Recipe by product id
+        public IEnumerable<Recipe_DetailsBO> GetRecipe(int id, int locationId) 
+        {
+            List<Recipe_DetailsBO> resultList = new List<Recipe_DetailsBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_RecipeDetailsForBatchPlanning_GetbyProductId", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ProductId",id);
+                    cmd.Parameters.AddWithValue("@LocationId", locationId);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new Recipe_DetailsBO()
+                        {
+                            RecipeIngredientsDetailID = Convert.ToInt32(reader["RecipeIngredientsDetailID"]),
+                            RecipeID = Convert.ToInt32(reader["RecipeID"]),
+                            RecipeName = reader["RecipeName"].ToString(),
+                            ItemId = Convert.ToInt32(reader["ItemId"]),
+                            ItemCode = reader["ItemCode"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            RoundedRatio = Convert.ToDecimal(reader["RoundedRatio"]),
+                            BatchSize = float.Parse(reader["BatchSize"].ToString()),
+                            TotalBatches = Convert.ToDecimal(reader["TotalBatches"]),
+                            Yield = Convert.ToDecimal(reader["Yield"]),
+                            ActualRequirement = Convert.ToDecimal(reader["ActualRequirement"]),
+                            StockInHand = Convert.ToDecimal(reader["StockInHand"]),
+                            ToBeProcured = Convert.ToDecimal(reader["ToBeProcured"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
     }
 }
