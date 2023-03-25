@@ -9,6 +9,7 @@ namespace InVanWebApp_BO
 {
     public class DashboardBO
     {
+        /*-----------Start FIFO System-------------------*/
         /*GRN Date*/
         [Required(ErrorMessage = "Please select the GRN date!")]
         [DataType(DataType.Date)]
@@ -30,14 +31,20 @@ namespace InVanWebApp_BO
 
         /* Received Qty*/
         public float ReceivedQty { get; set; }
+        /*------------End FIFO Dashboard-------------------------*/
 
+        /*-----------Start Yield Dashboard -----------------------*/
+
+        /**/
+
+        /*-----------End Yield Dashboard--------------------------*/
         /*From Date*/
         [DataType(DataType.Date)]
-        public Nullable<System.DateTime> fromDate { get; set; }
+        public DateTime fromDate { get; set; }
 
         /*toDate*/
         [Required(ErrorMessage = "Please select the GRN date!")]
         [DataType(DataType.Date)]
-        public Nullable<System.DateTime> toDate { get; set; }
+        public DateTime toDate { get; set; }
     }
 }

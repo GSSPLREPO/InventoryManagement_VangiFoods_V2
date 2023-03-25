@@ -108,7 +108,7 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("FIFOSystem", "Login");
             DashboardBO model = new DashboardBO();
             model.toDate = DateTime.Now;
-            model.fromDate = Convert.ToDateTime("01-11-2022");
+            model.fromDate = DateTime.Now; /*Convert.ToDateTime("01-11-2022");*/
             BindLocationDropdown();
             BindItemDropDown();
             return View(model);

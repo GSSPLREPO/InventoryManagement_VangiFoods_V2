@@ -406,9 +406,9 @@ namespace InVanWebApp.Controllers
             sb.Append("<br/><label style='font-size:10px;font-family:Arial'>" + address + "</label>");
             sb.Append("</th></tr>");
             sb.Append("<tr>");
-            sb.Append("<th colspan=10 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromdate);
+            sb.Append("<th colspan=6 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromdate);
             sb.Append("</th>");
-            sb.Append("<th colspan=10 style='text-align:right;font-size:11px;'>" + Todate + " " + todate);
+            sb.Append("<th colspan=6 style='text-align:right;font-size:11px;'>" + Todate + " " + todate);
             sb.Append("</th></tr>");
             sb.Append("</thead>");
             sb.Append("</table>");
