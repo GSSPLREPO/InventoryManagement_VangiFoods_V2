@@ -243,6 +243,7 @@ namespace InVanWebApp.Controllers
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("Date");
+            dt.Columns.Add("Time");
             dt.Columns.Add("LotNo");
             dt.Columns.Add("SampleName");
             dt.Columns.Add("ACIDValue");
@@ -259,6 +260,7 @@ namespace InVanWebApp.Controllers
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = i;
                 dr["Date"] = st.Date.ToString();
+                dr["Time"] = st.Time.ToString();
                 dr["LotNo"] = st.LotNo.ToString();
                 dr["SampleName"] = st.SampleName.ToString();
                 dr["ACIDValue"] = st.ACIDValue.ToString();
@@ -297,43 +299,41 @@ namespace InVanWebApp.Controllers
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["ToDate"]).ToString("dd/MM/yyyy");
+
             if (fromdate == "01-01-0001")
             {
                 fromdate = "";
-                Fromdate = "";
+                Fromdate = "From Date : " + DateTime.Today.ToString("dd/MM/yyyy");
             }
+
             if (todate == "01-01-0001")
             {
                 todate = "";
-                Todate = "";
+                Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy");
             }
-            //String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-            //    "<tr><td colspan='4'> <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
-            //    "<tr><td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-            //    "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
-            //    "<tr><tr><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-            //    + "<td><td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
-            //    + "</td></tr>" + "</table>"
-            //    + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
 
             String content1 = "";
+
             if (fromdate == "" || fromdate == null && todate == "" || todate == null)
             {
                 content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
-              "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
-              "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
-              "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+              "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
+              "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
+              "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+               + "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               + "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
             }
             else
             {
                 content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
-               "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
-               "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
-               "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
-               + "<tr><td colspan='10' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
-               + "</td><td colspan='10' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+               + "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               + "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
                /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
             }
@@ -360,18 +360,7 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExportAsPDF()
         {
-            //DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
-            //DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
 
-            //var status = Session["Status"].ToString();
-            //var VendorId = Convert.ToInt32(Session["Vendor"]);
-            //var DailyMonitoringReportDetails = GetAllDailyMonitoringList(fromDate, toDate);
-            //var DailyMonitoringReportDetails = TempData["DailyMonitoringPDF"];
-            //TempData["DailyMonitoringReportDataPDF"] = DailyMonitoringReportDetails;
-            //if (TempData["DailyMonitoringReportDataPDF"] == null)
-            //{
-            //    return View("Index");
-            //}
             if (TempData["OilAnalysisPDF"] == null)
             {
                 return View("Index");
@@ -384,18 +373,20 @@ namespace InVanWebApp.Controllers
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
             string ReportName = "Oil Analysis Report";
             string Fromdate = "From Date : ";
-            string Todate = "To Date:";
+            string Todate = "To Date :";
             string fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+
             if (fromdate == "01-01-0001")
             {
                 fromdate = "";
-                Fromdate = "";
+                Fromdate = "From Date : " + DateTime.Today.ToString("dd/MM/yyyy");
             }
+
             if (todate == "01-01-0001")
             {
                 todate = "";
-                Todate = "";
+                Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy");
             }
 
             string name = ApplicationSession.ORGANISATIONTIITLE;
@@ -405,9 +396,9 @@ namespace InVanWebApp.Controllers
             sb.Append("<thead>");
             sb.Append("<tr>");
             sb.Append("<th style='text-align:left'>" + "<img height='120' width='160' src='" + strPath + "'/></th>");
-            sb.Append("<th colspan='10' style='text-align:center'>");
+            sb.Append("<th colspan='6' style='text-align:center'>");
             //sb.Append("<label style='font-size:22px;font-family:Verdana;text-align:center; color:#0e3f6f'>" + ReportName + "</label>");
-            sb.Append("<label style='font-size:22px; bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; bottom:20px;font-weight:bold;color:Red;'>" + ReportName + "</label>");
             sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:14px;font-family:Arial'>" + name + "</label>");
             sb.Append("<br/><label style='font-size:10px;font-family:Arial'>" + address + "</label>");
@@ -427,6 +418,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1%;;font-size:13px;border: 0.05px  #e2e9f3;'>Sr.No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Time</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:4%;;font-size:13px;border: 0.05px  #e2e9f3;'>LotNo</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>SampleName</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>ACIDValue</th>");
@@ -447,8 +439,9 @@ namespace InVanWebApp.Controllers
             foreach (var item in oilAnalysis)
             {
                 sb.Append("<tr style='text-align:center;padding: 10px;'>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:1%;'>" + i + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:2%;'>" + i + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:3%;'>" + item.Date + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:3%;'>" + item.Time + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:4%;'>" + item.LotNo + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:5%;'>" + item.SampleName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:5%;'>" + item.ACIDValue + "</td>");
@@ -474,7 +467,7 @@ namespace InVanWebApp.Controllers
                 {
                     Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
                     //pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
-                    pdfDoc.SetPageSize(new Rectangle(1100f, 850f));
+                    //pdfDoc.SetPageSize(new Rectangle(1100f, 850f));
 
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);

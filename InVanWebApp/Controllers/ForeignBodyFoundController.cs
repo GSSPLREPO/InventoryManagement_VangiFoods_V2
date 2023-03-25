@@ -241,13 +241,13 @@ namespace InVanWebApp.Controllers
 
             List<ForeignBodyFoundBO> foreignBodyFound = TempData["ForeignBodyFoundExcel"] as List<ForeignBodyFoundBO>;
             DataTable dt = new DataTable();
-            
+
             dt.Columns.Add("Date");
-            dt.Columns.Add("RawMaterial");
-            dt.Columns.Add("OnGoingProcessing");
+            dt.Columns.Add("Raw Material");
+            dt.Columns.Add("On Going Processing");
             dt.Columns.Add("Batching");
-            dt.Columns.Add("PostProcessing");
-            dt.Columns.Add("CorrectiveAction");
+            dt.Columns.Add("Post Processing");
+            dt.Columns.Add("Corrective Action");
             dt.Columns.Add("Verify By");
             dt.Columns.Add("Remark");
 
@@ -257,11 +257,11 @@ namespace InVanWebApp.Controllers
                 DataRow dr = dt.NewRow();
                 //dr["Sr.No"] = i;
                 dr["Date"] = st.Date.ToString();
-                dr["RawMaterial"] = st.RawMaterial.ToString();
-                dr["OnGoingProcessing"] = st.OnGoingProcessing.ToString();
+                dr["Raw Material"] = st.RawMaterial.ToString();
+                dr["On Going Processing"] = st.OnGoingProcessing.ToString();
                 dr["Batching"] = st.Batching.ToString();
-                dr["PostProcessing"] = st.PostProcessing.ToString();
-                dr["CorrectiveAction"] = st.CorrectiveAction.ToString();
+                dr["Post Processing"] = st.PostProcessing.ToString();
+                dr["Corrective Action"] = st.CorrectiveAction.ToString();
                 dr["Verify By"] = st.VerifyByName.ToString();
                 dr["Remark"] = st.Remark.ToString();
 
@@ -286,50 +286,46 @@ namespace InVanWebApp.Controllers
             gv.RenderControl(hw);
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
-            string ReportName = "ForeignBodyFound Report";/* The Daily Monitoring Report name are given here  */
+            string ReportName = "Foreign Body Found Report";/* The Daily Monitoring Report name are given here  */
             string Fromdate = "From Date : ";/* The From Date are given here  */
             string Todate = "To Date:";/* The To Date are given here  */
             string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["ToDate"]).ToString("dd/MM/yyyy");
+
             if (fromdate == "01-01-0001")
             {
                 fromdate = "";
-                Fromdate = "";
+                Fromdate = "From Date : " + DateTime.Today.ToString("dd/MM/yyyy");/*old Code : Fromdate = " "*/
             }
             if (todate == "01-01-0001")
             {
                 todate = "";
-                Todate = "";
+                Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy");/*old Code : Todate*/
             }
-            //String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-            //    "<tr><td colspan='4'> <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
-            //    "<tr><td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-            //    "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
-            //    "<tr><tr><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-            //    + "<td><td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
-            //    + "</td></tr>" + "</table>"
-            //    + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
 
             String content1 = "";
             if (fromdate == "" || fromdate == null && todate == "" || todate == null)
             {
                 content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
-              "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
-              "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
-              "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+              "<tr><td colspan='4' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
+              "<tr><td colspan='4' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
+              "<tr><td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+              + "<tr><td colspan='4' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               + "</td><td colspan='4' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
             }
             else
             {
                 content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
-               "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
-               "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
-               "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
-               + "<tr><td colspan='10' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
-               + "</td><td colspan='10' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
+               "<tr><td colspan='4' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
+               "<tr><td colspan='4' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
+               "<tr><td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+               + "<tr><td colspan='4' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + DateTime.Today.ToString("dd/MM/yyyy")
+               + "</td><td colspan='4' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + DateTime.Today.ToString("dd/MM/yyyy")
                /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
             }
@@ -356,7 +352,7 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExportAsPDF()
         {
-         
+
             if (TempData["ForeignBodyFoundPDF"] == null)
             {
                 return View("Index");
@@ -369,18 +365,20 @@ namespace InVanWebApp.Controllers
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
             string ReportName = "Foreign Body Found Report";
             string Fromdate = "From Date : ";
-            string Todate = "To Date:";
+            string Todate = "To Date :";
             string fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+
             if (fromdate == "01-01-0001")
             {
                 fromdate = "";
-                Fromdate = "";
+                Fromdate = "From Date : " + DateTime.Today.ToString("dd/MM/yyyy");/*old Code : Fromdate = " "*/
             }
+
             if (todate == "01-01-0001")
             {
                 todate = "";
-                Todate = "";
+                Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy");/*old Code : Todate*/
             }
 
             string name = ApplicationSession.ORGANISATIONTIITLE;
@@ -390,9 +388,9 @@ namespace InVanWebApp.Controllers
             sb.Append("<thead>");
             sb.Append("<tr>");
             sb.Append("<th style='text-align:left'>" + "<img height='120' width='160' src='" + strPath + "'/></th>");
-            sb.Append("<th colspan='10' style='text-align:center'>");
+            sb.Append("<th colspan='5' style='text-align:center'>");
             //sb.Append("<label style='font-size:22px;font-family:Verdana;text-align:center; color:#0e3f6f'>" + ReportName + "</label>");
-            sb.Append("<label style='font-size:22px; bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; bottom:20px;font-weight:bold;color:Red;'>" + ReportName + "</label>");
             sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:14px;font-family:Arial'>" + name + "</label>");
             sb.Append("<br/><label style='font-size:10px;font-family:Arial'>" + address + "</label>");
@@ -417,7 +415,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Batching</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>PostProcessing</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:2%;;font-size:13px;border: 0.05px  #e2e9f3;'>CorrectiveAction</th>");
-            
+
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Verify By</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Remark</th>");
 
@@ -438,7 +436,7 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:5%;'>" + item.Batching + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:5%;'>" + item.PostProcessing + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:2%;'>" + item.CorrectiveAction + "</td>");
-                
+
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:3%;'>" + item.VerifyByName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:3%;'>" + item.Remark + "</td>");
 
@@ -456,8 +454,8 @@ namespace InVanWebApp.Controllers
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
-                    //pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
-                    pdfDoc.SetPageSize(new Rectangle(1100f, 850f));
+                    pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
+                    //pdfDoc.SetPageSize(new Rectangle(1100f, 850f));
 
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);

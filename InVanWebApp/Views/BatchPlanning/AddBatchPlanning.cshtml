@@ -81,7 +81,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TotalRawMaterialYeild, new { @class = "form-control form-control-sm"})
+                    @Html.TextBoxFor(model => model.TotalRawMaterialYeild, new { @class = "form-control form-control-sm" })
                     @Html.ValidationMessageFor(model => model.TotalRawMaterialYeild, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -101,7 +101,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.OrderQuantity, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "8", onchange = "OnOrderQtyChange($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.OrderQuantity, "", new { @class = "error mt-2 text-danger",id="valOrderQtyMsg" })
+                    @Html.ValidationMessageFor(model => model.OrderQuantity, "", new { @class = "error mt-2 text-danger", id = "valOrderQtyMsg" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Order Quantity Unit")
@@ -145,12 +145,12 @@
                                                 <th class="sortStyle d-n d-none">Item Id</th>
                                                 <th class="sortStyle">Ingredients</th>
                                                 <th class="sortStyle">Percentage (%)</th>
-                                                <th class="sortStyle">Batch Size</th>
-                                                <th class="sortStyle">Total Batches</th>
+                                                <th class="sortStyle">Batch Size (KG)</th>
+                                                <th class="sortStyle">Total Batches (KG)</th>
                                                 <th class="sortStyle">Yeild (%)</th>
-                                                <th class="sortStyle">Actual Requirement</th>
+                                                <th class="sortStyle">Actual Requirement (KG)</th>
                                                 <th class="sortStyle">Stock In Hand</th>
-                                                <th class="sortStyle">To be Procured</th>
+                                                <th class="sortStyle">To be Procured (KG)</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -171,7 +171,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TotalBatchSize, new { @class = "form-control form-control-sm",@readonly="readonly" })
+                    @Html.TextBoxFor(model => model.TotalBatchSize, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.TotalBatchSize, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -179,7 +179,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TotalNoBatches, new { @class = "form-control form-control-sm", @readonly="readonly"})
+                    @Html.TextBoxFor(model => model.TotalNoBatches, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.TotalNoBatches, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -207,6 +207,7 @@
 
 <script>
     function OnOrderQtyChange(value) {
+
         if (value == '' || value == null)
             value = 0;
         value = parseFloat(value);
@@ -220,27 +221,29 @@
         }
         else {
             parseFloat(PackingSize);
-            document.getElementById('PackingSize').setAttribute("readonly","readonly");
+            document.getElementById('PackingSize').setAttribute("readonly", "readonly");
         }
 
         //Checking the total raw material yield value.
         var totalRawYield = $('#TotalRawMaterialYeild').val();
-        if (totalRawYield == null || totalRawYield == '' || totalRawYield==0) {
+        if (totalRawYield == null || totalRawYield == '' || totalRawYield == 0) {
             $('#TotalRawMaterialYeild').focus();
             $('#OrderQuantity').val(0);
             return;
         }
-        else
+        else {
             parseFloat(totalRawYield);
+            document.getElementById('TotalRawMaterialYeild').setAttribute("readonly", "readonly");
+        }
 
         if (value != 0) {
-            $('#RequiredQuantityInKG').val(value*PackingSize);
+            $('#RequiredQuantityInKG').val(value * PackingSize);
             $('#valOrderQtyMsg').hide();
             var table = document.getElementById('submissionTable');
             var rowCount = table.rows.length;
             var i = 0;
-            var totalPercentage = 0, TotalBatchSize=0;
-            while (i < rowCount-1) {
+            var totalPercentage = 0, TotalBatchSize = 0;
+            while (i < rowCount - 1) {
                 totalPercentage = totalPercentage + parseFloat(document.getElementById('RoundedRatio_' + i).innerHTML);
                 TotalBatchSize = TotalBatchSize + parseFloat(document.getElementById('BatchSize_' + i).innerHTML);
                 i++;
@@ -252,8 +255,17 @@
             RequiredQuantityInKG = parseFloat(RequiredQuantityInKG);
 
             var TotalNoOfBatch = (RequiredQuantityInKG / totalBatchYield);
-            TotalNoOfBatch = Math.round(TotalNoOfBatch*100)/100;
+            TotalNoOfBatch = Math.round(TotalNoOfBatch * 100) / 100;
             $('#TotalNoBatches').val(TotalNoOfBatch);
+
+            i = 0;
+            while (i < rowCount - 1) {
+                var batchSize = document.getElementById('BatchSize_' + i).innerHTML;
+                batchSize = parseFloat(batchSize);
+
+                document.getElementById('TotalBatches_' + i).value = (TotalNoOfBatch * batchSize);
+                i++;
+            }
 
         }
         else {
@@ -264,6 +276,36 @@
             return;
         }
 
+    }
+
+    function OnChangeYield(value, id) {
+        $("#ProductId").prop("readonly", "readonly");
+        $('#btnSave').prop('disabled', false);
+        var rowNo = id.split('_')[1];
+
+        value = parseFloat(value);
+
+        if (value != 0) {
+
+            var totalBatch = document.getElementById('TotalBatches_' + rowNo).value;
+            totalBatch = parseFloat(totalBatch);
+
+            var RequiredQty = (totalBatch * 100) / value;
+            RequiredQty = Math.round(RequiredQty * 100) / 100;
+            document.getElementById('ActualRequirement_' + rowNo).value = RequiredQty;
+
+            var StockInHand = (document.getElementById('StockInHand_' + rowNo).innerHTML).split(' ')[0];
+            StockInHand = parseFloat(StockInHand);
+
+            var ToBeProcured = RequiredQty - StockInHand;
+            
+            if (ToBeProcured < 0)
+                ToBeProcured = 0;
+            else {
+                ToBeProcured = Math.round(ToBeProcured * 100) / 100;
+                document.getElementById('ToBeProcured_' + rowNo).value = ToBeProcured;
+            }
+        }
     }
 
     function SelectedIndexChanged(id) {
@@ -283,6 +325,27 @@
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
+        var table = document.getElementById('submissionTable');
+        var rowCount = table.rows.length;
+        var i = 0,flag = 0;
+        while (i < rowCount) {
+            var Yield = $('#Yield_' + i).val();
+            Yield = parseFloat(Yield);
+            if (Yield == 0) {
+                flag = 1;
+                break;
+            }
+            i++;
+        }
+
+        if (flag == 1) {
+            alert("Yield is zero or null! Cannot plan the batch!");
+            $('#btnSave').prop('disabled', true);            
+            return;
+        }
+        else
+            $('#btnSave').prop('disabled', false);
+
         createJson();
     };
     //==========end===============
@@ -292,7 +355,7 @@
 
         //Check whether the currency dropdown is selected or not
 
-        var CurrencyIDCheck = $('#SO_Id').val();
+        var CurrencyIDCheck = $('#SO_Id option:selected').text();
         if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
             $('#SO_Id').focus();
             document.getElementById('ProductId').selectedIndex = 0;
@@ -300,7 +363,7 @@
         }
         else {
             $("#SONumber").val(CurrencyIDCheck);
-            $("#SO_Id").prop("disabled", "true");
+            $("#SO_Id").prop("readonly", "readonly");
         }
 
         var LId = $("#LocationId").val();
@@ -311,7 +374,7 @@
         }
         else {
             $("#LocationName").val($("#LocationId option:selected").text());
-            $("#LocationId").prop("disabled", "true");
+            $("#LocationId").prop("readonly", "readonly");
         }
         //For deleting the rows of Item table if exist.
 
@@ -380,6 +443,7 @@
                             t4.setAttribute("class", "form-control form-control-sm");
                             t4.setAttribute("maxlength", "8");
                             t4.setAttribute("onkeypress", "return isNumberKey(event)");
+                            t4.setAttribute("onchange", "OnChangeYield($(this).val(),id)");
                             cell.appendChild(t4);
                         }
                         else if (i == 7) {
@@ -427,20 +491,25 @@
             var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
             var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
             var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
-            var OrderQty = ((document.getElementById("ItemQuantity_" + i)).innerHTML).split(' ')[0];
-            var Unit = ((document.getElementById("ItemQuantity_" + i)).innerHTML).split(' ')[1];
-            OrderQty = (OrderQty == null || OrderQty == '') ? 0 : OrderQty;
-            var PricePerUnit = $("#ItemUnitPrice_" + i).val();
-            PricePerUnit = (PricePerUnit == null || PricePerUnit == '') ? 0 : PricePerUnit;
+            var Percentage = ((document.getElementById("RoundedRatio_" + i)).innerHTML);
+            var BatchSizeCol = ((document.getElementById("BatchSize_" + i)).innerHTML);
+            var TotalBatchesCol = ((document.getElementById("TotalBatches_" + i)).value);
+            var YeildCol = ((document.getElementById("Yield_" + i)).value);
+            var ActualRequirementCol = ((document.getElementById("ActualRequirement_" + i)).value);
 
-            var Tax = (document.getElementById("ItemTax_" + i)).innerHTML.split(" ")[0];
-            var TotalItemCost = $("#TotalItemCost_" + i).val();
-            TotalItemCost = (TotalItemCost == null || TotalItemCost == '') ? 0 : TotalItemCost;
+            TotalBatchesCol = (TotalBatchesCol == null || TotalBatchesCol == '' || TotalBatchesCol == 0) ? 0 : TotalBatchesCol;
+            YeildCol = (YeildCol == null || YeildCol == '' || YeildCol == 0) ? 0 : YeildCol;
 
+            var StockInHandCol = document.getElementById("StockInHand_" + i).innerHTML.split(' ')[0];
+            StockInHandCol = (StockInHandCol == null || StockInHandCol == '') ? 0 : StockInHandCol;
+
+            var ToBeProcuredCol = (document.getElementById("ToBeProcured_" + i)).value;
+            
             TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
-                ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty
-                + ", \"ItemUnit\": \"" + Unit + "\", \"ItemUnitPrice\": " + PricePerUnit + ",\"ItemTaxValue\": " + Tax +
-                ", \"TotalItemCost\": " + TotalItemCost;
+                ", \"ItemName\": \"" + ItemName + "\", \"Percentage\": " + Percentage
+                + ", \"BatchSizeCol\": " + BatchSizeCol + ", \"TotalBatchesCol\": " + TotalBatchesCol
+                + ",\"YeildCol\": " + YeildCol + ", \"ActualRequirementCol\": " + ActualRequirementCol
+                + ", \"StockInHandCol\": " + StockInHandCol + ", \"ToBeProcuredCol\": " + ToBeProcuredCol;
 
             if (i == (rowCount - 2))
                 TxtItemDetails = TxtItemDetails + "}";
@@ -449,6 +518,7 @@
         }
         TxtItemDetails = TxtItemDetails + "]";
         $('#txtItemDetails').val(TxtItemDetails);
+        alert(TxtItemDetails);
     }
 
     function isNumberKey(evt) {

@@ -314,14 +314,19 @@ namespace InVanWebApp.Controllers
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+
             if (fromdate == "01-01-0001")
             {
                 fromdate = "";
+                Fromdate = "From Date : " + DateTime.Today.ToString("dd/MM/yyyy");
             }
+
             if (todate == "01-01-0001")
             {
                 todate = "";
+                Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy");
             }
+
 
 
             String content1 = "";
@@ -331,6 +336,8 @@ namespace InVanWebApp.Controllers
               "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
               "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
               "<tr><td colspan='18' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+               + "<tr><td colspan='10' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               + "</td><td colspan='10' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
             }

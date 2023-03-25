@@ -17,5 +17,8 @@ namespace InVanWebApp.Repository.Interface
         SalesOrderBO GetWorkOrderNumber(int id);
         IEnumerable<Recipe_DetailsBO> GetRecipe(int id, int locationId);
 
+        //Function define for: Delete record of item type using it's sales order id 
+        void Delete(int ID, int userId);
+
     }
 }

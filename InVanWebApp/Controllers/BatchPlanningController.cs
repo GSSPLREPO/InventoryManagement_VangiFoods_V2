@@ -103,6 +103,7 @@ namespace InVanWebApp.Controllers
                     if (ModelState.IsValid)
                     {
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        model.PackingSizeUnit = "KG";
 
                         response = _repository.Insert(model);
                         if (response.Status)
@@ -156,6 +157,28 @@ namespace InVanWebApp.Controllers
                 return View(model);
             }
             //return View();
+        }
+        #endregion
+
+        #region Delete function
+        /// <summary>
+        /// Date: 22 Mar'23
+        /// Farheen: Delete the perticular record Sales Order 
+        /// </summary>
+        /// <param name="ID">record Id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult DeleteIBatchPlanning(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                _repository.Delete(ID, userID);
+                TempData["Success"] = "<script>alert('Sales Order deleted successfully!');</script>";
+                return RedirectToAction("Index", "SalesOrder");
+            }
+            else
+                return RedirectToAction("Index", "Login");
         }
         #endregion
 

@@ -192,6 +192,7 @@
     <Compile Include="Controllers\OutwardNoteController.cs" />
     <Compile Include="Controllers\PestControlLogController.cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
+    <Compile Include="Controllers\PreProduction_QCController.cs" />
     <Compile Include="Controllers\PreStartupHygieneController.cs" />
     <Compile Include="Controllers\ProductEvaluationLogController.cs" />
     <Compile Include="Controllers\ProductionIndentController.cs" />
@@ -603,6 +604,7 @@
     <Compile Include="Repository\Interface\IOilAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IPestControlLogRepository.cs" />
+    <Compile Include="Repository\Interface\IPreProduction_QCRepository.cs" />
     <Compile Include="Repository\Interface\IPreStartupHygieneRepository.cs" />
     <Compile Include="Repository\Interface\IProductEvaluationLogRepository.cs" />
     <Compile Include="Repository\Interface\IProductionIndentRepository.cs" />
@@ -650,6 +652,7 @@
     <Compile Include="Repository\OutwardNoteRepository.cs" />
     <Compile Include="Repository\PestControlLogRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
+    <Compile Include="Repository\PreProduction_QCRepository.cs" />
     <Compile Include="Repository\PreStartupHygieneRepository.cs" />
     <Compile Include="Repository\ProductEvaluationLogRepository.cs" />
     <Compile Include="Repository\ProductionIndentRepository.cs" />
@@ -3163,6 +3166,9 @@
     <Content Include="Views\Report\RawMaterialCostAnalysisReport.cshtml" />
     <Content Include="Views\BatchPlanning\Index.cshtml" />
     <Content Include="Views\BatchPlanning\AddBatchPlanning.cshtml" />
+    <Content Include="Views\PreProduction_QC\AddPreProductionQC.cshtml" />
+    <Content Include="Views\PreProduction_QC\Index.cshtml" />
+    <Content Include="Views\PreProduction_QC\ViewPreProduction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
