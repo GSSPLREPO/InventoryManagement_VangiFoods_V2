@@ -73,6 +73,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@IsReturnable", model.IsReturnable);
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@VehicleNo", model.VehicleNo);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
@@ -98,8 +99,14 @@ namespace InVanWebApp.Repository
                         {
                             OutwardNoteDetailsBO objItemDetails = new OutwardNoteDetailsBO();
                             objItemDetails.OutwardNoteID = OutwardNote_Id;
-                            objItemDetails.ItemCode = item.ElementAt(0).Value.ToString();
-                            objItemDetails.ItemID = Convert.ToInt32(item.ElementAt(1).Value);
+                            //objItemDetails.ItemCode = item.ElementAt(0).Value.ToString();
+                            //objItemDetails.ItemID = Convert.ToInt32(item.ElementAt(1).Value);
+                            //objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                            //objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                            //objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
+                            //objItemDetails.Remarks = item.ElementAt(5).Value.ToString();
+                            objItemDetails.ItemID = Convert.ToInt32(item.ElementAt(0).Value);
+                            objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
                             objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
                             objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
                             objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
@@ -172,6 +179,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@IsReturnable", model.IsReturnable);
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@VehicleNo", model.VehicleNo);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
 

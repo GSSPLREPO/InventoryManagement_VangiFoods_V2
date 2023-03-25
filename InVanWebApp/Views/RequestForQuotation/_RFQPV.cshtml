@@ -58,7 +58,6 @@
                                                         }
 
                                                     </tr>
-
                                                 </thead>
                                                 <tbody id="myTableBody">
                                                     @{ int c = 1;
@@ -106,7 +105,7 @@
 
                                                             { c++; }
                                                         }
-
+                                                        @Html.Hidden("ItemCount", Model.itemDetails.Count() )
                                                         <tr>
                                                             <td></td>
                                                             @{
@@ -230,6 +229,7 @@
                     var vendorId = myObj[i].VendorsID;
                     setItemPrice(vendorId, (i + 1), id);
                 }
+                console.log(tempArray);
             },
             error: function (data) {
                 alert("Bind Company details failed!");
@@ -237,52 +237,20 @@
             }
         });
     }
-
+   
+    //============The below function is for redirecting the user to new tab on-click of View in RFQ Summary modal.===========//
     function redirectToView(ID, RequestForQuotationId) {
         var rowNo = ID.split('_')[1];
         var VendorsID = $("#VendorsID_" + rowNo).text();
-        window.open("RequestForQuotation/ViewRFQSupplierDetails?ID=" + VendorsID + "&RfqID=" + RequestForQuotationId,'_blank');
-        return;
-        //$.ajax({
-        //    type: "GET",
-        //    url: `/RequestForQuotation/ViewRFQSupplierDetails?ID=` + VendorsID + "&RfqID=" + RequestForQuotationId,
-        //    data: "{}",
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "json",
-        //    success: function (result) {
-        //        //if (result != null) {
-
-        //        //    var UnitPrice = 0;
-        //        //    var TotalItemPrice = 0;
-        //        //    var Remarks = '';
-        //        //    for (var j = 0; j < result.rfqVendorItemDetails.length; j++) {
-        //        //        UnitPrice = result.rfqVendorItemDetails[j].ItemUnitPrice;
-        //        //        if (UnitPrice == '' && UnitPrice == null)
-        //        //            UnitPrice = 0;
-
-        //        //        TotalItemPrice = result.rfqVendorItemDetails[j].TotalItemCost;
-        //        //        if (TotalItemPrice == '' && TotalItemPrice == null)
-        //        //            TotalItemPrice = 0;
-
-        //        //        Remarks = result.rfqVendorItemDetails[j].Remarks;
-        //        //        if (Remarks == '' && Remarks == null)
-        //        //            Remarks = '';
-
-        //        //        $("#UnitPrice_" + i + (j + 1)).text(UnitPrice);
-        //        //        $("#TotalItemCost_" + i + (j + 1)).text(TotalItemPrice);
-        //        //        $("#Remarks_" + i + (j + 1)).text(Remarks);
-        //        //    }
-        //        //}
-        //    },
-        //    error: function (data) {
-        //        //alert("Failed to bind item details vendor wise!");
-        //        //Success = false;
-        //    }
-        //});
+        window.open("RequestForQuotation/ViewRFQSupplierDetails?ID=" + VendorsID + "&RfqID=" + RequestForQuotationId, '_blank');
+        event.preventDefault();
+        return;       
     }
+    //=========================================================End===================================================================//
+
+    var tempArray = []; //This variable is used for marking the low quoted price among all vendors.
 
     function setItemPrice(vendorId, i, rfqId) {
-        //alert(vendorId + " " + i);
         $.ajax({
             type: "POST",
             url: `/RequestForQuotation/FetchItemDetailsVendorWise?id=` + vendorId+"&RFQId="+rfqId,
@@ -311,6 +279,8 @@
                         $("#UnitPrice_" + i + (j + 1)).text(UnitPrice);
                         $("#TotalItemCost_" + i + (j + 1)).text(TotalItemPrice);
                         $("#Remarks_" + i + (j + 1)).text(Remarks);
+
+                        tempArray.push([result.rfqVendorItemDetails[j].Item_ID, UnitPrice, "UnitPrice_" + i + (j + 1)]);
                     }
                 }
             },

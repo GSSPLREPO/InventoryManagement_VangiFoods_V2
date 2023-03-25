@@ -11,6 +11,7 @@ namespace InVanWebApp.Repository.Interface
     {
         //Define function for fetching details of DailyOperation.
         IEnumerable<DailyMonitoringBO> GetAll();
+        
 
         //Function define for: Insert record.
         ResponseMessageBO Insert(DailyMonitoringBO model);
@@ -23,6 +24,16 @@ namespace InVanWebApp.Repository.Interface
 
         //Function define for: Update DailyOperation record.
         ResponseMessageBO Update(DailyMonitoringBO model);
+        //Define function for fetching details of DailyOperation in between date.
+        //List<DailyMonitoringBO> GetAllDailyMonitoring(DateTime fromDate, DateTime toDate);
+
+
+
+       // IEnumerable<DailyMonitoringBO> GetAllDailyMonitoringList(DateTime? fromDate=null, DateTime? toDate=null);
+        //List<DailyMonitoringBO> GetAllDailyMonitoringList(DateTime? fromDate = null, DateTime? toDate = null);
+        List<DailyMonitoringBO> GetAllDailyMonitoringList(int flag, DateTime? fromDate = null, DateTime? toDate = null);
+
+
 
     }
 }

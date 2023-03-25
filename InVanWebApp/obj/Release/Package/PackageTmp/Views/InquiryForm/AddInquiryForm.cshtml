@@ -226,7 +226,7 @@
                                                     @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
                                                     @Html.TextBox("ItemUnitPrice", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
@@ -524,7 +524,7 @@
             '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0" required="required" onkeypress = "return isNumberKey(event)"  MaxLength = "8"  />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
+            '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;auto;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemPrice + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemPrice + '"readonly = "readonly" value="" required="required" />' +

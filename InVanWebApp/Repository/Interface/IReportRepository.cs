@@ -20,5 +20,20 @@ namespace InVanWebApp.Repository.Interface
         List<StockMasterBO> getInventoryFIFOReportData(DateTime fromDate, DateTime toDate, int itemId);
         List<LocationWiseStockBO> getTotalInventoryCostData(DateTime fromDate, DateTime toDate, int LocationId, int itemId);
         List<StockAdjustmentDetailsBO> getStockReconciliationData(DateTime fromDate, DateTime toDate, int LocationId, int itemId);
+        List<StockMasterBO> getInventoryAnalysisFIFOReportData(DateTime fromDate, DateTime toDate, int itemId);
+        List<CompanyBO> getCompanyDataByType(string CompanyType);
+
+        //Calling Method for Purchase Invoice Report
+        List<PurchaseOrderBO> getPurchaseInvoiceReportData(DateTime fromDate, DateTime toDate, int itemId, string Status);
+
+        //Calling Method For Issue Note Report
+        List<IssueNoteBO> getIssueNoteReportData(DateTime fromDate, DateTime toDate, int itemId);
+
+        //Calling Method For GRN Report
+        List<GRN_BO> getGRNReportData(DateTime fromDate, DateTime toDate, int itemId);
+
+        //Calling Method For Rejection Report
+        List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId);
+
     }
 }

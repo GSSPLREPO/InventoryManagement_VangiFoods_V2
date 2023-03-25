@@ -78,6 +78,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
+                    cmd.Parameters.AddWithValue("@DiscountPercentage", model.DiscountPercentage);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);

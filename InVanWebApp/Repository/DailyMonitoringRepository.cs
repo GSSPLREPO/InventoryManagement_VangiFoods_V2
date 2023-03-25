@@ -10,6 +10,8 @@ using System.Data.SqlClient;
 using System.Data;
 using InVanWebApp.Common;
 using System.IO;
+using Dapper;
+
 namespace InVanWebApp.Repository
 {
     public class DailyMonitoringRepository : IDailyMonitoringRepository
@@ -39,8 +41,24 @@ namespace InVanWebApp.Repository
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Date = Convert.ToDateTime(reader["Date"]),
+                            PersonalHygine = reader["PersonalHygine"].ToString(),
+                            CleaningAndSanitation = reader["CleaningAndSanitation"].ToString(),
+                            CleaningOfEquipment = reader["CleaningOfEquipment"].ToString(),
+                            WaterPotability = reader["WaterPotability"].ToString(),
+                            Allergic = reader["Allergic"].ToString(),
+                            NonAllergic = reader["NonAllergic"].ToString(),
+                            VegetableProcessingArea = reader["VegetableProcessingArea"].ToString(),
+                            PackagingLabellingArea = reader["PackagingLabellingArea"].ToString(),
+                            FgsArea = reader["FgsArea"].ToString(),
+                            Inside = reader["Inside"].ToString(),
+                            OutSide = reader["OutSide"].ToString(),
+                            Dry = reader["Dry"].ToString(),
+                            Wet = reader["Wet"].ToString(),
+                            OutSiders = reader["OutSiders"].ToString(),
+                            ProductionArea = reader["VerifyByName"].ToString(),
+                            OfficeStaff = reader["OfficeStaff"].ToString(),
                             VerifyByName = reader["VerifyByName"].ToString(),
-                            FgsArea = reader["FgsArea"].ToString()
+                            
                         };
                         dailyMonitoringList.Add(dailyMonitoring);
 
@@ -260,6 +278,82 @@ namespace InVanWebApp.Repository
             }
         }
 
+        #endregion
+
+        #region  Bind grid for datatable
+        /// <summary>
+        /// Date: 09 March'23
+        /// Snehal: This function is for fecthing list of Daily Monitoring.
+        /// </summary>
+        /// <returns></returns>
+        //public List<DailyMonitoringBO> GetAllDailyMonitoringList(DateTime? fromDate = null, DateTime? toDate = null)
+        public List<DailyMonitoringBO> GetAllDailyMonitoringList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
+            {
+            //SqlConnection con = new SqlConnection(conString);
+            //DynamicParameters parameters = new DynamicParameters();
+            //parameters.Add("@flag", fromDate);
+            //parameters.Add("@fromDate", fromDate);
+            //parameters.Add("@toDate", toDate);
+
+            //var dailyMonitoringList = con.Query<DailyMonitoringBO>("usp_tbl_DailyMonitoring_GetAllByDate", parameters, commandType: System.Data.CommandType.StoredProcedure).ToList();
+
+            //return dailyMonitoringList;
+
+
+            List<DailyMonitoringBO> dailyMonitoringList = new List<DailyMonitoringBO>();
+            try
+            {
+                if(fromDate==null && toDate==null)
+                {
+                    fromDate =DateTime.Today;
+                    toDate = DateTime.Today;
+                }
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_DailyMonitoring_GetAllByDate", con);
+                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var dailyMonitoring = new DailyMonitoringBO()
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Date = Convert.ToDateTime(reader["Date"]),
+                            PersonalHygine = reader["PersonalHygine"].ToString(),
+                            CleaningAndSanitation = reader["CleaningAndSanitation"].ToString(),
+                            CleaningOfEquipment = reader["CleaningOfEquipment"].ToString(),
+                            WaterPotability = reader["WaterPotability"].ToString(),
+                            Allergic = reader["Allergic"].ToString(),
+                            NonAllergic = reader["NonAllergic"].ToString(),
+                            VegetableProcessingArea = reader["VegetableProcessingArea"].ToString(),
+                            PackagingLabellingArea = reader["PackagingLabellingArea"].ToString(),
+                            FgsArea = reader["FgsArea"].ToString(),
+                            Inside = reader["Inside"].ToString(),
+                            OutSide = reader["OutSide"].ToString(),
+                            Dry = reader["Dry"].ToString(),
+                            Wet = reader["Wet"].ToString(),
+                            OutSiders = reader["OutSiders"].ToString(),
+                            ProductionArea = reader["ProductionArea"].ToString(),
+                            OfficeStaff = reader["OfficeStaff"].ToString(),
+                            VerifyByName = reader["VerifyByName"].ToString(),
+                            Remark = reader["Remark"].ToString(),
+                        };
+                        dailyMonitoringList.Add(dailyMonitoring);
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return dailyMonitoringList;
+        }
         #endregion
     }
 }

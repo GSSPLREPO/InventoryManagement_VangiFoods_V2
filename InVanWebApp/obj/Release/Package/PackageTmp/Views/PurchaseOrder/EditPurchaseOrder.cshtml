@@ -160,7 +160,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-striped" id="submissionTable">
+                                    <table class="table table-hover" id="submissionTable">
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">Item Code</th>
@@ -204,7 +204,7 @@
                                                                 @class = "form-control form-control-sm",
                                                            style = "height:30px;width:100px;",
                                                                 onkeypress = "return isNumberKey(event)",
-                                                           onchange = "OnChangeQty($(this).val(),id)"
+                                                           onchange = "OnChangeQty($(this).val(),id,"+item.ItemQuantity+")"
                                                             })
                                                         </td>
                                                         <td>
@@ -508,10 +508,6 @@
         }
     }
 
-    ///Finding the length of existing table
-    //var table = document.getElementById('submissionTable');
-    //var counter = table.rows.length;
-
     function CalculateTotalBeforeTax() {
         $('#TotalBeforeTax').val('');
         $('#TotalTax').val('');
@@ -554,7 +550,10 @@
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
-    function OnChangeQty(value, id) {
+    function OnChangeQty(value, id, previousValue) {
+        $('#btnSave').prop('disabled', false);
+        $('#btn_SaveDraft').prop('disabled', false);
+
         var rowNo = id.split('_')[1];
         var quantity = value;
         if (quantity == '')
@@ -563,20 +562,31 @@
         var BalanceQty = $("#BalanceQuantity_" + rowNo).val();
         BalanceQty = parseFloat(BalanceQty);
         quantity = parseFloat(quantity);
+
+        tempPrevVal = parseFloat(previousValue);
+
+        var ActualBalQty = $('#ActualBalanceQuantity_' + rowNo).val();
+        ActualBalQty = parseFloat(ActualBalQty);
+        ActualBalQty = ActualBalQty + tempPrevVal;
+
+
         var RequiredQty = $("#RequiredQuantity_" + rowNo).val().split(" ")[0];
         RequiredQty = parseFloat(RequiredQty);
 
-        if (quantity > BalanceQty) {
+        if (quantity > ActualBalQty) {
             alert("Order quantity cannot be greater then indent balance quantity!");
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
+            $('#btnSave').prop('disabled', true);
+            $('#btn_SaveDraft').prop('disabled', true);
             return;
         }
         else {
-            var tempBalanceQty = BalanceQty - quantity;
+            $('#btnSave').prop('disabled', false);
+            $('#btn_SaveDraft').prop('disabled', false);
+
+            var tempBalanceQty = ActualBalQty - quantity;
             if (quantity == 0) {
-                var ActualBalQty = $("#ActualBalanceQuantity_" + rowNo).val().split(" ")[0];
-                ActualBalQty = parseFloat(ActualBalQty);
                 $("#BalanceQuantity_" + rowNo).val(ActualBalQty);
             }
             else {

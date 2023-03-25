@@ -402,5 +402,340 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
+
+        #region Inventory Analysis Report (FIFO) 
+
+        /// <summary>
+        /// Repository for Inventory Analysis Report (FIFO) 
+        /// Developed by  - Rahul 22 Feb'23
+        /// </summary>
+        /// <param name="fromDate">From Date of report</param>
+        /// <param name="toDate">To Date of Report</param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public List<StockMasterBO> getInventoryAnalysisFIFOReportData(DateTime fromDate, DateTime toDate, int itemId)
+        {
+            List<StockMasterBO> resultList = new List<StockMasterBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_InventoryAnalysis_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new StockMasterBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            CompanyName = reader["VendorName"].ToString(),
+                            ItemID = reader["ItemId"] is DBNull ? 0 : Convert.ToInt32(reader["ItemId"]),
+                            Item_Code = reader["ItemCode"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            GRNCode = reader["GRN_No"].ToString(),
+                            PO_Number = reader["PO_No"].ToString(),
+                            Outward_No = reader["Outward_No"].ToString(),
+                            GRNDate = reader["StockInDate"] is DBNull ? "" : Convert.ToDateTime(reader["StockInDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                            StockInQty = reader["StockInQty"] is DBNull ? 0 : float.Parse(reader["StockInQty"].ToString()),
+                            ItemUnitPrice = reader["StockInUnitPrice"] is DBNull ? 0 : Convert.ToDecimal(reader["StockInUnitPrice"]),
+                            StockInTotalPrice = reader["StockInTotalPrice"] is DBNull ? 0 : Convert.ToDecimal(reader["StockInTotalPrice"]),
+                            CurrencyName = reader["StockInCurrency"].ToString(),
+                            DeliveryChallanDate = reader["StockOutDate"] is DBNull ? "" : Convert.ToDateTime(reader["StockOutDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                            StockOutQty = reader["StockOutQty"] is DBNull ? 0 : float.Parse(reader["StockOutQty"].ToString()),
+                            StockOutUnitPrice = reader["StockOutUnitPrice"] is DBNull ? 0 : Convert.ToDecimal(reader["StockOutUnitPrice"]),
+                            StockOutTotalPrice = reader["StockOutTotalPrice"] is DBNull ? 0 : Convert.ToDecimal(reader["StockOutTotalPrice"]),
+                            StockOutCurrency = reader["StockOutCurrency"] is DBNull ? "" : reader["StockOutCurrency"].ToString(),
+                            AvlDate = reader["AvlDate"] is DBNull ? "" : Convert.ToDateTime(reader["AvlDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                            AvlQty = reader["AvlQty"] is DBNull ? 0 : float.Parse(reader["AvlQty"].ToString()),
+                            AvlUnitPrice = reader["AvlUnitPrice"] is DBNull ? 0 : float.Parse(reader["AvlUnitPrice"].ToString()),
+                            AvlTotalPrice = reader["AvlTotalPrice"] is DBNull ? 0 : float.Parse(reader["AvlTotalPrice"].ToString()),
+                            AvlCurrency = reader["AvlCurrency"] is DBNull ? "" : reader["AvlCurrency"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Purchase Invoice report
+
+        /// Repository for Get Purchase Invoice Report Data 
+        /// Developed by  - Siddharth Purohit on 09-03-2023
+
+        public List<PurchaseOrderBO> getPurchaseInvoiceReportData(DateTime fromDate, DateTime toDate, int PoNumber, string Status)
+        {
+            List<PurchaseOrderBO> resultList = new List<PurchaseOrderBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_PurchaseInvoice_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@PONumber", PoNumber);
+                    cmd.Parameters.AddWithValue("@PaymentStatus", Status);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new PurchaseOrderBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            PONumber = reader["PONumber"].ToString(),
+                            PurchaseOrderDate = Convert.ToDateTime(reader["PurchaseOrderDate"]).ToString("dd/MM/yyyy"),
+                            DelDate = Convert.ToDateTime(reader["DeliveryDate"]).ToString("dd/MM/yyyy"),
+                            CompanyName = reader["CompanyName"].ToString(),
+                            InvoiceNumber = reader["InvoiceNumber"].ToString(),
+                            AdvancedPayment = float.Parse(reader["AdvancedPayment"].ToString()),
+                            AmountPaid = float.Parse(reader["AmountPaid"].ToString()),
+                            BalancePayment = float.Parse(reader["BalancePayment"].ToString()),
+                            PayDate = Convert.ToDateTime(reader["PaymentDate"]).ToString("dd/MM/yyyy"),
+                            PurchaseOrderStatus = reader["PaymentStatus"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Issue Note Report
+
+        /// Repository for Get ISsue Note Report Data 
+        /// Developed by  - Siddharth Purohit on 10-03-2023
+
+        public List<IssueNoteBO> getIssueNoteReportData(DateTime fromDate, DateTime toDate, int IssueNoteNumber)
+        {
+            List<IssueNoteBO> resultList = new List<IssueNoteBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_IssueNote_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@IssueNoteNumber", IssueNoteNumber);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new IssueNoteBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            IssueNoteNo = reader["IssueNoteNumber"].ToString(),
+                            IssueNoteNoDate = Convert.ToDateTime(reader["IssueNoteDate"]).ToString("dd/MM/yyyy"),
+                            ItemName = reader["ItemName"].ToString(),
+                            QuantityRequested = float.Parse(reader["QuantityRequested"].ToString()),
+                            QuantityIssued = float.Parse(reader["QuantityIssued"].ToString()),
+                            AvailableStockBeforeIssue = float.Parse(reader["AvailableStockBeforeIssue"].ToString()),
+                            StockAfterIssuing = float.Parse(reader["StockAfterIssuing"].ToString())
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region GRN Report
+
+        /// Repository for Get GRN Report Data 
+        /// Developed by  - Siddharth Purohit on 10-03-2023
+
+        public List<GRN_BO> getGRNReportData(DateTime fromDate, DateTime toDate, int GRNCode)
+        {
+            List<GRN_BO> resultList = new List<GRN_BO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_GRN_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@GRNCode", GRNCode);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new GRN_BO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            itemName = reader["ItemName"].ToString(),
+                            ItemCode = reader["ItemCode"].ToString(),
+                            GRN_Date = Convert.ToDateTime(reader["GRNDate"]).ToString("dd/MM/yyyy"),
+                            GRNCode = reader["GRNCode"].ToString(),
+                            OrderQty = float.Parse(reader["OrderQuantity"].ToString()),
+                            ReceivedQty = float.Parse(reader["ReceivedQuantity"].ToString()),
+                            InwardQty = float.Parse(reader["InwardQuantity"].ToString()),
+                            InwardNoteNumber = reader["InwardNoteNumber"].ToString(),
+                            InwardQCNumber = reader["InwardQCNumber"].ToString(),
+                            DeliveryAddress = reader["DeliveryAddress"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Rejection Report data
+        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int rejectionNumber)
+        {
+            List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_Rejection_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@RejectionNumber", rejectionNumber);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new RejectionNoteItemDetailsBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),
+                            RejectionNoteNo = reader["RejectionNumber"].ToString(),
+                            InwardNumber = reader["InwardNumber"].ToString(),
+                            ReasonForRR = reader["ReasonForRejection"].ToString(),
+                            Item_Name = reader["ItemName"].ToString(),
+                            Item_Code = reader["ItemCode"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
+                            TotalRecevingQuantiy = Convert.ToDouble(reader["RecivedQuantity"]),
+                            RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
+                            ApprovedBy = reader["ApprovedBy"].ToString(),
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Company data 
+
+        /// <summary>
+        /// Company report
+        /// Developed by  - Ytari 10 March'23
+        /// </summary>
+        /// <param name="fromDate">From Date of report</param>
+        /// <param name="toDate">To Date of Report</param>
+        /// <param name="CompanyType"></param>
+        /// <returns></returns>
+        public List<CompanyBO> getCompanyDataByType(string CompanyType)
+        {
+            List<CompanyBO> resultList = new List<CompanyBO>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+
+                    SqlCommand cmd1 = new SqlCommand("usp_rpt_Company_Report", con);
+                    cmd1.Parameters.AddWithValue("@CompanyType", CompanyType);
+
+
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader2 = cmd1.ExecuteReader();
+
+                    while (dataReader2.Read())
+                    {
+                        var result = new CompanyBO()
+                        {
+                            ID = Convert.ToInt32(dataReader2["ID"]),
+                            CompanyType = Convert.ToString(dataReader2["CompanyType"]),
+                            CompanyName = dataReader2["CompanyName"].ToString(),
+                            ContactPersonName = dataReader2["ContactPersonName"].ToString(),
+                            ContactPersonNo = dataReader2["ContactPersonNo"].ToString(),
+                            EmailId = dataReader2["EmailId"].ToString(),
+                            Address = dataReader2["Address"].ToString(),
+                            Remarks = dataReader2["Remarks"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
     }
 }

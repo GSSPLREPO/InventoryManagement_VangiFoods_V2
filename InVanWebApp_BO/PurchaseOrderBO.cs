@@ -7,7 +7,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
-
     public class PurchaseOrderBO
     {
         public int PurchaseOrderId { get; set; }
@@ -130,6 +129,11 @@ namespace InVanWebApp_BO
 
         //Added below field is used in Credit note
         public decimal RejectedQuantity { get; set; }
+
+        //Added this below fileds for Purchase Inovice Report
+        public float BalancePayment { get; set; }
+        public string DelDate { get; set; }
+        public string PayDate { get; set; }
     }
 
     public class PurchaseOrderItemsDetails

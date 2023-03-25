@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-striped" id="submissionTable">
+                                    <table class="table table-hover" id="submissionTable">
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">
@@ -189,6 +189,12 @@
         var flag = 0, i = 1;
 
         var RequiredQuantity = $('#RequiredQuantity').val();
+
+        var IndentBy = $('#RaisedBy').val();
+        if (IndentBy == '' || IndentBy == null) {
+            $('#RaisedBy').focus();
+            flag = 1;
+        }
         if (RequiredQuantity != '' && RequiredQuantity != 0) {
             flag = 1;
         }

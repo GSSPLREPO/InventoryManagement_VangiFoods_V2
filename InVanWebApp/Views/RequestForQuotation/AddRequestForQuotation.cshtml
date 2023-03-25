@@ -105,7 +105,7 @@
                             </h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm", placeholder = "Delivery address", style = "height:100px" })
+                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm", placeholder = "Delivery address", style = "height:100px"@*,  onmouseleave = "ValMsgDeliveryAddress($(this).val(),id)"*@})
                                 @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { id= "ValMsgDeliveryAddress", @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -319,15 +319,17 @@
     }
     //---rahul added 10-02-23.
     function ValidMsgBiddingStartDate() {
-        debugger
-        var startDate = $("#BiddingStartDate").val();
-        var endDate = $("#BiddingEndDate").val();
+        //debugger
+        //var startDate = $("#BiddingStartDate").val();
+        //var endDate = $("#BiddingEndDate").val();
 
-        if (startDate > endDate) {
-            alert('Bidding start date should not be greater than to end date!');
-            $('#BiddingStartDate').focus();
-            return;
-        }
+        //if (startDate > endDate) {
+        //    alert('Bidding start date should not be greater than end date!');
+        //    $('#BiddingStartDate').focus();
+        //    return;
+        //}
+        //else
+            $('#BiddingEndDate').focus();
     }
     //---BiddingStartDate todaysDate end ------
 
@@ -343,13 +345,14 @@
     }
     //---rahul added 10-02-23.
     function ValidMsgBiddingEndDate() {
-        debugger
+        //debugger
         var startDate = $("#BiddingStartDate").val();
         var endDate = $("#BiddingEndDate").val();
 
         if (startDate > endDate) {
-            alert('Bidding end date should not be greater than to start date!');
+            alert('Bidding end date should not be greater than start date!');
             $('#BiddingEndDate').focus();
+            event.preventDefault();
             return;
         }
     }
@@ -384,6 +387,8 @@
             else
                 $('#btnSave').prop('disabled', false);
         }
+
+        ValidMsgBiddingEndDate();
 
         createJson();
     };
@@ -555,7 +560,8 @@
                 $("#DeliveryAddress").val(deliveryAdd);
             }
         });
-        ValMsgDeliveryAddress(value, id) 
+        $("#ValMsgDeliveryAddress").hide();
+        //ValMsgDeliveryAddress(value, id) 
     }
 
     ///---Rahul added onmouseleave event ValMsgItemList(value, id) strart 09-02-2023.  
@@ -566,8 +572,8 @@
         if (delAdd == '' || delAdd == 0) {
             $("#ValMsgDeliveryAddress").text("Select Location Name to enter delivery address!");
             $("#ValMsgDeliveryAddress").show();
-            document.getElementById(id).focus();
-            return
+            document.getElementById("LocationId").focus();
+            return;
         }
         else {
             $("#ValMsgDeliveryAddress").hide();
@@ -634,8 +640,8 @@
             var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
             var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
             var RequiredQty = (document.getElementById("RequiredQuantity_" + i)).innerHTML.split(" ")[0]; //check
-            var RequiredQty = $("#RequiredQuantity_" + i).val();
-            RequiredQty = (RequiredQty == null || RequiredQty == '') ? 0 : RequiredQty;
+           // var RequiredQty = $("#RequiredQuantity_" + i).val();
+           // RequiredQty = (RequiredQty == null || RequiredQty == '') ? 0 : RequiredQty;
             var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
             var DeliveryDate = $("#DeliveryDate_" + i).val();
             var HSNCode = $("#HSNCode_" + i).val();

@@ -14,5 +14,6 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Delete(int Id, int userId);
         IssueNoteBO GetById(int ID);
         IEnumerable<UsersBO> GetUserNameList();
+        IEnumerable<IssueNoteBO> GetIssueNoteNumber();
     }
 }

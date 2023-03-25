@@ -1,0 +1,256 @@
+﻿@model InVanWebApp_BO.CompanyBO
+@{
+    ViewBag.Title = "CompanyReport";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Company Report</title>
+    @*<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />*@
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Company Report</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Reports</a>
+                    </li>
+                    <li class="breadcrumb-item active">Company Report</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="padding-top:15px;">
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Company Type:</label>
+
+                                    </div>
+                                    <div class="col-md-3">
+                                        @*@Html.DropDownList("Item", (IEnumerable<SelectListItem>)ViewData["Item"], "--ALL--", new { @class = "form-control", @id = "ItemId", onchange = "SelectedIndexChangedItem()" })*@
+                                        @Html.DropDownListFor(model => model.CompanyType, new List<SelectListItem>{
+                                        new SelectListItem{ Text="All", Value = "All" },
+                                        new SelectListItem{ Text="Buyer", Value = "Buyer" },
+                                        new SelectListItem{ Text="Supplier", Value = "Supplier" },
+                                        new SelectListItem{ Text="Both", Value = "Both" }
+                                        }, new { @class = "form-control", onchange = "SelectedIndexChangedCompanyType()" })
+                                        @Html.ValidationMessage("CompanyType", "", new { id = "CompanyTypeValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
+                                    </div>
+                                    <div class="col-md-6 left">
+                                        <a id="ExportPdf"style="float:right;" href="@Url.Action("ExprotAsPDFForCompany", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportExcel"style="float:right;" href="@Url.Action("ExportAsExcelForCompany", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div style="margin-top:25px;">
+                                    <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblCompanyType" style="width:100%">
+                                        <thead>
+                                            <tr>
+
+                                                <th style="text-align:center">Type</th>
+                                                <th style="text-align:center">Name</th>
+                                                <th style="text-align:center">Contact Person</th>
+                                                <th style="text-align:center">Contact No</th>
+                                                <th style="text-align:center">Email Id</th>
+                                                <th style="text-align:center">Address</th>
+                                                <th style="text-align:center">Remarks</th>
+                                                
+                                              
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@Html.Raw(TempData["Success"])
+
+@section scripts{
+
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+    @*<script type="text/javascript">$(document).ready(function () {
+                    $('#ExportPdf').hide();
+                    $('#ExportExcel').hide();
+                    $('#tblCompanyType').hide();
+                });
+
+
+                $("#btnGo").on('click', function () {
+                    var flag = 0;
+
+
+                    if (flag == 1) {
+                        return;
+                    }
+
+                    $('#ExportPdf').show();
+                    $('#ExportExcel').show();
+                    $('#tblCompanyType').show();
+
+                    var CompanyType = $('#CompanyType').val();
+                    //var warehouse = $('#Wearhouse').val();
+
+                    $('#tblCompanyType').dataTable().fnDestroy();
+                    var t = $('#tblCompanyType').DataTable({
+                        //"processing": true, // for show progress bar
+                        "serverSide": false, // for process server side
+                        "filter": true, // this is for disable filter (search box)
+                        "sAjaxSource": "/Report/getCompanyDataByType?CompanyType="+ CompanyType,
+                        "initComplete": function (settings, json) {
+                            var result = JSON.stringify(json);
+                            flag = parseFloat(result.length);
+
+                            if (flag > 11) {
+                                $('#ExportPdf').show();
+                                $('#ExportExcel').show();
+                            }
+                            else {
+                                $('#ExportPdf').hide();
+                                $('#ExportExcel').hide();
+                            }
+                        },
+                        "pageLength": 10,
+                        "scrollX": true,
+                        "columns": [
+                            { "data": "CompanyType", "autoWidth": true },
+                            { "data": "CompanyName", "autoWidth": true },
+                            { "data": "ContactPersonName", "autoWidth": true },
+                            { "data": "ContactPersonNo", "autoWidth": true },
+                            { "data": "EmailId", "autoWidth": true },
+                            { "data": "Address", "autoWidth": true },
+                            { "data": "Remarks", "autoWidth": true }
+                        ]
+                    });
+                    //t.on('order.dt search.dt', function () {
+                    //    let i = 1;
+
+                    //    t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                    //        this.data(i++);
+                    //    });
+                    //}).draw();
+
+                });
+            </script>
+        }*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            BindCompany();
+        });
+        function OnChangedFromDate() {
+            $('#fromDateValidate').hide();
+        }
+
+        function OnChangedToDate() {
+            $('#toDateValidate').hide();
+        }
+
+        function BindCompany() {
+            
+            $('#tblCompanyType').dataTable().fnDestroy();
+            var t = $('#tblCompanyType').dataTable({
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "pageLength": 10,
+                "sAjaxSource": "/Report/getCompanyDataByType?CompanyType=All",
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "scrollX": true,
+                "columns": [
+                   
+                    { "data": "CompanyType", "autoWidth": true },
+                    { "data": "CompanyName", "autoWidth": true },
+                    { "data": "ContactPersonName", "autoWidth": true },
+                    { "data": "ContactPersonNo", "autoWidth": true },
+                    { "data": "EmailId", "autoWidth": true },
+                    { "data": "Address", "autoWidth": true },
+                    { "data": "Remarks", "autoWidth": true }
+                 
+                   
+                ]
+
+
+            });
+           
+        }
+
+        $("#btnGo").on("click", function () {
+            
+            $('#ExportPdf').show();
+            $('#ExportExcel').show();
+            var CompanyType = $('#CompanyType').val();
+            $('#tblCompanyType').dataTable().fnDestroy();
+            var t = $('#tblCompanyType').dataTable({
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "pageLength": 10,
+                /*"sAjaxSource": "/DailyMonitoring/GetAllDailyMonitoringList?fromDate=" + fromDate + "&toDate=" + toDate,*/
+                "sAjaxSource": "/Report/getCompanyDataByType?CompanyType=" + CompanyType,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    var flag = parseFloat(result.length);
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "scrollX": true,
+                "columns": [
+                  
+                    { "data": "CompanyType", "autoWidth": true },
+                    { "data": "CompanyName", "autoWidth": true },
+                    { "data": "ContactPersonName", "autoWidth": true },
+                    { "data": "ContactPersonNo", "autoWidth": true },
+                    { "data": "EmailId", "autoWidth": true },
+                    { "data": "Address", "autoWidth": true },
+                    { "data": "Remarks", "autoWidth": true }
+                   
+                ]
+            });
+          
+        });
+
+
+        
+    </script>
+}

@@ -39,8 +39,14 @@ namespace InVanWebApp.Repository
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Date = Convert.ToDateTime(reader["Date"]),
-                            VerifyByName = reader["VerifyByName"].ToString(),
-                            FootWasher = reader["FootWasher"].ToString()
+                            FootWasher = reader["FootWasher"].ToString(),
+                            RoWater = reader["RoWater"].ToString(),
+                            SoftWater = reader["SoftWater"].ToString(),
+                            CoolingWaterTank = reader["CoolingWaterTank"].ToString(),
+                            ProcessingWater = reader["ProcessingWater"].ToString(),
+                            CIPWaterTank = reader["CIPWaterTank"].ToString(),
+                            VerifyByName = reader["VerifyByName"].ToString()
+                            
                         };
                         clorinationLogList.Add(clorinationLog);
 
@@ -79,6 +85,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@SoftWater", model.SoftWater);
                     cmd.Parameters.AddWithValue("@CoolingWaterTank", model.CoolingWaterTank);
                     cmd.Parameters.AddWithValue("@ProcessingWater", model.ProcessingWater);
+                    cmd.Parameters.AddWithValue("@CIPWaterTank", model.CIPWaterTank);
                     cmd.Parameters.AddWithValue("@VerifyByName", model.VerifyByName);
                     cmd.Parameters.AddWithValue("@Remark", model.Remark);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
@@ -133,6 +140,7 @@ namespace InVanWebApp.Repository
                             SoftWater = reader["SoftWater"].ToString(),
                             CoolingWaterTank = reader["CoolingWaterTank"].ToString(),
                             ProcessingWater = reader["ProcessingWater"].ToString(),
+                            CIPWaterTank = reader["CIPWaterTank"].ToString(),
                             VerifyByName = reader["VerifyByName"].ToString(),
                             Remark = reader["Remark"].ToString(),
                         };
@@ -170,6 +178,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@SoftWater", model.SoftWater);
                     cmd.Parameters.AddWithValue("@CoolingWaterTank", model.CoolingWaterTank);
                     cmd.Parameters.AddWithValue("@ProcessingWater", model.ProcessingWater);
+                    cmd.Parameters.AddWithValue("@CIPWaterTank", model.CIPWaterTank);
                     cmd.Parameters.AddWithValue("@Remark", model.Remark);
                     cmd.Parameters.AddWithValue("@VerifyByName", model.VerifyByName);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);

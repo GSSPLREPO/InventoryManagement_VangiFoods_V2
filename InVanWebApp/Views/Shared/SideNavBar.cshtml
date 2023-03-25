@@ -20,21 +20,21 @@
 <body>
     <ul class="nav">
         @*<li class="nav-item nav-profile">
-                <div class="nav-link">
-                    <div class="profile-image">
-                        <img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image" />
-                        <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image" />
-                    </div>
-                    <div class="profile-name">
-                        <p class="name">
-                            Welcome VangiFood
-                        </p>
-                        <p class="designation">
-                            Super Admin
-                        </p>
-                    </div>
+            <div class="nav-link">
+                <div class="profile-image">
+                    <img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image" />
+                    <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image" />
                 </div>
-            </li>*@
+                <div class="profile-name">
+                    <p class="name">
+                        Welcome VangiFood
+                    </p>
+                    <p class="designation">
+                        Super Admin
+                    </p>
+                </div>
+            </div>
+        </li>*@
         <br />
         <li class="nav-item">
             <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">
@@ -51,7 +51,7 @@
             <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
-                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
+                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a></li>
                 </ul>
@@ -70,6 +70,11 @@
                             <a class="nav-link" href="~/InquiryForm">Inquiry Form</a>
                         </div>
                     </li>
+                    @*<li class="nav-item">
+                        <div id="SalesOrder">
+                            <a class="nav-link" href="~/SalesOrder">Sales Order</a>
+                        </div>
+                    </li>*@
                     <li class="nav-item">
                         <div id="Indent">
                             <a class="nav-link" href="@Url.Action("Index","Indent")">Indent</a>
@@ -168,10 +173,41 @@
                             <a class="nav-link" href="@Url.Action("Index","InwardQCSorting")">Inward QC (Check-1)</a>
                         </div>
                     </li>
-                   
+                </ul>
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="CertificateOfAnalysisQC">
+                            <a class="nav-link" href="@Url.Action("Index","CertificateOfAnalysis")">Certificate of Analysis</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="PreProduction_QC">
+                            <a class="nav-link" href="@Url.Action("Index","PreProduction_QC")">Pre Production QC</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </li>
+
+        <li class=" nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#Proudct" aria-expanded="false" aria-controls="Proudct">
+                <i class="fas fa-clipboard-list menu-icon"></i>
+                <span class="menu-title">Production</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="Proudct">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="FinishedGoodSeriesQC">
+                            <a class="nav-link" href="@Url.Action("Index","FinishedGoodSeries")">Finished Good Series</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                 <i class="fab fa-wpforms menu-icon"></i>
@@ -180,34 +216,61 @@
             </a>
             <div class="collapse" id="form-elements">
                 <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <div id="DailyMonitoring">
-                                <a class="nav-link" href="@Url.Action("Index","DailyMonitoring")">Daily Monitoring</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div id="PreStartupHygiene">
-                                <a class="nav-link" href="@Url.Action("Index","PreStartupHygiene")">Pre Startup Hygiene</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div id="VegWasherDosageLog">
-                                <a class="nav-link" href="@Url.Action("Index","VegWasherDosageLog")">Veg Washer Dosage Log</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div id="ClorinationLogLog">
-                                <a class="nav-link" href="@Url.Action("Index","ClorinationLog")">Clorination Log</a>
-                            </div>
-                        </li>
-                    @*<li class="nav-item"><a class="nav-link" href="~/DailyOperations/CalibrationLogSheetForInstruments">Calibration Log</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/Chlorination">Chlorination</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/CriticalControlPointLogSheet">CriticalControlPoint</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/PreStartupHygiene">Pre-Startup Hygiene</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/ProductEvaluationLog">ProductEvaluationLog</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/SanitizationHygine">Sanitization & Hygine</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/VegWasherDosageLog">Veg Washer Dosage Log</a></li>
-        <li class="nav-item"><a class="nav-link" href="~/DailyOperations/WaterAnalysis">Water Analysis</a></li>*@
+                    <li class="nav-item">
+                        <div id="DailyMonitoring">
+                            <a class="nav-link" href="@Url.Action("Index","DailyMonitoring")">Daily Monitoring</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ClorinationLogLog">
+                            <a class="nav-link" href="@Url.Action("Index","ClorinationLog")">Chlorination Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="CalibrationLog">
+                            <a class="nav-link" href="@Url.Action("Index","CalibrationLog")">Calibration Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="MicroAnalysis">
+                            <a class="nav-link" href="@Url.Action("Index","MicroAnalysis")">Micro Analysis</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="OilAnalysis">
+                            <a class="nav-link" href="@Url.Action("Index","OilAnalysis")">Oil Analysis</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PestControlLog">
+                            <a class="nav-link" href="@Url.Action("Index","PestControlLog")">Pest Control Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PreStartupHygiene">
+                            <a class="nav-link" href="@Url.Action("Index","PreStartupHygiene")">Pre Startup Hygiene</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ProductEvaluationLog">
+                            <a class="nav-link" href="@Url.Action("Index","ProductEvaluationLog")">Product Evaluation Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SanitizationAndHygine">
+                            <a class="nav-link" href="@Url.Action("Index","SanitizationAndHygine")">Sanitization & Hygiene</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="VegWasherDosageLog">
+                            <a class="nav-link" href="@Url.Action("Index","VegWasherDosageLog")">Veg Washer Dosage Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="WaterAnalysis">
+                            <a class="nav-link" href="@Url.Action("Index","WaterAnalysis")">Water Analysis</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -251,6 +314,16 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <div id="ProductMaster">
+                            <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RecipeMaster">
+                            <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div id="TermsAndCondition">
                             <a class="nav-link" href="@Url.Action("Index","TermsAndCondition")">Terms and Condition</a>
                         </div>
@@ -279,8 +352,24 @@
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item"> <a class="nav-link" href="@Url.Action("Report_OC_Index","TransactionsPOandOC")">Sales Order Report</a></li>*@
                     <li class="nav-item">
+                        <div id="CompanyReport">
+                            <a class="nav-link" href="~/Report/CompanyReport">Company</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div id="FinishedGoodsDispatchReport">
                             <a class="nav-link" href="~/Report/FinishedGoodsDispatchReport">Finished Goods Dispatch</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="GRNReport">
+                            <a class="nav-link" href="~/Report/GRNReport">GRN Report</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="InventoryAnalysisReportFIFO">
+                            <a class="nav-link" href="~/Report/InventoryAnalysisReportFIFO">Inventory Analysis (FIFO)</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -289,19 +378,36 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <div id="IssueNoteReport">
+                            <a class="nav-link" href="~/Report/IssueNoteReport">Issue Note Report</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="PurchaseInvoiceReport">
+                            <a class="nav-link" href="~/Report/PurchaseInvoiceReport">Purchase Invoice Report</a>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item">
                         <div id="POReport">
                             <a class="nav-link" href="~/Report">Purchase Order</a>
                         </div>
                     </li>
-
                     <li class="nav-item">
                         <div id="RawMaterialReceivedReport">
                             <a class="nav-link" href="~/Report/RawMaterialIndex">Raw Material Received</a>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    @*<li class="nav-item">
                         <div id="RejectionNoteReport">
                             <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+                        </div>
+                    </li>*@
+                    <li class="nav-item">
+                        <div id="RejectionNoteReport">
+                            <a class="nav-link" href="~/Report/RejectionReport">Rejection Report</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -325,10 +431,10 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                            <div id="InventoryControlReport">
-                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-                            </div>
-                        </li>*@
+                        <div id="InventoryControlReport">
+                            <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+                        </div>
+                    </li>*@
                 </ul>
             </div>
         </li>

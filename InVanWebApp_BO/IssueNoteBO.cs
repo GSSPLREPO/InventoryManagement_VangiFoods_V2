@@ -39,6 +39,30 @@ namespace InVanWebApp_BO
         public string txtItemDetails { get; set; }
         public List<IssueNoteDetailsBO> IssueNoteDetails { get; set; }
 
+
+
+        //Used this fileds for Issue Note Report
+        [Required(ErrorMessage = "Please Select From Date!")]
+        public DateTime fromDate { get; set; }
+
+        [Required(ErrorMessage = "Please Select To Date!")]
+        public DateTime toDate { get; set; }
+
+        public int SrNo { get; set; }
+
+        public string ItemName { get; set; }
+
+        public Nullable<double> QuantityRequested { get; set; }
+
+        public Nullable<double> QuantityIssued { get; set; }
+
+        public Nullable<double> AvailableStockBeforeIssue { get; set; }
+
+        public Nullable<double> StockAfterIssuing { get; set; }
+
+        public string IssueNoteNoDate { get; set; }
+
+
     }
 
     public class IssueNoteDetailsBO

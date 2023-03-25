@@ -47,6 +47,7 @@ namespace InVanWebApp.Repository
                             CompanyName = reader["CompanyName"].ToString(),                            
                             //SONumber = reader["SONumber"].ToString(),
                             CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),                            
+                            ContactNo = (reader["ContactNo"].ToString())                            
 
                         };
                         inquiryFormMastersList.Add(inquiryFormMasters);
@@ -223,7 +224,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@InquiryID", model.InquiryID);
                     cmd.Parameters.AddWithValue("@InquiryNumber", model.InquiryNumber);
                     cmd.Parameters.AddWithValue("@InquiryStatusID", model.InquiryStatusID);
-                    cmd.Parameters.AddWithValue("@DateOfInquiry", Convert.ToDateTime(System.DateTime.Now));
+                    cmd.Parameters.AddWithValue("@DateOfInquiry", model.DateOfInquiry);
                     cmd.Parameters.AddWithValue("@ContactPersonName", model.ContactPersonName);
                     cmd.Parameters.AddWithValue("@ClientEmail", model.ClientEmail);
                     cmd.Parameters.AddWithValue("@ContactNo", model.ContactNo); 
@@ -243,7 +244,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
                     cmd.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);                    
-                    cmd.Parameters.AddWithValue("@LastModifiedBy", model.CreatedBy);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
 
                     con.Open();

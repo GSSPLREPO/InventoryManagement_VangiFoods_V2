@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<InVanWebApp_BO.ClorinationLogBO>
 
 @{
-    ViewBag.Title = "Clorination Log";
+    ViewBag.Title = "Chlorination Log";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
@@ -15,13 +15,13 @@
 
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Clorination Log 2-3 Time in Week</h4>
+            <h4 class="page-title">Chlorination Log</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Daily Operations</a>
                     </li>
-                    <li class="breadcrumb-item active">Clorination Log</li>
+                    <li class="breadcrumb-item active">Chlorination Log</li>
                 </ol>
             </nav>
         </div>
@@ -32,7 +32,7 @@
                     <div class="card">
                         <div class="card-body">
                             <a href="@Url.Action("AddClorinationLog","ClorinationLog")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span> Clorination Log
+                                <span class="fa fa-plus"></span> Chlorination Log
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
 
@@ -41,27 +41,37 @@
                                         <tr>
                                             <th>@Html.DisplayName("Date")</th>
                                             <th>@Html.DisplayName("Foot Washer")</th>
+                                            <th>@Html.DisplayName("RO Water")</th>
+                                            <th>@Html.DisplayName("Soft Water")</th>
+                                            <th>@Html.DisplayName("Cooling Water Tank")</th>
+                                            <th>@Html.DisplayName("Portable Water")</th>
+                                            <th>@Html.DisplayName("CIP Water Tank")</th>
                                             <th>@Html.DisplayName("Verify By")</th>
-                                            <th>@Html.DisplayName("Edit/Delete")</th>
+                                            <th>@Html.DisplayName("Action")</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.FootWasher)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.VerifyByName)</td>
-                                                <td>
-                                                    <a href=@Url.Action("EditClorinationLog", "ClorinationLog", new { Id = item.Id })>
-                                                        <i class="fa fa-edit text-primary"></i>
-                                                    </a> &emsp;
-                                                    <a href=@Url.Action("Delete", "ClorinationLog", new { Id = item.Id }) onclick="return confirm('Are you sure want to delete?');">
-                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.FootWasher)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.RoWater)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.SoftWater)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CoolingWaterTank)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ProcessingWater)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CIPWaterTank)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.VerifyByName)</td>
+                                            <td>
+                                                <a href=@Url.Action("EditClorinationLog", "ClorinationLog", new { Id = item.Id })>
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("Delete", "ClorinationLog", new { Id = item.Id }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>

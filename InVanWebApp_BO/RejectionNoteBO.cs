@@ -105,6 +105,7 @@ namespace InVanWebApp_BO
         public string RejectionNoteNo { get; set; }
         public string InwardNumber { get; set; }
         public string InwardQCNumber { get; set; }
+        public string ReasonForRR { get; set; }
     }
 
 }

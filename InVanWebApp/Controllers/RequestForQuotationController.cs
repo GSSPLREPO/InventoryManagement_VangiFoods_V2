@@ -522,7 +522,13 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
 
             RFQ_VendorDetailsBO model = _requestForQuotationRepository.ItemDetailsVendorWise(RfqID, 0, ID);
-            return View(model);
+            if (model == null)
+            {
+                TempData["Success"] = "<script>alert('Quotation for this vendor is not punched yet! Please try again');</script>";
+                return RedirectToAction("Index", "RequestForQuotation");
+            }
+            else
+                return View(model);
 
         }
         #endregion

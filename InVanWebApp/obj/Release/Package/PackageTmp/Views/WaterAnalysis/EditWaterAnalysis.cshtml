@@ -1,0 +1,273 @@
+﻿@model InVanWebApp_BO.WaterAnalysisBO
+
+@{
+    ViewBag.Title = "EditWaterAnalysis";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Water Analysis</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("User")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Date")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4" @*id="datetimepicker"*@>
+
+                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Time")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+
+                @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "error mt-2 text-danger" })
+            </div>
+
+        </div>
+            <hr />
+            <div class="row">
+                <h4 style="color:darkcyan">Production Area(Ro Water)</h4>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("PH")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PAPH, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.PAPH, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TDS")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PATDS, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.PATDS, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Hardness")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PAHardness, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.PAHardness, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Salt Added")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PASaltAdded, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphaNumeric(event);" })
+                    @Html.ValidationMessageFor(model => model.PASaltAdded, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <hr />
+            <div class="row">
+                <h4 style="color:darkcyan">Soft Water</h4>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("PH")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.SWPH, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.SWPH, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TDS")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.SWTDS, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.SWTDS, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Hardness")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.SWHardness, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.SWHardness, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+          
+
+            <hr />
+            <div class="row">
+                <h4 style="color:darkcyan">ETP Plant</h4>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TEMP")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ETPTEM, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.ETPTEM, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("PH")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ETPPH, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.ETPPH, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TDS")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ETPTDS, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.ETPTDS, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("TEMP")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TEM, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return customValidation(event);" })
+                    @Html.ValidationMessageFor(model => model.TEM, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Gas Reading")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.GasReading, new { @class = "form-control form-control-sm", maxlength = "15" , @onkeypress = "return isNumberKey(event);" })
+                    @Html.ValidationMessageFor(model => model.GasReading, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Remarks Will be Allow 100 Charachter" })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+            <br />
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "WaterAnalysis")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@*<script src="jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>*@
+<script src="jquery-ui-timepicker-addon.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#date").datetimepicker({
+            dateFormat: 'dd-mm-yy', timeFormat: 'hh:mm:ss'
+        });
+    });
+</script>
+
+
+<script>
+        $(document).ready(function ()
+        {
+            $("#datetimepicker").datetimepicker(
+                {
+
+                    //defaultDate: '@Model.Date',
+                    showTodayButton: true,
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    //showClose: true,
+                    //showClear: true,
+                    //toolbarPlacement: 'top',
+                    //stepping: 15
+                    lang
+                });
+
+
+
+        });
+</script>
+
+<script type="text/javascript">
+
+    //Custom validation for only numeric, decimal and NA/na character.
+    function customValidation(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
+            || unicode == 46) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //Custom validation for only numeric, alphabets, underscore and NA/na character.
+    function IsAlphaNumeric(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //Custom validation for only numeric, decimal.
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+</script>

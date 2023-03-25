@@ -109,7 +109,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            <table class="table table-striped" id="submissionTable">
+                                            <table class="table table-hover" id="submissionTable">
                                                 <thead>
                                                     <tr>
                                                         <th class="sortStyle text-wrap">Select Item for PO</th>
@@ -135,28 +135,28 @@
                                                                 </td>
                                                                 <td class="d-none">@Html.HiddenFor(x => item.Item_ID, new { id = "ItemID_" + c })</td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.Item_Code, new { id = "ItemCode_" + c, style = "border:none;background: none;width:auto;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.Item_Code, new { id = "ItemCode_" + c, style = "border:none;background: none;width:auto;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.ItemName, new { id = "ItemName_" + c, style = "border:none;background: none;width:auto;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.ItemName, new { id = "ItemName_" + c, style = "border:none;background: none;width:auto;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.ItemQuantity, new { id = "ItemQuantity_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.ItemQuantity, new { id = "ItemQuantity_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.ItemUnit, new { id = "ItemUnit_" + c, style = "border:none;background: none;width:auto;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.ItemUnit, new { id = "ItemUnit_" + c, style = "border:none;background:none;width:auto;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.ItemUnitPrice, new { id = "ItemUnitPrice_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.ItemUnitPrice, new { id = "ItemUnitPrice_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.CurrencyName, new { id = "CurrencyName_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.CurrencyName, new { id = "CurrencyName_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background:none;height:20px;", @readonly = "readonly" })
                                                                 </td>
                                                             </tr>
                                                             { c++; }
