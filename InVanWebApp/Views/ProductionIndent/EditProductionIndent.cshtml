@@ -62,29 +62,6 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("SO Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownList("SalesOrderId", (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "--Select--",
-                   new { @class = "form-control", onchange = "SelectedIndexChangedSO($(this).val(),id)" })
-                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
-                    @Html.HiddenFor(model => model.SONo)
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Work Order No")
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
-                   new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
-                    @Html.HiddenFor(model => model.WorkOrderNo)
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-2">
                     @Html.Label("Product Name")
                     <span style="color:red">*</span>
                 </div>
@@ -99,14 +76,45 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TotalBatches, new { @class = "form-control form-control-sm", maxlength = "8", })
+                    @Html.TextBoxFor(model => model.TotalBatches, new { @class = "form-control form-control-sm", maxlength = "8", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.TotalBatches, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Remarks")                    
+                    @Html.Label("SO Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("SalesOrderId", (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "--Select--",
+                   new { @class = "form-control", onchange = "SelectedIndexChangedSO($(this).val(),id)", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.SONo)
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Work Order No")
+                </div>
+                <div class="col-md-4">
+                    @*@Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
+        new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })
+         @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })*@
+                    @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", maxlength = "50", @disabled = "disabled" })
+                    @Html.HiddenFor(model => model.WorkOrderNo)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Batch Number")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95", onkeypress = "createJson();" })
@@ -236,7 +244,7 @@
 
     var TxtItemDetails = "";
 
-    $("#TotalBatches").change(function () {        
+    $("#TotalBatches").change(function () {
         var totalBatches = $("#TotalBatches").val();
         if (totalBatches > 0) {
             var len = document.getElementById("ItemTable").rows.length;
@@ -245,10 +253,10 @@
             while (t < len) {
                 var totalBatches = $("#TotalBatches").val();
                 var idItemQty = document.getElementById("ItemQty_" + t).value;
-                var TotItemQty = idItemQty * totalBatches;                
+                var TotItemQty = idItemQty * totalBatches;
                 document.getElementById("ItemQty_" + t).value = TotItemQty.toFixed(4);
                 var idFinalQty = document.getElementById("txtFinalQty_" + t).value;
-                var TotFinalQty = idFinalQty * totalBatches;                
+                var TotFinalQty = idFinalQty * totalBatches;
                 document.getElementById("txtFinalQty_" + t).value = TotFinalQty.toFixed(4);
                 t++;
             }
@@ -262,6 +270,26 @@
         SONo = document.getElementById("SalesOrderId").options[selectedOptionSO].innerText;
         document.getElementById("SONo").value = SONo;
         SelectedIndexChangedWO(id);
+        
+        var TotalBatches = $("#TotalBatches").val();
+        debugger
+        $.get("@Url.Action("BindBatchNumber", "ProductionIndent")?id=" + id + "&TotalBatches=" + TotalBatches
+
+            , function (data) {
+                console.log(data);
+                var len = data.length;
+                var result = '';
+                var i = 0;
+                while (i < len) {
+                        result = result + data[i].BatchNumber;
+                    if (i != len-1) {
+                        result = result + ',';
+                    }
+                    i++;
+                }
+                $('#BatchNumber').val(result);
+            });
+
     }
     //SO Number End
 
@@ -282,7 +310,7 @@
         document.getElementById("RecipeName").value = RecipeName;
 
         $("#TotalBatches").val('1');
-        //For deleting the rows of Item table if exist.        
+        //For deleting the rows of Item table if exist.
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
         while (rowCount != '1') {
@@ -296,7 +324,7 @@
             data: "{ }",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (result) {                
+            success: function (result) {
                 var ColCount = result.length;
 
                 //===================Create dynamic table for binding Item details====================//
@@ -335,7 +363,7 @@
                         }
                         else if (i == 3) {
                             cell.innerHTML = result[j].ItemQuantity.toFixed(4);
-                            cell.setAttribute("id", "ItemQty_" + j);                         
+                            cell.setAttribute("id", "ItemQty_" + j);
                         }
                         else if (i == 4) {
                             var t4 = document.createElement("input");
@@ -344,7 +372,7 @@
                             t4.removeAttribute("disabled", "true");
                             t4.setAttribute("maxlength", "8");
                             t4.setAttribute("onkeypress", "return isNumberKey(event)");
-                            t4.setAttribute("value", result[j].FinalQuantity.toFixed(4));                   
+                            t4.setAttribute("value", result[j].FinalQuantity.toFixed(4));
                             t4.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                             t4.setAttribute("class", "form-control form-control-sm");
                             cell.appendChild(t4);
@@ -370,8 +398,8 @@
 
     function OnChangeQty(value, id) {
         var totalBatches = $("#TotalBatches").val();
-        var rowNo = id.split('_')[1];        
-        var finalQty = $("#txtFinalQty_" + rowNo).val();        
+        var rowNo = id.split('_')[1];
+        var finalQty = $("#txtFinalQty_" + rowNo).val();
         var percentage = $("#Percentage_" + rowNo).val();
         var finalQuantity = totalBatches * percentage * finalQty;
         $("#txtFinalQty_" + rowNo).val(finalQuantity.toFixed(4));
@@ -416,7 +444,7 @@
                 TxtItemDetails = TxtItemDetails + "},";
         }
         TxtItemDetails = TxtItemDetails + "]"
-        $('#TxtItemDetails').val(TxtItemDetails);        
+        $('#TxtItemDetails').val(TxtItemDetails);
     }
     //==========end===============
 

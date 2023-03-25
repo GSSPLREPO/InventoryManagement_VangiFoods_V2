@@ -63,29 +63,6 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("SO Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownList("SalesOrderId", (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "--Select--",
-                   new { @class = "form-control", onchange = "SelectedIndexChangedSO($(this).val(),id)" })
-                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
-                    @Html.HiddenFor(model => model.SONo)                    
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Work Order No")
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
-                   new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
-                    @Html.HiddenFor(model => model.WorkOrderNo)
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-2">
                     @Html.Label("Product Name")
                     <span style="color:red">*</span>
                 </div>
@@ -107,11 +84,33 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Batche Number")
+                    @Html.Label("SO Number")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", Value = ViewData["BatchNo"], @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })
+                    @Html.DropDownList("SalesOrderId", (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "--Select--",
+                   new { @class = "form-control", onchange = "SelectedIndexChangedSO($(this).val(),id)" })
+                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.SONo)
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Work Order No")
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
+                   new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
+                    @Html.HiddenFor(model => model.WorkOrderNo)
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Batch Number")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })                    
                 </div>
 
                 <div class="col-md-2">
@@ -170,7 +169,7 @@
     var TxtItemDetails = "";
 
     $("#TotalBatches").change(function () {
-        
+
         var totalBatches = $("#TotalBatches").val();
         if (totalBatches > 0) {
             var len = document.getElementById("ItemTable").rows.length;
@@ -190,17 +189,36 @@
     });
 
     //SO Number Start
-    function SelectedIndexChangedSO(id) {        
+    function SelectedIndexChangedSO(id) {
         var selectedOptionSO, SONo;
         selectedOptionSO = document.getElementById("SalesOrderId").selectedIndex;
         SONo = document.getElementById("SalesOrderId").options[selectedOptionSO].innerText;
         document.getElementById("SONo").value = SONo;
         SelectedIndexChangedWO(id);
+        debugger
+        var TotalBatches = $("#TotalBatches").val();
+
+        $.get("@Url.Action("BindBatchNumber", "ProductionIndent")?id=" + id + "&TotalBatches=" + TotalBatches
+
+            , function (data) {
+                console.log(data);
+                var len = data.length;
+                var result = '';
+                var i = 0;
+                while (i < len) {
+                        result = result + data[i].BatchNumber;
+                    if (i != len-1) {
+                        result = result + ',';
+                    }                    
+                    i++;
+                }
+                $('#BatchNumber').val(result);
+            });
     }
     //SO Number End
 
     //WO Number Start
-    function SelectedIndexChangedWO(id) {        
+    function SelectedIndexChangedWO(id) {
         var selectedOptionWO, WONo;
         selectedOptionWO = document.getElementById("SOId").selectedIndex = id;
         WONo = document.getElementById("SOId").options[selectedOptionWO].innerText;
@@ -293,8 +311,8 @@
                             t6.id = "Percentage_" + j;
                             t6.setAttribute("disabled", "true");
                             t6.setAttribute("style", "background:transparent;border:none;");
-                            t6.setAttribute("value", result[j].Ratio.toFixed(4));                            
-                            cell.appendChild(t6);                            
+                            t6.setAttribute("value", result[j].Ratio.toFixed(4));
+                            cell.appendChild(t6);
                         }
                     }
                 }
@@ -303,8 +321,8 @@
     }
 
 
-    function OnChangeQty(value, id) {        
-        var totalBatches = $("#TotalBatches").val();        
+    function OnChangeQty(value, id) {
+        var totalBatches = $("#TotalBatches").val();
         var rowNo = id.split('_')[1];
         var finalQty = $("#txtFinalQty_" + rowNo).val();
         var percentage = $("#Percentage_" + rowNo).val();
@@ -340,7 +358,7 @@
             FinalQty = (FinalQty == null || FinalQty == '') ? 0 : FinalQty;
             var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
             var Percentage = $("#Percentage_" + i).val();
-            
+
             TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID +
                 ", \"Item_Code\":\"" + ItemCode + "\", \"ItemName\": \"" + ItemName + "\", \"ItemQty\": " + ItemQty + ", \"FinalQty\": " + FinalQty +
                 ", \"ItemUnit\": \"" + Unit + "\", \"Percentage\": " + Percentage;

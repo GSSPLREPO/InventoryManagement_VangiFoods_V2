@@ -56,4 +56,10 @@ namespace InVanWebApp_BO
         public string CurrencyName { get; set; }
         public string ItemUnit { get; set; }
     }
+    //Rahul added 25-033-2023. 
+    public class BatchNumberMasterBO 
+    {
+        public int ID { get; set; }
+        public string BatchNumber { get; set; } 
+    }
 }

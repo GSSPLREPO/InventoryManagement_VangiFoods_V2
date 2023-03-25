@@ -118,6 +118,24 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Bind all BindBatch Number details 
+        public JsonResult BindBatchNumber(string id, string TotalBatches = null) 
+        {
+            int SO_Id = 0;
+            int Total_Batches = 0;
+
+            if (id != "" && id != null)
+                SO_Id = Convert.ToInt32(id);
+
+            if (TotalBatches != "" && TotalBatches != null)
+                Total_Batches = Convert.ToInt32(TotalBatches);
+
+            var result = _productionIndentRepository.GetBatchNumberById(SO_Id, Total_Batches);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+
         #region Insert functionality of Production Indent
         [HttpGet]
         public ActionResult AddProductionIndent()
@@ -131,11 +149,6 @@ namespace InVanWebApp.Controllers
                 //=========here document type=16 i.e. for generating the Production Indent Number(logic is in SP).====//
                 var DocumentNumber = objDocNo.GetDocumentNo(16);
                 ViewData["DocumentNo"] = DocumentNumber;
-
-                //Binding Production Indent Batch Numer. 
-                //var batchNumberList = _productionIndentRepository.GetItemDetailsForBatchNumber(); 
-                //var BatchNumber = new SelectList(batchNumberList.ToList(), "BatchNumber");
-                //ViewData["BatchNo"] = BatchNumber;  
 
                 //Binding item grid with sell type item.
                 var itemList = _repository.GetItemDetailsForDD();
