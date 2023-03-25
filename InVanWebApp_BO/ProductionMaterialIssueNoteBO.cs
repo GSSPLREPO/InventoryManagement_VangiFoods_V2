@@ -37,6 +37,10 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
         public string txtItemDetails { get; set; }
+        ///Rahul added 23-03-2023.
+        [Required(ErrorMessage = "Select production indent number!")]
+        public Nullable<int> ProductionIndentId { get; set; } 
+        public string ProductionIndentNo { get; set; } 
         public List<ProductionMaterialIssueNoteDetailsBO> ProductionMaterialIssueNoteDetails { get; set; }
 
     }

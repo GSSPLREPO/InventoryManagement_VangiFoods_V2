@@ -128,9 +128,14 @@ namespace InVanWebApp.Controllers
                 BindItemTypeCategory();
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
-                //=========here document type=16 i.e. for generating the Production Indent (logic is in SP).====//
+                //=========here document type=16 i.e. for generating the Production Indent Number(logic is in SP).====//
                 var DocumentNumber = objDocNo.GetDocumentNo(16);
                 ViewData["DocumentNo"] = DocumentNumber;
+
+                //Binding Production Indent Batch Numer. 
+                //var batchNumberList = _productionIndentRepository.GetItemDetailsForBatchNumber(); 
+                //var BatchNumber = new SelectList(batchNumberList.ToList(), "BatchNumber");
+                //ViewData["BatchNo"] = BatchNumber;  
 
                 //Binding item grid with sell type item.
                 var itemList = _repository.GetItemDetailsForDD();

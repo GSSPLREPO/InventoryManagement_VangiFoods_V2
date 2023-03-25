@@ -16,12 +16,13 @@ namespace InVanWebApp_BO
         //[Required(ErrorMessage ="Select the indent date!")]
         public Nullable<System.DateTime> ProductionDate { get; set; } 
         //[Required(ErrorMessage ="Select user!")] 
-        public Nullable<int> RaisedBy { get; set; }
+        public Nullable<int> RaisedBy { get; set; }        
         public string Description { get; set; }
         public Nullable<int> Status { get; set; }
-        [Required(ErrorMessage = "Select the Product Name!")]
+        [Required(ErrorMessage = "Select the Product Name!")] //added
         public int RecipeID { get; set; }         
         public string RecipeName { get; set; }
+        [Required(ErrorMessage = "Select the SO Number!")] //added
         public int SalesOrderId { get; set; }
         public string SONo { get; set; }        
         public string WorkOrderNo { get; set; } 
@@ -45,7 +46,14 @@ namespace InVanWebApp_BO
         public float Ratio { get; set; }
         public string TxtItemDetails { get; set; } 
         public int IndentCount { get; set; }
+        public int ProductionIndentId { get; set; }
+        public string BatchNumber { get; set; } //Rahul added 24-03-23.         
         public List<ProductionIndent_DetailsBO> indent_Details { get; set; }
-
+        //Rahul added 24-03-23. 
+        public int ItemId { get; set; }
+        public decimal ItemUnitPrice { get; set; } 
+        public decimal AvailableStock { get; set; }
+        public string CurrencyName { get; set; }
+        public string ItemUnit { get; set; }
     }
 }

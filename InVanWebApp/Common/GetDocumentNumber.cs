@@ -47,5 +47,22 @@ namespace InVanWebApp.Common
             return DocumentNumber;
         }
         #endregion
+
+        //#region Get Batch number
+        //public string GetBatchNo()
+        //{
+        //    var BatchNumber = "";
+        //    try
+        //    {
+        //        BatchNumber = _repository.GetBatchNo();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex.Message, ex);
+        //    }
+        //    return BatchNumber; 
+        //}
+        //#endregion
+
     }
 }

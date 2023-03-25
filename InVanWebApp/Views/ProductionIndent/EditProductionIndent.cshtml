@@ -89,13 +89,9 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @*@Html.DropDownListFor(model => model.RecipeID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val(),id)" })
-        @Html.ValidationMessageFor(model => model.RecipeID, "", new { @class = "error mt-2 text-danger" })
-        @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })*@
                     @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                     @Html.HiddenFor(model => model.RecipeID)
                     @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger" })
-
                 </div>
 
                 <div class="col-md-2">
@@ -110,7 +106,7 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Remarks")
+                    @Html.Label("Remarks")                    
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95", onkeypress = "createJson();" })
@@ -240,8 +236,7 @@
 
     var TxtItemDetails = "";
 
-    $("#TotalBatches").change(function () {
-        debugger
+    $("#TotalBatches").change(function () {        
         var totalBatches = $("#TotalBatches").val();
         if (totalBatches > 0) {
             var len = document.getElementById("ItemTable").rows.length;
@@ -250,12 +245,10 @@
             while (t < len) {
                 var totalBatches = $("#TotalBatches").val();
                 var idItemQty = document.getElementById("ItemQty_" + t).value;
-                var TotItemQty = idItemQty * totalBatches;
-                //console.log(TotItemQty);
+                var TotItemQty = idItemQty * totalBatches;                
                 document.getElementById("ItemQty_" + t).value = TotItemQty.toFixed(4);
                 var idFinalQty = document.getElementById("txtFinalQty_" + t).value;
-                var TotFinalQty = idFinalQty * totalBatches;
-                //console.log(TotFinalQty);
+                var TotFinalQty = idFinalQty * totalBatches;                
                 document.getElementById("txtFinalQty_" + t).value = TotFinalQty.toFixed(4);
                 t++;
             }
@@ -289,8 +282,7 @@
         document.getElementById("RecipeName").value = RecipeName;
 
         $("#TotalBatches").val('1');
-        //For deleting the rows of Item table if exist.
-        debugger
+        //For deleting the rows of Item table if exist.        
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
         while (rowCount != '1') {
@@ -304,9 +296,7 @@
             data: "{ }",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: function (result) {
-                console.log(result);
-                //$('#RecipeName').val(result[0].RecipeName);
+            success: function (result) {                
                 var ColCount = result.length;
 
                 //===================Create dynamic table for binding Item details====================//
@@ -345,13 +335,7 @@
                         }
                         else if (i == 3) {
                             cell.innerHTML = result[j].ItemQuantity.toFixed(4);
-                            cell.setAttribute("id", "ItemQty_" + j);
-                            //debugger
-                            //var totalBatches = $("#TotalBatches").val();
-                            //var ratio = result[j].Ratio;
-                            //var ItemQty = totalBatches * ratio;
-                            ////cell.setAttribute("value", ItemQty);
-                            //cell.innerHTML = ItemQty;
+                            cell.setAttribute("id", "ItemQty_" + j);                         
                         }
                         else if (i == 4) {
                             var t4 = document.createElement("input");
@@ -360,17 +344,8 @@
                             t4.removeAttribute("disabled", "true");
                             t4.setAttribute("maxlength", "8");
                             t4.setAttribute("onkeypress", "return isNumberKey(event)");
-                            t4.setAttribute("value", result[j].FinalQuantity.toFixed(4));
-                            //debugger
-                            //$("#TotalBatches").change(function () {
-                            //debugger
-                            //var totalBatches = $("#TotalBatches").val();
-                            //var itemQuantity = result[j].ItemQuantity;
-                            //var ItemQty = totalBatches * itemQuantity;
-                            //t4.setAttribute("value", ItemQty.toFixed(4));
-                            //});
+                            t4.setAttribute("value", result[j].FinalQuantity.toFixed(4));                   
                             t4.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-
                             t4.setAttribute("class", "form-control form-control-sm");
                             cell.appendChild(t4);
                         }
@@ -395,14 +370,10 @@
 
     function OnChangeQty(value, id) {
         var totalBatches = $("#TotalBatches").val();
-        var rowNo = id.split('_')[1];
-        //console.log("PerId:", id);
-        var finalQty = $("#txtFinalQty_" + rowNo).val();
-        //console.log(finalQty);
+        var rowNo = id.split('_')[1];        
+        var finalQty = $("#txtFinalQty_" + rowNo).val();        
         var percentage = $("#Percentage_" + rowNo).val();
-        //console.log(percentage);
         var finalQuantity = totalBatches * percentage * finalQty;
-        //console.log(finalQuantity);
         $("#txtFinalQty_" + rowNo).val(finalQuantity.toFixed(4));
         $("#ItemQty_" + rowNo).val(finalQuantity.toFixed(4));
     }
@@ -416,43 +387,9 @@
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
         createJson();
-
-        //var tableLength = document.getElementById('submissionTable').rows.length;
-        //var flag = 0, i = 1;
-
-        //var RequiredQuantity = $('#RequiredQuantity').val();
-        //var IndentBy = $('#RaisedBy').val();    //Rahul added 'IndentBy' if 'flag = 1;' then '#btnSave' 'disabled' 22-02-23.
-        //if (IndentBy == '' || IndentBy == null) {
-        //    $('#RaisedBy').focus();
-        //    flag = 1;
-        //}
-        //if (RequiredQuantity != '' && RequiredQuantity != 0) {
-        //    flag = 1;
-        //}
-        //if (tableLength > 1) {
-        //    while (i < tableLength - 1) {
-        //        var PhyQty = document.getElementById("requiredQuantity_" + i).value;
-        //        PhyQty = parseFloat(PhyQty);
-
-        //        if (PhyQty != 0) {
-        //            flag = 1;
-
-        //            i++;
-        //        }
-
-        //    }
-        //    if (flag != 1) {
-        //        alert("Required quantity is zero or null! Cannot create Production Indent!");
-        //        $('#btnSave').prop('disabled', true);
-        //        return;
-        //    }
-        //    else
-        //        $('#btnSave').prop('disabled', false);
-        //}
     };
 
     function createJson() {
-        debugger
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
         var i = 1;
@@ -479,8 +416,7 @@
                 TxtItemDetails = TxtItemDetails + "},";
         }
         TxtItemDetails = TxtItemDetails + "]"
-        $('#TxtItemDetails').val(TxtItemDetails);
-        console.log(TxtItemDetails);
+        $('#TxtItemDetails').val(TxtItemDetails);        
     }
     //==========end===============
 

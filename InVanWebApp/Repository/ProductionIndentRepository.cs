@@ -186,6 +186,8 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        //GetItemDetailsForBatchNumber
+
         #region Insert function
         public ResponseMessageBO Insert(ProductionIndentBO model)
         {

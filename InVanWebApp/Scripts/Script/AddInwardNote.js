@@ -56,7 +56,7 @@ function createJson() {
 }
 
 function SelectedIndexChanged(id) {
-
+    debugger
     //For deleting the rows of Item table if exist.
 
     var table = document.getElementById('ItemTable');

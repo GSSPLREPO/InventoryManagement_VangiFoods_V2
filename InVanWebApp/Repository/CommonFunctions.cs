@@ -45,5 +45,36 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        //#region Generate Batch number 
+        //public string GetBatchNo(string WorkOrderNumber)
+        //{
+        //    var BatchNumber = "";
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(conString))
+        //        {
+        //            SqlCommand cmd = new SqlCommand("usp_tbl_GenerateBatchNumber", con);
+        //            cmd.CommandType = CommandType.StoredProcedure;
+        //            cmd.Parameters.AddWithValue("@WorkOrderNumber", WorkOrderNumber);
+        //            con.Open();
+        //            SqlDataReader reader = cmd.ExecuteReader();
+        //            while (reader.Read())
+        //            {
+        //                BatchNumber = reader["BatchNumber"].ToString();
+        //            }
+        //            con.Close();
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex.Message, ex);
+        //    }
+
+        //    return BatchNumber;
+        //}
+
+        //#endregion
+
     }
 }

@@ -9,19 +9,21 @@
         <h4>Add Recipe</h4>
         <hr />
         @Html.ValidationSummary(true)
-        <div class="row">
-            <div class="col-md-2 text-right">
-                <button class="btn btn-sm btn-primary mr-2" id="btnAdd" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Single Recipe</button>
-            </div>
-            @*Rahul commented on 13-03-2023.*@
-            @*<div class="col-md-2 text-right">
-                <button class="btn btn-sm btn-primary mr-2" id="btnAddMultiple" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Multiple Recipe</button>
-            </div>*@
-        </div>
+    <div class="row">
+        @*//Rahul commented/removed id="btnAdd" 24-03-23.*@
+        @*<div class="col-md-2 text-right">
+            <button class="btn btn-sm btn-primary mr-2" id="btnAdd" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Single Recipe</button>
+        </div>*@
+        @*//Rahul commented on 13-03-2023.*@
+        @*<div class="col-md-2 text-right">
+            <button class="btn btn-sm btn-primary mr-2" id="btnAddMultiple" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Multiple Recipe</button>
+        </div>*@
+    </div>
         @using (Html.BeginForm("AddRecipeItems", "RecipeMater", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-    <div id="AddDiv" style="display:none;">
+            //Rahul updated style = "display:none;" to style = "display:block;" 24-03-23.
+    <div id="AddDiv" style="display:block;">
         <div class="row">
             <div class="col-md-2">
                 @Html.Label("Product Name")
