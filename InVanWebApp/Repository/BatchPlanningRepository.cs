@@ -254,9 +254,9 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_SalesOrder_Delete", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_BatchPlanningOrder_Delete", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@SalesOrderId", ID);
+                    cmd.Parameters.AddWithValue("@BatchID", ID);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();

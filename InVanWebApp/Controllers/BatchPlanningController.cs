@@ -174,8 +174,8 @@ namespace InVanWebApp.Controllers
             {
                 var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
                 _repository.Delete(ID, userID);
-                TempData["Success"] = "<script>alert('Sales Order deleted successfully!');</script>";
-                return RedirectToAction("Index", "SalesOrder");
+                TempData["Success"] = "<script>alert('Batch planning deleted successfully!');</script>";
+                return RedirectToAction("Index", "BatchPlanning");
             }
             else
                 return RedirectToAction("Index", "Login");
