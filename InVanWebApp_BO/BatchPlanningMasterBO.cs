@@ -23,10 +23,6 @@ namespace InVanWebApp_BO
         public Nullable<decimal> RequiredQuantityInKG { get; set; }
         public Nullable<decimal> TotalBatchSize { get; set; }
         public Nullable<decimal> TotalNoBatches { get; set; }
-        public int? LocationId { get; set; }
-        public string LocationName { get; set; }
-        public decimal TotalRawMaterialYeild { get; set; }
-        public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

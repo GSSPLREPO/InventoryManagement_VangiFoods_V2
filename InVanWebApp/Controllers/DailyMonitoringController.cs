@@ -213,6 +213,8 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Report
+
         #region  Bind Datatable and Export Pdf & Excel
         /// <summary>
         /// Develop By Snehal on 09 Feb'23
@@ -378,7 +380,7 @@ namespace InVanWebApp.Controllers
                /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
             }
-
+           
 
 
             string style = @"<!--mce:2-->";
@@ -578,7 +580,7 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-
+        #endregion
 
     }
 }

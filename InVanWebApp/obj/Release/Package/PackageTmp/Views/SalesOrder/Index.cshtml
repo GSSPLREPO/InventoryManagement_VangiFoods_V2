@@ -86,11 +86,11 @@
 
                                                     @if (item.DraftFlag == true)
                                                     {
-                                                        <a href=@Url.Action("EditSalesOrder", new { ID = item.SalesOrderId }) title="Edit SO">
+                                                        <a href=@Url.Action("EditSalesOrder", new { ID = item.SalesOrderId }) title="Edit PO">
                                                             <i class="fa fa-edit text-primary"></i>
                                                         </a>
                                                         <span>&nbsp;&nbsp;</span>
-                                                        <a href=@Url.Action("DeleteSalesOrder", new { ID = item.SalesOrderId, }) onclick="return confirm('Are you sure want to delete the SO?');" title="Delete SO">
+                                                        <a href=@Url.Action("DeleteSalesOrder", new { ID = item.SalesOrderId, }) onclick="return confirm('Are you sure want to delete the PO?');" title="Delete PO">
                                                             @*<i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>*@
                                                             <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                         </a><span>&nbsp;&nbsp;</span>
@@ -103,7 +103,7 @@
                                                                 <i class="fa fa-file-alt text-primary"></i>
                                                             </a><span>&nbsp;&nbsp;</span>
                                                         }
-                                                        <a href=@Url.Action("DeleteSalesOrder", new { ID = item.SalesOrderId, }) onclick="return confirm('Are you sure want to delete the SO?');" title="Delete SO">
+                                                        <a href=@Url.Action("DeleteSalesOrder", new { ID = item.SalesOrderId, }) onclick="return confirm('Are you sure want to delete the PO?');" title="Delete PO">
                                                             <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                         </a><span>&nbsp;&nbsp;</span>
                                                     }

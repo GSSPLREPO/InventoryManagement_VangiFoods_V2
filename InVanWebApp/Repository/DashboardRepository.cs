@@ -101,5 +101,50 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+        
+        #region Function for Fifo system 
+        public List<DashboardBO> GetFIFOSystem(DateTime fromDate,DateTime toDate, int ItemId = 0, int LocationID = 0)
+        {
+            List<DashboardBO> resultList = new List<DashboardBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_dashb_FIFOWithExpiryHighlighting", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ItemId", ItemId);
+                    cmd.Parameters.AddWithValue("@locationId", LocationID);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+
+                    con.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader(); 
+                    while (reader.Read())
+                    {
+                        var result = new DashboardBO()
+                        {
+                            GRNDate = Convert.ToDateTime(reader["GRNDate"]),
+                            ItemName = reader["ItemName"].ToString(),
+                            LocationName = reader["Location"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(reader["Price"]),
+                            CurrencyName = (reader["Currency"].ToString()),
+                            ReceivedQty=float.Parse(reader["Quantity"].ToString())
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+
+            return resultList;
+        }
+
+        #endregion
     }
 }

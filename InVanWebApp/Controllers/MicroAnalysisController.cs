@@ -211,7 +211,7 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        /* Report */
+        #region Report
         #region  Bind Datatable and Export Pdf & Excel
         /// <summary>
         /// Develop By Snehal on 09 Feb'23
@@ -423,13 +423,13 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Yeast & Mould(cfu/gm) L=1 x 10^2");
             dt.Columns.Add("Coliform (cfu/gm)");
             dt.Columns.Add("Verify By Name");
-
+            
 
             int i = 1;
             foreach (MicroAnalysisBO st in dailyMonitoring)
             {
                 DataRow dr = dt.NewRow();
-                // dr["Sr.No"] = i;
+               // dr["Sr.No"] = i;
                 dr["Date"] = st.Date.ToString();
                 dr["Source"] = st.Source.ToString();
                 dr["WO/PO"] = st.WOPO.ToString();
@@ -444,7 +444,7 @@ namespace InVanWebApp.Controllers
                 dr["Yeast & Mould(cfu/gm) L=1 x 10^2"] = st.YeastandMould.ToString();
                 dr["Coliform (cfu/gm)"] = st.Coliform.ToString();
                 dr["Verify By Name"] = st.VerifyByName.ToString();
-
+               
                 dt.Rows.Add(dr);
                 i++;
             }
@@ -521,6 +521,8 @@ namespace InVanWebApp.Controllers
 
             return View("Index");
         }
+        #endregion
+
         #endregion
 
     }

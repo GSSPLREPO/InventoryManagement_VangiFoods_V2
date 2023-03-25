@@ -64,14 +64,6 @@ namespace InVanWebApp_BO
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
 
-        //Added the below fields for batch planning
-        public decimal? RoundedRatio { get; set; }
-        public decimal? TotalBatches { get; set; }
-        public decimal? Yield { get; set; }
-        public decimal? ActualRequirement { get; set; }
-        public decimal? StockInHand { get; set; }
-        public decimal? ToBeProcured { get; set; }
-
     }
 
 }

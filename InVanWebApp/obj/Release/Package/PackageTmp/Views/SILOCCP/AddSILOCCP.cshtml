@@ -15,14 +15,14 @@
             @Html.ValidationSummary(true)
 
         <div class="row">
-            @*<div class="col-md-2">
+            <div class="col-md-2">
                 @Html.Label("User")
                 <span style="color:red">*</span>
             </div>
             <div class="col-md-4">
                 @Html.TextBoxFor(model => model.Verification, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                 @Html.ValidationMessageFor(model => model.Verification, "", new { @class = "error mt-2 text-danger" })
-            </div>*@
+            </div>
             <div class="col-md-2">
                 @Html.Label("Date")
                 <span style="color:red">*</span>
@@ -33,7 +33,7 @@
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
             </div>
             <div class="col-md-2">
-                @Html.Label("Transefered Time From RQS")
+                @Html.Label("TranseferedTimeFromRQS")
                 <span style="color:red">*</span>
             </div>
             <div class="col-md-4">
@@ -45,7 +45,7 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Item Name")
+                    @Html.Label("ItemName")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -111,7 +111,7 @@
                     @Html.ValidationMessageFor(model => model.WeightOfHoldingMaterial, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Corrective Actions")
+                    @Html.Label("CorrectiveActions")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -137,15 +137,6 @@
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Remarks Will be Allow 100 Charachter" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.Label("Verification")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Verification, new { @class = "form-control form-control-sm"})
-                    @Html.ValidationMessageFor(model => model.Verification, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
             </div>

@@ -209,6 +209,8 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Report
+
         #region  Bind Datatable and Export Pdf & Excel
         /// <summary>
         /// Develop By Snehal on 17 March '23
@@ -504,6 +506,8 @@ namespace InVanWebApp.Controllers
 
             //---------------------------------------
         }
+        #endregion
+
         #endregion
     }
 }

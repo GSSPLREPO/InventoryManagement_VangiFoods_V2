@@ -68,6 +68,7 @@
     <Compile Include="CityMaster.cs" />
     <Compile Include="ClorinationLogBO.cs" />
     <Compile Include="DailyMonitoringBO.cs" />
+    <Compile Include="DashboardBO.cs" />
     <Compile Include="FinishedGoodSeriesBO.cs" />
     <Compile Include="ForeignBodyFoundBO.cs" />
     <Compile Include="HotFillingPackingLineLogSheetCCPBO.cs" />
@@ -96,7 +97,6 @@
     <Compile Include="OutwardNoteBO.cs" />
     <Compile Include="PestControlLogBO.cs" />
     <Compile Include="POPaymentBO.cs" />
-    <Compile Include="PreProduction_QCBO.cs" />
     <Compile Include="PreStartupHygieneBO.cs" />
     <Compile Include="ProductEvaluationLogBO.cs" />
     <Compile Include="ProductionIndentBO.cs" />

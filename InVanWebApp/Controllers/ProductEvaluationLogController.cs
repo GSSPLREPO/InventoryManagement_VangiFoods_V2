@@ -62,22 +62,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region  Bind Datatable and Export Pdf & Excel
-        /// <summary>
-        /// Develop By Snehal on 14 March' 2023
-        /// Calling method for ProductEvaluationLog Data
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult GetAllProductEvaluationLogList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
-        {
-            Session["FromDate"] = fromDate;
-            Session["ToDate"] = toDate;
-            var dailyMonitoringBOs = _productEvaluationLogRepository.GetAllProductEvaluationLogList(flagdate, fromDate, toDate);
-            TempData["ProductEvaluationLogPDF"] = dailyMonitoringBOs;
-            TempData["ProductEvaluationLogExcel"] = dailyMonitoringBOs;
-            return Json(new { data = dailyMonitoringBOs }, JsonRequestBehavior.AllowGet);
-        }
-        #endregion
 
         #region Insert function
         /// <summary>
@@ -247,6 +231,25 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Report
+
+        #region  Bind Datatable and Export Pdf & Excel
+        /// <summary>
+        /// Develop By Snehal on 14 March' 2023
+        /// Calling method for ProductEvaluationLog Data
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetAllProductEvaluationLogList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            var dailyMonitoringBOs = _productEvaluationLogRepository.GetAllProductEvaluationLogList(flagdate, fromDate, toDate);
+            TempData["ProductEvaluationLogPDF"] = dailyMonitoringBOs;
+            TempData["ProductEvaluationLogExcel"] = dailyMonitoringBOs;
+            return Json(new { data = dailyMonitoringBOs }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
         #region Excel Product Evaluation Log
         //public void ExportAsExcel()
         public ActionResult ExportAsExcel()
@@ -258,7 +261,7 @@ namespace InVanWebApp.Controllers
 
             GridView gv = new GridView();
 
-            List<ProductEvaluationLogBO> productEvaluationLog = TempData["ProductEvaluationLogExcel"] as List<ProductEvaluationLogBO>;
+            List<ProductEvaluationLogBO> productEvaluationLog  = TempData["ProductEvaluationLogExcel"] as List<ProductEvaluationLogBO>;
             DataTable dt = new DataTable();
             dt.Columns.Add("Date");
             dt.Columns.Add("Product Name");
@@ -280,7 +283,7 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Verify By");
 
 
-            foreach (ProductEvaluationLogBO st in productEvaluationLog)
+            foreach (ProductEvaluationLogBO st in productEvaluationLog )
             {
                 DataRow dr = dt.NewRow();
                 dr["Date"] = st.PELDate.ToString();
@@ -291,13 +294,13 @@ namespace InVanWebApp.Controllers
                 dr["Acid"] = st.Acid.ToString();
                 dr["Salt"] = st.Salt.ToString();
                 dr["Viscosity"] = st.Viscosity.ToString();
-                dr["Date after 7 days"] = st.PELDateAfter7Days == null ? "" : st.PELDateAfter7Days.ToString();
-                dr["Ph after 7 days"] = st.PhAfter7Days == null ? "" : st.PhAfter7Days.ToString();
+                dr["Date after 7 days"] = st.PELDateAfter7Days == null ? "" : st.PELDateAfter7Days.ToString(); 
+                dr["Ph after 7 days"] = st.PhAfter7Days == null ? "" : st.PhAfter7Days.ToString(); 
                 dr["Tex, Col & Taste "] = st.TexColTasteAfter7Days == null ? "" : st.TexColTasteAfter7Days.ToString();
                 dr["Acid "] = st.AcidAfter7Days == null ? "" : st.AcidAfter7Days.ToString();
                 dr["Salt "] = st.SaltAfter7Days == null ? "" : st.SaltAfter7Days.ToString();
                 dr["Viscosity "] = st.ViscosityAfter7Days == null ? "" : st.ViscosityAfter7Days.ToString();
-                dr["Work Order"] = st.WorkOrder == null ? "" : st.WorkOrder.ToString();
+                dr["Work Order"] = st.WorkOrder==null?"": st.WorkOrder.ToString();
                 dr["Status"] = st.Status.ToString();
                 dr["Remark"] = st.Remark.ToString();
                 dr["Verify By"] = st.VerifyByName.ToString();
@@ -345,14 +348,14 @@ namespace InVanWebApp.Controllers
             String content1 = "";
             if (fromdate == "" || fromdate == null && todate == "" || todate == null)
             {
-                content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
-               "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
-               "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
-               "<tr><td colspan=14' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
-               + "<tr><td colspan='10' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
-                + "</td><td colspan='8' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
-               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
-               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
+               content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+              "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
+              "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
+              "<tr><td colspan=14' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+              + "<tr><td colspan='10' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               + "</td><td colspan='8' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
+              /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+              + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
             }
             else
             {
@@ -534,5 +537,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #endregion
     }
 }

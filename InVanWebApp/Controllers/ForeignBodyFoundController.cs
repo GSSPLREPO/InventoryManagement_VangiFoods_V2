@@ -208,6 +208,8 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Report
+
         #region  Bind Datatable and Export Pdf & Excel
         /// <summary>
         /// Develop By Yatri on 18 March'23
@@ -241,7 +243,7 @@ namespace InVanWebApp.Controllers
 
             List<ForeignBodyFoundBO> foreignBodyFound = TempData["ForeignBodyFoundExcel"] as List<ForeignBodyFoundBO>;
             DataTable dt = new DataTable();
-
+            
             dt.Columns.Add("Date");
             dt.Columns.Add("Raw Material");
             dt.Columns.Add("On Going Processing");
@@ -304,7 +306,7 @@ namespace InVanWebApp.Controllers
                 todate = "";
                 Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy");/*old Code : Todate*/
             }
-
+         
 
             String content1 = "";
             if (fromdate == "" || fromdate == null && todate == "" || todate == null)
@@ -352,7 +354,7 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExportAsPDF()
         {
-
+         
             if (TempData["ForeignBodyFoundPDF"] == null)
             {
                 return View("Index");
@@ -368,7 +370,7 @@ namespace InVanWebApp.Controllers
             string Todate = "To Date :";
             string fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
-
+            
             if (fromdate == "01-01-0001")
             {
                 fromdate = "";
@@ -415,7 +417,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Batching</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>PostProcessing</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:2%;;font-size:13px;border: 0.05px  #e2e9f3;'>CorrectiveAction</th>");
-
+            
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Verify By</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Remark</th>");
 
@@ -436,7 +438,7 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:5%;'>" + item.Batching + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:5%;'>" + item.PostProcessing + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:2%;'>" + item.CorrectiveAction + "</td>");
-
+                
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:3%;'>" + item.VerifyByName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:3%;'>" + item.Remark + "</td>");
 
@@ -498,6 +500,8 @@ namespace InVanWebApp.Controllers
 
             //---------------------------------------
         }
+        #endregion
+
         #endregion
     }
 }

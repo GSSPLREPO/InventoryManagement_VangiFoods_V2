@@ -208,6 +208,8 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Reports
+
         #region  Bind Datatable and Export Pdf & Excel
         /// <summary>
         /// Develop By Yatri on 15 March'23
@@ -260,7 +262,7 @@ namespace InVanWebApp.Controllers
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = i;
                 dr["Date"] = st.Date.ToString();
-                dr["Time"] = st.Time.ToString();
+                dr["Time"] = st.Time .ToString();
                 dr["LotNo"] = st.LotNo.ToString();
                 dr["SampleName"] = st.SampleName.ToString();
                 dr["ACIDValue"] = st.ACIDValue.ToString();
@@ -360,7 +362,7 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExportAsPDF()
         {
-
+            
             if (TempData["OilAnalysisPDF"] == null)
             {
                 return View("Index");
@@ -382,11 +384,11 @@ namespace InVanWebApp.Controllers
                 fromdate = "";
                 Fromdate = "From Date : " + DateTime.Today.ToString("dd/MM/yyyy");
             }
-
+           
             if (todate == "01-01-0001")
             {
                 todate = "";
-                Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy");
+                Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy"); 
             }
 
             string name = ApplicationSession.ORGANISATIONTIITLE;
@@ -511,5 +513,8 @@ namespace InVanWebApp.Controllers
             //---------------------------------------
         }
         #endregion
+
+        #endregion
+
     }
 }

@@ -141,7 +141,9 @@
                         $('#ExportExcel').hide();
                     }
                 },
+                "scrollX": true,
                 "columns": [
+                   /* { "data": "Date", "autoWidth": true },*/
                     {
                         "data": "Date",
                         "autoWidth": true,
@@ -153,6 +155,9 @@
                             var day = currentTime.getDate();
                             var dayString = day > 9 ? day : '0' + day;
                             var year = currentTime.getFullYear();
+                            //var hours = currentTime.getHours();
+                            //var minutes = currentTime.getMinutes();
+                            //var seconds = currentTime.getSeconds();
                             var date = dayString + "/" + monthString + "/" + year;
                             return date;
                         }
@@ -175,6 +180,13 @@
 
 
             });
+            //t.on('order.dt search.dt', function () {
+            //    let i = 1;
+
+            //    t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+            //        this.data(i++);
+            //    });
+            //}).draw();
         }
 
         $("#btnGo").on("click", function () {
@@ -210,6 +222,7 @@
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
                 "pageLength": 10,
+                /*"sAjaxSource": "/DailyMonitoring/GetAllDailyMonitoringList?fromDate=" + fromDate + "&toDate=" + toDate,*/
                 "sAjaxSource": "/ForeignBodyFound/GetAllForeignBodyFoundList?flagdate=" + flagdate + "&fromDate=" + fromDate + "&toDate=" + toDate,
                 "initComplete": function (settings, json) {
                     var result = JSON.stringify(json);
@@ -223,6 +236,7 @@
                         $('#ExportExcel').hide();
                     }
                 },
+                "scrollX": true,
                 "columns": [
                     {
                         "data": "Date",
@@ -235,6 +249,9 @@
                             var day = currentTime.getDate();
                             var dayString = day > 9 ? day : '0' + day;
                             var year = currentTime.getFullYear();
+                            //var hours = currentTime.getHours();
+                            //var minutes = currentTime.getMinutes();
+                            //var seconds = currentTime.getSeconds();
                             var date = dayString + "/" + monthString + "/" + year;
                             return date;
                         }
@@ -254,6 +271,13 @@
                     }
                 ]
             });
+            //t.on('order.dt search.dt', function () {
+            //    let i = 1;
+
+            //    t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+            //        this.data(i++);
+            //    });
+            //}).draw();
         });
 
         $(document).on("click", ".btnEdit", function () {

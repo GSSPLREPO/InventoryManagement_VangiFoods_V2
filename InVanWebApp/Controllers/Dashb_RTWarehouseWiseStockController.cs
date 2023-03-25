@@ -17,6 +17,7 @@ namespace InVanWebApp.Controllers
         private IDashboardRepository _repository;
         private ILocationRepository _repositoryLocation;
         private IItemRepository _itemRepository;
+        
         private static ILog log = LogManager.GetLogger(typeof(GRNController));
 
         #region Initializing constructor
@@ -28,6 +29,7 @@ namespace InVanWebApp.Controllers
             _repository = new DashboardRepository();
             _repositoryLocation = new LocationRepository();
             _itemRepository = new ItemRepository();
+            
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
@@ -54,9 +56,9 @@ namespace InVanWebApp.Controllers
         public JsonResult GetDashboardData(string id, string ItemId)
         {
             int LocationId = 0, itemId=0;
-            if (id != null & id != "")
+            if (id != null && id != "")
                 LocationId = Convert.ToInt32(id);
-            if(ItemId!=null & ItemId!="")
+            if(ItemId!=null && ItemId!="")
                 itemId = Convert.ToInt32(ItemId);
 
             string jsonstring = string.Empty;
@@ -90,6 +92,43 @@ namespace InVanWebApp.Controllers
             string jsonstring = string.Empty;
 
             var result = _repository.GetReorderPointDashboardData(ItemId);
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
+        #region Bind FIFO System
+
+        public ActionResult FIFOSystem()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("FIFOSystem", "Login");
+            DashboardBO model = new DashboardBO();
+            model.toDate = DateTime.Now;
+            model.fromDate = Convert.ToDateTime("01-11-2022");
+            BindLocationDropdown();
+            BindItemDropDown();
+            return View(model);
+        }
+
+        public JsonResult GetFIFOSystem(string id, string ItemId, DateTime fromDate, DateTime toDate )
+        {
+            int LocationId = 0, itemId = 0;
+            if (id != null && id != "")
+                LocationId = Convert.ToInt32(id);
+            if (ItemId != null && ItemId != "")
+                itemId = Convert.ToInt32(ItemId);
+
+            DashboardBO model = new DashboardBO();
+            model.fromDate = DateTime.Today;
+            model.toDate = DateTime.Today;
+
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetFIFOSystem(fromDate, toDate, itemId, LocationId);
             jsonstring = JsonConvert.SerializeObject(result);
 
             var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);

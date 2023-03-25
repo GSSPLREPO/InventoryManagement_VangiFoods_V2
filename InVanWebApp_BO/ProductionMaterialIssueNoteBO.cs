@@ -39,49 +39,6 @@ namespace InVanWebApp_BO
         public string txtItemDetails { get; set; }
         public List<ProductionMaterialIssueNoteDetailsBO> ProductionMaterialIssueNoteDetails { get; set; }
 
-        //Additional fields for Po details.
-
-        [Required(ErrorMessage = "Enter shipping details!")]
-        public string ShippingDetails { get; set; }
-
-        [Required(ErrorMessage = "Enter Production Indent No!")]
-        public string ProductionIndentNo { get; set; }
-
-        public string InwardQuantities { get; set; }
-        public string BalanceQuantities { get; set; }
-
-
-        //Additional fields for Inward QC
-        public float QuantityTookForSorting { get; set; }
-        public float BalanceQuantity { get; set; }
-        public float RejectedQuantity { get; set; }
-        public float WastageQuantityInPercentage { get; set; }
-
-        //Added below fields for GRN module
-        public string DeliveryAddress { get; set; }
-        public string SupplierAddress { get; set; }
-        public string ItemUnit { get; set; }
-        public float TotalQuantity { get; set; }
-        public float ReceivedQty { get; set; }
-
-        //Added below fields for Currency module
-        public int CurrencyID { get; set; }
-        public string CurrencyName { get; set; }
-        public double CurrencyPrice { get; set; }
-        public List<InwardNoteDetailBO> itemDetails { get; set; }
-
-        //This field is used in Inward QC.
-        public string ItemTaxValue { get; set; }
-
-        //Below field is added for Rejection note.
-        public Nullable<int> ProductionIndentID { get; set; }
-
-        //Added the below fields for Pre-QC prod
-        public Nullable<int> ItemId { get; set; }
-        public string Item_Name { get; set; }
-        public string Item_Code { get; set; }
-        public Nullable<double> IssuedQuantity { get; set; }
-        public Nullable<decimal> ItemUnitPrice { get; set; }
     }
 
     public class ProductionMaterialIssueNoteDetailsBO 
@@ -107,10 +64,6 @@ namespace InVanWebApp_BO
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
-
-        //Added below fields for Currency module
-        public int CurrencyID { get; set; }
-        public int PO_ID { get; set; }
     }
 
 }
