@@ -186,6 +186,43 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Bind all Batch Number details by SO_Id and Total_Batches
+        public IEnumerable<BatchNumberMasterBO> GetBatchNumberById(int SO_Id, int Total_Batches) 
+        {
+            List<BatchNumberMasterBO> resultList = new List<BatchNumberMasterBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_BatchNumberMaster_ProductionIndent_GetbyId", con);
+                    cmd.Parameters.AddWithValue("@SO_ID", SO_Id);
+                    cmd.Parameters.AddWithValue("@Total_Batches", Total_Batches); 
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new BatchNumberMasterBO() 
+                        {
+                            ID = Convert.ToInt32(dataReader["ID"]),
+                            BatchNumber = dataReader["BatchNumber"].ToString(),
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+
         #region Insert function
         public ResponseMessageBO Insert(ProductionIndentBO model)
         {
@@ -208,6 +245,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@RecipeID", model.RecipeID);
                     cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
                     cmd.Parameters.AddWithValue("@TotalBatches", model.TotalBatches);
+                    cmd.Parameters.AddWithValue("@BatchNumber", model.BatchNumber); //Rahul added 25-033-2023.
                     cmd.Parameters.AddWithValue("@Remarks", model.Description);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -316,6 +354,7 @@ namespace InVanWebApp.Repository
                             SONo = reader["SONo"].ToString(),
                             WorkOrderNo = reader["WorkOrderNo"].ToString(),
                             TotalBatches = Convert.ToInt32(reader["TotalBatches"]),
+                            BatchNumber = reader["BatchNumber"].ToString(), //Rahul added 25-033-2023.
                             Description = reader["Description"].ToString()                            
                             //IndentStatus = reader["IndentStatus"].ToString(),
                             //IndentDate= DateTime.ParseExact(reader["IndentDate"].ToString(), "dd-MM-yyyy", CultureInfo.InvariantCulture),
@@ -377,6 +416,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@RecipeID", model.RecipeID);
                     cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
                     cmd.Parameters.AddWithValue("@TotalBatches", model.TotalBatches);
+                    cmd.Parameters.AddWithValue("@BatchNumber", model.BatchNumber); //Rahul added 25-03-2023.
                     cmd.Parameters.AddWithValue("@Remarks", model.Description);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));

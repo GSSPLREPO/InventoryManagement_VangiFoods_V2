@@ -70,7 +70,6 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindSONumber();
-                BindProductDropDown();
                 BindLocationName();
 
                 BatchPlanningMasterBO model = new BatchPlanningMasterBO();
@@ -112,7 +111,6 @@ namespace InVanWebApp.Controllers
                         {
                             TempData["Success"] = "<script>alert('Duplicate batch document number! Can not be inserted!');</script>";
                             BindSONumber();
-                            BindProductDropDown();
                             BindLocationName();
 
                             GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -128,7 +126,6 @@ namespace InVanWebApp.Controllers
                     else
                     {
                         BindSONumber();
-                        BindProductDropDown();
                         BindLocationName();
 
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -148,7 +145,6 @@ namespace InVanWebApp.Controllers
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
                 BindSONumber();
-                BindProductDropDown();
                 BindLocationName();
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -168,7 +164,7 @@ namespace InVanWebApp.Controllers
         /// <param name="ID">record Id</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult DeleteIBatchPlanning(int ID)
+        public ActionResult DeleteBatchPlanning(int ID)
         {
             if (Session[ApplicationSession.USERID] != null)
             {
@@ -179,6 +175,25 @@ namespace InVanWebApp.Controllers
             }
             else
                 return RedirectToAction("Index", "Login");
+        }
+        #endregion
+
+        #region View Batch planning
+        /// <summary>
+        /// Created By: Farheen
+        /// Created Date : 23-03-2023
+        /// Description: This method responsible for View of sales order details.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public ActionResult ViewBatchPlanning(int ID)
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            BatchPlanningMasterBO model = _repository.GetById(ID);
+            return View(model);
+
         }
         #endregion
 
@@ -204,11 +219,13 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
 
-        public JsonResult GetRecipe(string id, string LocationId)
+        public JsonResult GetRecipe(string id, string LocationId, string SId)
         {
             int ProductId = Convert.ToInt32(id);
             int locationId = Convert.ToInt32(LocationId);
-            var result = _repository.GetRecipe(ProductId, locationId);
+            int SOId = Convert.ToInt32(SId);
+
+            var result = _repository.GetRecipe(ProductId, locationId, SOId);
             return Json(result);
         }
 

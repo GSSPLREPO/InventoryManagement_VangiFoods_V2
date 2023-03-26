@@ -112,7 +112,8 @@ namespace InVanWebApp.Controllers
         public void BindItemDropDown()
         {
             var model = _itemRepository.GetAll();
-            var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
+            //var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
+            var Item_dd = new SelectList(model.ToList(), "ID", "ItemNameWithCode");
             ViewData["Item"] = Item_dd;
         }
         #endregion

@@ -15,10 +15,11 @@ namespace InVanWebApp.Repository.Interface
         //Function define for: Insert record.
         ResponseMessageBO Insert(BatchPlanningMasterBO model);
         SalesOrderBO GetWorkOrderNumber(int id);
-        IEnumerable<Recipe_DetailsBO> GetRecipe(int id, int locationId);
+        IEnumerable<Recipe_DetailsBO> GetRecipe(int id, int locationId, int SOId);
 
         //Function define for: Delete record of item type using it's sales order id 
         void Delete(int ID, int userId);
+        BatchPlanningMasterBO GetById(int Id);
 
     }
 }

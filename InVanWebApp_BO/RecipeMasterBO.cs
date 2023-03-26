@@ -72,6 +72,9 @@ namespace InVanWebApp_BO
         public decimal? StockInHand { get; set; }
         public decimal? ToBeProcured { get; set; }
 
+        //Added the below field for batch planning
+        public decimal? SalesOrderQty { get; set; }
+
     }
 
 }

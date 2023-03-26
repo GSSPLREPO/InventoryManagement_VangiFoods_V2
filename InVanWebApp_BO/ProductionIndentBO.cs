@@ -47,7 +47,23 @@ namespace InVanWebApp_BO
         public float Ratio { get; set; }
         public string TxtItemDetails { get; set; }
         public int IndentCount { get; set; }
+        public int ProductionIndentId { get; set; }
+        public string BatchNumber { get; set; } //Rahul added 24-03-23.   
         public List<ProductionIndent_DetailsBO> indent_Details { get; set; }
 
+        //Rahul added 24-03-23. 
+        public int ItemId { get; set; }
+        public decimal ItemUnitPrice { get; set; }
+        public decimal AvailableStock { get; set; }
+        public string CurrencyName { get; set; }
+        public string ItemUnit { get; set; }
+
+    }
+
+    //Rahul added 25-033-2023. 
+    public class BatchNumberMasterBO
+    {
+        public int ID { get; set; }
+        public string BatchNumber { get; set; }
     }
 }

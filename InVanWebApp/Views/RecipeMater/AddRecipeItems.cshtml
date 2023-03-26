@@ -9,191 +9,162 @@
         <h4>Add Recipe</h4>
         <hr />
         @Html.ValidationSummary(true)
-        <div class="row">
-            <div class="col-md-2 text-right">
-                <button class="btn btn-sm btn-primary mr-2" id="btnAdd" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Single Recipe</button>
-            </div>
-            @*Rahul commented on 13-03-2023.*@
-            @*<div class="col-md-2 text-right">
-                <button class="btn btn-sm btn-primary mr-2" id="btnAddMultiple" style="background: linear-gradient(85deg, #392c70, #6a005b);"> Add Multiple Recipe</button>
-            </div>*@
-        </div>
+
         @using (Html.BeginForm("AddRecipeItems", "RecipeMater", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
-    <div id="AddDiv" style="display:none;">
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Product Name")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val())" })
-                @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error mt-2 text-danger" })
-                @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
-            </div>
-        </div>
+            <div id="AddDiv">
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Product Name")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val())" })
+                        @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error mt-2 text-danger" })
+                        @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Recipe Item Name")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "40" })
-                @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Recipe Description")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "40" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Recipe Item Name")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "40" })
+                        @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Recipe Description")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "40" })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Packing Size")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", maxlength = "8" })
-                @Html.ValidationMessageFor(model => model.PackingSize, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Unit Of Measurement")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.DropDownListFor(model => model.UOM_Id, (IEnumerable<SelectListItem>)ViewData["UOM"], "---Select unit---", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.UOM_Id, "", new { @class = "error mt-2 text-danger" })
-            </div>
-        </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Packing Size")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", maxlength = "8" })
+                        @Html.ValidationMessageFor(model => model.PackingSize, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Unit Of Measurement")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.UOM_Id, (IEnumerable<SelectListItem>)ViewData["UOM"], "---Select unit---", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.UOM_Id, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Packing Size Unit")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.PackingSizeUnit, new { @class = "form-control form-control-sm", maxlength = "8" })
-                @Html.ValidationMessageFor(model => model.PackingSizeUnit, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-md-4" style="color:darkcyan">
-                @Html.Label("Recipe Ingredients detail")
-            </div>
-        </div>
-        <hr />
-        <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                <table class="table table-hover" id="submissionTable">
-                                    <thead>
-                                        <tr>
-                                            <th class="sortStyle">
-                                                Recipe Ingredients
-                                            </th>
-                                            <th class="sortStyle d-n d-none">
-                                                Selected Item Code
-                                            </th>
-                                            <th class="sortStyle">
-                                                Item
-                                            </th>
-                                            <th class="sortStyle">
-                                                Units
-                                            </th>
-                                            <th class="sortStyle">
-                                                Percentage (%)
-                                            </th>
-                                            <th class="sortStyle">
-                                                Batch Size 
-                                            </th>
-                                            <th class="sortStyle">
-                                                Description
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="myTableBody">
-                                        <tr id="tablerow">
-                                            <td>
-                                                @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["Ingredients"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
-                                                <span id="ValMsgItemList" style="display:none; color:red"></span>
-                                            </td>
-                                            <td class="col-md-4 d-none">
-                                                @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBox("UnitName", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(model => model.Ratio, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeRatioForFirstRow($(this).val(),id)" })
-                                                @Html.ValidationMessageFor(model => model.Ratio, "", new { id = "RatioErr", @class = "error mt-2 text-danger" })
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(model => model.BatchSize, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeBatchSizeForFirstRow($(this).val(),id)" })
-                                                @Html.ValidationMessageFor(model => model.BatchSize, "", new { id = "batchSizeErr", @class = "error mt-2 text-danger" }) 
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(model => model.Description, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;", onkeypress = "createJson();" })
-                                                @*@Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })*@
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <br />
-                                <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddRecipeItem">
-                                    + Add Recipe 
-                                </button>
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Packing Size Unit")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.PackingSizeUnit, new { @class = "form-control form-control-sm", maxlength = "8" })
+                        @Html.ValidationMessageFor(model => model.PackingSizeUnit, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4" style="color:darkcyan">
+                        @Html.Label("Recipe Ingredients detail")
+                    </div>
+                </div>
+                <hr />
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                        <table class="table table-hover" id="submissionTable">
+                                            <thead>
+                                                <tr>
+                                                    <th class="sortStyle">
+                                                        Recipe Ingredients
+                                                    </th>
+                                                    <th class="sortStyle d-n d-none">
+                                                        Selected Item Code
+                                                    </th>
+                                                    <th class="sortStyle">
+                                                        Item
+                                                    </th>
+                                                    <th class="sortStyle">
+                                                        Units
+                                                    </th>
+                                                    <th class="sortStyle">
+                                                        Percentage (%)
+                                                    </th>
+                                                    <th class="sortStyle">
+                                                        Batch Size
+                                                    </th>
+                                                    <th class="sortStyle">
+                                                        Description
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="myTableBody">
+                                                <tr id="tablerow">
+                                                    <td>
+                                                        @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["Ingredients"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                        <span id="ValMsgItemList" style="display:none; color:red"></span>
+                                                    </td>
+                                                    <td class="col-md-4 d-none">
+                                                        @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox("UnitName", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.Ratio, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeRatioForFirstRow($(this).val(),id)" })
+                                                        @Html.ValidationMessageFor(model => model.Ratio, "", new { id = "RatioErr", @class = "error mt-2 text-danger" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.BatchSize, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeBatchSizeForFirstRow($(this).val(),id)" })
+                                                        @Html.ValidationMessageFor(model => model.BatchSize, "", new { id = "batchSizeErr", @class = "error mt-2 text-danger" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.Description, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;", onkeypress = "createJson();" })
+                                                        @*@Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })*@
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddRecipeItem">
+                                            + Add Recipe
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">                        
-                        @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
-                    </div> 
                 </div>
             </div>
-        </div>
-    </div>
-
-            <div id="AddMultipleDiv" style="display:none;">
-                <fieldset>
-                    <div class="row">
-                        <div class="col-lg-7">
-                            <label>Add Multiple Recipe</label>
-                            <input type="file" name="UploadedFile" id="fileupload" class="file-drop-zone" required>
-                            <span id="sfileupload" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <a href="~/ExcelFileFormat/Download-Format-Recipe-Item.xlsx" class="btn btn-sm btn-primary mr-2" download style="background: linear-gradient(85deg, #392c70, #6a005b);"><i class="icon-cloud-download2"></i> Download Excel File Format</a>
-                            <span> </span>
-                            <button type="submit" class="btn btn-sm btn-primary mr-2" id="uploadexcel" style="display: none; background: linear-gradient(85deg, #392c70, #6a005b);"> Upload</button>
-                            <input type="hidden" id="hdnExcelRecord" name="hdnExcelRecord" />
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
-            <br />
 
             <a href="@Url.Action("Index", "RecipeMater")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
                 Back To List
             </a>
-            <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right; display: none;" onclick="SaveBtnClick()">Save</button>
+            <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" onclick="SaveBtnClick()">Save</button>
         }
     </div>
 </div>
@@ -291,7 +262,7 @@
                     //console.log(description);
                     $("#ItemName").val(recipeDescription.Item_Name);
                     $("#UnitName").val(recipeDescription.UnitCode);
-                    
+
                 },
                 failure: function () {
                     alert('Failed to retrieved item detals!');
@@ -376,7 +347,7 @@
                             $("#itemCode_" + count).val(itemDescription.Item_Code);
                             $("#itemDescription_" + count).val(itemDescription.Item_Name);
                             $("#UnitName_" + count).val(itemDescription.UnitCode);
-                            
+
                 },
                 failure: function () {
                     alert('Failed to retrieved item detals!');
@@ -396,7 +367,7 @@
         }
         else {
             $('#tablerow' + index).remove();
-        }        
+        }
         return false;
     }
 
@@ -410,7 +381,7 @@
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
-      
+
     //---OnChangeRatio start rahul added on 04-02-23------
     function OnChangeRatioForFirstRow(value, id) {
         var itemId = $("#Item_ID").val();
@@ -421,11 +392,11 @@
         }
 
         var Ratio = parseFloat(value);
-        if (Ratio <= 0 || value == null || value == '') {            
+        if (Ratio <= 0 || value == null || value == '') {
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
-            document.getElementById("RatioErr").setAttribute("style", "color:red;");    
-            $("#RatioErr").text("Enter Ratio!");    
+            document.getElementById("RatioErr").setAttribute("style", "color:red;");
+            $("#RatioErr").text("Enter Ratio!");
             return;
         }
         else {
@@ -450,8 +421,8 @@
         if (Ratio <= 0 || value == null || value == '') {
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
-            document.getElementById("RatioErr_" + rowNo).setAttribute("style", "color:red;");    
-            $("#RatioErr_" + rowNo).text("Enter Ratio!");   
+            document.getElementById("RatioErr_" + rowNo).setAttribute("style", "color:red;");
+            $("#RatioErr_" + rowNo).text("Enter Ratio!");
             return;
         }
         else {
@@ -531,23 +502,7 @@
         return true;
     }
 
-    $("#btnAdd").click(function () {
-        $("#AddMultipleDiv").hide();
-        $("#AddDiv").show();
-        $("#btnSave").show();
-        $("#btnAdd").hide();
-        $("#btnAddMultiple").hide();
-    });
-
-    $("#btnAddMultiple").click(function () {
-        $("#AddMultipleDiv").show();
-        $("#AddDiv").hide();
-        $("#btnAdd").hide();
-        $("#btnAddMultiple").hide();
-        $("#btnSave").hide();
-    });
-
-
+   
     $('#uploadexcel').show();
     $('#uploadexcel').attr("disabled", true);
 
@@ -596,7 +551,7 @@
         if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
             $('#uploadexcel').attr("disabled", true);
             alert("Only '.xls','.xlsx' formats are allowed.");
-            $('#fileupload').val('');            
+            $('#fileupload').val('');
         }
         else {
             $('#uploadexcel').attr("disabled", false);

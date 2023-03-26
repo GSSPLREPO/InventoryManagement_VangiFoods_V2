@@ -57,15 +57,6 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Product Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.ProductId, (IEnumerable<SelectListItem>)ViewData["Product_dd"], "--Select--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductName($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "error mt-2 text-danger" })
-                    @Html.HiddenFor(model => model.ProductName)
-                </div>
-                <div class="col-md-2">
                     @Html.Label("Packing Size (Kg)")
                     <span style="color:red">*</span>
                 </div>
@@ -73,9 +64,6 @@
                     @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "4" })
                     @Html.ValidationMessageFor(model => model.PackingSize, "", new { @class = "error mt-2 text-danger" })
                 </div>
-            </div>
-            <br />
-            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Raw Material Yield")
                     <span style="color:red">*</span>
@@ -83,6 +71,21 @@
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.TotalRawMaterialYeild, new { @class = "form-control form-control-sm" })
                     @Html.ValidationMessageFor(model => model.TotalRawMaterialYeild, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Product Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    <select id="ProductId" name="ProductId" class="form-control form-control-sm" onchange="SelectedIndexChangedProductName($(this).val())">
+                        <option value="0">--Select--</option>
+                    </select>
+                    @*@Html.DropDownListFor(model => model.ProductId, (IEnumerable<SelectListItem>)ViewData["Product_dd"], "--Select--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductName($(this).val())" })*@
+                    @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.ProductName)
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Packing Type")
@@ -100,7 +103,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.OrderQuantity, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "8", onchange = "OnOrderQtyChange($(this).val())" })
+                    @Html.TextBoxFor(model => model.OrderQuantity, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "8", onchange = "OnOrderQtyChange($(this).val())", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.OrderQuantity, "", new { @class = "error mt-2 text-danger", id = "valOrderQtyMsg" })
                 </div>
                 <div class="col-md-2">
@@ -214,27 +217,11 @@
 
         //Checking the packing size value.
         var PackingSize = $('#PackingSize').val();
-        if (PackingSize == null || PackingSize == '' || PackingSize == 0) {
-            $('#PackingSize').focus();
-            $('#OrderQuantity').val(0);
-            return;
-        }
-        else {
-            parseFloat(PackingSize);
-            document.getElementById('PackingSize').setAttribute("readonly", "readonly");
-        }
+        PackingSize = parseFloat(PackingSize);
 
         //Checking the total raw material yield value.
         var totalRawYield = $('#TotalRawMaterialYeild').val();
-        if (totalRawYield == null || totalRawYield == '' || totalRawYield == 0) {
-            $('#TotalRawMaterialYeild').focus();
-            $('#OrderQuantity').val(0);
-            return;
-        }
-        else {
-            parseFloat(totalRawYield);
-            document.getElementById('TotalRawMaterialYeild').setAttribute("readonly", "readonly");
-        }
+        totalRawYield = parseFloat(totalRawYield);
 
         if (value != 0) {
             $('#RequiredQuantityInKG').val(value * PackingSize);
@@ -262,11 +249,11 @@
             while (i < rowCount - 1) {
                 var batchSize = document.getElementById('BatchSize_' + i).innerHTML;
                 batchSize = parseFloat(batchSize);
-
-                document.getElementById('TotalBatches_' + i).value = (TotalNoOfBatch * batchSize);
+                var totalBatchCol = (TotalNoOfBatch * batchSize);
+                totalBatchCol = Math.round(totalBatchCol * 100) / 100;
+                document.getElementById('TotalBatches_' + i).value = totalBatchCol;
                 i++;
             }
-
         }
         else {
             $('#RequiredQuantityInKG').val(value * PackingSize);
@@ -283,6 +270,9 @@
         $('#btnSave').prop('disabled', false);
         var rowNo = id.split('_')[1];
 
+        if (value == null || value == '')
+            value = 0;
+
         value = parseFloat(value);
 
         if (value != 0) {
@@ -298,7 +288,7 @@
             StockInHand = parseFloat(StockInHand);
 
             var ToBeProcured = RequiredQty - StockInHand;
-            
+
             if (ToBeProcured < 0)
                 ToBeProcured = 0;
             else {
@@ -316,6 +306,15 @@
             data: { id },
             success: function (result) {
                 $('#WorkOrderNumber').val(result.WorkOrderNo);
+                var count = result.salesOrderItemsDetails.length;
+                var i = 0;
+                $("#ProductId option").remove();
+                $("#ProductId").append($("<option></option>").val('0').html('--Select--'));
+                while (i < count) {
+                    $("#ProductId").append($("<option></option>").val(result.salesOrderItemsDetails[i].Item_ID).html(result.salesOrderItemsDetails[i].ItemName));
+                    i++;
+                }
+
             },
             error: function (err) {
                 alert('Not able to get the work order number!');
@@ -327,10 +326,15 @@
     function SaveBtnClick() {
         var table = document.getElementById('submissionTable');
         var rowCount = table.rows.length;
-        var i = 0,flag = 0;
+        var i = 0, flag = 0;
         while (i < rowCount) {
             var Yield = $('#Yield_' + i).val();
-            Yield = parseFloat(Yield);
+            if (Yield == '' || Yield == null) {
+                Yeild = 0;
+            }
+            else
+                Yield = parseFloat(Yield);
+
             if (Yield == 0) {
                 flag = 1;
                 break;
@@ -340,7 +344,8 @@
 
         if (flag == 1) {
             alert("Yield is zero or null! Cannot plan the batch!");
-            $('#btnSave').prop('disabled', true);            
+            $('#btnSave').prop('disabled', true);
+            event.preventDefault();
             return;
         }
         else
@@ -353,6 +358,28 @@
     //=====================Onchange of Product Name description===========================
     function SelectedIndexChangedProductName(id) {
 
+        //Checking the packing size value.
+        var PackingSize = $('#PackingSize').val();
+        if (PackingSize == null || PackingSize == '' || PackingSize == 0) {
+            $('#PackingSize').focus();
+            document.getElementById('ProductId').selectedIndex = 0;
+            return;
+        }
+        else {
+            parseFloat(PackingSize);
+            document.getElementById('PackingSize').setAttribute("readonly", "readonly");
+        }
+
+        var totalRawYield = $('#TotalRawMaterialYeild').val();
+        if (totalRawYield == null || totalRawYield == '' || totalRawYield == 0) {
+            $('#TotalRawMaterialYeild').focus();
+            document.getElementById('ProductId').selectedIndex = 0;
+            return;
+        }
+        else {
+            parseFloat(totalRawYield);
+            document.getElementById('TotalRawMaterialYeild').setAttribute("readonly", "readonly");
+        }
         //Check whether the currency dropdown is selected or not
 
         var CurrencyIDCheck = $('#SO_Id option:selected').text();
@@ -387,12 +414,14 @@
 
         var ProductNumber = $("#ProductId option:selected").text();
         $('#ProductName').val(ProductNumber);
+        var SOId = $('#SO_Id').val();
 
         $.ajax({
-            url: '/BatchPlanning/GetRecipe?id=' + id + "&LocationId=" + LId,
+            url: '/BatchPlanning/GetRecipe?id=' + id + "&LocationId=" + LId + "&SId=" + SOId,
             type: "POST",
             data: {},
             success: function (result) {
+                $('#OrderQuantity').val(result[0].SalesOrderQty);
 
                 var table = document.getElementById('submissionTable');
                 for (var j = 0; j < result.length; j++) {
@@ -469,6 +498,9 @@
                     }
 
                 }
+
+                var value = $('#OrderQuantity').val();
+                OnOrderQtyChange(value);
             },
             error: function (err) {
                 alert('Not able to fetch recipe!');
@@ -504,7 +536,7 @@
             StockInHandCol = (StockInHandCol == null || StockInHandCol == '') ? 0 : StockInHandCol;
 
             var ToBeProcuredCol = (document.getElementById("ToBeProcured_" + i)).value;
-            
+
             TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
                 ", \"ItemName\": \"" + ItemName + "\", \"Percentage\": " + Percentage
                 + ", \"BatchSizeCol\": " + BatchSizeCol + ", \"TotalBatchesCol\": " + TotalBatchesCol

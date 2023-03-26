@@ -82,7 +82,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@WorkOrderNumber", model.WorkOrderNumber);
                     cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
                     cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
-                    cmd.Parameters.AddWithValue("@ProductId", model.ProductId);
+                    cmd.Parameters.AddWithValue("@ItemId", model.ProductId);
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
                     cmd.Parameters.AddWithValue("@PackingSize", model.PackingSize);
                     cmd.Parameters.AddWithValue("@PackingSizeUnit", model.PackingSizeUnit);
@@ -178,12 +178,17 @@ namespace InVanWebApp.Repository
         public SalesOrderBO GetWorkOrderNumber(int id)
         {
             string purchaseOrderQuery = "SELECT WorkOrderNo FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
+            string itemDetails = "Select Item_ID,ItemName from SalesOrderItemsDetails where SalesOrderId=@Id and IsDeleted=0";
+
             SalesOrderBO result = new SalesOrderBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     result = con.Query<SalesOrderBO>(purchaseOrderQuery, new { @Id = id }).FirstOrDefault();
+                    var resultList = con.Query<SalesOrderItemsDetail>(itemDetails, new { @Id = id }).ToList();
+
+                    result.salesOrderItemsDetails = resultList;
                 }
 
             }
@@ -197,7 +202,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Fetch Recipe by product id
-        public IEnumerable<Recipe_DetailsBO> GetRecipe(int id, int locationId)
+        public IEnumerable<Recipe_DetailsBO> GetRecipe(int id, int locationId, int SOId)
         {
             List<Recipe_DetailsBO> resultList = new List<Recipe_DetailsBO>();
             try
@@ -208,6 +213,7 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ProductId", id);
                     cmd.Parameters.AddWithValue("@LocationId", locationId);
+                    cmd.Parameters.AddWithValue("@SOId", SOId);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
@@ -226,7 +232,9 @@ namespace InVanWebApp.Repository
                             Yield = Convert.ToDecimal(reader["Yield"]),
                             ActualRequirement = Convert.ToDecimal(reader["ActualRequirement"]),
                             StockInHand = Convert.ToDecimal(reader["StockInHand"]),
-                            ToBeProcured = Convert.ToDecimal(reader["ToBeProcured"])
+                            ToBeProcured = Convert.ToDecimal(reader["ToBeProcured"]),
+                            SalesOrderQty = Convert.ToDecimal(reader["OrderedQty"])
+
                         };
                         resultList.Add(result);
                     }
@@ -268,6 +276,36 @@ namespace InVanWebApp.Repository
             {
                 log.Error(ex.Message, ex);
             }
+        }
+        #endregion
+
+        #region View function
+        /// <summary>
+        /// Rahul: This function is for fetch data for editing by ID
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public BatchPlanningMasterBO GetById(int Id)
+        {
+            string purchaseOrderQuery = "SELECT * FROM BatchPlanningMaster WHERE ID = @Id AND IsDeleted = 0";
+            string purchaseOrderItemQuery = "SELECT * FROM BatchPlanning_Details WHERE BatchPlanningId= @Id AND IsDeleted = 0";
+            BatchPlanningMasterBO result = new BatchPlanningMasterBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    result = con.Query<BatchPlanningMasterBO>(purchaseOrderQuery, new { @Id = Id }).FirstOrDefault();
+                    var purchaseOrderList = con.Query<BatchPlanning_DetailsBO>(purchaseOrderItemQuery, new { @Id = Id }).ToList();
+                    result.batchPlanningItemDetails = purchaseOrderList;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result = null;
+                log.Error(ex.Message, ex);
+            }
+            return result;
         }
         #endregion
     }

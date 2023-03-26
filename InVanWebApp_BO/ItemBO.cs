@@ -61,6 +61,8 @@ namespace InVanWebApp_BO
         public Nullable<double> RequiredQuantity { get; set; } //Rahul added 23 Nov 2022 
         public string IndianCurrencyValue { get; set; } //Rahul added 02 Dec 2022 
 
+        //Added for Dashboard dropdown
+        public string ItemNameWithCode { get; set; }
 
     }
 }
