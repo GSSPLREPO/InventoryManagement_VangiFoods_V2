@@ -83,58 +83,20 @@
             </div>
             <br />
             <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Purpose")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.Purpose, new List<SelectListItem>{
-                    new SelectListItem{ Text="---Select---", Value = "" },
-                    new SelectListItem{ Text="Production", Value = "Production" },
-                    new SelectListItem{ Text="QC", Value = "QC" },
-                    new SelectListItem{ Text="Dispatch", Value = "Dispatch" },
-                    new SelectListItem{ Text="Others", Value = "Others" },}, new { @class = "form-control", onchange = "OnChangePurpose(id)" })
-
-                    @Html.ValidationMessageFor(model => model.Purpose, "", new { @class = "error mt-2 text-danger" })
-                    @Html.HiddenFor(model => model.IssueByName)
-                </div>
-                <div class="col-md-2 dvProduction" style="display:none;">
+                @*Rahul removed dvProduction style="display:none; 23-03-2023.*@
+                <div class="col-md-2 dvProduction">
                     @Html.Label("Work Order Number")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4 dvProduction" style="display:none;">
-                    @Html.DropDownListFor(model => model.SalesOrderId, (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
-                    new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)" })
-                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
-                    @Html.HiddenFor(model => model.WorkOrderNumber)
-
-                    @*@Html.TextBoxFor(model => model.WorkOrderNumber, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumeric(event,1)", maxlength = "15" })*@
-                    <span id="valMsgWorkOrder" style="display:none;"></span>
-                </div>
-                <div class="col-md-2 dvQC" style="display:none;">
-                    @Html.Label("QC Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4 dvQC" style="display:none;">
-                    @Html.TextBoxFor(model => model.QCNumber, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumeric(event,2)", maxlength = "15" })
-                    <span id="valMsgQC" style="display:none;"></span>
-                </div>
-                <div class="col-md-2 dvDispatch" style="display:none;">
-                    @Html.Label("Sales Order Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4 dvDispatch" style="display:none;">
-                    @Html.TextBoxFor(model => model.SONumber, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumeric(event,3)", maxlength = "15" })
-                    <span id="valMsgSONo" style="display:none;"></span>
-                </div>
-                <div class="col-md-2 dvOthers" style="display:none;">
-                    @Html.Label("Other Document Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4 dvOthers" style="display:none;">
-                    @Html.TextBoxFor(model => model.OtherPurpose, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumeric(event,4)", maxlength = "30" })
-                    <span id="valMsgOther" style="display:none;"></span>
-                </div>
+                @*Rahul removed dvProduction style="display:none; 23-03-2023.*@
+            <div class="col-md-4 dvProduction">
+                @Html.DropDownListFor(model => model.SalesOrderId, (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
+                new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)" })
+                @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
+                @Html.HiddenFor(model => model.WorkOrderNumber)
+                <span id="valMsgWorkOrder" style="display:none;"></span>
+                @Html.HiddenFor(model => model.IssueByName)
+            </div>
             </div>
             <br />
             <div class="row">
@@ -171,8 +133,10 @@
                                                 <th class="sortStyle">UOM</th>
                                                 <th class="sortStyle">Requested Quantity</th>
                                                 <th class="sortStyle">Issued Quantity</th>
+                                                <th class="sortStyle">Issuing Quantity</th>
                                                 <th class="sortStyle">Final Stock</th>
                                                 <th class="sortStyle">Balance Quantity</th>
+                                                <th class="sortStyle">Remarks</th>
                                             </tr>
                                         </thead>
                                     </table>

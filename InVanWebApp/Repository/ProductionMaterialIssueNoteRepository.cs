@@ -128,6 +128,7 @@ namespace InVanWebApp.Repository
                             ItemUnit = dataReader2["ItemUnit"].ToString(), 
                             AvailableStock = Convert.ToDecimal(dataReader2["AvailableStock"]),
                             FinalQuantity = Convert.ToDouble(dataReader2["FinalQuantity"]),
+                            QuantityIssued = Convert.ToDouble(dataReader2["QuantityIssued"]),
                             CurrencyName = dataReader2["CurrencyName"].ToString()
                         };
                         resultList.Add(result);
@@ -142,7 +143,6 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
-
 
         #region Insert function
         /// <summary>
@@ -166,11 +166,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
                     cmd.Parameters.AddWithValue("@ProductionIndentID", model.ProductionIndentId);
                     cmd.Parameters.AddWithValue("@ProductionIndentNo", model.ProductionIndentNo);
-                    cmd.Parameters.AddWithValue("@Purpose", model.Purpose);
+                    cmd.Parameters.AddWithValue("@SalesOrderId", model.SalesOrderId);
                     cmd.Parameters.AddWithValue("@WorkOrderNumber", model.WorkOrderNumber);
-                    cmd.Parameters.AddWithValue("@QCNumber", model.QCNumber);
-                    cmd.Parameters.AddWithValue("@SONumber", model.SONumber);
-                    cmd.Parameters.AddWithValue("@OtherPurpose", model.OtherPurpose);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));

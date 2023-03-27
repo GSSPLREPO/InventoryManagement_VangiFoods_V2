@@ -14,14 +14,8 @@ namespace InVanWebApp_BO
         public string ProductionMaterialIssueNoteNo { get; set; }
         [Required(ErrorMessage = "Select production material issue date!")]
         public Nullable<System.DateTime> ProductionMaterialIssueNoteDate { get; set; } 
-        
-        [Required(ErrorMessage = "Select Purpose!")]
-        public string Purpose { get; set; }
         public string WorkOrderNumber { get; set; }
-        public string QCNumber { get; set; }
         public Nullable<int> SalesOrderId { get; set; }
-        public string SONumber { get; set; }
-        public string OtherPurpose { get; set; }
         [Required(ErrorMessage = "Select issue by!")]
         public int IssueBy { get; set; }
         public string IssueByName { get; set; }

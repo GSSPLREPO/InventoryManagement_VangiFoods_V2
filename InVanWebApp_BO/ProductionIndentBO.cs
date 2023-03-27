@@ -55,6 +55,7 @@ namespace InVanWebApp_BO
         public decimal AvailableStock { get; set; }
         public string CurrencyName { get; set; }
         public string ItemUnit { get; set; }
+        public double QuantityIssued { get; set; }
     }
     //Rahul added 25-033-2023. 
     public class BatchNumberMasterBO 

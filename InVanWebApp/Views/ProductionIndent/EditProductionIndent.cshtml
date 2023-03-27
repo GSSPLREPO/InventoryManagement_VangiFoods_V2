@@ -27,7 +27,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.IssueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.IssueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.IssueDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -90,6 +90,7 @@
                     @Html.DropDownList("SalesOrderId", (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "--Select--",
                    new { @class = "form-control", onchange = "SelectedIndexChangedSO($(this).val(),id)", @disabled = "disabled" })
                     @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.SalesOrderId)
                     @Html.HiddenFor(model => model.SONo)
                 </div>
                 <div class="col-md-2">

@@ -1,22 +1,4 @@
-﻿//===============On change function for purpose of issuing the note=============//
-function OnChangePurpose(id) {
-    var purpose = $('#' + id).val();
-    $('.dvProduction').hide();
-    $('.dvQC').hide();
-    $('.dvDispatch').hide();
-    $('.dvOthers').hide();
-
-    if (purpose == 'Production')
-        $('.dvProduction').show();
-    else if (purpose == 'QC')
-        $('.dvQC').show();
-    else if (purpose == 'Dispatch')
-        $('.dvDispatch').show();
-    else if (purpose == 'Others')
-        $('.dvOthers').show();
-}
-//===================end============================//
-
+﻿
 //PI Number Start 
 function SelectedIndexChangedPI(id) {
     debugger
@@ -127,17 +109,12 @@ function SelectedIndexChangedPI(id) {
                     else if (i == 7) {
                         cell.innerHTML = result[j].FinalQuantity;
                         cell.setAttribute("id", "txtRequestedQty_" + j);
-
-                        //var t5 = document.createElement("input");
-                        //t5.id = "txtRequestedQty_" + j;
-                        //t5.setAttribute("value", "0");
-                        //t5.setAttribute("type", "text");
-                        //t5.setAttribute("maxlength", "8");
-                        //t5.setAttribute("onkeypress", "return isNumberKey(event)");
-                        //t5.setAttribute("class", "form-control form-control-sm");
-                        //cell.appendChild(t5);
                     }
                     else if (i == 8) {
+                        cell.innerHTML = result[j].QuantityIssued;
+                        cell.setAttribute("id", "txtIssuingQty_" + j);
+                    }
+                    else if (i == 9) {
                         var t5 = document.createElement("input");
                         t5.id = "txtIssuedQty_" + j;
                         t5.setAttribute("value", "0");
@@ -151,7 +128,7 @@ function SelectedIndexChangedPI(id) {
                         t6.setAttribute("class", "text-wrap");
                         cell.appendChild(t6);
                     }
-                    else if (i == 9) {
+                    else if (i == 10) {
                         var t5 = document.createElement("input");
                         t5.id = "txtFinalStock_" + j;
                         t5.setAttribute("readonly", "readonly");
@@ -160,7 +137,15 @@ function SelectedIndexChangedPI(id) {
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
                     }
-                    else if (i == 10) {
+                    else if (i == 11) {
+                        var t5 = document.createElement("input");
+                        t5.id = "txtBalanceQty" + j;
+                        t5.setAttribute("disabled", "true");
+                        t5.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
+                        t5.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
+                        cell.appendChild(t5);
+                    }
+                    else if (i == 12) {
                         var t5 = document.createElement("input");
                         t5.id = "txtRemarks_" + j;
                         t5.setAttribute("maxlength", "90");
@@ -172,26 +157,13 @@ function SelectedIndexChangedPI(id) {
                         t6.id = "spanRemark_" + j;
                         cell.appendChild(t6);
                     }
-                    else if (i == 11) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtBalanceQty" + j;
-                        t5.setAttribute("disabled", "true");
-                        t5.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
-                        t5.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
-                        cell.appendChild(t7);
-                    }
-
                 }
-
             }
         },
         error: function (err) {
             alert('Not able to fetch item details!');
-
         }
-
     });
-    $('#Purpose').focus();
 }
 //PI Number end
 
@@ -206,57 +178,6 @@ function SelectedIndexChangedWO(id) {
 //==================Set value in txtItemDetails onCick of Save/Update button======--------
 function SaveBtnClick() {
     var tableLength = document.getElementById('submissionTable').rows.length;
-
-    //======Check whether the pupose number is written or not=======//
-    var Purpose = $('#Purpose').val();
-    if (Purpose == 'Production') {
-        var tempNo = $('#WorkOrderNumber').val();
-        if (tempNo == '' || tempNo == null) {
-            $('#valMsgWorkOrder').text('Enter the work order number!');
-            $('#valMsgWorkOrder').css('display', 'contents');
-            $('#valMsgWorkOrder').css('color', 'red');
-            event.preventDefault();
-            return;
-        }
-        else
-            $('#valMsgWorkOrder').css('display', 'none');
-    }
-    else if (Purpose == 'QC') {
-        var tempNo = $('#QCNumber').val();
-        if (tempNo == '' || tempNo == null) {
-            $('#valMsgQC').text('Enter the QC number!');
-            $('#valMsgQC').css('display', 'contents');
-            $('#valMsgQC').css('color', 'red');
-            event.preventDefault();
-            return;
-        }
-        else
-            $('#valMsgQC').css('display', 'none');
-    }
-    else if (Purpose == 'Dispatch') {
-        var tempNo = $('#SONumber').val();
-        if (tempNo == '' || tempNo == null) {
-            $('#valMsgSONo').text('Enter the sales order number!');
-            $('#valMsgSONo').css('display', 'contents');
-            $('#valMsgSONo').css('color', 'red');
-            event.preventDefault();
-            return;
-        }
-        else
-            $('#valMsgSONo').css('display', 'none');
-    }
-    else if (Purpose == 'Others') {
-        var tempNo = $('#OtherPurpose').val();
-        if (tempNo == '' || tempNo == null) {
-            $('#valMsgOther').text('Enter the other document number!');
-            $('#valMsgOther').css('display', 'contents');
-            $('#valMsgOther').css('color', 'red');
-            event.preventDefault();
-            return;
-        }
-        else
-            $('#valMsgOther').css('display', 'none');
-    }
 
     var flag = 0, i = 0;
     if (tableLength > 1) {
@@ -306,8 +227,6 @@ function SaveBtnClick() {
     var LocationName = $("#LocationId option:selected").text();
     $('#LocationName').val(LocationName);
 
-    //var IssueByName = $("#IssueBy option:selected").text();
-    //$('#IssueByName').val(IssueByName);
     createJson();
 };
 //==========end===============
@@ -320,148 +239,6 @@ function SelectedIndexChangedLocation(id) {
     locationName = document.getElementById("LocationId").options[selectedOptionLocationId].innerText;
     document.getElementById("LocationName").value = locationName;
     $('#ProductionIndentId').focus();
-
-    //$('#ddlItem').val(0);
-    //$("#ddlItem option").remove();
-    //$('#btnSave').prop('disabled', false);
-
-    //For deleting the rows of Item table if exist.
-
-    //var table = document.getElementById('submissionTable');
-    //var rowCount = table.rows.length;
-    //while (rowCount != '1') {
-    //    var row = table.deleteRow(rowCount - 1);
-    //    rowCount--;
-    //}
-
-    //var Location_ID = $("#LocationId").val();
-
-    ///This call is for binding the item list on that location.
-
-    //$.ajax({
-    //    url: '/StockAdjustment/GetItemList',
-    //    type: "POST",
-    //    data: { id: Location_ID },
-    //    success: function (result) {
-    //        var i = 1;
-    //        $("#ddlItem").append($("<option></option>").val(result[0].ID).html("--Select--"));
-    //        while (i < result.length) {
-    //            $("#ddlItem").append($("<option></option>").val(result[i].ID).html(result[i].Item_Name));
-    //            i++;
-    //        }
-    //    },
-    //    error: function (err) {
-    //        alert('Not able to fetch item list of that warehouse!');
-
-    //    }
-    //});
-
-    ///This call is for binding item details of that location
-    //$.ajax({
-    //    url: '/StockAdjustment/GetLocationStocksDetails',
-    //    type: "POST",
-    //    data: { id: Location_ID },
-    //    success: function (result) {
-
-    //        var table = document.getElementById('submissionTable');
-    //        for (var j = 0; j < result.length; j++) {
-    //            var rowCount = table.rows.length;
-    //            var cellCount = table.rows[0].cells.length;
-    //            var row = table.insertRow(rowCount);
-    //            if (j % 2 != 0) {
-    //                row.setAttribute("style", "background-color:rgba(0, 0, 0, 0.05);");
-    //            }
-
-    //            for (var i = 0; i < cellCount; i++) {
-    //                var cell = 'cell' + i;
-    //                cell = row.insertCell(i);
-
-    //                if (i == 0) {
-    //                    cell.innerHTML = result[j].Item_Code;
-    //                    cell.setAttribute("id", "ItemCode_" + j);
-    //                }
-    //                else if (i == 1) {
-    //                    cell.innerHTML = result[j].ItemId;
-    //                    cell.setAttribute("class", "d-none");
-    //                    cell.setAttribute("id", "ItemID_" + j);
-    //                }
-    //                else if (i == 2) {
-    //                    cell.innerHTML = result[j].Item_Name;
-    //                    cell.setAttribute("id", "ItemName_" + j);
-
-    //                }
-    //                else if (i == 3) {
-    //                    cell.innerHTML = result[j].ItemUnitPrice;
-    //                    cell.setAttribute("id", "ItemUnitPrice_" + j);
-    //                }
-    //                else if (i == 4) {
-    //                    cell.innerHTML = result[j].CurrencyName;
-    //                    cell.setAttribute("id", "CurrencyName_" + j);
-    //                }
-    //                else if (i == 5) {
-    //                    cell.innerHTML = result[j].AvailableStock;
-    //                    cell.setAttribute("id", "AvailableStock_" + j);
-    //                }
-    //                else if (i == 6) {
-
-    //                    cell.innerHTML = result[j].ItemUnit;
-    //                    cell.setAttribute("id", "ItemUnit_" + j);
-    //                }
-    //                else if (i == 7) {
-    //                    var t5 = document.createElement("input");
-    //                    t5.id = "txtRequestedQty_" + j;
-    //                    t5.setAttribute("value", "0");
-    //                    t5.setAttribute("type", "text");
-    //                    t5.setAttribute("maxlength", "8");
-    //                    t5.setAttribute("onkeypress", "return isNumberKey(event)");
-    //                    t5.setAttribute("class", "form-control form-control-sm");
-    //                    cell.appendChild(t5);
-    //                }
-    //                else if (i == 8) {
-    //                    var t5 = document.createElement("input");
-    //                    t5.id = "txtIssuedQty_" + j;
-    //                    t5.setAttribute("value", "0");
-    //                    t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-    //                    t5.setAttribute("maxlength", "8");
-    //                    t5.setAttribute("onkeypress", "return isNumberKey(event)");
-    //                    t5.setAttribute("class", "form-control form-control-sm");
-    //                    cell.appendChild(t5);
-    //                    var t6 = document.createElement('span');
-    //                    t6.id = "spanIssueQty_" + j;
-    //                    t6.setAttribute("class", "text-wrap");
-    //                    cell.appendChild(t6);
-    //                }
-    //                else if (i == 9) {
-    //                    var t5 = document.createElement("input");
-    //                    t5.id = "txtFinalStock_" + j;
-    //                    t5.setAttribute("readonly", "readonly");
-    //                    t5.setAttribute("value", "0");
-    //                    t5.setAttribute("type", "number");
-    //                    t5.setAttribute("class", "form-control form-control-sm");
-    //                    cell.appendChild(t5);
-    //                }
-    //                else if (i == 10) {
-    //                    var t5 = document.createElement("input");
-    //                    t5.id = "txtRemarks_" + j;
-    //                    t5.setAttribute("maxlength", "90");
-    //                    t5.setAttribute("style", "width:auto;");
-    //                    t5.setAttribute("class", "form-control form-control-sm");
-    //                    t5.setAttribute("onkeyup", "OnChangeComment($(this).val(),id)");
-    //                    cell.appendChild(t5);
-    //                    var t6 = document.createElement('span');
-    //                    t6.id = "spanRemark_" + j;
-    //                    cell.appendChild(t6);
-    //                }
-    //            }
-
-    //        }
-    //    },
-    //    error: function (err) {
-    //        alert('Not able to fetch item details!');
-
-    //    }
-
-    //});
 
 }
 //=============End==============
@@ -535,17 +312,12 @@ function SelectedIndexChangedItem(id) {
                     else if (i == 7) {
                         cell.innerHTML = result[j].FinalQuantity;
                         cell.setAttribute("id", "txtRequestedQty_" + j);
-
-                        //var t5 = document.createElement("input");
-                        //t5.id = "txtRequestedQty_" + j;
-                        //t5.setAttribute("value", "0");
-                        //t5.setAttribute("type", "text");
-                        //t5.setAttribute("maxlength", "8");
-                        //t5.setAttribute("onkeypress", "return isNumberKey(event)");
-                        //t5.setAttribute("class", "form-control form-control-sm");
-                        //cell.appendChild(t5);
                     }
                     else if (i == 8) {
+                        cell.innerHTML = result[j].QuantityIssued;
+                        cell.setAttribute("id", "txtIssuingQty_" + j);
+                    }
+                    else if (i == 9) {
                         var t5 = document.createElement("input");
                         t5.id = "txtIssuedQty_" + j;
                         t5.setAttribute("value", "0");
@@ -560,7 +332,7 @@ function SelectedIndexChangedItem(id) {
                         t6.setAttribute("class", "text-wrap");
                         cell.appendChild(t6);
                     }
-                    else if (i == 9) {
+                    else if (i == 10) {
                         var t5 = document.createElement("input");
                         t5.id = "txtFinalStock_" + j;
                         t5.setAttribute("readonly", "readonly");
@@ -569,7 +341,15 @@ function SelectedIndexChangedItem(id) {
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
                     }
-                    else if (i == 10) {
+                    else if (i == 12) {
+                        var t5 = document.createElement("input");
+                        t5.id = "txtBalanceQty" + j;
+                        t5.setAttribute("disabled", "true");
+                        t5.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
+                        t5.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
+                        cell.appendChild(t7);
+                    }
+                    else if (i == 11) {
                         var t5 = document.createElement("input");
                         t5.id = "txtRemarks_" + j;
                         t5.setAttribute("maxlength", "90");
@@ -586,8 +366,7 @@ function SelectedIndexChangedItem(id) {
             }
         },
         error: function (err) {
-            alert('Not able to fetch item details!');
-
+            alert('Not able to fetch item details!');   
         }
 
     });
