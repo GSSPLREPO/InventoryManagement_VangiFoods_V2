@@ -299,12 +299,22 @@
     }
 
     function SelectedIndexChanged(id) {
+        $('#btnSave').prop('disabled', false);
 
         $.ajax({
             url: '/BatchPlanning/GetWorkOrderNumber',
             type: "POST",
             data: { id },
             success: function (result) {
+                if (result.IsBatchDone == 1) {
+                    $('#btnSave').prop('disabled', true);
+                    alert('Batch planning of the selected SO is done!');
+                    return;
+                }
+                else {
+                    $('#btnSave').prop('disabled', false);
+                }
+
                 $('#WorkOrderNumber').val(result.WorkOrderNo);
                 var count = result.salesOrderItemsDetails.length;
                 var i = 0;

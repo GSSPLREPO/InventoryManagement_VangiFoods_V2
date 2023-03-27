@@ -116,7 +116,7 @@ namespace InVanWebApp.Repository
                         {
                             BatchPlanning_DetailsBO objItemDetails = new BatchPlanning_DetailsBO();
                             objItemDetails.BatchPlanningId = BatchPlanningId;
-                            objItemDetails.ItemCode= item.ElementAt(0).Value.ToString();
+                            objItemDetails.ItemCode = item.ElementAt(0).Value.ToString();
                             objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
                             objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
                             objItemDetails.QuantityPercentage = Convert.ToDecimal(item.ElementAt(3).Value);
@@ -126,7 +126,7 @@ namespace InVanWebApp.Repository
                             objItemDetails.ActualRequirement = Convert.ToDecimal(item.ElementAt(7).Value);
                             objItemDetails.StockInHand = Convert.ToDecimal(item.ElementAt(8).Value);
                             objItemDetails.ToBeProcured = Convert.ToDecimal(item.ElementAt(9).Value);
-                            
+
                             itemDetails.Add(objItemDetails);
                         }
 
@@ -190,7 +190,8 @@ namespace InVanWebApp.Repository
 
                     result.salesOrderItemsDetails = resultList;
                 }
-
+                var flag = BatchPlanningIsDone(id);
+                result.IsBatchDone = flag;
             }
             catch (Exception ex)
             {
@@ -198,6 +199,43 @@ namespace InVanWebApp.Repository
                 log.Error(ex.Message, ex);
             }
             return result;
+        }
+
+        /// <summary>
+        /// Created by: Farheen
+        /// Description: This function is for finding whether the Batch planning of the passed SO_Id is done.
+        /// </summary>
+        /// <param name="SOid"></param>
+        /// <returns></returns>
+        public int BatchPlanningIsDone(int SOid)
+        {
+            string Query = "Select Count(*) as SOCount from BatchPlanningMaster where IsDeleted=0 and SO_Id=@Id";
+            string Query1 = "Select Count(*) as ItemCount from SalesOrderItemsDetails where IsDeleted=0 and SalesOrderId=@Id";
+
+            SalesOrderItemsDetail result = new SalesOrderItemsDetail();
+            BatchPlanningMasterBO result1 = new BatchPlanningMasterBO();
+            int flagResult = 0;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    result = con.Query<SalesOrderItemsDetail>(Query1, new { @Id = SOid }).FirstOrDefault();
+                    result1 = con.Query<BatchPlanningMasterBO>(Query, new { @Id = SOid }).FirstOrDefault();
+
+                }
+
+                if (result.ItemCount == result1.SOCount)
+                    flagResult = 1;
+                else
+                    flagResult = 0;
+
+            }
+            catch (Exception ex)
+            {
+                flagResult = 0;
+                log.Error(ex.Message, ex);
+            }
+            return flagResult;
         }
         #endregion
 

@@ -43,6 +43,90 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Bind dropdown of Production Indent Number
+        public IEnumerable<ProductionIndentBO> GetProductionIndentNumberForDropdown()
+        {
+            List<ProductionIndentBO> resultList = new List<ProductionIndentBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_GetAll_For_Material_Issue", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new ProductionIndentBO()
+                        {
+                            ID = Convert.ToInt32(dataReader["ProductionIndentId"]),
+                            ProductionIndentNo = dataReader["ProductionIndentNo"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Fetch Production Indent Ingredients Details ById for Production Material IssueNote
+        public IEnumerable<ProductionIndent_DetailsBO> GetProductionIndentIngredientsDetailsById(int ProductionIndentId,int LocationID)
+        {
+            List<ProductionIndent_DetailsBO> resultList = new List<ProductionIndent_DetailsBO>();
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+
+                    SqlCommand cmd1 = new SqlCommand("usp_tbl_ProductionIndentIngredientsDetails_GetByID", con);
+                    cmd1.Parameters.AddWithValue("@ProductionIndent_Id", ProductionIndentId);
+                    cmd1.Parameters.AddWithValue("@Location_Id", LocationID);
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader2 = cmd1.ExecuteReader();
+
+                    while (dataReader2.Read())
+                    {
+                        var result = new ProductionIndent_DetailsBO()
+                        {
+                            //ID = Convert.ToInt32(dataReader2["ID"]),
+                            ItemId = Convert.ToInt32(dataReader2["ItemId"]), 
+                            ItemName = dataReader2["Item_Name"].ToString(),
+                            ItemCode = dataReader2["Item_Code"].ToString(),
+                            RequestedQty=Convert.ToDecimal(dataReader2["RequestedQty"]),
+                            IssuedQty=Convert.ToDecimal(dataReader2["IssuedQty"]),
+                            IssuingQty=Convert.ToDecimal(dataReader2["IssuingQty"]),
+                            BalanceQty=Convert.ToDecimal(dataReader2["BalanceQty"]),
+                            ItemUnit = dataReader2["ItemUnit"].ToString(), 
+                            AvailableStock = Convert.ToDecimal(dataReader2["AvailableStock"]),
+                            ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                            CurrencyName = dataReader2["CurrencyName"].ToString(),
+                            FinalStock = Convert.ToDecimal(dataReader2["FinalStock"]),
+                            WorkOrderNo=dataReader2["WorkOrderNo"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+
         #region Insert function
         /// <summary>
         /// Rahul: Insert record.
@@ -63,6 +147,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@IssueByName", model.IssueByName);
                     cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
                     cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
+                    cmd.Parameters.AddWithValue("@ProductionIndentID", model.ProductionIndentId);
+                    cmd.Parameters.AddWithValue("@ProductionIndentNo", model.ProductionIndentNo);
                     cmd.Parameters.AddWithValue("@Purpose", model.Purpose);
                     cmd.Parameters.AddWithValue("@WorkOrderNumber", model.WorkOrderNumber);
                     cmd.Parameters.AddWithValue("@QCNumber", model.QCNumber);

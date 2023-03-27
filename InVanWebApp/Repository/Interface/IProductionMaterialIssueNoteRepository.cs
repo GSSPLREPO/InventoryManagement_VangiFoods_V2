@@ -11,6 +11,11 @@ namespace InVanWebApp.Repository.Interface
     {
         //This function is for fecthing list of Production Material Issue Note data.
         IEnumerable<ProductionMaterialIssueNoteBO> GetAll();
+        //Bind dropdown of Production Indent Number. 
+        IEnumerable<ProductionIndentBO> GetProductionIndentNumberForDropdown();
+        //Fetch Production Indent Ingredients Details ById for Production Material IssueNote
+        IEnumerable<ProductionIndent_DetailsBO> GetProductionIndentIngredientsDetailsById(int ProductionIndentId, int LocationID);
+        
         //Insert record.
         ResponseMessageBO Insert(ProductionMaterialIssueNoteBO model);
         //This function is for fetch data for editing by ID and for downloading pdf

@@ -109,7 +109,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Batch plane created successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Duplicate batch document number! Can not be inserted!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate batch document number or Planning of the selected product is done! Can not be inserted!');</script>";
                             BindSONumber();
                             BindLocationName();
 

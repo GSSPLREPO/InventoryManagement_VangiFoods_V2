@@ -16,7 +16,7 @@ namespace InVanWebApp.Controllers
         private IProductionMaterialIssueNoteRepository _productionMaterialIssueNoteRepository;
         private IPurchaseOrderRepository _purchaseOrderRepository;
         private IStockAdjustmentRepository _stockAdjustmentRepository;
-        private IProductionIndentRepository _productionIndentRepository; 
+        private IProductionIndentRepository _productionIndentRepository;
         private static ILog log = LogManager.GetLogger(typeof(StockAdjustmentController));
 
         #region Initializing Constructor
@@ -40,7 +40,7 @@ namespace InVanWebApp.Controllers
         /// <param name="stockAdjustmentRepository"></param>
         public ProductionMaterialIssueNoteController(IProductionMaterialIssueNoteRepository productionMaterialIssueNoteRepository)
         {
-            _productionMaterialIssueNoteRepository = productionMaterialIssueNoteRepository;  
+            _productionMaterialIssueNoteRepository = productionMaterialIssueNoteRepository;
         }
         #endregion
 
@@ -48,47 +48,10 @@ namespace InVanWebApp.Controllers
         // GET: ProductionMaterialIssueNote
         public ActionResult Index()
         {
-            if (Session[ApplicationSession.USERID] == null)            
+            if (Session[ApplicationSession.USERID] == null)
                 return RedirectToAction("Index", "Login");
             var model = _productionMaterialIssueNoteRepository.GetAll();
-            return View(model); 
-        }
-        #endregion
-
-        #region Bind dropdowns 
-        public void BindLocationName()
-        {
-            var result = _purchaseOrderRepository.GetLocationNameList();
-            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
-            ViewData["LocationList"] = resultList;
-        }
-
-        public void GenerateDocumentNo()
-        {
-            //==========Document number for Stock adjustment============//
-            GetDocumentNumber objDocNo = new GetDocumentNumber();
-
-            //=========here document type=13 i.e. for generating the Production Material Issue Note (logic is in SP).====//
-            var DocumentNumber = objDocNo.GetDocumentNo(17);
-            ViewData["DocumentNo"] = DocumentNumber;
-        }
-
-        //Bind SO and WO Number 
-        public void GetSOWONumber()
-        {
-            var resultWO = _productionIndentRepository.GetSONumberForDropdown();
-            var resultListWO = new SelectList(resultWO.ToList(), "SalesOrderId", "WorkOrderNo");
-            ViewData["WONumberAndId"] = resultListWO;
-        }
-
-        public JsonResult GetItemList(string id)
-        {
-            int Location_Id = 0;
-            if (id != "" && id != null)
-                Location_Id = Convert.ToInt32(id);
-
-            var result = _stockAdjustmentRepository.GetItemListByLocationId(Location_Id);
-            return Json(result);
+            return View(model);
         }
         #endregion
 
@@ -104,7 +67,7 @@ namespace InVanWebApp.Controllers
             {
                 BindLocationName();
                 GenerateDocumentNo();
-                GetSOWONumber();
+                BindProductionIndentNumber();
 
                 ProductionMaterialIssueNoteBO model = new ProductionMaterialIssueNoteBO();
                 model.ProductionMaterialIssueNoteDate = DateTime.Today;
@@ -120,7 +83,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddProductionMaterialIssueNote(ProductionMaterialIssueNoteBO model) 
+        public ActionResult AddProductionMaterialIssueNote(ProductionMaterialIssueNoteBO model)
         {
             try
             {
@@ -135,7 +98,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('No item is issued! Production material issue note cannot be created!');</script>";
                             BindLocationName();
                             GenerateDocumentNo();
-                            GetSOWONumber();
+                            BindProductionIndentNumber();
 
                             model.ProductionMaterialIssueNoteDate = DateTime.Today;
                             return View(model);
@@ -150,7 +113,7 @@ namespace InVanWebApp.Controllers
                                 TempData["Success"] = "<script>alert('Error! Production material issue note cannot be created!');</script>";
                                 BindLocationName();
                                 GenerateDocumentNo();
-                                GetSOWONumber();
+                                BindProductionIndentNumber();
 
                                 model.ProductionMaterialIssueNoteDate = DateTime.Today;
                                 return View(model);
@@ -164,7 +127,7 @@ namespace InVanWebApp.Controllers
                     {
                         BindLocationName();
                         GenerateDocumentNo();
-                        GetSOWONumber();
+                        BindProductionIndentNumber();
 
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         model.ProductionMaterialIssueNoteDate = DateTime.Today;
@@ -182,7 +145,7 @@ namespace InVanWebApp.Controllers
 
                 BindLocationName();
                 GenerateDocumentNo();
-                GetSOWONumber();
+                BindProductionIndentNumber();
 
                 model.ProductionMaterialIssueNoteDate = DateTime.Today;
                 return View(model);
@@ -204,8 +167,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-
-
         #region Delete function
         /// <summary>
         /// Date: 24 Jan'23
@@ -215,7 +176,7 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public ActionResult DeleteProductionMaterialIssueNote(int ID) 
+        public ActionResult DeleteProductionMaterialIssueNote(int ID)
         {
             if (Session[ApplicationSession.USERID] != null)
             {
@@ -234,7 +195,47 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
         #endregion
+       
+        #region Bind dropdowns 
+        public void BindProductionIndentNumber()
+        {
+            var result = _productionMaterialIssueNoteRepository.GetProductionIndentNumberForDropdown();
+            var resultList = new SelectList(result.ToList(), "ID", "ProductionIndentNo");
+            ViewData["ProductionIndentNumberAndId"] = resultList;
+        }
 
+        public void BindLocationName()
+        {
+            var result = _purchaseOrderRepository.GetLocationNameList();
+            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
+            ViewData["LocationList"] = resultList;
+        }
 
+        public void GenerateDocumentNo()
+        {
+            //==========Document number for Stock adjustment============//
+            GetDocumentNumber objDocNo = new GetDocumentNumber();
+
+            //=========here document type=13 i.e. for generating the Production Material Issue Note (logic is in SP).====//
+            var DocumentNumber = objDocNo.GetDocumentNo(17);
+            ViewData["DocumentNo"] = DocumentNumber;
+        }
+       
+        #endregion
+
+        #region Fetch Get Location Stocks Details for Production Material IssueNote
+        public JsonResult GetLocationStocksDetails(string id, string locationId)
+        {
+            int ProductionIndent_Id = 0;
+            if (id != "" && id != null)
+                ProductionIndent_Id = Convert.ToInt32(id);
+            int Location_Id = 0;
+            if (locationId != "" && locationId != null)
+                Location_Id = Convert.ToInt32(locationId);
+
+            var result = _productionMaterialIssueNoteRepository.GetProductionIndentIngredientsDetailsById(ProductionIndent_Id, Location_Id);
+            return Json(result);
+        }
+        #endregion
     }
 }

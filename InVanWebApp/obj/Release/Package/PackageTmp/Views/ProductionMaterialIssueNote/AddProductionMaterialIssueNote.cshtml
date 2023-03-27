@@ -52,17 +52,27 @@
                         @Html.TextBoxFor(model => model.IssueByName, new { @class = "form-control", Value = @Session["UserName"], @readonly = "readonly" })
                     </div>
                 }
-            </div>
-            <br />
-            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Location")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationList"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation(id)" })
-                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
+                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationList"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val(),id)" })
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new { id = "LocationIdErr", @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.LocationName)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Production Indent Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("ProductionIndentId", (IEnumerable<SelectListItem>)ViewData["ProductionIndentNumberAndId"], "--Select--",
+                   new { @class = "form-control", onchange = "SelectedIndexChangedPI($(this).val())" })
+                    @Html.ValidationMessageFor(model => model.ProductionIndentId, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.ProductionIndentNo)
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Item")
@@ -162,7 +172,7 @@
                                                 <th class="sortStyle">Requested Quantity</th>
                                                 <th class="sortStyle">Issued Quantity</th>
                                                 <th class="sortStyle">Final Stock</th>
-                                                <th class="sortStyle">Comments</th>
+                                                <th class="sortStyle">Balance Quantity</th>
                                             </tr>
                                         </thead>
                                     </table>

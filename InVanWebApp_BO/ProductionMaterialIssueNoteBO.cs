@@ -7,15 +7,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
-    public class ProductionMaterialIssueNoteBO 
+    public class ProductionMaterialIssueNoteBO
     {
         public int ID { get; set; }
         [Required(ErrorMessage = "Enter production material issue note no.!")]
         public string ProductionMaterialIssueNoteNo { get; set; }
         [Required(ErrorMessage = "Select production material issue date!")]
-        public Nullable<System.DateTime> ProductionMaterialIssueNoteDate { get; set; } 
-        
-        [Required(ErrorMessage = "Select Purpose!")]
+        public Nullable<System.DateTime> ProductionMaterialIssueNoteDate { get; set; }
         public string Purpose { get; set; }
         public string WorkOrderNumber { get; set; }
         public string QCNumber { get; set; }
@@ -43,10 +41,7 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Enter shipping details!")]
         public string ShippingDetails { get; set; }
-
-        [Required(ErrorMessage = "Enter Production Indent No!")]
         public string ProductionIndentNo { get; set; }
-
         public string InwardQuantities { get; set; }
         public string BalanceQuantities { get; set; }
 
@@ -75,6 +70,8 @@ namespace InVanWebApp_BO
 
         //Below field is added for Rejection note.
         public Nullable<int> ProductionIndentID { get; set; }
+        [Required(ErrorMessage = "Enter Production Indent Number!")]
+        public Nullable<int> ProductionIndentId { get; set; }
 
         //Added the below fields for Pre-QC prod
         public Nullable<int> ItemId { get; set; }
@@ -84,7 +81,7 @@ namespace InVanWebApp_BO
         public Nullable<decimal> ItemUnitPrice { get; set; }
     }
 
-    public class ProductionMaterialIssueNoteDetailsBO 
+    public class ProductionMaterialIssueNoteDetailsBO
     {
         public int ID { get; set; }
         public Nullable<int> IssueNoteId { get; set; }
@@ -98,6 +95,8 @@ namespace InVanWebApp_BO
         public string ItemUnit { get; set; }
         public Nullable<double> QuantityRequested { get; set; }
         public Nullable<double> QuantityIssued { get; set; }
+        public Nullable<double> IssuingQty { get; set; }
+        public Nullable<double> BalanceQty { get; set; }
         public Nullable<double> StockAfterIssuing { get; set; }
         public Nullable<double> AvailableStockBeforeIssue { get; set; }
         public Nullable<int> UnitId { get; set; }

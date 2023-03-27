@@ -92,6 +92,9 @@ namespace InVanWebApp_BO
 
         //Added the below field for production indent.
         public string SONumber { get; set; }
+
+        //Added the below field for batch planning count
+        public int? IsBatchDone { get; set; }
     }
 
     public class SalesOrderItemsDetail
@@ -115,5 +118,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        //Added the below field for finding the batch planning is done or not
+        public int ItemCount { get; set; }
     }
 }

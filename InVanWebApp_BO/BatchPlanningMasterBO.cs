@@ -47,6 +47,9 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public IEnumerable<BatchPlanning_DetailsBO> batchPlanningItemDetails{ get; set; }
         public string txtItemDetails { get; set; }
+
+        //Added the below field for finding the batch planning is done or not
+        public int SOCount { get; set; }
     }
 
     public class BatchPlanning_DetailsBO
