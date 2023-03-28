@@ -41,8 +41,10 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region 
+
         #region Bind real time warehouse wise dashboard
-       
+
         public ActionResult Index()
         {
             if (Session[ApplicationSession.USERID] == null)
@@ -100,6 +102,25 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Bind location dropdown
+        public void BindLocationDropdown()
+        {
+            var ItemType = _repositoryLocation.GetAll();
+            var dd = new SelectList(ItemType.ToList(), "ID", "LocationName");
+            ViewData["LocationName"] = dd;
+        }
+
+        #endregion
+
+        #region Bind Item dropdown
+        public void BindItemDropDown()
+        {
+            var model = _itemRepository.GetAll();
+            var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
+            ViewData["Item"] = Item_dd;
+        }
+        #endregion
+
         #region Bind FIFO System
 
         public ActionResult FIFOSystem()
@@ -108,7 +129,7 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("FIFOSystem", "Login");
             DashboardBO model = new DashboardBO();
             model.toDate = DateTime.Now;
-            model.fromDate = DateTime.Now; /*Convert.ToDateTime("01-11-2022");*/
+            model.fromDate = /*DateTime.Now;*/Convert.ToDateTime("01-11-2022");
             BindLocationDropdown();
             BindItemDropDown();
             return View(model);
@@ -137,8 +158,44 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region Bind location dropdown
-        public void BindLocationDropdown()
+        #endregion
+
+        #region Bind real time warehouse wise dashboard
+
+        public ActionResult Index(DateTime fromDate,DateTime toDate, string BatchNumber,string WorkOrderNumber)
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+            DashboardBO model = new DashboardBO();
+            model.toDate = DateTime.Now;
+            model.fromDate = DateTime.Now;
+
+            BindLocationDropdown();
+            BindItemDropDown();
+            return View(model);
+        }
+
+        public JsonResult GetYeildSystem(DateTime fromDate,DateTime toDate, int BatchNumberID = 0, int WorkOrderNumberID = 0)
+        {
+            int BatchNumberID = 0, WorkOrderNumberID = 0;
+            if (id != null && id != "")
+                LocationId = Convert.ToInt32(id);
+            if (ItemId != null && ItemId != "")
+                itemId = Convert.ToInt32(ItemId);
+
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetYeildSystem();
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
+        #region Bind Batch dropdown
+        public void BindBatchNumberDropdown()
         {
             var ItemType = _repositoryLocation.GetAll();
             var dd = new SelectList(ItemType.ToList(), "ID", "LocationName");
@@ -147,13 +204,5 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region Bind Item dropdown
-        public void BindItemDropDown()
-        {
-            var model = _itemRepository.GetAll();
-            var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
-            ViewData["Item"] = Item_dd;
-        }
-        #endregion
     }
 }

@@ -173,6 +173,7 @@
 
         if (fromDate == null || fromDate == "") {
             $('#fromDateValidate').text('Select from date!');
+
             $('#fromDateValidate').show();
             $("#fromDate").focus();
             return;
@@ -292,7 +293,7 @@
 
                         coloR.push(dynamicColors());
                         serial2.color = getRandomColor();
-                        xAxisData.push(jsondata.GRNDate);
+                        xAxisData.push(jsondata.GRNDate + ' (' + jsondata.ItemName + ' ' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');;
 
                     });
                     ItemName.push(serial2);

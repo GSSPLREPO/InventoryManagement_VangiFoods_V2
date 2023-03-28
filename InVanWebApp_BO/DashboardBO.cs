@@ -9,11 +9,23 @@ namespace InVanWebApp_BO
 {
     public class DashboardBO
     {
+        /*-------------fromDate and toDate----------------------------*/
+
+        /*From Date*/
+        [DataType(DataType.Date)]
+        public DateTime fromDate { get; set; }
+
+        /*toDate*/
+        [Required(ErrorMessage = "Please select the GRN date!")]
+        [DataType(DataType.Date)]
+        public DateTime toDate { get; set; }
+
+
         /*-----------Start FIFO System-------------------*/
         /*GRN Date*/
         [Required(ErrorMessage = "Please select the GRN date!")]
         [DataType(DataType.Date)]
-        public Nullable<System.DateTime> GRNDate { get; set; }
+        public String GRNDate { get; set; }
 
         /*Location*/
         public int LocationID { get; set; }
@@ -32,19 +44,20 @@ namespace InVanWebApp_BO
         /* Received Qty*/
         public float ReceivedQty { get; set; }
         /*------------End FIFO Dashboard-------------------------*/
+        
 
-        /*-----------Start Yield Dashboard -----------------------*/
 
-        /**/
 
-        /*-----------End Yield Dashboard--------------------------*/
-        /*From Date*/
-        [DataType(DataType.Date)]
-        public DateTime fromDate { get; set; }
+        /*-------------Start Yeild Report---------------------------*/
+        public string WorkOrderNumber { get; set; }
 
-        /*toDate*/
-        [Required(ErrorMessage = "Please select the GRN date!")]
-        [DataType(DataType.Date)]
-        public DateTime toDate { get; set; }
+        public string BatchNumber { get; set; }
+
+        public string ProductName { get; set; }
+
+        public decimal ExpectedYeild { get; set; }
+
+        public decimal ActualYeild { get; set; }
+        /*-------------End   Yeild Report---------------------------*/
     }
 }
