@@ -3764,12 +3764,19 @@ namespace InVanWebApp.Controllers
             sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
+            //sb.Append("<tr>");
+            //sb.Append("<th style='text-align:right;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            //sb.Append("</th></tr>");
+            //sb.Append("<tr>");
+            //sb.Append("<th colspan=6 style='text-align:right;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            //sb.Append("</th></tr>");
+
             sb.Append("<tr>");
-            sb.Append("<th style='text-align:right;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("<th colspan=3 style='text-align:left;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th>");
+            sb.Append("<th colspan=3 style='text-align:right;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
             sb.Append("</th></tr>");
-            sb.Append("<tr>");
-            sb.Append("<th colspan=6 style='text-align:right;font-family:Times New Roman;padding-right:-60px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
-            sb.Append("</th></tr>");
+
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
@@ -3784,11 +3791,11 @@ namespace InVanWebApp.Controllers
             sb.Append("</th></tr>");
 
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;font-size:12px;border: 0.05px  #e2e9f3;'>Sr. No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Work Order Number</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Production Material Issue Note Number</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Product Name</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Batch Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:25%;font-size:13px;border: 0.05px  #e2e9f3;'>Batch Number</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Raw Material Cost</ th>");
 
             sb.Append("</tr>");
@@ -3800,7 +3807,7 @@ namespace InVanWebApp.Controllers
             {
 
                 sb.Append("<tr style='text-align:center;padding: 10px;'>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 1px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.WorkOrderNumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ProductionMaterailIssueNoteNumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ProductName + "</td>");
