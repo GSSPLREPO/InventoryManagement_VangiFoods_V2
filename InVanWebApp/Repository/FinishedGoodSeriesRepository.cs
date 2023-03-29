@@ -98,7 +98,10 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_FinishGoodSeries_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
 
+                    cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
+                    cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@ItemId", model.ProductId);
                     cmd.Parameters.AddWithValue("@PackageSize", model.PackageSize);
                     cmd.Parameters.AddWithValue("@MfgDate", model.MfgDate);
                     cmd.Parameters.AddWithValue("@NoOfCartonBox", model.NoOfCartonBox);
@@ -162,6 +165,7 @@ namespace InVanWebApp.Repository
                         FinishedGoodSeriesBO = new FinishedGoodSeriesBO()
                         {
                             FGSID = Convert.ToInt32(reader["FGSID"]),
+                            LocationName=reader["LocationName"].ToString(),
                             ProductName = reader["ProductName"].ToString(),
                             PackageSize = reader["PackageSize"].ToString(),
                             MfgDate = Convert.ToDateTime(reader["MfgDate"]),
@@ -169,7 +173,7 @@ namespace InVanWebApp.Repository
                             QuantityInKG = Convert.ToDouble(reader["QuantityInKG"]),
                             BatchNo = reader["BatchNo"].ToString(),
                             SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),
-                            SONo = reader["SONo"].ToString(),
+                            SONo = reader["SONumber"].ToString(),
                             Packaging = reader["Packaging"].ToString(),
                             Sealing = reader["Sealing"].ToString(),
                             Labelling = reader["Labeling"].ToString(),
@@ -179,7 +183,7 @@ namespace InVanWebApp.Repository
                             ExpectedYield = Convert.ToDecimal(reader["ExpectedYield"]),
                             ActualYield = Convert.ToDecimal(reader["ActualYield"]),
                             WorkOrderNo = reader["WorkOrderNo"].ToString(),
-                            Remarks = reader["Remarks"].ToString(),
+                            Remarks = reader["Remarks"].ToString()
                         };
                     }
                     con.Close();
@@ -314,7 +318,25 @@ namespace InVanWebApp.Repository
             return salesOrderList;
         }
 
-
+        public IEnumerable<BatchNumberMasterBO> GetBatchNo(int SOId)
+        {
+            string Query = "SELECT BatchNumber FROM BatchNumberMaster WHERE SO_Id=@Id AND IsDeleted = 0 and flagForIndent=1";
+            
+            List<BatchNumberMasterBO> result = new List<BatchNumberMasterBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    result = con.Query<BatchNumberMasterBO>(Query, new { @Id = SOId }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                result = null;
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
         #endregion
 
         #region Function for binding data to get Work Order NO

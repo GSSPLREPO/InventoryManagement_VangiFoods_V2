@@ -13,6 +13,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Enter production material issue note no.!")]
         public string ProductionMaterialIssueNoteNo { get; set; }
         [Required(ErrorMessage = "Select production material issue date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> ProductionMaterialIssueNoteDate { get; set; }
         public string Purpose { get; set; }
         public string WorkOrderNumber { get; set; }
@@ -39,7 +40,6 @@ namespace InVanWebApp_BO
 
         //Additional fields for Po details.
 
-        [Required(ErrorMessage = "Enter shipping details!")]
         public string ShippingDetails { get; set; }
         public string ProductionIndentNo { get; set; }
         public string InwardQuantities { get; set; }
@@ -69,9 +69,9 @@ namespace InVanWebApp_BO
         public string ItemTaxValue { get; set; }
 
         //Below field is added for Rejection note.
-        public Nullable<int> ProductionIndentID { get; set; }
         [Required(ErrorMessage = "Enter Production Indent Number!")]
-        public Nullable<int> ProductionIndentId { get; set; }
+        public Nullable<int> ProductionIndentID { get; set; }
+        //public Nullable<int> ProductionIndentId { get; set; }
 
         //Added the below fields for Pre-QC prod
         public Nullable<int> ItemId { get; set; }

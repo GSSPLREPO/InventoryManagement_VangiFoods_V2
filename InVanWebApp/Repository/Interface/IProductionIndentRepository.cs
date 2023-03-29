@@ -12,7 +12,7 @@ namespace InVanWebApp.Repository.Interface
         //Define function for fetching details of Item master, edited the passing parameter for Production Indent. 
         IEnumerable<ProductionIndentBO> GetAll();
         //Get Recipe details by ID. 
-        IEnumerable<RecipeMasterBO> GetRecipeDetailsById(int ProductId, int Recipe_Id);
+        IEnumerable<Recipe_DetailsBO> GetRecipeDetailsById(int ProductId, int Recipe_Id);
         //Bind all Batch Number details by SO_Id and Total_Batches 
         IEnumerable<BatchNumberMasterBO> GetBatchNumberById(int SO_Id, int Total_Batches);
         //Define function for inserting data into Production Indent 
@@ -27,6 +27,12 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Update(ProductionIndentBO model); 
         //Function define for the delete Production Indent details
         void Delete(int ID, int userId);
+
+        //IEnumerable<SalesOrderBO> BindWorkOrderNo(int wONId);
+
+        SalesOrderBO GetWorkOrderNumber(int id);
+       // IEnumerable<BatchNumberMasterBO> GetBatchNumber(int SO_Id, int Total_Batches);
+        
     }
 
 }

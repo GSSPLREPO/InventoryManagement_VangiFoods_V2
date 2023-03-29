@@ -43,8 +43,6 @@
                                         <th class="text-wrap">Product Name</th>
                                         <th class="text-wrap">Package Size</th>
                                         <th class="text-wrap">Manufacture Date</th>
-                                        @*<th class="text-wrap">Batch No</th>
-                                        <th class="text-wrap">Work Order No</th>*@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -138,8 +136,11 @@
                     //{ "data": "WorkOrderNo", "autoWidth": true },
                     {
                         data: "FGSID", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEye"><i class="fa fa-eye text-primary"/></i></button>'+'<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                    + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEye"><i class="fa fa-eye text-primary"/></i></button>' +'<button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+
+                            //return '<button type="button" id="' + data + '" class = "btn text-primary btnEye"><i class="fa fa-eye text-primary"/></i></button>'+'<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                            //        + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ],

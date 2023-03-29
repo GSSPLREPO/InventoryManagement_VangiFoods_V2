@@ -9,21 +9,21 @@
 <html>
 <head>
 
-    <title>Production Report (Cost for per batch)</title>
+    <title>Batch-wise Production Cost</title>
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
 </head>
 <body>
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
             @*Rahul updated heading tag text 'Received' to 'Dispatch' 16-02-23.*@
-            <h4 class="page-title">Production Report (Cost for per batch)</h4>
+            <h4 class="page-title">Batch-wise Production Cost</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Reports</a>
                     </li>
                     @*Rahul updated anchor tag text 'Received' to 'Dispatch' 16-02-23.*@
-                <li class="breadcrumb-item active">Production Report (Cost for per batch)</li>
+                <li class="breadcrumb-item active">Batch-wise Production Cost</li>
                 </ol>
             </nav>
         </div>
@@ -203,7 +203,7 @@
                 "columns": [
                     { "data": "SrNo", "autoWidth": true },
                     { "data": "WorkOrderNumber", "autoWidth": true },
-                    { "data": "ProductionMaterialIssueNoteNumber", "autoWidth": true },
+                    { "data": "ProductionMaterailIssueNoteNumber", "autoWidth": true },
                     { "data": "ProductName", "autoWidth": true },
                     { "data": "BatchNumber", "autoWidth": true },
                     { "data": "RawMaterialCost", "autoWidth": true }

@@ -227,9 +227,9 @@ namespace InVanWebApp.Repository
                             MinStock = Convert.ToDouble(reader["MinStock"]),
                             Description = reader["Description"].ToString(),
                             UnitOfMeasurement_ID = Convert.ToInt32(reader["UnitOfMeasurement_ID"]),
-                            UnitPrice = (reader["UnitPrice"]) == null ? 0 : Convert.ToDouble(reader["UnitPrice"]),
-                            TaxId = (reader["TaxId"]) == null ? 0 : Convert.ToInt32(reader["TaxId"]),
-                            ItemTaxValue = (reader["ItemTaxValue"]) == null ? 0 : float.Parse(reader["ItemTaxValue"].ToString())
+                            UnitPrice = (reader["UnitPrice"]) is DBNull ? 0 : Convert.ToDouble(reader["UnitPrice"]),
+                            TaxId = (reader["TaxId"]) is DBNull ? 0 : Convert.ToInt32(reader["TaxId"]),
+                            ItemTaxValue = (reader["ItemTaxValue"]) is DBNull ? 0 : float.Parse(reader["ItemTaxValue"].ToString())
                         };
                     }
                     con.Close();

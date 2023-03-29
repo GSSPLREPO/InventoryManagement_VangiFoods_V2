@@ -18,7 +18,7 @@ namespace InVanWebApp_BO
         /*adding this flied*/
         public string Time { get; set; }
 
-        [Required(ErrorMessage ="Enter Lot Number;!")]
+        [Required(ErrorMessage ="Enter Lot Number!")]
        public string LotNo { get; set; }
 
         [Required(ErrorMessage ="Enter the Name of Sample!")]

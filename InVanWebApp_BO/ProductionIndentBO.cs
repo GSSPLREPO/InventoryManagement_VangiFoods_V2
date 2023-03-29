@@ -57,7 +57,7 @@ namespace InVanWebApp_BO
         public decimal AvailableStock { get; set; }
         public string CurrencyName { get; set; }
         public string ItemUnit { get; set; }
-
+        public Nullable<int> SO_Id { get; set; }
     }
 
     //Rahul added 25-033-2023. 

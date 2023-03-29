@@ -93,9 +93,12 @@ namespace InVanWebApp.Controllers
                     if (ModelState.IsValid)
                     {
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                        if (model.txtItemDetails == null || model.txtItemDetails == "[]]")
+                        response = _productionMaterialIssueNoteRepository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Production material issue note is created successfully!');</script>";
+                        else
                         {
-                            TempData["Success"] = "<script>alert('No item is issued! Production material issue note cannot be created!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate Production material issue note! Cannot be inserted!');</script>";
                             BindLocationName();
                             GenerateDocumentNo();
                             BindProductionIndentNumber();
@@ -103,22 +106,7 @@ namespace InVanWebApp.Controllers
                             model.ProductionMaterialIssueNoteDate = DateTime.Today;
                             return View(model);
                         }
-                        else
-                        {
-                            response = _productionMaterialIssueNoteRepository.Insert(model);
-                            if (response.Status)
-                                TempData["Success"] = "<script>alert('Production material issue note is created successfully!');</script>";
-                            else
-                            {
-                                TempData["Success"] = "<script>alert('Error! Production material issue note cannot be created!');</script>";
-                                BindLocationName();
-                                GenerateDocumentNo();
-                                BindProductionIndentNumber();
 
-                                model.ProductionMaterialIssueNoteDate = DateTime.Today;
-                                return View(model);
-                            }
-                        }
 
                         return RedirectToAction("Index", "ProductionMaterialIssueNote");
 
@@ -195,7 +183,7 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
         #endregion
-       
+
         #region Bind dropdowns 
         public void BindProductionIndentNumber()
         {
@@ -220,7 +208,7 @@ namespace InVanWebApp.Controllers
             var DocumentNumber = objDocNo.GetDocumentNo(17);
             ViewData["DocumentNo"] = DocumentNumber;
         }
-       
+
         #endregion
 
         #region Fetch Get Location Stocks Details for Production Material IssueNote

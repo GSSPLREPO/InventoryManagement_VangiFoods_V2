@@ -18,7 +18,7 @@ namespace InVanWebApp.Repository.Interface
 
         //Function define for: Insert record.
         ResponseMessageBO Insert(RecipeMasterBO model); 
-        List<ResponseMessageBO> SaveRecipeItemData(List<RecipeMasterBO> model);
+        //List<ResponseMessageBO> SaveRecipeItemData(List<RecipeMasterBO> model);
         //This function is for fetch data for editing by Recipe_ID 
         RecipeMasterBO GetById(int Recipe_ID);
         //This function is for fetch data for editing by ID.

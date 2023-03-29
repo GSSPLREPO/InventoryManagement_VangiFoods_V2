@@ -3452,7 +3452,7 @@ namespace InVanWebApp.Controllers
         public void BindBatchNumberDropDown()
         {
             var model = _repository.GetAll();
-            var BatchNumberdd = new SelectList(model.ToList(), "ID", "BatchNumber");
+            var BatchNumberdd = new SelectList(model.ToList(), "BatchNumber", "BatchNumber");
             ViewData["BatchNumberdd"] = BatchNumberdd;
         }
 
@@ -3680,6 +3680,233 @@ namespace InVanWebApp.Controllers
                + "</td><td colspan='4' style='text-align:right; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Todate + todate
                /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region  BatchwiseProductionCost report
+
+        #region Binding the Batchwise Production report data 
+
+        public ActionResult BatchwiseProductionCostReport()
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                ReportBO model = new ReportBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                BindBatchNumberDropDown();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+
+        /// <summary>
+        /// Develop By Siddharth on 21 MAR 2023
+        /// Calling method for  Batchwise Production report data 
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetBatchwiseProductionCostReportData(DateTime fromDate, DateTime toDate, string ItemId)
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            Session["ItemId"] = ItemId;
+            var batchWiseProductionCost = _repository.getBatchwiseProductionCostReportData(fromDate, toDate, ItemId);
+            return Json(new { data = batchWiseProductionCost }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Export PDF Batchwise Production report
+        /// <summary>
+        /// Create by Siddhareth on 21 MAR 2023
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete]
+        public ActionResult ExprotAsPDFForBatchwiseProductionCostReport()
+        {
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            //var itemId = Convert.ToInt32(Session["ItemId"]);
+            var itemId = (Session["ItemId"].ToString());
+
+            var BatchwiseProductionReport = _repository.getBatchwiseProductionCostReportData(fromDate, toDate, itemId);
+            TempData["BatchwiseProductionReportDataTemp"] = BatchwiseProductionReport;
+            if (TempData["BatchwiseProductionReportDataTemp"] == null)
+            {
+                return RedirectToAction("BatchwiseProductionCostReport", "Report");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<ReportBO> resultList = TempData["BatchwiseProductionReportDataTemp"] as List<ReportBO>;
+
+            if (resultList.Count < 0)
+                return RedirectToAction("BatchwiseProductionCostReport", "Report");
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
+            string ReportName = "Batch-wise Production Cost";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<thead>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:right;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th colspan=6 style='text-align:right;font-family:Times New Roman;padding-right:-60px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center;' Colspan='1'>" +
+                "<img height='150' width='150' src='" + strPath + "'/></th>");
+            sb.Append("<th Colspan='10' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
+            //sb.Append("<br/>");
+            sb.Append("<label style='font-size:22px;font-weight:bold;color:Red;font-family:Times New Roman; text-color:red; bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
+            //sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
+
+            sb.Append("</th></tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Work Order Number</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Production Material Issue Note Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Product Name</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Batch Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Raw Material Cost</ th>");
+
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            resultList.Count();
+            //stockReport.r
+            foreach (var item in resultList)
+            {
+
+                sb.Append("<tr style='text-align:center;padding: 10px;'>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.WorkOrderNumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ProductionMaterailIssueNoteNumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ProductName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.BatchNumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RawMaterialCost + "</td>");
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+
+            using (var sr = new StringReader(sb.ToString()))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+
+                    writer.PageEvent = new PageHeaderFooter();
+                    pdfDoc.Open();
+                    //pdfDoc.NewPage();
+
+
+                    setBorder(writer, pdfDoc);
+
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                    pdfDoc.Close();
+                    byte[] bytes = memoryStream.ToArray();
+                    string filename = "Rpt_BatchwiseProductionCost_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    return File(memoryStream.ToArray(), "application/pdf", filename);
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region Excel Batchwise Production report
+        public void ExportAsExcelForBatchwiseProductionCostReport()
+        {
+            GridView gv = new GridView();
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            //var locationId = Convert.ToInt32(Session["LocationId"]);
+            var itemId = (Session["ItemId"].ToString());
+
+            List<ReportBO> resultList = _repository.getBatchwiseProductionCostReportData(fromDate, toDate, itemId);
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Work Order Number");
+            dt.Columns.Add("Production Material Issue Note Number");
+            dt.Columns.Add("Product Name");
+            dt.Columns.Add("Batch Number");
+            dt.Columns.Add("Raw Material Cost");
+
+            foreach (ReportBO st in resultList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["Work Order Number"] = st.WorkOrderNumber.ToString();
+                dr["Production Material Issue Note Number"] = st.ProductionMaterailIssueNoteNumber.ToString();
+                dr["Product Name"] = st.ProductName.ToString();
+                dr["Batch Number"] = st.BatchNumber.ToString();
+                dr["Raw Material Cost"] = st.RawMaterialCost.ToString();
+
+
+
+
+
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_BatchwiseProductionCost_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Batch-wise Production Cost";/* The Stock Movement Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date : ";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
+                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr></tr>" +
+                "<tr align='center'><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "</td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 
 
             string style = @"<!--mce:2-->";

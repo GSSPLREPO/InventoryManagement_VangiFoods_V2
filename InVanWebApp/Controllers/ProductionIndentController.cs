@@ -19,6 +19,8 @@ namespace InVanWebApp.Controllers
         private IIndentRepository _repository;
         private IRecipeMaterRepository _productionRecipeRepository;
         private IProductMasterRepository _productMasterRepository;
+        private ISalesOrderRepository _salesOrderRepository;
+        private IBatchPlanningRepository _batchPlanningRepository;
 
         private static ILog log = LogManager.GetLogger(typeof(ProductionIndentController));
 
@@ -35,6 +37,8 @@ namespace InVanWebApp.Controllers
             _repository = new IndentRepository();
             _productionRecipeRepository = new RecipeMaterRepository();
             _productMasterRepository = new ProductMasterRepository();
+            _salesOrderRepository = new SalesOrderRepository();
+            _batchPlanningRepository = new BatchPlanningRepository();
         }
 
         /// <summary>
@@ -89,12 +93,18 @@ namespace InVanWebApp.Controllers
             ViewData["Ingredients"] = dd;
 
             //Bind SO Number 
-            var result = _productionIndentRepository.GetSONumberForDropdown();
-            var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONumber");
+            //var result = _productionIndentRepository.GetSONumberForD/*ropdown();*/
+
+            var result = _salesOrderRepository.GetAll();
+            //var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONumber");
+            var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONo");
             ViewData["SONumberAndId"] = resultList;
 
             //Bind WO Number 
-            var resultWO = _productionIndentRepository.GetSONumberForDropdown();
+            //var resultWO = _productionIndentRepository.GetSONumberForDropdown();
+            //var resultListWO = new SelectList(resultWO.ToList(), "SalesOrderId", "WorkOrderNo");
+
+            var resultWO = _salesOrderRepository.GetAll();
             var resultListWO = new SelectList(resultWO.ToList(), "SalesOrderId", "WorkOrderNo");
             ViewData["WONumberAndId"] = resultListWO;
 
@@ -102,20 +112,30 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind all Recipe details 
-        public JsonResult BindRecipeDetails(string id, string RecipeID=null)
-        {
-            int ProductId = 0;  
-            int RecipeId = 0;  
-            
-            if (id != "" && id != null)
-                ProductId = Convert.ToInt32(id);
 
-            if (RecipeID != "" && RecipeID != null)
-                RecipeId = Convert.ToInt32(RecipeID);
-            
-            var result = _productionIndentRepository.GetRecipeDetailsById(ProductId,RecipeId);
+        public JsonResult GetRecipe(string id, string RecipeID = null)
+        {
+            int ProductId = Convert.ToInt32(id);
+            int recipeID = Convert.ToInt32(RecipeID);
+
+            var result = _productionIndentRepository.GetRecipeDetailsById(ProductId, recipeID);
             return Json(result);
         }
+
+        //public JsonResult BindRecipeDetails(string id, string RecipeID=null)
+        //{
+        //    int ProductId = 0;  
+        //    int RecipeId = 0;  
+            
+        //    if (id != "" && id != null)
+        //        ProductId = Convert.ToInt32(id);
+
+        //    if (RecipeID != "" && RecipeID != null)
+        //        RecipeId = Convert.ToInt32(RecipeID);
+            
+        //    var result = _productionIndentRepository.GetRecipeDetailsById(ProductId,RecipeId);
+        //    return Json(result);
+        //}
         #endregion
 
         #region Bind all BindBatch Number details 
@@ -144,6 +164,7 @@ namespace InVanWebApp.Controllers
             {
                 BindUsers();
                 BindItemTypeCategory();
+                BindSONumber();
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
                 //=========here document type=16 i.e. for generating the Production Indent Number(logic is in SP).====//
@@ -264,27 +285,6 @@ namespace InVanWebApp.Controllers
 
                 ProductionIndentBO model = _productionIndentRepository.GetById(ID);
                 model.indent_Details = _productionIndentRepository.GetItemDetailsByProductionIndentId(ID); 
-                //Binding item grid with sell type item.
-                var itemList = _repository.GetItemDetailsForDD();
-                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                string itemListForDD = "itemListForDD";
-
-                if (model != null)
-                {
-                    var ItemCount = model.indent_Details.Count;
-                    var i = 0;
-                    while (i < ItemCount)
-                    {
-                        itemListForDD = "itemListForDD";
-                        itemListForDD = itemListForDD + i;
-                        dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model.indent_Details[i].ItemId);
-                        ViewData[itemListForDD] = dd;
-                        i++;
-                    }
-
-                }
-
-                ViewData[itemListForDD] = dd;
 
                 return View(model);
             }
@@ -314,8 +314,6 @@ namespace InVanWebApp.Controllers
 
                         if (response.Status)
                             TempData["Success"] = "<script>alert('Production Indent updated successfully!');</script>";
-
-
                         else
                         {
                             TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
@@ -324,28 +322,6 @@ namespace InVanWebApp.Controllers
 
                             ProductionIndentBO model1 = _productionIndentRepository.GetById(model.ID);
                             model1.indent_Details = _productionIndentRepository.GetItemDetailsByProductionIndentId(model.ID);
-
-                            //Binding item grid with sell type item.
-                            var itemList = _repository.GetItemDetailsForDD();
-                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                            string itemListForDD = "itemListForDD";
-
-                            if (model1 != null)
-                            {
-                                var ItemCount = model1.indent_Details.Count;
-                                var i = 0;
-                                while (i < ItemCount)
-                                {
-                                    itemListForDD = "itemListForDD";
-                                    itemListForDD = itemListForDD + i;
-                                    dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.indent_Details[i].ItemId);
-                                    ViewData[itemListForDD] = dd;
-                                    i++;
-                                }
-
-                            }
-
-                            ViewData[itemListForDD] = dd;
 
                             return View(model1);
                         }
@@ -360,28 +336,6 @@ namespace InVanWebApp.Controllers
 
                         ProductionIndentBO model1 = _productionIndentRepository.GetById(model.ID);
                         model1.indent_Details = _productionIndentRepository.GetItemDetailsByProductionIndentId(model.ID);
-
-                        //Binding item grid with sell type item.
-                        var itemList = _repository.GetItemDetailsForDD();
-                        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                        string itemListForDD = "itemListForDD";
-
-                        if (model1 != null)
-                        {
-                            var ItemCount = model1.indent_Details.Count;
-                            var i = 0;
-                            while (i < ItemCount)
-                            {
-                                itemListForDD = "itemListForDD";
-                                itemListForDD = itemListForDD + i;
-                                dd = new SelectList(itemList.ToList(), "ID", "Item_Code", model1.indent_Details[i].ItemId);
-                                ViewData[itemListForDD] = dd;
-                                i++;
-                            }
-
-                        }
-
-                        ViewData[itemListForDD] = dd;
 
                         return View(model1);
                     }
@@ -424,5 +378,59 @@ namespace InVanWebApp.Controllers
         #endregion
 
 
+        #region Bind Dropdowns
+        public void BindSONumber()
+        {
+            var result = _salesOrderRepository.GetAll();
+            var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONo");
+
+            ViewData["SO_dd"] = resultList;
+        }
+
+        public void BindProductDropDown()
+        {
+            var result = _productMasterRepository.GetAll();
+            var resultList = new SelectList(result.ToList(), "ProductID", "ProductName");
+            ViewData["Product_dd"] = resultList;
+        }
+
+        public JsonResult GetWorkOrderNumber(string id)
+        {
+            var Id = Convert.ToInt32(id);
+            var result = _productionIndentRepository.GetWorkOrderNumber(Id);
+            return Json(result);
+        }
+
+        #endregion
+
+        #region Bind Dropdowns
+        /// <summary>
+        ///Create By: Snehal 
+        ///Description: View Indent Particular record.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult ViewProductionIndent(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                ProductionIndentBO model = _productionIndentRepository.GetById(ID);
+                model.indent_Details = _productionIndentRepository.GetItemDetailsByProductionIndentId(ID);
+
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+
+        }
+        #endregion
+        public JsonResult GetBatchNumber(string id, string TotalBatches)
+        {
+            var Id = Convert.ToInt32(id);
+            var totalBatches = Convert.ToInt32(TotalBatches);
+            var result = _productionIndentRepository.GetBatchNumberById(Id, totalBatches);
+            return Json(result);
+        }
     }
 }

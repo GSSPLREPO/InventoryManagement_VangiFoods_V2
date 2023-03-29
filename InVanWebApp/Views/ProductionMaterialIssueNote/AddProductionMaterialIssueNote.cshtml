@@ -71,7 +71,7 @@
                 <div class="col-md-4">
                     @Html.DropDownList("ProductionIndentId", (IEnumerable<SelectListItem>)ViewData["ProductionIndentNumberAndId"], "--Select--",
                         new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedPI()" })
-                    @Html.ValidationMessageFor(model => model.ProductionIndentId, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.ProductionIndentID, "", new { @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.ProductionIndentNo)
                 </div>
                 <div class="col-md-2">

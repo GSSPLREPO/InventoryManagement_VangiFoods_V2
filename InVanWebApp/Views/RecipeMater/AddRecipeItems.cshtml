@@ -45,35 +45,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-2">
-                        @Html.Label("Packing Size")
-                        <span style="color:red">*</span>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", maxlength = "8" })
-                        @Html.ValidationMessageFor(model => model.PackingSize, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
-                    </div>
-                    <div class="col-md-2">
-                        @Html.Label("Unit Of Measurement")
-                        <span style="color:red">*</span>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.UOM_Id, (IEnumerable<SelectListItem>)ViewData["UOM"], "---Select unit---", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.UOM_Id, "", new { @class = "error mt-2 text-danger" })
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-2">
-                        @Html.Label("Packing Size Unit")
-                        <span style="color:red">*</span>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.PackingSizeUnit, new { @class = "form-control form-control-sm", maxlength = "8" })
-                        @Html.ValidationMessageFor(model => model.PackingSizeUnit, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
-                    </div>
-                </div>
                 <br />
                 <div class="row">
                     <div class="col-md-4" style="color:darkcyan">

@@ -39,8 +39,6 @@
                                         <tr>
                                             <th>@Html.DisplayName("Recipe Name")</th>                                            
                                             <th>@Html.DisplayName("Description")</th>
-                                            <th>@Html.DisplayName("Packing Size (Kg)")</th>
-                                            <th>@Html.DisplayName("Packing Size Unit")</th>
                                             <th>@Html.DisplayName("Product Name")</th>
                                             <th>@Html.DisplayName("Created Date")</th>
                                             <th>@Html.DisplayName("Action")</th>
@@ -55,12 +53,6 @@
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.Description)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.PackingSize) 
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.PackingSizeUnit)
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(modelItem => item.ProductName)

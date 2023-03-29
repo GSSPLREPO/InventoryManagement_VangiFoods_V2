@@ -17,6 +17,7 @@ namespace InVanWebApp.Controllers
         private IDashboardRepository _repository;
         private ILocationRepository _repositoryLocation;
         private IItemRepository _itemRepository;
+        private IReportRepository _repositoryRR;
         private static ILog log = LogManager.GetLogger(typeof(GRNController));
 
         #region Initializing constructor
@@ -28,6 +29,7 @@ namespace InVanWebApp.Controllers
             _repository = new DashboardRepository();
             _repositoryLocation = new LocationRepository();
             _itemRepository = new ItemRepository();
+            _repositoryRR = new ReportRepository();
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
@@ -116,6 +118,98 @@ namespace InVanWebApp.Controllers
             var Item_dd = new SelectList(model.ToList(), "ID", "ItemNameWithCode");
             ViewData["Item"] = Item_dd;
         }
+        #endregion
+
+        #region Bind data reorder point of available total ActualYeild And ExpectedYeild
+
+        public ActionResult YeildDashboard()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("YeildDashboard", "Login");
+            ReportBO model = new ReportBO();
+            model.fromDate = DateTime.Now;
+            model.toDate = DateTime.Now;
+            BindBatchNumberDropDown();
+            BindWorkOrderNumberDropDown();
+            return View();
+        }
+
+        public JsonResult GetYeildDashboardData(DateTime fromDate, DateTime toDate, string BatchNumber = "", string WorkOrderNumber = "")
+        {
+
+            var BatchNumberId = 0;
+            var WorkOrderNumberId = 0;
+            if (BatchNumber != "")
+                BatchNumberId = Convert.ToInt32(BatchNumber);
+            if (WorkOrderNumber != "")
+                WorkOrderNumberId = Convert.ToInt32(WorkOrderNumber);
+
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetYeildDashboardData(fromDate, toDate, BatchNumberId, WorkOrderNumberId);
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
+        #region Bind BacthNumber dropdown
+        public void BindBatchNumberDropDown()
+        {
+            var model = _repositoryRR.GetAll();
+            var BatchNumberdd = new SelectList(model.ToList(), "ID", "BatchNumber");
+            ViewData["BatchNumberdd"] = BatchNumberdd;
+        }
+
+        #endregion
+
+        #region Bind WorkOrderNumber dropdown
+        public void BindWorkOrderNumberDropDown()
+        {
+            var model = _repositoryRR.Getall();
+            var WorkOrderNumberdd = new SelectList(model.ToList(), "ID", "WorkOrderNumber");
+            ViewData["WorkOrderNumberdd"] = WorkOrderNumberdd;
+        }
+
+        #endregion
+
+        #region Bind FIFO System
+
+        public ActionResult FIFOSystem()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("FIFOSystem", "Login");
+            DashboardBO model = new DashboardBO();
+            model.toDate = DateTime.Now;
+            model.fromDate = DateTime.Now;
+            BindLocationDropdown();
+            BindItemDropDown();
+            return View(model);
+        }
+
+        public JsonResult GetFIFOSystem(string id, string ItemId, DateTime fromDate, DateTime toDate)
+        {
+            int LocationId = 0, itemId = 0;
+            if (id != null && id != "")
+                LocationId = Convert.ToInt32(id);
+            if (ItemId != null && ItemId != "")
+                itemId = Convert.ToInt32(ItemId);
+
+            DashboardBO model = new DashboardBO();
+            model.fromDate = DateTime.Today;
+            model.toDate = DateTime.Today;
+
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetFIFOSystem(fromDate, toDate, itemId, LocationId);
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
         #endregion
     }
 }

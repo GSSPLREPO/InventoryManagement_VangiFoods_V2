@@ -739,7 +739,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Batchwise Production report data 
-        public List<ReportBO> getBatchwiseProductionCostReportData(DateTime fromDate, DateTime toDate, int batchNumber)
+        public List<ReportBO> getBatchwiseProductionCostReportData(DateTime fromDate, DateTime toDate, string batchNumber)
         {
             List<ReportBO> resultList = new List<ReportBO>();
             try
@@ -1000,5 +1000,42 @@ namespace InVanWebApp.Repository
 
         #endregion
 
+        #region  Bind WrokOrderNumber
+        /// <summary>
+        /// Yatri: This function is for fatching the Wrok Order number
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ReportBO> Getall()
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_WorkOrderNumber_Get", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            ID = Convert.ToInt32(reader["SO_Id"]),
+                            WorkOrderNumber = reader["WorkOrderNumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+
+        #endregion
     }
 }

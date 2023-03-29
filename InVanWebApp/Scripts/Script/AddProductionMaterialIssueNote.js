@@ -6,42 +6,53 @@ function SaveBtnClick() {
     var flag = 0, i = 0;
     if (tableLength > 1) {
         while (i < tableLength - 1) {
-            var PhyQty = document.getElementById("txtIssuedQty_" + i).value; //Change this with Requested qty
-            PhyQty = parseFloat(PhyQty);
-            var AvlQty = document.getElementById("AvailableStock_" + i).innerHTML;
-            AvlQty = parseFloat(AvlQty);
+            var IssuingQty = document.getElementById("IssuingQty_" + i).value;
+            var IssuedQty = document.getElementById("IssuedQty_" + i).innerHTML;
+            var RequestedQty = document.getElementById("RequestedQty_" + i).innerHTML;
+            var AvailableStock = document.getElementById("AvailableStock_" + i).innerHTML;
 
-            if (PhyQty != 0) {
-                flag = 1;
-                var Comments = document.getElementById("txtRemarks_" + i).value;
-                var IssueQty = document.getElementById("txtIssuedQty_" + i).value;
-                IssueQty = parseFloat(IssueQty);
 
-                if (Comments == '' || Comments == null) {
-                    $('#spanRemark_' + i).text('Comment is mandatory!');
-                    document.getElementById('spanRemark_' + i).setAttribute('style', 'color:red;');
-                    document.getElementById("txtRemarks_" + i).focus();
+            if (AvailableStock == null || AvailableStock == '')
+                AvailableStock = 0;
+            else
+                AvailableStock = parseFloat(AvailableStock);
 
-                    event.preventDefault();
-                    return;
+            if (RequestedQty == null || RequestedQty == '')
+                RequestedQty = 0;
+            else
+                RequestedQty = parseFloat(RequestedQty);
+
+            if (IssuedQty == null || IssuedQty == '')
+                IssuedQty = 0;
+            else
+                IssuedQty = parseFloat(IssuedQty);
+
+
+            if (IssuingQty == null || IssuingQty == '')
+                IssuingQty = 0;
+            else
+                IssuingQty = parseFloat(IssuingQty);
+
+            if (IssuingQty == 0) {
+                if (IssuedQty == RequestedQty) {
+                    flag = 0;
                 }
-                else if (IssueQty > AvlQty) {
-                    document.getElementById("txtIssuedQty_" + i).value = 0;
-                    $('#spanIssueQty_' + i).text('');
-                    document.getElementById("txtIssuedQty_" + i).focus();
-                    event.preventDefault();
-                    return;
+                else if (AvailableStock == 0) {
+                    flag = 0;
                 }
-                document.getElementById("txtRemarks_" + i).setAttribute("required", "required");
+                else {
+                    flag = 1;
+                    break;
+                }
             }
-            $('#spanRemark_' + i).text('');
 
             i++;
         }
 
-        if (flag != 1) {
-            alert("No item issued, Cannot create issue note!");
+        if (flag == 1) {
+            alert("No item issued, Cannot create production material issue note!");
             $('#btnSave').prop('disabled', true);
+            event.preventDefault();
             return;
         }
         else
@@ -124,6 +135,9 @@ function SelectedIndexChangedPI() {
                         cell.setAttribute("id", "IssuedQty_" + j);
                     }
                     else if (i == 5) {
+                        var IssuedQty = parseFloat(result[j].IssuedQty);
+                        var RequestedQty = parseFloat(result[j].RequestedQty);
+
                         var t5 = document.createElement("input");
                         t5.id = "IssuingQty_" + j;
                         t5.setAttribute("value", result[j].IssuingQty);
@@ -132,6 +146,10 @@ function SelectedIndexChangedPI() {
                         t5.setAttribute("onkeypress", "return isNumberKey(event)")
                         t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)")
                         t5.setAttribute("class", "form-control form-control-sm");
+                        if (IssuedQty == RequestedQty) {
+                            t5.setAttribute("readonly", "readonly");
+                        }
+
                         cell.appendChild(t5);
 
                         var t6 = document.createElement('span');
@@ -169,40 +187,6 @@ function SelectedIndexChangedPI() {
                         cell.setAttribute("id", "ActualBalanceQty_" + j);
                         cell.setAttribute("class", "d-none");
                     }
-                    //else if (i == 11) {
-                    //    var t5 = document.createElement("input");
-                    //    t5.id = "txtRequestedQty_" + j;
-                    //    t5.setAttribute("value", "0");
-                    //    t5.setAttribute("type", "text");
-                    //    t5.setAttribute("maxlength", "8");
-                    //    t5.setAttribute("onkeypress", "return isNumberKey(event)");
-                    //    t5.setAttribute("class", "form-control form-control-sm");
-                    //    cell.appendChild(t5);
-                    //}
-                    //else if (i == 8) {
-                    //    var t5 = document.createElement("input");
-                    //    t5.id = "txtIssuedQty_" + j;
-                    //    t5.setAttribute("value", "0");
-                    //    t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-                    //    t5.setAttribute("maxlength", "8");
-                    //    t5.setAttribute("onkeypress", "return isNumberKey(event)");
-                    //    t5.setAttribute("class", "form-control form-control-sm");
-                    //    cell.appendChild(t5);
-                    //    var t6 = document.createElement('span');
-                    //    t6.id = "spanIssueQty_" + j;
-                    //    t6.setAttribute("class", "text-wrap");
-                    //    cell.appendChild(t6);
-                    //}
-                    //else if (i == 9) {
-                    //    var t5 = document.createElement("input");
-                    //    t5.id = "txtFinalStock_" + j;
-                    //    t5.setAttribute("readonly", "readonly");
-                    //    t5.setAttribute("value", "0");
-                    //    t5.setAttribute("type", "number");
-                    //    t5.setAttribute("class", "form-control form-control-sm");
-                    //    cell.appendChild(t5);
-                    //}
-
                 }
 
             }
@@ -218,7 +202,7 @@ function SelectedIndexChangedPI() {
 //=============End==============
 
 function OnChangeQty(value, id) {
-    $('#btnSave').prop('disabled', false);
+    /* $('#btnSave').prop('disabled', false);*/
 
     var rowNo = id.split('_')[1];
     if (value == '' || value == null)
@@ -245,29 +229,39 @@ function OnChangeQty(value, id) {
         $('#spanMsg_' + rowNo).text('You cannot issue more than requested quantity!');
         document.getElementById('spanMsg_' + rowNo).setAttribute('style', 'color:red;');
         document.getElementById(id).focus();
+        $('#btnSave').prop('disabled', true);
         return;
     }
     else if (value > AvailableStock) {
         $('#spanMsg_' + rowNo).text('You cannot issue more than available stock!');
         document.getElementById('spanMsg_' + rowNo).setAttribute('style', 'color:red;');
         document.getElementById(id).focus();
+        $('#btnSave').prop('disabled', true);
         return;
     }
     else if (value > ActualBalanceQty) {
         $('#spanMsg_' + rowNo).text('You cannot issue more than balance stock!');
         document.getElementById('spanMsg_' + rowNo).setAttribute('style', 'color:red;');
         document.getElementById(id).focus();
+        $('#btnSave').prop('disabled', true);
         return;
     }
     else {
         $('#spanMsg_' + rowNo).text('');
-        DiffQty = (RequestedQty + IssuedQty) - value;
+        DiffQty = (ActualBalanceQty) - value;
         DiffQty = parseFloat(DiffQty);
-        finalStockQty = AvailableStock - value;
+        if (value == 0) {
+            finalStockQty = 0;
+        }
+        else {
+            finalStockQty = AvailableStock - value;
+        }
         finalStockQty = parseFloat(finalStockQty);
 
         document.getElementById("BalanceQty_" + rowNo).innerHTML = DiffQty;
         document.getElementById("FinalStock_" + rowNo).innerHTML = finalStockQty;
+
+        $('#btnSave').prop('disabled', false);
     }
 }
 
@@ -276,52 +270,42 @@ var TxtItemDetails = "";
 function createJson() {
     var table = document.getElementById('submissionTable');
     var rowCount = table.rows.length;
-    var i = 0, flag = 0;
+    var i = 0;
     TxtItemDetails = "[";
     while (i < rowCount - 1) {
         var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
         var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
         var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
+        var ReqQty = (document.getElementById("RequestedQty_" + i)).innerHTML;
+        var IssueQty = (document.getElementById("IssuedQty_" + i)).innerHTML;
+        var IssuingQty = (document.getElementById("IssuingQty_" + i)).value;
+        IssuingQty = (IssuingQty == '' || IssuingQty == null ? 0 : IssuingQty);
+
+        var BalanceQty = (document.getElementById("BalanceQty_" + i)).innerHTML;
+        var AvailableStock = (document.getElementById("AvailableStock_" + i)).innerHTML;
+        var ItemUnit = (document.getElementById("ItemUnit_" + i)).innerHTML;
         var PricePerUnit = (document.getElementById("ItemUnitPrice_" + i)).innerHTML;
         var CurrencyName = (document.getElementById("CurrencyName_" + i)).innerHTML;
-        var AvailableStock = (document.getElementById("AvailableStock_" + i)).innerHTML;
-        var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
-
-        var ReqQty = (document.getElementById("txtRequestedQty_" + i)).value;
-        var IssueQty = (document.getElementById("txtIssuedQty_" + i)).value;
-        var DiffQty = (document.getElementById("txtFinalStock_" + i)).value;
-
-        var Remarks = (document.getElementById("txtRemarks_" + i)).value;
-
-        if (IssueQty == 0) {
-            i++;
-            continue;
-        }
+        var FinalStock = (document.getElementById("FinalStock_" + i)).innerHTML;
 
         TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
-            ", \"ItemName\": \"" + ItemName + "\", \"ItemUnitPrice\": " + PricePerUnit +
-            ", \"CurrencyName\": \"" + CurrencyName + "\", \"AvlStock\": " + AvailableStock + ", \"ItemUnit\": \"" + Unit +
-            "\", \"ReqQty\": " + ReqQty + ",\"FinalQty\": " + DiffQty + ", \"IssueQty\": " + IssueQty +
-            ",\"Remarks\": \"" + Remarks + "\"";
+            ", \"ItemName\": \"" + ItemName + "\", \"ReqQty\": " + ReqQty + ", \"IssueQty\": " + IssueQty +
+            ", \"IssuingQty\": " + IssuingQty + ", \"BalanceQty\": " + BalanceQty + ", \"AvlStock\": " + AvailableStock +
+            ", \"ItemUnit\": \"" + ItemUnit + "\", \"PricePerUnit\": " + PricePerUnit + ", \"CurrencyName\": \"" + CurrencyName +
+            "\",\"FinalQty\": " + FinalStock;
 
-        if (i == (rowCount - 1)) {
+        if (i == (rowCount - 2)) {
             TxtItemDetails = TxtItemDetails + "}";
-            flag = 1;
         }
         else
             TxtItemDetails = TxtItemDetails + "},";
 
         i++;
     }
-    TxtItemDetails = TxtItemDetails + "]"
-    var tempTxt = TxtItemDetails.split(',]')[0];
-
-    if (flag == 0)
-        TxtItemDetails = tempTxt + "]";
+    TxtItemDetails = TxtItemDetails + "]";
 
     $('#txtItemDetails').val(TxtItemDetails);
 
-    //alert(TxtItemDetails);
 }
 
 function isNumberKey(evt) {

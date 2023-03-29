@@ -41,9 +41,7 @@ namespace InVanWebApp.Repository
                         {
                             RecipeID = Convert.ToInt32(reader["RecipeID"]),
                             RecipeName = reader["RecipeName"].ToString(),
-                            Description = reader["Description"].ToString(),
-                            PackingSize = reader["PackingSize"] is DBNull ? 0 : float.Parse(reader["PackingSize"].ToString()),
-                            PackingSizeUnit = reader["PackingSizeUnit"] is DBNull ? 0 : Convert.ToInt32(reader["PackingSizeUnit"]),
+                            Description = reader["Description"].ToString(),                            
                             ProductID = reader["ProductID"] is DBNull ? 0 : Convert.ToInt32(reader["ProductID"]),
                             ProductName = reader["ProductName"] is DBNull ? "" : reader["ProductName"].ToString(),
                             CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
@@ -156,10 +154,7 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_tbl_RecipeMaster_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;                    
                     cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
-                    cmd.Parameters.AddWithValue("@Description", model.Description);                    
-                    cmd.Parameters.AddWithValue("@PackingSize", model.PackingSize);                    
-                    cmd.Parameters.AddWithValue("@PackingSizeUnit", model.PackingSizeUnit);                    
-                    cmd.Parameters.AddWithValue("@UOM_Id", model.UOM_Id);                    
+                    cmd.Parameters.AddWithValue("@Description", model.Description);                                     
                     cmd.Parameters.AddWithValue("@ProductID", model.ProductID);                    
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);                    
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
@@ -209,8 +204,7 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
                         cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
                         cmdNew.Parameters.AddWithValue("@Ratio", item.Ratio);
-                        cmdNew.Parameters.AddWithValue("@BatchSize", item.BatchSize);
-                        cmdNew.Parameters.AddWithValue("@Unit", model.UOM_Id);
+                        cmdNew.Parameters.AddWithValue("@BatchSize", item.BatchSize);                        
                         cmdNew.Parameters.AddWithValue("@UnitName", item.UnitName);
                         cmdNew.Parameters.AddWithValue("@Description", item.Description);
                         cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
@@ -232,77 +226,6 @@ namespace InVanWebApp.Repository
                 log.Error(ex.Message, ex);
             }
             return response;
-        }
-
-        /// <summary>
-        /// Date: 27 Feb 2023
-        /// Rahul: This function is for uploading Recipe item list (Bulk upload)
-        /// </summary>
-        /// <param name="model"></param>
-        public List<ResponseMessageBO> SaveRecipeItemData(List<RecipeMasterBO> model) 
-        {
-            try
-            {
-                //var success = false;
-                int cnt = 0;
-                List<ResponseMessageBO> responsesList = new List<ResponseMessageBO>();
-                if (model != null && model.Count > 0)
-                {
-
-                    for (int i = 0; i < model.Count; i++)
-                    {
-                        RecipeMasterBO material = new RecipeMasterBO();
-
-                        material.RecipeName = model[i].RecipeName;
-                        material.Description = model[i].Description;
-                        material.PackingSize = model[i].PackingSize;
-                        material.PackingSizeUnit = model[i].PackingSizeUnit;
-                        material.UOM_Id = model[i].UOM_Id;
-                        material.ProductID = model[i].ProductID;
-                        material.ProductName = model[i].ProductName;
-                        material.IsDeleted = false;
-                        material.CreatedBy = model[i].CreatedBy;
-                        material.CreatedDate = Convert.ToDateTime(model[i].CreatedDate);
-
-                        using (SqlConnection con = new SqlConnection(conString))
-                        {
-                            SqlCommand cmd = new SqlCommand("usp_tbl_RecipeMaster_Insert", con); 
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            cmd.Parameters.AddWithValue("@RecipeName", material.RecipeName);
-                            cmd.Parameters.AddWithValue("@Description", material.Description);
-                            cmd.Parameters.AddWithValue("@PackingSize", material.PackingSize);
-                            cmd.Parameters.AddWithValue("@PackingSizeUnit", material.PackingSizeUnit);
-                            cmd.Parameters.AddWithValue("@UOM_Id", material.UOM_Id);
-                            cmd.Parameters.AddWithValue("@ProductID", material.ProductID);
-                            cmd.Parameters.AddWithValue("@ProductName", material.ProductName); 
-                            cmd.Parameters.AddWithValue("@CreatedBy", material.CreatedBy);
-                            cmd.Parameters.AddWithValue("@CreatedDate", material.CreatedDate);
-                            con.Open();
-                            //cmd.ExecuteNonQuery();
-                            SqlDataReader dataReader = cmd.ExecuteReader();
-
-                            while (dataReader.Read())
-                            {
-                                ResponseMessageBO response = new ResponseMessageBO();
-
-                                response.ItemName = dataReader["RecipeName"].ToString();
-                                response.ItemCode = dataReader["Description"].ToString();
-                                response.Status = Convert.ToBoolean(dataReader["Status"]);
-
-                                responsesList.Add(response);
-                            }
-                            con.Close();
-                        };
-
-                        cnt += 1;
-                    }
-                }                
-                return responsesList;
-            }
-            catch (Exception ex)
-            {                
-                throw ex;
-            }
         }
         #endregion
 
@@ -332,9 +255,6 @@ namespace InVanWebApp.Repository
                             RecipeID = Convert.ToInt32(reader["RecipeID"]),
                             RecipeName = reader["RecipeName"].ToString(),
                             Description = reader["Description"].ToString(),
-                            PackingSize = reader["PackingSize"] is DBNull ? 0 : float.Parse(reader["PackingSize"].ToString()),
-                            PackingSizeUnit = reader["PackingSizeUnit"] is DBNull ? 0 : Convert.ToInt32(reader["PackingSizeUnit"]),
-                            UOM_Id = reader["UOM_Id"] is DBNull ? 0 : Convert.ToInt32(reader["UOM_Id"]),
                             ProductID = reader["ProductID"] is DBNull ? 0 : Convert.ToInt32(reader["ProductID"]),
                             ProductName = reader["ProductName"] is DBNull ? "" : reader["ProductName"].ToString()
                         };
@@ -375,9 +295,6 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Recipe_ID", item.RecipeID); 
                     cmd.Parameters.AddWithValue("@RecipeName", item.RecipeName);
                     cmd.Parameters.AddWithValue("@Description", item.Description);
-                    cmd.Parameters.AddWithValue("@PackingSize", item.PackingSize);
-                    cmd.Parameters.AddWithValue("@PackingSizeUnit", item.PackingSizeUnit);
-                    cmd.Parameters.AddWithValue("@UOM_Id", item.UOM_Id);
                     cmd.Parameters.AddWithValue("@ProductID", item.ProductID);
                     cmd.Parameters.AddWithValue("@ProductName", item.ProductName);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", item.LastModifiedBy);
@@ -426,8 +343,7 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@Item_Code", items.ItemCode);
                         cmdNew.Parameters.AddWithValue("@ItemName", items.ItemName);
                         cmdNew.Parameters.AddWithValue("@Ratio", items.Ratio);
-                        cmdNew.Parameters.AddWithValue("@BatchSize", items.BatchSize);
-                        cmdNew.Parameters.AddWithValue("@Unit", item.UOM_Id);
+                        cmdNew.Parameters.AddWithValue("@BatchSize", items.BatchSize);                        
                         cmdNew.Parameters.AddWithValue("@UnitName", items.UnitName);
                         cmdNew.Parameters.AddWithValue("@Description", items.Description);
                         cmdNew.Parameters.AddWithValue("@LastModifiedBy", item.LastModifiedBy);

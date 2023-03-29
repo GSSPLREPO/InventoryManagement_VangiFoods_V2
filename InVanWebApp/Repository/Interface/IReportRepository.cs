@@ -38,7 +38,7 @@ namespace InVanWebApp.Repository.Interface
 
         ///Production Reprot
         //Batchwise Production cost Reprot
-        List<ReportBO> getBatchwiseProductionCostReportData(DateTime fromDate, DateTime toDate, int ItemId);
+        List<ReportBO> getBatchwiseProductionCostReportData(DateTime fromDate, DateTime toDate, string ItemId);
 
         //To Bind BatchNumber for Batchwise Production Cost Report
         IEnumerable<ReportBO> GetAll();
@@ -55,5 +55,7 @@ namespace InVanWebApp.Repository.Interface
         //Batchwise Production cost Reprot
         List<ReportBO> getRawMaterialCostAnalysisReportData(DateTime fromDate, DateTime toDate, int ItemId);
 
+        //To Bind WorkOrder for Batchwise Production Cost Report
+        IEnumerable<ReportBO> Getall();
     }
 }

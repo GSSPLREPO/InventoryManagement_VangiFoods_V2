@@ -104,7 +104,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Oil Analysis Details Inserted Successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                            TempData["Success"] = "<script>alert('Duplication Lot no! Cannot be inserted!');</script>";
                             return View();
                         }
                         return RedirectToAction("Index", "OilAnalysis");

@@ -51,9 +51,13 @@
             <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
-                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
+        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a></li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/YeildDashboard">Yield Dashboard</a>
+                    </li>
+                    @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/FIFOSystem">FIFO System</a></li>*@
                 </ul>
             </div>
         </li>
@@ -396,8 +400,13 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <div id="BatchwiseProductionCostReport">
+                            <a class="nav-link" href="~/Report/BatchwiseProductionCostReport">Batch-wise Production Cost</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div id="FGLocationWiseReport">
-                            <a class="nav-link" href="~/Report/FGLocationWiseReport">FG Locationwise Report</a>
+                            <a class="nav-link" href="~/Report/FGLocationWiseReport">FG Location wise</a>
                         </div>
                     </li>
 

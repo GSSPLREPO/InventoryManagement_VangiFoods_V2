@@ -26,6 +26,7 @@ namespace InVanWebApp.Controllers
     public class FinishedGoodSeriesController : Controller
     {
         private IFinishedGoodSeriesRepository _finishedGoodSeriesRepository;
+        private IPurchaseOrderRepository _purchaseOrderRepository;
         private static ILog log = LogManager.GetLogger(typeof(FinishedGoodSeriesController));
 
         #region Initializing constructor
@@ -36,6 +37,7 @@ namespace InVanWebApp.Controllers
         public FinishedGoodSeriesController()
         {
             _finishedGoodSeriesRepository = new FinishedGoodSeriesRepository();
+            _purchaseOrderRepository = new PurchaseOrderRepository();
         }
 
         #endregion
@@ -87,6 +89,7 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindSONumber();
+                BindLocationName();
 
                 FinishedGoodSeriesBO model = new FinishedGoodSeriesBO();
                 //model.VerifyByName = Session[ApplicationSession.USERNAME].ToString();
@@ -248,6 +251,20 @@ namespace InVanWebApp.Controllers
             var soNumber = _finishedGoodSeriesRepository.GetSONUmberForDropDown();
             var soNumberList = new SelectList(soNumber.ToList(), "SalesOrderId", "SONo");
             ViewData["SONumbers"] = soNumberList;
+        }
+
+        public JsonResult BatchNumber(string SId)
+        {
+            var SOId = Convert.ToInt32(SId);
+            var result = _finishedGoodSeriesRepository.GetBatchNo(SOId);
+            return Json(result);
+        }
+
+        public void BindLocationName()
+        {
+            var result = _purchaseOrderRepository.GetLocationNameList();
+            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
+            ViewData["LocationDD"] = resultList;
         }
 
         #endregion

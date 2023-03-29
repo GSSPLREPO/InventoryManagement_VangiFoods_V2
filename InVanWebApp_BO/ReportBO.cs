@@ -52,5 +52,11 @@ namespace InVanWebApp_BO
         //Thius BO used for Raw Material Cost Analysis Report
 
         public string QuantityUsed { get; set; }
+
+        //this fileds are used for YeildDashboard
+
+        public int BatchNumberId { get; set; }
+
+        public int WorkOrderNumberId { get; set; }
     }
 }

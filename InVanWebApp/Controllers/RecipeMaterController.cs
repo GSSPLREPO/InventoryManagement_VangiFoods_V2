@@ -15,8 +15,7 @@ namespace InVanWebApp.Controllers
 {
     public class RecipeMaterController : Controller
     {
-        private IRecipeMaterRepository _productionRecipeRepository;
-        private IUnitRepository _unitRepository;
+        private IRecipeMaterRepository _productionRecipeRepository;        
         private IProductMasterRepository _productMasterRepository;
         //private IIndentRepository _repository;
         private static ILog log = LogManager.GetLogger(typeof(RecipeMaterController));
@@ -28,8 +27,7 @@ namespace InVanWebApp.Controllers
         /// </summary>
         public RecipeMaterController()
         {
-            _productionRecipeRepository = new RecipeMaterRepository();
-            _unitRepository = new UnitRepository();
+            _productionRecipeRepository = new RecipeMaterRepository();            
             _productMasterRepository = new ProductMasterRepository();
         }
 
@@ -66,10 +64,6 @@ namespace InVanWebApp.Controllers
         #region For binding the dropdown of Production Recipe Item Packing Size Unit. 
         public void BindItemTypeCategory()
         {
-            var unit = _unitRepository.GetAll();
-            var dd3 = new SelectList(unit.ToList(), "UnitID", "UnitName");
-            ViewData["UOM"] = dd3;
-
             var product = _productMasterRepository.GetAll();
             var dd4 = new SelectList(product.ToList(), "ProductID", "ProductCode", "ProductName");
             ViewData["ProductName"] = dd4;
@@ -151,101 +145,6 @@ namespace InVanWebApp.Controllers
             BindItemTypeCategory();
             return View();
         }
-
-        /// <summary>
-        /// Date: 27 Feb '23 
-        /// Rahul: Upload multiple Recipe items. 
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult UploadRecipeItems()
-        {
-            if (Session[ApplicationSession.USERID] != null)
-            {
-                try
-                {
-                    List<ResponseMessageBO> responsesList = new List<ResponseMessageBO>();
-                    HttpFileCollectionBase files = Request.Files;
-                    HttpPostedFileBase materialExcelFile = files[0];
-                    string materialExcelFilename;
-
-                    // Checking for Internet Explorer  
-                    if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-                    {
-                        string[] testfiles = materialExcelFile.FileName.Split(new char[] { '\\' });
-                        materialExcelFilename = testfiles[testfiles.Length - 1];
-                    }
-                    else
-                    {
-                        materialExcelFilename = materialExcelFile.FileName;
-                    }
-
-                    // Get the complete folder path and store the file inside it.  
-                    materialExcelFilename = Path.Combine(Server.MapPath("~/ExcelUploads/"), materialExcelFilename);
-                    materialExcelFile.SaveAs(materialExcelFilename);
-
-                    //------------------------ New Code Start----------------------------------
-                    var listMaterialExcelEntity = new List<RecipeMasterBO>();
-                    using (var package = new ExcelPackage(materialExcelFile.InputStream))
-                    {
-                        // get the first worksheet in the workbook
-                        ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
-                        int col = 1;
-
-                        for (int row = 2; worksheet.Cells[row, col].Value != null; row++)
-                        {
-                            // do something with worksheet.Cells[row, col].Value 
-                            var productExcel = new RecipeMasterBO();
-
-                            productExcel.RecipeName = worksheet.Cells[row, col].Value != null ? worksheet.Cells[row, col].Value.ToString() : null;
-                            productExcel.Description = worksheet.Cells[row, col + 1].Value != null ? worksheet.Cells[row, col + 1].Value.ToString() : null;
-                            productExcel.PackingSize = float.Parse(worksheet.Cells[row, col + 2].Value != null ? worksheet.Cells[row, col + 2].Value.ToString() : null);
-                            productExcel.PackingSizeUnit = Convert.ToInt32(worksheet.Cells[row, col + 3].Value != null ? worksheet.Cells[row, col + 3].Value.ToString() : null);
-                            productExcel.UOM_Id = Convert.ToInt32(worksheet.Cells[row, col + 4].Value != null ? worksheet.Cells[row, col + 4].Value.ToString() : null);
-                            productExcel.ProductID = Convert.ToInt32(worksheet.Cells[row, col + 5].Value != null ? worksheet.Cells[row, col + 5].Value.ToString() : null);
-                            productExcel.ProductName = worksheet.Cells[row, col + 6].Value != null ? worksheet.Cells[row, col + 6].Value.ToString() : null;
-                            var tempCreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-
-                            productExcel.CreatedBy = tempCreatedBy;
-                            productExcel.CreatedDate = DateTime.UtcNow.AddHours(5.5);
-                            productExcel.IsDeleted = false;
-                            listMaterialExcelEntity.Add(productExcel);
-                        }
-                        responsesList = _productionRecipeRepository.SaveRecipeItemData(listMaterialExcelEntity);
-
-                    } // the using 
-                      //------------------------ New Code End----------------------------------
-
-                    int i = 0, flag = 0;
-                    int count = responsesList.Count;
-                    string ItemList = "";
-
-                    while (i < count)
-                    {
-                        if (responsesList[i].Status == false)
-                            ItemList = ItemList + responsesList[i].ItemName + ", ";
-                        else
-                            flag = 1;
-                        i++;
-                    }
-                    if (ItemList != "")
-                    {
-                        if (flag == 1)
-                            return Json("Few Recipe items are uploaded successfully! And following Recipe items are duplicate: " + ItemList, JsonRequestBehavior.AllowGet);
-                        else
-                            return Json("No Recipe item inserted! And list of duplicate Recipe items: " + ItemList, JsonRequestBehavior.AllowGet);
-                    }
-                    else
-                        return Json("All Recipe Items Uploaded Successfully!", JsonRequestBehavior.AllowGet);
-                }
-                catch (Exception ex)
-                {
-                    return Json(ex, JsonRequestBehavior.AllowGet);
-                }
-            }
-            else
-                return Json("Session Out!", JsonRequestBehavior.AllowGet);
-        }
-
         #endregion
 
         #region  Update function

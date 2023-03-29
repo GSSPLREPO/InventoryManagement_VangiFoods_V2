@@ -1,237 +1,227 @@
 ﻿@model InVanWebApp_BO.ProductionIndentBO
-@{
-    ViewBag.Title = "EditProductionIndent";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "EditProductionIndent";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 @using (Html.BeginForm("EditProductionIndent", "ProductionIndent", FormMethod.Post))
 {
-    <div class="card">
-        <div class="card-body">
-            <h4>Edit Production Indent</h4>
-            <hr />
-            @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.ID)
+<div class="card">
+    <div class="card-body">
+        <h4>Edit Production Indent</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
 
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Indent Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ProductionIndentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Issue Date")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.IssueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.IssueDate, "", new { @class = "error mt-2 text-danger" })
-                </div>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Indent Number")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ProductionIndentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Issue Date")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.IssueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.IssueDate, "", new { @class = "error mt-2 text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Indent By")
+                <span style="color:red">*</span>
+            </div>
+            @if (@Session["UserId"] != null)
+            {
+<div class="col-md-4 d-none">
+    @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control", Value = @Session["UserId"], @readonly = "readonly" })
+</div>          }
+
+            @if (@Session["UserName"] != null)
+            {
+<div class="col-md-4">
+    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", Value = @Session["UserName"], @readonly = "readonly" })
+</div>          }
+            <div class="col-md-2">
+                @Html.Label("Production Date")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ProductionDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.ProductionDate, "", new { @class = "error mt-2 text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Product Name")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                @Html.HiddenFor(model => model.RecipeID)
+                @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger" })
             </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Indent By")
-                    <span style="color:red">*</span>
-                </div>
-                @if (@Session["UserId"] != null)
-                {
-                    <div class="col-md-4 d-none">
-                        @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control", Value = @Session["UserId"], @readonly = "readonly" })
-                    </div>
-                }
+            <div class="col-md-2">
+                @Html.Label("Total Batches")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.TotalBatches, new { @class = "form-control form-control-sm", maxlength = "8", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.TotalBatches, "", new { @class = "error mt-2 text-danger" })
+            </div>
+        </div>
 
-                @if (@Session["UserName"] != null)
-                {
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", Value = @Session["UserName"], @readonly = "readonly" })
-                    </div>
-                }
-                <div class="col-md-2">
-                    @Html.Label("Production Date")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ProductionDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.ProductionDate, "", new { @class = "error mt-2 text-danger" })
-                </div>
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("SO Number")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model=>model.SONo, new { @class = "form-control form-control-sm", @readonly="readonly" })
+                @Html.ValidationMessageFor(model => model.SONo, "", new { @class = "error mt-2 text-danger" })
+                @Html.HiddenFor(model => model.SalesOrderId)
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Work Order No")
+            </div>
+            <div class="col-md-4">
+                @*@Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
+                    new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })
+                     @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })*@
+                @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", maxlength = "50", @disabled = "disabled" })
+                @Html.HiddenFor(model => model.WorkOrderNo)
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Batch Number")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })
             </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Product Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.HiddenFor(model => model.RecipeID)
-                    @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.Label("Total Batches")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TotalBatches, new { @class = "form-control form-control-sm", maxlength = "8", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.TotalBatches, "", new { @class = "error mt-2 text-danger" })
-                </div>
+            <div class="col-md-2">
+                @Html.Label("Remarks")
             </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("SO Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownList("SalesOrderId", (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "--Select--",
-                   new { @class = "form-control", onchange = "SelectedIndexChangedSO($(this).val(),id)", @disabled = "disabled" })
-                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
-                    @Html.HiddenFor(model => model.SalesOrderId)
-                    @Html.HiddenFor(model => model.SONo)
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Work Order No")
-                </div>
-                <div class="col-md-4">
-                    @*@Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
-        new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })
-         @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })*@
-                    @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", maxlength = "50", @disabled = "disabled" })
-                    @Html.HiddenFor(model => model.WorkOrderNo)
-                </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95", onkeypress = "createJson();" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
             </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Batch Number")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.Label("Remarks")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95", onkeypress = "createJson();" })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
-                </div>
+        </div>
+        <br />
+        <hr />
+        <div class="row">
+            <div class="col-md-4" style="color:darkcyan">
+                @Html.Label("Indent Ingredients detail")
             </div>
-            <br />
-            <hr />
-            <div class="row">
-                <div class="col-md-4" style="color:darkcyan">
-                    @Html.Label("Indent Ingredients detail")
-                </div>
-            </div>
-            <hr />
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-hover" id="ItemTable">
-                                        <thead>
-                                            <tr>
-                                                <th class="sortStyle d-none">
-                                                    ItemID
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Ingredients Code
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Ingredients
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Batch Quantity
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Final Quantity
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Units
-                                                </th>
-                                                <th class="sortStyle">Percentage</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="myTableBody">
-                                            @{ int c = 1;
-                                                foreach (var item in Model.indent_Details)
-                                                {
-                                                    string itemListForDD = "itemListForDD";
-                                                    itemListForDD = itemListForDD + (c - 1);
-                                                    <tr id="tablerow_@c">
-                                                        <td class="col-md-4 d-none">
-                                                            @Html.TextBox("ItemID_" + c, item.ItemId, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ItemCode_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ItemQty_" + c, item.BatchQuantity, new
-                                                       {
-                                                           @class = "form-control form-control-sm text-right",
-                                                           style = "height:30px;",
-                                                           value = "0",
-                                                           onkeypress = "return isNumberKey(event)",
-                                                           onchange = "CalItemTotalPrice($(this).val(),id)",
-                                                           maxlength = "8",
-                                                           @readonly = "readonly"
-                                                       })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("txtFinalQty_" + c, item.FinalQuantity, new
-                                                            {
-                                                                @class = "form-control form-control-sm text-right",
-                                                                style = "height:30px;",
-                                                                value = "0",
-                                                                onkeypress = "return isNumberKey(event)",
-                                                           onchange = "CalItemTotalPrice($(this).val(),id)",
-                                                                maxlength = "8"
-                                                            })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("Percentage_" + c, item.Percentage, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                        </td>
+        </div>
+        <hr />
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                <table class="table table-hover" id="ItemTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortStyle d-none">
+                                                ItemID
+                                            </th>
+                                            <th class="sortStyle">
+                                                Item Code
+                                            </th>
+                                            <th class="sortStyle">
+                                                Item Name
+                                            </th>
+                                            <th class="sortStyle">Percentage</th>
+                                            <th class="sortStyle">
+                                                Batch Quantity
+                                            </th>
+                                            <th class="sortStyle">
+                                                Final Quantity
+                                            </th>
+                                            <th class="sortStyle">
+                                                Units
+                                            </th>
 
-                                                    </tr>
-                                                    { c++; }
-                                                }
+                                        </tr>
+                                    </thead>
+                                    <tbody id="myTableBody">
+                                        @{ int c = 1;
+                                            foreach (var item in Model.indent_Details)
+                                            {
+                                                string itemListForDD = "itemListForDD";
+                                                itemListForDD = itemListForDD + (c - 1);
+                            <tr id="tablerow_@c">
+                                <td class="col-md-4 d-none">
+                                    @Html.TextBox("ItemID_" + c, item.ItemId, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("ItemCode_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("Percentage_" + c, item.Percentage, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("ItemQty_" + c, item.BatchQuantity, new
+                                    {
+                                        @class = "form-control form-control-sm",
+                                        style = "height:30px;",
+                                        value = "0",
+                                        onkeypress = "return isNumberKey(event)",
+                                        maxlength = "8",
+                                        @readonly = "readonly"
+                                    })
+                                </td>
+                                <td>
+                                    @Html.TextBox("txtFinalQty_" + c, item.FinalQuantity, new
+                                    {
+                                        @class = "form-control form-control-sm",
+                                        style = "height:30px;",
+                                        value = "0",
+                                        onkeypress = "return isNumberKey(event)",
+                                        maxlength = "8"
+                                    })
+                                </td>
+                                <td>
+                                    @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                </td>
 
-                                            }
-                                        </tbody>
-                                    </table>
-                                    <br />
 
-                                </div>
+                            </tr> { c++; }
+                                            } }
+                                    </tbody>
+                                </table>
+                                <br />
+
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
-                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
                     </div>
                 </div>
             </div>
-            <br />
-            <a href="@Url.Action("Index", "ProductionIndent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                Back To List
-            </a>
-            <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
         </div>
+        <br />
+        <a href="@Url.Action("Index", "ProductionIndent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+            Back To List
+        </a>
+        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
     </div>
-}
+</div>}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -271,7 +261,7 @@
         SONo = document.getElementById("SalesOrderId").options[selectedOptionSO].innerText;
         document.getElementById("SONo").value = SONo;
         SelectedIndexChangedWO(id);
-        
+
         var TotalBatches = $("#TotalBatches").val();
         debugger
         $.get("@Url.Action("BindBatchNumber", "ProductionIndent")?id=" + id + "&TotalBatches=" + TotalBatches

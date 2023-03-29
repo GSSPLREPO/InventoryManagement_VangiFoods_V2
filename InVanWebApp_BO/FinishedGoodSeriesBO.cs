@@ -10,7 +10,8 @@ namespace InVanWebApp_BO
     public class FinishedGoodSeriesBO
     {
         public int FGSID { get; set; }
-        [Required(ErrorMessage = "Enter Product Name")]
+        [Required(ErrorMessage = "Select Product Name")]
+        public int ProductId { get; set; }
         public string ProductName { get; set; }
         [Required(ErrorMessage = "Enter Package Size of Product")]
         public string PackageSize { get; set; }
@@ -45,12 +46,16 @@ namespace InVanWebApp_BO
         public Nullable<decimal> ActualYield { get; set; }
         public string WorkOrderNo { get; set; }
         //public string VerifyByName { get; set; }
+        [Required(ErrorMessage = "Select Location!")]
+        public int LocationId { get; set; }
+        public string LocationName { get; set; }
         public string Remarks { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+
         //Added the below field for report
         //[Required(ErrorMessage = "Please Select From Date!")]
         //public DateTime fromDate { get; set; }

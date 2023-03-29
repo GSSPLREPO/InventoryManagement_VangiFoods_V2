@@ -81,7 +81,7 @@
                 </div>
                 <div class="col-md-4">
                     <select id="ProductId" name="ProductId" class="form-control form-control-sm" onchange="SelectedIndexChangedProductName($(this).val())">
-                        <option value="0">--Select--</option>
+                        <option value="">--Select--</option>
                     </select>
                     @*@Html.DropDownListFor(model => model.ProductId, (IEnumerable<SelectListItem>)ViewData["Product_dd"], "--Select--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductName($(this).val())" })*@
                     @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "error mt-2 text-danger" })
@@ -319,7 +319,7 @@
                 var count = result.salesOrderItemsDetails.length;
                 var i = 0;
                 $("#ProductId option").remove();
-                $("#ProductId").append($("<option></option>").val('0').html('--Select--'));
+                $("#ProductId").append($("<option></option>").val('').html('--Select--'));
                 while (i < count) {
                     $("#ProductId").append($("<option></option>").val(result.salesOrderItemsDetails[i].Item_ID).html(result.salesOrderItemsDetails[i].ItemName));
                     i++;

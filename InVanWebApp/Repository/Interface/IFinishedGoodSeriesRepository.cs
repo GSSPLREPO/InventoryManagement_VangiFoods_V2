@@ -32,5 +32,6 @@ namespace InVanWebApp.Repository.Interface
 
         IEnumerable<SalesOrderBO > GetBindWorkOrderNo(int id);
 
+        IEnumerable<BatchNumberMasterBO> GetBatchNo(int SOId);
     }
 }

@@ -24,7 +24,7 @@ function SaveBtnClick() {
         }
 
         if (balQtyFlag == 1) {
-            alert("All items shipped, Cannot create its outward note!");
+            alert("All items shipped, Cannot create its delivery challan!");
             $('#btnSave').prop('disabled', true);
             return;
         }
@@ -32,7 +32,7 @@ function SaveBtnClick() {
             $('#btnSave').prop('disabled', false);
 
         if (flag != 1) {
-            alert("No item shipped, Cannot create outward note!");
+            alert("No item shipped, Cannot create delivery challan!");
             $('#btnSave').prop('disabled', true);
             return;
         }
@@ -123,7 +123,8 @@ function SelectedIndexChangedSO(id) {
                         t5.setAttribute("maxlength", "8");
                         t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                         t5.setAttribute("class", "form-control form-control-sm");
-                        if (result[j].BalanceQuantity == 0)
+                        //if (result[j].BalanceQuantity == 0)
+                        if (result[j].BalanceQuantity == result[j].ItemQuantity)
                             t5.setAttribute("readonly", "readonly");
 
                         cell.appendChild(t5);
@@ -197,15 +198,17 @@ function OnChangeQty(value, id) {
 
     var DiffQty = 0;
 
-    if (OutwardQty > BalQty) {
-        $('#spanShippingQty_' + rowNo).text('Shipped quantity cannot be greater than balance quantity!');
+    //if (OutwardQty > (BalQty)) {
+    if (OutwardQty > (SOQty-BalQty)) {
+        $('#spanShippingQty_' + rowNo).text('Shipped quantity cannot be greater than delivered quantity!');
         document.getElementById('spanShippingQty_' + rowNo).setAttribute('style', 'color:red;');
         document.getElementById(id).focus();
         return;
     }
     else {
         $('#spanShippingQty_' + rowNo).text('');
-        DiffQty = BalQty - OutwardQty;
+        //DiffQty = BalQty - OutwardQty;
+        DiffQty = (SOQty - BalQty) - OutwardQty;
         DiffQty = parseFloat(DiffQty);
         document.getElementById("BalQty_" + rowNo).innerHTML = DiffQty;
 
