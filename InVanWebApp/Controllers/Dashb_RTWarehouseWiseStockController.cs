@@ -18,6 +18,7 @@ namespace InVanWebApp.Controllers
         private ILocationRepository _repositoryLocation;
         private IItemRepository _itemRepository;
         private IReportRepository _repositoryRR;
+        private IFinishedGoodSeriesRepository _finishedGoodSeriesRepository;
         private static ILog log = LogManager.GetLogger(typeof(GRNController));
 
         #region Initializing constructor
@@ -30,6 +31,7 @@ namespace InVanWebApp.Controllers
             _repositoryLocation = new LocationRepository();
             _itemRepository = new ItemRepository();
             _repositoryRR = new ReportRepository();
+            _finishedGoodSeriesRepository = new FinishedGoodSeriesRepository();
         }
         /// <summary>
         /// Farheen: Constructor with parameters for initializing the interface object.
@@ -42,7 +44,7 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind real time warehouse wise dashboard
-       
+
         public ActionResult Index()
         {
             if (Session[ApplicationSession.USERID] == null)
@@ -55,15 +57,15 @@ namespace InVanWebApp.Controllers
 
         public JsonResult GetDashboardData(string id, string ItemId)
         {
-            int LocationId = 0, itemId=0;
+            int LocationId = 0, itemId = 0;
             if (id != null & id != "")
                 LocationId = Convert.ToInt32(id);
-            if(ItemId!=null & ItemId!="")
+            if (ItemId != null & ItemId != "")
                 itemId = Convert.ToInt32(ItemId);
 
             string jsonstring = string.Empty;
 
-            var result = _repository.GetDashboardData(LocationId,itemId);
+            var result = _repository.GetDashboardData(LocationId, itemId);
             jsonstring = JsonConvert.SerializeObject(result);
 
             var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
@@ -83,7 +85,7 @@ namespace InVanWebApp.Controllers
             return View();
         }
 
-        public JsonResult GetDashboardDataReorderPointOfStocks(string id="")
+        public JsonResult GetDashboardDataReorderPointOfStocks(string id = "")
         {
             var ItemId = 0;
             if (id != "")
@@ -100,25 +102,6 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region Bind location dropdown
-        public void BindLocationDropdown()
-        {
-            var ItemType = _repositoryLocation.GetAll();
-            var dd = new SelectList(ItemType.ToList(), "ID", "LocationName");
-            ViewData["LocationName"] = dd;
-        }
-
-        #endregion
-
-        #region Bind Item dropdown
-        public void BindItemDropDown()
-        {
-            var model = _itemRepository.GetAll();
-            //var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
-            var Item_dd = new SelectList(model.ToList(), "ID", "ItemNameWithCode");
-            ViewData["Item"] = Item_dd;
-        }
-        #endregion
 
         #region Bind data reorder point of available total ActualYeild And ExpectedYeild
 
@@ -151,26 +134,6 @@ namespace InVanWebApp.Controllers
 
             var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
             return jsonResult;
-        }
-
-        #endregion
-
-        #region Bind BacthNumber dropdown
-        public void BindBatchNumberDropDown()
-        {
-            var model = _repositoryRR.GetAll();
-            var BatchNumberdd = new SelectList(model.ToList(), "ID", "BatchNumber");
-            ViewData["BatchNumberdd"] = BatchNumberdd;
-        }
-
-        #endregion
-
-        #region Bind WorkOrderNumber dropdown
-        public void BindWorkOrderNumberDropDown()
-        {
-            var model = _repositoryRR.Getall();
-            var WorkOrderNumberdd = new SelectList(model.ToList(), "ID", "WorkOrderNumber");
-            ViewData["WorkOrderNumberdd"] = WorkOrderNumberdd;
         }
 
         #endregion
@@ -210,6 +173,152 @@ namespace InVanWebApp.Controllers
             return jsonResult;
         }
 
+        #endregion
+
+        #region Bind Total Production Cost by Batch Number 
+
+        public ActionResult ProductionCostByBatchNumber()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+            BindSONumber();
+            BindBatchNumberDropDown();
+            return View();
+        }
+
+        public JsonResult GetDashboardProductionCostByBatchNumber(string soID = "", string batchNumber = "", DateTime? fromDate = null, DateTime? toDate = null)
+        {
+            var BatchNumber = "";
+            if (batchNumber != "")
+                BatchNumber = batchNumber.ToString();
+
+            var SOID = 0;
+            if (soID != "")
+                SOID = Convert.ToInt32(soID);
+
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetDashboardProductionCostByBatchNumber(SOID, BatchNumber, fromDate, toDate);
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
+        #region Bind data reorder point of available Opening And Closing
+
+        public ActionResult OrderSummeryDashboard()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("OrderSummeryDashboard", "Login");
+            OrderSummeryBO model = new OrderSummeryBO();
+            model.fromDate = DateTime.Now;
+            model.toDate = DateTime.Now;
+            return View(model);
+        }
+
+        public JsonResult GetOrderSummeryDashboardData(DateTime fromDate, DateTime toDate, string Duration = "")
+        {
+            var DurationID = 2;
+            if (Duration != " ")
+                DurationID = Convert.ToInt32(Duration);
+
+
+
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetOrderSummeryDashboardData(fromDate, toDate, DurationID);
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
+        #region Bind data reorder point of available Total Production Cost by SO or Work Order wise dashboard
+
+        public ActionResult WorkOrderwiseProductionCostDashboard()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("WorkOrderwiseProductionCostDashboard", "Login");
+            DashboardBO model = new DashboardBO();
+            model.fromDate = DateTime.Now;
+            model.toDate = DateTime.Now;
+            //BindBatchNumberDropDown();
+            BindWorkOrderNumberDropDown();
+            return View();
+        }
+
+        public JsonResult GetWorkOrderwiseProductionCostData(DateTime FromDate, DateTime ToDate, String SalesOrderId = "")
+        {
+
+            var SaleOrderid = 0;
+
+            if (SalesOrderId != "")
+                SaleOrderid = Convert.ToInt32(SalesOrderId);
+
+
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetWorkOrderwiseProductionCost(FromDate, ToDate, SaleOrderid);
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
+        #region Bind dropdowns
+        public void BindLocationDropdown()
+        {
+            var ItemType = _repositoryLocation.GetAll();
+            var dd = new SelectList(ItemType.ToList(), "ID", "LocationName");
+            ViewData["LocationName"] = dd;
+        }
+        public void BindItemDropDown()
+        {
+            var model = _itemRepository.GetAll();
+            //var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
+            var Item_dd = new SelectList(model.ToList(), "ID", "ItemNameWithCode");
+            ViewData["Item"] = Item_dd;
+        }
+        public void BindBatchNumberDropDown()
+        {
+            var model = _repositoryRR.GetAll();
+            var BatchNumberdd = new SelectList(model.ToList(), "ID", "BatchNumber");
+            ViewData["BatchNumberdd"] = BatchNumberdd;
+        }
+
+        public void BindWorkOrderNumberDropDown()
+        {
+            var model = _repositoryRR.Getall();
+            var WorkOrderNumberdd = new SelectList(model.ToList(), "ID", "WorkOrderNumber");
+            ViewData["WorkOrderNumberdd"] = WorkOrderNumberdd;
+        }
+
+        /// <summary>
+        /// Snehal: This function is for fatching the SO Number & batch number
+        /// Date:25-03-2023
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        public void BindSONumber()
+        {
+            var soNumber = _finishedGoodSeriesRepository.GetSONUmberForDropDown();
+            var soNumberList = new SelectList(soNumber.ToList(), "SalesOrderId", "SONo");
+            ViewData["SONumbers"] = soNumberList;
+        }
+
+        public JsonResult BatchNumber(string SId)
+        {
+            var SOId = Convert.ToInt32(SId);
+            var result = _finishedGoodSeriesRepository.GetBatchNo(SOId);
+            return Json(result);
+        }
         #endregion
     }
 }

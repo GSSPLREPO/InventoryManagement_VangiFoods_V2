@@ -59,5 +59,15 @@ namespace InVanWebApp_BO
 
         public decimal ActualYeild { get; set; }
         /*-------------End   Yeild Report---------------------------*/
+
+        // This feild added for WorkOrderwiseProductionCost Dashboard
+        [Required(ErrorMessage = "Please Select From Date!")]
+        public DateTime FromDate { get; set; }
+
+        [Required(ErrorMessage = "Please Select To Date!")]
+        public DateTime ToDate { get; set; }
+        public string SalesOrderNumber { get; set; }
+        public int SalesOrderId { get; set; }
+        public decimal RawMatrialCost { get; set; }
     }
 }

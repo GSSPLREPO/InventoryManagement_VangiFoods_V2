@@ -3173,6 +3173,9 @@
     <Content Include="Views\Dashb_RTWarehouseWiseStock\YeildDashboard.cshtml" />
     <Content Include="Views\ProductionIndent\ViewProductionIndent.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\FIFOSystem.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\ProductionCostByBatchNumber.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\OrderSummeryDashboard.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\WorkOrderwiseProductionCostDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

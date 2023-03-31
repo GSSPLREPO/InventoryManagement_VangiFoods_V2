@@ -12,7 +12,7 @@ using System.Data;
 
 namespace InVanWebApp.Repository
 {
-    public class DashboardRepository:IDashboardRepository
+    public class DashboardRepository : IDashboardRepository
     {
         private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private static ILog log = LogManager.GetLogger(typeof(ItemTypeRepository));
@@ -39,7 +39,7 @@ namespace InVanWebApp.Repository
                             LocationName = reader["LocationName"].ToString(),
                             ItemName = reader["Item_Name"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
-                            ItemId= Convert.ToInt32(reader["ItemID"]),
+                            ItemId = Convert.ToInt32(reader["ItemID"]),
                             Quantity = Convert.ToDouble(reader["Quantity"]),
                             ItemUnit = (reader["ItemUnit"].ToString()),
                             CurrencyName = (reader["CurrencyName"].ToString())
@@ -70,10 +70,10 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_dashb_ReorderPointOnAvailableStock", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ItemId",ItemId);
+                    cmd.Parameters.AddWithValue("@ItemId", ItemId);
 
                     con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); 
+                    SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
                         var result = new StockMasterBO()
@@ -84,7 +84,7 @@ namespace InVanWebApp.Repository
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
                             StockQuantity = Convert.ToDouble(reader["StockQuantity"]),
                             CurrencyName = (reader["CurrencyName"].ToString()),
-                            MinimumStock=float.Parse(reader["MinStock"].ToString())
+                            MinimumStock = float.Parse(reader["MinStock"].ToString())
                         };
                         resultList.Add(result);
                     }
@@ -193,5 +193,141 @@ namespace InVanWebApp.Repository
         }
 
         #endregion#region Function for Fifo system 
+
+        #region Function for Bind Total Production Cost by Batch Number
+        /// <summary>
+        /// Snehal: This function is for fatching the batch number
+        /// Also Use for Dashboard for production
+        /// </summary>
+        /// <returns></returns>
+        public List<ProductionMaterialIssueNoteBO> GetDashboardProductionCostByBatchNumber(int SOID, string BatchNumber = "", DateTime? fromDate = null, DateTime? toDate = null)
+        {
+            List<ProductionMaterialIssueNoteBO> resultList = new List<ProductionMaterialIssueNoteBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("[usp_dashb_BatchwiseProductionCost]", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@SOID", SOID);
+                    cmd.Parameters.AddWithValue("@BatchNumber", BatchNumber);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new ProductionMaterialIssueNoteBO()
+                        {
+                            ID = Convert.ToInt32(reader["SrNo"]),
+                            WorkOrderNumber = reader["WorkOrderNumber"].ToString(),
+                            ProductionMaterialIssueNoteNo = reader["POMaterialIssueNoteNumber"].ToString(),
+                            Item_Name = reader["ProductName"].ToString(),
+                            BatchNumber = reader["BatchNumber"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(reader["Rawmaterialcost"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+
+            return resultList;
+        }
+
+        #endregion
+        
+        #region Function for Order Summery
+        public List<OrderSummeryBO> GetOrderSummeryDashboardData(DateTime fromDate, DateTime toDate, int DurationID = 0)
+        {
+            List<OrderSummeryBO> resultList = new List<OrderSummeryBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("Usp_Dashboard_OderSummery", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@flag", DurationID);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+
+                    con.Open();
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new OrderSummeryBO()
+                        {
+                            DateWise = reader["DateTime"].ToString(),
+                            //Convert.ToDateTime(reader["DateTime"]),
+                            Open_GrandTotal = float.Parse(reader["Opening_GrandTotal"].ToString()),
+                            Closing_GrandTotal = float.Parse(reader["Closing_GrandTotal"].ToString()),
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+
+            return resultList;
+
+
+        }
+        #endregion
+
+        #region Function For WorkOrderwiseProductionCost 
+        public List<DashboardBO> GetWorkOrderwiseProductionCost(DateTime FromDate, DateTime ToDate, int SalesOrderId = 0)
+        {
+            List<DashboardBO> resultList = new List<DashboardBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_dashb_WorkOrderwiseProductionCost", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@fromDate", FromDate);
+                    cmd.Parameters.AddWithValue("@toDate", ToDate);
+                    cmd.Parameters.AddWithValue("@SO_ID", SalesOrderId);
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new DashboardBO()
+                        {
+                            WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
+                            SalesOrderNumber = (reader["SalesOrderNumber"].ToString()),
+                            ProductName = (reader["ProductName"].ToString()),
+                            RawMatrialCost = Convert.ToDecimal(reader["Rawmaterialcost"]),
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+
+            return resultList;
+        }
+
+        #endregion
     }
 }
