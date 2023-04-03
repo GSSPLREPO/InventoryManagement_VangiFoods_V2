@@ -60,7 +60,7 @@ namespace InVanWebApp.Controllers
             int ItemId = 0;
             if (id != "")
                 ItemId = Convert.ToInt32(id);
-
+            
             Session["ItemId"] = ItemId;
 
             var stockDetails = _StockMasterRepository.GetAllStock(ItemId);
@@ -116,11 +116,11 @@ namespace InVanWebApp.Controllers
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
             sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:-150px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; bottom:20px;font-family:Times New Roman;font-weight:bold;color:Red;'>" + ReportName + "</label>");
             sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
 
             sb.Append("</th></tr>");
 
@@ -270,11 +270,14 @@ namespace InVanWebApp.Controllers
 
 
 
-            String content1 = "<table>" + "<tr><td><td colspan='3' rowspan='5'> <img height='120' width='120' src='" + strPath + "'/></td></td>" +
-                "<tr><td><td></td><td></td><td colspan='5' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></td></tr></tr>" +
-                "<tr><td><td></td><td><td colspan='2'>&nbsp;&nbsp;&nbsp;&emsp;&emsp;" + name + "</td></td></tr>" +
-                "<tr><td><td></td><td colspan='6'>" + address + "</td></td></tr>" + "</table>"
-                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:15px;font-family:Times New Roman;font-weight:bold'>" + name + "</td></tr>" +
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
+               //+ "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               //+ "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
+               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
 
             string style = @"<!--mce:2-->";
             Response.Write(style);

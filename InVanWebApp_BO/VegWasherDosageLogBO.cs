@@ -14,28 +14,28 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select Date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
-                
-        [Required(ErrorMessage = "Enter Solution A ml!")]
-        public string VegWasher1SolutionAMl { get; set; }
-        [Required(ErrorMessage = "Enter Solution B ml!")]
-        public string VegWasher1SolutionBMl { get; set; }
-        [Required(ErrorMessage = "Enter Name of Item!")]
+        //[RegularExpression(@"\d{0,5}(\.\d{1,2})?", ErrorMessage = "Solution-A ml must be a Integer or Decimal Number.")]
+        [Required(ErrorMessage = "Enter the Proportion of Solution-A in ml!")]
+        public double? VegWasher1SolutionAMl { get; set; }
+        [Required(ErrorMessage = "Enter the Proportion of Solution-B in ml!")]
+        public double? VegWasher1SolutionBMl { get; set; }
+        [Required(ErrorMessage = "Enter the Name of Item!")]
         public string NameOfItem1 { get; set; }
-        [Required(ErrorMessage = "Enter Washing Time!")]
+        [Required(ErrorMessage = "Enter the time Required for Washing!")]
         public string WashingTime1 { get; set; }
         [Required(ErrorMessage = "Enter PPM!")]
         public string Ppm1 { get; set; }
-        [Required(ErrorMessage = "Enter Solution A ml!")]
-        public string VegWasher2SolutionAMl { get; set; }
-        [Required(ErrorMessage = "Enter Solution B ml!")]
-        public string VegWasher2SolutionBMl { get; set; }
-        [Required(ErrorMessage = "Enter Name of Item!")]
+        [Required(ErrorMessage = "Enter the Proportion of Solution-A in ml!")]
+        public double? VegWasher2SolutionAMl { get; set; }
+        [Required(ErrorMessage = "Enter the Proportion of Solution-B in ml!")]
+        public double? VegWasher2SolutionBMl { get; set; }
+        [Required(ErrorMessage = "Enter the Name of Item!")]
         public string NameOfItem2 { get; set; }
-        [Required(ErrorMessage = "Enter Washing Time!")]
+        [Required(ErrorMessage = "Enter the time Required for Washing!")]
         public string WashingTime2 { get; set; }
         [Required(ErrorMessage = "Enter PPM!")]
         public string Ppm2 { get; set; }
-        [Required(ErrorMessage = "Enter name of User!")]
+        [Required(ErrorMessage = "Enter Name of User!")]
         public string VerifyByName { get; set; }
         public string Remark { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

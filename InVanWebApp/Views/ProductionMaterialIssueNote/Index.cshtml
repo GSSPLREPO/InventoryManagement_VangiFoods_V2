@@ -36,9 +36,9 @@
                                 <table class="table table-striped table-bordered hover table-sm" id="tblIssueNote">
                                     <thead>
                                         <tr>
-                                            <th>@Html.Label("Issue Note Number")</th>
-                                            <th>@Html.Label("Issue Date")</th>                                            
-                                            <th>@Html.Label("Location")</th>
+                                            <th>@Html.Label("Material Issue Number")</th>
+                                            <th>@Html.Label("Material Issued Date")</th>
+                                            <th>@Html.Label("Production Indent")</th>
                                             <th>@Html.Label("Issued By")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
@@ -49,7 +49,7 @@
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.ProductionMaterialIssueNoteNo)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.ProductionMaterialIssueNoteDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ProductionIndentNo)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.IssueByName)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewProductionMaterialIssueNote", "ProductionMaterialIssueNote", new { ID = item.ID }) title="Edit Production Issue Note">

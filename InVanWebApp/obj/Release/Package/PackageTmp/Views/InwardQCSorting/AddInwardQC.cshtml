@@ -377,12 +377,13 @@
         //    }
         //    i = i + 1;
         //}
-
+        $('#btnSave').prop("disabled", false);
         var RejQty = $("#txtRejectedQty" + rowNo).val();
         if (RejQty != null && RejQty != 0 && RejQty != '') {
             if (RemarkLen <= 0) {
                 alert("Remarks cannot be empty!");
                 document.getElementById(id).focus();
+                $('#btnSave').prop("disabled", true);
                 //return false;
             }
 
@@ -392,7 +393,7 @@
     }
 
     function OnChangeRejQty(value, id) {
-
+        $('#btnSave').prop("disabled", false);
         //-------For finding the table row-----------//
         var rowNo = id.split('y')[1];
         var cell = document.getElementById("txtQCQty" + rowNo);
@@ -413,9 +414,11 @@
                 document.getElementById(id).focus();
                 document.getElementById(id).setAttribute("class", "border border-1 border-danger");
                 //document.getElementById(id).setAttribute("style", "border-color:red;");
+                $('#btnSave').prop("disabled", true);
                 return;
             }
             else {
+                $('#btnSave').prop("disabled", false);
                 document.getElementById(id).setAttribute("style", "border-color:none;");
                 document.getElementById(id).removeAttribute("class", "border border-1 border-danger");
                 RejectedQuantities = RejectedQuantities + "txtRejectedQty" + rowNo + "*" + rejectedQty + ",";
@@ -437,6 +440,7 @@
     }
 
     function OnChangeQCQty(value, id) {
+        $('#btnSave').prop("disabled", false);
 
         var rowNo = id.split('y')[1];
         var cell = document.getElementById("DeliveredQty" + rowNo);
@@ -452,9 +456,11 @@
             document.getElementById(id).focus();
             //document.getElementById(id).setAttribute("style", "border-color:red;");
             document.getElementById(id).setAttribute("class", "border border-1 border-danger");
+            $('#btnSave').prop("disabled", true);
             return;
         }
         else {
+            $('#btnSave').prop("disabled", false);
             var tempInwQty = document.getElementById("txtQCQty" + rowNo).value;
             //console.log(tempInwQty + " " + InwQty);
             document.getElementById("txtBalanceQty" + rowNo).value = ((parseFloat(temp_itemQty[0]) - (parseFloat(balQty))) - parseFloat(tempInwQty));

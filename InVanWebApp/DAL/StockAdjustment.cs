@@ -14,18 +14,26 @@ namespace InVanWebApp.DAL
     
     public partial class StockAdjustment
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public StockAdjustment()
+        {
+            this.StockAdjustmentDetails = new HashSet<StockAdjustmentDetail>();
+        }
+    
         public int ID { get; set; }
-        public Nullable<int> ItemId { get; set; }
-        public string Item_Name { get; set; }
-        public string Item_Code { get; set; }
-        public Nullable<int> QuantityAdjust { get; set; }
-        public string Reason { get; set; }
+        public string DocumentNo { get; set; }
+        public Nullable<System.DateTime> DocumentDate { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public string LocationName { get; set; }
+        public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModificationDate { get; set; }
         public Nullable<int> LastModificationBy { get; set; }
     
-        public virtual Item Item { get; set; }
+        public virtual LocationMaster LocationMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<StockAdjustmentDetail> StockAdjustmentDetails { get; set; }
     }
 }

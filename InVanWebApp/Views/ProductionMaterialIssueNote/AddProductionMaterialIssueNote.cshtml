@@ -16,7 +16,7 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Issue Note Number")
+                    @Html.Label("Document Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -24,7 +24,7 @@
                     @Html.ValidationMessageFor(model => model.ProductionMaterialIssueNoteNo, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Issue Note Date")
+                    @Html.Label("Document Date")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -42,14 +42,14 @@
                 @if (@Session["UserId"] != null)
                 {
                     <div class="col-md-4 d-none">
-                        @Html.TextBoxFor(model => model.IssueBy, new { @class = "form-control", Value = @Session["UserId"], @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model.IssueBy, new { @class = "form-control form-control-sm", Value = @Session["UserId"], @readonly = "readonly" })
                     </div>
                 }
 
                 @if (@Session["UserName"] != null)
                 {
                     <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.IssueByName, new { @class = "form-control", Value = @Session["UserName"], @readonly = "readonly" })
+                        @Html.TextBoxFor(model => model.IssueByName, new { @class = "form-control form-control-sm", Value = @Session["UserName"], @readonly = "readonly" })
                     </div>
                 }
                 <div class="col-md-2">
@@ -57,7 +57,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationList"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val(),id)" })
+                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationList"], "---Select---", new { @class = "form-control form-control-sm"})
                     @Html.ValidationMessageFor(model => model.LocationId, "", new { id = "LocationIdErr", @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.LocationName)
                 </div>
@@ -70,33 +70,18 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownList("ProductionIndentId", (IEnumerable<SelectListItem>)ViewData["ProductionIndentNumberAndId"], "--Select--",
-                   new { @class = "form-control", onchange = "SelectedIndexChangedPI($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.ProductionIndentId, "", new { @class = "error mt-2 text-danger" })
+                        new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedPI()" })
+                    @Html.ValidationMessageFor(model => model.ProductionIndentID, "", new { @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.ProductionIndentNo)
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Item")
-                </div>
-                <div class="col-md-4">
-                    <select id="ddlItem" class="form-control" onchange="SelectedIndexChangedItem(id)"><option value="0">--Select--</option></select>
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                @*Rahul removed dvProduction style="display:none; 23-03-2023.*@
-                <div class="col-md-2 dvProduction">
                     @Html.Label("Work Order Number")
                     <span style="color:red">*</span>
                 </div>
-                @*Rahul removed dvProduction style="display:none; 23-03-2023.*@
-            <div class="col-md-4 dvProduction">
-                @Html.DropDownListFor(model => model.SalesOrderId, (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
-                new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)" })
-                @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
-                @Html.HiddenFor(model => model.WorkOrderNumber)
-                <span id="valMsgWorkOrder" style="display:none;"></span>
-                @Html.HiddenFor(model => model.IssueByName)
-            </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model=>model.WorkOrderNumber,new { @class = "form-control form-control-sm", @readonly="readonly" })
+                    @Html.ValidationMessageFor(model => model.WorkOrderNumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
             <br />
             <div class="row">
@@ -110,7 +95,7 @@
             </div>
             <hr />
             <div class="row">
-                <h4 style="color:darkcyan">Ingredients Item Details</h4>
+                <h4 style="color:darkcyan">Ingredient Details</h4>
             </div>
             <hr />
 
@@ -123,20 +108,19 @@
                                     <table class="table table-striped" id="submissionTable">
                                         <thead>
                                             <tr style="background-color:rgba(0, 0, 0, 0.05);">
-                                                @*<th class="sortStyle">Sr. No.</th>*@
                                                 <th class="sortStyle">Item Code</th>
                                                 <th class="sortStyle d-n d-none">Item Id</th>
-                                                <th class="sortStyle">Item Name</th>
-                                                <th class="sortStyle">Price (Per Unit)</th>
-                                                <th class="sortStyle">Currency</th>
-                                                <th class="sortStyle">Available Stock</th>
-                                                <th class="sortStyle">UOM</th>
+                                                <th class="sortStyle">Item</th>
                                                 <th class="sortStyle">Requested Quantity</th>
                                                 <th class="sortStyle">Issued Quantity</th>
                                                 <th class="sortStyle">Issuing Quantity</th>
-                                                <th class="sortStyle">Final Stock</th>
                                                 <th class="sortStyle">Balance Quantity</th>
-                                                <th class="sortStyle">Remarks</th>
+                                                <th class="sortStyle">Available Stock</th>
+                                                <th class="sortStyle">UOM</th>
+                                                <th class="sortStyle">Price (Per Unit)</th>
+                                                <th class="sortStyle">Currency</th>
+                                                <th class="sortStyle">Final Stock</th>
+                                                <th class="sortStyle d-none">Actual balance Qty</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -173,5 +157,3 @@
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script src="~/Scripts/Script/AddProductionMaterialIssueNote.js"></script>
-
-

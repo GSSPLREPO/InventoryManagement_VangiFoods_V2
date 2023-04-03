@@ -1,0 +1,237 @@
+﻿@model InVanWebApp_BO.ForeignBodyFoundBO
+
+@{
+    ViewBag.Title = "EditForeignBodyFound";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Foreign Body Found</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("User")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4" @*id="datetimepicker"*@>
+
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Raw Material")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RawMaterial, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphabate(event);" })
+                    @Html.ValidationMessageFor(model => model.RawMaterial, "", new { @class = "error mt-2 text-danger", id = "validationMgsPAPH" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("On Going Processing")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.OnGoingProcessing, new List<SelectListItem>{
+                    new SelectListItem{ Text="Absent", Value = "Absent" },
+                    new SelectListItem{ Text="Present", Value = "Present" }
+                    }, "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.OnGoingProcessing, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                @*<div class="col-md-2 mb-1">
+            @Html.Label("OnGoingProcessing")
+            <span style="color:red">*</span>
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.OnGoingProcessing, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphabate(event);" })
+            @Html.ValidationMessageFor(model => model.OnGoingProcessing, "", new { @class = "error mt-2 text-danger" })
+        </div>*@
+
+                <div class="col-md-2">
+                    @Html.Label("Batching")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.Batching, new List<SelectListItem>{
+                    new SelectListItem{ Text="Absent", Value = "Absent" },
+                    new SelectListItem{ Text="Present", Value = "Present" }
+                    }, "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Batching, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                @*<div class="col-md-2 mb-1">
+            @Html.Label("Batching")
+            <span style="color:red">*</span>
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.Batching, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return IsAlphabate(event);" })
+            @Html.ValidationMessageFor(model => model.Batching, "", new { @class = "error mt-2 text-danger" })
+        </div>*@
+
+                <div class="col-md-2">
+                    @Html.Label("Post Processing")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.PostProcessing, new List<SelectListItem>{
+                    new SelectListItem{ Text="Absent", Value = "Absent" },
+                    new SelectListItem{ Text="Present", Value = "Present" }
+                    }, "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PostProcessing, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                @*<div class="col-md-2 mb-1">
+            @Html.Label("PostProcessing")
+            <span style="color:red">*</span>
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.PostProcessing, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphabate(event);" })
+            @Html.ValidationMessageFor(model => model.PostProcessing, "", new { @class = "error mt-2 text-danger" })
+        </div>*@
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Corrective Action")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.CorrectiveAction, new { @class = "form-control form-control-sm", maxlength = "100", @onkeypress = "return IsAlphabate(event);" })
+                    @Html.ValidationMessageFor(model => model.CorrectiveAction, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Remarks Will be Allow 100 Charachter" })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+            <br />
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "ForeignBodyFound")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@*<script src="jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>*@
+<script src="jquery-ui-timepicker-addon.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#date").datetimepicker({
+            dateFormat: 'dd-mm-yy', timeFormat: 'hh:mm:ss'
+        });
+    });
+</script>
+
+
+@*<script>
+        $(document).ready(function ()
+        {
+            $("#datetimepicker").datetimepicker(
+                {
+
+                    defaultDate: '@Model.Date',
+                    showTodayButton: true,
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    //showClose: true,
+                    //showClear: true,
+                    //toolbarPlacement: 'top',
+                    //stepping: 15
+                    lang
+                });
+
+
+
+        });
+</script>*@
+
+<script type="text/javascript">
+
+    ////Custom validation for only numeric, decimal and NA/na character.
+    //function customValidation(e) {
+    //    var unicode = e.charCode ? e.charCode : e.keyCode;
+    //    if (unicode == 8 || unicode == 9 || unicode == 42 ||
+    //        (unicode >= 48 && unicode <= 57)
+    //        || unicode == 46) {
+    //        return true;
+    //    }
+    //    else {
+    //        return false;
+    //    }
+    //}
+
+    ////Custom validation for only numeric, alphabets, underscore and NA/na character.
+    //function IsAlphaNumeric(e) {
+    //    var unicode = e.charCode ? e.charCode : e.keyCode;
+    //    if (unicode == 8 || unicode == 9 || unicode == 32 || unicode == 45 || (unicode >= 48 && unicode <= 57)
+    //        || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+    //        return true;
+    //    }
+    //    else {
+    //        return false;
+    //    }
+    //}
+
+    //Custom validation for only  alphabets, underscore and NA/na character.
+    function IsAlphabate(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || unicode == 32
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    ////Custom validation for only numeric, decimal.
+    //function isNumberKey(evt) {
+    //    var keycode = (evt.which) ? evt.which : evt.keyCode;
+    //    if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+    //        return false;
+    //    }
+    //    else {
+    //        var parts = evt.srcElement.value.split('.');
+    //        if (parts.length > 1 && keycode == 46)
+    //            return false;
+    //        else
+    //            return true;
+    //    }
+    //    return true;
+    //}
+</script>

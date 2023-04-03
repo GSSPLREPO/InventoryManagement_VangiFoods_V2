@@ -167,31 +167,48 @@
     <Compile Include="Common\ApplicationSession.cs" />
     <Compile Include="Common\GetDocumentNumber.cs" />
     <Compile Include="Controllers\BatchPlanningController.cs" />
+    <Compile Include="Controllers\CalibrationLogController.cs" />
+    <Compile Include="Controllers\CertificateOfAnalysisController.cs" />
+    <Compile Include="Controllers\ChillerCCPController.cs" />
+    <Compile Include="Controllers\ClorinationLogController.cs" />
     <Compile Include="Controllers\CreditNoteController.cs" />
     <Compile Include="Controllers\DailyMonitoringController.cs" />
     <Compile Include="Controllers\Dashb_RTWarehouseWiseStockController.cs" />
     <Compile Include="Controllers\DebitNoteController.cs" />
+    <Compile Include="Controllers\FinishedGoodSeriesController.cs" />
+    <Compile Include="Controllers\ForeignBodyFoundController.cs" />
     <Compile Include="Controllers\GRNController.cs" />
+    <Compile Include="Controllers\HotFillingPackingLineLogSheetCCPController.cs" />
     <Compile Include="Controllers\IndentController.cs" />
     <Compile Include="Controllers\InquiryFormController.cs" />
     <Compile Include="Controllers\InventoryControlController.cs" />
     <Compile Include="Controllers\InwardNoteController.cs" />
     <Compile Include="Controllers\InwardQCSortingController.cs" />
     <Compile Include="Controllers\IssueNoteController.cs" />
+    <Compile Include="Controllers\MicroAnalysisController.cs" />
+    <Compile Include="Controllers\OilAnalysisController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\DeliveryChallanController.cs" />
     <Compile Include="Controllers\OutwardNoteController.cs" />
+    <Compile Include="Controllers\PestControlLogController.cs" />
+    <Compile Include="Controllers\SOPaymentController .cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
+    <Compile Include="Controllers\PreProduction_QCController.cs" />
     <Compile Include="Controllers\PreStartupHygieneController.cs" />
+    <Compile Include="Controllers\ProductEvaluationLogController.cs" />
     <Compile Include="Controllers\ProductionIndentController.cs" />
     <Compile Include="Controllers\ProductionMaterialIssueNoteController.cs" />
-    <Compile Include="Controllers\RecipeMaterController.cs" />
     <Compile Include="Controllers\ProductMasterController.cs" />
     <Compile Include="Controllers\PurchaseOrderController.cs" />
+    <Compile Include="Controllers\RecipeMaterController.cs" />
     <Compile Include="Controllers\RejectionNoteController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RequestForQuotationController.cs" />
     <Compile Include="Controllers\RoleRightsController.cs" />
+    <Compile Include="Controllers\RQCCPController.cs" />
+    <Compile Include="Controllers\SalesOrderController.cs" />
+    <Compile Include="Controllers\SanitizationAndHygineController.cs" />
+    <Compile Include="Controllers\SILOCCPController.cs" />
     <Compile Include="Controllers\StockAdjustmentController.cs" />
     <Compile Include="Controllers\StockMovementController.cs" />
     <Compile Include="Controllers\StockReportController.cs" />
@@ -210,13 +227,32 @@
     <Compile Include="Controllers\TaxController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Controllers\VegWasherDosageLogController.cs" />
+    <Compile Include="Controllers\WaterAnalysisController.cs" />
+    <Compile Include="DAL\BatchNumberMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\BatchPlanningMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\BatchPlanning_Details.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Branch.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\CalibrationLog.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\CertificateAnalysi.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ChillerCCP.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\CityMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\ClientMaster.cs">
+    <Compile Include="DAL\ClorinationLog.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\COAMaster.cs">
@@ -228,13 +264,28 @@
     <Compile Include="DAL\CountryMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\CreditNote.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\CreditNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\CurrencyMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DailyMonitoring.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\DebitNote.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\DebitNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DeliveryChallan.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\DeliveryChallanItemDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Department.cs">
@@ -246,6 +297,9 @@
     <Compile Include="DAL\FinishGoodSery.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\ForeignBodyFound.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\GRNDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -255,10 +309,16 @@
     <Compile Include="DAL\GSTMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\HotFillingPackingLineLogSheetCCP.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Indent.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Indent_Details.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\InquiryFormItemDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\InquiryMaster.cs">
@@ -327,7 +387,10 @@
     <Compile Include="DAL\Log.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\MachineMaster.cs">
+    <Compile Include="DAL\MicroAnalysi.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\OilAnalysi.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Organisation.cs">
@@ -336,16 +399,46 @@
     <Compile Include="DAL\OrganisationGroup.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\OutwardNote.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\OutwardNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PestControlLog.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PreProduction_QC.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PreProduction_QC_Details.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PreStartUpHygineCheck.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\ProcessMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\ProductEvaluationLog.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductionIndent.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductionIndentIngredientsDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductionMaterialIssueNote.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductionMaterialIssueNoteDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ProductMaster.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\PurchaseOrder.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PurchaseOrderAmendment.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\PurchaseOrderAmendmentDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\PurchaseOrderItemsDetail.cs">
@@ -357,25 +450,40 @@
     <Compile Include="DAL\QCProductionSpecificationMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\QCProductioObservationMaste.cs">
+    <Compile Include="DAL\QCProductioObservationMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\QCProductioObservationMaster.cs">
+    <Compile Include="DAL\RecipeIngredientsDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\RecipeMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\RejectionDataSheetMaster.cs">
+    <Compile Include="DAL\RejectionNote.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RejectionNoteItemDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\RequestForQuotation.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RequestForQuotationItemDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RFQ_VendorDetails.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RFQ_Vendor_ItemDetails.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Role.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\RoleRight.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\RQCCP.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\SalesOrder.cs">
@@ -387,10 +495,13 @@
     <Compile Include="DAL\SalesOrderPaymentDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\SanitizationAndHygine.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\ScreenName.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\SOItem.cs">
+    <Compile Include="DAL\SILOCCP.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\SOItemSchedule.cs">
@@ -405,13 +516,13 @@
     <Compile Include="DAL\StockAdjustment.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\StockAdjustmentDetail.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\StockMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\StockTransfer.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\SupplierMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\sysdiagram.cs">
@@ -432,6 +543,12 @@
     <Compile Include="DAL\UserDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\VegWasherDosageLog.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\WaterAnalysi.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\WorkOrder.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -446,22 +563,36 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BatchPlanningRepository.cs" />
+    <Compile Include="Repository\CalibrationLogRepository.cs" />
+    <Compile Include="Repository\CertificateOfAnalysisRepository.cs" />
+    <Compile Include="Repository\ChillerCCPRepository.cs" />
+    <Compile Include="Repository\ClorinationLogRepository.cs" />
     <Compile Include="Repository\CommonFunctions.cs" />
     <Compile Include="Repository\CreditNoteRepository.cs" />
     <Compile Include="Repository\DailyMonitoringRepository.cs" />
     <Compile Include="Repository\DashboardRepository.cs" />
     <Compile Include="Repository\DebitNoteRepository.cs" />
+    <Compile Include="Repository\FinishedGoodSeriesRepository.cs" />
+    <Compile Include="Repository\ForeignBodyFoundRepository .cs" />
     <Compile Include="Repository\GRNRepository.cs" />
+    <Compile Include="Repository\HotFillingPackingLineLogSheetCCPRepository.cs" />
     <Compile Include="Repository\IndentRepository.cs" />
     <Compile Include="Repository\InquiryFormRepository.cs" />
     <Compile Include="Repository\Interface\IBatchPlanningRepository.cs" />
+    <Compile Include="Repository\Interface\ICalibrationLogRepository.cs" />
+    <Compile Include="Repository\Interface\ICertificateOfAnalysisRepository.cs" />
+    <Compile Include="Repository\Interface\IChillerCCPRepository.cs" />
+    <Compile Include="Repository\Interface\IClorinationLogRepository.cs" />
     <Compile Include="Repository\Interface\ICommonFunctions.cs" />
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
     <Compile Include="Repository\Interface\ICreditNoteRepository.cs" />
     <Compile Include="Repository\Interface\IDailyMonitoringRepository.cs" />
     <Compile Include="Repository\Interface\IDashboardRepository.cs" />
     <Compile Include="Repository\Interface\IDebitNoteRepository.cs" />
+    <Compile Include="Repository\Interface\IFinishedGoodSeriesRepository.cs" />
+    <Compile Include="Repository\Interface\IForeignBodyFoundRepository.cs" />
     <Compile Include="Repository\Interface\IGRNRepository.cs" />
+    <Compile Include="Repository\Interface\IHotFillingPackingLineLogSheetCCPRepository.cs" />
     <Compile Include="Repository\Interface\IIndentRepository.cs" />
     <Compile Include="Repository\Interface\IInquiryFormRepository.cs" />
     <Compile Include="Repository\Interface\IInventoryControlRepository.cs" />
@@ -470,15 +601,24 @@
     <Compile Include="Repository\Interface\IIssueNoteRepository.cs" />
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
     <Compile Include="Repository\Interface\IDeliveryChallanRepository.cs" />
+    <Compile Include="Repository\Interface\IMicroAnalysisRepository.cs" />
+    <Compile Include="Repository\Interface\IOilAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
+    <Compile Include="Repository\Interface\IPestControlLogRepository.cs" />
+    <Compile Include="Repository\Interface\ISOPaymentRepository.cs" />
+    <Compile Include="Repository\Interface\IPreProduction_QCRepository.cs" />
     <Compile Include="Repository\Interface\IPreStartupHygieneRepository.cs" />
+    <Compile Include="Repository\Interface\IProductEvaluationLogRepository.cs" />
     <Compile Include="Repository\Interface\IProductionIndentRepository.cs" />
     <Compile Include="Repository\Interface\IProductionMaterialIssueNoteRepository.cs" />
-    <Compile Include="Repository\Interface\IRecipeMaterRepository.cs" />
     <Compile Include="Repository\Interface\IProductMasterRepository.cs" />
+    <Compile Include="Repository\Interface\IRecipeMaterRepository.cs" />
     <Compile Include="Repository\Interface\IRejectionNoteRepository.cs" />
     <Compile Include="Repository\Interface\IReportRepository.cs" />
     <Compile Include="Repository\Interface\IRequestForQuotationRepository.cs" />
+    <Compile Include="Repository\Interface\IRQCCPRepository.cs" />
+    <Compile Include="Repository\Interface\ISanitizationAndHygineRepository.cs" />
+    <Compile Include="Repository\Interface\ISILOCCPRepository.cs" />
     <Compile Include="Repository\Interface\IStockAdjustmentRepository.cs" />
     <Compile Include="Repository\Interface\ITermsConditionRepository.cs" />
     <Compile Include="Repository\Interface\IOrganisationRepository.cs" />
@@ -490,6 +630,8 @@
     <Compile Include="Repository\Interface\ITaxRepository.cs" />
     <Compile Include="Repository\Interface\IUserDetailsRepository.cs" />
     <Compile Include="Repository\Interface\IVegWasherDosageLogRepository.cs" />
+    <Compile Include="Repository\Interface\IWaterAnalysisRepository.cs" />
+    <Compile Include="Repository\Interface\ISalesOrderRepository.cs" />
     <Compile Include="Repository\InventoryControlRepository.cs" />
     <Compile Include="Repository\InwardNoteRepository.cs" />
     <Compile Include="Repository\InwardQCSortingRepository.cs" />
@@ -505,21 +647,31 @@
     <Compile Include="Repository\Interface\IUnitRepository.cs" />
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />
+    <Compile Include="Repository\MicroAnalysisRepository.cs" />
+    <Compile Include="Repository\OilAnalysisRepository.cs" />
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\DeliveryChallanRepository.cs" />
     <Compile Include="Repository\OutwardNoteRepository.cs" />
+    <Compile Include="Repository\PestControlLogRepository.cs" />
+    <Compile Include="Repository\SOPaymentRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
+    <Compile Include="Repository\PreProduction_QCRepository.cs" />
     <Compile Include="Repository\PreStartupHygieneRepository.cs" />
+    <Compile Include="Repository\ProductEvaluationLogRepository.cs" />
     <Compile Include="Repository\ProductionIndentRepository.cs" />
     <Compile Include="Repository\ProductionMaterialIssueNoteRepository.cs" />
-    <Compile Include="Repository\RecipeMaterRepository.cs" />
     <Compile Include="Repository\ProductMasterRepository.cs" />
     <Compile Include="Repository\PurchaseOrderRepository.cs" />
+    <Compile Include="Repository\RecipeMaterRepository.cs" />
     <Compile Include="Repository\RejectionNoteRepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
     <Compile Include="Repository\RequestForQuotationRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\CompanyRepository.cs" />
+    <Compile Include="Repository\RQCCPRepository.cs" />
+    <Compile Include="Repository\SalesOrderRepository.cs" />
+    <Compile Include="Repository\SanitizationAndHygineRepository.cs" />
+    <Compile Include="Repository\SILOCCPRepository.cs" />
     <Compile Include="Repository\StockAdjustmentRepository.cs" />
     <Compile Include="Repository\StockMasterRepository.cs" />
     <Compile Include="Repository\StockMovementRepository.cs" />
@@ -529,6 +681,7 @@
     <Compile Include="Repository\UnitRepository.cs" />
     <Compile Include="Repository\UserDetailsRepository.cs" />
     <Compile Include="Repository\VegWasherDosageLogRepository.cs" />
+    <Compile Include="Repository\WaterAnalysisRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker.min.css" />
@@ -1868,9 +2021,9 @@
     <Content Include="Highcharts-10.3.1\code\themes\skies.js.map" />
     <Content Include="Highcharts-10.3.1\code\themes\sunset.js.map" />
     <Content Include="Scripts\Script\AddDeliveryChallan.js" />
-    <Content Include="Scripts\Script\AddProductionMaterialIssueNote.js" />
     <Content Include="Scripts\Script\AddIssueNote.js" />
     <Content Include="Scripts\Script\AddOutwardNote.js" />
+    <Content Include="Scripts\Script\AddProductionMaterialIssueNote.js" />
     <Content Include="Scripts\Script\AddStockAdjustment.js" />
     <Content Include="Scripts\Script\EditOutwardNote.js" />
     <Content Include="Theme\MainContent\css\customLogin.css" />
@@ -1878,6 +2031,7 @@
     <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
     <Content Include="Views\RejectionNote\Index.cshtml" />
     <Content Include="Views\RejectionNote\ViewRejectionNote.cshtml" />
+    <Content Include="ExcelFileFormat\Download-Format-Recipe-Item.xlsx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2928,33 +3082,115 @@
     <Content Include="Views\RequestForQuotation\GeneratePO.cshtml" />
     <Content Include="Views\POPayment\ViewPOPayment.cshtml" />
     <Content Include="Views\Report\InventoryAnalysisReportFIFO.cshtml" />
-    <Content Include="Views\ProductionIndent\Index.cshtml" />
-    <Content Include="Views\RecipeMater\AddRecipeItems.cshtml" />
-    <Content Include="Views\RecipeMater\Index.cshtml" />
-    <Content Include="Views\RecipeMater\EditRecipeItem.cshtml" />
-    <Content Include="Views\ProductMaster\Index.cshtml" />
-    <Content Include="Views\DailyMonitoring\AddDailyMonitoring.cshtml" />
-    <Content Include="Views\DailyMonitoring\EditDailyMonitoring.cshtml" />
-    <Content Include="Views\DailyMonitoring\Index.cshtml" />
     <Content Include="Views\PreStartupHygiene\AddPreStartupHygiene.cshtml" />
     <Content Include="Views\PreStartupHygiene\EditPreStartupHygiene.cshtml" />
     <Content Include="Views\PreStartupHygiene\Index.cshtml" />
+    <Content Include="Views\DailyMonitoring\AddDailyMonitoring.cshtml" />
+    <Content Include="Views\DailyMonitoring\EditDailyMonitoring.cshtml" />
+    <Content Include="Views\DailyMonitoring\Index.cshtml" />
+    <Content Include="Views\ClorinationLog\AddClorinationLog.cshtml" />
+    <Content Include="Views\ClorinationLog\EditClorinationLog.cshtml" />
+    <Content Include="Views\ClorinationLog\Index.cshtml" />
+    <Content Include="Views\PestControlLog\AddPestControlLog.cshtml" />
+    <Content Include="Views\PestControlLog\EditPestControlLog.cshtml" />
+    <Content Include="Views\PestControlLog\Index.cshtml" />
+    <Content Include="Views\WaterAnalysis\AddWaterAnalysis.cshtml" />
+    <Content Include="Views\WaterAnalysis\EditWaterAnalysis.cshtml" />
+    <Content Include="Views\WaterAnalysis\Index.cshtml" />
+    <Content Include="Views\ProductMaster\AddProductItems.cshtml" />
+    <Content Include="Views\ProductMaster\EditProductItem.cshtml" />
+    <Content Include="Views\ProductMaster\Index.cshtml" />
+    <Content Include="Views\OilAnalysis\AddOilAnalysis.cshtml" />
+    <Content Include="Views\OilAnalysis\EditOilAnalysis.cshtml" />
+    <Content Include="Views\OilAnalysis\Index.cshtml" />
+    <Content Include="Views\Report\PurchaseInvoiceReport.cshtml" />
     <Content Include="Views\VegWasherDosageLog\AddVegWasherDosageLog.cshtml" />
     <Content Include="Views\VegWasherDosageLog\EditVegWasherDosageLog.cshtml" />
     <Content Include="Views\VegWasherDosageLog\Index.cshtml" />
-    <Content Include="Views\ProductMaster\AddProductItems.cshtml" />
-    <Content Include="Views\ProductMaster\EditProductItem.cshtml" />
+    <Content Include="Views\RecipeMater\AddRecipeItems.cshtml" />
+    <Content Include="Views\RecipeMater\EditRecipeItem.cshtml" />
+    <Content Include="Views\RecipeMater\Index.cshtml" />
+    <Content Include="Views\Report\CompanyReport.cshtml" />
+    <Content Include="Views\Report\IssueNoteReport.cshtml" />
+    <Content Include="Views\Report\RejectionReport.cshtml" />
+    <Content Include="Views\Report\GRNReport.cshtml" />
+    <Content Include="Views\CalibrationLog\AddCalibrationLog.cshtml" />
+    <Content Include="Views\CalibrationLog\EditCalibrationLog.cshtml" />
+    <Content Include="Views\CalibrationLog\Index.cshtml" />
+    <Content Include="Views\DailyMonitoring\Index - Copy.cshtml" />
+    <Content Include="Views\SanitizationAndHygine\AddSanitizationAndHygine.cshtml" />
+    <Content Include="Views\SanitizationAndHygine\EditSanitizationAndHygine.cshtml" />
+    <Content Include="Views\SanitizationAndHygine\Index.cshtml" />
+    <Content Include="Views\SalesOrder\Index.cshtml" />
+    <Content Include="Views\ProductEvaluationLog\AddProductEvaluationLog.cshtml" />
+    <Content Include="Views\ProductEvaluationLog\EditProductEvaluationLog.cshtml" />
+    <Content Include="Views\ProductEvaluationLog\Index.cshtml" />
+    <Content Include="Views\OilAnalysis\Index - Copy.cshtml" />
+    <Content Include="Views\MicroAnalysis\AddMicroAnalysis.cshtml" />
+    <Content Include="Views\MicroAnalysis\EditMicroAnalysis.cshtml" />
+    <Content Include="Views\MicroAnalysis\Index.cshtml" />
+    <Content Include="Views\RQCCP\AddRQCCP.cshtml" />
+    <Content Include="Views\RQCCP\EditRQCCP.cshtml" />
+    <Content Include="Views\RQCCP\Index.cshtml" />
     <Content Include="Views\ProductionIndent\AddProductionIndent.cshtml" />
     <Content Include="Views\ProductionIndent\EditProductionIndent.cshtml" />
-    <Content Include="Views\ProductionMaterialIssueNote\Index.cshtml" />
+    <Content Include="Views\ProductionIndent\Index.cshtml" />
+    <Content Include="Views\SalesOrder\AddSalesOrder.cshtml" />
+    <Content Include="Views\CertificateOfAnalysis\AddCertificateOfAnalysis.cshtml" />
+    <Content Include="Views\CertificateOfAnalysis\EditCertificateOfAnalysis - Copy.cshtml" />
+    <Content Include="Views\CertificateOfAnalysis\EditCertificateOfAnalysis.cshtml" />
+    <Content Include="Views\CertificateOfAnalysis\Index.cshtml" />
+    <Content Include="Views\SILOCCP\AddSILOCCP.cshtml" />
+    <Content Include="Views\SILOCCP\EditSILOCCP.cshtml" />
+    <Content Include="Views\SILOCCP\Index.cshtml" />
+    <Content Include="Views\HotFillingPackingLineLogSheetCCP\AddHotFillingPackingLineLogSheetCCP.cshtml" />
+    <Content Include="Views\HotFillingPackingLineLogSheetCCP\EditHotFillingPackingLineLogSheetCCP.cshtml" />
+    <Content Include="Views\HotFillingPackingLineLogSheetCCP\Index.cshtml" />
     <Content Include="Views\ProductionMaterialIssueNote\AddProductionMaterialIssueNote.cshtml" />
+    <Content Include="Views\ProductionMaterialIssueNote\Index.cshtml" />
     <Content Include="Views\ProductionMaterialIssueNote\ViewProductionMaterialIssueNote.cshtml" />
+    <Content Include="Views\ChillerCCP\AddChillerCCP.cshtml" />
+    <Content Include="Views\ChillerCCP\EditChillerCCP.cshtml" />
+    <Content Include="Views\ChillerCCP\Index.cshtml" />
+    <Content Include="Views\ForeignBodyFound\AddForeignBodyFound.cshtml" />
+    <Content Include="Views\ForeignBodyFound\EditForeignBodyFound.cshtml" />
+    <Content Include="Views\ForeignBodyFound\Index - Copy.cshtml" />
+    <Content Include="Views\ForeignBodyFound\Index.cshtml" />
+    <Content Include="Views\SalesOrder\EditSalesOrder.cshtml" />
+    <Content Include="Views\SalesOrder\ViewSalesOrder.cshtml" />
+    <Content Include="Views\SalesOrder\SOAmendment.cshtml" />
+    <Content Include="Views\FinishedGoodSeries\AddFinishedGoodSeries.cshtml" />
+    <Content Include="Views\FinishedGoodSeries\EditFinishedGoodSeries.cshtml" />
+    <Content Include="Views\FinishedGoodSeries\Index.cshtml" />
+    <Content Include="Views\FinishedGoodSeries\ViewFinishedGoodSeries.cshtml" />
+    <Content Include="Views\Report\BatchwiseProductionCostReport.cshtml" />
+    <Content Include="Views\Report\FGLocationWiseReport.cshtml" />
+    <Content Include="Views\Report\YeildReport.cshtml" />
+    <Content Include="Views\Report\RawMaterialCostAnalysisReport.cshtml" />
     <Content Include="Views\BatchPlanning\Index.cshtml" />
+    <Content Include="Views\BatchPlanning\AddBatchPlanning.cshtml" />
+    <Content Include="Views\PreProduction_QC\AddPreProductionQC.cshtml" />
+    <Content Include="Views\PreProduction_QC\Index.cshtml" />
+    <Content Include="Views\PreProduction_QC\ViewPreProduction.cshtml" />
+    <Content Include="Views\BatchPlanning\ViewBatchPlanning.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\YeildDashboard.cshtml" />
+    <Content Include="Views\ProductionIndent\ViewProductionIndent.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\FIFOSystem.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\ProductionCostByBatchNumber.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\OrderSummeryDashboard.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\WorkOrderwiseProductionCostDashboard.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\ProductionUtilityConsumptionByBatchDashboard.cshtml" />
+    <Content Include="Views\SOPayment\_SOPaymentDetails.cshtml" />
+    <Content Include="Views\SOPayment\AddSOPayment.cshtml" />
+    <Content Include="Views\SOPayment\EditSOPayment.cshtml" />
+    <Content Include="Views\SOPayment\Index.cshtml" />
+    <Content Include="Views\SOPayment\ViewSOPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\SignatureImages\" />
     <Folder Include="ExcelUploads\" />
+    <Folder Include="LabAnalysisReport\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

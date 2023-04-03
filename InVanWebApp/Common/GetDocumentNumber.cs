@@ -48,21 +48,20 @@ namespace InVanWebApp.Common
         }
         #endregion
 
-        //#region Get Batch number
-        //public string GetBatchNo()
-        //{
-        //    var BatchNumber = "";
-        //    try
-        //    {
-        //        BatchNumber = _repository.GetBatchNo();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.Error(ex.Message, ex);
-        //    }
-        //    return BatchNumber; 
-        //}
-        //#endregion
-
+        #region Get work order number
+        public string GetWorkOrderNo(int DocumentType,string WorkOrderType)
+        {
+            var DocumentNumber="";
+            try
+            {
+                DocumentNumber = _repository.GetWorkOrderNo(DocumentType, WorkOrderType);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return DocumentNumber;
+        }
+        #endregion
     }
 }

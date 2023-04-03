@@ -26,7 +26,7 @@ namespace InVanWebApp.Repository
         public IEnumerable<StockAdjustmentBO> GetAll()
         {
             List<StockAdjustmentBO> resultList = new List<StockAdjustmentBO>();
-            string stockAdjustment = "select SA.ID,SA.DocumentNo, SA.DocumentDate, SA.LocationName, SA.Remarks,UD.UserName as UserName, Remarks from StockAdjustment SA inner join UserDetails UD on UD.EmployeeID=SA.CreatedBy where SA.IsDeleted=0 and UD.IsDeleted=0";
+            string stockAdjustment = "select SA.ID,SA.DocumentNo, SA.DocumentDate, SA.LocationName, SA.Remarks,UD.UserName as UserName from StockAdjustment SA inner join Users UD on UD.UserId=SA.CreatedBy where SA.IsDeleted=0 and UD.IsDeleted=0";
 
             try
             {

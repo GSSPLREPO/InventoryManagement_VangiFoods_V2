@@ -174,18 +174,18 @@ namespace InVanWebApp.Repository
                     {
                         var result = new Indent_DetailsBO()
                         {
-                            IndentID = Convert.ToInt32(reader["IndentID"]),
+                            IndentID = reader["IndentID"] is DBNull?0: (Convert.ToInt32(reader["IndentID"])),
                             ItemName = reader["ItemName"].ToString(),
-                            ItemId = Convert.ToInt32(reader["ItemId"]),
-                            RequiredQuantity = Convert.ToDouble(reader["RequiredQuantity"]),
-                            SentQuantity = Convert.ToDouble(reader["SentQuantity"]),
+                            ItemId = reader["ItemId"] is DBNull?0:(Convert.ToInt32(reader["ItemId"])),
+                            RequiredQuantity = reader["RequiredQuantity"] is DBNull?0: (Convert.ToDouble(reader["RequiredQuantity"])),
+                            SentQuantity = reader["SentQuantity"] is DBNull ? 0 : (Convert.ToDouble(reader["SentQuantity"])),
                             
                             //Added the below fields for binding the items in PO
                             ItemCode=reader["ItemCode"].ToString(),
                             ItemUnit= reader["ItemUnit"].ToString(),
-                            ItemUnitPrice= Convert.ToDouble(reader["ItemUnitPrice"]),
-                            ItemTax= Convert.ToDouble(reader["ItemTax"]),
-                            BalanceQuantity= Convert.ToDouble(reader["BalanceQuantity"])
+                            ItemUnitPrice= reader["ItemUnitPrice"] is DBNull ? 0 : (Convert.ToDouble(reader["ItemUnitPrice"])),
+                            ItemTax= reader["ItemTax"] is DBNull ? 0 : (Convert.ToDouble(reader["ItemTax"])),
+                            BalanceQuantity= reader["BalanceQuantity"] is DBNull ? 0 : (Convert.ToDouble(reader["BalanceQuantity"]))
 
                         };
                         resultList.Add(result);

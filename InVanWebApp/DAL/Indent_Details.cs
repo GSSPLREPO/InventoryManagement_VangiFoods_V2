@@ -17,6 +17,9 @@ namespace InVanWebApp.DAL
         public int ID { get; set; }
         public Nullable<int> IndentID { get; set; }
         public Nullable<int> ItemId { get; set; }
+        public string ItemCode { get; set; }
+        public string ItemName { get; set; }
+        public string ItemUnit { get; set; }
         public Nullable<double> RequiredQuantity { get; set; }
         public Nullable<double> SentQuantity { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

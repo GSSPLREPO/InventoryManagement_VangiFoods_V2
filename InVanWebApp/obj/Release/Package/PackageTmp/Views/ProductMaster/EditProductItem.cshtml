@@ -10,7 +10,7 @@
 
     <div class="card">
         <div class="card-body">
-            <h4>Edit Recipe</h4>
+            <h4>Edit Product</h4>
             <hr />
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.ProductID)
@@ -37,7 +37,6 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Product Description")
-                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "100" })
@@ -123,6 +122,3 @@
 </script>
 
 @Html.Raw(TempData["Success"])
-
-
-

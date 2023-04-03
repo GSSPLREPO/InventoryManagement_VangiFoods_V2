@@ -14,9 +14,8 @@ namespace InVanWebApp.Repository.Interface
         //Bind dropdown of Production Indent Number. 
         IEnumerable<ProductionIndentBO> GetProductionIndentNumberForDropdown();
         //Fetch Production Indent Ingredients Details ById for Production Material IssueNote
-        IEnumerable<ProductionIndentBO> GetProductionIndentIngredientsDetailsById(int ProductionIndentId, int LocationID, int ItemId);
-        //Fetch Item list by ProductionIndent ID.
-        IEnumerable<ItemBO> GetItemListByProductionIndentId(int ProductionIndentId);
+        IEnumerable<ProductionIndent_DetailsBO> GetProductionIndentIngredientsDetailsById(int ProductionIndentId, int LocationID);
+        
         //Insert record.
         ResponseMessageBO Insert(ProductionMaterialIssueNoteBO model);
         //This function is for fetch data for editing by ID and for downloading pdf

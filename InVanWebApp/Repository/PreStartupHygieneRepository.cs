@@ -40,7 +40,23 @@ namespace InVanWebApp.Repository
                             Id = Convert.ToInt32(reader["Id"]),
                             VerifyBy = reader["VerifyBy"].ToString(),
                             Date = Convert.ToDateTime(reader["Date"]),
-                            Roboqubos = reader["Roboqubos"].ToString()
+                            RMRecevingArea = reader["RMRecevingArea"].ToString(),
+                            CratesBlue = reader["CratesBlue"].ToString(),
+                            CratesYellow = reader["CratesYellow"].ToString(),
+                            CratesRed = reader["CratesRed"].ToString(),
+                            WeightingArea = reader["WeightingArea"].ToString(),
+                            Water = reader["Water"].ToString(),
+                            HygineArea = reader["HygineArea"].ToString(),
+                            RawMaterial = reader["RawMaterial"].ToString(),
+                            FinishGoods = reader["FinishGoods"].ToString(),
+                            WalkWay = reader["WalkWay"].ToString(),
+                            VegetableWashingArea = reader["VegetableWashingArea"].ToString(),
+                            PeelingMachine = reader["PeelingMachine"].ToString(),
+                            ColdStorage = reader["ColdStorage"].ToString(),
+                            Roboqubos = reader["Roboqubos"].ToString(),
+                            Silo = reader["Silo"].ToString(),
+                            PackagingLine = reader["PackagingLine"].ToString(),
+                            Chiller = reader["Chiller"].ToString()
                         };
                         preStartupHygieneList.Add(preStartupHygiene);
 
@@ -262,6 +278,74 @@ namespace InVanWebApp.Repository
             }
         }
 
+        #endregion
+
+        #region  Bind grid for Report
+        /// <summary>
+        /// Date: 09 March'23
+        /// Snehal: This function is for fecthing list of Daily Monitoring.
+        /// </summary>
+        /// <returns></returns>
+        //public List<MicroAnalysisBO> GetPreStartupHygieneList(DateTime? fromDate = null, DateTime? toDate = null)
+        public List<PreStartupHygieneBO> GetPreStartupHygieneList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+
+            List<PreStartupHygieneBO> preStartupHygieneList = new List<PreStartupHygieneBO>();
+            try
+            {
+                if (fromDate == null && toDate == null)
+                {
+                    fromDate = DateTime.Today;
+                    toDate = DateTime.Today;
+                }
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_PreStartupHygiene_GetAllByDate", con);
+                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var preStartupHygiene = new PreStartupHygieneBO()
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            VerifyBy = reader["VerifyBy"].ToString(),
+                            Date = Convert.ToDateTime(reader["Date"]),
+                            RMRecevingArea = reader["RMRecevingArea"].ToString(),
+                            CratesBlue = reader["CratesBlue"].ToString(),
+                            CratesYellow = reader["CratesYellow"].ToString(),
+                            CratesRed = reader["CratesRed"].ToString(),
+                            WeightingArea = reader["WeightingArea"].ToString(),
+                            Water = reader["Water"].ToString(),
+                            HygineArea = reader["HygineArea"].ToString(),
+                            RawMaterial = reader["RawMaterial"].ToString(),
+                            FinishGoods = reader["FinishGoods"].ToString(),
+                            WalkWay = reader["WalkWay"].ToString(),
+                            VegetableWashingArea = reader["VegetableWashingArea"].ToString(),
+                            PeelingMachine = reader["PeelingMachine"].ToString(),
+                            ColdStorage = reader["ColdStorage"].ToString(),
+                            Roboqubos = reader["Roboqubos"].ToString(),
+                            Silo = reader["Silo"].ToString(),
+                            PackagingLine = reader["PackagingLine"].ToString(),
+                            Chiller = reader["Chiller"].ToString(),
+                            Remark = reader["Remark"].ToString(),
+
+                        };
+                        preStartupHygieneList.Add(preStartupHygiene);
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return preStartupHygieneList;
+        }
         #endregion
     }
 }

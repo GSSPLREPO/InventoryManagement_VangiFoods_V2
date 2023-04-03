@@ -308,49 +308,55 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult PurchaseOrderDetails(int purchaseOrderId)
         {
-            POPaymentBO model = new POPaymentBO();
-
-            var purchaseDetails = _POPaymentRepository.GetPurchaseOrderById(purchaseOrderId);
-
-            var purchaseOrderItems = _POPaymentRepository.GetPOItemsByPurchaseOrderId(purchaseOrderId);
-            List<PurchaseOrderItemsDetailBO> items = new List<PurchaseOrderItemsDetailBO>();
-            foreach (var item in purchaseOrderItems)
+            if (Session[ApplicationSession.USERID] != null)
             {
-                PurchaseOrderItemsDetailBO purchaseOrderItem = new PurchaseOrderItemsDetailBO
+
+                POPaymentBO model = new POPaymentBO();
+
+                var purchaseDetails = _POPaymentRepository.GetPurchaseOrderById(purchaseOrderId);
+
+                var purchaseOrderItems = _POPaymentRepository.GetPOItemsByPurchaseOrderId(purchaseOrderId);
+                List<PurchaseOrderItemsDetailBO> items = new List<PurchaseOrderItemsDetailBO>();
+                foreach (var item in purchaseOrderItems)
                 {
-                    CreatedBy = item.CreatedBy,
-                    CreatedDate = item.CreatedDate,
-                    ID = item.ID,
-                    IsDeleted = item.IsDeleted,
-                    ItemName = item.ItemName,
-                    ItemQuantity = item.ItemQuantity,
-                    ItemTaxValue = Math.Round((Convert.ToDouble(item.ItemTaxValue)),2).ToString(),
-                    ItemUnit = item.ItemUnit,
-                    ItemUnitPrice = item.ItemUnitPrice,
-                    Item_Code = item.Item_Code,
-                    Item_ID = item.Item_ID,
-                    LastModifiedBy = item.LastModifiedBy,
-                    LastModifiedDate = item.LastModifiedDate,
-                    PurchaseOrderId = item.PurchaseOrderId,
-                    TotalItemCost = item.TotalItemCost
-                };
-                items.Add(purchaseOrderItem);
+                    PurchaseOrderItemsDetailBO purchaseOrderItem = new PurchaseOrderItemsDetailBO
+                    {
+                        CreatedBy = item.CreatedBy,
+                        CreatedDate = item.CreatedDate,
+                        ID = item.ID,
+                        IsDeleted = item.IsDeleted,
+                        ItemName = item.ItemName,
+                        ItemQuantity = item.ItemQuantity,
+                        ItemTaxValue = Math.Round((Convert.ToDouble(item.ItemTaxValue)), 2).ToString(),
+                        ItemUnit = item.ItemUnit,
+                        ItemUnitPrice = item.ItemUnitPrice,
+                        Item_Code = item.Item_Code,
+                        Item_ID = item.Item_ID,
+                        LastModifiedBy = item.LastModifiedBy,
+                        LastModifiedDate = item.LastModifiedDate,
+                        PurchaseOrderId = item.PurchaseOrderId,
+                        TotalItemCost = item.TotalItemCost
+                    };
+                    items.Add(purchaseOrderItem);
+                }
+
+
+                model.PurchaseOrderId = purchaseOrderId;
+                model.PONumber = purchaseDetails.PONumber;
+                model.TotalPOAmount = Convert.ToDecimal(purchaseDetails.GrandTotal);
+                model.AdvancedPayment = Convert.ToDecimal(purchaseDetails.AdvancedPayment);
+                model.VendorID = (int)purchaseDetails.VendorsID;
+                model.AmountPaid = purchaseDetails.AmountPaid;
+                model.VendorName = _CompanyRepository.GetById(model.VendorID).CompanyName;
+                model.PurchaseOrderItems = items;
+                model.PaymentDueDate = DateTime.Today;
+                model.PaymentDate = DateTime.Today;
+
+                BindPONumbers();
+                return PartialView("_POPaymentDetails", model);
             }
-
-
-            model.PurchaseOrderId = purchaseOrderId;
-            model.PONumber = purchaseDetails.PONumber;
-            model.TotalPOAmount = Convert.ToDecimal(purchaseDetails.GrandTotal);
-            model.AdvancedPayment = Convert.ToDecimal(purchaseDetails.AdvancedPayment);
-            model.VendorID = (int)purchaseDetails.VendorsID;
-            model.AmountPaid = purchaseDetails.AmountPaid;
-            model.VendorName = _CompanyRepository.GetById(model.VendorID).CompanyName;
-            model.PurchaseOrderItems = items;
-            model.PaymentDueDate = DateTime.Today;
-            model.PaymentDate = DateTime.Today;
-
-            BindPONumbers();
-            return PartialView("_POPaymentDetails", model);
+            else
+                return RedirectToAction("Index", "Login");
 
         }
         #endregion

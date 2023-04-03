@@ -93,9 +93,9 @@ namespace InVanWebApp.Controllers
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _productMasterRepository.Insert(model); 
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Product item Inserted Successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Product inserted successfully!');</script>";
                         else
-                            TempData["Success"] = "<script>alert('Duplicate Product item! Can not be inserted!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate product! Can not be inserted!');</script>";
 
                         return RedirectToAction("Index", "ProductMaster");
 
@@ -156,10 +156,10 @@ namespace InVanWebApp.Controllers
                         model.LastModifiedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _productMasterRepository.Update(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Product Item updated successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Product updated successfully!');</script>";
 
                         else
-                            TempData["Success"] = "<script>alert('Duplicate Product Item! Can not be updated!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate product! Can not be updated!');</script>";
 
                         return RedirectToAction("Index", "ProductMaster");
                     }
@@ -192,7 +192,7 @@ namespace InVanWebApp.Controllers
             {
                 int userId = Convert.ToInt32(Session[ApplicationSession.USERID]);
                 _productMasterRepository.Delete(Product_ID, userId);
-                TempData["Success"] = "<script>alert('Product Item deleted successfully!');</script>";
+                TempData["Success"] = "<script>alert('Product deleted successfully!');</script>";
                 return RedirectToAction("Index", "ProductMaster");
             }
             else

@@ -11,10 +11,10 @@ namespace InVanWebApp_BO
     {
         public int ID { get; set; }
 
-        [Required(ErrorMessage = "Select item category name!")] //Rahul updated ItemCategory_ID ErrorMessage 16-02-23. 
-        public Nullable<int> ItemCategory_ID { get; set; }  
+        [Required(ErrorMessage = "Select item category name!")]
+        public Nullable<int> ItemCategory_ID { get; set; }
 
-        [Required(ErrorMessage = "Select item type name!")] //Rahul updated ItemTypeID ErrorMessage 16-02-23.
+        [Required(ErrorMessage = "Select item type name!")]
         public Nullable<int> ItemTypeID { get; set; }
 
         [Required(ErrorMessage = "Enter item code!")]
@@ -61,6 +61,8 @@ namespace InVanWebApp_BO
         public Nullable<double> RequiredQuantity { get; set; } //Rahul added 23 Nov 2022 
         public string IndianCurrencyValue { get; set; } //Rahul added 02 Dec 2022 
 
+        //Added for Dashboard dropdown
+        public string ItemNameWithCode { get; set; }
 
     }
 }

@@ -14,13 +14,20 @@ namespace InVanWebApp.DAL
     
     public partial class IssueNoteDetail
     {
-        public int IssueNoteDetailsId { get; set; }
+        public int ID { get; set; }
         public Nullable<int> IssueNoteId { get; set; }
         public Nullable<int> ItemId { get; set; }
+        public string Item_Code { get; set; }
+        public string Item_Name { get; set; }
+        public Nullable<double> ItemUnitPrice { get; set; }
+        public string ItemUnit { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<int> CurrencyId { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
         public Nullable<double> QuantityRequested { get; set; }
         public Nullable<double> QuantityIssued { get; set; }
-        public Nullable<double> CurrentStock { get; set; }
-        public Nullable<int> UnitId { get; set; }
+        public Nullable<double> AvailableStockBeforeIssue { get; set; }
+        public Nullable<double> StockAfterIssuing { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -28,6 +35,8 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
     
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
         public virtual IssueNote IssueNote { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

@@ -226,7 +226,7 @@
                                                     @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
                                                     @Html.TextBox("ItemUnitPrice", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
@@ -247,7 +247,7 @@
                                                     @Html.TextBox("ItemTaxValue", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                    @Html.TextBoxFor(model => model.TotalItemCost, "0", new { @class = "form-control form-control-sm text-right", value="0",id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                 </td>
                                                 @*<td>
                                                         @Html.TextBoxFor(model => model.CloserPrice, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
@@ -296,7 +296,7 @@
                             <div class="form-group">
                                 <div class="row mb-2">
                                     <label id="lblTotalBeforeTax"><b>Total (before tax): </b></label>
-                                    <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="" readonly="readonly" />
+                                    <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="0" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Total tax: </b></label>
@@ -422,7 +422,7 @@
                     $("#ItemQuantity").val('0');
 
                     $("#ItemTotalPrice").val('');
-                    $("#TotalBeforeTax").val('');
+                    $("#TotalBeforeTax").val('0');
                     $("#TotalTax").val('');
                     $("#TotalAfterTax").val('');
                     $("#GrandTotal").val('');
@@ -524,7 +524,7 @@
             '<input type="text" id="' + itemQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemQuantity + '" value="0" required="required" onkeypress = "return isNumberKey(event)"  MaxLength = "8"  />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
+            '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;auto;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemPrice + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + itemPrice + '"readonly = "readonly" value="" required="required" />' +

@@ -60,95 +60,58 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Bind all Recipe details 
-        public IEnumerable<RecipeMasterBO> GetRecipeDetailsById(int ProductId, int Recipe_Id) 
+
+        #region Fetch Recipe by product id
+        public IEnumerable<Recipe_DetailsBO> GetRecipeDetailsById(int ProductId, int Recipe_Id)
         {
-            List<RecipeMasterBO> resultList = new List<RecipeMasterBO>();
+            List<Recipe_DetailsBO> resultList = new List<Recipe_DetailsBO>();
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_RecipeIngredientsDetail_GetBy_Id", con);
-                    cmd.Parameters.AddWithValue("@ID", ProductId);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_RecipeDetailsForBatchPlanning_GetbyProductId", con);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ProductId", ProductId);
+                    cmd.Parameters.AddWithValue("@SOId", Recipe_Id);
                     con.Open();
-                    SqlDataReader dataReader = cmd.ExecuteReader();
-
-                    while (dataReader.Read())
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
                     {
-                        var result = new RecipeMasterBO()
-                        {                            
-                            RecipeID = Convert.ToInt32(dataReader["RecipeID"]),
-                            RecipeName = dataReader["RecipeName"].ToString(),
-                            Item_ID = Convert.ToInt32(dataReader["ItemId"]),
-                            ItemCode = dataReader["ItemCode"].ToString(),
-                            ItemName = dataReader["ItemName"].ToString(),
-                            ItemQuantity = ((dataReader["BatchSize"] != null) ? Convert.ToDecimal(dataReader["BatchSize"]) : 0),
-                            FinalQuantity = ((dataReader["BatchSize"] != null) ? Convert.ToDecimal(dataReader["BatchSize"]) : 0),
-                            UnitName = dataReader["UnitName"].ToString(),
-                            Ratio = ((dataReader["Ratio"] != null) ? float.Parse(dataReader["Ratio"].ToString()) : 0)
+                        var result = new Recipe_DetailsBO()
+                        {
+                            RecipeIngredientsDetailID = Convert.ToInt32(reader["RecipeIngredientsDetailID"]),
+                            RecipeID = Convert.ToInt32(reader["RecipeID"]),
+                            RecipeName = reader["RecipeName"].ToString(),
+                            ItemId = Convert.ToInt32(reader["ItemId"]),
+                            ItemCode = reader["ItemCode"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            RoundedRatio = Convert.ToDecimal(reader["RoundedRatio"]),
+                            UnitName = reader["UnitName"].ToString(),
+                            BatchSize = float.Parse(reader["BatchSize"].ToString()),
+
+                            TotalBatches = Convert.ToDecimal(reader["TotalBatches"]),
+                            Yield = Convert.ToDecimal(reader["Yield"]),
+                            ActualRequirement = Convert.ToDecimal(reader["ActualRequirement"]),
+                            StockInHand = Convert.ToDecimal(reader["StockInHand"]),
+                            ToBeProcured = Convert.ToDecimal(reader["ToBeProcured"]),
+                            SalesOrderQty = Convert.ToDecimal(reader["OrderedQty"])
+
                         };
                         resultList.Add(result);
                     }
                     con.Close();
 
-                    //==========This condition is for edit functionality "Recipe_Id == 0".===========///
-                    if (Recipe_Id == 0)
-                    {                        
-                        SqlCommand cmd2 = new SqlCommand("usp_tbl_RecipeIngredientsDetails_GetByID", con);
-                        cmd2.Parameters.AddWithValue("@RecipeID", Recipe_Id);
-                        cmd2.CommandType = CommandType.StoredProcedure;
-                        con.Open();
-                        SqlDataReader dataReader2 = cmd2.ExecuteReader();
-
-                        while (dataReader2.Read())
-                        {
-                            var result = new RecipeMasterBO()
-                            {
-                                Item_ID = Convert.ToInt32(dataReader2["ItemID"]),
-                                ItemCode = dataReader2["Item_Code"].ToString(),
-                                ItemName = dataReader2["ItemName"].ToString(),
-                                ItemQuantity = ((dataReader2["ItemQuantity"] != null) ? Convert.ToDecimal(dataReader2["ItemQuantity"]) : 0),
-                                FinalQuantity = ((dataReader2["FinalQuantity"] != null) ? Convert.ToDecimal(dataReader2["FinalQuantity"]) : 0),
-                                UnitName = dataReader2["ItemUnit"].ToString(),                                
-                                Ratio = ((dataReader2["Percentage"] != null) ? float.Parse(dataReader2["Percentage"].ToString()): 0)
-                            };
-                            resultList.Add(result);
-                        }
-                        con.Close();
-                    }
-
-                    else //==========This else will execute for generating view.===============//
-                    {
-                        SqlCommand cmd1 = new SqlCommand("usp_tbl_RecipeIngredientsDetailsForView_GetByID", con);
-                        cmd1.Parameters.AddWithValue("@ID", Recipe_Id);
-                        cmd1.CommandType = CommandType.StoredProcedure;
-                        con.Open();
-                        SqlDataReader dataReader1 = cmd1.ExecuteReader();
-
-                        while (dataReader1.Read())
-                        {
-                            var result = new RecipeMasterBO()
-                            {
-                                ItemCode = dataReader1["Item_Code"].ToString(),
-                                ItemName = dataReader1["ItemName"].ToString(),
-                                ItemQuantity = ((dataReader1["ItemQuantity"] != null) ? Convert.ToDecimal(dataReader1["ItemQuantity"]) : 0),
-                                FinalQuantity = ((dataReader1["FinalQuantity"] != null) ? Convert.ToDecimal(dataReader1["FinalQuantity"]) : 0),
-                                UnitName = dataReader1["ItemUnit"].ToString(),
-                                Ratio = ((dataReader1["Percentage"] != null) ? float.Parse(dataReader1["Percentage"].ToString()) : 0)
-                            };
-                            resultList.Add(result);
-                        }
-                        con.Close();
-                    }
-                };
+                }
             }
             catch (Exception ex)
             {
-                resultList = null;
                 log.Error(ex.Message, ex);
             }
             return resultList;
         }
+        #endregion
+
+       
         #endregion
 
         #region Bind dropdown of SO Number 
@@ -239,10 +202,10 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@ProductionDate", model.ProductionDate);
                     cmd.Parameters.AddWithValue("@IndentBy", model.RaisedBy);
                     cmd.Parameters.AddWithValue("@UserName", model.UserName);
-                    cmd.Parameters.AddWithValue("@SalesOrderId", model.SalesOrderId);
+                    cmd.Parameters.AddWithValue("@SalesOrderId", model.SO_Id);
                     cmd.Parameters.AddWithValue("@SONo", model.SONo);                    
                     cmd.Parameters.AddWithValue("@WorkOrderNo", model.WorkOrderNo);
-                    cmd.Parameters.AddWithValue("@RecipeID", model.RecipeID);
+                    cmd.Parameters.AddWithValue("@ItemID", model.RecipeID);
                     cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
                     cmd.Parameters.AddWithValue("@TotalBatches", model.TotalBatches);
                     cmd.Parameters.AddWithValue("@BatchNumber", model.BatchNumber); //Rahul added 25-033-2023.
@@ -287,9 +250,6 @@ namespace InVanWebApp.Repository
                         cmdNew.CommandType = CommandType.StoredProcedure;
 
                         cmdNew.Parameters.AddWithValue("@ProductionIndentID", item.ProductionIndentID);
-                        cmdNew.Parameters.AddWithValue("@QCcheck_1", item.QCcheck_1);
-                        cmdNew.Parameters.AddWithValue("@QCcheck_2", item.QCcheck_2);
-                        cmdNew.Parameters.AddWithValue("@QCcheck_3", item.QCcheck_3);
                         cmdNew.Parameters.AddWithValue("@Item_ID", item.ItemId);
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
                         cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
@@ -523,5 +483,34 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+
+        #region Bind Work order no
+        public SalesOrderBO GetWorkOrderNumber(int id)
+        {
+            string purchaseOrderQuery = "SELECT WorkOrderNo FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
+            string itemDetails = "Select Item_ID,ItemName from SalesOrderItemsDetails where SalesOrderId=@Id and IsDeleted=0";
+
+            SalesOrderBO result = new SalesOrderBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    result = con.Query<SalesOrderBO>(purchaseOrderQuery, new { @Id = id }).FirstOrDefault();
+                    var resultList = con.Query<SalesOrderItemsDetail>(itemDetails, new { @Id = id }).ToList();
+
+                    result.salesOrderItemsDetails = resultList;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result = null;
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
+        #endregion
+
+  
     }
 }

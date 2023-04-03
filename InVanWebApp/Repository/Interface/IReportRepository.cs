@@ -18,9 +18,51 @@ namespace InVanWebApp.Repository.Interface
         List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate);
         List<DeliveryChallanItemDetailsBO> getFinishedGoodsReportData(DateTime fromDate, DateTime toDate,int itemId);
         List<StockMasterBO> getInventoryFIFOReportData(DateTime fromDate, DateTime toDate, int itemId);
-        //Calling Method For Inventory Analysis FIFO Report 22-02-23. 
-        List<StockMasterBO> getInventoryAnalysisFIFOReportData(DateTime fromDate, DateTime toDate, int itemId); 
         List<LocationWiseStockBO> getTotalInventoryCostData(DateTime fromDate, DateTime toDate, int LocationId, int itemId);
         List<StockAdjustmentDetailsBO> getStockReconciliationData(DateTime fromDate, DateTime toDate, int LocationId, int itemId);
+        List<StockMasterBO> getInventoryAnalysisFIFOReportData(DateTime fromDate, DateTime toDate, int itemId);
+        List<CompanyBO> getCompanyDataByType(string CompanyType);
+
+        //Calling Method for Purchase Invoice Report
+        List<PurchaseOrderBO> getPurchaseInvoiceReportData(DateTime fromDate, DateTime toDate, int itemId, string Status);
+
+        //Calling Method For Issue Note Report
+        List<IssueNoteBO> getIssueNoteReportData(DateTime fromDate, DateTime toDate, int itemId);
+
+        //Calling Method For GRN Report
+        List<GRN_BO> getGRNReportData(DateTime fromDate, DateTime toDate, int itemId);
+
+        //Calling Method For Rejection Report
+        List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId);
+
+
+        ///Production Reprot
+        //Batchwise Production cost Reprot
+        List<ReportBO> getBatchwiseProductionCostReportData(DateTime fromDate, DateTime toDate, string ItemId);
+
+        //To Bind BatchNumber for Batchwise Production Cost Report
+        IEnumerable<ReportBO> GetAll();
+
+        //To Bind BatchNumber for Batchwise Production Cost Report
+        IEnumerable<ReportBO> GetGFLocationBatchNumber();
+
+        //Yeild Report 
+        List<ReportBO> getYeildReportData(DateTime fromDate, DateTime toDate, int ItemId);
+
+        //FG Locationwise Report
+        List<ReportBO> getFGLocationwiseReportData(DateTime fromDate, DateTime toDate, int LocationId);
+
+        //Batchwise Production cost Reprot
+        List<ReportBO> getRawMaterialCostAnalysisReportData(DateTime fromDate, DateTime toDate, int ItemId);
+
+        //To Bind WorkOrder for Batchwise Production Cost Report
+        IEnumerable<ReportBO> Getall();
+
+        //Bind Utility Consumption By Batch dropdown for dashboard
+        IEnumerable<ReportBO> GetAllBatchNumber();
+        //Bind Utility Consumption By Work Order dropdown for dashboard
+        IEnumerable<ReportBO> GetAllWorkOrderNumber();
+
+
     }
 }

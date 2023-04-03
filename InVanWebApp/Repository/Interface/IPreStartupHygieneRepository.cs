@@ -24,6 +24,7 @@ namespace InVanWebApp.Repository.Interface
 
         //Function define for: Update PreHygiene record.
         ResponseMessageBO Update(PreStartupHygieneBO model);
+        List<PreStartupHygieneBO> GetPreStartupHygieneList(int flag, DateTime? fromDate = null, DateTime? toDate = null);
 
     }
 }

@@ -77,31 +77,10 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-        #region Fetch Item list by ProductionIndent ID.
-        public IEnumerable<ItemBO> GetItemListByProductionIndentId(int ProductionIndentId)
-        {
-            List<ItemBO> resultList = new List<ItemBO>();
-            string itemQuery = "select distinct(LS.ItemId) as ID, (Select I.Item_Name from Item I where I.IsDeleted = 0 and I.ID = LS.ItemId) as Item_Name from ProductionIndentIngredientsDetails LS where LS.IsDeleted = 0 and LS.ProductionIndentID = @ID";
-
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connString))
-                {
-                    resultList = con.Query<ItemBO>(itemQuery, new { @ID = ProductionIndentId }).ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-            }
-            return resultList;
-        }
-        #endregion
-
         #region Fetch Production Indent Ingredients Details ById for Production Material IssueNote
-        public IEnumerable<ProductionIndentBO> GetProductionIndentIngredientsDetailsById(int ProductionIndentId,int LocationID, int ItemId)
+        public IEnumerable<ProductionIndent_DetailsBO> GetProductionIndentIngredientsDetailsById(int ProductionIndentId,int LocationID)
         {
-            List<ProductionIndentBO> resultList = new List<ProductionIndentBO>();
+            List<ProductionIndent_DetailsBO> resultList = new List<ProductionIndent_DetailsBO>();
 
             try
             {
@@ -111,25 +90,28 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd1 = new SqlCommand("usp_tbl_ProductionIndentIngredientsDetails_GetByID", con);
                     cmd1.Parameters.AddWithValue("@ProductionIndent_Id", ProductionIndentId);
                     cmd1.Parameters.AddWithValue("@Location_Id", LocationID);
-                    cmd1.Parameters.AddWithValue("@Item_Id", ItemId);
                     cmd1.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader2 = cmd1.ExecuteReader();
 
                     while (dataReader2.Read())
                     {
-                        var result = new ProductionIndentBO()
+                        var result = new ProductionIndent_DetailsBO()
                         {
-                            ID = Convert.ToInt32(dataReader2["ID"]),
+                            //ID = Convert.ToInt32(dataReader2["ID"]),
                             ItemId = Convert.ToInt32(dataReader2["ItemId"]), 
-                            ItemCode = dataReader2["ItemCode"].ToString(),
-                            ItemName = dataReader2["ItemName"].ToString(),
-                            ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                            ItemName = dataReader2["Item_Name"].ToString(),
+                            ItemCode = dataReader2["Item_Code"].ToString(),
+                            RequestedQty=Convert.ToDecimal(dataReader2["RequestedQty"]),
+                            IssuedQty=Convert.ToDecimal(dataReader2["IssuedQty"]),
+                            IssuingQty=Convert.ToDecimal(dataReader2["IssuingQty"]),
+                            BalanceQty=Convert.ToDecimal(dataReader2["BalanceQty"]),
                             ItemUnit = dataReader2["ItemUnit"].ToString(), 
                             AvailableStock = Convert.ToDecimal(dataReader2["AvailableStock"]),
-                            FinalQuantity = Convert.ToDouble(dataReader2["FinalQuantity"]),
-                            QuantityIssued = Convert.ToDouble(dataReader2["QuantityIssued"]),
-                            CurrencyName = dataReader2["CurrencyName"].ToString()
+                            ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                            CurrencyName = dataReader2["CurrencyName"].ToString(),
+                            FinalStock = Convert.ToDecimal(dataReader2["FinalStock"]),
+                            WorkOrderNo=dataReader2["WorkOrderNo"].ToString()
                         };
                         resultList.Add(result);
                     }
@@ -143,6 +125,7 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
+
 
         #region Insert function
         /// <summary>
@@ -164,9 +147,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@IssueByName", model.IssueByName);
                     cmd.Parameters.AddWithValue("@LocationId", model.LocationId);
                     cmd.Parameters.AddWithValue("@LocationName", model.LocationName);
-                    cmd.Parameters.AddWithValue("@ProductionIndentID", model.ProductionIndentId);
+                    cmd.Parameters.AddWithValue("@ProductionIndentID", model.ProductionIndentID);
                     cmd.Parameters.AddWithValue("@ProductionIndentNo", model.ProductionIndentNo);
-                    cmd.Parameters.AddWithValue("@SalesOrderId", model.SalesOrderId);
                     cmd.Parameters.AddWithValue("@WorkOrderNumber", model.WorkOrderNumber);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
@@ -197,14 +179,15 @@ namespace InVanWebApp.Repository
                             objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
                             objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
                             objItemDetails.Item_Name = item.ElementAt(2).Value.ToString();
-                            objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(3).Value);
-                            objItemDetails.CurrencyName = item.ElementAt(4).Value.ToString();
-                            objItemDetails.AvailableStockBeforeIssue = Convert.ToDouble(item.ElementAt(5).Value);
-                            objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
-                            objItemDetails.QuantityRequested = Convert.ToDouble(item.ElementAt(7).Value);
-                            objItemDetails.StockAfterIssuing = Convert.ToDouble(item.ElementAt(8).Value);
-                            objItemDetails.QuantityIssued = Convert.ToDouble(item.ElementAt(9).Value);
-                            objItemDetails.Description = item.ElementAt(10).Value.ToString();
+                            objItemDetails.QuantityRequested = Convert.ToDouble(item.ElementAt(3).Value);
+                            objItemDetails.QuantityIssued= Convert.ToDouble(item.ElementAt(4).Value);
+                            objItemDetails.IssuingQty= Convert.ToDouble(item.ElementAt(5).Value);
+                            objItemDetails.BalanceQty= Convert.ToDouble(item.ElementAt(6).Value);
+                            objItemDetails.AvailableStockBeforeIssue = Convert.ToDouble(item.ElementAt(7).Value);
+                            objItemDetails.ItemUnit = item.ElementAt(8).Value.ToString();
+                            objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(9).Value);
+                            objItemDetails.CurrencyName = item.ElementAt(10).Value.ToString();
+                            objItemDetails.StockAfterIssuing = Convert.ToDouble(item.ElementAt(11).Value);
                             objItemDetails.CreatedBy = model.CreatedBy;
                             itemDetails.Add(objItemDetails);
                         }
@@ -219,16 +202,17 @@ namespace InVanWebApp.Repository
                             cmdNew.Parameters.AddWithValue("@ItemId", item.ItemId);
                             cmdNew.Parameters.AddWithValue("@Item_Name", item.Item_Name);
                             cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                            cmdNew.Parameters.AddWithValue("@QuantityRequested", item.QuantityRequested);
+                            cmdNew.Parameters.AddWithValue("@QuantityIssued", item.QuantityIssued);
+                            cmdNew.Parameters.AddWithValue("@IssuingQty", item.IssuingQty);
+                            cmdNew.Parameters.AddWithValue("@BalanceQty", item.BalanceQty);
+                            cmdNew.Parameters.AddWithValue("@AvailableStockBeforeIssue", item.AvailableStockBeforeIssue);
+                            cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
                             cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
                             cmdNew.Parameters.AddWithValue("@CurrencyName", item.CurrencyName);
-                            cmdNew.Parameters.AddWithValue("@QuantityRequested", item.QuantityRequested);
-                            cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
-                            cmdNew.Parameters.AddWithValue("@AvailableStockBeforeIssue", item.AvailableStockBeforeIssue);
                             cmdNew.Parameters.AddWithValue("@StockAfterIssuing", item.StockAfterIssuing);
-                            cmdNew.Parameters.AddWithValue("@QuantityIssued", item.QuantityIssued);
-                            cmdNew.Parameters.AddWithValue("@Description", item.Description);
                             cmdNew.Parameters.AddWithValue("@LocationId", model.LocationId);
-                            cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                            cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                             cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
 
                             SqlDataReader dataReaderNew = cmdNew.ExecuteReader();

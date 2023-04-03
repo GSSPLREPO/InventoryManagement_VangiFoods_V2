@@ -82,8 +82,7 @@
                                                     {
                                                         @class = "form-control form-control-sm",
                                                         style = "height:30px;width:270px;",
-                                                        onchange = "SelectedIndexChangedItemList($(this).val())"@*onmouseleave = "
-                                                    ($(this).val(),id)"*@})
+                                                        onchange = "SelectedIndexChangedItemList($(this).val())"@*onmouseleave = "ValMsgItemList($(this).val(),id)"*@})
                                                     <span id="ValMsgItemList" style="display:none; color:red"></span>
                                                     @*@Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" }) Rahul removed ValidationMessageFor ItemId and added ValMsgItemList in span tag onchange SelectedIndexChangedItemList 09-02-23. *@
                                                 </td>

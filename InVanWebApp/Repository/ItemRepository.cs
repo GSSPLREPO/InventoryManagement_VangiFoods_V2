@@ -44,7 +44,8 @@ namespace InVanWebApp.Repository
                             Item_Code = reader["Item_Code"].ToString(),
                             Item_Name = reader["Item_Name"].ToString(),
                             HSN_Code = reader["HSN_Code"].ToString(),
-                            Description = reader["Description"].ToString()
+                            Description = reader["Description"].ToString(),
+                            ItemNameWithCode = reader["Item_Name"].ToString() + " (" + reader["Item_Code"].ToString() + ")"
                         };
                         ItemList.Add(item);
 
@@ -226,9 +227,9 @@ namespace InVanWebApp.Repository
                             MinStock = Convert.ToDouble(reader["MinStock"]),
                             Description = reader["Description"].ToString(),
                             UnitOfMeasurement_ID = Convert.ToInt32(reader["UnitOfMeasurement_ID"]),
-                            UnitPrice = Convert.ToDouble(reader["UnitPrice"]),
-                            TaxId = Convert.ToInt32(reader["TaxId"]),
-                            ItemTaxValue = float.Parse(reader["ItemTaxValue"].ToString())
+                            UnitPrice = (reader["UnitPrice"]) is DBNull ? 0 : Convert.ToDouble(reader["UnitPrice"]),
+                            TaxId = (reader["TaxId"]) is DBNull ? 0 : Convert.ToInt32(reader["TaxId"]),
+                            ItemTaxValue = (reader["ItemTaxValue"]) is DBNull ? 0 : float.Parse(reader["ItemTaxValue"].ToString())
                         };
                     }
                     con.Close();

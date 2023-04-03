@@ -38,10 +38,12 @@
 <script type="text/javascript">
     
     $('#PONumber').change(function () {
+        debugger;
         var Id = $('#PONumber option:selected').attr('value');
         $('#btnBackBtn').hide();
-        if (Id > 1) {
-            var url = "/POPayment/PurchaseOrderDetails?purchaseOrderId=" + Id;
+        var url = '';
+        if (Id > 0) {
+            url = "/POPayment/PurchaseOrderDetails?purchaseOrderId=" + Id;
             $.get(url, function (data) {
                 $("#rData").html(data);
             });

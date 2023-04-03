@@ -33,9 +33,9 @@ namespace InVanWebApp_BO
         public string CurrencyName { get; set; }
         public float CurrencyPrice { get; set; }
         public float GrandTotal { get; set; }
-        public float DiscountPercentage { get; set; } 
         public float TotalAfterTax { get; set; }
         public float OtherTax { get; set; }
+        public float DiscountPercentage { get; set; }
         public int TermsAndCondition_ID { get; set; }
         public string Terms { get; set; }
         public string Remarks { get; set; }

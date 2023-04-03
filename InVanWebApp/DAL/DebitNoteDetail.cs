@@ -20,17 +20,22 @@ namespace InVanWebApp.DAL
         public string Item_Name { get; set; }
         public string Item_Code { get; set; }
         public string ItemTaxValue { get; set; }
+        public string ItemUnit { get; set; }
         public Nullable<decimal> ItemUnitPrice { get; set; }
-        public Nullable<double> QuantityDebited { get; set; }
-        public Nullable<double> QuantityRejected { get; set; }
-        public Nullable<bool> Status { get; set; }
+        public Nullable<double> POQuantity { get; set; }
+        public Nullable<double> DebitedQuantity { get; set; }
+        public Nullable<double> ItemTotalAmount { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
+        public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
         public virtual DebitNote DebitNote { get; set; }
         public virtual Item Item { get; set; }
     }

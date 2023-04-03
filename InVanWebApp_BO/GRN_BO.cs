@@ -63,5 +63,12 @@ namespace InVanWebApp_BO
         //Added the below field for PO Report
         public int SrNo { get; set; }
         public string GRN_Date { get; set; }
+
+        //Used this fileds for GRN  Report
+        [Required(ErrorMessage = "Please Select From Date!")]
+        public DateTime fromDate { get; set; }
+
+        [Required(ErrorMessage = "Please Select To Date!")]
+        public DateTime toDate { get; set; }
     }
 }

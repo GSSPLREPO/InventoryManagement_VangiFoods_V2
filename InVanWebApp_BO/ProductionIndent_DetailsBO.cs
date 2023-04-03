@@ -26,6 +26,19 @@ namespace InVanWebApp_BO
         public double BatchQuantity { get; set; }  
         public double FinalQuantity { get; set; }  
         public string ItemUnit { get; set; }        
-        public double Percentage { get; set; } 
+        public double Percentage { get; set; }
+
+        //Added the below fields for Production material Issue note
+        public decimal? RequestedQty { get; set; }
+        public decimal? IssuedQty { get; set; }
+        public decimal? IssuingQty { get; set; }
+        public decimal? BalanceQty { get; set; }
+        public decimal? AvailableStock { get; set; }
+        public decimal? ItemUnitPrice { get; set; }
+        public string CurrencyName { get; set; }
+        public decimal? FinalStock { get; set; }
+        public string WorkOrderNo { get; set; }
+
+
     }
 }

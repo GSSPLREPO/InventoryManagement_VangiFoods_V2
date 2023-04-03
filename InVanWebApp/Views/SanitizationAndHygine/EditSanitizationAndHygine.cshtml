@@ -1,0 +1,325 @@
+﻿@model InVanWebApp_BO.SanitizationAndHygineBO
+
+@{
+    ViewBag.Title = "EditSanitizationAndHygine";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Sanitization And Hygiene</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Date)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Verify By Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Name of Employee")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.NameOfEmpolyee, new { @class = "form-control form-control-sm", maxlength = "30", @onkeypress = "return IsAlphabate(event);" })
+                    @Html.ValidationMessageFor(model => model.NameOfEmpolyee, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+
+            @*<div class="row">
+            <div class="col-md-2">
+                @Html.Label("Hand Wash")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.HandWash, new List<SelectListItem>{
+                new SelectListItem{ Text="Normal", Value = "Normal" },
+                new SelectListItem{ Text="Modrate", Value = "Modrate" },
+                new SelectListItem{ Text="High", Value = "High" },
+                }, "---Select---", new { @class = "form-control" })
+
+                @Html.ValidationMessageFor(model => model.HandWash, "", new { @class = "error mt-2 text-danger" })
+            </div>
+        </div>*@
+
+            @*<div class="row">
+            <h4 style="color:darkcyan">Body Temprature</h4>
+        </div>
+        <br />*@
+            <div class="row">
+                @*<div class="col-md-2">
+                @Html.Label("Normal")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-2">
+                @Html.RadioButtonFor(model => model.BodyTemperature, "Normal", new { @class = "form-check-input form-control", @Value = "Normal" })
+
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Modrate")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-2">
+                @Html.RadioButtonFor(model => model.BodyTemperature, "Modrate", new { @class = "form-check-input form-control", @Value = "Modrate" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("High")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-2">
+                @Html.RadioButtonFor(model => model.BodyTemperature, "High", new { @class = "form-check-input form-control", @Value = "High" })
+            </div>
+            <div class="col-md-6">
+                @Html.ValidationMessageFor(model => model.BodyTemperature, "", new { @class = "error mt-2 text-danger" })
+            </div>*@
+                <div class="col-md-2">
+                    @Html.Label("Department")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Department, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return IsAlphaNumeric(event);" })
+                    @Html.ValidationMessageFor(model => model.Department, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Body Temprature")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.BodyTemperature, new List<SelectListItem>{
+                    new SelectListItem{ Text="Normal", Value = "Normal" },
+                    new SelectListItem{ Text="Modrate", Value = "Modrate" },
+                    new SelectListItem{ Text="High", Value = "High" }
+                    }, "---Select---", new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.BodyTemperature, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Hand Wash")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.HandWash, new List<SelectListItem>{
+                    new SelectListItem{ Text="Yes", Value = "Yes" },
+                    new SelectListItem{ Text="No", Value = "No" }
+                    }, "---Select---", new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.HandWash, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Clean Nails")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.CleanNails, new List<SelectListItem>{
+                    new SelectListItem{ Text="Yes", Value = "Yes" },
+                    new SelectListItem{ Text="No", Value = "No" }
+                    }, "---Select---", new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.CleanNails, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Clean Uniform")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.CleanUniform, new List<SelectListItem>{
+                     new SelectListItem{ Text="Yes", Value = "Yes" },
+                     new SelectListItem{ Text="No", Value = "No" },
+                     new SelectListItem{ Text="No Uniform Yet", Value = "No Uniform Yet" }
+                     }, "---Select---", new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.CleanUniform, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Any Cuts & Wounds")
+                    @*@Html.Label("Appear Any Cuts & Wounds")*@
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @*@Html.TextBoxFor(model => model.AppearAnyCutsandWounds, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphaNumeric(event);" })*@
+                    @Html.DropDownListFor(model => model.AppearAnyCutsandWounds, new List<SelectListItem>{
+                  new SelectListItem{ Text="Found", Value = "Found" },
+                  new SelectListItem{ Text="Not Found", Value = "Not Found" }
+                  }, "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AppearAnyCutsandWounds, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Wear Any Jewellery")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.WearAnyJwellery, new List<SelectListItem>{
+                    new SelectListItem{ Text="Yes", Value = "Yes" },
+                    new SelectListItem{ Text="No", Value = "No" }
+                    }, "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.WearAnyJwellery, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.Label("Fully Coverd Hair")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.FullyCoverdHair, new List<SelectListItem>{
+                     new SelectListItem{ Text="Yes", Value = "Yes" },
+                     new SelectListItem{ Text="No", Value = "No" }
+                     }, "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FullyCoverdHair, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Clean Shoes")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.CleanShoes, new List<SelectListItem>{
+                    new SelectListItem{ Text="Yes", Value = "Yes" },
+                    new SelectListItem{ Text="No", Value = "No" }
+                    }, "---Select---", new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.CleanShoes, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("No Tobaco, Chewingum")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.NoTobacoChewingum, new List<SelectListItem>{
+                      new SelectListItem{ Text="Yes", Value = "Yes" },
+                      new SelectListItem{ Text="No", Value = "No" }
+                      }, "---Select---", new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.NoTobacoChewingum, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @*@Html.Label("Any Kind Of Illness/Seakness")*@
+                    @Html.Label("Illness/Seakness")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.AnyKindOfIllnessSeakness, new List<SelectListItem>{
+                    new SelectListItem{ Text="Yes", Value = "Yes" },
+                    new SelectListItem{ Text="No", Value = "No" }
+                    }, "---Select---", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AnyKindOfIllnessSeakness, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+                <div class="row">
+
+
+                    <div class="row">
+                        <div class="col-md-2 mb-1">
+                            @Html.Label("Remarks")
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", title = "Remark allow only 100 Charachters" })
+                            @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <br />
+                <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
+                        </div>
+                        <div class="col">
+                            <a href="@Url.Action("Index", "SanitizationAndHygine")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                                Back To List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+    //Custom validation for only numeric, decimal and NA/na character.
+    /*function customValidation(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
+            || unicode == 46) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }*/
+
+    //Custom validation for only numeric, alphabets, underscore and NA/na character.
+    function IsAlphaNumeric(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 46
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //Custom validation for only , alphabets, underscore and NA/na character.
+    function IsAlphabate(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //Custom validation for only numeric, decimal.
+    /* function isNumberKey(evt) {
+         var keycode = (evt.which) ? evt.which : evt.keyCode;
+         if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+             return false;
+         }
+         else {
+             var parts = evt.srcElement.value.split('.');
+             if (parts.length > 1 && keycode == 46)
+                 return false;
+             else
+                 return true;
+         }
+         return true;
+     }*/
+</script>

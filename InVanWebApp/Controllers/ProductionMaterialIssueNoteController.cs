@@ -16,7 +16,7 @@ namespace InVanWebApp.Controllers
         private IProductionMaterialIssueNoteRepository _productionMaterialIssueNoteRepository;
         private IPurchaseOrderRepository _purchaseOrderRepository;
         private IStockAdjustmentRepository _stockAdjustmentRepository;
-        private IProductionIndentRepository _productionIndentRepository; 
+        private IProductionIndentRepository _productionIndentRepository;
         private static ILog log = LogManager.GetLogger(typeof(StockAdjustmentController));
 
         #region Initializing Constructor
@@ -40,7 +40,7 @@ namespace InVanWebApp.Controllers
         /// <param name="stockAdjustmentRepository"></param>
         public ProductionMaterialIssueNoteController(IProductionMaterialIssueNoteRepository productionMaterialIssueNoteRepository)
         {
-            _productionMaterialIssueNoteRepository = productionMaterialIssueNoteRepository;  
+            _productionMaterialIssueNoteRepository = productionMaterialIssueNoteRepository;
         }
         #endregion
 
@@ -48,85 +48,12 @@ namespace InVanWebApp.Controllers
         // GET: ProductionMaterialIssueNote
         public ActionResult Index()
         {
-            if (Session[ApplicationSession.USERID] == null)            
+            if (Session[ApplicationSession.USERID] == null)
                 return RedirectToAction("Index", "Login");
             var model = _productionMaterialIssueNoteRepository.GetAll();
-            return View(model); 
+            return View(model);
         }
         #endregion
-
-        #region Bind dropdowns 
-        public void BindProductionIndentNumber() 
-        {
-            var result = _productionMaterialIssueNoteRepository.GetProductionIndentNumberForDropdown();
-            var resultList = new SelectList(result.ToList(), "ID", "ProductionIndentNo");
-            ViewData["ProductionIndentNumberAndId"] = resultList;
-        }
-        
-        public void BindLocationName()
-        {
-            var result = _purchaseOrderRepository.GetLocationNameList();
-            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
-            ViewData["LocationList"] = resultList;
-        }
-
-        public void GenerateDocumentNo()
-        {
-            //==========Document number for Stock adjustment============//
-            GetDocumentNumber objDocNo = new GetDocumentNumber();
-
-            //=========here document type=13 i.e. for generating the Production Material Issue Note (logic is in SP).====//
-            var DocumentNumber = objDocNo.GetDocumentNo(17);
-            ViewData["DocumentNo"] = DocumentNumber;
-        }
-
-        //Bind SO and WO Number 
-        public void GetSOWONumber()
-        {
-            var resultWO = _productionIndentRepository.GetSONumberForDropdown();
-            var resultListWO = new SelectList(resultWO.ToList(), "SalesOrderId", "WorkOrderNo");
-            ViewData["WONumberAndId"] = resultListWO;
-        }
-        //Bind Get Item List
-        public JsonResult GetItemList(string id)
-        {
-            int Location_Id = 0;
-            if (id != "" && id != null)
-                Location_Id = Convert.ToInt32(id);
-
-            var result = _stockAdjustmentRepository.GetItemListByLocationId(Location_Id);
-            return Json(result);
-        }
-        //Bind Production Indent
-        public JsonResult GetProductionIndentItemList(string id) 
-        {
-            int ProductionIndent_Id = 0;
-            if (id != "" && id != null)
-                ProductionIndent_Id = Convert.ToInt32(id);
-
-            var result = _productionMaterialIssueNoteRepository.GetItemListByProductionIndentId(ProductionIndent_Id);
-            return Json(result);
-        }
-        #endregion
-
-        #region Fetch Get Location Stocks Details for Production Material IssueNote
-        public JsonResult GetLocationStocksDetails(string id, string locationId, string itemId = null)
-        {
-            int ProductionIndent_Id = 0;
-            if (id != "" && id != null)
-                ProductionIndent_Id = Convert.ToInt32(id);
-            int Location_Id = 0;
-            if (locationId != "" && locationId != null)
-                Location_Id = Convert.ToInt32(locationId);
-            int Item_Id = 0;
-            if (itemId != null && itemId != "")
-                Item_Id = Convert.ToInt32(itemId);
-
-            var result = _productionMaterialIssueNoteRepository.GetProductionIndentIngredientsDetailsById(ProductionIndent_Id, Location_Id, Item_Id);
-            return Json(result);
-        }
-        #endregion
-
 
         #region Insert functions
         /// <summary>
@@ -140,7 +67,6 @@ namespace InVanWebApp.Controllers
             {
                 BindLocationName();
                 GenerateDocumentNo();
-                GetSOWONumber();
                 BindProductionIndentNumber();
 
                 ProductionMaterialIssueNoteBO model = new ProductionMaterialIssueNoteBO();
@@ -157,7 +83,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddProductionMaterialIssueNote(ProductionMaterialIssueNoteBO model) 
+        public ActionResult AddProductionMaterialIssueNote(ProductionMaterialIssueNoteBO model)
         {
             try
             {
@@ -167,34 +93,20 @@ namespace InVanWebApp.Controllers
                     if (ModelState.IsValid)
                     {
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                        if (model.txtItemDetails == null || model.txtItemDetails == "[]]")
+                        response = _productionMaterialIssueNoteRepository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Production material issue note is created successfully!');</script>";
+                        else
                         {
-                            TempData["Success"] = "<script>alert('No item is issued! Production material issue note cannot be created!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate Production material issue note! Cannot be inserted!');</script>";
                             BindLocationName();
                             GenerateDocumentNo();
-                            GetSOWONumber();
                             BindProductionIndentNumber();
 
                             model.ProductionMaterialIssueNoteDate = DateTime.Today;
                             return View(model);
                         }
-                        else
-                        {
-                            response = _productionMaterialIssueNoteRepository.Insert(model);
-                            if (response.Status)
-                                TempData["Success"] = "<script>alert('Production material issue note is created successfully!');</script>";
-                            else
-                            {
-                                TempData["Success"] = "<script>alert('Error! Production material issue note cannot be created!');</script>";
-                                BindLocationName();
-                                GenerateDocumentNo();
-                                GetSOWONumber();
-                                BindProductionIndentNumber();
 
-                                model.ProductionMaterialIssueNoteDate = DateTime.Today;
-                                return View(model);
-                            }
-                        }
 
                         return RedirectToAction("Index", "ProductionMaterialIssueNote");
 
@@ -203,7 +115,6 @@ namespace InVanWebApp.Controllers
                     {
                         BindLocationName();
                         GenerateDocumentNo();
-                        GetSOWONumber();
                         BindProductionIndentNumber();
 
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
@@ -222,7 +133,6 @@ namespace InVanWebApp.Controllers
 
                 BindLocationName();
                 GenerateDocumentNo();
-                GetSOWONumber();
                 BindProductionIndentNumber();
 
                 model.ProductionMaterialIssueNoteDate = DateTime.Today;
@@ -245,8 +155,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-
-
         #region Delete function
         /// <summary>
         /// Date: 24 Jan'23
@@ -256,7 +164,7 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public ActionResult DeleteProductionMaterialIssueNote(int ID) 
+        public ActionResult DeleteProductionMaterialIssueNote(int ID)
         {
             if (Session[ApplicationSession.USERID] != null)
             {
@@ -276,6 +184,46 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Bind dropdowns 
+        public void BindProductionIndentNumber()
+        {
+            var result = _productionMaterialIssueNoteRepository.GetProductionIndentNumberForDropdown();
+            var resultList = new SelectList(result.ToList(), "ID", "ProductionIndentNo");
+            ViewData["ProductionIndentNumberAndId"] = resultList;
+        }
 
+        public void BindLocationName()
+        {
+            var result = _purchaseOrderRepository.GetLocationNameList();
+            var resultList = new SelectList(result.ToList(), "LocationId", "LocationName");
+            ViewData["LocationList"] = resultList;
+        }
+
+        public void GenerateDocumentNo()
+        {
+            //==========Document number for Stock adjustment============//
+            GetDocumentNumber objDocNo = new GetDocumentNumber();
+
+            //=========here document type=13 i.e. for generating the Production Material Issue Note (logic is in SP).====//
+            var DocumentNumber = objDocNo.GetDocumentNo(17);
+            ViewData["DocumentNo"] = DocumentNumber;
+        }
+
+        #endregion
+
+        #region Fetch Get Location Stocks Details for Production Material IssueNote
+        public JsonResult GetLocationStocksDetails(string id, string locationId)
+        {
+            int ProductionIndent_Id = 0;
+            if (id != "" && id != null)
+                ProductionIndent_Id = Convert.ToInt32(id);
+            int Location_Id = 0;
+            if (locationId != "" && locationId != null)
+                Location_Id = Convert.ToInt32(locationId);
+
+            var result = _productionMaterialIssueNoteRepository.GetProductionIndentIngredientsDetailsById(ProductionIndent_Id, Location_Id);
+            return Json(result);
+        }
+        #endregion
     }
 }

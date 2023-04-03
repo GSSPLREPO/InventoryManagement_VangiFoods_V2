@@ -39,9 +39,19 @@ namespace InVanWebApp.Repository
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Date = Convert.ToDateTime(reader["Date"]),
-                            VerifyByName = reader["VerifyByName"].ToString(),
+                            //VegWasher1SolutionAMl = reader["VegWasher1SolutionAMl"].ToString(),
+                            //VegWasher1SolutionBMl = reader["VegWasher1SolutionBMl"].ToString(),
+                            VegWasher1SolutionAMl = Convert.ToDouble(reader["VegWasher1SolutionAMl"]),
+                            VegWasher1SolutionBMl = Convert.ToDouble(reader["VegWasher1SolutionBMl"]),
                             NameOfItem1 = reader["NameOfItem1"].ToString(),
-                            NameOfItem2 = reader["NameOfItem2"].ToString()
+                            WashingTime1 = reader["WashingTime1"].ToString(),
+                            Ppm1 = reader["Ppm1"].ToString(),
+                            VegWasher2SolutionAMl = Convert.ToDouble(reader["VegWasher2SolutionAMl"]),
+                            VegWasher2SolutionBMl = Convert.ToDouble(reader["VegWasher2SolutionBMl"]),
+                            NameOfItem2 = reader["NameOfItem2"].ToString(),
+                            WashingTime2 = reader["WashingTime2"].ToString(),
+                            Ppm2 = reader["Ppm2"].ToString(),
+                            VerifyByName = reader["VerifyByName"].ToString()
                         };
                         vegWasherDosageLogList.Add(vegWasherDosageLog);
                     }
@@ -133,13 +143,18 @@ namespace InVanWebApp.Repository
                         {
                             Id = Convert.ToInt32(reader["Id"]),
                             Date = Convert.ToDateTime(reader["Date"]),
-                            VegWasher1SolutionAMl = reader["VegWasher1SolutionAMl"].ToString(),
-                            VegWasher1SolutionBMl = reader["VegWasher1SolutionBMl"].ToString(),
+                            //VegWasher1SolutionAMl = reader["VegWasher1SolutionAMl"].ToString(),
+                            //VegWasher1SolutionBMl = reader["VegWasher1SolutionBMl"].ToString(),
+                            VegWasher1SolutionAMl = Convert.ToDouble(reader["VegWasher1SolutionAMl"]),
+                            VegWasher1SolutionBMl = Convert.ToDouble(reader["VegWasher1SolutionBMl"]),
                             NameOfItem1 = reader["NameOfItem1"].ToString(),
                             WashingTime1 = reader["WashingTime1"].ToString(),
                             Ppm1 = reader["Ppm1"].ToString(),
-                            VegWasher2SolutionAMl = reader["VegWasher2SolutionAMl"].ToString(),
-                            VegWasher2SolutionBMl = reader["VegWasher2SolutionBMl"].ToString(),
+                            //VegWasher2SolutionAMl = reader["VegWasher2SolutionAMl"].ToString(),
+                            //VegWasher2SolutionBMl = reader["VegWasher2SolutionBMl"].ToString(),
+
+                            VegWasher2SolutionAMl = Convert.ToDouble(reader["VegWasher2SolutionAMl"]),
+                            VegWasher2SolutionBMl = Convert.ToDouble(reader["VegWasher2SolutionBMl"]),
                             NameOfItem2 = reader["NameOfItem2"].ToString(),
                             WashingTime2 = reader["WashingTime2"].ToString(),
                             Ppm2 = reader["Ppm2"].ToString(),

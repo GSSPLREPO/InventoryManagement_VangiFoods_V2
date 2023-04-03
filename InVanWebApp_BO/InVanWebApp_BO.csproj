@@ -60,13 +60,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BatchPlanningMasterBO.cs" />
     <Compile Include="Branch.cs" />
+    <Compile Include="CalibrationLogBO.cs" />
+    <Compile Include="CertificateOfAnalysisBO.cs" />
+    <Compile Include="ChillerCCPBO.cs" />
     <Compile Include="CityMaster.cs" />
+    <Compile Include="ClorinationLogBO.cs" />
     <Compile Include="DailyMonitoringBO.cs" />
-    <Compile Include="ProductionMaterialIssueNoteBO.cs" />
-    <Compile Include="PreStartupHygieneBO.cs" />
-    <Compile Include="ProductionIndent_DetailsBO.cs" />
-    <Compile Include="ProductionIndentBO.cs" />
+    <Compile Include="DashboardBO.cs" />
+    <Compile Include="FinishedGoodSeriesBO.cs" />
+    <Compile Include="ForeignBodyFoundBO.cs" />
+    <Compile Include="HotFillingPackingLineLogSheetCCPBO.cs" />
     <Compile Include="IssueNoteBO.cs" />
     <Compile Include="DeliveryChallanBO.cs" />
     <Compile Include="CompanyBO.cs" />
@@ -85,20 +90,35 @@
     <Compile Include="InwardNoteBO.cs" />
     <Compile Include="InwardQCBO.cs" />
     <Compile Include="LocationWiseStockBO.cs" />
+    <Compile Include="MicroAnalysisBO.cs" />
+    <Compile Include="OilAnalysisBO.cs" />
+    <Compile Include="OrderSummeryBO.cs" />
     <Compile Include="OrganisationGroupBO.cs" />
     <Compile Include="OrganisationsBO.cs" />
     <Compile Include="OutwardNoteBO.cs" />
+    <Compile Include="PestControlLogBO.cs" />
+    <Compile Include="SOPaymentBO.cs" />
     <Compile Include="POPaymentBO.cs" />
-    <Compile Include="PurchaseOrderAmendmentDetailBO.cs" />
+    <Compile Include="PreProduction_QCBO.cs" />
+    <Compile Include="PreStartupHygieneBO.cs" />
+    <Compile Include="ProductEvaluationLogBO.cs" />
+    <Compile Include="ProductionIndentBO.cs" />
+    <Compile Include="ProductionIndent_DetailsBO.cs" />
+    <Compile Include="ProductionMaterialIssueNoteBO.cs" />
     <Compile Include="ProductMasterBO.cs" />
-    <Compile Include="BatchPlanningMasterBO.cs" />
+    <Compile Include="PurchaseOrderAmendmentDetailBO.cs" />
+    <Compile Include="PurchaseOrderBO.cs" />
     <Compile Include="RecipeMasterBO.cs" />
     <Compile Include="RejectionNoteBO.cs" />
+    <Compile Include="ReportBO.cs" />
     <Compile Include="RequestForQuotationBO.cs" />
     <Compile Include="RequestForQuotationItemDetailsBO.cs" />
     <Compile Include="RoleRightBO.cs" />
+    <Compile Include="RQCCPBO.cs" />
     <Compile Include="SalesOrderBO.cs" />
+    <Compile Include="SanitizationAndHygineBO.cs" />
     <Compile Include="ScreenNameBO.cs" />
+    <Compile Include="SiloCCPBO.cs" />
     <Compile Include="StockAdjustmentBO.cs" />
     <Compile Include="StockMasterBO.cs" />
     <Compile Include="StockMovementBO.cs" />
@@ -113,7 +133,6 @@
     <Compile Include="LocationMasterBO.cs" />
     <Compile Include="MachineMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PurchaseOrderBO.cs" />
     <Compile Include="QCProductionSpecificationMaster.cs" />
     <Compile Include="QCProductioObservationMaste.cs" />
     <Compile Include="QCProductioObservationMaster.cs" />
@@ -128,6 +147,7 @@
     <Compile Include="UnitMaster.cs" />
     <Compile Include="UsersBO.cs" />
     <Compile Include="VegWasherDosageLogBO.cs" />
+    <Compile Include="WaterAnalysisBO.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
