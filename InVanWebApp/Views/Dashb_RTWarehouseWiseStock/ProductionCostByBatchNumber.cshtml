@@ -27,7 +27,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         @*Rahul updated anchor tag text 'Dashboard' to 'Home' 16-02-23.*@
-                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Home</a>
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item active">Production Cost Batch Wise</li>
                 </ol>
@@ -318,8 +318,6 @@
     });
 
     $("#btnGo").on("click", function () {
-
-
         Highcharts.setOptions({ colors: ['#333', '#002B5B','#64E572', '#6AF9C4','#24CBE5', '#DDDF00',  '#CB2326', '#FF9655', '#CB2326', ]});
         var fromDate = $("#fromDate").val();
         var toDate = $("#toDate").val();

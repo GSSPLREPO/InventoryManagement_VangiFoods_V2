@@ -1037,5 +1037,79 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region  Bind Utility Consumption By Batch dropdown
+        /// <summary>
+        /// Rahul: This function is for fatching the Utility Consumption By Batch dropdown
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ReportBO> GetAllBatchNumber()
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_GetUtilityConsumptionByBatchNumber", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            BatchNumber = reader["BatchNumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region  Bind Utility Consumption By Work Order dropdown
+        /// <summary>
+        /// Rahul: This function is for fatching the Utility Consumption By Work Order dropdown
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ReportBO> GetAllWorkOrderNumber()
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_GetUtilityConsumptionByWorkOrderNumber", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            WorkOrderNumber = reader["WorkOrderNumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+
     }
 }

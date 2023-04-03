@@ -10,10 +10,11 @@ namespace InVanWebApp_BO
     public class ProductionIndentBO
     {
         public int ID { get; set; }
+        [Required(ErrorMessage ="Enter production indent no.!")]
         public string ProductionIndentNo { get; set; }
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> IssueDate { get; set; }
-        //[Required(ErrorMessage ="Select the indent date!")]
+        [Required(ErrorMessage ="Select the indent date!")]
         public Nullable<System.DateTime> ProductionDate { get; set; }
         //[Required(ErrorMessage ="Select user!")] 
         public Nullable<int> RaisedBy { get; set; }
@@ -57,6 +58,7 @@ namespace InVanWebApp_BO
         public decimal AvailableStock { get; set; }
         public string CurrencyName { get; set; }
         public string ItemUnit { get; set; }
+        [Required(ErrorMessage = "Select the SO Number!")]
         public Nullable<int> SO_Id { get; set; }
     }
 

@@ -57,5 +57,12 @@ namespace InVanWebApp.Repository.Interface
 
         //To Bind WorkOrder for Batchwise Production Cost Report
         IEnumerable<ReportBO> Getall();
+
+        //Bind Utility Consumption By Batch dropdown for dashboard
+        IEnumerable<ReportBO> GetAllBatchNumber();
+        //Bind Utility Consumption By Work Order dropdown for dashboard
+        IEnumerable<ReportBO> GetAllWorkOrderNumber();
+
+
     }
 }

@@ -102,13 +102,12 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-
-        #region Bind data reorder point of available total ActualYeild And ExpectedYeild
+        #region Bind data ActualYeild And ExpectedYeild
 
         public ActionResult YeildDashboard()
         {
             if (Session[ApplicationSession.USERID] == null)
-                return RedirectToAction("YeildDashboard", "Login");
+                return RedirectToAction("Index", "Login");
             ReportBO model = new ReportBO();
             model.fromDate = DateTime.Now;
             model.toDate = DateTime.Now;
@@ -120,10 +119,11 @@ namespace InVanWebApp.Controllers
         public JsonResult GetYeildDashboardData(DateTime fromDate, DateTime toDate, string BatchNumber = "", string WorkOrderNumber = "")
         {
 
-            var BatchNumberId = 0;
+            var BatchNumberId = "0";
             var WorkOrderNumberId = 0;
             if (BatchNumber != "")
-                BatchNumberId = Convert.ToInt32(BatchNumber);
+                BatchNumberId = BatchNumber;
+                //BatchNumberId = Convert.ToInt32(BatchNumber);
             if (WorkOrderNumber != "")
                 WorkOrderNumberId = Convert.ToInt32(WorkOrderNumber);
 
@@ -143,7 +143,7 @@ namespace InVanWebApp.Controllers
         public ActionResult FIFOSystem()
         {
             if (Session[ApplicationSession.USERID] == null)
-                return RedirectToAction("FIFOSystem", "Login");
+                return RedirectToAction("Index", "Login");
             DashboardBO model = new DashboardBO();
             model.toDate = DateTime.Now;
             model.fromDate = DateTime.Now;
@@ -212,7 +212,7 @@ namespace InVanWebApp.Controllers
         public ActionResult OrderSummeryDashboard()
         {
             if (Session[ApplicationSession.USERID] == null)
-                return RedirectToAction("OrderSummeryDashboard", "Login");
+                return RedirectToAction("Index", "Login");
             OrderSummeryBO model = new OrderSummeryBO();
             model.fromDate = DateTime.Now;
             model.toDate = DateTime.Now;
@@ -243,7 +243,7 @@ namespace InVanWebApp.Controllers
         public ActionResult WorkOrderwiseProductionCostDashboard()
         {
             if (Session[ApplicationSession.USERID] == null)
-                return RedirectToAction("WorkOrderwiseProductionCostDashboard", "Login");
+                return RedirectToAction("Index", "Login");
             DashboardBO model = new DashboardBO();
             model.fromDate = DateTime.Now;
             model.toDate = DateTime.Now;
@@ -272,6 +272,37 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Bind data Get Production Utility Consumption dashboard by batch  
+        public ActionResult ProductionUtilityConsumptionByBatchDashboard()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            ReportBO model = new ReportBO();
+            model.fromDate = DateTime.Now;
+            model.toDate = DateTime.Now;
+
+            BindBatchNumberDropDown();
+            BindWorkOrderNumberDropDown();
+
+            //BindUtilityConsumptionByBatchNumberDropDown();
+            //BindUtilityConsumptionByWorkOrderNumberDropDown();
+
+            return View();
+        }
+
+        public JsonResult GetProductionUtilityConsumptionByBatchDashboard(DateTime fromDate, DateTime toDate, string BatchNumber = "", string WorkOrderNumber = "")
+        {
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetProductionUtilityConsumptionByBatchDashboardData(fromDate, toDate, BatchNumber, WorkOrderNumber);
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+        #endregion
+
         #region Bind dropdowns
         public void BindLocationDropdown()
         {
@@ -292,7 +323,6 @@ namespace InVanWebApp.Controllers
             var BatchNumberdd = new SelectList(model.ToList(), "ID", "BatchNumber");
             ViewData["BatchNumberdd"] = BatchNumberdd;
         }
-
         public void BindWorkOrderNumberDropDown()
         {
             var model = _repositoryRR.Getall();
@@ -313,12 +343,26 @@ namespace InVanWebApp.Controllers
             ViewData["SONumbers"] = soNumberList;
         }
 
-        public JsonResult BatchNumber(string SId)
+        public JsonResult BatchNumber(string WOId)
         {
-            var SOId = Convert.ToInt32(SId);
-            var result = _finishedGoodSeriesRepository.GetBatchNo(SOId);
+            var BatchNumberID = Convert.ToInt32(WOId);
+            var result = _finishedGoodSeriesRepository.GetBatchNo(BatchNumberID);
             return Json(result);
         }
+        public void BindUtilityConsumptionByBatchNumberDropDown()
+        {
+            var model = _repositoryRR.GetAllBatchNumber();
+            var UtilityConsumptionByBatchNumber = new SelectList(model.ToList(), "ID", "BatchNumber");
+            ViewData["UtilityConsumptionByBatchNumber"] = UtilityConsumptionByBatchNumber;
+        }
+        public void BindUtilityConsumptionByWorkOrderNumberDropDown()
+        {
+            var model = _repositoryRR.GetAllWorkOrderNumber();
+            var UtilityConsumptionByWorkOrder = new SelectList(model.ToList(), "ID", "WorkOrderNumber");
+            ViewData["UtilityConsumptionByWorkOrder"] = UtilityConsumptionByWorkOrder;
+        }
+
         #endregion
+
     }
 }

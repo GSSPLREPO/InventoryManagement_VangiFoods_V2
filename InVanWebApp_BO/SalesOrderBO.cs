@@ -63,6 +63,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CheckedDate { get; set; }
         public string Remarks { get; set; }
         public string DispatchMode { get; set; }
+        [Required(ErrorMessage ="Select inquiry number!")]
         public int? InquiryID { get; set; }
         public string InquiryNumber { get; set; }
         public string WorkOrderNo { get; set; }

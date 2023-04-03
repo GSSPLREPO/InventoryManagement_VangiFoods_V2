@@ -103,35 +103,31 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Function For Yeild Wise Data
-        public List<ReportBO> GetYeildDashboardData(DateTime fromDate, DateTime toDate, int BatchNumberId = 0, int WorkOrderNumberId = 0)
+        public List<ReportBO> GetYeildDashboardData(DateTime fromDate, DateTime toDate, string BatchNumberId = "0", int WorkOrderNumberId = 0)
         {
             List<ReportBO> resultList = new List<ReportBO>();
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_dashb_Yeild", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.Parameters.AddWithValue("@BatchNumber", BatchNumberId);
-                    cmd.Parameters.AddWithValue("@WorkOrderNumber", WorkOrderNumberId);
-
                     con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    SqlCommand cmd1 = new SqlCommand("usp_dashb_Yeild", con);
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    cmd1.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd1.Parameters.AddWithValue("@toDate", toDate);
+                    cmd1.Parameters.AddWithValue("@BatchNumber", BatchNumberId);
+                    cmd1.Parameters.AddWithValue("@WorkOrderNumber", WorkOrderNumberId);
+
+                    SqlDataReader readerNew = cmd1.ExecuteReader();
+                    while (readerNew.Read())
                     {
                         var result = new ReportBO()
                         {
-                            //BatchNumberId = Convert.ToInt32(reader["BatchNumber"]),
-                            //WorkOrderNumberId = Convert.ToInt32(reader["WorkOrderNumber"]),
-
-                            //SrNo = Convert.ToInt32(reader["SrNo"]),
-                            WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
-                            BatchNumber = (reader["BatchNumber"].ToString()),
-                            ProductName = (reader["ProductName"].ToString()),
-                            ExpectedYeild = Convert.ToDecimal(reader["ExpectedYeild"]),
-                            ActualYeild = Convert.ToDecimal(reader["ActualYeild"]),
+                            WorkOrderNumber = (readerNew["WorkOrderNumber"].ToString()),
+                            BatchNumber = (readerNew["BatchNumber"].ToString()),
+                            ProductName = (readerNew["ProductName"].ToString()),
+                            ExpectedYeild = Convert.ToDecimal(readerNew["ExpectedYeild"]),
+                            ActualYeild = Convert.ToDecimal(readerNew["ActualYeild"])
                         };
                         resultList.Add(result);
                     }
@@ -242,7 +238,7 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
-        
+
         #region Function for Order Summery
         public List<OrderSummeryBO> GetOrderSummeryDashboardData(DateTime fromDate, DateTime toDate, int DurationID = 0)
         {
@@ -309,8 +305,8 @@ namespace InVanWebApp.Repository
                         var result = new DashboardBO()
                         {
                             WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
-                            SalesOrderNumber = (reader["SalesOrderNumber"].ToString()),
-                            ProductName = (reader["ProductName"].ToString()),
+                            SalesOrderNumber = (reader["SONumber"].ToString()),
+                            //ProductName = (reader["ProductName"].ToString()),
                             RawMatrialCost = Convert.ToDecimal(reader["Rawmaterialcost"]),
 
                         };
@@ -329,5 +325,46 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region Function For Production Utility Consumption By Batch Wise Data         
+        public List<ReportBO> GetProductionUtilityConsumptionByBatchDashboardData(DateTime fromDate, DateTime toDate, string BatchNumber = "0", string WorkOrderNumber = "0")
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_dashb_UtilityConsumptionbybatchDashboard", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@BatchNumber", BatchNumber);
+                    cmd.Parameters.AddWithValue("@WorkOrderNumber", WorkOrderNumber);
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
+                            ProductionMaterailIssueNoteNumber = (reader["POMaterialIssueNoteNumber"].ToString()),
+                            ItemName = (reader["RawMaterial"].ToString()),
+                            BatchNumber = (reader["BatchNumber"].ToString()),
+                            RawMaterialCost = Convert.ToDecimal(reader["RawMaterialConsumption"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
     }
 }
