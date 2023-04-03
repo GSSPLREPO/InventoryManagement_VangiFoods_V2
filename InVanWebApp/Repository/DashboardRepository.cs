@@ -115,8 +115,8 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ItemId", ItemId);
                     cmd.Parameters.AddWithValue("@locationId", LocationID);
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    //cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    //cmd.Parameters.AddWithValue("@toDate", toDate);
 
                     con.Open();
 
@@ -147,53 +147,6 @@ namespace InVanWebApp.Repository
         }
 
         #endregion#region Function for Fifo system 
-
-        #region Function for Yeild Dashboard
-        public List<DashboardBO> GetYeildSystem(DateTime fromDate,DateTime toDate, int BatchNumberID = 0, int WorkOrderNumberID = 0)
-        {
-            List<DashboardBO> resultList = new List<DashboardBO>();
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connString))
-                {
-                    SqlCommand cmd = new SqlCommand("usp_dashb_Yeild", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.Parameters.AddWithValue("@BatchNumber", BatchNumberID);
-                    cmd.Parameters.AddWithValue("@WorkOrderNumber", WorkOrderNumberID);
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                    while (reader.Read())
-                    {
-                        var result = new DashboardBO()
-                        {
-                            //ID = Convert.ToInt32(reader["ID"]),
-                            WorkOrderNumber = reader["WorkOrderNumber"].ToString(),
-                            BatchNumber = reader["BatchNumber"].ToString(),
-                            ProductName = reader["ProductName"].ToString(),
-                            ExpectedYeild = Convert.ToDecimal(reader["ExpectedYeild"]),
-                            ActualYeild = Convert.ToDecimal(reader["ActualYeild"]),
-                            //ItemUnit = (reader["ItemUnit"].ToString()),
-                            //CurrencyName = (reader["CurrencyName"].ToString())
-                        };
-                        resultList.Add(result);
-                    }
-                    con.Close();
-
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-            }
-
-            return resultList;
-        }
-
-        #endregion
-
-        
 
     }
 }

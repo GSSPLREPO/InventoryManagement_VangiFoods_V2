@@ -123,27 +123,28 @@ namespace InVanWebApp.Controllers
             string ReportName = "PO Report";
             string name = ApplicationSession.ORGANISATIONTIITLE;
             string address = ApplicationSession.ORGANISATIONADDRESS;
-            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
-            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<div style='padding-top:20px; padding-left:10px;padding-right:10px;padding-bottom:20px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;repeat-header: No;page-break-inside: auto;'>");
             sb.Append("<thead>");
-            sb.Append("<tr >");
-            sb.Append("<th  style='text-align:left;padding-right:20px;padding-bottom:-290px;font-size:11px;font-family:Times New Roman;'>" + "From Date:" + " " + fromDate.ToString("dd/MM/yyyy"));
-            sb.Append("</th></tr>");
-            sb.Append("<tr >");
-            sb.Append("<th colspan=9 style='text-align:right;padding-right:10px;padding-bottom:-290px;font-size:11px;font-family:Times New Roman;'>" + "To Date:" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:left'>" + "<img height='120' width='160' src='" + strPath + "'/></th>");
+            sb.Append("<th colspan='3' style='text-align:center'>");
+            //sb.Append("<label style='font-size:22px;font-family:Verdana;text-align:center; color:#0e3f6f'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; bottom:20px;font-weight:bold;color:Red;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Arial'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:10px;font-family:Arial'>" + address + "</label>");
             sb.Append("</th></tr>");
             sb.Append("<tr>");
-            sb.Append("<th style='text-align:center;' Colspan='1'>" +
-                "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:100px'>");
-            //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
-            sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
-            //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
-
+            sb.Append("<th colspan=3 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + "From Date : " + fromDate + " ");
+            sb.Append("</th>");
+            sb.Append("<th colspan=3 style='text-align:right;font-size:11px;'>"+"To Date : " + toDate + " ");
             sb.Append("</th></tr>");
+            sb.Append("</thead>");
+            sb.Append("</table>");
+
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;repeat-header: yes;page-break-inside: auto;'>");
+            sb.Append("<thead>");
 
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:13px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");

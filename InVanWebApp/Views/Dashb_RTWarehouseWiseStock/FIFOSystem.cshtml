@@ -253,7 +253,7 @@
             var Location = $("#LocationID option:selected").text();
             //-----------Bind individual warehouse data in the graph Start-----------------------------------------------------------
             var request = $.ajax({
-                url: "/Dashb_RTWarehouseWiseStock/GetFIFOSystem?id=" + LocationId + "&ItemId=" + ItemId + "&fromDate=" + fromDate + "&toDate=" + toDate,
+                url: "/Dashb_RTWarehouseWiseStock/GetFIFOSystem?id=" + LocationId + "&ItemId=" + ItemId/* + "&fromDate=" + fromDate + "&toDate=" + toDate*/,
                 contentType: 'application/json;',
                 dataType: 'json',
                 type: "POST",
@@ -354,7 +354,7 @@
                             column: {
                                 stacking: 'normal',
                                 dataLabels: {
-                                    enabled: false
+                                    enabled: true
                                 }
                             },
                         },

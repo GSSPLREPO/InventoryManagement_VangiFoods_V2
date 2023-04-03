@@ -48,16 +48,6 @@ namespace InVanWebApp_BO
 
 
 
-        /*-------------Start Yeild Report---------------------------*/
-        public string WorkOrderNumber { get; set; }
-
-        public string BatchNumber { get; set; }
-
-        public string ProductName { get; set; }
-
-        public decimal ExpectedYeild { get; set; }
-
-        public decimal ActualYeild { get; set; }
-        /*-------------End   Yeild Report---------------------------*/
+        
     }
 }

@@ -208,8 +208,6 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region Report
-
         #region  Bind Datatable and Export Pdf & Excel
         /// <summary>
         /// Develop By Yatri on 18 March'23
@@ -398,9 +396,9 @@ namespace InVanWebApp.Controllers
             sb.Append("<br/><label style='font-size:10px;font-family:Arial'>" + address + "</label>");
             sb.Append("</th></tr>");
             sb.Append("<tr>");
-            sb.Append("<th colspan=10 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromdate);
+            sb.Append("<th colspan=4 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromdate);
             sb.Append("</th>");
-            sb.Append("<th colspan=10 style='text-align:right;font-size:11px;'>" + Todate + " " + todate);
+            sb.Append("<th colspan=5 style='text-align:right;font-size:11px;'>" + Todate + " " + todate);
             sb.Append("</th></tr>");
             sb.Append("</thead>");
             sb.Append("</table>");
@@ -412,11 +410,11 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1%;;font-size:13px;border: 0.05px  #e2e9f3;'>Sr.No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:4%;;font-size:13px;border: 0.05px  #e2e9f3;'>RawMaterial</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>OnGoingProcessing</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:4%;;font-size:13px;border: 0.05px  #e2e9f3;'>Raw Material</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>On Going Processing</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Batching</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>PostProcessing</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:2%;;font-size:13px;border: 0.05px  #e2e9f3;'>CorrectiveAction</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Post Processing</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:2%;;font-size:13px;border: 0.05px  #e2e9f3;'>Corrective Action</th>");
             
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Verify By</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Remark</th>");
@@ -456,7 +454,7 @@ namespace InVanWebApp.Controllers
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
-                    pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
+                    //pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
                     //pdfDoc.SetPageSize(new Rectangle(1100f, 850f));
 
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
@@ -502,6 +500,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #endregion
+     
     }
 }
