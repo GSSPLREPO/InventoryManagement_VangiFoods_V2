@@ -56,7 +56,10 @@ namespace InVanWebApp_BO
         //this fileds are used for YeildDashboard
 
         public int BatchNumberId { get; set; }
-
         public int WorkOrderNumberId { get; set; }
+
+        //This BO Fileds are used for UtilityConsumptionProduction Dashboard
+        public decimal ConsumeQty { get; set; }
+        public decimal ProQty { get; set; }
     }
 }

@@ -1,0 +1,388 @@
+﻿@model InVanWebApp_BO.DashboardBO
+@{
+    ViewBag.Title = "WorkOrderwiseProductionCostDashboard";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Total Production Cost</title>
+    <style>
+        table {
+            border-spacing: 0px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td {
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Total Production Cost</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("WorkOrderwiseProductionCostDashboard","Dashb_RTWarehouseWiseStock")">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Total Production Cost</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>From Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBox("fromDate", "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessage("msgfromDate", "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label>To Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBox("toDate", "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessage("toDate", "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                                </div>
+                            <div class= "row">
+                                <div class="col-md-2">
+                                    <label>Work Order No:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    @*@Html.TextBox("WorkOrderNo", new { @id = "WorkOrderNo", @class = " datepicker form-control form-control-sm", onchange = "OnChangedToDate()" })
+                                    @Html.ValidationMessage("WorkOrderNo", "", new { id = "WorkOrderNoValidate", @class = "col-form-label error mt-2 text-danger" })*@
+                                    @Html.DropDownListFor(model => model.SalesOrderId, (IEnumerable<SelectListItem>)ViewData["WorkOrderNumberdd"], "--All--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
+                                </div>
+                            </div>
+<br/>
+                        <div class="row">
+                                <div class="col-md-12">
+                                    <div id="ItemCost" style="width:100%;"></div>
+                                    <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript">
+    $(document).ready(function () {
+        setCurrentDate();
+    });
+
+    function setCurrentDate() {
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        $('#fromDate').val(today);
+        $('#toDate').val(today);
+    }
+    function OnChangedFromDate() {
+        $('#fromDateValidate').hide();
+    }
+
+    function OnChangedToDate() {
+        $('#toDateValidate').hide();
+    }
+
+
+</script>
+<script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script type="text/javascript">
+    function getRandomColor() {
+        var Letters = '0123456789ABCDEF';
+        var Color = '#';
+        for (var i = 0; i < 6; i++) {
+            Color += Letters[Math.floor(Math.random() * 16)];
+        }
+        return Color;
+    }
+
+
+    $("#btnGo").on("click", function () {
+        var fromDate = $("#fromDate").val();
+        var toDate = $("#toDate").val();
+
+        if (fromDate == null || fromDate == "") {
+            $('#fromDateValidate').text('Select from date!');
+            $('#fromDateValidate').show();
+            $("#fromDate").focus();
+            return;
+        }
+
+        if (toDate == null || toDate == "") {
+            $('#toDateValidate').text('Select to date!');
+            $('#toDateValidate').show();
+            $("#toDate").focus();
+            return;
+        }
+
+        if (fromDate > toDate) {
+            alert('Invalid date selection!');
+            $('#fromDate').focus();
+            return;
+        }
+
+        $(".spinner-wrapper").fadeIn("slow");
+        population = [];
+        xAxisData = [];
+        var coloR = [];
+
+        function convertDhms(h, m, s) {
+            h <= 0 ? h = 1 : h = h * 60 * 60 * 1000;
+            m <= 0 ? m = 1 : m = m * 60 * 1000;
+            s <= 0 ? s = 1 : s = s * 1000;
+            return h + m + s;
+        }
+        var SalesOrderId = $('#SalesOrderId').val();
+        if (SalesOrderId == '' || SalesOrderId == null)
+            SalesOrderId = 0;
+       
+        //-----------Bind data in the graph Start-----------------------------------------------------------
+        var request = $.ajax({
+            
+            url: "/Dashb_RTWarehouseWiseStock/GetWorkOrderwiseProductionCostData?FromDate=" + fromDate + "&ToDate=" + toDate + "&SalesOrderId=" + SalesOrderId,
+
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: "POST",
+            success: function (result) { 
+               // console.log(result)
+                ond = result;
+                var parsed = $.parseJSON(result);
+                var dataLength = parsed.length;
+
+                var serial2 = {
+                    name: "Total Production Cost",
+                    type: 'spline',
+                    yAxis: 1,
+                    data: [],
+                    //color: [],
+                    color: '#159895',
+                    tooltip: {
+                        valueSuffix: ' INR'
+                    }
+
+                };
+                //var serialForMinStock = {
+                //    name: "Expected Yeild",
+                //    type: 'column',
+                //    data: [],
+                //    color: 'blue',
+                //    tooltip: {
+                //        valueSuffix: ' '
+                //    }
+
+                //};
+
+                $.each(parsed, function (i, jsondata) {
+
+                    var dynamicColors = function () {
+                        var r = Math.floor(Math.random() * 255);
+                        var g = Math.floor(Math.random() * 255);
+                        var b = Math.floor(Math.random() * 255);
+                        return "rgb(" + r + "," + g + "," + b + ")";
+                    }
+
+                    var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
+                    if (jsondata.RawMatrialCost != null) {
+                        serial2.data.push(parseFloat(jsondata.RawMatrialCost));
+                    } else {
+                        serial2.data.push(parseFloat(0));
+                    }
+                    //alert(jsondata.RawMatrialCost);
+                    console.log(jsondata.RawMatrialCost);
+
+                    //FN
+                    //if (jsondata.ActualYeild != null) {
+                    //    serialForMinStock.data.push(parseFloat(jsondata.ActualYeild));
+                    //} else {
+                    //    serialForMinStock.data.push(parseFloat(0));
+                    //}
+
+                    coloR.push(dynamicColors());
+                    //serial2.color = getRandomColor();
+                    xAxisData.push(jsondata.WorkOrderNumber + ' (' + jsondata.SalesOrderNumber + ')');
+                });
+
+                var finalSeries = [serial2];
+
+                Highcharts.chart('ItemCost', {
+                    chart: {
+                        zoomType: 'xy'
+                    },
+                    title: {
+                        text: 'Work order wise cost'
+                    },
+                    xAxis: {
+                        categories: xAxisData,
+                        crosshair: true,
+                        scrollbar: {
+                            enabled: true
+                        },
+                        tickLength: 0,
+                    },
+                    
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            format: '{value} INR',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck'
+                            }
+                        },
+                        title: {
+                            text: '',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck'
+                            }
+                        }
+                  
+                    },
+                        { // Secondary yAxis
+                        title: {
+                                text: 'Raw Material Cost',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Black'
+                            }
+                        },
+                        labels: {
+                            format: '{value} INR',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck'
+                            }
+                        },
+                       // opposite: true
+                        }
+                    ],
+                    tooltip: {
+                        shared: true
+                    },
+                    series: finalSeries
+                });
+
+                //Highcharts.chart('ItemCost', {
+                //    chart: {
+                //        type: 'spline'
+                //    },
+                //    title: {
+                //        text: 'Work Order Wise data'
+                //    },
+                  
+                //    xAxis: {
+                //        categories: ['WorkOrderNumber', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                //            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                //        accessibility: {
+                //            description: 'Months of the year'
+                //        }
+                //    },
+                //    yAxis: {
+                //        title: {
+                //            text: 'Total Production Cost'
+                //        },
+                //        labels: {
+                //            formatter: function () {
+                //                return this.value + 'INR';
+                //            }
+                //        }
+                //    },
+                //    tooltip: {
+                //        crosshairs: true,
+                //        shared: true
+                //    },
+                //    plotOptions: {
+                //        spline: {
+                //            marker: {
+                //                radius: 4,
+                //                lineColor: '#666666',
+                //                lineWidth: 1
+                //            }
+                //        }
+                //    },
+                //    series: [{
+                //        name: 'ProductName',
+                //        marker: {
+                //            symbol: 'square'
+                //        },
+                //        data: [ {
+                //            y: 2.6,
+                //            marker: {
+                //                symbol: 'url(https://www.highcharts.com/samples/graphics/sun.png)'
+                //            },
+                //            accessibility: {
+                //                description: 'Sunny symbol, this is the warmest point in the chart.'
+                //            }
+                //        }, ]
+
+                //    },
+                //        {
+                //        name: '',
+                //        marker: {
+                //            symbol: ''
+                //        },
+                //        data: [{
+                //            y:1.2 ,
+                //            marker: {
+                //                symbol: 'url(https://www.highcharts.com/samples/graphics/snow.png)'
+                //            },
+                //            accessibility: {
+                //                description: 'Snowy symbol, this is the coldest point in the chart.'
+                //            }
+                //        },]
+                //    }]
+                //});
+                if (dataLength > 0) {
+                    $("#ItemCost").show();
+                    $("#NoDataFound").hide();
+                } else {
+                    $("#ItemCost").hide();
+                    $("#NoDataFound").show();
+
+                }
+
+            }
+
+        });
+        //-----------Bind data in the graph End-------------------------------------------------------------
+
+        $(".spinner-wrapper").fadeOut("slow");
+
+    });
+
+</script>
+

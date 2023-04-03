@@ -18,6 +18,8 @@ namespace InVanWebApp.Repository.Interface
         List<DashboardBO> GetWorkOrderwiseProductionCost(DateTime FromDate, DateTime ToDate, int SalesOrderId = 0);
         //Function For Production Utility Consumption By Batch Wise Data.    
         List<ReportBO> GetProductionUtilityConsumptionByBatchDashboardData(DateTime fromDate, DateTime toDate, string BatchNumber = "0", string WorkOrderNumber = "0");
+        List<ReportBO> GetDashboardUtilityConsumptionProduction(int SO_ID, DateTime? fromDate = null, DateTime? toDate = null);
+        IEnumerable<ReportBO> GetAllWorkOrderNumber();
 
     }
 }

@@ -1,0 +1,353 @@
+﻿@model InVanWebApp_BO.ReportBO
+@{ ViewBag.Title = "ProductionUtilityConsumptionByBatchDashboard";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Utility Consumption By Batch</title>
+    <style>
+        table {
+            border-spacing: 0px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td {
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Utility Consumption By Batch</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Utility Consumption By Batch</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>From Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBox("fromDate", "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessage("msgfromDate", "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label>To Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBox("toDate", "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessage("toDate", "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-2">
+                                    <label>Work Order No</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => model.WorkOrderNumber, (IEnumerable<SelectListItem>)ViewData["WorkOrderNumberdd"], "--All--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedWONumber($(this).val())" })
+                                    @Html.ValidationMessageFor(model => model.WorkOrderNumber, "", new { id = "WOValidate", @class = "error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.Label("Batch Number")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+
+                                    <select id="BatchNumber" name="BatchNumber" class="form-control form-control-sm">
+                                        <option>--All--</option>
+                                    </select>
+                                    <span id="valMsgBatchNo" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Batch Number!</span>
+                                    @Html.ValidationMessageFor(model => model.BatchNumber, "", new { id = "valMsgBatchNo", @class = "error mt-2 text-danger" })
+                                </div>
+                                @*<div class="col-md-3">
+                                        @Html.DropDownListFor(model => model.BatchNumber, (IEnumerable<SelectListItem>)ViewData["BatchNumberdd"], "--All--", new { @class = "form-control form-control-sm" })
+                                    </div>*@
+                                <div class="col-md-2">
+                                    <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="itemName" style="width:100%;"></div>
+                                    <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+
+<script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        setCurrentDate();
+        $('#fromDateValidate').hide();
+        $('#toDateValidate').hide();
+    });
+
+    function SelectedIndexChangedWONumber(id) {
+        $('#WOValidate').hide();
+        var WOId = $('#WorkOrderNumber').val();
+        if (WOId == '' || WOId == null) {
+            WOId = 0;
+        }
+
+        if (WOId != 0) {
+            $.ajax({
+                url: '/Dashb_RTWarehouseWiseStock/BatchNumber?WOId=' + WOId,
+                type: "POST",
+                data: {},
+                success: function (result) {
+                    var count = result.length;
+                    var i = 0;
+                    $("#BatchNumber option").remove();
+                    $("#BatchNumber").append($("<option></option>").val('').html('--All--'));
+                    while (i < count) {
+                        $("#BatchNumber").append($("<option></option>").val(result[i].BatchNumber).html(result[i].BatchNumber));
+                        i++;
+                    }
+                },
+                error: function (err) {
+                    alert('Not able to fetch batch number!');
+
+                }
+            });
+        }
+        else {
+            $("#BatchNumber option").remove();
+            $("#BatchNumber").append($("<option></option>").val('').html('--All--'));
+        }
+
+    }
+
+    function setCurrentDate() {
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+        $('#fromDate').val(today);
+        $('#toDate').val(today);
+    }
+    function OnChangedFromDate() {
+        $('#fromDateValidate').hide();
+    }
+
+    function OnChangedToDate() {
+        $('#toDateValidate').hide();
+    }
+
+    $("#btnGo").on("click", function () {
+        var fromDate = $("#fromDate").val();
+        var toDate = $("#toDate").val();
+
+        if (fromDate == null || fromDate == "") {
+            $('#fromDateValidate').text('Select from date!');
+            $('#fromDateValidate').show();
+            $("#fromDate").focus();
+            return;
+        }
+
+        if (toDate == null || toDate == "") {
+            $('#toDateValidate').text('Select to date!');
+            $('#toDateValidate').show();
+            $("#toDate").focus();
+            return;
+        }
+
+        if (fromDate > toDate) {
+            alert('Invalid date selection!');
+            $('#fromDate').focus();
+            return;
+        }
+
+        $(".spinner-wrapper").fadeIn("slow");
+
+        var name = Array();
+        var data = Array();
+        //var dataWO = Array();
+        var dataArrayFinal = Array();
+
+        var WorkOrderNumberId = $("#WorkOrderNumber option:selected").text();
+        if (WorkOrderNumberId == '' || WorkOrderNumberId == null || WorkOrderNumberId == '--All--')
+            WorkOrderNumberId = 0;
+
+        var BatchNumberId = $("#BatchNumber option:selected").text();
+        if (BatchNumberId == '' || BatchNumberId == null || BatchNumberId == '--All--')
+            BatchNumberId = 0;
+
+        //-----------Bind data in the graph Start-----------------------------------------------------------
+        var request = $.ajax({
+
+            url: "/Dashb_RTWarehouseWiseStock/GetProductionUtilityConsumptionByBatchDashboard?fromDate=" + fromDate + "&toDate=" + toDate + "&BatchNumber=" + BatchNumberId + "&WorkOrderNumber=" + WorkOrderNumberId,
+
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: "POST",
+            success: function (result) {
+                ond = result;
+                var parsed = $.parseJSON(result);
+                //console.log(parsed);
+                var dataLength = parsed.length;
+
+                for (i = 0; i < dataLength; i++) {
+                    //name[i] = parsed[i].ItemName + '<br> (' + parsed[i].WorkOrderNumber + ')' + '<br> (' + parsed[i].BatchNumber + ')';
+                    name[i] = parsed[i].ItemName;
+                    data[i] = parsed[i].RawMaterialCost;
+                    //dataWO[i] = parsed[i].WorkOrderNumber;
+                }
+
+                for (j = 0; j < name.length; j++) {
+                    var temp = new Array(name[j], data[j]);
+                    dataArrayFinal[j] = temp;
+                }
+                console.log(dataArrayFinal);
+
+                Highcharts.chart('itemName', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                    },
+                    title: {
+                        text: 'Utility <br>Consumption <br>By Batch',
+                        align: 'center',
+                        verticalAlign: 'middle',
+                        y: 50
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y} KG {series.dataWO}</b>'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: ' KG'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            dataLabels: {
+                                enabled: true,
+                                distance: -50,
+                                style: {
+                                    fontWeight: 'bold',
+                                    color: 'white'
+                                }
+                            },
+                            startAngle: -90,
+                            endAngle: 90,
+                            center: ['50%', '75%'],
+                            size: '110%',
+                            showInLegend: true
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        innerSize: '50%',
+                        name: 'Raw Material Consumption',
+                        data: dataArrayFinal
+                    }]
+                });
+
+                if (dataLength > 0) {
+                    $("#itemName").show();
+                    $("#NoDataFound").hide();
+                } else {
+                    $("#itemName").hide();
+                    $("#NoDataFound").show();
+
+                }
+
+            }
+
+        });
+        //-----------Bind data in the graph End-------------------------------------------------------------
+
+        $(".spinner-wrapper").fadeOut("slow");
+
+    });
+</script>
+
+<style>
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 320px;
+        max-width: 500px;
+        margin: 1em auto;
+    }
+
+    #itemName {
+        height: 400px;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+</style>
