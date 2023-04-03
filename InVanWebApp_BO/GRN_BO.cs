@@ -70,7 +70,5 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Please Select To Date!")]
         public DateTime toDate { get; set; }
-
-        public string itemName { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace InVanWebApp_BO
         public string FinishGoods { get; set; }
         [Required(ErrorMessage = "Select cleanliness of Walk Way!")]
         public string WalkWay { get; set; }
-        [Required(ErrorMessage = "Select cleanliness of Vegetable Washing Area1")]
+        [Required(ErrorMessage = "Select cleanliness of Vegetable Washing Area!")]
         public string VegetableWashingArea { get; set; }
         [Required(ErrorMessage = "Select cleanliness of Peeling Machine!")]
         public string PeelingMachine { get; set; }

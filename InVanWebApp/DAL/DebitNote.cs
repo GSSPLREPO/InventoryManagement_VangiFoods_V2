@@ -21,14 +21,27 @@ namespace InVanWebApp.DAL
         }
     
         public int ID { get; set; }
-        public string DebitRejectionNoteNo { get; set; }
-        public Nullable<System.DateTime> DebitRejectionNoteDate { get; set; }
-        public Nullable<int> InwardNoteId { get; set; }
-        public string InwardNumber { get; set; }
+        public string DebitNoteNo { get; set; }
+        public Nullable<System.DateTime> DebitNoteDate { get; set; }
+        public Nullable<int> GRNId { get; set; }
+        public string GRN_No { get; set; }
         public Nullable<int> PO_ID { get; set; }
-        public string PONumber { get; set; }
-        public string FlagDebitRejectionNotes { get; set; }
-        public string Attachment { get; set; }
+        public string PO_Number { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public string LocationName { get; set; }
+        public string DeliveryAddress { get; set; }
+        public Nullable<int> VendorID { get; set; }
+        public string VendorName { get; set; }
+        public string VendorAddress { get; set; }
+        public Nullable<int> TermsAndConditionID { get; set; }
+        public string Terms { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<decimal> CurrencyPrice { get; set; }
+        public Nullable<decimal> TotalBeforeTax { get; set; }
+        public Nullable<decimal> TotalTax { get; set; }
+        public Nullable<decimal> OtherTax { get; set; }
+        public Nullable<decimal> GrandTotal { get; set; }
         public string Signature { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
@@ -37,8 +50,12 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
     
-        public virtual InwardNote InwardNote { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
+        public virtual GRN_Master GRN_Master { get; set; }
+        public virtual LocationMaster LocationMaster { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
+        public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DebitNoteDetail> DebitNoteDetails { get; set; }
     }

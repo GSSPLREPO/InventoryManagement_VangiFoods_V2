@@ -60,14 +60,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BatchPlanningMasterBO.cs" />
     <Compile Include="Branch.cs" />
     <Compile Include="CalibrationLogBO.cs" />
+    <Compile Include="CertificateOfAnalysisBO.cs" />
+    <Compile Include="ChillerCCPBO.cs" />
     <Compile Include="CityMaster.cs" />
     <Compile Include="ClorinationLogBO.cs" />
-    <Compile Include="FinishedGoodSeriesBO.cs" />
     <Compile Include="DailyMonitoringBO.cs" />
-    <Compile Include="ProductionMaterialIssueNoteBO.cs" />
-    <Compile Include="PreProduction_QCBO.cs" />
+    <Compile Include="FinishedGoodSeriesBO.cs" />
+    <Compile Include="ForeignBodyFoundBO.cs" />
+    <Compile Include="HotFillingPackingLineLogSheetCCPBO.cs" />
     <Compile Include="IssueNoteBO.cs" />
     <Compile Include="DeliveryChallanBO.cs" />
     <Compile Include="CompanyBO.cs" />
@@ -86,7 +89,6 @@
     <Compile Include="InwardNoteBO.cs" />
     <Compile Include="InwardQCBO.cs" />
     <Compile Include="LocationWiseStockBO.cs" />
-    <Compile Include="CertificateOfAnalysisBO.cs" />
     <Compile Include="MicroAnalysisBO.cs" />
     <Compile Include="OilAnalysisBO.cs" />
     <Compile Include="OrganisationGroupBO.cs" />
@@ -94,13 +96,18 @@
     <Compile Include="OutwardNoteBO.cs" />
     <Compile Include="PestControlLogBO.cs" />
     <Compile Include="POPaymentBO.cs" />
+    <Compile Include="PreProduction_QCBO.cs" />
     <Compile Include="PreStartupHygieneBO.cs" />
     <Compile Include="ProductEvaluationLogBO.cs" />
+    <Compile Include="ProductionIndentBO.cs" />
+    <Compile Include="ProductionIndent_DetailsBO.cs" />
+    <Compile Include="ProductionMaterialIssueNoteBO.cs" />
     <Compile Include="ProductMasterBO.cs" />
     <Compile Include="PurchaseOrderAmendmentDetailBO.cs" />
     <Compile Include="PurchaseOrderBO.cs" />
     <Compile Include="RecipeMasterBO.cs" />
     <Compile Include="RejectionNoteBO.cs" />
+    <Compile Include="ReportBO.cs" />
     <Compile Include="RequestForQuotationBO.cs" />
     <Compile Include="RequestForQuotationItemDetailsBO.cs" />
     <Compile Include="RoleRightBO.cs" />

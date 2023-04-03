@@ -686,7 +686,6 @@
         var selectedOption, companyName;
         selectedOption = document.getElementById("VendorsID").selectedIndex;
         companyName = document.getElementById("VendorsID").options[selectedOption].innerText;
-        console.log(companyName);
         document.getElementById("CompanyName").value = companyName;
 
         $.ajax({

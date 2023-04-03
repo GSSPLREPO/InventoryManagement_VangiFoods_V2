@@ -11,5 +11,9 @@ namespace InVanWebApp.Repository.Interface
     {
         List<LocationWiseStockBO> GetDashboardData(int id, int ItemId=0);
         List<StockMasterBO> GetReorderPointDashboardData(int ItemId=0);
+        List<ReportBO> GetProductionUtilityConsumptionByBatchDashboardData(DateTime fromDate, DateTime toDate, int BatchNumberId = 0, int WorkOrderNumberId = 0);
+        List<ProductionMaterialIssueNoteBO> GetDashboardProductionCostByBatchNumber(int SOID,string BatchNumber = null, DateTime? fromDate = null, DateTime? toDate = null);
+        List<ReportBO> GetDashboardUtilityConsumptionProduction(int SO_ID, DateTime? fromDate = null, DateTime? toDate = null);
+        IEnumerable<ReportBO> GetAllWorkOrderNumber();
     }
 }

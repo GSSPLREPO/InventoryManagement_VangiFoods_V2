@@ -1,0 +1,205 @@
+﻿@model InVanWebApp_BO.ChillerCCPBO
+
+@{
+    ViewBag.Title = "EditChillerCCP";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Chiller CCP</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("User")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4" @*id="datetimepicker"*@>
+
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                @*<div class="col-md-2">
+                @Html.Label("Time")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+
+                @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "error mt-2 text-danger" })
+            </div>*@
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Water Clorinated")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.WaterClorinated, new { @class = "form-control form-control-sm",maxlength = "30", @onkeypress = "return IsAlphabate(event);" })
+                    @Html.ValidationMessageFor(model => model.WaterClorinated, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Total Time In Chiller")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TotleTimeInChiller, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphaNumeric(event);" })
+                    @Html.ValidationMessageFor(model => model.TotleTimeInChiller, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Quntity Of Paked Product")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.QuntityOfPakedProduct, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsNumeric(event);" })
+                    @Html.ValidationMessageFor(model => model.QuntityOfPakedProduct, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("No Of Crates")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.NoOfCrates, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphaNumeric(event);" })
+                    @Html.ValidationMessageFor(model => model.NoOfCrates, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Mandatoty Temperature (°C)")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.MandatotyTemperature, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return  IsAlphaNumeric(event);" })
+                    @Html.ValidationMessageFor(model => model.MandatotyTemperature, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Remarks Will be Allow 100 Charachter" })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+            </div>
+            <br />
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "ChillerCCP")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+@*<script src="jquery.min.js"></script>
+    <script src="jquery-ui.min.js"></script>*@
+<script src="jquery-ui-timepicker-addon.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#date").datetimepicker({
+            dateFormat: 'dd-mm-yy', timeFormat: 'hh:mm:ss'
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    //Custom validation for only  alphabets, underscore and NA/na character.
+    function IsAlphabate(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || unicode == 32
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //Custom validation for only numeric, alphabets, underscore and NA/na character.
+    function IsAlphaNumeric(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //Custom validation for only numeric
+    function IsNumeric(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32
+            || unicode == 95) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+</script>
+
+<script>
+        $(document).ready(function ()
+        {
+            $("#datetimepicker").datetimepicker(
+                {
+
+                    //defaultDate: '@Model.Date',
+                    showTodayButton: true,
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    //showClose: true,
+                    //showClear: true,
+                    //toolbarPlacement: 'top',
+                    //stepping: 15
+                    lang
+                });
+
+
+
+        });
+</script>
+
+
+
+

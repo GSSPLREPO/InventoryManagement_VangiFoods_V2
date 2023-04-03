@@ -110,7 +110,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.EscherichiaColi, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
+                                @Html.TextBoxFor(model => model.EscherichiaColi, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
                                 @Html.ValidationMessageFor(model => model.EscherichiaColi, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
@@ -118,7 +118,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Salmonella, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
+                                @Html.TextBoxFor(model => model.Salmonella, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
                                 @Html.ValidationMessageFor(model => model.Salmonella, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.TotalPlateCountNumber, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsNumericGretareThenLessThen(event);" })
+                                @Html.TextBoxFor(model => model.TotalPlateCountNumber, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsNumericGretareThenLessThen(event);" })
                                 @Html.ValidationMessageFor(model => model.TotalPlateCountNumber, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
@@ -137,7 +137,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.YeastandMould, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
+                                @Html.TextBoxFor(model => model.YeastandMould, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
                                 @Html.ValidationMessageFor(model => model.YeastandMould, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Coliform, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event)" })
+                                @Html.TextBoxFor(model => model.Coliform, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event)" })
                                 @Html.ValidationMessageFor(model => model.Coliform, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
@@ -212,7 +212,7 @@
                                 @Html.HiddenFor(x => x.LabAnalysisReport, new { id = "tempSign" })
                                 @*<button id="btnCancel" class="btn btn-sm fa fa-times" float:right;"><span class="fa fa-times" style="font-size:larger"> Clear Report</span></button>*@
                                 <a href="#" id="btnCancel" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">
-                                    @*<i class="fa fa-times" ></i>*@ Remove File
+                                    <i class="fa fa-times" ></i>
                                  </a>
                                 <p style="padding-left: 0%;color:red;">(Note: Only .png, .pdf, .xls and .xlsx are allowed!)</p>
                             </div>
@@ -283,7 +283,7 @@
     //Custom validation for only numeric, alphabets.
     function IsBatchNo(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 95 || unicode == 45 || unicode == 46
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 95
             || unicode == 47 || unicode == 92 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
             return true;
         }
@@ -416,20 +416,6 @@
         var size = document.getElementById('file').files[0].size;
         var filePath = fileInput.value;
         fileInput.value = "";
-    });
-
-    function SaveBtnClick() {
-        var reportNo = $("#ReportNo").val();
-        var fileInput =
-            document.getElementById('file');
-        if (fileInput.value != null && fileInput.value != "") {
-            if (reportNo == null || reportNo == "") {
-                alert('Please enter lab anlaysis no');
-                $('#ReportNo').focus();
-                event.preventDefault();
-                return;
-            }
-        }
-    }
+        });
 //===================end=======================//
 </script>

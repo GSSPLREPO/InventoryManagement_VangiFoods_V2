@@ -106,7 +106,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.EscherichiaColi, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
+                    @Html.TextBoxFor(model => model.EscherichiaColi, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
                     @Html.ValidationMessageFor(model => model.EscherichiaColi, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -114,17 +114,18 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Salmonella, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
+                    @Html.TextBoxFor(model => model.Salmonella, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
                     @Html.ValidationMessageFor(model => model.Salmonella, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Total Plate Count")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TotalPlateCountNumber, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsNumericGretareThenLessThen(event);" })
+                    @Html.TextBoxFor(model => model.TotalPlateCountNumber, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsNumericGretareThenLessThen(event);" })
                     @Html.ValidationMessageFor(model => model.TotalPlateCountNumber, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -132,17 +133,18 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.YeastandMould, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
+                    @Html.TextBoxFor(model => model.YeastandMould, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event);" })
                     @Html.ValidationMessageFor(model => model.YeastandMould, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Coliform")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Coliform, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event)" })
+                    @Html.TextBoxFor(model => model.Coliform, new { @class = "form-control form-control-sm", maxlength = "6", @onkeypress = "return IsAlphaNumericGretareThenLessThen(event)" })
                     @Html.ValidationMessageFor(model => model.Coliform, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -193,11 +195,9 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Lab Analysis Report No")
-                    
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.LabAnalysisReportNo, new { @id = "ReportNo", @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsAlphaNumeric(event)" })
-                    @*@Html.ValidationMessage("labReportNo", "", new { id = "labReportNoValidate", @class = "col-form-label error mt-2 text-danger" })*@
+                    @Html.TextBoxFor(model => model.LabAnalysisReportNo, new {@id="ReportNo", @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsAlphaNumeric(event)" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Lab Analysis Report")
@@ -277,7 +277,7 @@
     //Custom validation for only numeric, alphabets.
     function IsBatchNo(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 95 || unicode == 45|| unicode == 46
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 95
             || unicode == 47 || unicode == 92 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
             return true;
         }
@@ -377,56 +377,5 @@
      
     }
 
-    //Custom validation for only numeric, alphabets.
-    function IsAlphaNumericAndNumberCheck(e) {
-        var fileInput =
-            document.getElementById('file');
-        var reportNo = $("#ReportNo").val();
-        //alert(reportNo);
-        var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 45 || unicode == 46 || unicode == 95
-            || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
-            return true;
-        }
-        //else if (fileInput != null || fileInput != "") {
-        //    if (reportNo == null || reportNo == "") {
-        //        alert('Please enter lab anlaysis no ');
-        //        return false;
-        //    }
-        //}
-        else {
-            return false;
-        }
-    }
-
-    //Call when Lab Analysis number change
-    //$('#ReportNo').change(function () {
-    //    var reportNo = this.value;
-    //    var fileInput =
-    //        document.getElementById('file');
-    //  //  var reportNo = $("#ReportNo").val();
-    //    if (fileInput != null || fileInput != "") {
-    //        if (reportNo == null || reportNo == "") {
-    //            alert('Please enter lab anlaysis no');
-    //            fileInput.value = '';
-    //            $('#ReportNo').focus();
-    //            return;
-    //        }
-    //    }
-    //});
-
-    function SaveBtnClick() {
-        var reportNo = $("#ReportNo").val();
-        var fileInput =
-            document.getElementById('file');
-        if (fileInput.value != null && fileInput.value != "") {
-            if (reportNo == null || reportNo == "") {
-                alert('Please enter lab anlaysis no');
-                $('#ReportNo').focus();
-                event.preventDefault();
-                return;
-            }
-        }
-    }
-
+    
 </script>

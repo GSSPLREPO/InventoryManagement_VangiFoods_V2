@@ -36,7 +36,11 @@ namespace InVanWebApp_BO
         public string HSN_Code { get; set; }        
         public int CurrencyID { get; set; } 
         public string CurrencyName { get; set; }
-        
+
+        //Added the below fields for Sales Order
+        public int VendorId { get; set; }
+        public string SupplierAddress { get; set; }
+
 
     }
 }

@@ -14,9 +14,9 @@ namespace InVanWebApp.Controllers
         private IRolesRepository _rolesRepository;
         private static ILog log = LogManager.GetLogger(typeof(RoleController));
 
-        #region Initializing constructor
+        #region Initializing Constructor
         /// <summary>
-        /// Farheen: Constructor without parameter
+        /// Snehal: Constructor without parameter
         /// </summary>
         public RoleController()
         {
@@ -24,7 +24,7 @@ namespace InVanWebApp.Controllers
         }
 
         /// <summary>
-        /// Farheen: Constructor with parameters for initializing the interface object.
+        /// Snehal: Constructor with parameters for initializing the interface object.
         /// </summary>
         /// <param name="rolesRepository"></param>
         public RoleController(IRolesRepository rolesRepository)
@@ -34,9 +34,9 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region  Bind grid
+        #region  Bind Grid
         /// <summary>
-        ///Farheen: Get data and rendered it in it's view. 
+        ///Snehal: Get data and rendered it in it's view. 
         /// </summary>
         /// <returns></returns>
         // GET: Role
@@ -48,9 +48,9 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region Insert function
+        #region Insert Function
         /// <summary>
-        /// Farheen: Rendered the user to the add role master form
+        /// Snehal: Rendered the user to the add role master form
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -60,7 +60,7 @@ namespace InVanWebApp.Controllers
         }
 
         /// <summary>
-        /// Farheen: Pass the data to the repository for insertion from it's view.
+        /// Snehal: Pass the data to the repository for insertion from it's view.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -95,9 +95,9 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region  Update function
+        #region  Update Function
         /// <summary>
-        ///Farheen: Rendered the user to the edit page with details of a perticular record.
+        ///Snehal: Rendered the user to the edit page with details of a perticular record.
         /// </summary>
         /// <param name="RoleId"></param>
         /// <returns></returns>
@@ -109,7 +109,7 @@ namespace InVanWebApp.Controllers
         }
 
         /// <summary>
-        /// Farheen:  Pass the data to the repository for updating that record.
+        /// Snehal:  Pass the data to the repository for updating that record.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -150,9 +150,9 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region Delete function
+        #region Delete Function
         /// <summary>
-        /// Farheen: Delete the perticular record
+        /// Snehal: Delete the perticular record
         /// </summary>
         /// <param name="RoleId">record Id</param>
         /// <returns></returns>

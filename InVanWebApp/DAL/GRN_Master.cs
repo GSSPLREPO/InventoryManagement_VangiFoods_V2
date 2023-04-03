@@ -17,6 +17,8 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public GRN_Master()
         {
+            this.CreditNotes = new HashSet<CreditNote>();
+            this.DebitNotes = new HashSet<DebitNote>();
             this.GRNDetails = new HashSet<GRNDetail>();
             this.StockMasters = new HashSet<StockMaster>();
         }
@@ -24,6 +26,8 @@ namespace InVanWebApp.DAL
         public int ID { get; set; }
         public Nullable<int> InwardNoteId { get; set; }
         public string InwardNoteNumber { get; set; }
+        public Nullable<int> InwardQCId { get; set; }
+        public string InwardQCNumber { get; set; }
         public Nullable<int> PO_ID { get; set; }
         public string PONumber { get; set; }
         public string GRNCode { get; set; }
@@ -37,7 +41,12 @@ namespace InVanWebApp.DAL
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CreditNote> CreditNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DebitNote> DebitNotes { get; set; }
         public virtual InwardNote InwardNote { get; set; }
+        public virtual InwardQC InwardQC { get; set; }
         public virtual LocationMaster LocationMaster { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

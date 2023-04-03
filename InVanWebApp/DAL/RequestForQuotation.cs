@@ -14,30 +14,53 @@ namespace InVanWebApp.DAL
     
     public partial class RequestForQuotation
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public RequestForQuotation()
+        {
+            this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.RequestForQuotationItemDetails = new HashSet<RequestForQuotationItemDetail>();
+            this.RFQ_Vendor_ItemDetails = new HashSet<RFQ_Vendor_ItemDetails>();
+            this.RFQ_VendorDetails = new HashSet<RFQ_VendorDetails>();
+        }
+    
         public int RequestForQuotationId { get; set; }
-        public Nullable<int> OrganisationId { get; set; }
-        public Nullable<int> BranchId { get; set; }
         public string RFQNO { get; set; }
-        public Nullable<int> CompanyId { get; set; }
+        public Nullable<int> VendorsID { get; set; }
+        public string VendorIDs { get; set; }
         public Nullable<int> LocationId { get; set; }
-        public Nullable<int> UnitId { get; set; }
-        public Nullable<int> ItemId { get; set; }
+        public string LocationName { get; set; }
+        public string DeliveryAddress { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public Nullable<System.DateTime> BiddingStartDate { get; set; }
         public Nullable<System.DateTime> BiddingEndDate { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
+        public Nullable<int> IndentID { get; set; }
+        public string IndentNumber { get; set; }
         public string Signature { get; set; }
         public string Remarks { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public Nullable<double> CGST { get; set; }
+        public Nullable<double> SGST { get; set; }
+        public Nullable<double> IGST { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedByID { get; set; }
         public Nullable<System.DateTime> CreatedByDate { get; set; }
         public Nullable<int> LastModifiedByID { get; set; }
         public Nullable<System.DateTime> LastModifiedByDate { get; set; }
     
-        public virtual Branch Branch { get; set; }
-        public virtual Item Item { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
+        public virtual Indent Indent { get; set; }
         public virtual LocationMaster LocationMaster { get; set; }
-        public virtual UnitMaster UnitMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RequestForQuotationItemDetail> RequestForQuotationItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RFQ_Vendor_ItemDetails> RFQ_Vendor_ItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RFQ_VendorDetails> RFQ_VendorDetails { get; set; }
     }
 }

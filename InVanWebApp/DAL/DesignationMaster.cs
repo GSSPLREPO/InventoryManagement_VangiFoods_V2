@@ -18,6 +18,7 @@ namespace InVanWebApp.DAL
         public DesignationMaster()
         {
             this.UserDetails = new HashSet<UserDetail>();
+            this.Indents = new HashSet<Indent>();
         }
     
         public int DesignationID { get; set; }
@@ -31,5 +32,7 @@ namespace InVanWebApp.DAL
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserDetail> UserDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Indent> Indents { get; set; }
     }
 }

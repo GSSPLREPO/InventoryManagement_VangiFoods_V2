@@ -70,11 +70,11 @@
                             <a class="nav-link" href="~/InquiryForm">Inquiry Form</a>
                         </div>
                     </li>
-                    @*<li class="nav-item">
+                    <li class="nav-item">
                         <div id="SalesOrder">
                             <a class="nav-link" href="~/SalesOrder">Sales Order</a>
                         </div>
-                    </li>*@
+                    </li>
                     <li class="nav-item">
                         <div id="Indent">
                             <a class="nav-link" href="@Url.Action("Index","Indent")">Indent</a>
@@ -173,6 +173,11 @@
                             <a class="nav-link" href="@Url.Action("Index","InwardQCSorting")">Inward QC (Check-1)</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="CertificateOfAnalysisQC">
+                            <a class="nav-link" href="@Url.Action("Index","CertificateOfAnalysis")">Certificate of Analysis</a>
+                        </div>
+                    </li>
 
                 </ul>
             </div>
@@ -198,6 +203,11 @@
                     <li class="nav-item">
                         <div id="CalibrationLog">
                             <a class="nav-link" href="@Url.Action("Index","CalibrationLog")">Calibration Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ForeignBodyFound">
+                            <a class="nav-link" href="@Url.Action("Index","ForeignBodyFound")">Foreign Body Found</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -245,6 +255,56 @@
         </li>
 
         <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-production" aria-expanded="false" aria-controls="form-production">
+                <i class="fas fa-cogs menu-icon"></i>
+                <span class="menu-title">Production</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-production">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="FinishedGoodSeriesQC">
+                            <a class="nav-link" href="@Url.Action("Index","FinishedGoodSeries")">Finished Good Series</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="ProductionIndent">
+                            <a class="nav-link" href="@Url.Action("Index","ProductionIndent")">Production Indent</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ProductionMaterialIssueNote">
+                            <a class="nav-link" href="@Url.Action("Index","ProductionMaterialIssueNote")">Production Material Issue Note</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RQCCP">
+                            <a class="nav-link" href="@Url.Action("Index","RQCCP")">Stage-1 RQ CCP</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SILOCCP">
+                            <a class="nav-link" href="@Url.Action("Index","SILOCCP")">Stage-2 SILO CCP</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PackingCCP">
+                            <a class="nav-link" href="@Url.Action("Index","HotFillingPackingLineLogSheetCCP")">Stage-3 Packing CCP</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ChillerCCP">
+                            <a class="nav-link" href="@Url.Action("Index","ChillerCCP")">Stage-4 Chiller CCP</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+
+
+        <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#editors" aria-expanded="false" aria-controls="editors">
                 <i class="fas fa-pen-square menu-icon"></i>
                 <span class="menu-title">Masters</span>
@@ -282,16 +342,16 @@
                             <a class="nav-link" href="@Url.Action("Index","Organisation")">Organisation</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <div id="ProductMaster">
-                            <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div id="RecipeMaster">
-                            <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
-                        </div>
-                    </li>
+                    @*<li class="nav-item">
+                            <div id="ProductMaster">
+                                <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div id="RecipeMaster">
+                                <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
+                            </div>
+                        </li>*@
                     <li class="nav-item">
                         <div id="TermsAndCondition">
                             <a class="nav-link" href="@Url.Action("Index","TermsAndCondition")">Terms and Condition</a>
@@ -325,6 +385,12 @@
                             <a class="nav-link" href="~/Report/CompanyReport">Company</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="FGLocationWiseReport">
+                            <a class="nav-link" href="~/Report/FGLocationWiseReport">FG Locationwise Report</a>
+                        </div>
+                    </li>
+
                     <li class="nav-item">
                         <div id="FinishedGoodsDispatchReport">
                             <a class="nav-link" href="~/Report/FinishedGoodsDispatchReport">Finished Goods Dispatch</a>
@@ -365,15 +431,20 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <div id="RawMaterialCostAnalysisReport">
+                            <a class="nav-link" href="~/Report/RawMaterialCostAnalysisReport">Raw Material Cost Analysis Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div id="RawMaterialReceivedReport">
                             <a class="nav-link" href="~/Report/RawMaterialIndex">Raw Material Received</a>
                         </div>
                     </li>
                     @*<li class="nav-item">
-                            <div id="RejectionNoteReport">
-                                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
-                            </div>
-                        </li>*@
+            <div id="RejectionNoteReport">
+                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+            </div>
+        </li>*@
                     <li class="nav-item">
                         <div id="RejectionNoteReport">
                             <a class="nav-link" href="~/Report/RejectionReport">Rejection Report</a>
@@ -399,11 +470,17 @@
                             <a class="nav-link" href="~/Report/TotalInventoryCostReport">Total Inventory Cost</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="YeildReport">
+                            <a class="nav-link" href="~/Report/YeildReport">Yeild Report</a>
+                        </div>
+                    </li>
+
                     @*<li class="nav-item">
-                            <div id="InventoryControlReport">
-                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-                            </div>
-                        </li>*@
+            <div id="InventoryControlReport">
+                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+            </div>
+        </li>*@
                 </ul>
             </div>
         </li>

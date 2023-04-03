@@ -189,11 +189,11 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
                         objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
                         objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.RecipeName = item.ElementAt(0).Value.ToString();
+                        objItemDetails.UnitName = item.ElementAt(3).Value.ToString();
                         objItemDetails.Ratio = float.Parse(item.ElementAt(4).Value);
-                        objItemDetails.Description = item.ElementAt(5).Value.ToString();
-                        //objItemDetails.UOM_Id = Convert.ToInt32(item.ElementAt(3).Value);
-
+                        objItemDetails.BatchSize = float.Parse(item.ElementAt(5).Value);
+                        objItemDetails.Description = item.ElementAt(6).Value.ToString();
+                        
                         itemDetails.Add(objItemDetails);
                     }
 
@@ -209,8 +209,9 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
                         cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
                         cmdNew.Parameters.AddWithValue("@Ratio", item.Ratio);
+                        cmdNew.Parameters.AddWithValue("@BatchSize", item.BatchSize);
                         cmdNew.Parameters.AddWithValue("@Unit", model.UOM_Id);
-                        cmdNew.Parameters.AddWithValue("@UnitName", model.UnitName);
+                        cmdNew.Parameters.AddWithValue("@UnitName", item.UnitName);
                         cmdNew.Parameters.AddWithValue("@Description", item.Description);
                         cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -400,13 +401,14 @@ namespace InVanWebApp.Repository
                     {
                         Recipe_DetailsBO objItemDetails = new Recipe_DetailsBO();
                         objItemDetails.RecipeID = item.RecipeID;
+                        objItemDetails.RecipeName = items.ElementAt(0).Value.ToString();
                         objItemDetails.ItemId = Convert.ToInt32(items.ElementAt(0).Value);
                         objItemDetails.ItemCode = items.ElementAt(1).Value.ToString();
                         objItemDetails.ItemName = items.ElementAt(2).Value.ToString();
-                        objItemDetails.RecipeName = items.ElementAt(0).Value.ToString();
                         objItemDetails.Ratio = float.Parse(items.ElementAt(4).Value);
-                        objItemDetails.Description = items.ElementAt(5).Value.ToString();
+                        objItemDetails.BatchSize = float.Parse(items.ElementAt(5).Value);
                         objItemDetails.UnitName = items.ElementAt(3).Value.ToString();
+                        objItemDetails.Description = items.ElementAt(6).Value.ToString();
 
                         itemDetails.Add(objItemDetails);
                     }
@@ -424,6 +426,7 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@Item_Code", items.ItemCode);
                         cmdNew.Parameters.AddWithValue("@ItemName", items.ItemName);
                         cmdNew.Parameters.AddWithValue("@Ratio", items.Ratio);
+                        cmdNew.Parameters.AddWithValue("@BatchSize", items.BatchSize);
                         cmdNew.Parameters.AddWithValue("@Unit", item.UOM_Id);
                         cmdNew.Parameters.AddWithValue("@UnitName", items.UnitName);
                         cmdNew.Parameters.AddWithValue("@Description", items.Description);

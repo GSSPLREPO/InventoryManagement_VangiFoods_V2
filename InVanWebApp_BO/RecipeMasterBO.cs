@@ -37,6 +37,9 @@ namespace InVanWebApp_BO
         //public string ItemUnit { get; set; }
         public string ItemName { get; set; }
         public float Ratio { get; set; }
+        public float BatchSize { get; set; } //Rahul added 15-03-2023. 
+        public decimal ItemQuantity { get; set; }
+        public decimal FinalQuantity { get; set; }
         public string TxtItemDetails { get; set; } 
         public List<Recipe_DetailsBO> recipe_Details { get; set; }
     }
@@ -45,19 +48,29 @@ namespace InVanWebApp_BO
         public int RecipeIngredientsDetailID { get; set; }
         public Nullable<int> RecipeID { get; set; }
         public string RecipeName { get; set; }
-        public Nullable<int> ItemId { get; set; }
-        //public Nullable<int> Item_ID { get; set; }
+        public Nullable<int> ItemId { get; set; }        
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public Nullable<int> UOM_Id { get; set; }
+        public decimal ItemQuantity { get; set; }
+        public decimal FinalQuantity { get; set; } 
         public string UnitName { get; set; }
         public float Ratio { get; set; }
+        public float BatchSize { get; set; } //Rahul added 15-03-2023. 
         public string Description { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+
+        //Added the below fields for batch planning
+        public decimal? RoundedRatio { get; set; }
+        public decimal? TotalBatches { get; set; }
+        public decimal? Yield { get; set; }
+        public decimal? ActualRequirement { get; set; }
+        public decimal? StockInHand { get; set; }
+        public decimal? ToBeProcured { get; set; }
 
     }
 

@@ -25,12 +25,16 @@ namespace InVanWebApp.DAL
         public Nullable<decimal> POQuantity { get; set; }
         public Nullable<double> InwardQuantity { get; set; }
         public Nullable<double> BalanceQuantity { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
         public virtual InwardNote InwardNote { get; set; }
         public virtual Item Item { get; set; }
     }

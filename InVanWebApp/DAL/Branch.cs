@@ -18,7 +18,6 @@ namespace InVanWebApp.DAL
         public Branch()
         {
             this.Departments = new HashSet<Department>();
-            this.RequestForQuotations = new HashSet<RequestForQuotation>();
         }
     
         public int BranchId { get; set; }
@@ -40,7 +39,5 @@ namespace InVanWebApp.DAL
         public virtual Organisation Organisation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Departments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequestForQuotation> RequestForQuotations { get; set; }
     }
 }

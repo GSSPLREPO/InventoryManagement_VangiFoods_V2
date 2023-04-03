@@ -17,7 +17,7 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ItemCategoryMaster()
         {
-            this.InquiryMasters = new HashSet<InquiryMaster>();
+            this.InquiryFormItemDetails = new HashSet<InquiryFormItemDetail>();
             this.Items = new HashSet<Item>();
             this.QCProductionSpecificationMasters = new HashSet<QCProductionSpecificationMaster>();
         }
@@ -33,7 +33,7 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<InquiryMaster> InquiryMasters { get; set; }
+        public virtual ICollection<InquiryFormItemDetail> InquiryFormItemDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Items { get; set; }
         public virtual ItemType ItemType { get; set; }

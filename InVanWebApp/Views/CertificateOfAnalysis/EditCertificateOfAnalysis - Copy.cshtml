@@ -211,7 +211,7 @@
     //Custom validation for only numeric, alphabets.
     function IsBatchNo(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 95 || unicode == 45 || unicode == 46
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || unicode == 95
             || unicode == 47 || unicode == 92 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
             return true;
         }
@@ -219,6 +219,7 @@
             return false;
         }
     }
+
     //Custom validation for only numeric, alphabets.
     function IsAlphaNumeric(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode;

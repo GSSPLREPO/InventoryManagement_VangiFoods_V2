@@ -56,7 +56,7 @@ namespace InVanWebApp.Repository
                             QuantityInKG = Convert.ToDouble(reader["QuantityInKG"]),
                             BatchNo = reader["BatchNo"].ToString(),
                             SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),
-                            SONo = reader["SONo"].ToString(),
+                            SONo = reader["SONumber"].ToString(),
                             Packaging = reader["Packaging"].ToString(),
                             Sealing = reader["Sealing"].ToString(),
                             Labelling = reader["Labeling"].ToString(),
@@ -282,7 +282,7 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region Functions for dropdown binding
+        #region Functions for dropdown binding SO Number & Batch Number
         public IEnumerable<SalesOrderBO> GetSONUmberForDropDown()
         {
             List<SalesOrderBO> salesOrderList = new List<SalesOrderBO>();
@@ -314,7 +314,25 @@ namespace InVanWebApp.Repository
             return salesOrderList;
         }
 
+        public IEnumerable<BatchNumberMasterBO> GetBatchNo(int SOId)
+        {
+            string Query = "SELECT BatchNumber FROM BatchNumberMaster WHERE SO_Id=@Id AND IsDeleted = 0 and flagForIndent=1";
 
+            List<BatchNumberMasterBO> result = new List<BatchNumberMasterBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    result = con.Query<BatchNumberMasterBO>(Query, new { @Id = SOId }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                result = null;
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
         #endregion
 
         #region Function for binding data to get Work Order NO

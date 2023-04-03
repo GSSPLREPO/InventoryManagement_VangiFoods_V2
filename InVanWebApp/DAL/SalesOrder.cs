@@ -17,56 +17,77 @@ namespace InVanWebApp.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SalesOrder()
         {
+            this.BatchNumberMasters = new HashSet<BatchNumberMaster>();
+            this.BatchPlanningMasters = new HashSet<BatchPlanningMaster>();
+            this.DeliveryChallans = new HashSet<DeliveryChallan>();
+            this.ProductionIndents = new HashSet<ProductionIndent>();
+            this.ProductionMaterialIssueNotes = new HashSet<ProductionMaterialIssueNote>();
             this.SalesOrderItemsDetails = new HashSet<SalesOrderItemsDetail>();
             this.SalesOrderPaymentDetails = new HashSet<SalesOrderPaymentDetail>();
             this.StockMasters = new HashSet<StockMaster>();
         }
     
         public int SalesOrderId { get; set; }
-        public Nullable<int> OrganisationId { get; set; }
-        public Nullable<int> BranchId { get; set; }
         public string SONo { get; set; }
         public Nullable<System.DateTime> SODate { get; set; }
-        public Nullable<int> ClientId { get; set; }
-        public string DispatchTo { get; set; }
-        public string ServiceType { get; set; }
-        public string PONo { get; set; }
-        public Nullable<System.DateTime> PODate { get; set; }
-        public string TransportationMode { get; set; }
-        public string QuatationRef { get; set; }
-        public Nullable<System.DateTime> DelivaryDate { get; set; }
-        public Nullable<int> SOIncharge { get; set; }
-        public Nullable<decimal> OtherCharges { get; set; }
-        public Nullable<decimal> GrandTotal { get; set; }
-        public string InspectionTerms { get; set; }
-        public string InspectionTermsDesc { get; set; }
-        public string PaymentTerms { get; set; }
-        public string PaymentTermsDesc { get; set; }
-        public string DeliveryTerms { get; set; }
-        public string DeliveryTermsDesc { get; set; }
-        public string DespatchMode { get; set; }
-        public string Freight { get; set; }
-        public string Payment { get; set; }
-        public Nullable<int> TaxId { get; set; }
-        public string TransitInsurance { get; set; }
-        public string PackingAndForwarding { get; set; }
-        public string TestToBeOffered { get; set; }
-        public string SupervisionTerms { get; set; }
-        public string SOYear { get; set; }
-        public Nullable<int> ApprovalStatus { get; set; }
-        public string Approvalremarks { get; set; }
-        public Nullable<int> ApprovedById { get; set; }
-        public Nullable<int> CheckedById { get; set; }
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
+        public Nullable<int> ClientID { get; set; }
+        public string CompanyName { get; set; }
+        public Nullable<double> CGST { get; set; }
+        public Nullable<double> SGST { get; set; }
+        public Nullable<double> IGST { get; set; }
+        public Nullable<int> TermsAndConditionID { get; set; }
+        public string Terms { get; set; }
+        public string SalesOrderStatus { get; set; }
+        public Nullable<bool> Cancelled { get; set; }
+        public string ReasonForCancellation { get; set; }
+        public Nullable<bool> DraftFlag { get; set; }
+        public Nullable<int> Amendment { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string SupplierAddress { get; set; }
+        public Nullable<double> AdvancedPayment { get; set; }
+        public Nullable<double> GrandTotal { get; set; }
+        public Nullable<double> TotalAfterTax { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public string LocationName { get; set; }
+        public string Attachment { get; set; }
+        public string QuotationRef { get; set; }
+        public Nullable<int> CurrencyID { get; set; }
+        public string CurrencyName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public Nullable<decimal> OtherTax { get; set; }
+        public string Signature { get; set; }
+        public Nullable<int> ApprovedBy { get; set; }
+        public Nullable<System.DateTime> ApprovedDate { get; set; }
+        public Nullable<int> CheckedBy { get; set; }
+        public Nullable<System.DateTime> CheckedDate { get; set; }
+        public string DispatchMode { get; set; }
+        public Nullable<int> InquiryID { get; set; }
+        public string InquiryNumber { get; set; }
+        public string WorkOrderNo { get; set; }
+        public string WorkOrderType { get; set; }
+        public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> CreatedById { get; set; }
+        public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        public Nullable<int> LastModifiedById { get; set; }
-        public Nullable<decimal> FreightRs { get; set; }
-        public Nullable<decimal> FreightGSTPercent { get; set; }
-        public Nullable<bool> IsOpen { get; set; }
-        public string SpecialRemarks { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchNumberMaster> BatchNumberMasters { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BatchPlanningMaster> BatchPlanningMasters { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual CurrencyMaster CurrencyMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliveryChallan> DeliveryChallans { get; set; }
+        public virtual InquiryMaster InquiryMaster { get; set; }
+        public virtual LocationMaster LocationMaster { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductionIndent> ProductionIndents { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductionMaterialIssueNote> ProductionMaterialIssueNotes { get; set; }
+        public virtual TermsAndConditionMaster TermsAndConditionMaster { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SalesOrderItemsDetail> SalesOrderItemsDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

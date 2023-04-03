@@ -21,7 +21,7 @@
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">QC</a>
                     </li>
-                    <li class="breadcrumb-item active">Certificate of Analysis</li>
+                    <li class="breadcrumb-item active"> Certificate of Analysis</li>
                 </ol>
             </nav>
         </div>
@@ -65,11 +65,11 @@
                                         <th>@Html.DisplayName("Date")</th>
                                         <th>@Html.DisplayName("Source")</th>
                                         <th>@Html.DisplayName("WO/PO")</th>
-                                        <th class="text-wrap">@Html.DisplayName("Product Name")</th>
-                                        <th class="text-wrap">@Html.DisplayName("Batch No")</th>
-                                        <th class="text-wrap">@Html.DisplayName("Packing Size")</th>
-                                        <th class="text-wrap">@Html.DisplayName("Best Before")</th>
-                                        <th class="text-wrap">@Html.DisplayName("Verify By Name")</th>
+                                        <th>@Html.DisplayName("Product Name")</th>
+                                        <th>@Html.DisplayName("Batch No")</th>
+                                        <th>@Html.DisplayName("Packing Size")</th>
+                                        <th>@Html.DisplayName("Best Before")</th>
+                                        <th>@Html.DisplayName("Verify By Name")</th>
                                         <th>@Html.DisplayName("Action")</th>
                                     </tr>
                                 </thead>
@@ -180,14 +180,6 @@
                                 + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
                         }
                     }
-                ],
-                columnDefs: [
-                    {
-                        render: function (data, type, full, meta) {
-                            return "<div class='text-wrap width-200'>" + data + "</div>";
-                        },
-                        targets: 3
-                    }
                 ]
             });
         }
@@ -279,14 +271,6 @@
                             return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
                                 + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
                         }
-                    }
-                ],
-                columnDefs: [
-                    {
-                        render: function (data, type, full, meta) {
-                            return "<div class='text-wrap width-200'>" + data + "</div>";
-                        },
-                        targets: 3
                     }
                 ]
             });

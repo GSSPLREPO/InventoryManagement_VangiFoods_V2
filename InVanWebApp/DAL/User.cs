@@ -14,6 +14,13 @@ namespace InVanWebApp.DAL
     
     public partial class User
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
+        {
+            this.IssueNotes = new HashSet<IssueNote>();
+            this.ProductionMaterialIssueNotes = new HashSet<ProductionMaterialIssueNote>();
+        }
+    
         public int UserId { get; set; }
         public Nullable<int> RoleId { get; set; }
         public Nullable<int> EmployeeId { get; set; }
@@ -26,6 +33,10 @@ namespace InVanWebApp.DAL
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IssueNote> IssueNotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductionMaterialIssueNote> ProductionMaterialIssueNotes { get; set; }
         public virtual Role Role { get; set; }
         public virtual UserDetail UserDetail { get; set; }
     }

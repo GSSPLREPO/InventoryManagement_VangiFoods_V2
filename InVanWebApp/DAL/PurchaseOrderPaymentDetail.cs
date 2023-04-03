@@ -29,6 +29,9 @@ namespace InVanWebApp.DAL
         public string PaymentDetails { get; set; }
         public string PaymentStatus { get; set; }
         public Nullable<System.DateTime> PaymentDueDate { get; set; }
+        public string BranchName { get; set; }
+        public string IFSCCode { get; set; }
+        public string UTRNo { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -37,6 +40,5 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
     
         public virtual PurchaseOrder PurchaseOrder { get; set; }
-
     }
 }

@@ -20,20 +20,21 @@ namespace InVanWebApp.DAL
             this.IssueNoteDetails = new HashSet<IssueNoteDetail>();
         }
     
-        public int IssueNoteId { get; set; }
-        public Nullable<int> DepartmentId { get; set; }
+        public int ID { get; set; }
         public string IssueNoteNo { get; set; }
-        public Nullable<int> IsAgainstBOM { get; set; }
-        public Nullable<int> SalesOrderId { get; set; }
         public Nullable<System.DateTime> IssueNoteDate { get; set; }
-        public string PONumber { get; set; }
+        public string Purpose { get; set; }
         public string WorkOrderNumber { get; set; }
-        public string BatchNo { get; set; }
-        public string VendorName { get; set; }
+        public string QCNumber { get; set; }
+        public Nullable<int> SalesOrderId { get; set; }
+        public string SONumber { get; set; }
+        public string OtherPurpose { get; set; }
+        public Nullable<int> IssueBy { get; set; }
+        public string IssueByName { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public string LocationName { get; set; }
         public string Remarks { get; set; }
-        public Nullable<int> PreparedBy { get; set; }
         public Nullable<int> ApprovedBy { get; set; }
-        public Nullable<int> CheckedBy { get; set; }
         public Nullable<int> Status { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -41,6 +42,8 @@ namespace InVanWebApp.DAL
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public Nullable<int> LastModifiedby { get; set; }
     
+        public virtual LocationMaster LocationMaster { get; set; }
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IssueNoteDetail> IssueNoteDetails { get; set; }
     }
