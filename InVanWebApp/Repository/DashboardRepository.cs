@@ -404,6 +404,43 @@ namespace InVanWebApp.Repository
 
         #endregion
 
+        #region Function for Total Inventory Value Warehouse Wise
+        public List<LocationWiseStockBO> GetTotalInventoryValue()
+        {
+            List<LocationWiseStockBO> resultList = new List<LocationWiseStockBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_dashb_TotalInventoryValueWarehouseWise", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new LocationWiseStockBO()
+                        {
+                            LocationName = (reader["LocationName"].ToString()),
+                            LocationID = Convert.ToInt32(reader["LocationId"]),
+                            TotalInvValue = Convert.ToDecimal(reader["TotalInvValue"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+
+            return resultList;
+        }
+
+        #endregion
+
         #region  Bind Work Order dropdown
         /// <summary>
         /// Snehal: This function is for fatching the Utility Consumption By Work Order dropdown

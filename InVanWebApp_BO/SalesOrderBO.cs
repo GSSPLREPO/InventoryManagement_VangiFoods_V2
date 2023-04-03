@@ -78,7 +78,7 @@ namespace InVanWebApp_BO
         public string txtItemDetails { get; set; }
         public List<SalesOrderItemsDetail> salesOrderItemsDetails { get; set; }
 
-        //Added below fields for fetching items details in Outward note
+        //Added below fields for fetching items details in Outward note/delivery challan
         public Nullable<int> Item_ID { get; set; }
         public string ItemName { get; set; }
         public string Item_Code { get; set; }
@@ -89,6 +89,7 @@ namespace InVanWebApp_BO
         public decimal TotalItemCost { get; set; }
         public decimal BalanceQuantity { get; set; }
         public int OutwardCount { get; set; }
+        public decimal OutwardQuantity { get; set; }
 
         //Below field is added for finding amendment entry or simple insert entry
         public int IsAmendmentFlag { get; set; }
@@ -98,6 +99,12 @@ namespace InVanWebApp_BO
 
         //Added the below field for batch planning count
         public int? IsBatchDone { get; set; }
+
+        [Required(ErrorMessage = "Select vendors name!")]
+        public Nullable<int> VendorsID { get; set; }
+        //Rahul Added the below field for SO payment module 
+        public float AmountPaid { get; set; }
+
     }
 
     public class SalesOrderItemsDetail

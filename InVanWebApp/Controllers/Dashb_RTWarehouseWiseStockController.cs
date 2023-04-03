@@ -303,6 +303,31 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Bind data Total Inventory Value Warehouse Wise
+
+        public ActionResult TotalInventoryValueWarehouseWise()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            return View();
+        }
+
+        public JsonResult GetTotalInventoryValue()
+        {
+
+
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetTotalInventoryValue();
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
         #region Bind dropdowns
         public void BindLocationDropdown()
         {
@@ -348,18 +373,6 @@ namespace InVanWebApp.Controllers
             var BatchNumberID = Convert.ToInt32(WOId);
             var result = _finishedGoodSeriesRepository.GetBatchNo(BatchNumberID);
             return Json(result);
-        }
-        public void BindUtilityConsumptionByBatchNumberDropDown()
-        {
-            var model = _repositoryRR.GetAllBatchNumber();
-            var UtilityConsumptionByBatchNumber = new SelectList(model.ToList(), "ID", "BatchNumber");
-            ViewData["UtilityConsumptionByBatchNumber"] = UtilityConsumptionByBatchNumber;
-        }
-        public void BindUtilityConsumptionByWorkOrderNumberDropDown()
-        {
-            var model = _repositoryRR.GetAllWorkOrderNumber();
-            var UtilityConsumptionByWorkOrder = new SelectList(model.ToList(), "ID", "WorkOrderNumber");
-            ViewData["UtilityConsumptionByWorkOrder"] = UtilityConsumptionByWorkOrder;
         }
 
         #endregion

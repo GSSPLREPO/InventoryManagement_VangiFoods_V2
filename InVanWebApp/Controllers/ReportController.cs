@@ -25,6 +25,7 @@ namespace InVanWebApp.Controllers
     public class ReportController : Controller
     {
         private IReportRepository _repository;
+        private IReportRepository _reportRepository;
         private ICompanyRepository _repositoryCompany;
         private IItemRepository _itemRepository;
         private ILocationRepository _locationRepository;
@@ -40,6 +41,7 @@ namespace InVanWebApp.Controllers
         public ReportController()
         {
             _repository = new ReportRepository();
+            _reportRepository = new ReportRepository();
             _repositoryCompany = new CompanyRepository();
             _itemRepository = new ItemRepository();
             _locationRepository = new LocationRepository();
@@ -3927,6 +3929,920 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #endregion
+
+        #region Delivery Challan (Against SO) report
+
+        #region Delivery Challan (Against SO) report
+
+        public ActionResult DeliveryChallanAgainstSOReport()
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                ReportBO model = new ReportBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                BindSONumberDropDown();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+
+        /// <summary>
+        /// Develop By Siddharth on 03 APR 2023
+        /// Calling method for Delivery Challan (Against SO) report data
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetDeliveryChallanAgainstSOReportData(DateTime fromDate, DateTime toDate, string SONumberId)
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            Session["ItemId"] = SONumberId;
+            var DeliveryChallanAgainstSOReport = _reportRepository.getDeliveryChallanAgainstSOReportData(fromDate, toDate, SONumberId);
+            return Json(new { data = DeliveryChallanAgainstSOReport }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Export PDF Delivery Challan (Against SO) report
+        /// <summary>
+        /// Create by Siddhareth on 03 APR 2023
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete]
+        public ActionResult ExprotAsPDFForDeliveryChallanAgainstSOreport()
+        {
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            string SONumberID = Convert.ToString(Session["ItemId"]);
+
+            var DeliveryChallanAgainstSOreport = _reportRepository.getDeliveryChallanAgainstSOReportData(fromDate, toDate, SONumberID);
+            TempData["DeliveryChallanAgainstSOreportDataTemp"] = DeliveryChallanAgainstSOreport;
+            if (TempData["DeliveryChallanAgainstSOreportDataTemp"] == null)
+            {
+                return RedirectToAction("DeliveryChallanAgainstSOReport", "Report");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<ReportBO> resultList = TempData["DeliveryChallanAgainstSOreportDataTemp"] as List<ReportBO>;
+
+            if (resultList.Count < 0)
+                return RedirectToAction("DeliveryChallanAgainstSOReport", "Report");
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
+            string ReportName = "Delivery Challan (Against SO) Report";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<thead>");
+            sb.Append("<tr >");
+            sb.Append("<th  style='text-align:right;padding-right:20px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr > <th></th>");
+            sb.Append("<th colspan=9 style='text-align:right;padding-right:-1px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center;' Colspan='1'>" +
+                "<img height='150' width='150' src='" + strPath + "'/></th>");
+            sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
+            //sb.Append("<br/>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            //sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+
+            sb.Append("</th></tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>SO Number</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>SO Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Delivery Challan NO</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Delivery Challan Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Client Name</ th>");
+
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            resultList.Count();
+            //stockReport.r
+            foreach (var item in resultList)
+            {
+
+                sb.Append("<tr style='text-align:center;padding: 10px;'>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SONumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SODate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.DeliveryChallanNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.DeliveryChallanDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ClientName + "</td>");
+
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+
+            using (var sr = new StringReader(sb.ToString()))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+
+                    writer.PageEvent = new PageHeaderFooter();
+                    pdfDoc.Open();
+                    //pdfDoc.NewPage();
+
+
+                    setBorder(writer, pdfDoc);
+
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                    pdfDoc.Close();
+                    byte[] bytes = memoryStream.ToArray();
+                    string filename = "Rpt_DeliveryChallan(AgainstPO)_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    return File(memoryStream.ToArray(), "application/pdf", filename);
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region Excel PDF Delivery Challan (Against SO) report
+        public void ExportAsExcelForDeliveryChallanAgainstSOreport()
+        {
+            GridView gv = new GridView();
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            //var locationId = Convert.ToInt32(Session["LocationId"]);
+            string SONumberId = Convert.ToString(Session["ItemId"]);
+
+            List<ReportBO> resultList = _reportRepository.getDeliveryChallanAgainstSOReportData(fromDate, toDate, SONumberId);
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("SO Number");
+            dt.Columns.Add("SO Date");
+            dt.Columns.Add("Delivery Challan No");
+            dt.Columns.Add("Delivery Challan Date");
+            dt.Columns.Add("Client Name");
+
+            foreach (ReportBO st in resultList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["SO Number"] = st.SONumber.ToString();
+                dr["SO Date"] = st.SODate.ToString();
+                dr["Delivery Challan No"] = st.DeliveryChallanNo.ToString();
+                dr["Delivery Challan Date"] = st.DeliveryChallanDate.ToString();
+                dr["Client Name"] = st.ClientName.ToString();
+
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_DeliveryChallan(AgainstPO)_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Delivery Challan (Against SO) Report";/* The Stock Movement Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date : ";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
+                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "</td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Sales report
+
+        #region Sales report
+
+        public ActionResult SalesReport()
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                ReportBO model = new ReportBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                BindSONumberDropDown();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+
+        /// <summary>
+        /// Develop By Siddharth on 03 APR 2023
+        /// Calling method for Sales  report data
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetSalesReportData(DateTime fromDate, DateTime toDate, string SONumberId)
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            Session["ItemId"] = SONumberId;
+            var SalesReport = _reportRepository.getSalesReportData(fromDate, toDate, SONumberId);
+            return Json(new { data = SalesReport }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Export PDF Sales report
+        /// <summary>
+        /// Create by Siddhareth on 03 APR 2023
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete]
+        public ActionResult ExprotAsPDFForSalesreport()
+        {
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            string SONumberID = Convert.ToString(Session["ItemId"]);
+
+            var SalesReport = _reportRepository.getSalesReportData(fromDate, toDate, SONumberID);
+            TempData["SalesReportDataTemp"] = SalesReport;
+            if (TempData["SalesReportDataTemp"] == null)
+            {
+                return RedirectToAction("SalesReport", "Report");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<ReportBO> resultList = TempData["SalesReportDataTemp"] as List<ReportBO>;
+
+            if (resultList.Count < 0)
+                return RedirectToAction("SalesReport", "Report");
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
+            string ReportName = "Sales Report";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<thead>");
+            sb.Append("<tr >");
+            sb.Append("<th  style='text-align:right;padding-right:20px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr > <th></th>");
+            sb.Append("<th colspan=9 style='text-align:right;padding-right:-1px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center;' Colspan='1'>" +
+                "<img height='150' width='150' src='" + strPath + "'/></th>");
+            sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
+            //sb.Append("<br/>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            //sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+
+            sb.Append("</th></tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Inquiry No</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>SO Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>SO Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Client Name</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Status</ th>");
+
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            resultList.Count();
+            //stockReport.r
+            foreach (var item in resultList)
+            {
+
+                sb.Append("<tr style='text-align:center;padding: 10px;'>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InquiryNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SONumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SODate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ClientName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Status + "</td>");
+
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+
+            using (var sr = new StringReader(sb.ToString()))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+
+                    writer.PageEvent = new PageHeaderFooter();
+                    pdfDoc.Open();
+                    //pdfDoc.NewPage();
+
+
+                    setBorder(writer, pdfDoc);
+
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                    pdfDoc.Close();
+                    byte[] bytes = memoryStream.ToArray();
+                    string filename = "Rpt_Sales_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    return File(memoryStream.ToArray(), "application/pdf", filename);
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region Excel Sales report
+        public void ExportAsExcelForSalesreport()
+        {
+            GridView gv = new GridView();
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            //var locationId = Convert.ToInt32(Session["LocationId"]);
+            string SONumberId = Convert.ToString(Session["ItemId"]);
+
+            List<ReportBO> resultList = _reportRepository.getSalesReportData(fromDate, toDate, SONumberId);
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Inquiry No");
+            dt.Columns.Add("SO Number");
+            dt.Columns.Add("SO Date");
+            dt.Columns.Add("Client Name");
+            dt.Columns.Add("Status");
+
+            foreach (ReportBO st in resultList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["Inquiry No"] = st.InquiryNo.ToString();
+                dr["SO Number"] = st.SONumber.ToString();
+                dr["SO Date"] = st.SODate.ToString();
+                dr["Client Name"] = st.ClientName.ToString();
+                dr["Status"] = st.Status.ToString();
+
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_Sales_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Sales Report";/* The Stock Movement Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date : ";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
+                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "</td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Sales Invoice report
+
+        #region Sales Invoice report
+
+        public ActionResult SalesInvoiceReport()
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                ReportBO model = new ReportBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                BindSONumberDropDown();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+
+        /// <summary>
+        /// Develop By Siddharth on 03 APR 2023
+        /// Calling method for Sales Invoice report data
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetSalesReportInvoiceData(DateTime fromDate, DateTime toDate, string SONumberId)
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            Session["ItemId"] = SONumberId;
+            var SalesInvoiceReport = _reportRepository.getSalesInvoiceReportData(fromDate, toDate, SONumberId);
+            return Json(new { data = SalesInvoiceReport }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Export PDF Sales Invoice report
+        /// <summary>
+        /// Create by Siddhareth on 03 APR 2023
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete]
+        public ActionResult ExprotAsPDFForSalesInvoicereport()
+        {
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            string SONumberID = Convert.ToString(Session["ItemId"]);
+
+            var SalesReport = _reportRepository.getSalesInvoiceReportData(fromDate, toDate, SONumberID);
+            TempData["SalesInvoiceReportDataTemp"] = SalesReport;
+            if (TempData["SalesInvoiceReportDataTemp"] == null)
+            {
+                return RedirectToAction("SalesInvoiceReport", "Report");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<ReportBO> resultList = TempData["SalesInvoiceReportDataTemp"] as List<ReportBO>;
+
+            if (resultList.Count < 0)
+                return RedirectToAction("SalesInvoiceReport", "Report");
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
+            string ReportName = "Sales Invoice Report";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<thead>");
+            sb.Append("<tr >");
+            sb.Append("<th  style='text-align:right;padding-right:20px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr > <th></th>");
+            sb.Append("<th colspan=9 style='text-align:right;padding-right:-1px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center;' Colspan='1'>" +
+                "<img height='150' width='150' src='" + strPath + "'/></th>");
+            sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
+            //sb.Append("<br/>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            //sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+
+            sb.Append("</th></tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>SO Number</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Invoice No</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Anvoice Amount</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Amount Recived</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Balance Recivable</ th>");
+
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            resultList.Count();
+            //stockReport.r
+            foreach (var item in resultList)
+            {
+
+                sb.Append("<tr style='text-align:center;padding: 10px;'>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SONumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InquiryNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InvoiceAmount + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.AmountRecived + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.BalanceRecivable + "</td>");
+
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+
+            using (var sr = new StringReader(sb.ToString()))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+
+                    writer.PageEvent = new PageHeaderFooter();
+                    pdfDoc.Open();
+                    //pdfDoc.NewPage();
+
+
+                    setBorder(writer, pdfDoc);
+
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                    pdfDoc.Close();
+                    byte[] bytes = memoryStream.ToArray();
+                    string filename = "Rpt_SalesInvoice_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    return File(memoryStream.ToArray(), "application/pdf", filename);
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region Excel Sales Invoice report
+        public void ExportAsExcelForSalesInvoicereport()
+        {
+            GridView gv = new GridView();
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            //var locationId = Convert.ToInt32(Session["LocationId"]);
+            string SONumberId = Convert.ToString(Session["ItemId"]);
+
+            List<ReportBO> resultList = _reportRepository.getSalesInvoiceReportData(fromDate, toDate, SONumberId);
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("SO Number");
+            dt.Columns.Add("Invoice No");
+            dt.Columns.Add("Invoice Amount");
+            dt.Columns.Add("Amount Recived");
+            dt.Columns.Add("Balance Recivable");
+
+            foreach (ReportBO st in resultList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["SO Number"] = st.SONumber.ToString();
+                dr["Invoice No"] = st.InvoiceNo.ToString();
+                dr["Invoice Amount"] = st.InvoiceAmount.ToString();
+                dr["Amount Recived"] = st.AmountRecived.ToString();
+                dr["Balance Recivable"] = st.BalanceRecivable.ToString();
+
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_SalesInvoice_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Sales Invoice Report";/* The Stock Movement Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date : ";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
+                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "</td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Debit Note report
+
+        #region Debit Note report
+
+        public ActionResult DebitNoteReport()
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                ReportBO model = new ReportBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                BindDBNoteNumberDropDown();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+
+        /// <summary>
+        /// Develop By Siddharth on 03 APR 2023
+        /// Calling method for Debit Note Report data
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetDBNoteData(DateTime fromDate, DateTime toDate, int DBNoteNumberId)
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            Session["ItemId"] = DBNoteNumberId;
+            var DBNoteReport = _reportRepository.getDBNoteReportData(fromDate, toDate, DBNoteNumberId);
+            return Json(new { data = DBNoteReport }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Export PDF Debit Notee report
+        /// <summary>
+        /// Create by Siddhareth on 03 APR 2023
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete]
+        public ActionResult ExprotAsPDFForDBNotereport()
+        {
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            var DBNoteNumberId = Convert.ToInt32(Session["ItemId"]);
+
+            var DBNoteReport = _reportRepository.getDBNoteReportData(fromDate, toDate, DBNoteNumberId);
+            TempData["DBNoteDataTemp"] = DBNoteReport;
+            if (TempData["DBNoteDataTemp"] == null)
+            {
+                return RedirectToAction("DebitNoteReport", "Report");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<ReportBO> resultList = TempData["DBNoteDataTemp"] as List<ReportBO>;
+
+            if (resultList.Count < 0)
+                return RedirectToAction("DebitNoteReport", "Report");
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
+            string ReportName = "Debit Note Report";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<thead>");
+            sb.Append("<tr >");
+            sb.Append("<th  style='text-align:right;padding-right:-10px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr > <th></th>");
+            sb.Append("<th colspan=9 style='text-align:right;padding-right:-1px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center;' Colspan='1'>" +
+                "<img height='150' width='150' src='" + strPath + "'/></th>");
+            sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
+            //sb.Append("<br/>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            //sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+
+            sb.Append("</th></tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Debit Note No</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Debit Note Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO No</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO Quantity</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Debited Quantity</ th>");
+
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            resultList.Count();
+            //stockReport.r
+            foreach (var item in resultList)
+            {
+
+                sb.Append("<tr style='text-align:center;padding: 10px;'>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.DebitNoteNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.DebitNoteDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PONo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.POQuantity + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.DebitedQuantity + "</td>");
+
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+
+            using (var sr = new StringReader(sb.ToString()))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+
+                    writer.PageEvent = new PageHeaderFooter();
+                    pdfDoc.Open();
+                    //pdfDoc.NewPage();
+
+
+                    setBorder(writer, pdfDoc);
+
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                    pdfDoc.Close();
+                    byte[] bytes = memoryStream.ToArray();
+                    string filename = "Rpt_DebitNote_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    return File(memoryStream.ToArray(), "application/pdf", filename);
+                }
+            }
+        }
+
+
+        #endregion
+
+        #region Excel Debit Note report
+        public void ExportAsExcelForDBNotereport()
+        {
+            GridView gv = new GridView();
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            //var locationId = Convert.ToInt32(Session["LocationId"]);
+            var DBNoteNumberId = Convert.ToInt32(Session["ItemId"]);
+
+            List<ReportBO> resultList = _reportRepository.getDBNoteReportData(fromDate, toDate, DBNoteNumberId);
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Debit Note No");
+            dt.Columns.Add("Debit Note Date");
+            dt.Columns.Add("PO No");
+            dt.Columns.Add("Item Name");
+            dt.Columns.Add("PO Quantity");
+            dt.Columns.Add("Debited Quantity");
+
+            foreach (ReportBO st in resultList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["Debit Note No"] = st.DebitNoteNo.ToString();
+                dr["Debit Note Date"] = st.DebitNoteDate.ToString();
+                dr["PO No"] = st.PONo.ToString();
+                dr["Item Name"] = st.ItemName.ToString();
+                dr["PO Quantity"] = st.POQuantity.ToString();
+                dr["Debited Quantity"] = st.DebitedQuantity.ToString();
+
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_DebitNote_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Debit Note Report";/* The Stock Movement Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date : ";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
+                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "</td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Bind dropdown
+        public void BindSONumberDropDown()
+        {
+            var model = _repository.GetSONumber();
+            var SONumberdd = new SelectList(model.ToList(), "SONumber", "SONumber");
+            ViewData["SONumberdd"] = SONumberdd;
+
+        }
+
+        public void BindDBNoteNumberDropDown()
+        {
+            var model = _repository.GetDebitNoteNumber();
+            var DBNoteNumberdd = new SelectList(model.ToList(), "ID", "DebitNoteNo");
+            ViewData["DBNoteNumberdd"] = DBNoteNumberdd;
+
+        }
         #endregion
 
         #region Set Border
