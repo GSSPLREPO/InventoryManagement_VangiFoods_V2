@@ -209,17 +209,17 @@ namespace InVanWebApp.Controllers
 
         #region Bind data reorder point of available Opening And Closing
 
-        public ActionResult OrderSummeryDashboard()
+        public ActionResult OrderSummaryDashboard()
         {
             if (Session[ApplicationSession.USERID] == null)
                 return RedirectToAction("Index", "Login");
-            OrderSummeryBO model = new OrderSummeryBO();
+            OrderSummaryBO model = new OrderSummaryBO();
             model.fromDate = DateTime.Now;
             model.toDate = DateTime.Now;
             return View(model);
         }
 
-        public JsonResult GetOrderSummeryDashboardData(DateTime fromDate, DateTime toDate, string Duration = "")
+        public JsonResult GetOrderSummaryDashboardData(DateTime fromDate, DateTime toDate, string Duration = "")
         {
             var DurationID = 2;
             if (Duration != " ")
@@ -229,7 +229,7 @@ namespace InVanWebApp.Controllers
 
             string jsonstring = string.Empty;
 
-            var result = _repository.GetOrderSummeryDashboardData(fromDate, toDate, DurationID);
+            var result = _repository.GetOrderSummaryDashboardData(fromDate, toDate, DurationID);
             jsonstring = JsonConvert.SerializeObject(result);
 
             var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
@@ -303,6 +303,31 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region Bind data Total Inventory Value Warehouse Wise
+
+        public ActionResult TotalInventoryValueWarehouseWise()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            return View();
+        }
+
+        public JsonResult GetTotalInventoryValue()
+        {
+
+
+            string jsonstring = string.Empty;
+
+            var result = _repository.GetTotalInventoryValue();
+            jsonstring = JsonConvert.SerializeObject(result);
+
+            var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        #endregion
+
         #region Bind dropdowns
         public void BindLocationDropdown()
         {
@@ -348,18 +373,6 @@ namespace InVanWebApp.Controllers
             var BatchNumberID = Convert.ToInt32(WOId);
             var result = _finishedGoodSeriesRepository.GetBatchNo(BatchNumberID);
             return Json(result);
-        }
-        public void BindUtilityConsumptionByBatchNumberDropDown()
-        {
-            var model = _repositoryRR.GetAllBatchNumber();
-            var UtilityConsumptionByBatchNumber = new SelectList(model.ToList(), "ID", "BatchNumber");
-            ViewData["UtilityConsumptionByBatchNumber"] = UtilityConsumptionByBatchNumber;
-        }
-        public void BindUtilityConsumptionByWorkOrderNumberDropDown()
-        {
-            var model = _repositoryRR.GetAllWorkOrderNumber();
-            var UtilityConsumptionByWorkOrder = new SelectList(model.ToList(), "ID", "WorkOrderNumber");
-            ViewData["UtilityConsumptionByWorkOrder"] = UtilityConsumptionByWorkOrder;
         }
 
         #endregion

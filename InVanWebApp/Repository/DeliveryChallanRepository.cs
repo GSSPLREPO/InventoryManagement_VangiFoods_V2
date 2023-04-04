@@ -109,12 +109,12 @@ namespace InVanWebApp.Repository
                             objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(1).Value);
                             objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
                             objItemDetails.OrderedQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                            objItemDetails.BalanceQuantity = Convert.ToDecimal(item.ElementAt(4).Value);
-                            objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(5).Value);
-                            objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
-                            objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(7).Value);
-                            objItemDetails.CurrencyName = item.ElementAt(8).Value.ToString();
-                            objItemDetails.ItemTaxValue = item.ElementAt(9).Value.ToString();
+                            objItemDetails.ItemTaxValue = item.ElementAt(4).Value.ToString();
+                            objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
+                            objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(6).Value);
+                            objItemDetails.BalanceQuantity = Convert.ToDecimal(item.ElementAt(7).Value);
+                            objItemDetails.ItemUnit = item.ElementAt(8).Value.ToString();
+                            objItemDetails.CurrencyName = item.ElementAt(9).Value.ToString();
                             objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(10).Value);
                             objItemDetails.CreatedBy = model.CreatedBy;
                             itemDetails.Add(objItemDetails);
@@ -140,7 +140,7 @@ namespace InVanWebApp.Repository
                             cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
                             cmdNew.Parameters.AddWithValue("@LocationId", model.LocationId);
                             cmdNew.Parameters.AddWithValue("@SO_Id", model.SO_Id);
-                            cmdNew.Parameters.AddWithValue("@CreatedBy", item.CreatedBy);
+                            cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                             cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
 
                             SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
@@ -298,17 +298,18 @@ namespace InVanWebApp.Repository
                     {
                         var result = new SalesOrderBO()
                         {
-                            Item_ID = Convert.ToInt32(dataReader2["Item_ID"]),
+                            Item_ID = Convert.ToInt32(dataReader2["ItemID"]),
                             Item_Code = dataReader2["Item_Code"].ToString(),
                             ItemName = dataReader2["ItemName"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
                             ItemUnit = dataReader2["ItemUnit"].ToString(),
                             ItemTaxValue = Convert.ToDecimal(dataReader2["ItemTaxValue"]),
                             ItemQuantity = Convert.ToDecimal(dataReader2["ItemQuantity"]),
+                            OutwardQuantity = Convert.ToDecimal(dataReader2["OutwardQuantity"]),
                             BalanceQuantity = Convert.ToDecimal(dataReader2["BalanceQuantity"]),
                             CurrencyName = dataReader2["CurrencyName"].ToString(),
-                            CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"]),
-                            TotalItemCost = Convert.ToDecimal(dataReader2["TotalItemCost"])
+                            CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"])
+                            //TotalItemCost = Convert.ToDecimal(dataReader2["TotalItemCost"])
                         };
                         resultList.Add(result);
                     }

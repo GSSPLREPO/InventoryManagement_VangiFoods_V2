@@ -2,7 +2,7 @@
 @{ ViewBag.Title = "FIFOSystem";
     Layout = "~/Views/Shared/MainMaster.cshtml";
     //Layout = null; }
-}
+ }
 
 <!DOCTYPE html>
 
@@ -206,7 +206,7 @@
 
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
     function getRandomColor() {
         var Letters = '0123456789ABCDEF';
@@ -219,7 +219,7 @@
 
 
     $("#btnGo").on("click", function () {
-        debugger
+
         $(".spinner-wrapper").fadeIn("slow");
 
         ItemName = [];
@@ -265,7 +265,7 @@
                     var serial2 =
 
                     {
-                        name: "Qunatity" ,
+                        name: "Quantity",
                         type: 'bar',
                         data: [],
                         color: [],
@@ -309,8 +309,9 @@
                             text: 'Location: ' + Location
                         },
                         xAxis: {
-                            
-                            categories: xAxisData
+
+                            categories: xAxisData,
+
                         },
                         yAxis: {
                             min: 0,
@@ -332,17 +333,22 @@
                             }
                         },
                         legend: {
-                            layout: 'vertical',
-                            align: 'right',
-                            verticalAlign: 'top',
-                            x: -40,
-                            y: 80,
-                            floating: true,
-                            borderWidth: 1,
-                            backgroundColor:
-                                Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-                            shadow: true
+                            enabled: false
                         },
+
+                        //legend: {
+                        //    layout: 'vertical',
+                        //    align: 'right',
+                        //    verticalAlign: 'top',
+                        //    x: -40,
+                        //    y: 80,
+                        //    floating: true,
+                        //    borderWidth: 1,
+                        //    backgroundColor:
+                        //        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                        //    shadow: true
+                        //},
+
                         credits: {
                             enabled: false
                         },
@@ -359,19 +365,7 @@
                             },
                         },
                         series: ItemName
-                        //    [{
-                        //    name: 'TOMATO',
-                        //    data: xAxisData
-                        //}, {
-                        //    name: 'Onion',
-                        //    data: [814, 841, 3714, 726, 500]
-                        //}, {
-                        //    name: 'Year 2010',
-                        //    data: [1044, 944, 4170, 735, 40]
-                        //}, {
-                        //    name: 'Year 2018',
-                        //    data: [1276, 1007, 4561, 746, 42]
-                        //}]
+
                     });
 
                     if (dataLength > 0) {
@@ -429,7 +423,7 @@
                             var parsed = $.parseJSON(result);
                             var dataLength = parsed.length;
                             var serialFinal1 = {
-                                name: "Date",
+                                name: "Quantity",
                                 data: [],
                                 color: [],
                                 tooltip: {
@@ -488,6 +482,9 @@
                                     },
 
                                 },
+                                legend: {
+                                    enabled: false
+                                },
                                 credits: {
                                     enabled: false
                                 },
@@ -532,7 +529,7 @@
                             var dataLength = parsed.length;
 
                             var serialFinal2 = {
-                                name: "Date",
+                                name: "Quantity",
                                 data: [],
                                 color: [],
                                 tooltip: {
@@ -597,6 +594,9 @@
                                 tooltip: {
                                     shared: true
                                 },
+                                legend: {
+                                    enabled: false
+                                },
 
                                 plotOptions: {
                                     column: {
@@ -633,7 +633,7 @@
                             var parsed = $.parseJSON(result);
                             var dataLength = parsed.length;
                             var serialFinal3 = {
-                                name: "Stock",
+                                name: "Quantity",
                                 data: [],
                                 color: [],
                                 tooltip: {
@@ -692,13 +692,17 @@
                                     },
 
                                 },
+
                                 credits: {
                                     enabled: false
                                 },
+
                                 tooltip: {
                                     shared: true
                                 },
-
+                                legend: {
+                                    enabled: false
+                                },
                                 plotOptions: {
                                     column: {
                                         stacking: 'normal',  //'percent',
@@ -709,7 +713,6 @@
                                 },
                                 series: population3
                             });
-
                             if (dataLength > 0) {
                                 $("#warehouse3").show();
                                 $("#NoDataFound3").hide();
@@ -735,7 +738,7 @@
                             var dataLength = parsed.length;
 
                             var serialFinal4 = {
-                                name: "Date",
+                                name: "Quantity",
                                 data: [],
                                 color: [],
                                 tooltip: {
@@ -800,7 +803,9 @@
                                 tooltip: {
                                     shared: true
                                 },
-
+                                legend: {
+                                    enabled: false
+                                },
                                 plotOptions: {
                                     column: {
                                         stacking: 'normal',  //'percent',
@@ -837,7 +842,7 @@
                             var dataLength = parsed.length;
 
                             var serialFinal5 = {
-                                name: "Date",
+                                name: "Quantity",
                                 data: [],
                                 color: [],
                                 tooltip: {
@@ -868,7 +873,7 @@
                             population5.push(serialFinal5);
                             Highcharts.chart('warehouse5', {
                                 chart: {
-                                    type: 'bar'
+                                    type: 'bar',
                                 },
                                 title: {
                                     text: 'Location: ' + Location /*Title*/
@@ -880,8 +885,10 @@
                                     min: 0,
                                     title: {
                                         style: {
-                                            fontWeight: 'bold'
+                                            fontWeight: 'bold',
+
                                         },
+
                                         text: 'Quantity (Kg)'/*Title*/
                                     },
                                     stackLabels: {
@@ -902,7 +909,9 @@
                                 tooltip: {
                                     shared: true
                                 },
-
+                                legend: {
+                                    enabled: false
+                                },
                                 plotOptions: {
                                     column: {
                                         stacking: 'normal',  //'percent',

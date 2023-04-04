@@ -191,7 +191,6 @@
     <Compile Include="Controllers\DeliveryChallanController.cs" />
     <Compile Include="Controllers\OutwardNoteController.cs" />
     <Compile Include="Controllers\PestControlLogController.cs" />
-    <Compile Include="Controllers\SOPaymentController .cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
     <Compile Include="Controllers\PreProduction_QCController.cs" />
     <Compile Include="Controllers\PreStartupHygieneController.cs" />
@@ -209,6 +208,7 @@
     <Compile Include="Controllers\SalesOrderController.cs" />
     <Compile Include="Controllers\SanitizationAndHygineController.cs" />
     <Compile Include="Controllers\SILOCCPController.cs" />
+    <Compile Include="Controllers\SOPaymentController .cs" />
     <Compile Include="Controllers\StockAdjustmentController.cs" />
     <Compile Include="Controllers\StockMovementController.cs" />
     <Compile Include="Controllers\StockReportController.cs" />
@@ -605,7 +605,6 @@
     <Compile Include="Repository\Interface\IOilAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IPestControlLogRepository.cs" />
-    <Compile Include="Repository\Interface\ISOPaymentRepository.cs" />
     <Compile Include="Repository\Interface\IPreProduction_QCRepository.cs" />
     <Compile Include="Repository\Interface\IPreStartupHygieneRepository.cs" />
     <Compile Include="Repository\Interface\IProductEvaluationLogRepository.cs" />
@@ -619,6 +618,7 @@
     <Compile Include="Repository\Interface\IRQCCPRepository.cs" />
     <Compile Include="Repository\Interface\ISanitizationAndHygineRepository.cs" />
     <Compile Include="Repository\Interface\ISILOCCPRepository.cs" />
+    <Compile Include="Repository\Interface\ISOPaymentRepository.cs" />
     <Compile Include="Repository\Interface\IStockAdjustmentRepository.cs" />
     <Compile Include="Repository\Interface\ITermsConditionRepository.cs" />
     <Compile Include="Repository\Interface\IOrganisationRepository.cs" />
@@ -653,7 +653,6 @@
     <Compile Include="Repository\DeliveryChallanRepository.cs" />
     <Compile Include="Repository\OutwardNoteRepository.cs" />
     <Compile Include="Repository\PestControlLogRepository.cs" />
-    <Compile Include="Repository\SOPaymentRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
     <Compile Include="Repository\PreProduction_QCRepository.cs" />
     <Compile Include="Repository\PreStartupHygieneRepository.cs" />
@@ -672,6 +671,7 @@
     <Compile Include="Repository\SalesOrderRepository.cs" />
     <Compile Include="Repository\SanitizationAndHygineRepository.cs" />
     <Compile Include="Repository\SILOCCPRepository.cs" />
+    <Compile Include="Repository\SOPaymentRepository.cs" />
     <Compile Include="Repository\StockAdjustmentRepository.cs" />
     <Compile Include="Repository\StockMasterRepository.cs" />
     <Compile Include="Repository\StockMovementRepository.cs" />
@@ -3177,14 +3177,20 @@
     <Content Include="Views\ProductionIndent\ViewProductionIndent.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\FIFOSystem.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\ProductionCostByBatchNumber.cshtml" />
-    <Content Include="Views\Dashb_RTWarehouseWiseStock\OrderSummeryDashboard.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\OrderSummaryDashboard.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\WorkOrderwiseProductionCostDashboard.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\ProductionUtilityConsumptionByBatchDashboard.cshtml" />
-    <Content Include="Views\SOPayment\_SOPaymentDetails.cshtml" />
+    <Content Include="Views\Dashboard\UtilityConsumptionProduction.cshtml" />
+    <Content Include="Views\Report\DebitNoteReport.cshtml" />
+    <Content Include="Views\Report\SalesInvoiceReport.cshtml" />
+    <Content Include="Views\Report\SalesReport.cshtml" />
+    <Content Include="Views\Report\DeliveryChallanAgainstSOReport.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\TotalInventoryValueWarehouseWise.cshtml" />
     <Content Include="Views\SOPayment\AddSOPayment.cshtml" />
     <Content Include="Views\SOPayment\EditSOPayment.cshtml" />
     <Content Include="Views\SOPayment\Index.cshtml" />
     <Content Include="Views\SOPayment\ViewSOPayment.cshtml" />
+    <Content Include="Views\SOPayment\_SOPaymentDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -92,12 +92,11 @@
     <Compile Include="LocationWiseStockBO.cs" />
     <Compile Include="MicroAnalysisBO.cs" />
     <Compile Include="OilAnalysisBO.cs" />
-    <Compile Include="OrderSummeryBO.cs" />
+    <Compile Include="OrderSummaryBO.cs" />
     <Compile Include="OrganisationGroupBO.cs" />
     <Compile Include="OrganisationsBO.cs" />
     <Compile Include="OutwardNoteBO.cs" />
     <Compile Include="PestControlLogBO.cs" />
-    <Compile Include="SOPaymentBO.cs" />
     <Compile Include="POPaymentBO.cs" />
     <Compile Include="PreProduction_QCBO.cs" />
     <Compile Include="PreStartupHygieneBO.cs" />
@@ -119,6 +118,7 @@
     <Compile Include="SanitizationAndHygineBO.cs" />
     <Compile Include="ScreenNameBO.cs" />
     <Compile Include="SiloCCPBO.cs" />
+    <Compile Include="SOPaymentBO.cs" />
     <Compile Include="StockAdjustmentBO.cs" />
     <Compile Include="StockMasterBO.cs" />
     <Compile Include="StockMovementBO.cs" />

@@ -56,7 +56,52 @@ namespace InVanWebApp_BO
         //this fileds are used for YeildDashboard
 
         public int BatchNumberId { get; set; }
-
         public int WorkOrderNumberId { get; set; }
+
+        //This BO Fileds are used for UtilityConsumptionProduction Dashboard
+        public decimal ConsumeQty { get; set; }
+        public decimal ProQty { get; set; }
+
+
+        //This BO used for Delivery Challan (Against SO) Report
+
+        public string SONumber { get; set; }
+
+        public string SODate { get; set; }
+
+        public string DeliveryChallanNo { get; set; }
+
+        public string DeliveryChallanDate { get; set; }
+
+        public string ClientName { get; set; }
+
+
+        //This BO used for Sales Report
+
+        public string InquiryNo { get; set; }
+
+        public string Status { get; set; }
+
+        //This BO used for Sales InvoiceReport
+
+        public string InvoiceNo { get; set; }
+
+        public string InvoiceAmount { get; set; }
+
+        public string AmountRecived { get; set; }
+
+        public string BalanceRecivable { get; set; }
+
+        //This BO used for Debit Note Report
+
+        public string DebitNoteNo { get; set; }
+
+        public string DebitNoteDate { get; set; }
+
+        public string PONo { get; set; }
+
+        public string POQuantity { get; set; }
+
+        public string DebitedQuantity { get; set; }
     }
 }

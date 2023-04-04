@@ -58,11 +58,25 @@ namespace InVanWebApp.Repository.Interface
         //To Bind WorkOrder for Batchwise Production Cost Report
         IEnumerable<ReportBO> Getall();
 
-        //Bind Utility Consumption By Batch dropdown for dashboard
-        IEnumerable<ReportBO> GetAllBatchNumber();
-        //Bind Utility Consumption By Work Order dropdown for dashboard
-        IEnumerable<ReportBO> GetAllWorkOrderNumber();
+
+        // Delivery Challan (Against SO) Report
+        List<ReportBO> getDeliveryChallanAgainstSOReportData(DateTime fromDate, DateTime toDate, string SONumberId);
+
+        // Sales Report
+        List<ReportBO> getSalesReportData(DateTime fromDate, DateTime toDate, string SONumberId);
 
 
+        //To Bind SONumber for Delivery Challan (Against SO) Report
+        IEnumerable<ReportBO> GetSONumber();
+
+        // Sales Invoice Report
+        List<ReportBO> getSalesInvoiceReportData(DateTime fromDate, DateTime toDate, string SONumberId);
+
+        // Debit Note Report
+        List<ReportBO> getDBNoteReportData(DateTime fromDate, DateTime toDate, int DBNoteNumberId);
+
+
+        //To Bind GetDebitNoteNumber for Debit Note Report
+        IEnumerable<ReportBO> GetDebitNoteNumber();
     }
 }

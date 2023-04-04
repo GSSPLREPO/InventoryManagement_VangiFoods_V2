@@ -56,11 +56,15 @@
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ProductionCostByBatchNumber">Production Cost Batch Wise</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
                     <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a></li>
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/OrderSummeryDashboard">Sales Order Summery</a></li>
+                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/OrderSummaryDashboard">Sales Order Summary</a></li>
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/TotalInventoryValueWarehouseWise">Total Inventory Value</a>
+                    </li>
                     <li class="nav-item d-none d-lg-block">
                         <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/WorkOrderwiseProductionCostDashboard">Total Production Cost</a>
                     </li>
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ProductionUtilityConsumptionByBatchDashboard">Utility Consumption By Batch</a></li>
+                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ProductionUtilityConsumptionByBatchDashboard">Raw Material Consumption By Batch</a></li>
+                    <li class="nav-item d-none d-lg-block"> <a class="nav-link text-wrap" href="~/Dashboard/UtilityConsumptionProduction">Raw Material Consumption Vs Production</a></li>
                     <li class="nav-item d-none d-lg-block"><a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/YeildDashboard">Yield</a></li>
                 </ul>
             </div>
@@ -81,6 +85,11 @@
                     <li class="nav-item">
                         <div id="SalesOrder">
                             <a class="nav-link" href="~/SalesOrder">Sales Order</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SOPayment">
+                            <a class="nav-link" href="~/SOPayment">SO Payment Details</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -116,11 +125,6 @@
                     <li class="nav-item">
                         <div id="POPayment">
                             <a class="nav-link" href="~/POPayment">PO Payment Details</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div id="SOPayment">
-                            <a class="nav-link" href="~/SOPayment">SO Payment Details</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -409,6 +413,16 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <div id="DebitNoteReport">
+                            <a class="nav-link" href="~/Report/DebitNoteReport">Debit Note Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="DeliveryChallanAgainstSOReport">
+                            <a class="nav-link" href="~/Report/DeliveryChallanAgainstSOReport">Delivery Challan (Against SO) Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div id="BatchwiseProductionCostReport">
                             <a class="nav-link" href="~/Report/BatchwiseProductionCostReport">Batch-wise Production Cost</a>
                         </div>
@@ -468,6 +482,18 @@
                             <a class="nav-link" href="~/Report/RawMaterialIndex">Raw Material Received</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="SalesInvoiceReport">
+                            <a class="nav-link" href="~/Report/SalesInvoiceReport">Sales Invoice Report</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="SalesReport">
+                            <a class="nav-link" href="~/Report/SalesReport">Sales Report</a>
+                        </div>
+                    </li>
+
                     @*<li class="nav-item">
             <div id="RejectionNoteReport">
                 <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>

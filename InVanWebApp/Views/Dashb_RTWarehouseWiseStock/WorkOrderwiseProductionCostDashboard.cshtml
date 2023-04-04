@@ -244,15 +244,22 @@
                         zoomType: 'xy'
                     },
                     title: {
-                        text: 'Work order wise cost'
+                        text: 'Total Production Cost'
                     },
                     xAxis: {
                         categories: xAxisData,
                         crosshair: true,
-                        scrollbar: {
-                            enabled: true
-                        },
-                        tickLength: 0,
+                        title: {
+                            text: 'Workordernumber(Saleordernumber)',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck'
+                            }
+                        }
+                        //scrollbar: {
+                            //enabled: true
+                        //},
+                        //tickLength: 0,
                     },
                     
                     yAxis: [{ // Primary yAxis

@@ -275,7 +275,7 @@
                 var dataLength = parsed.length;
 
                 var serial2 = {
-                    name: "Actual Yeild",
+                    name: "Expected Yield",
                     type: 'column',
                     yAxis: 1,
                     data: [],
@@ -287,7 +287,7 @@
 
                 };
                 var serialForMinStock = {
-                    name: "Expected Yeild",
+                    name: "Actual Yield",
                     type: 'column',
                     data: [],
                     color: 'blue',
@@ -332,11 +332,18 @@
                         zoomType: 'xy'
                     },
                     title: {
-                        text: 'Product Wise Yeild'
+                        text: 'Yield Dashboard'
                     },
                     xAxis: {
                         categories: xAxisData,
                         crosshair: true,
+                        title: {
+                            text: 'ItemName(Batchnumber Workordernumber)',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck'
+                            }
+                        }
                         //scrollbar: {
                         //    enabled: true
                         //},

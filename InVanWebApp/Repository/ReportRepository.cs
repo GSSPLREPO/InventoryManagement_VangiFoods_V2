@@ -1038,19 +1038,65 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region  Bind Utility Consumption By Batch dropdown
-        /// <summary>
-        /// Rahul: This function is for fatching the Utility Consumption By Batch dropdown
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ReportBO> GetAllBatchNumber()
+        #region Delivery Challan (Against SO) report data
+        public List<ReportBO> getDeliveryChallanAgainstSOReportData(DateTime fromDate, DateTime toDate, string SONumberId)
         {
             List<ReportBO> resultList = new List<ReportBO>();
             try
             {
                 using (SqlConnection con = new SqlConnection(conStr))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_GetUtilityConsumptionByBatchNumber", con);
+                    SqlCommand cmd = new SqlCommand("usp_rpt_DeliveryChallanAgainstSO_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@SONumberId", SONumberId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            SONumber = reader["SONumber"].ToString(),
+                            SODate = reader["SODate"].ToString(),
+                            DeliveryChallanNo = reader["DeliveryChallanNo"].ToString(),
+                            DeliveryChallanDate = reader["DeliveryChallanDate"].ToString(),
+                            ClientName = reader["ClientName"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region  Bind SONumber
+        /// <summary>
+        /// Siddharth: This function is for fatching the SO number
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ReportBO> GetSONumber()
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_SONumber_Get", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
@@ -1059,11 +1105,12 @@ namespace InVanWebApp.Repository
                         var result = new ReportBO()
                         {
                             ID = Convert.ToInt32(reader["ID"]),
-                            BatchNumber = reader["BatchNumber"].ToString()
+                            SONumber = reader["SONumber"].ToString()
                         };
                         resultList.Add(result);
                     }
                     con.Close();
+
                 }
             }
             catch (Exception ex)
@@ -1072,21 +1119,161 @@ namespace InVanWebApp.Repository
             }
             return resultList;
         }
+
         #endregion
 
-        #region  Bind Utility Consumption By Work Order dropdown
-        /// <summary>
-        /// Rahul: This function is for fatching the Utility Consumption By Work Order dropdown
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ReportBO> GetAllWorkOrderNumber()
+        #region Sales report data
+        public List<ReportBO> getSalesReportData(DateTime fromDate, DateTime toDate, string SONumberId)
         {
             List<ReportBO> resultList = new List<ReportBO>();
             try
             {
                 using (SqlConnection con = new SqlConnection(conStr))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_ProductionIndent_GetUtilityConsumptionByWorkOrderNumber", con);
+                    SqlCommand cmd = new SqlCommand("usp_rpt_Sales_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@SONumberId", SONumberId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            InquiryNo = reader["InquiryNo"].ToString(),
+                            SONumber = reader["SONumber"].ToString(),
+                            SODate = reader["SODate"].ToString(),
+                            ClientName = reader["ClientName"].ToString(),
+                            Status = reader["Status"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Sales Invoice report data
+        public List<ReportBO> getSalesInvoiceReportData(DateTime fromDate, DateTime toDate, string SONumberId)
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_SalesInvoice_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@SONumberId", SONumberId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            SONumber = reader["SONumber"].ToString(),
+                            InvoiceNo = reader["InvoiceNo"].ToString(),
+                            InvoiceAmount = reader["InvoiceAmount"].ToString(),
+                            AmountRecived = reader["AmountRecived"].ToString(),
+                            BalanceRecivable = reader["BalanceRecivable"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region Debit Note report data
+        public List<ReportBO> getDBNoteReportData(DateTime fromDate, DateTime toDate, int DBNoteNumberId)
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_DBNoteReport", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@DBNoteNumberId", DBNoteNumberId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            DebitNoteNo = reader["DebitNoteNo"].ToString(),
+                            DebitNoteDate = reader["DebitNoteDate"].ToString(),
+                            PONo = reader["PONo"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            POQuantity = reader["POQuantity"].ToString(),
+                            DebitedQuantity = reader["DebitedQuantity"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+        #region  Bind Debit Note Number
+        /// <summary>
+        /// Siddharth: This function is for fatching the SO number
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ReportBO> GetDebitNoteNumber()
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_DBBoteNumber_Get", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
@@ -1095,11 +1282,12 @@ namespace InVanWebApp.Repository
                         var result = new ReportBO()
                         {
                             ID = Convert.ToInt32(reader["ID"]),
-                            WorkOrderNumber = reader["WorkOrderNumber"].ToString()
+                            DebitNoteNo = reader["DBNoteNo"].ToString()
                         };
                         resultList.Add(result);
                     }
                     con.Close();
+
                 }
             }
             catch (Exception ex)
@@ -1108,8 +1296,7 @@ namespace InVanWebApp.Repository
             }
             return resultList;
         }
+
         #endregion
-
-
     }
 }
