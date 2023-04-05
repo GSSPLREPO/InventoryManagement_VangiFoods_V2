@@ -100,7 +100,7 @@ namespace InVanWebApp_BO
         //Added the below field for batch planning count
         public int? IsBatchDone { get; set; }
 
-        [Required(ErrorMessage = "Select vendors name!")]
+        //[Required(ErrorMessage = "Select vendors name!")]
         public Nullable<int> VendorsID { get; set; }
         //Rahul Added the below field for SO payment module 
         public float AmountPaid { get; set; }

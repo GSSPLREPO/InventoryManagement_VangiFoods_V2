@@ -3177,7 +3177,6 @@
     <Content Include="Views\ProductionIndent\ViewProductionIndent.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\FIFOSystem.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\ProductionCostByBatchNumber.cshtml" />
-    <Content Include="Views\Dashb_RTWarehouseWiseStock\OrderSummeryDashboard.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\WorkOrderwiseProductionCostDashboard.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\ProductionUtilityConsumptionByBatchDashboard.cshtml" />
     <Content Include="Views\Dashboard\UtilityConsumptionProduction.cshtml" />
@@ -3191,6 +3190,7 @@
     <Content Include="Views\SOPayment\Index.cshtml" />
     <Content Include="Views\SOPayment\ViewSOPayment.cshtml" />
     <Content Include="Views\SOPayment\_SOPaymentDetails.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\OrderSummaryDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

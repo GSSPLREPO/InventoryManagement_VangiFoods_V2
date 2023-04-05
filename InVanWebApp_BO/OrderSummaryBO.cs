@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
-    public class OrderSummeryBO
+    public class OrderSummaryBO
     {
         /*-------------fromDate and toDate----------------------------*/
 

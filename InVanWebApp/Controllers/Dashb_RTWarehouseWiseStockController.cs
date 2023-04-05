@@ -209,17 +209,17 @@ namespace InVanWebApp.Controllers
 
         #region Bind data reorder point of available Opening And Closing
 
-        public ActionResult OrderSummeryDashboard()
+        public ActionResult OrderSummaryDashboard()
         {
             if (Session[ApplicationSession.USERID] == null)
                 return RedirectToAction("Index", "Login");
-            OrderSummeryBO model = new OrderSummeryBO();
+            OrderSummaryBO model = new OrderSummaryBO();
             model.fromDate = DateTime.Now;
             model.toDate = DateTime.Now;
             return View(model);
         }
 
-        public JsonResult GetOrderSummeryDashboardData(DateTime fromDate, DateTime toDate, string Duration = "")
+        public JsonResult GetOrderSummaryDashboardData(DateTime fromDate, DateTime toDate, string Duration = "")
         {
             var DurationID = 2;
             if (Duration != " ")
@@ -229,7 +229,7 @@ namespace InVanWebApp.Controllers
 
             string jsonstring = string.Empty;
 
-            var result = _repository.GetOrderSummeryDashboardData(fromDate, toDate, DurationID);
+            var result = _repository.GetOrderSummaryDashboardData(fromDate, toDate, DurationID);
             jsonstring = JsonConvert.SerializeObject(result);
 
             var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);

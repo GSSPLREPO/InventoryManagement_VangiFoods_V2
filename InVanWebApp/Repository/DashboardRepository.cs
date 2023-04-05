@@ -240,9 +240,9 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Function for Order Summery
-        public List<OrderSummeryBO> GetOrderSummeryDashboardData(DateTime fromDate, DateTime toDate, int DurationID = 0)
+        public List<OrderSummaryBO> GetOrderSummaryDashboardData(DateTime fromDate, DateTime toDate, int DurationID = 0)
         {
-            List<OrderSummeryBO> resultList = new List<OrderSummeryBO>();
+            List<OrderSummaryBO> resultList = new List<OrderSummaryBO>();
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
@@ -259,7 +259,7 @@ namespace InVanWebApp.Repository
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        var result = new OrderSummeryBO()
+                        var result = new OrderSummaryBO()
                         {
                             DateWise = reader["DateTime"].ToString(),
                             //Convert.ToDateTime(reader["DateTime"]),

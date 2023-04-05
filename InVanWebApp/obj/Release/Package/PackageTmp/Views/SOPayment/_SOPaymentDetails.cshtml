@@ -1,4 +1,4 @@
-﻿@model InVanWebApp_BO.POPaymentBO
+﻿@model InVanWebApp_BO.SOPaymentBO 
 <style>
     .error {
         color: red;
@@ -10,12 +10,12 @@
     }
 </style>
 
-@using (Html.BeginForm("AddPOPayment", "POPayment"))
+@using (Html.BeginForm("AddSOPayment", "SOPayment"))
 {
     @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(model => model.PurchaseOrderId)
-    @Html.HiddenFor(model => model.PONumber)
+    @Html.HiddenFor(model => model.SalesOrderId)
+    @Html.HiddenFor(model => model.SONumber)
     <hr />
     <div id="dvPaymentDetails">
         <div class="row">
@@ -110,7 +110,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model.PurchaseOrderItems)
+                                    @foreach (var item in Model.SalesOrderItems) 
                                     {
                                         <tr id="tablerow">
                                             <td>
@@ -234,7 +234,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-5">
-                                @Html.Label("Total PO Amount (Rs)")
+                                @Html.Label("Total SO Amount (Rs)")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-7">
@@ -320,10 +320,10 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <a href="@Url.Action("Index", "POPayment")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                <a href="@Url.Action("Index", "SOPayment")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                     Back To List
                 </a>
-                <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Submit</button>
+                <button type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Submit</button>
             </div>
         </div>
     </div>
@@ -360,22 +360,10 @@
         $('#PaymentAmount').val(totalPayment);
 
         if (totalPayment == paidAmount) {
-            alert('Payment is already completed for the selected PO number!');
-            window.location.href = '/POPayment/AddPOPayment';
+            alert('Payment is already completed for the selected SO number!');
+            window.location.href = '/SOPayment/AddSOPayment';
         }
 
-    });
-
-    $('#btnSave').click(function () {
-        var payment = $('#TotalPaybleAmount').val();
-        if (payment == null || payment == '' || payment == 0) {
-            $('#btnSave').prop('disabled', 'true');
-            $('#TotalPaybleAmount').focus();
-            event.preventDefault();
-            return;
-        }
-        else
-            $('#btnSave').prop('disabled', false);
     });
 
     $('#PaymentMode').change(function () {
@@ -555,8 +543,6 @@
 
     //=================================End===============================
     function calculateBalancePay() {
-        $('#btnSave').prop('disabled', false);
-
         var totalPayment = $('#TotalPOAmount').val();
         totalPayment = parseFloat(totalPayment);
 
