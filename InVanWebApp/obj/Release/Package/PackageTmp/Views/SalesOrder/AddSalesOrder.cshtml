@@ -75,7 +75,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("Currency", (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", id = "CurrencyID" })
+                    @Html.DropDownListFor(model=>model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", id = "CurrencyID" })
                     @Html.HiddenFor(model => model.CurrencyID, new { id = "tempCurrencyID" })
                     @Html.HiddenFor(model => model.CurrencyName)
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })

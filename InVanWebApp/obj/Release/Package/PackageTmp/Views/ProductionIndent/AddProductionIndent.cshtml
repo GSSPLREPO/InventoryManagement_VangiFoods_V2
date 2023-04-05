@@ -1,6 +1,6 @@
 ﻿@model InVanWebApp_BO.ProductionIndentBO
 @{ ViewBag.Title = "AddProductionIndent";
-                Layout = "~/Views/Shared/MainMaster.cshtml"; }
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 @using (Html.BeginForm("AddProductionIndent", "ProductionIndent", FormMethod.Post))
 {
@@ -39,14 +39,14 @@
                                             @if (@Session["UserId"] != null)
                                             {
                             <div class="col-md-4 d-none">
-                                @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control", Value = @Session["UserId"], @readonly = "readonly" })
-                            </div>                }
+                                @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control form-control-sm", Value = @Session["UserId"], @readonly = "readonly" })
+                            </div>}
 
                                             @if (@Session["UserName"] != null)
                                             {
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", Value = @Session["UserName"], @readonly = "readonly" })
-                            </div>                }
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", Value = @Session["UserName"], @readonly = "readonly" })
+                            </div>}
                                             <div class="col-md-2">
                                                 @Html.Label("Production Date")
                                                 <span style="color:red">*</span>
@@ -68,7 +68,7 @@
                                                     @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
                                                     @Html.HiddenFor(model => model.SONo)*@
                                                 @Html.DropDownListFor(model => model.SO_Id, (IEnumerable<SelectListItem>)ViewData["SO_dd"], "--Select--",
-                                              new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                                                  new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                                                 @Html.ValidationMessageFor(model => model.SO_Id, "", new { @class = "error mt-2 text-danger" })
                                                 @Html.HiddenFor(model => model.SONo)
 
@@ -102,7 +102,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <select id="RecipeID" name="RecipeID" class="form-control form-control-sm" onchange="SelectedIndexChangedProductNameList($(this).val())">
-                                                    <option value="0">--Select--</option>
+                                                    <option value="">--Select--</option>
                                                 </select>
                                                 @Html.ValidationMessageFor(model => model.RecipeID, "", new { @class = "error mt-2 text-danger" })
                                                 @Html.HiddenFor(model => model.RecipeName)
@@ -223,7 +223,7 @@
                 alert('Not able to fetch Number!');
 
             }
-        });        
+        });
 
     });
 
@@ -244,7 +244,7 @@
                 var count = result.salesOrderItemsDetails.length;
                 var i = 0;
                 $("#RecipeID option").remove();
-                $("#RecipeID").append($("<option></option>").val('0').html('--Select--'));
+                $("#RecipeID").append($("<option></option>").val('').html('--Select--'));
                 while (i < count) {
                     $("#RecipeID").append($("<option></option>").val(result.salesOrderItemsDetails[i].Item_ID).html(result.salesOrderItemsDetails[i].ItemName));
                     i++;
@@ -258,20 +258,20 @@
     }
     // So Number New End
 
-
-
     function SelectedIndexChangedProductNameList(id) {
 
         var selectedOptionRecipeName, RecipeName;
-        
+
         selectedOptionRecipeName = document.getElementById("RecipeID").selectedIndex;
         RecipeName = document.getElementById("RecipeID").options[selectedOptionRecipeName].innerText;
         document.getElementById("RecipeName").value = RecipeName;
-       
+
         var ProductNumber = $("#RecipeID option:selected").text();
         $('#RecipeName').val(ProductNumber);
         var recipeID = $('#SO_Id').val();
-
+        if (recipeID == '' || recipeID == null) {
+            recipeID = 0;
+        }
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
         while (rowCount != '1') {
@@ -344,7 +344,7 @@
                             t4.setAttribute("maxlength", "8");
                             t4.setAttribute("onkeypress", "return isNumberKey(event)");
                             t4.setAttribute("value", result[j].BatchSize.toFixed(4));
-                           // t4.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                            // t4.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                             t4.setAttribute("class", "form-control form-control-sm");
                             cell.appendChild(t4);
                         }
@@ -359,7 +359,6 @@
             }
         });
     }
-
 
     //function OnChangeQty(value, id) {
     //    var totalBatches = $("#TotalBatches").val();
@@ -400,10 +399,10 @@
             var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
             var Percentage = $("#Percentage_" + i).val();
 
-            
+
             TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID +
                 ", \"Item_Code\":\"" + ItemCode + "\", \"ItemName\": \"" + ItemName + "\", \"ItemQty\": " + ItemQty +
-                ", \"FinalQty\": " + FinalQty +", \"ItemUnit\": \"" + Unit + "\", \"Percentage\": " + Percentage;
+                ", \"FinalQty\": " + FinalQty + ", \"ItemUnit\": \"" + Unit + "\", \"Percentage\": " + Percentage;
 
             if (i == (rowCount - 2))
                 TxtItemDetails = TxtItemDetails + "}";

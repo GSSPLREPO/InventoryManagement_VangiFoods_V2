@@ -1,0 +1,158 @@
+﻿@model InVanWebApp_BO.LocationWiseStockBO
+@{
+    ViewBag.Title = "TotalInventoryValueWarehouseWise";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Reorder Point of Stock</title>
+    <style>
+        table {
+            border-spacing: 0px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td {
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title"> Warehouse-wise total Inventory value</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("TotalInventoryValueWarehouseWise","Dashb_RTWarehouseWiseStock")">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active"> Warehouse-wise total Inventory value</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="Warehouse" style="width:100%;"></div>
+                                    <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var name = Array();
+        var data = Array();
+        //var dataWO = Array();
+        var dataArrayFinal = Array();
+        //-----------Bind data in the graph Start-----------------------------------------------------------
+        var request = $.ajax({
+            url: "/Dashb_RTWarehouseWiseStock/GetTotalInventoryValue",
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: "POST",
+            success: function (result) {
+                ond = result;
+                var parsed = $.parseJSON(result);
+                //console.log(parsed);
+                var dataLength = parsed.length;
+
+                for (i = 0; i < dataLength; i++) {
+                    name[i] = parsed[i].LocationName;
+                    data[i] = parsed[i].TotalInvValue;
+                }
+
+                for (j = 0; j < name.length; j++) {
+                    var temp = new Array(name[j], data[j]);
+                    dataArrayFinal[j] = temp;
+                }
+                //console.log(dataArrayFinal);
+
+                Highcharts.chart('Warehouse', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type:'pie'
+                    },
+                    title: {
+                        text: ' Warehouse-wise total Inventory value',
+                        //align: 'center',
+                        //verticalAlign: 'middle',
+                        //y: 50
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y} INR'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: ' INR'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: <BR> {point.y} INR',
+                                //style: {
+                                //    fontWeight: 'bold',
+                                //    color: 'white'
+                                //}
+                            }
+                        }
+                    },
+                    series: [{
+           
+                        //innerSize: '50%',
+                        name: 'Total Inv Value',
+                        data: dataArrayFinal
+                    }]
+                });
+
+                if (dataLength > 0) {
+                    $("#Warehouse").show();
+                    $("#NoDataFound").hide();
+                } else {
+                    $("#Warehouse").hide();
+                    $("#NoDataFound").show();
+
+                }
+
+            }
+
+        });
+        //-----------Bind data in the graph End-------------------------------------------------------------
+    });
+
+   
+
+
+</script>
+
+

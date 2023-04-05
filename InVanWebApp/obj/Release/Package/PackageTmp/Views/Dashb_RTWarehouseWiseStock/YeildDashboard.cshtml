@@ -1,8 +1,6 @@
 ﻿@model InVanWebApp_BO.ReportBO
-@{
-    ViewBag.Title = "YeildDashboard";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "YeildDashboard";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <!DOCTYPE html>
 
@@ -46,39 +44,75 @@
                                     <label>From Date:</label>
                                     <span style="color:red">*</span>
                                 </div>
-                                <div class="col-md-2">
-                                    @Html.TextBox("fromDate", "{0:yyyy-MM-dd}", new {@id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                <div class="col-md-3">
+                                    @Html.TextBox("fromDate", "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                                     @Html.ValidationMessage("msgfromDate", "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
                                 </div>
                                 <div class="col-md-2">
                                     <label>To Date:</label>
                                     <span style="color:red">*</span>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     @Html.TextBox("toDate", "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                                     @Html.ValidationMessage("toDate", "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
                                 </div>
                             </div>
-                            <div class="row">
 
+                            <div class="row">
                                 <div class="col-md-2">
-                                    <label>Work Order No:</label>
+                                    <label>Work Order No</label>
                                     <span style="color:red">*</span>
                                 </div>
-                                <div class="col-md-2">
-                                    @Html.DropDownListFor(model => model.WorkOrderNumber, (IEnumerable<SelectListItem>)ViewData["WorkOrderNumberdd"], "--All--", new { @class = "form-control" })
+                                <div class="col-md-3" style="color:black;">
+                                    @Html.DropDownListFor(model => model.WorkOrderNumberId, (IEnumerable<SelectListItem>)ViewData["WorkOrderNumberdd"], "---All---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedWONumber($(this).val())" })
+                                    @Html.HiddenFor(model => model.ID)
+                                    @Html.ValidationMessageFor(model => model.WorkOrderNumberId, "", new { id = "WOValidate", @class = "error mt-2 text-danger" })
                                 </div>
-                                <div class="col-md-2">
+                                <!--<div class="col-md-2">
                                     <label>Batch Number:</label>
                                     <span style="color:red">*</span>
                                 </div>
+                                <div class="col-md-2" style="color:black;">-->
+                                @*@Html.TextBoxFor(model => model.BatchNumberId, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.BatchNumberId, "", new { @class = "error mt-2 text-danger" })*@
+                                <!--@Html.DropDownListFor(model => model.BatchNumber, (IEnumerable<SelectListItem>)ViewData["BatchNumberdd"], "--All--", new { @class = "form-control form-control-sm" })
+                                </div>-->
                                 <div class="col-md-2">
-                                    @Html.DropDownListFor(model => model.BatchNumber, (IEnumerable<SelectListItem>)ViewData["BatchNumberdd"], "--All--", new { @class = "form-control" })
+                                    @Html.Label("Batch Number")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+
+                                    <select id="BatchNo" name="BatchNo" class="form-control form-control-sm">
+                                        <option>--All--</option>
+                                    </select>
+                                    <span id="valMsgBatchNo" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Batch Number!</span>
+                                    @Html.ValidationMessageFor(model => model.BatchNumber, "", new { id = "valMsgBatchNo", @class = "error mt-2 text-danger" })
                                 </div>
                                 <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
                                 </div>
                             </div>
+                            @*<div class="row">
+
+                                    <div class="col-md-2">
+                                        <label>Work Order No:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(model => model.WorkOrderNumber, (IEnumerable<SelectListItem>)ViewData["WorkOrderNumberdd"], "--All--", new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Batch Number:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.DropDownListFor(model => model.BatchNumber, (IEnumerable<SelectListItem>)ViewData["BatchNumberdd"], "--All--", new { @class = "form-control" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
+                                    </div>
+                                </div>*@
                             <br />
                             <div class="row">
                                 <div class="col-md-12">
@@ -96,9 +130,20 @@
 </html>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+<script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         setCurrentDate();
+        $('#fromDateValidate').hide();
+        $('#toDateValidate').hide();
     });
 
     function setCurrentDate() {
@@ -119,13 +164,6 @@
 
 
 </script>
-<script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
 <script type="text/javascript">
 
 
@@ -138,10 +176,45 @@
         return Color;
     }
 
+    function SelectedIndexChangedWONumber(id) {
+        $('#WOValidate').hide();
+        var WOId = $('#WorkOrderNumberId').val();
+        if (WOId == '' || WOId == null) {
+            WOId = 0;
+        }
+
+        if (WOId != 0) {
+            $.ajax({
+                url: '/Dashb_RTWarehouseWiseStock/BatchNumber?WOId=' + WOId,
+                type: "POST",
+                data: {},
+                success: function (result) {
+                    var count = result.length;
+                    var i = 0;
+                    $("#BatchNo option").remove();
+                    $("#BatchNo").append($("<option></option>").val('').html('--All--'));
+                    while (i < count) {
+                        $("#BatchNo").append($("<option></option>").val(result[i].BatchNumber).html(result[i].BatchNumber));
+                        i++;
+                    }
+                },
+                error: function (err) {
+                    alert('Not able to fetch batch number!');
+
+                }
+            });
+        }
+        else {
+            $("#BatchNo option").remove();
+            $("#BatchNo").append($("<option></option>").val('').html('--All--'));
+        }
+
+    }
 
     $("#btnGo").on("click", function () {
         var fromDate = $("#fromDate").val();
         var toDate = $("#toDate").val();
+        var WOId = $('#WorkOrderNumberId').val();
 
         if (fromDate == null || fromDate == "") {
             $('#fromDateValidate').text('Select from date!');
@@ -162,7 +235,13 @@
             $('#fromDate').focus();
             return;
         }
-
+        if (WOId == null || WOId == "") {
+            WOId = 0;
+            //$('#WOValidate').text('Select WO number!');
+            //$('#WOValidate').show();
+            //$("#WOValidate").focus();
+            //return;
+        }
         $(".spinner-wrapper").fadeIn("slow");
         population = [];
         xAxisData = [];
@@ -174,41 +253,41 @@
             s <= 0 ? s = 1 : s = s * 1000;
             return h + m + s;
         }
-        var WorkOrderNumberId = $('#WorkOrderNumber').val();
+        var WorkOrderNumberId = $('#WorkOrderNumberId').val();
         if (WorkOrderNumberId == '' || WorkOrderNumberId == null)
             WorkOrderNumberId = 0;
         //alert(WorkOrderNumberId);
-        var BatchNumberId = $('#BatchNumber').val();
-        if (BatchNumberId == '' || BatchNumberId == null)
+        var BatchNumberId = $('#BatchNo').val();
+        if (BatchNumberId == '' || BatchNumberId == null || BatchNumberId=='--All--')
             BatchNumberId = 0;
         //alert(BatchNumberId);
         //-----------Bind data in the graph Start-----------------------------------------------------------
         var request = $.ajax({
-            
+
             url: "/Dashb_RTWarehouseWiseStock/GetYeildDashboardData?fromDate=" + fromDate + "&toDate=" + toDate + "&BatchNumber=" + BatchNumberId + "&WorkOrderNumber=" + WorkOrderNumberId,
 
             contentType: 'application/json;',
             dataType: 'json',
             type: "POST",
             success: function (result) {
-                console.log(result)
                 ond = result;
                 var parsed = $.parseJSON(result);
                 var dataLength = parsed.length;
 
                 var serial2 = {
-                    name: "Actual Yeild",
+                    name: "Expected Yield",
                     type: 'column',
                     yAxis: 1,
                     data: [],
-                    color: [],
+                    /*color: [],*/
+                    color: 'lightblue',
                     tooltip: {
                         valueSuffix: ' '
                     }
 
                 };
                 var serialForMinStock = {
-                    name: "Expected Yeild",
+                    name: "Actual Yield",
                     type: 'column',
                     data: [],
                     color: 'blue',
@@ -241,7 +320,7 @@
                     }
 
                     coloR.push(dynamicColors());
-                    serial2.color = getRandomColor();
+                    //serial2.color = getRandomColor();
                     xAxisData.push(jsondata.ProductName + ' (' + jsondata.BatchNumber + ' ' + jsondata.WorkOrderNumber + ')');
 
                 });
@@ -253,17 +332,24 @@
                         zoomType: 'xy'
                     },
                     title: {
-                        text: 'Product Wise Yeild'
+                        text: 'Yield Dashboard'
                     },
                     xAxis: {
                         categories: xAxisData,
                         crosshair: true,
+                        title: {
+                            text: 'ItemName(Batchnumber Workordernumber)',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck'
+                            }
+                        }
                         //scrollbar: {
                         //    enabled: true
                         //},
                         //tickLength: 0,
                     },
-                    
+
                     yAxis: [{ // Primary yAxis
                         labels: {
                             format: '{value} KG',

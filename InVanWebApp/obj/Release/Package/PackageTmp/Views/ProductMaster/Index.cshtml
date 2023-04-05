@@ -46,25 +46,27 @@
                                     <tbody style="overflow-wrap: anywhere;">
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.ProductCode)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.ProductName)
-                                                </td>
-                                                <td class="text-wrap">
-                                                    @Html.DisplayFor(modelItem => item.Description)
-                                                </td>
-                                                <td>
-                                                    <a href=@Url.Action("EditProductItem", "ProductMaster", new { Product_ID = item.ProductID }) title="Edit Product Item">
-                                                        <i class="fa fa-edit text-primary"></i>
-                                                    </a> &emsp;
-                                                    <a href=@Url.Action("DeleteProductItem", "ProductMaster", new { Product_ID = item.ProductID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Product Item">
-                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            @*Rahul added 'td class="text-wrap"' 05-04-2023.*@
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.ProductCode)
+                                            </td>
+                                            @*Rahul added 'td class="text-wrap"' 05-04-2023.*@
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.ProductName)
+                                            </td>
+                                            <td class="text-wrap">
+                                                @Html.DisplayFor(modelItem => item.Description)
+                                            </td>
+                                            <td>
+                                                <a href=@Url.Action("EditProductItem", "ProductMaster", new { Product_ID = item.ProductID }) title="Edit Product Item">
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("DeleteProductItem", "ProductMaster", new { Product_ID = item.ProductID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Product Item">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>

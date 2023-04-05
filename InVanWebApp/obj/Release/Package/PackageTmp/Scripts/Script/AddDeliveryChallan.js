@@ -106,50 +106,59 @@ function SelectedIndexChangedSO(id) {
                         cell.setAttribute("id", "ItemName_" + j);
                     }
                     else if (i == 3) {
-                        cell.innerHTML = result[j].ItemQuantity;
+                        cell.innerHTML = result[j].ItemQuantity + " " + result[j].ItemUnit;
                         cell.setAttribute("id", "SOQty_" + j);
 
                     }
                     else if (i == 4) {
-                        cell.innerHTML = result[j].BalanceQuantity;
-                        cell.setAttribute("id", "BalQty_" + j);
+                        cell.innerHTML = result[j].ItemTaxValue + " %";
+                        cell.setAttribute("id", "ItemTaxValue_" + j);
                     }
                     else if (i == 5) {
+                        cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
+                        cell.setAttribute("id", "ItemUnitPrice_" + j);
+                    }
+                    else if (i == 6) {
+                        cell.innerHTML = result[j].OutwardQuantity + " " + result[j].ItemUnit;
+                        cell.setAttribute("id", "OutwardQty_" + j);
+                    }
+                    else if (i == 7) {
                         var t5 = document.createElement("input");
                         t5.id = "txtShippingQty_" + j;
-                        t5.setAttribute("value", "0");
+                        t5.removeAttribute("disabled", "false");
+                        t5.removeAttribute("disabled", "true");
+
+                        if (parseFloat(result[j].ItemQuantity) == parseFloat(result[j].OutwardQuantity)) {
+                            t5.setAttribute("disabled", "true");
+                        }
+                        else {
+                            t5.removeAttribute("disabled", "false");
+                            t5.removeAttribute("disabled", "true");
+                            t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                        }
+
                         t5.setAttribute("type", "number");
                         t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
                         t5.setAttribute("maxlength", "8");
-                        t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                         t5.setAttribute("class", "form-control form-control-sm");
-                        //if (result[j].BalanceQuantity == 0)
-                        if (result[j].BalanceQuantity == result[j].ItemQuantity)
-                            t5.setAttribute("readonly", "readonly");
 
                         cell.appendChild(t5);
+
                         var t6 = document.createElement('span');
                         t6.id = "spanShippingQty_" + j;
                         t6.setAttribute("class", "text-wrap");
                         cell.appendChild(t6);
 
                     }
-                    else if (i == 6) {
+                    else if (i == 8) {
+                        cell.innerHTML = result[j].BalanceQuantity + " " + result[j].ItemUnit;
+                        cell.setAttribute("id", "BalQty_" + j);
+                    }
+                    else if (i == 9) {
                         cell.innerHTML = result[j].ItemUnit;
                         cell.setAttribute("id", "ItemUnit_" + j);
                     }
-                    else if (i == 7) {
-                        cell.innerHTML = result[j].ItemUnitPrice;
-                        cell.setAttribute("id", "ItemUnitPrice_" + j);
-                    }
-                    else if (i == 8) {
-                        cell.innerHTML = result[j].CurrencyName
-                        cell.setAttribute("id", "CurrencyName_" + j);
-                    }
-                    else if (i == 9) {
-                        cell.innerHTML = result[j].ItemTaxValue + " %";
-                        cell.setAttribute("id", "ItemTaxValue_" + j);
-                    }
+
                     else if (i == 10) {
                         var t5 = document.createElement("input");
                         t5.id = "txtTotalItemCost_" + j;
@@ -159,12 +168,13 @@ function SelectedIndexChangedSO(id) {
                         cell.appendChild(t5);
                     }
                     else if (i == 11) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtBalQty_" + j;
-                        t5.setAttribute("class", "d-none");
-                        t5.setAttribute("value", result[j].BalanceQuantity);
-                        cell.appendChild(t5);
-                        cell.setAttribute("style", "display:none;");
+                        cell.innerHTML = result[j].CurrencyName;
+                        cell.setAttribute("id", "CurrencyName_" + j);
+                    }
+                    else if (i == 12) {
+                        cell.innerHTML = result[j].BalanceQuantity;
+                        cell.setAttribute("id", "txtBalQty_" + j);
+                        cell.setAttribute("class", "d-none");
                     }
                 }
 
@@ -184,35 +194,52 @@ function OnChangeQty(value, id) {
     $('#btnSave').prop('disabled', false);
     $('#spanShippingQty_' + rowNo).text('');
     var rowNo = id.split('_')[1];
-    var BalQty = document.getElementById("txtBalQty_" + rowNo).value;
-    BalQty = parseFloat(BalQty);
+    var BalQty = document.getElementById("txtBalQty_" + rowNo).innerHTML;
+    if (BalQty == '' || BalQty == null)
+        BalQty = 0;
+    else
+        BalQty = parseFloat(BalQty);
+
     var unitPrice = document.getElementById("ItemUnitPrice_" + rowNo).innerHTML;
-    unitPrice = parseFloat(unitPrice);
+    if (unitPrice == '' || unitPrice == null)
+        unitPrice = 0;
+    else
+        unitPrice = parseFloat(unitPrice);
 
     var SOQty = document.getElementById("SOQty_" + rowNo).innerHTML;
-    SOQty = parseFloat(SOQty);
+    if (SOQty == '' || SOQty == null)
+        SOQty = 0;
+    else
+        SOQty = parseFloat(SOQty);
+
+
+    var outwardQty = document.getElementById("OutwardQty_" + rowNo).innerHTML;
+    if (outwardQty == '' || outwardQty == null)
+        outwardQty = 0;
+    else
+        outwardQty = parseFloat(outwardQty);
+
     if (value == '')
         value = 0;
 
-    var OutwardQty = parseFloat(value);
+    var ShippingQty = parseFloat(value);
 
     var DiffQty = 0;
 
-    //if (OutwardQty > (BalQty)) {
-    if (OutwardQty > (SOQty-BalQty)) {
-        $('#spanShippingQty_' + rowNo).text('Shipped quantity cannot be greater than delivered quantity!');
+    if (ShippingQty > BalQty) {
+        $('#spanShippingQty_' + rowNo).text('Shipped quantity cannot be greater than balance quantity!');
         document.getElementById('spanShippingQty_' + rowNo).setAttribute('style', 'color:red;');
         document.getElementById(id).focus();
+        $('#btnSave').prop("disabled", true);
         return;
     }
     else {
         $('#spanShippingQty_' + rowNo).text('');
-        //DiffQty = BalQty - OutwardQty;
-        DiffQty = (SOQty - BalQty) - OutwardQty;
+        DiffQty = BalQty - ShippingQty;
         DiffQty = parseFloat(DiffQty);
         document.getElementById("BalQty_" + rowNo).innerHTML = DiffQty;
 
-        document.getElementById("txtTotalItemCost_" + rowNo).value = Math.round(OutwardQty * unitPrice);
+        document.getElementById("txtTotalItemCost_" + rowNo).value = Math.round(ShippingQty * unitPrice);
 
     }
     CalculateTotalBeforeTax();
@@ -243,8 +270,22 @@ function CalculateTotalBeforeTax() {
     var i = 1;
     while (i <= length) {
         var temp = document.getElementById("txtTotalItemCost_" + i).value;
+        if (temp == '' || temp == null) {
+            temp = 0;
+        }
+        else {
+            temp = parseFloat(temp);
+        }
+
         var tempTotalTax = ((document.getElementById("ItemTaxValue_" + i)).innerHTML).split(" %")[0];
-        total = parseFloat(temp) + total;
+        total = temp + total;
+
+        if (tempTotalTax == '' || tempTotalTax == null) {
+            tempTotalTax = 0;
+        }
+        else {
+            tempTotalTax = parseFloat(tempTotalTax);
+        }
 
         tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
         totalTax = parseFloat(tempTotalTax) + totalTax;
@@ -277,24 +318,28 @@ function createJson() {
         var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
         var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
         var SOQty = (document.getElementById("SOQty_" + i)).innerHTML;
-        var BalQty = (document.getElementById("BalQty_" + i)).innerHTML;
-        var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
-        var OutwardQty = document.getElementById("txtShippingQty_" + i).value;
+        var Tax = (document.getElementById("ItemTaxValue_" + i)).innerHTML.split(" %")[0];
+        Tax = (Tax == null || Tax == '') ? 0 : Tax;
 
-        var PricePerUnit = (document.getElementById("ItemUnitPrice_" + i)).innerHTML;
+        var PricePerUnit = (document.getElementById("ItemUnitPrice_" + i)).innerHTML.split(' ')[0];
         PricePerUnit = (PricePerUnit == null || PricePerUnit == '') ? 0 : PricePerUnit;
 
-        var CurrencyName = (document.getElementById("CurrencyName_" + i)).innerHTML;
-        var Tax = (document.getElementById("ItemTaxValue_" + i)).innerHTML.split(" %")[0];
+        var OutwardQty = document.getElementById("txtShippingQty_" + i).value;
+        var ShippingQty = document.getElementById("OutwardQty_" + i).value;
+        var BalQty = (document.getElementById("BalQty_" + i)).innerHTML;
+        var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
 
         var TotalItemCost = (document.getElementById("txtTotalItemCost_" + i)).value;
         TotalItemCost = (TotalItemCost == null || TotalItemCost == '') ? 0 : TotalItemCost;
 
+        var CurrencyName = (document.getElementById("CurrencyName_" + i)).innerHTML;
+
         TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
-            ", \"ItemName\": \"" + ItemName + "\", \"SOQty\": " + SOQty + ", \"BalQty\": " + BalQty +
-            ", \"OutwardQty\": " + OutwardQty +
-            ", \"ItemUnit\": \"" + Unit + "\", \"ItemUnitPrice\": " + PricePerUnit + ", \"CurrencyName\": \""
-            + CurrencyName + "\",\"ItemTaxValue\": " + Tax + ", \"TotalItemCost\": " + TotalItemCost;
+            ", \"ItemName\": \"" + ItemName + "\", \"SOQty\": " + SOQty+ ",\"ItemTaxValue\": " + Tax +
+            ", \"ItemUnitPrice\": " + PricePerUnit /*+ ", \"OutwardQty\": " + OutwardQty*/
+            + ", \"ShippingQty\": " + ShippingQty + ", \"BalQty\": " + BalQty +
+            ", \"ItemUnit\": \"" + Unit +  "\", \"CurrencyName\": \""
+            + CurrencyName + "\", \"TotalItemCost\": " + TotalItemCost;
 
         if (i == (rowCount - 1))
             TxtItemDetails = TxtItemDetails + "}";
