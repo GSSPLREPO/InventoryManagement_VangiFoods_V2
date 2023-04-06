@@ -231,10 +231,11 @@
         if (Batchnumber == '' || Batchnumber == null)
             Batchnumber = 0;
 
+
         //-----------Bind data in the graph Start-----------------------------------------------------------
         //url: '/Dashb_RTWarehouseWiseStock/BatchNumber?SId=' + SOId,
         var request = $.ajax({
-            url: "/Dashb_RTWarehouseWiseStock/GetDashboardProductionCostByBatchNumber?soID=" + soNumber + "&batchNumber" + Batchnumber + "&fromDate=" + fromDate + "&toDate=" + toDate,
+            url: "/Dashb_RTWarehouseWiseStock/GetDashboardProductionCostByBatchNumber?soID=" + soNumber + "&batchNumber=" + Batchnumber + "&fromDate=" + fromDate + "&toDate=" + toDate,
             //url: "/Dashb_RTWarehouseWiseStock/GetDashboardProductionCostByBatchNumber?soID=" + soNumber +"&batchNumber"+ Batchnumber + "&fromDate=" + fromDate + "&toDate=" + toDate,
             contentType: 'application/json;',
             dataType: 'json',
