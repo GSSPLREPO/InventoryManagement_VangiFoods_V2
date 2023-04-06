@@ -50,7 +50,7 @@
                                             @Html.DisplayName("Remarks")
                                         </th>
                                         <th>
-                                            @Html.DisplayName("Edit/Delete")
+                                            @Html.DisplayName("Actions")
                                         </th>
                                     </tr>
 
@@ -64,10 +64,10 @@
                                                 @Html.DisplayFor(modelItem => item.Remark)
                                             </td>
                                             <td>
-                                                <a href=@Url.Action("EditLocation", "Location", new { LocationID = item.ID })>
+                                                <a href=@Url.Action("EditLocation", "Location", new { LocationID = item.ID }) title="Edit Location">
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </a> &emsp;
-                                                <a href=@Url.Action("DeleteLocation", "Location", new { LocationID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                <a href=@Url.Action("DeleteLocation", "Location", new { LocationID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Location">
                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                 </a>
                                                 @*@Html.ActionLink("Edit", "EditLocation", new { LocationID = item.ID }) |

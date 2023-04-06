@@ -58,7 +58,7 @@
                 <div class="col-md-4">
                     @Html.DropDownList("InquiryStatusID", new List<SelectListItem>{
                             new SelectListItem{ Text="Open", Value = "0" },
-                            new SelectListItem{ Text="Close", Value = "1" },
+                            //new SelectListItem{ Text="Close", Value = "1" },
                             }, new { @class = "form-control form-control-sm" })
                     @*@Html.DropDownListFor(model => model.InquiryStatusID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control form-control-sm" })*@
                     @*@Html.ValidationMessageFor(model => model.InquiryStatusID, "", new { @class = "error mt-2 text-danger" })*@

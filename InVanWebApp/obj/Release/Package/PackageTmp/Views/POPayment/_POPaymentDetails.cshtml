@@ -543,6 +543,8 @@
 
     //=================================End===============================
     function calculateBalancePay() {
+        $('#btnSave').prop('disabled', false);
+
         var totalPayment = $('#TotalPOAmount').val();
         totalPayment = parseFloat(totalPayment);
 
@@ -568,4 +570,16 @@
         }
 
     }
+
+    $('#btnSave').click(function () {
+        var payment = $('#TotalPaybleAmount').val();
+        if (payment == null || payment == '' || payment == 0) {
+            $('#btnSave').prop('disabled', 'true');
+            $('#TotalPaybleAmount').focus();
+            event.preventDefault();
+            return;
+        }
+        else
+            $('#btnSave').prop('disabled', false);
+    });
 </script>

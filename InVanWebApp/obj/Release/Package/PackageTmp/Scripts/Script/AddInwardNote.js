@@ -56,7 +56,7 @@ function createJson() {
 }
 
 function SelectedIndexChanged(id) {
-
+    $('#btnSave').prop('disabled',false);
     //For deleting the rows of Item table if exist.
     var table = document.getElementById('ItemTable');
     var rowCount = table.rows.length;
@@ -81,7 +81,7 @@ function SelectedIndexChanged(id) {
             $('#ShippingDetails').val(result[0].DeliveryAddress);
             $('#SupplierDetails').val(result[0].SupplierAddress);
             var ColCount = result.length
-
+            var flag = 0; //This flag is for checking whether the selected Inward Note is completed or not.
             //===================Create dynamic table for binding Item details====================//
             var table = document.getElementById('ItemTable');
             for (var j = 1; j < result.length; j++) {
@@ -148,12 +148,13 @@ function SelectedIndexChanged(id) {
                         cellData = document.getElementById("DeliveredQty" + j);
                         var deliveredQty = cellData.innerHTML;
                         if (parseFloat(temp_itemQty[0]) == parseFloat(deliveredQty)) {
-                            t6.setAttribute("disabled", "true");
+                            t6.setAttribute("disabled", "true");                           
                         }
-                        else {
+                        else {                            
                             t6.removeAttribute("disabled", "false");
                             t6.removeAttribute("disabled", "true");
                             t6.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
+                            flag = 1;
                         }
                         t6.setAttribute("type", "number");
                         t6.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
@@ -180,6 +181,13 @@ function SelectedIndexChanged(id) {
                     }
                 }
 
+            }
+            if (flag == 0) {
+                $('#btnSave').prop('disabled','true');
+                alert('Inward is done for the selected Inward number!');
+            }
+            else {
+                 $('#btnSave').prop('disabled', false);
             }
         }
     });

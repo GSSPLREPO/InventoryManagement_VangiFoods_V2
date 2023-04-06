@@ -65,21 +65,21 @@
                                 <div class="col-md-3">
                                     @Html.DropDownListFor(model => model.SalesOrderId, (IEnumerable<SelectListItem>)ViewData["SONumbers"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedSONumber($(this).val())" })
                                     @Html.HiddenFor(model => model.SONumber)
-                                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { id = "SOIDValidate", @class = "error mt-2 text-danger" }) 
+                                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { id = "SOIDValidate", @class = "error mt-2 text-danger" })
                                 </div>
-                                    <div class="col-md-2">
+                                <div class="col-md-2">
                                     @Html.Label("Batch No")
                                     <span style="color:red">*</span>
                                 </div>
-                                    <div class="col-md-3">
-                                        @*<select id="BatchNo" name="BatchNo" class="form-control form-control-sm" onchange="SelectedIndexChangedBatchNo($(this).val())">*@
-                                        <select id="BatchNo" name="BatchNo" class="form-control form-control-sm">
-                                            <option>--All--</option>
-                                        </select>
-                                        <span id="valMsgBatchNo" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Batch Number!</span>
-                                        @*@Html.HiddenFor(model => model.ID)*@
-                                        @Html.ValidationMessageFor(model => model.BatchNumber, "", new { id = "valMsgBatchNo", @class = "error mt-2 text-danger" })
-                                    </div>
+                                <div class="col-md-3">
+                                    @*<select id="BatchNo" name="BatchNo" class="form-control form-control-sm" onchange="SelectedIndexChangedBatchNo($(this).val())">*@
+                                    <select id="BatchNo" name="BatchNo" class="form-control form-control-sm">
+                                        <option>--All--</option>
+                                    </select>
+                                    <span id="valMsgBatchNo" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Batch Number!</span>
+                                    @*@Html.HiddenFor(model => model.ID)*@
+                                    @Html.ValidationMessageFor(model => model.BatchNumber, "", new { id = "valMsgBatchNo", @class = "error mt-2 text-danger" })
+                                </div>
 
                                 <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
@@ -88,7 +88,7 @@
                             <br />
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div id="mainTPCost" style="width:100%;"></div>
+                                    <div id="container" style="width:100%;"></div>
                                     <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
                                 </div>
                             </div>
@@ -101,13 +101,11 @@
 </body>
 </html>
 
+
 <script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
 <script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
 <script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+
 
 <script type="text/javascript">
 
@@ -127,13 +125,13 @@
     function OnChangedToDate() {
         $('#toDateValidate').hide();
     }
-   
+
     function SelectedIndexChangedSONumber(id) {
         $('#SOIDValidate').hide();
         var SOId = $('#SalesOrderId').val();
 
         $.ajax({
-            url: '/Dashb_RTWarehouseWiseStock/BatchNumber?SId=' + SOId,
+            url: '/Dashb_RTWarehouseWiseStock/BatchNumber?WOId=' + SOId,
             type: "POST",
             data: {},
             success: function (result) {
@@ -156,11 +154,6 @@
     }
 
     $(document).ready(function () {
-        $('#toDateValidate').hide();
-        $('#fromDateValidate').hide();
-        $('#SOIDValidate').hide();
-        $('#valMsgBatchNo').hide();
-
         var date = new Date();
 
         var day = date.getDate(),
@@ -175,154 +168,26 @@
 
         document.getElementById('toDate').value = today;
         document.getElementById('fromDate').value = today;
-        $(".spinner-wrapper").fadeIn("slow");
 
-        population = [];
-        xAxisData = [];
-        var coloR = [];
+        $('#toDateValidate').hide();
+        $('#fromDateValidate').hide();
+        $('#SOIDValidate').hide();
+        $('#valMsgBatchNo').hide();
+        $("#NoDataFound").hide();
 
-        function convertDhms(h, m, s) {
-            h <= 0 ? h = 1 : h = h * 60 * 60 * 1000;
-            m <= 0 ? m = 1 : m = m * 60 * 1000;
-            s <= 0 ? s = 1 : s = s * 1000;
-            return h + m + s;
-        }
-
-        var request = $.ajax({
-            url: "/Dashb_RTWarehouseWiseStock/GetDashboardProductionCostByBatchNumber",
-            contentType: 'application/json;',
-            dataType: 'json',
-            type: "POST",
-            success: function (result) {
-                ond = result;
-                var parsed = $.parseJSON(result);
-                var dataLength = parsed.length;
-
-                var serial2 = {
-                    name: "ProductName",
-                    type: 'column',
-                    yAxis: 1,
-                    data: [],
-                    color: [],
-                    tooltip: {
-                        valueSuffix: ' INR'
-                    }
-
-                };
-                var serialForBatchNumber = {
-                    name: "BatchNumber",
-                    type: 'spline',
-                    data: [],
-                    color: 'black',
-                    tooltip: {
-                        valueSuffix: ' INR'
-                    }
-
-                };
-
-                $.each(parsed, function (i, jsondata) {
-
-                    var dynamicColors = function () {
-                        var r = Math.floor(Math.random() * 255);
-                        var g = Math.floor(Math.random() * 255);
-                        var b = Math.floor(Math.random() * 255);
-                        return "rgb(" + r + "," + g + "," + b + ")";
-                    }
-
-                    var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
-                    if (jsondata.Item_Name != null) {
-                        serial2.data.push(parseFloat(jsondata.Item_Name));
-                    } else {
-                        serial2.data.push(parseFloat(0));
-                    }
-                    //FN
-                    if (jsondata.BatchNumber != null) {
-                        serialForBatchNumber.data.push(parseFloat(jsondata.BatchNumber));
-                    } else {
-                        serialForBatchNumber.data.push(parseFloat(0));
-                    }
-
-                    coloR.push(dynamicColors());
-                    serial2.color = getRandomColor();
-                    xAxisData.push(jsondata.WorkOrderNumber + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.ProductionMaterialIssueNoteNo + ')');
-
-                });
-
-                var finalSeries = [serial2, serialForBatchNumber];
-
-                Highcharts.chart('mainTPCost', {
-                    chart: {
-                        zoomType: 'xy'
-                    },
-                    title: {
-                        text: 'Total Production of Cost'
-                    },
-                    xAxis: {
-                        categories: xAxisData,
-                        crosshair: true
-                    },
-                    yAxis: [{ // Primary yAxis
-                        labels: {
-                            format: '{value} INR',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Balck'
-                            }
-                        },
-                        title: {
-                            text: 'Minimum Stock Value (INR)',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Balck'
-                            }
-                        }
-                    }, { // Secondary yAxis
-                        title: {
-                            text: 'Quantity (INR)',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Black'
-                            }
-                        },
-                        labels: {
-                            format: '{value} INR',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Balck'
-                            }
-                        },
-                        opposite: true
-                    }],
-                    tooltip: {
-                        shared: true
-                    },
-                    series: finalSeries
-                });
-
-                if (dataLength > 0) {
-                    $("#mainTPCost").show();
-                    $("#NoDataFound").hide();
-                } else {
-                    $("#mainTPCost").hide();
-                    $("#NoDataFound").show();
-
-                }
-
-            }
-
-        });
-
-
-        $(".spinner-wrapper").fadeOut("slow");
+      
+      
 
     });
 
+
+
     $("#btnGo").on("click", function () {
-        Highcharts.setOptions({ colors: ['#333', '#002B5B','#64E572', '#6AF9C4','#24CBE5', '#DDDF00',  '#CB2326', '#FF9655', '#CB2326', ]});
+        Highcharts.setOptions({ colors: ['#333', '#002B5B', '#64E572', '#6AF9C4', '#24CBE5', '#DDDF00', '#FF9655', '#CB2326', '#CB2326',] });
         var fromDate = $("#fromDate").val();
         var toDate = $("#toDate").val();
         var soNumber = $("#SalesOrderId").val();
-    //    var batchNO = $("#BatchNo").val();
+        //var BatchNo = $("#BatchNo").val();
 
         if (fromDate == null || fromDate == "") {
             $('#fromDateValidate').text('Select from date!');
@@ -343,13 +208,13 @@
             $('#fromDate').focus();
             return;
         }
-        if (soNumber == null || soNumber=="") {
+        if (soNumber == null || soNumber == "") {
             $('#SOIDValidate').text('Select SO Number!');
             $('#SOIDValidate').show();
             event.preventDefault();
             return;
         }
-       
+
         $(".spinner-wrapper").fadeIn("slow");
         population = [];
         xAxisData = [];
@@ -362,14 +227,15 @@
             return h + m + s;
         }
         var Batchnumber = $('#BatchNo').val();
-       
+
         if (Batchnumber == '' || Batchnumber == null)
             Batchnumber = 0;
-        
+
         //-----------Bind data in the graph Start-----------------------------------------------------------
         //url: '/Dashb_RTWarehouseWiseStock/BatchNumber?SId=' + SOId,
         var request = $.ajax({
-            url: "/Dashb_RTWarehouseWiseStock/GetDashboardProductionCostByBatchNumber?soID=" + soNumber +"&batchNumber"+ Batchnumber + "&fromDate=" + fromDate + "&toDate=" + toDate,
+            url: "/Dashb_RTWarehouseWiseStock/GetDashboardProductionCostByBatchNumber?soID=" + soNumber + "&batchNumber" + Batchnumber + "&fromDate=" + fromDate + "&toDate=" + toDate,
+            //url: "/Dashb_RTWarehouseWiseStock/GetDashboardProductionCostByBatchNumber?soID=" + soNumber +"&batchNumber"+ Batchnumber + "&fromDate=" + fromDate + "&toDate=" + toDate,
             contentType: 'application/json;',
             dataType: 'json',
             type: "POST",
@@ -377,52 +243,55 @@
                 ond = result;
                 var parsed = $.parseJSON(result);
                 var dataLength = parsed.length;
+              
+                if (dataLength == 0) {
+                    $("#NoDataFound").show();
+                    $("#container").hide();
+                    return;
+                }
+                else {
+                    $("#container").show();
+                    $("#NoDataFound").hide();
+                }
+
+
 
                 var serial2 = {
-                    name: "Raw Material Cost",
+                    name: "Total Raw Material Cost",
                     type: 'column',
                     yAxis: 1,
                     data: [],
-                    /*color: [],*/
                     color: '#159895',
-                    //color: {
-                    //    linearGradient: {
-                    //        x1: 0,
-                    //        x2: 0,
-                    //        y1: 0,
-                    //        y2: 1
-                    //    },
-                    //    stops: [
-                    //        [0, '#392c70'],
-                    //        [1, '#6a005b']
-                    //    ]
-                    //},
                     tooltip: {
                         valueSuffix: ' INR'
                     }
                 };
-                
+
 
                 var yData = 0;
                 var yTotal = 0;
                 var pieColor = "";
                 var serialForBatchPie = {
-                    name: "Total Raw Material Cost",
                     type: 'pie',
+                    name: "Total Raw Material Cost",                    
                     color: Highcharts.getOptions().colors[7],
                     tooltip: {
-                        valueSuffix: '{point.total} INR'
+                        valueSuffix: '{point.total} INR',
+
                     },
                     data: [{
                         y: yTotal,
-                       
+
                         dataLabels: {
                             enabled: true,
                             distance: -50,
+                            Textenabled: false,
                             format: '{point.total} INR',
                             style: {
-                                fontSize: '10px',
-                                color:'black'                               
+                                fontSize: '12px',
+                                /*color:''*/
+                                color: 'black',
+
                             }
                         }
                     }],
@@ -449,14 +318,14 @@
                         serial2.data.push(parseFloat(jsondata.ItemUnitPrice.toFixed(2)));
                         yData = parseFloat(jsondata.ItemUnitPrice);
                         yTotal = yTotal + parseFloat(jsondata.ItemUnitPrice.toFixed(2));
-                        
+
                     } else {
                         serial2.data.push(parseFloat(0));
                         serialForBatchPie.data.push(parseFloat(0));
                     }
 
                     coloR.push(dynamicColors());
-                   // serial2.color = getRandomColor();
+                    // serial2.color = getRandomColor();
                     //pieColor  = getRandomColor();
                     //serialForBatchPie.color.push(pieColor);
                     //pieColor  = getRandomColor();
@@ -468,9 +337,11 @@
                 serialForBatchPie.data.push(yTotal);
 
                 var finalSeries = [serial2, serialForBatchPie];
-                Highcharts.chart('mainTPCost', {
+
+
+                Highcharts.chart('container', {
                     title: {
-                        text: 'Production of Cost'
+                        text: 'Production Cost'
                     },
                     chart: {
                         zoomType: 'xy'
@@ -521,48 +392,21 @@
                             opposite: false
 
                         }],
+                    legend: {
+                        enabled: false
+                    },
                     tooltip: {
                         shared: true
                     },
                     series: finalSeries
-                //    , exporting: {
-                //        menuItemDefinitions: {
-                //            // Custom definition
-                //            label: {
-                //                onclick: function () {
-                //                    this.renderer.label(
-                //                        'You just clicked a custom menu item',
-                //                        100,
-                //                        100
-                //                    )
-                //                        .attr({
-                //                            fill: '#a4edba',
-                //                            r: 5,
-                //                            padding: 10,
-                //                            zIndex: 10
-                //                        })
-                //                        .css({
-                //                            fontSize: '1.5em'
-                //                        })
-                //                        .add();
-                //                },
-                //                text: 'Show label'
-                //            }
-                //        },
-                //        buttons: {
-                //            contextButton: {
-                //                //menuItems: ["viewFullscreen", "printChart", "separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG"]
-                //                menuItems: ["viewFullscreen", "printChart", "separator", "downloadPNG", "downloadJPEG", "downloadSVG"]
-                //            }
-                //        }
-                //    }
                 });
 
+
                 if (dataLength > 0) {
-                    $("#mainTPCost").show();
+                    $("#container").show();
                     $("#NoDataFound").hide();
                 } else {
-                    $("#mainTPCost").hide();
+                    $("#container").hide();
                     $("#NoDataFound").show();
 
                 }
