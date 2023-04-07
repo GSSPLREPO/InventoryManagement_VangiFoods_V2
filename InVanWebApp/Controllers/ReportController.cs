@@ -33,7 +33,7 @@ namespace InVanWebApp.Controllers
         private IIssueNoteRepository _issueNoteRepository;
         private IGRNRepository _gRNRepository;
         private IRejectionNoteRepository _rejectionNoteRepository;
-
+        private IInwardNoteRepository _inwardNoteRepository; //Bind Inward Note for Wastage report 07-04-23.
 
         private static ILog log = LogManager.GetLogger(typeof(ReportController));
 
@@ -49,6 +49,7 @@ namespace InVanWebApp.Controllers
             _issueNoteRepository = new IssueNoteRepository();
             _gRNRepository = new GRNRepository();
             _rejectionNoteRepository = new RejectionNoteRepository();
+            _inwardNoteRepository = new InwardNoteRepository(); //Bind Inward Note for Wastage report 07-04-23.  
         }
 
         public ReportController(IReportRepository reportRepository)
@@ -3464,7 +3465,16 @@ namespace InVanWebApp.Controllers
             var BatchNumberdd = new SelectList(model.ToList(), "ID", "BatchNumber");
             ViewData["BatchNumberdd"] = BatchNumberdd;
         }
-
+        /// <summary>
+        /// Rahul 07-04-23. 
+        /// Bind Inward PONo. for Wastage report.  
+        /// </summary>
+        public void BindInwardPODropDown()
+        {
+            var model = _inwardNoteRepository.GetAll();
+            var WastageReport_dd = new SelectList(model.ToList(), "ID", "PONumber");
+            ViewData["PONumberdd"] = WastageReport_dd;
+        }
         #endregion
 
         #region  Raw Material Cost analysis 
@@ -4869,5 +4879,40 @@ namespace InVanWebApp.Controllers
             //---------------------------------------
         }
         #endregion
+
+        #region Wastage Report 
+
+        #region Binding the Wastage report data 
+        public ActionResult WastageReport()
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                InwardQCBO model = new InwardQCBO(); 
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                BindInwardPODropDown();                     
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+        /// <summary>
+        /// Rahul 7 Apr 2023
+        /// Calling method for Wastage Report Data  
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetWastageReportData(DateTime fromDate, DateTime toDate, int ItemId)
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            Session["ItemId"] = ItemId;
+            var rejectionNoteReport = _repository.getWastageReportData(fromDate, toDate, ItemId);
+            return Json(new { data = rejectionNoteReport }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #endregion
+
     }
 }

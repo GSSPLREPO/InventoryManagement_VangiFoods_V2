@@ -14,7 +14,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select PO number!")]
         public int PO_Id { get; set; }
 
-        public string PONumber{ get; set; }
+        public string PONumber { get; set; }
         public Nullable<System.DateTime> PODate { get; set; }
 
         [Required(ErrorMessage = "Please enter Inward number!")]
@@ -31,7 +31,7 @@ namespace InVanWebApp_BO
         public Nullable<decimal> ItemUnitPrice { get; set; }
         public string Signature { get; set; }
         public string Remarks { get; set; }
-        public string ChallanNo{ get; set; }
+        public string ChallanNo { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -68,12 +68,19 @@ namespace InVanWebApp_BO
         public string CurrencyName { get; set; }
         public double CurrencyPrice { get; set; }
         public List<InwardNoteDetailBO> itemDetails { get; set; }
-        
+
         //This field is used in Inward QC.
         public string ItemTaxValue { get; set; }
 
         //Below field is added for Rejection note.
         public Nullable<int> SupplierID { get; set; }  ///Rahul added 10-01-2023. 
+        //Added the below field for Wastage Report 07-04-23. 
+        [Required(ErrorMessage = "Please Select From Date!")]
+        public DateTime fromDate { get; set; }
+
+        [Required(ErrorMessage = "Please Select To Date!")]
+        public DateTime toDate { get; set; }
+
     }
 
     public class InwardNoteDetailBO

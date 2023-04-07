@@ -216,9 +216,9 @@ namespace InVanWebApp.Repository
                     {
                         var result = new ProductionMaterialIssueNoteBO()
                         {
-                            ID = Convert.ToInt32(reader["SrNo"]),
-                            WorkOrderNumber = reader["WorkOrderNumber"].ToString(),
-                            ProductionMaterialIssueNoteNo = reader["POMaterialIssueNoteNumber"].ToString(),
+                            //ID = Convert.ToInt32(reader["SrNo"]),
+                            //WorkOrderNumber = reader["WorkOrderNumber"].ToString(),
+                            //ProductionMaterialIssueNoteNo = reader["POMaterialIssueNoteNumber"].ToString(),
                             Item_Name = reader["ProductName"].ToString(),
                             BatchNumber = reader["BatchNumber"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["Rawmaterialcost"])
