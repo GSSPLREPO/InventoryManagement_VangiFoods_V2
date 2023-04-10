@@ -78,5 +78,9 @@ namespace InVanWebApp.Repository.Interface
 
         //To Bind GetDebitNoteNumber for Debit Note Report
         IEnumerable<ReportBO> GetDebitNoteNumber();
+
+        //To Bind Vendor-wise Inward wastage report against each PO.    
+        List<InwardQCDetailBO> getWastageReportData(DateTime fromDate, DateTime toDate, int inwardNumber);
+
     }
 }

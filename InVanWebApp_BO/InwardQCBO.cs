@@ -52,6 +52,14 @@ namespace InVanWebApp_BO
 
         //Added the below property for saving the item table details.
         public List<InwardQCDetailBO> itemDetails { get; set; }
+
+        //Added the below field for Wastage Report 07-04-23. 
+        [Required(ErrorMessage = "Please Select From Date!")]
+        public DateTime fromDate { get; set; }
+
+        [Required(ErrorMessage = "Please Select To Date!")]
+        public DateTime toDate { get; set; }
+
     }
 
     public class InwardQCDetailBO
@@ -79,6 +87,16 @@ namespace InVanWebApp_BO
 
         //Added the below properties for Currency
         public string CurrencyName { get; set; }
+
+        //Added the below field for Wastage Report 07-04-23.
+        public int SrNo { get; set; }
+        public string InwardQCDate { get; set; }
+        public string PONumber { get; set; }
+        public string InwardNumber { get; set; }
+        public string InwardQCNumber { get; set; }
+        public string ReasonForWastage { get; set; }
+        public string ApprovedBy { get; set; }
+
 
     }
 }

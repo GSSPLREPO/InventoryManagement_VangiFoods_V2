@@ -1298,5 +1298,66 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region Wastage Report data 
+        /// <summary>
+        /// Rahul 7 Apr 2023
+        /// To Bind Vendor-wise Inward wastage report against each PO.    
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="inwardNumber"></param>
+        /// <returns></returns>
+        public List<InwardQCDetailBO> getWastageReportData(DateTime fromDate, DateTime toDate, int inwardNumber)
+        {
+            List<InwardQCDetailBO> resultList = new List<InwardQCDetailBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_Wastage_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@inwardNumber", inwardNumber);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new InwardQCDetailBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            InwardQCDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),
+                            PONumber = reader["PONumber"].ToString(),
+                            InwardNumber = reader["InwardNumber"].ToString(),
+                            InwardQCNumber = reader["InwardQCNumber"].ToString(),
+                            SupplierName = reader["SupplierName"].ToString(),
+                            Item_Name = reader["ItemName"].ToString(),
+                            Item_Code = reader["ItemCode"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
+                            InwardQuantity = Convert.ToDouble(reader["InwardQuantity"]),
+                            QuantityTookForSorting = Convert.ToDouble(reader["RecivedQuantity"]),
+                            BalanceQuantity = Convert.ToDouble(reader["BalanceQuantity"]),
+                            RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
+                            WastageQuantityInPercentage = Convert.ToDouble(reader["WastageQuantity"]),
+                            ReasonForWastage = reader["ReasonForWastage"].ToString(),
+                            ApprovedBy = reader["ApprovedBy"].ToString(),
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+            }
+            return resultList;
+        }
+        #endregion
+
     }
 }
