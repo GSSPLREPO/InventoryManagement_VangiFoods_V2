@@ -46,7 +46,7 @@ namespace InVanWebApp.Repository
                             BiddingStartDate = Convert.ToDateTime(reader["BiddingStartDate"]),
                             BiddingEndDate = Convert.ToDateTime(reader["BiddingEndDate"]),
                             CreatedByDate = Convert.ToDateTime(reader["CreatedByDate"]),
-
+                            RFQCount = Convert.ToInt32(reader["RFQCount"])  //Rahul added 'RFQCount' 10-04-23. 
                         };
                         requestForQuotationMastersList.Add(requestForQuotationMasters);
                     }

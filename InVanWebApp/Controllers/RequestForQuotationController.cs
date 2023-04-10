@@ -652,5 +652,29 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region View Request For Quotation
+        /// <summary>
+        /// Created By: Rahul
+        /// Created Date : 10-04-2023. 
+        /// Description: This method responsible for View of Request For Quotation details. 
+        /// </summary>
+        /// <param name="RequestForQuotationId"></param> 
+        /// <returns></returns>
+        public ActionResult ViewRequestForQuotation(int RequestForQuotationId) 
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            BindCompany();
+            BindCurrencyPrice();
+            BindLocationName();
+
+            RequestForQuotationBO model = _requestForQuotationRepository.GetDetailsForRFQView(RequestForQuotationId);
+            return View(model);
+
+        }
+        #endregion
+
+
     }
 }

@@ -55,63 +55,63 @@
                                     </div>
                                     <div class="col-md-2">
                                         <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
-                                        @*<a id="ExportPdf" href="@Url.Action("ExprotAsPDFForRejectionReport", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
-                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForRejectionReport", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
-                                </div>
+                                        <a id="ExportPdf" href="@Url.Action("ExprotAsPDFForWastageReport", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        @*<a id="ExportExcel" href="@Url.Action("ExportAsExcelForRejectionReport", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
+                                    </div>
 
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2 ms-1">
-                                    <label>PO Number:</label>
-                                    <span style="color:red">*</span>
                                 </div>
-                                <div class="col-md-3">
-                                    @Html.DropDownList("PONumber", (IEnumerable<SelectListItem>)ViewData["PONumberdd"], "--Select--", new { @class = "form-control", @id = "PONumberId", onchange = "SelectedIndexChangedItem()" })
-                                    @Html.ValidationMessage("PONumber", "", new { id = "PONumberValidate", @class = "col-form-label error mt-2 text-danger" })
-                                </div>
-
-                                @*<div class="col-md-2">
-                                        <label>Wearhouse Location:</label>
+                                <div class="row">
+                                    <div class="col-md-2 ms-1">
+                                        <label>PO Number:</label>
                                         <span style="color:red">*</span>
                                     </div>
                                     <div class="col-md-3">
-                                        @Html.DropDownList("Wearhouse", (IEnumerable<SelectListItem>)ViewData["WearhouseLocation"], "--Select--", new { @class = "form-control", @id = "Wearhouse", onchange = "SelectedIndexChangedWearhouse()" })
-                                        @Html.ValidationMessage("Wearhouse", "", new { id = "WearhouseValidate", @class = "col-form-label error mt-2 text-danger" })
-                                    </div>*@
+                                        @Html.DropDownList("PONumber", (IEnumerable<SelectListItem>)ViewData["PONumberdd"], "--Select--", new { @class = "form-control", @id = "PONumberId", onchange = "SelectedIndexChangedItem()" })
+                                        @Html.ValidationMessage("PONumber", "", new { id = "PONumberValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
 
-                            </div>
-                            <br />
-                            <div style="margin-top:25px;">
-                                <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblRejectionReport" style="width: 100%;" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align:center" class="text-wrap">Sr.No.</th>
-                                            <th style="text-align:center">Date</th>
-                                            <th style="text-align:center" class="text-wrap">PO Number</th>
-                                            <th style="text-align:center" class="text-wrap">Inward Number</th>
-                                            <th style="text-align:center" class="text-wrap">Inward QC Number</th>
-                                            <th style="text-align:center" class="text-wrap">Supplier Name</th>
-                                            <th style="text-align:center" class="text-wrap">Item Name</th>
-                                            <th style="text-align:center" class="text-wrap">Item Code</th>
-                                            <th style="text-align:center" class="text-wrap">Item Unit Price (Rs)</th>
-                                            <th style="text-align:center" class="text-wrap">Inward Quantity (KG)</th>
-                                            <th style="text-align:center" class="text-wrap">Received Quantity (KG)</th>
-                                            <th style="text-align:center" class="text-wrap">Balance Quantity (KG)</th>
-                                            <th style="text-align:center" class="text-wrap">Rejected Quantity (KG)</th>
-                                            <th style="text-align:center" class="text-wrap">Wastage Quantity (%)</th>
-                                            <th style="text-align:center" class="text-wrap">Reason For Rejection</th>
-                                            <th style="text-align:center" class="text-wrap">Approved By</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="text-center"></tbody>
-                                </table>
+                                    @*<div class="col-md-2">
+                                            <label>Wearhouse Location:</label>
+                                            <span style="color:red">*</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.DropDownList("Wearhouse", (IEnumerable<SelectListItem>)ViewData["WearhouseLocation"], "--Select--", new { @class = "form-control", @id = "Wearhouse", onchange = "SelectedIndexChangedWearhouse()" })
+                                            @Html.ValidationMessage("Wearhouse", "", new { id = "WearhouseValidate", @class = "col-form-label error mt-2 text-danger" })
+                                        </div>*@
+
                                 </div>
+                                <br />
+                                <div style="margin-top:25px;">
+                                    <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblWastageReport" style="width: 100%;" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center" class="text-wrap">Sr.No.</th>
+                                                <th style="text-align:center">Date</th>
+                                                <th style="text-align:center" class="text-wrap">PO Number</th>
+                                                <th style="text-align:center" class="text-wrap">Inward Number</th>
+                                                <th style="text-align:center" class="text-wrap">Inward QC Number</th>
+                                                <th style="text-align:center" class="text-wrap">Supplier Name</th>
+                                                <th style="text-align:center" class="text-wrap">Item Name</th>
+                                                <th style="text-align:center" class="text-wrap">Item Code</th>
+                                                <th style="text-align:center" class="text-wrap">Item Unit Price (Rs)</th>
+                                                <th style="text-align:center" class="text-wrap">Inward Quantity (KG)</th>
+                                                <th style="text-align:center" class="text-wrap">Received Quantity (KG)</th>
+                                                <th style="text-align:center" class="text-wrap">Balance Quantity (KG)</th>
+                                                <th style="text-align:center" class="text-wrap">Rejected Quantity (KG)</th>
+                                                <th style="text-align:center" class="text-wrap">Wastage Quantity (%)</th>
+                                                <th style="text-align:center" class="text-wrap">Reason For Rejection</th>
+                                                <th style="text-align:center" class="text-wrap">Approved By</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center"></tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </body>
 
@@ -131,7 +131,7 @@
         $(document).ready(function () {
             $('#ExportPdf').hide();
             $('#ExportExcel').hide();
-            $('#tblRejectionReport').hide();
+            $('#tblWastageReport').hide();
         });
 
         //function SelectedIndexChangedWearhouse() {
@@ -183,10 +183,10 @@
 
             $('#ExportPdf').show();
             $('#ExportExcel').show();
-            $('#tblRejectionReport').show();
+            $('#tblWastageReport').show();
             var flag = 0;
-            $('#tblRejectionReport').dataTable().fnDestroy();
-            var t = $('#tblRejectionReport').DataTable({
+            $('#tblWastageReport').dataTable().fnDestroy();
+            var t = $('#tblWastageReport').DataTable({
                 //"processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
@@ -240,6 +240,6 @@
 
 <style>
     td {
-        white-space: break-spaces!important;
+        white-space: break-spaces !important;
     }
 </style>

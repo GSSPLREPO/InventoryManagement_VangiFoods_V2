@@ -14,6 +14,7 @@ namespace InVanWebApp_BO
         ///public Nullable<int> BranchId { get; set; } ///Rahul removed 'BranchId' 17-12-2022.  
         public string RFQNO { get; set; }
         //public Nullable<int> CompanyId { get; set; } ///Rahul updated 'CompanyId' to 'VendorsID' 14-12-2022. 
+        [Required(ErrorMessage = "Select Location Name!")]  ///Rahul added 'ErrorMessage' 10-04-2023.   
         public Nullable<int> LocationId { get; set; }
         ///public Nullable<int> UnitId { get; set; } ///Rahul removed 'UnitId' 17-12-2022.  
         ///public Nullable<int> ItemId { get; set; } ///Rahul removed 'ItemId' 17-12-2022.  
@@ -36,6 +37,8 @@ namespace InVanWebApp_BO
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedByID { get; set; }
         public Nullable<System.DateTime> CreatedByDate { get; set; }
+        //Rahul added 'RFQCount' 10-04-23.
+        public int RFQCount { get; set; }
         public Nullable<int> LastModifiedByID { get; set; }
         public Nullable<System.DateTime> LastModifiedByDate { get; set; }
         //==============Rahul: These fields are for Request For Quotation details 14/12/2022==============//

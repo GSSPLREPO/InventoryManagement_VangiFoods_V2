@@ -41,7 +41,9 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownList("Currency", (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control form-control-sm", id = "CurrencyID" })
+                    @*///Rahul added '@Html.DropDownListFor(model => model.CurrencyID,' 10-04-2023.*@
+                    @*@Html.DropDownList("Currency", (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control form-control-sm", id = "CurrencyID" })*@
+                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control form-control-sm", id = "CurrencyID" })
                     @Html.HiddenFor(model => model.CurrencyID, new { id = "tempCurrencyID" })
                     @Html.HiddenFor(model => model.CurrencyName)
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })

@@ -1,8 +1,7 @@
-﻿@model InVanWebApp_BO.RequestForQuotationBO
-@{
-    ViewBag.Title = "Punch Quotation";
-    Layout = "";
-}
+﻿
+@model InVanWebApp_BO.RequestForQuotationBO
+@{ ViewBag.Title = "Punch Quotation";
+                Layout = ""; }
 
 <html>
 <head>
@@ -21,192 +20,166 @@
     @using (Html.BeginForm())
     {
 
-        @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
 
-        <div class="container-fluid p-0">
+                <div class="container-fluid p-0">
 
-            <div class="row">
-                <div class="col-lg-12">
-                    @*Card start*@
-                    <div class="card text-center">
-                        @*<div class="card-header">
-                                <a class="nav-link" href="#!">Punch Quotation</a>
-                            </div>*@
-                        <div class="card-body">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            <table class="table table-hover table-sm" id="submissionTable" style="table-layout: fixed;">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-left">
-                                                            Description
-                                                        </th>
-                                                        @{
-                                                            int c1 = 1;
-                                                            while (c1 <= Model.vendorIdLength)
-                                                            {
-                                                                <th id="tableHeader_@c1" class="text-left">
-                                                                    <span><label id="CompanyName_@c1"></label></span>
-                                                                    <span class="d-none"><label id="VendorsID_@c1"></label></span>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @*Card start*@
+                            <div class="card text-center">
+                                @*<div class="card-header">
+                                        <a class="nav-link" href="#!">Punch Quotation</a>
+                                    </div>*@
+                                <div class="card-body">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                    <table class="table table-hover table-sm" id="submissionTable" style="table-layout: fixed;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-left">
+                                                                    Description
                                                                 </th>
-
-                                                                { c1++; }
-                                                            }
-                                                        }
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="myTableBody">
-                                                    @{ int c = 1;
-                                                        foreach (var item in Model.itemDetails)
-                                                        {
-                                                            @*<tr id="tablerow_@c" class="d-inline-flex flex-nowrap">*@
-                                                            <tr id="tablerow_@c">
-                                                                <td class="text-left">
-                                                                    <label>Item Code:</label>
-                                                                    @Html.DisplayFor(x => item.Item_Code)<br />
-                                                                    <label>Item Name: </label>
-                                                                    @Html.DisplayFor(x => item.ItemName)<br />
-                                                                    <label>Requested Quantity: </label>
-                                                                    @Html.DisplayFor(x => item.ItemQuantity)
-                                                                </td>
-
-                                                                @{
-                                                                    int c2 = 1;
-                                                                    while (c2 <= Model.vendorIdLength)
-                                                                    {
-                                                                        <td class="text-left">
-                                                                            <label>Quoted Quantity: </label>
-                                                                            @Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)<br />
-
-                                                                            <label>Price: </label>
-                                                                            <span id="UnitPrice_@c2@c">0</span>
-                                                                            @Html.DisplayFor(modal => modal.CurrencyName)<br />
-
-                                                                            <label>Amount: </label>
-                                                                            <span id="TotalItemCost_@c2@c">0</span>
-                                                                            @Html.DisplayFor(modal => modal.CurrencyName)<br />
-
-                                                                            <label>Comment: </label>
-                                                                            <span id="Remarks_@c2@c"></span>
-                                                                        </td>
-
-                                                                        { c2++; }
-                                                                    }
-
-                                                                }
-
+                                                                @{ int c1 = 1;
+                                                                                    while (c1 <= Model.vendorIdLength)
+                                                                                    {
+                                                                    <th id="tableHeader_@c1" class="text-left">
+                                                                        <span><label id="CompanyName_@c1"></label></span>
+                                                                        <span class="d-none"><label id="VendorsID_@c1"></label></span>
+                                                                    </th> { c1++; }
+                                                                                    } }
 
                                                             </tr>
+                                                        </thead>
+                                                        <tbody id="myTableBody">
+                                                            @{ int c = 1;
+                                                                foreach (var item in Model.itemDetails)
+                                                                { @*<tr id="tablerow_@c" class="d-inline-flex flex-nowrap">*@
+                                                                                    <tr id="tablerow_@c">
+                                                                                        <td class="text-left">
+                                                                                            <label>Item Code:</label>
+                                                                                            @Html.DisplayFor(x => item.Item_Code)<br />
+                                                                                            <label>Item Name: </label>
+                                                                                            @Html.DisplayFor(x => item.ItemName)<br />
+                                                                                            <label>Requested Quantity: </label>
+                                                                                            @Html.DisplayFor(x => item.ItemQuantity)
+                                                                                        </td>
+
+                                                                                        @{ int c2 = 1;
+                                                                                                                while (c2 <= Model.vendorIdLength)
+                                                                                                                {
+                                                                                            <td class="text-left">
+                                                                                                <label>Quoted Quantity: </label>
+                                                                                                @Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)<br />
+
+                                                                                                <label>Price: </label>
+                                                                                                <span id="UnitPrice_@c2@c">0</span>
+                                                                                                @Html.DisplayFor(modal => modal.CurrencyName)<br />
+
+                                                                                                <label>Amount: </label>
+                                                                                                <span id="TotalItemCost_@c2@c">0</span>
+                                                                                                @Html.DisplayFor(modal => modal.CurrencyName)<br />
+
+                                                                                                <label>Comment: </label>
+                                                                                                <span id="Remarks_@c2@c"></span>
+                                                                                            </td> { c2++; }
+                                                                                                                } }
 
 
-                                                            { c++; }
-                                                        }
-                                                        @Html.Hidden("ItemCount", Model.itemDetails.Count() )
-                                                        <tr>
-                                                            <td></td>
-                                                            @{
-                                                                int c3 = 1;
-                                                                while (c3 <= Model.vendorIdLength)
-                                                                {
-                                                                    <td class="text-left">
-                                                                                                                                              
-                                                                        <button type="button" class="btn btn-sm btn-link btn-pq text-dark" style="background-color:transparent"
-                                                                                id="BtnPunchQuot_@c3" onclick="RFQSupplierDetails(this.id,@Model.RequestForQuotationId)">
-                                                                            <i class="fa fa-reply me-1 text-dark" aria-hidden="true"></i>Punch Quotation
-                                                                        </button>
-                                                                    </td>
-                                                                    { c3++; }
-                                                                }
-                                                            }
-                                                        </tr>
+                                                                                    </tr> { c++; }
+                                                                                                    }
+                                                                                    @Html.Hidden("ItemCount", Model.itemDetails.Count())
+                                                                                                    <tr>
+                                                                                                        <td></td>
+                                                                                                        @{ int c3 = 1;
+                                                                                                                            while (c3 <= Model.vendorIdLength)
+                                                                                                                            {
+                                                                                                            <td class="text-left">
 
-                                                        <tr>
-                                                            <td></td>
-                                                            @{
-                                                                int c4 = 1;
-                                                                while (c4 <= Model.vendorIdLength)
-                                                                {
-                                                                    if (Model.countQuotation > 0)
-                                                                    {
-                                                                        <td class="text-left">
-                                                                            <button id="BtnPunchQuotView_@c4" onclick="redirectToView(this.id,@Model.RequestForQuotationId)" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);">View</button>
-                                                                            @*<a id="BtnPunchQuotView_@c4" href="@Url.Action("ViewRFQSupplierDetails","RequestForQuotation",new { ID = c4,RfqID=Model.RequestForQuotationId })" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);">View</a>*@
-                                                                        </td>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <td class="text-left">
-                                                                            <a id="BtnPunchQuotView_@c4" href="#" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);display:none;">View</a>
-                                                                        </td>
-                                                                    }
-                                                                    { c4++; }
-                                                                }
-                                                            }
-                                                        </tr>
-                                                    }
+                                                                                                                <button type="button" class="btn btn-sm btn-link btn-pq text-dark" style="background-color:transparent"
+                                                                                                                        id="BtnPunchQuot_@c3" onclick="RFQSupplierDetails(this.id,@Model.RequestForQuotationId)">
+                                                                                                                    <i class="fa fa-reply me-1 text-dark" aria-hidden="true"></i>Punch Quotation
+                                                                                                                </button>
+                                                                                                            </td> { c3++; }
+                                                                                                                            } }
+                                                                                                    </tr>
 
-                                                </tbody>
-                                            </table>
-                                            @*Model Started*@
-                                            <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-xl" role="document">
+                                                                                                                    <tr>
+                                                                                                                        <td></td>
+                                                                                                                        @{ int c4 = 1;
+                                                                                                                                            while (c4 <= Model.vendorIdLength)
+                                                                                                                                            {
+                                                                                                                                                if (Model.countQuotation > 0)
+                                                                                                                                                {
+                                                                                                                            <td class="text-left">
+                                                                                                                                <button id="BtnPunchQuotView_@c4" onclick="redirectToView(this.id,@Model.RequestForQuotationId)" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);">View</button>
+                                                                                                                                @*<a id="BtnPunchQuotView_@c4" href="@Url.Action("ViewRFQSupplierDetails","RequestForQuotation",new { ID = c4,RfqID=Model.RequestForQuotationId })" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);">View</a>*@
+                                                                                                                            </td> }
+                                                                                                                                                else
+                                                                                                                                                {
+                                                                                                                            <td class="text-left">
+                                                                                                                                <a id="BtnPunchQuotView_@c4" href="#" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);display:none;">View</a>
+                                                                                                                            </td> }
+                                                                                                                                                { c4++; }
+                                                                                                                                            } }
+                                                                                                                    </tr> }
 
-                                                    <!-- Modal content-->
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title" id="myModalLabel" style="color:darkcyan">RFQ Supplier wise Details</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
+                                                        </tbody>
+                                                    </table>
+                                                    @*Model Started*@
+                                                    <div class="modal fade" id="myModal" role="dialog" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-xl" role="document">
+
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title" id="myModalLabel" style="color:darkcyan">RFQ Supplier wise Details</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    @*Model end*@
                                                 </div>
                                             </div>
-                                            @*Model end*@
+                                            <br />
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
                                         </div>
                                     </div>
-                                    <br />
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
                                 </div>
                             </div>
-
-
+                            @*Card end*@
                         </div>
                     </div>
-                    @*Card end*@
                 </div>
-            </div>
-
-        </div>
-
-
-    }
+}
 </body>
 </html>
 @Html.Raw(TempData["Success"])
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+    @*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+    <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @*<script src="~/Theme/MainContent/js/jquery.min.js"></script>*@
 
-@*<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>*@
-<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-
-@*<script src="~/Theme/MainContent/js/jquery.min.js"></script>*@
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        var id = $("#RequestForQuotationId").val();
-        CompanyName(id);
-
+    <script type="text/javascript">
+        
+    $(document).ready(function () {            
+    var id = $("#RequestForQuotationId").val();
+    CompanyName(id);
     });
 
     function CompanyName(id) {
@@ -237,14 +210,14 @@
             }
         });
     }
-   
+
     //============The below function is for redirecting the user to new tab on-click of View in RFQ Summary modal.===========//
     function redirectToView(ID, RequestForQuotationId) {
         var rowNo = ID.split('_')[1];
         var VendorsID = $("#VendorsID_" + rowNo).text();
         window.open("RequestForQuotation/ViewRFQSupplierDetails?ID=" + VendorsID + "&RfqID=" + RequestForQuotationId, '_blank');
         event.preventDefault();
-        return;       
+        return;
     }
     //=========================================================End===================================================================//
 
@@ -312,7 +285,7 @@
                 var modal = $(this)
                 //modal.find('.modal-title').text('New message to ' + recipient)
                 modal.find('.modal-body input').val(recipient)
-            });
+            });        
     }
 
     //==================/Function of RFQSupplierDetails modal/////////////=============================
@@ -423,9 +396,8 @@
         console.log(TxtItemDetails);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
+    </script>
 
-
-</script>
 
 <style>
     button.btn-pq {
