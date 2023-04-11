@@ -1,9 +1,7 @@
 ﻿@model IEnumerable<InVanWebApp_BO.CertificateOfAnalysisBO>
 
-@{
-    ViewBag.Title = "Micro Analysis";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "Micro Analysis";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <!DOCTYPE html>
 
@@ -62,15 +60,15 @@
                                 <thead>
                                     <tr>
 
-                                        <th>@Html.DisplayName("Date")</th>
-                                        <th>@Html.DisplayName("Source")</th>
-                                        <th>@Html.DisplayName("WO/PO")</th>
-                                        <th>@Html.DisplayName("Product Name")</th>
-                                        <th>@Html.DisplayName("Batch No")</th>
-                                        <th>@Html.DisplayName("Packing Size")</th>
-                                        <th>@Html.DisplayName("Best Before")</th>
-                                        <th>@Html.DisplayName("Verify By Name")</th>
-                                        <th>@Html.DisplayName("Action")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Date")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Source")</th>
+                                        <th class="text-wrap">@Html.DisplayName("WO/PO")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Product Name")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Batch No")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Packing Size")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Best Before")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Verify By Name")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Action")</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -202,7 +200,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid date selection!');
+                alert('To date is greater than from date!');
                 $('#fromDate').focus();
                 return;
             }
@@ -288,3 +286,9 @@
                 })
     </script>
 }
+
+<style>
+    td {
+        white-space: break-spaces !important;
+    }
+</style>

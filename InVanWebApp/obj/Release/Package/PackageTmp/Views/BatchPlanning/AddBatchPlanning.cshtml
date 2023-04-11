@@ -80,9 +80,12 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    <select id="ProductId" name="ProductId" class="form-control form-control-sm" onchange="SelectedIndexChangedProductName($(this).val())">
+                    <select id="ProductId" name="ProductId" class="form-control form-control-sm" onchange="SelectedIndexChangedProductName($(this).val())" data-val="true" data-val-number="The field ProductId must be a number." data-val-required="Select the Product Name!">
                         <option value="">--Select--</option>
                     </select>
+                    @*<select id="ProductId" name="ProductId" class="form-control form-control-sm" onchange="SelectedIndexChangedProductName($(this).val())">
+                        <option value="">--Select--</option>
+                    </select>*@
                     @*@Html.DropDownListFor(model => model.ProductId, (IEnumerable<SelectListItem>)ViewData["Product_dd"], "--Select--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductName($(this).val())" })*@
                     @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.ProductName)

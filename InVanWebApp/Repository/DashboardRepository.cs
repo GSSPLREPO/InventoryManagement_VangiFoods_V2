@@ -347,10 +347,10 @@ namespace InVanWebApp.Repository
                     {
                         var result = new ReportBO()
                         {
-                            WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
-                            ProductionMaterailIssueNoteNumber = (reader["POMaterialIssueNoteNumber"].ToString()),
+                            //WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
+                            //ProductionMaterailIssueNoteNumber = (reader["POMaterialIssueNoteNumber"].ToString()),
                             ItemName = (reader["RawMaterial"].ToString()),
-                            BatchNumber = (reader["BatchNumber"].ToString()),
+                            //BatchNumber = (reader["BatchNumber"].ToString()),
                             RawMaterialCost = Convert.ToDecimal(reader["RawMaterialConsumption"])
                         };
                         resultList.Add(result);

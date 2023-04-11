@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { id = "ValMgssuppliername", @class = "error mt-2 text-danger"})
                 </div>
                 <div class="col-md-4 d-none">
                     @Html.TextBoxFor(model => model.SupplierID, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
@@ -150,7 +150,9 @@
     }
     ///---Rahul added onmouseleave event ValMsgInwardQCNumber(value, id) end.
 
-    function SelectedIndexChanged(id) {         
+    function SelectedIndexChanged(id) {
+
+        $('#ValMgssuppliername').hide();
         var InwardNumber = $("#InwardQCId option:selected").text();
         
         var InwNumQcNumSplit = InwardNumber.split(' (');

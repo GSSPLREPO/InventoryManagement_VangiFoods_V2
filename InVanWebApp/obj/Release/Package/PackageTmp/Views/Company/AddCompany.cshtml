@@ -133,7 +133,7 @@
                     </div>
                     <div class="col-md-2" style="padding-top:0.6%;">
                         @*Rahul added class form-check-input and removed form-control-sm 10-02-2023.*@
-                        @Html.CheckBoxFor(model => model.IsBlackListed, new { @class = "form-check-input form-control" })
+                        @Html.CheckBoxFor(model => model.IsBlackListed, new { @class = "form-check-input form-control", @disabled = "disabled" })
                     </div>
                     <div class="col-md-2"></div>
                 </div>

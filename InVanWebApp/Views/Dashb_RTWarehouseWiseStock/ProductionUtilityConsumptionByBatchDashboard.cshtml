@@ -192,7 +192,7 @@
         }
 
         if (fromDate > toDate) {
-            alert('Invalid date selection!');
+            alert('To date is greater than from date!');
             $('#fromDate').focus();
             return;
         }
@@ -262,7 +262,7 @@
                     plotOptions: {
                         pie: {
                             dataLabels: {
-                                enabled: true,
+                                enabled: false,
                                 distance: -50,
                                 style: {
                                     fontWeight: 'bold',

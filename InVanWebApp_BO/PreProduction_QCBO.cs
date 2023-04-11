@@ -44,8 +44,14 @@ namespace InVanWebApp_BO
         public string ItemTaxValue { get; set; }
         public float WastageQuantityInPercentage { get; set; }
         public float QuantityTookForSorting { get; set; }
+        //Added the below field for Wastage Report 11-04-23. 
+        [Required(ErrorMessage = "Please Select From Date!")]
+        public DateTime fromDate { get; set; }
 
-        //Additional fields for reProduction_QC 
+        [Required(ErrorMessage = "Please Select To Date!")]
+        public DateTime toDate { get; set; }
+
+        //Additional fields for PreProduction_QC 
         public string txtItemDetails { get; set; }
 
         //Added the below property for saving the item table details.

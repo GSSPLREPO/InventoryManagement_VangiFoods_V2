@@ -115,16 +115,12 @@
                     },
                     plotOptions: {
                         pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
                             dataLabels: {
                                 enabled: true,
                                 format: '<b>{point.name}</b>: <BR> {point.y} INR',
-                                //style: {
-                                //    fontWeight: 'bold',
-                                //    color: 'white'
-                                //}
-                            }
+                            },
+                            center: ['50%', '45%'],
+                            showInLegend: true
                         }
                     },
                     series: [{

@@ -79,8 +79,9 @@
                                             </div>
                                             <div class="col-md-8">
                                                 @Html.HiddenFor(modelItem => item.RoleId)
-                                                @Html.HiddenFor(modelItem => item.ScreenId)
-                                                @Html.DisplayFor(modelItem => item.ScreenName)
+                                                @Html.HiddenFor(modelItem => item.ScreenId)                                                
+                                                @Html.HiddenFor(modelItem => item.ScreenName)
+                                                @Html.DisplayFor(modelItem => item.DisplayName)
                                             </div>
                                         </div>
                                     }
@@ -189,9 +190,11 @@
                         });
                         document.getElementById("btnSave").disabled = false;
                     });
+                    alert('Successfully Rights assigned');
                 }
             });
         } else {
+            alert('Some error occurred! Please try again');
             return false;
         }
     });
