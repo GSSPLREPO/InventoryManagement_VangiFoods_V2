@@ -56,7 +56,12 @@ function createJson() {
 }
 
 function SelectedIndexChanged(id) {
-    $('#btnSave').prop('disabled',false);
+    $('#btnSave').prop('disabled', false);
+
+    $('#ValMsgPONumber').hide();
+    $('#ValMsgShippingDetails').hide();
+    $('#ValMsgSupplierDetails').hide();
+
     //For deleting the rows of Item table if exist.
     var table = document.getElementById('ItemTable');
     var rowCount = table.rows.length;

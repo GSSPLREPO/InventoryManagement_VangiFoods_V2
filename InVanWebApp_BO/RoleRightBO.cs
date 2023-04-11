@@ -25,5 +25,6 @@ namespace InVanWebApp_BO
 
         public string ScreenName{ get; set; }
         public int[] ScreensForRole { get; set; }
+        public string DisplayName { get; set; }
     }
 }

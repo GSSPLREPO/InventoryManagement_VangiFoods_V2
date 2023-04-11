@@ -32,8 +32,8 @@ namespace InVanWebApp.Controllers
         private IPOPaymentRepository _pOPaymentRepository;
         private IIssueNoteRepository _issueNoteRepository;
         private IGRNRepository _gRNRepository;
-        private IRejectionNoteRepository _rejectionNoteRepository;
-        private IInwardNoteRepository _inwardNoteRepository; //Bind Inward Note for Wastage report 07-04-23.
+        private IRejectionNoteRepository _rejectionNoteRepository;        
+        private IPurchaseOrderRepository _purchaseOrderRepository;//Bind PONo. for Wastage report 07-04-23.  
 
         private static ILog log = LogManager.GetLogger(typeof(ReportController));
 
@@ -49,7 +49,7 @@ namespace InVanWebApp.Controllers
             _issueNoteRepository = new IssueNoteRepository();
             _gRNRepository = new GRNRepository();
             _rejectionNoteRepository = new RejectionNoteRepository();
-            _inwardNoteRepository = new InwardNoteRepository(); //Bind Inward Note for Wastage report 07-04-23.  
+            _purchaseOrderRepository = new PurchaseOrderRepository();   //Bind PONo. for Wastage report 07-04-23.  
         }
 
         public ReportController(IReportRepository reportRepository)
@@ -3467,12 +3467,12 @@ namespace InVanWebApp.Controllers
         }
         /// <summary>
         /// Rahul 07-04-23. 
-        /// Bind Inward PONo. for Wastage report.  
+        /// Bind PONo. for Wastage report.  
         /// </summary>
         public void BindInwardPODropDown()
         {
-            var model = _inwardNoteRepository.GetAll();
-            var WastageReport_dd = new SelectList(model.ToList(), "ID", "PONumber");
+            var model = _purchaseOrderRepository.GetAll();
+            var WastageReport_dd = new SelectList(model.ToList(), "PurchaseOrderId", "PONumber");
             ViewData["PONumberdd"] = WastageReport_dd;
         }
         #endregion

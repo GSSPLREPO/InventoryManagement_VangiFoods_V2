@@ -205,7 +205,8 @@ namespace InVanWebApp.Repository
                         var result = new RoleRightBO()
                         {
                             ScreenId = Convert.ToInt32(dataReader["ScreenId"]),
-                            ScreenName = dataReader["ScreenName"].ToString()
+                            ScreenName = dataReader["ScreenName"].ToString(),
+                            DisplayName = dataReader["DisplayName"].ToString()  
                         };
                         resultList.Add(result);
                     }
@@ -334,7 +335,7 @@ namespace InVanWebApp.Repository
                 using (SqlConnection con = new SqlConnection(conString))
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_GetScreensNotInRoleRightsById", con);
-                    cmd.Parameters.AddWithValue("@RoleId",roleId);
+                    cmd.Parameters.AddWithValue("@RoleId", roleId);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -345,7 +346,7 @@ namespace InVanWebApp.Repository
                         {
                             ScreenId = Convert.ToInt32(dataReader["ScreenId"]),
                             ScreenName = dataReader["ScreenName"].ToString(),
-                            DisplayName=dataReader["DisplayName"].ToString()
+                            DisplayName = dataReader["DisplayName"].ToString()
                         };
                         resultList.Add(result);
                     }
