@@ -63,7 +63,8 @@
                                             <label class="font-weight-bold">Inward Number</label>
                                         </div>
                                         <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.InwardNumber)
+                                            @*@Html.DisplayFor(model => model.InwardNumber)*@
+                                            @Html.TextBoxFor(model => model.InwardNumber, new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                                         </div>
                                         <div class="col-lg-2">
                                             <label class="font-weight-bold">Inward Date</label>
@@ -78,7 +79,8 @@
                                             <label class="font-weight-bold">PO Number</label>
                                         </div>
                                         <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.PONumber)
+                                            @*@Html.DisplayFor(model => model.PONumber)*@
+                                            @Html.TextBoxFor(model => model.PONumber, new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                                         </div>
                                         <div class="col-lg-2">
                                             <label class="font-weight-bold">PO Date</label>
@@ -93,7 +95,8 @@
                                             <label class="font-weight-bold">Bill/Challan No.</label>
                                         </div>
                                         <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.ChallanNo)
+                                            @*@Html.DisplayFor(model => model.ChallanNo)*@
+                                            @Html.TextBoxFor(model => model.ChallanNo, new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                                         </div>
                                     </div>
                                 </div>

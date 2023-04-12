@@ -82,5 +82,8 @@ namespace InVanWebApp.Repository.Interface
         //To Bind Vendor-wise Inward wastage report against each PO.    
         List<InwardQCDetailBO> getWastageReportData(DateTime fromDate, DateTime toDate, int inwardNumber);
 
+        //To Bind Pre-Production_QC report against each WO.     
+        List<PreProduction_QC_Details> getPreProduction_QCReportData(DateTime fromDate, DateTime toDate, int PreProductionQCId);
+
     }
 }

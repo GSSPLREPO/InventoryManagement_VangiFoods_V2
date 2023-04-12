@@ -7,13 +7,14 @@ using System.Linq;
 using System.Web;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
+using InVanWebApp.Common;
 using log4net;
 
 namespace InVanWebApp.Repository
 {
     public class TaxRepository : ITaxRepository
     {
-        private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(TaxRepository));
 
         #region  Bind grid

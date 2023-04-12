@@ -9,12 +9,13 @@ using Dapper;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class StockMovementRepository : IStockMovementRepository
     {
-        private readonly string conStr = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string conStr = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(InwardNoteRepository));
         public List<StockMovementBO> GetAllTransfferedStock(DateTime fromDate, DateTime toDate)
         {

@@ -58,6 +58,10 @@ function createJson() {
 function SelectedIndexChanged(id) {
     $('#btnSave').prop('disabled', false);
 
+    $('#ValMsgPONumber').hide();
+    $('#ValMsgShippingDetails').hide();
+    $('#ValMsgSupplierDetails').hide();
+
     //For deleting the rows of Item table if exist.
     var table = document.getElementById('ItemTable');
     var rowCount = table.rows.length;
@@ -243,6 +247,33 @@ function fileValidation() {
 }
 
 function SetInwardQty() {
+
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+
+    var tableLength = document.getElementById('ItemTable').rows.length;
+    var flag = 0, i = 1;
+
+    if (tableLength > 1) {
+        while (i < tableLength - 1) {
+            var PhyQty = document.getElementById("txtInwardQty" + i).value;
+            PhyQty = parseFloat(PhyQty);
+
+            if (PhyQty != 0) {
+                flag = 1;
+
+            }
+            i++;
+
+        }
+        if (flag != 1) {
+            alert("Deliverd quantity is zero or null! Cannot create inward note!");
+            $('#btnSave').prop('disabled', true);
+            return;
+        }
+        else
+            $('#btnSave').prop('disabled', false);
+    }
+
     createJson();
     $('#InwardQuantities').val(InwardQuantities);
     //$('#BalanceQuantities').val(BalanceQuantities);

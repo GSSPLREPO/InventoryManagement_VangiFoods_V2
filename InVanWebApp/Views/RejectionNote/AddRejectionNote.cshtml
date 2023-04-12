@@ -45,7 +45,6 @@
                     @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
                    new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())", onmouseleave = "ValMsgInwardQCNumber($(this).val(),id)" })
                     @Html.ValidationMessageFor(model => model.InwardQCId, "", new { id = "ValMsgInwardQCNumber", @class = "error mt-2 text-danger" })
-                    @*<span id="ValMsgInwardQCNumber" style="display:none; color:red"></span>*@ @*Rahul removed and added onmouseleave event 09-02-2023.*@
                     @Html.HiddenFor(model => model.InwardQCNumber)
                     @Html.HiddenFor(model => model.InwardNoteNumber)
                 </div>
@@ -68,7 +67,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "error mt-2 text-danger",id = "ValMgssuppliername" })
                 </div>
                 <div class="col-md-4 d-none">
                     @Html.TextBoxFor(model => model.SupplierID, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
@@ -151,8 +150,10 @@
     ///---Rahul added onmouseleave event ValMsgInwardQCNumber(value, id) end.
 
     function SelectedIndexChanged(id) {         
+        $('#ValMgssuppliername').hide();
+
         var InwardNumber = $("#InwardQCId option:selected").text();
-        
+                
         var InwNumQcNumSplit = InwardNumber.split(' (');
         document.getElementById("InwardQCNumber").value = InwNumQcNumSplit[0];
         var tempInwNumQcNumSplit = InwNumQcNumSplit[1].split(')'); 

@@ -64,7 +64,8 @@ namespace InVanWebApp.Controllers
                 {
                     RoleId = screen.RoleId,
                     ScreenId = screen.ScreenId,
-                    ScreenName = screen.ScreenName
+                    ScreenName = screen.ScreenName,
+                    DisplayName = screen.DisplayName
                 };
                 roleRights.Add(rights);
             }

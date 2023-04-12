@@ -8,13 +8,14 @@ using InVanWebApp_BO;
 using InVanWebApp.Repository.Interface;
 using log4net;
 using System.Configuration;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class OrganisationRepository : IOrganisationRepository
     {
         //private readonly InVanDBContext _context;
-        private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(OrganisationRepository));
 
         #region  Bind grid

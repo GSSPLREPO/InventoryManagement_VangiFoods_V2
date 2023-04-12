@@ -7,12 +7,13 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class StockMasterRepository : IStockMasterRepository
     {
-        private string conStr = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private string conStr = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
 
         public IEnumerable<StockReportBO> GetAllStock(int ItemId = 0)
         {

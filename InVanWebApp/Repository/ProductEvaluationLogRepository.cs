@@ -16,7 +16,7 @@ namespace InVanWebApp.Repository
 {
     public class ProductEvaluationLogRepository : IProductEvaluationLogRepository
     {
-        private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(ProductEvaluationLogRepository));
 
         #region  Bind grid for datatable

@@ -83,7 +83,7 @@
     });
 
     //Validation for special characters.
-    $('#ProductName').on("keydown keyup change", function () {
+    $('#ProductCode').on("keydown keyup change", function () {
         var maxLength = 20;
         var $th = $(this);
         $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
@@ -93,7 +93,7 @@
                 return '';
             }));
 
-        if (($('#ProductName').val().length) > maxLength) {
+        if (($('#ProductCode').val().length) > maxLength) {
             $('#validationMsgCode').show();
             $('#validationMsgCode').text('Length is exceeding!');
             //return false;

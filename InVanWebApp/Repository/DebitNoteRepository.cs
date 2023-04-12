@@ -10,12 +10,13 @@ using System.Web;
 using InVanWebApp_BO;
 using Dapper;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class DebitNoteRepository : IDebitNoteRepository
     {
-        private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(DebitNoteRepository));
 
         #region  Bind grid

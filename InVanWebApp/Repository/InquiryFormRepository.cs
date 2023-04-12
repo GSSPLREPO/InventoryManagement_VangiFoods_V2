@@ -10,12 +10,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class InquiryFormRepository : IInquiryFormRepository
     {
-        private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RequestForQuotationRepository));
 
         #region  Bind grid
@@ -155,9 +156,9 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
                         cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
                         cmdNew.Parameters.AddWithValue("@ItemUnitPrice", item.ItemUnitPrice);
-                        cmdNew.Parameters.AddWithValue("@QuotedPrice", inquiryFormBOMaster.QuotedPrice);
-                        cmdNew.Parameters.AddWithValue("@ExpectedPrice", inquiryFormBOMaster.ExpectedPrice);
-                        cmdNew.Parameters.AddWithValue("@CloserPrice", inquiryFormBOMaster.CloserPrice); 
+                        cmdNew.Parameters.AddWithValue("@QuotedPrice", item.QuotedPrice);
+                        cmdNew.Parameters.AddWithValue("@ExpectedPrice", item.ExpectedPrice);
+                        cmdNew.Parameters.AddWithValue("@CloserPrice", item.CloserPrice); 
                         cmdNew.Parameters.AddWithValue("@ItemQuantity", item.ItemQuantity); 
                         cmdNew.Parameters.AddWithValue("@ItemTaxValue", item.ItemTaxValue);
                         cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
@@ -340,7 +341,6 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-
         #region Delete function 
         /// <summary>
         /// Delete record by ID 
@@ -368,7 +368,5 @@ namespace InVanWebApp.Repository
             }
         }
         #endregion
-
-
     }
 }

@@ -10,12 +10,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class RejectionNoteRepository : IRejectionNoteRepository
     {
-        private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RejectionNoteRepository));
 
         #region  Bind grid

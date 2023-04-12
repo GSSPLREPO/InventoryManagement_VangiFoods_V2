@@ -13,7 +13,7 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage ="Enter document number!")]
         public string BatchPlanningDocumentNo { get; set; }
-        [Required(ErrorMessage ="Enter work order number!")]
+        //[Required(ErrorMessage ="Enter work order number!")]
         public string WorkOrderNumber { get; set; }
         [Required(ErrorMessage ="Select SO number!")]
         public Nullable<int> SO_Id { get; set; }
@@ -38,7 +38,7 @@ namespace InVanWebApp_BO
         public int? LocationId { get; set; }
         public string LocationName { get; set; }
         [Required(ErrorMessage ="Enter total yield of raw material!")]
-        public decimal TotalRawMaterialYeild { get; set; }
+        public decimal? TotalRawMaterialYeild { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

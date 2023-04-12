@@ -11,12 +11,13 @@ using Dapper;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class IndentRepository : IIndentRepository
     {
-        private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(IndentRepository));
 
         #region  Bind grid

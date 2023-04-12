@@ -9,12 +9,13 @@ using System.Data.SqlClient;
 using log4net;
 using System.Configuration;
 using System.Data;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class DashboardRepository : IDashboardRepository
     {
-        private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(ItemTypeRepository));
 
         #region Function for real time warehouse wise stock
@@ -347,10 +348,10 @@ namespace InVanWebApp.Repository
                     {
                         var result = new ReportBO()
                         {
-                            WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
-                            ProductionMaterailIssueNoteNumber = (reader["POMaterialIssueNoteNumber"].ToString()),
+                            //WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
+                            //ProductionMaterailIssueNoteNumber = (reader["POMaterialIssueNoteNumber"].ToString()),
                             ItemName = (reader["RawMaterial"].ToString()),
-                            BatchNumber = (reader["BatchNumber"].ToString()),
+                           // BatchNumber = (reader["BatchNumber"].ToString()),
                             RawMaterialCost = Convert.ToDecimal(reader["RawMaterialConsumption"])
                         };
                         resultList.Add(result);

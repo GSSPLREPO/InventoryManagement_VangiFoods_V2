@@ -10,11 +10,12 @@ using System.Data.SqlClient;
 using System.Data;
 using InVanWebApp.Common;
 using System.IO;
+
 namespace InVanWebApp.Repository
 {
     public class MicroAnalysisRepository : IMicroAnalysisRepository
     {
-        private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(MicroAnalysisRepository));
 
         #region  Bind grid

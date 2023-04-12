@@ -22,8 +22,10 @@ namespace InVanWebApp_BO
         public Nullable<bool> UpdateRight { get; set; }
         public Nullable<bool> DeleteRight { get; set; }
         public Nullable<bool> ViewScreen { get; set; }
-
         public string ScreenName{ get; set; }
         public int[] ScreensForRole { get; set; }
+
+        //Added the below field for displaying name in correct format.
+        public string DisplayName { get; set; }
     }
 }
