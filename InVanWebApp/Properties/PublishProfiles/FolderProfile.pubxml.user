@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <_PublishTargetUrl>D:\Publish</_PublishTargetUrl>
-    <History>True|2023-04-11T12:26:27.1284478Z;</History>
+    <History>True|2023-04-13T05:06:36.3520788Z;True|2023-04-11T17:56:27.1284478+05:30;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Antlr3.Runtime.dll">
@@ -39,16 +39,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="bin/InVanWebApp.dll">
-      <publishTime>04/11/2023 17:56:16</publishTime>
+      <publishTime>04/13/2023 10:36:21</publishTime>
     </File>
     <File Include="bin/InVanWebApp.pdb">
-      <publishTime>04/11/2023 17:56:16</publishTime>
+      <publishTime>04/13/2023 10:36:21</publishTime>
     </File>
     <File Include="bin/InVanWebApp_BO.dll">
-      <publishTime>04/11/2023 17:56:14</publishTime>
+      <publishTime>04/13/2023 10:36:19</publishTime>
     </File>
     <File Include="bin/InVanWebApp_BO.pdb">
-      <publishTime>04/11/2023 17:56:14</publishTime>
+      <publishTime>04/13/2023 10:36:19</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -4278,10 +4278,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Scripts/Script/AddDeliveryChallan.js">
-      <publishTime>04/03/2023 05:47:58</publishTime>
+      <publishTime>04/12/2023 15:44:50</publishTime>
     </File>
     <File Include="Scripts/Script/AddInwardNote.js">
-      <publishTime>04/11/2023 09:48:29</publishTime>
+      <publishTime>04/12/2023 17:19:05</publishTime>
     </File>
     <File Include="Scripts/Script/AddIssueNote.js">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7035,7 +7035,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/BatchPlanning/AddBatchPlanning.cshtml">
-      <publishTime>04/11/2023 17:24:33</publishTime>
+      <publishTime>04/12/2023 17:35:45</publishTime>
     </File>
     <File Include="Views/BatchPlanning/Index.cshtml">
       <publishTime>04/06/2023 17:06:30</publishTime>
@@ -7050,7 +7050,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/CalibrationLog/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/CertificateOfAnalysis/AddCertificateOfAnalysis.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7062,7 +7062,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/CertificateOfAnalysis/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/ChillerCCP/AddChillerCCP.cshtml">
       <publishTime>04/04/2023 11:00:14</publishTime>
@@ -7107,10 +7107,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/DailyMonitoring/Index - Copy.cshtml">
-      <publishTime>04/11/2023 17:17:02</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/DailyMonitoring/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Dashboard/Index.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7119,22 +7119,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/Dashboard/UtilityConsumptionProduction.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Dashb_RTWarehouseWiseStock/FIFOSystem.cshtml">
-      <publishTime>04/11/2023 17:17:02</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Dashb_RTWarehouseWiseStock/Index.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/Dashb_RTWarehouseWiseStock/OrderSummaryDashboard.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Dashb_RTWarehouseWiseStock/ProductionCostByBatchNumber.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Dashb_RTWarehouseWiseStock/ProductionUtilityConsumptionByBatchDashboard.cshtml">
-      <publishTime>04/11/2023 17:31:33</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7143,10 +7143,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/07/2023 16:42:53</publishTime>
     </File>
     <File Include="Views/Dashb_RTWarehouseWiseStock/WorkOrderwiseProductionCostDashboard.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Dashb_RTWarehouseWiseStock/YeildDashboard.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/DebitNote/AddDebitNote.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7188,13 +7188,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/ForeignBodyFound/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/GRN/AddGRN.cshtml">
-      <publishTime>04/03/2023 05:47:58</publishTime>
+      <publishTime>04/13/2023 10:03:01</publishTime>
     </File>
     <File Include="Views/GRN/Index.cshtml">
-      <publishTime>04/06/2023 17:14:10</publishTime>
+      <publishTime>04/13/2023 10:04:20</publishTime>
     </File>
     <File Include="Views/GRN/ViewGRN.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7227,16 +7227,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/06/2023 17:13:33</publishTime>
     </File>
     <File Include="Views/InquiryForm/AddInquiryForm.cshtml">
-      <publishTime>04/06/2023 16:34:35</publishTime>
+      <publishTime>04/13/2023 10:35:01</publishTime>
     </File>
     <File Include="Views/InquiryForm/EditInquiryForm.cshtml">
-      <publishTime>04/03/2023 05:47:58</publishTime>
+      <publishTime>04/12/2023 17:31:50</publishTime>
     </File>
     <File Include="Views/InquiryForm/Index.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/InquiryForm/ViewInquiryForm.cshtml">
-      <publishTime>04/03/2023 05:47:58</publishTime>
+      <publishTime>04/13/2023 09:57:42</publishTime>
     </File>
     <File Include="Views/InventoryControl/Index.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7272,7 +7272,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/Item/AddItems.cshtml">
-      <publishTime>04/03/2023 05:47:58</publishTime>
+      <publishTime>04/12/2023 17:19:38</publishTime>
     </File>
     <File Include="Views/Item/EditItem.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7317,7 +7317,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/MicroAnalysis/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/OilAnalysis/AddOilAnalysis.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7329,7 +7329,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/OilAnalysis/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Organisation/AddOrganisation.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7392,7 +7392,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/PreStartupHygiene/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/ProductEvaluationLog/AddProductEvaluationLog.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7401,7 +7401,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/ProductEvaluationLog/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/ProductionIndent/AddProductionIndent.cshtml">
       <publishTime>04/06/2023 16:48:32</publishTime>
@@ -7425,10 +7425,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/ProductMaster/AddProductItems.cshtml">
-      <publishTime>04/03/2023 05:47:58</publishTime>
+      <publishTime>04/12/2023 17:31:33</publishTime>
     </File>
     <File Include="Views/ProductMaster/EditProductItem.cshtml">
-      <publishTime>04/03/2023 05:47:58</publishTime>
+      <publishTime>04/12/2023 17:31:46</publishTime>
     </File>
     <File Include="Views/ProductMaster/Index.cshtml">
       <publishTime>04/06/2023 17:01:10</publishTime>
@@ -7452,10 +7452,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/RecipeMater/AddRecipeItems.cshtml">
-      <publishTime>04/03/2023 05:47:58</publishTime>
+      <publishTime>04/13/2023 09:46:33</publishTime>
     </File>
     <File Include="Views/RecipeMater/EditRecipeItem.cshtml">
-      <publishTime>04/10/2023 16:17:08</publishTime>
+      <publishTime>04/13/2023 09:46:47</publishTime>
     </File>
     <File Include="Views/RecipeMater/Index.cshtml">
       <publishTime>04/06/2023 17:03:31</publishTime>
@@ -7470,70 +7470,73 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/Report/BatchwiseProductionCostReport.cshtml">
-      <publishTime>04/11/2023 17:17:02</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/CompanyReport.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/Report/DebitNoteReport.cshtml">
-      <publishTime>04/11/2023 17:17:02</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/DeliveryChallanAgainstSOReport.cshtml">
-      <publishTime>04/11/2023 17:13:33</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/FGLocationWiseReport.cshtml">
-      <publishTime>04/11/2023 17:17:02</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/FinishedGoodsDispatchReport.cshtml">
-      <publishTime>04/11/2023 17:17:02</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/GRNReport.cshtml">
-      <publishTime>04/11/2023 17:17:02</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/InventoryAnalysisReportFIFO.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/InventoryFIFOReport.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/IssueNoteReport.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
+    </File>
+    <File Include="Views/Report/PreProduction_QCReport.cshtml">
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/PurchaseInvoiceReport.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/RawMaterialCostAnalysisReport.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/RawMaterialIndex.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/RejectionNoteReport.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/RejectionReport.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/SalesInvoiceReport.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/SalesReport.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/StockReconciliationReport.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/TotalInventoryCostReport.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/WastageReport.cshtml">
-      <publishTime>04/11/2023 17:22:00</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/Report/YeildReport.cshtml">
-      <publishTime>04/11/2023 17:22:02</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/RequestForQuotation/AddRequestForQuotation.cshtml">
       <publishTime>04/10/2023 11:04:22</publishTime>
@@ -7545,7 +7548,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/10/2023 13:59:44</publishTime>
     </File>
     <File Include="Views/RequestForQuotation/GeneratePO.cshtml">
-      <publishTime>04/03/2023 05:47:58</publishTime>
+      <publishTime>04/13/2023 09:55:53</publishTime>
     </File>
     <File Include="Views/RequestForQuotation/Index.cshtml">
       <publishTime>04/10/2023 12:44:22</publishTime>
@@ -7569,7 +7572,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/RoleRights/Index.cshtml">
-      <publishTime>04/11/2023 09:36:25</publishTime>
+      <publishTime>04/12/2023 17:38:11</publishTime>
     </File>
     <File Include="Views/RQCCP/AddRQCCP.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7614,7 +7617,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/04/2023 14:08:54</publishTime>
     </File>
     <File Include="Views/Shared/SideNavBar.cshtml">
-      <publishTime>04/11/2023 15:41:58</publishTime>
+      <publishTime>04/12/2023 11:12:17</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>04/03/2023 05:47:58</publishTime>
@@ -7653,7 +7656,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Views/StockMovement/Index.cshtml">
-      <publishTime>04/11/2023 17:20:24</publishTime>
+      <publishTime>04/13/2023 10:31:25</publishTime>
     </File>
     <File Include="Views/StockReport/Index.cshtml">
       <publishTime>04/06/2023 17:21:33</publishTime>
@@ -7725,7 +7728,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/03/2023 05:47:58</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/11/2023 10:50:30</publishTime>
+      <publishTime>04/13/2023 10:36:23</publishTime>
     </File>
   </ItemGroup>
 </Project>

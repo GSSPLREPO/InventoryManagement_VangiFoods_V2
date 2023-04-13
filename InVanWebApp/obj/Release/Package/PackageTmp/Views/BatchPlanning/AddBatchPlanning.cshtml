@@ -126,7 +126,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.RequiredQuantityInKG, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "8", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.RequiredQuantityInKG, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.RequiredQuantityInKG, "", new { id = "valRequiredQtyMgs", @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Remarks")
@@ -370,7 +370,7 @@
 
     //=====================Onchange of Product Name description===========================
     function SelectedIndexChangedProductName(id) {
-
+        $('#valRequiredQtyMgs').hide();
         //Checking the packing size value.
         var PackingSize = $('#PackingSize').val();
         if (PackingSize == null || PackingSize == '' || PackingSize == 0) {
