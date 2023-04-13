@@ -7,12 +7,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using log4net;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class RoleRepository : IRolesRepository
     {
-        private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RoleRepository));
 
         #region  Bind grid

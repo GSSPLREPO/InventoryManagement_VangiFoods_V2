@@ -1,4 +1,5 @@
-﻿using InVanWebApp.Repository.Interface;
+﻿using InVanWebApp.Common;
+using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
 using System;
@@ -13,7 +14,8 @@ namespace InVanWebApp.Repository
 {
     public class ProductMasterRepository : IProductMasterRepository 
     {
-        private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ToString();
+        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ToString();
+        private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(ProductMasterRepository));
 
         #region  Bind grid

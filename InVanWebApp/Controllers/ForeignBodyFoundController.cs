@@ -174,15 +174,14 @@ namespace InVanWebApp.Controllers
 
                 }
                 catch (Exception ex)
-                { }
-
-
+                {
+                    log.Error("Error", ex);
+                    TempData["Success"] = "<script>alert('Error while update!');</script>";
+                    return RedirectToAction("Index", "ForeignBodyFound");
+                }
             }
-
-
-                return RedirectToAction("Index", "Login");
+            return RedirectToAction("Index", "Login");
         }
-
         #endregion
 
         #region Delete function

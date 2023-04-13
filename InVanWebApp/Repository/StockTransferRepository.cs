@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using InVanWebApp.Common;
 using InVanWebApp.DAL;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
@@ -18,7 +19,8 @@ namespace InVanWebApp.Repository
     public class StockTransferRepository : IStockTransferRepository
     {
         //private readonly InVanDBContext _context;
-        private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(StockTransferRepository));
 
         #region  Bind grid

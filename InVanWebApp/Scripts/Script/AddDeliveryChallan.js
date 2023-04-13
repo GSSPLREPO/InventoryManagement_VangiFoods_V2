@@ -1,5 +1,6 @@
 ﻿//==================Set value in txtItemDetails onCick of Save/Update button======--------
 function SaveBtnClick() {
+    
     var SONumber = $("#SO_Id option:selected").text();
     $("#SONumber").val(SONumber);
 
@@ -41,7 +42,7 @@ function SaveBtnClick() {
     }
 
 
-    createJson();
+    createJson(); 
 };
 //==========end===============
 
@@ -345,9 +346,17 @@ function createJson() {
             TxtItemDetails = TxtItemDetails + "}";
         else
             TxtItemDetails = TxtItemDetails + "},";
+        //i++;   //Rahul added 12-04-23.
     }
-    TxtItemDetails = TxtItemDetails + "]"
-    $('#txtItemDetails').val(TxtItemDetails);
+    TxtItemDetails = TxtItemDetails + "]"   
+    //Rahul added 'tempTxt' 12-04-23.
+    //var tempTxt = TxtItemDetails.split(',]')[0];
+    //Rahul added 'flag' 12-04-23.
+    //if (flag == 0)
+    //    TxtItemDetails = tempTxt + "]";
+
+    $('#txtItemDetails').val(TxtItemDetails);debugger
+    console.log("TxtItemDetails: " + TxtItemDetails);
 }
 
 function isNumberKey(evt, id) {

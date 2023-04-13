@@ -9,13 +9,15 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class PreProduction_QCRepository : IPreProduction_QCRepository
     {
         //private readonly InVanDBContext _context;
-        private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(PreProduction_QCRepository));
 
         #region  Bind grid

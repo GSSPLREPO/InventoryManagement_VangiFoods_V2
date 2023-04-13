@@ -8,12 +8,14 @@ using log4net;
 using InVanWebApp_BO;
 using System.Data.SqlClient;
 using System.Data;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class ReportRepository : IReportRepository
     {
-        private readonly string conStr = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        //private readonly string conStr = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string conStr = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(ReportRepository));
 
         #region PO report
@@ -1366,37 +1368,36 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="fromDate"></param>
         /// <param name="toDate"></param>
-        /// <param name="inwardNumber"></param>
+        /// <param name="PreProductionQCId"></param>
         /// <returns></returns>
-        public List<InwardQCDetailBO> getPreProduction_QCReportData(DateTime fromDate, DateTime toDate, int inwardNumber)
+        public List<PreProduction_QC_Details> getPreProduction_QCReportData(DateTime fromDate, DateTime toDate, int PreProductionQCId)
         {
-            List<InwardQCDetailBO> resultList = new List<InwardQCDetailBO>();
+            List<PreProduction_QC_Details> resultList = new List<PreProduction_QC_Details>();
             try
             {
                 using (SqlConnection con = new SqlConnection(conStr))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_rpt_Wastage_Report", con);
+                    SqlCommand cmd = new SqlCommand("usp_rpt_PreProduction_QC_Report", con);
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.Parameters.AddWithValue("@inwardNumber", inwardNumber);
+                    cmd.Parameters.AddWithValue("@PreProductionQCId", PreProductionQCId);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                    while (reader.Read())
+                    con.Open(); 
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row. 
+                    while (reader.Read()) 
                     {
-                        var result = new InwardQCDetailBO()
+                        var result = new PreProduction_QC_Details() 
                         {
                             SrNo = Convert.ToInt32(reader["SrNo"]),
                             InwardQCDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),
-                            PONumber = reader["PONumber"].ToString(),
-                            InwardNumber = reader["InwardNumber"].ToString(),
-                            InwardQCNumber = reader["InwardQCNumber"].ToString(),
-                            SupplierName = reader["SupplierName"].ToString(),
+                            WONumber = reader["WONumber"].ToString(),
+                            MaterialIssueNumber = reader["MaterialIssueNumber"].ToString(),
+                            PQCNumber = reader["PQCNumber"].ToString(),
                             Item_Name = reader["ItemName"].ToString(),
                             Item_Code = reader["ItemCode"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
-                            InwardQuantity = Convert.ToDouble(reader["InwardQuantity"]),
+                            IssuedQuantity = Convert.ToDouble(reader["InwardQuantity"]),
                             QuantityTookForSorting = Convert.ToDouble(reader["RecivedQuantity"]),
                             BalanceQuantity = Convert.ToDouble(reader["BalanceQuantity"]),
                             RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),

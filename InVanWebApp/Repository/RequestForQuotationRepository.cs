@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
@@ -16,7 +17,8 @@ namespace InVanWebApp.Repository
 {
     public class RequestForQuotationRepository : IRequestForQuotationRepository
     {
-        private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RequestForQuotationRepository));
 
         #region  Bind grid

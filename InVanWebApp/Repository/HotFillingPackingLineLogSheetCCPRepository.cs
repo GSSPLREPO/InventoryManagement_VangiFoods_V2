@@ -8,12 +8,14 @@ using InVanWebApp.Repository.Interface;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class HotFillingPackingLineLogSheetCCPRepository : IHotFillingPackingLineLogSheetCCPRepository
     {
-        private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
+        private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(HotFillingPackingLineLogSheetCCPRepository));
 
         #region  Bind grid

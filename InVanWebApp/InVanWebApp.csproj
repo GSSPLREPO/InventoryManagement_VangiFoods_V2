@@ -165,6 +165,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Common\ApplicationSession.cs" />
+    <Compile Include="Common\Encryption.cs" />
     <Compile Include="Common\GetDocumentNumber.cs" />
     <Compile Include="Controllers\BatchPlanningController.cs" />
     <Compile Include="Controllers\CalibrationLogController.cs" />
@@ -3193,6 +3194,7 @@
     <Content Include="Views\SOPayment\_SOPaymentDetails.cshtml" />
     <Content Include="Views\Report\WastageReport.cshtml" />
     <Content Include="Views\RequestForQuotation\ViewRequestForQuotation.cshtml" />
+    <Content Include="Views\Report\PreProduction_QCReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
