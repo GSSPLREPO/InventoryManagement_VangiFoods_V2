@@ -26,7 +26,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        [Required(ErrorMessage ="Select warehouse!")]
+        [Required(ErrorMessage = "Select Location Name!")] ///Rahul updated 'Select warehouse!' to 'Select Location Name!' 13-04-23.
         public int LocationId { get; set; }
         public string LocationName{ get; set; }
         [Required(ErrorMessage ="Select designation!")]

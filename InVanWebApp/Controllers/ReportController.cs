@@ -88,7 +88,9 @@ namespace InVanWebApp.Controllers
         {
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
-            var VendorId = Convert.ToInt32(vendor);
+            int VendorId = 0; //Rahul added 13-04-23.
+            if (vendor != "" && vendor != null) //Rahul added 13-04-23.
+                VendorId = Convert.ToInt32(vendor);
             Session["Status"] = status;
             Session["Vendor"] = vendor;
             var poReport = _repository.getPOReportData(fromDate, toDate, status, VendorId);

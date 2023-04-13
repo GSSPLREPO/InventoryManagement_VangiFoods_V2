@@ -308,7 +308,8 @@
                 });
 
                 var finalSeries = [SerialForProQty, SerialForConsumeQty];
-                Highcharts.chart('mainTPCost', {
+                ///Rahul added 'const chart =' 13-04-23.
+                const chart = Highcharts.chart('mainTPCost', {
                     chart: {
                         type: 'column',
                         styledMode: true
@@ -317,6 +318,10 @@
                         text: 'Raw Material Consumption Vs Production',
                         align: 'center'
                     },
+                    ///Rahul added 'exporting' 13-04-23 start.
+                    exporting: {
+                        filename: "Raw Material Consumption Vs Production"
+                    },///Rahul added 'exporting' 13-04-23 end.
                     xAxis: {
                         categories: xAxisData,
                         crosshair: true
@@ -364,7 +369,15 @@
                     },
                     series: finalSeries
                 });
-
+                ///Rahul added 'setTimeout' 13-04-23 start.
+                setTimeout(function () {
+                    chart.update({
+                        exporting: {
+                            filename: "Raw-Material-Consumption-Vs-Production"
+                        }
+                    });
+                }, 2000);
+                ///Rahul added 'setTimeout' 13-04-23 end.
                 if (dataLength > 0) {
                     $("#mainTPCost").show();
                     $("#NoDataFound").hide();
