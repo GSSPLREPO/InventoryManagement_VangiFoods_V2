@@ -57,14 +57,20 @@
                                                 <td>@Html.DisplayFor(modelItem => item.BiddingStartDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.BiddingEndDate)</td>                                                
                                                 <td>@Html.DisplayFor(modelItem => item.CreatedByDate)</td>
-                                                <td>                                                    
-                                                    @*<a href=@Url.Action("EditRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId }) title="Edit RFQ">
-                                                        <i class="fa fa-edit text-primary"></i>
-                                                    </a> 
-                                                    <span>&nbsp;&nbsp;</span>*@  
-                                                    <a href=@Url.Action("DeleteRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId, }) onclick="return confirm('Are you sure want to delete the RFQ?');" title="Delete RFQ">                                                           
-                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                    </a><span>&nbsp;&nbsp;</span>                                                    
+                                                <td>
+                                                    @if (item.RFQCount <= 0)
+                                                    {
+                                                        <a href=@Url.Action("EditRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId }) title="Edit RFQ">
+                                                            <i class="fa fa-edit text-primary"></i>
+                                                        </a>
+                                                        <span>&nbsp;&nbsp;</span>
+                                                        <a href=@Url.Action("DeleteRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId, }) onclick="return confirm('Are you sure want to delete the RFQ?');" title="Delete RFQ">
+                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                        </a><span>&nbsp;&nbsp;</span>
+                                                    }
+                                                    <a href=@Url.Action("ViewRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId }) title="View RFQ">
+                                                        <i class="fa fa-eye text-primary"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
                                                 </td>
                                             </tr>
                                         }
@@ -78,7 +84,7 @@
                                         <div class="modal-content">                                            
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="myModalLabel" style="color:darkcyan">RFQ Summary</h4>                                                
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="locationReload()">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
@@ -145,5 +151,10 @@
                 modal.find('.modal-body input').val(recipient)
             });
         }
+
+        function locationReload() {
+            location.reload(true);
+        }
+
     </script>
 }

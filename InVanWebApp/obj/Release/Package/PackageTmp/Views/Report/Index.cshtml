@@ -65,6 +65,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             @Html.DropDownList("Status", new List<SelectListItem> {
+                                           new SelectListItem { Text = "--Select--", Value = "--Select--" },
                                                 new SelectListItem { Text = "Open", Value = "Open" },
                                                 new SelectListItem { Text = "Closed", Value = "Closed" },
                                                 new SelectListItem { Text = "In Progress", Value = "In Progress" }}, new { @class = "form-control", @id = "Status" })
@@ -159,48 +160,25 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid date selection!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }
 
-            //===========OnChange of item if Vendors is not selected================
-            var VendorsCheck = $('#Vendors').val();
-            if (VendorsCheck == '' || VendorsCheck == null) {
-                $('#VendorValidate').text("Select Vendor!");
-                $('#VendorValidate').show();
-                $('#Vendors').focus();
-                document.getElementById('Vendors').selectedIndex = 0;
-                return;
-            }
-            else {
-                SelectedIndexChangedVendor();
-            }
             //==================end======================
-            //===========OnChange of item if From date is not selected================
-            //var fromDateCheck = $('#fromDate').val();
-            //var toDateCheck = $('#toDate').val();
-            //if (fromDateCheck == '' || fromDateCheck == null) {
-            //    $('#fromDateValidate').text("Select from date!");
-            //    $('#fromDateValidate').show();
-            //    $('#fromDate').focus();
-            //    return;
-            //}
-            //else if (toDateCheck == '' || toDateCheck == null) {
-            //    $('#toDateValidate').text("Select to date!");
-            //    $('#toDateValidate').show();
-            //    $('#toDate').focus();
-            //    return;
-            //}
-
-            //==================end======================
-
+           
             $('#ExportPdf').show();
             $('#ExportExcel').show();
             $('#tblInward').show();
 
             var Status = $('#Status').val();
-            var Vendor = $('#Vendors').val();
+            if (Status == '' || Status == null || Status == '--Select--') {
+                Status = 0;
+            }
+            if (Vendor == '' || Vendor == null) {
+                Vendor = 0;
+            }
+            var flag = 0;
 
             $('#tblInward').dataTable().fnDestroy();
             var t = $('#tblInward').DataTable({
@@ -221,7 +199,7 @@
                         $('#ExportExcel').hide();
                     }
                 },
-                "pageLength": 20,
+                "pageLength": 10,
                 "scrollX": true,
                 "columns": [
                     { "data": "SrNo", "autoWidth": true },

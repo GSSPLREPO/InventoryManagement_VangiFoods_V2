@@ -10,6 +10,11 @@
 <html>
 <head>
     <title>Micro Analysis</title>
+    <style>
+        td {
+            white-space: break-spaces !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -62,15 +67,15 @@
                                 <thead>
                                     <tr>
 
-                                        <th>@Html.DisplayName("Date")</th>
-                                        <th>@Html.DisplayName("Source")</th>
-                                        <th>@Html.DisplayName("WO/PO")</th>
-                                        <th>@Html.DisplayName("Product Name")</th>
-                                        <th>@Html.DisplayName("Batch No")</th>
-                                        <th>@Html.DisplayName("Packing Size")</th>
-                                        <th>@Html.DisplayName("Best Before")</th>
-                                        <th>@Html.DisplayName("Verify By Name")</th>
-                                        <th>@Html.DisplayName("Action")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Date")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Source")</th>
+                                        <th class="text-wrap">@Html.DisplayName("WO/PO")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Product Name")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Batch No")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Packing Size")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Best Before")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Verify By Name")</th>
+                                        <th class="text-wrap">@Html.DisplayName("Actions")</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -202,7 +207,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid date selection!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }

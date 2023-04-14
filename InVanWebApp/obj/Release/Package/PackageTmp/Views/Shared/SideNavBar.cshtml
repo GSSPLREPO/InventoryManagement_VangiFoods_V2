@@ -52,20 +52,56 @@
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
         <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/FIFOSystem">FIFO System</a></li>
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ProductionCostByBatchNumber">Production Cost Batch Wise</a></li>
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a></li>
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a></li>
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/OrderSummeryDashboard">Sales Order Summery</a></li>
                     <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/TotalInventoryValueWarehouseWise">Total Inventory Value</a>
+                        <div id="FIFOSystem">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/FIFOSystem">Raw Material Dashboard</a>
+                        </div>
                     </li>
                     <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/WorkOrderwiseProductionCostDashboard">Total Production Cost</a>
+                        <div id="ProductionCostByBatchNumber">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ProductionCostByBatchNumber">Production Cost Batch Wise</a>
+                        </div>
                     </li>
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ProductionUtilityConsumptionByBatchDashboard">Utility Consumption By Batch</a></li>
-                    <li class="nav-item d-none d-lg-block"> <a class="nav-link text-wrap" href="~/Dashboard/UtilityConsumptionProduction">Raw Material Consumption Vs Production</a></li>
-                    <li class="nav-item d-none d-lg-block"><a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/YeildDashboard">Yield</a></li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="Dashb_RTWarehouseWiseStock">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="ReorderPointOfStocks">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="OrderSummaryDashboard">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/OrderSummaryDashboard">Sales Order Summary</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="TotalInventoryValueWarehouseWise">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/TotalInventoryValueWarehouseWise">Total Inventory Value</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="WorkOrderwiseProductionCostDashboard">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/WorkOrderwiseProductionCostDashboard">Total Production Cost</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="ProductionUtilityConsumptionByBatchDashboard">
+                            <a class="nav-link text-wrap" href="~/Dashb_RTWarehouseWiseStock/ProductionUtilityConsumptionByBatchDashboard">Raw Material Consumption By Batch</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="UtilityConsumptionProduction">
+                            <a class="nav-link text-wrap" href="~/Dashboard/UtilityConsumptionProduction">Raw Material Consumption Vs Production</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="YeildDashboard">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/YeildDashboard">Yield</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -207,7 +243,7 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
                 <i class="fab fa-wpforms menu-icon"></i>
-                <span class="menu-title">Daily Operations</span>
+                <span class="menu-title">QC Daily Operation Log</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="form-elements">
@@ -296,7 +332,7 @@
                     </li>
                     <li class="nav-item">
                         <div id="ProductionMaterialIssueNote">
-                            <a class="nav-link" href="@Url.Action("Index","ProductionMaterialIssueNote")">Production Material Issue Note</a>
+                            <a class="nav-link text-wrap" href="@Url.Action("Index","ProductionMaterialIssueNote")">Production Material Issue Note</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -414,55 +450,55 @@
                     </li>
                     <li class="nav-item">
                         <div id="DebitNoteReport">
-                            <a class="nav-link" href="~/Report/DebitNoteReport">Debit Note Report</a>
+                            <a class="nav-link" href="~/Report/DebitNoteReport">Debit Note</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="DeliveryChallanAgainstSOReport">
-                            <a class="nav-link" href="~/Report/DeliveryChallanAgainstSOReport">Delivery Challan (Against PO) Report</a>
+                            <a class="nav-link text-wrap" href="~/Report/DeliveryChallanAgainstSOReport">Delivery Challan (Against PO)</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="BatchwiseProductionCostReport">
-                            <a class="nav-link" href="~/Report/BatchwiseProductionCostReport">Batch-wise Production Cost</a>
+                            <a class="nav-link text-wrap" href="~/Report/BatchwiseProductionCostReport">Batch-wise Production Cost</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="FGLocationWiseReport">
-                            <a class="nav-link" href="~/Report/FGLocationWiseReport">FG Location wise</a>
+                            <a class="nav-link text-wrap" href="~/Report/FGLocationWiseReport">FG Location wise</a>
                         </div>
                     </li>
 
                     <li class="nav-item">
                         <div id="FinishedGoodsDispatchReport">
-                            <a class="nav-link" href="~/Report/FinishedGoodsDispatchReport">Finished Goods Dispatch</a>
+                            <a class="nav-link text-wrap" href="~/Report/FinishedGoodsDispatchReport">Finished Goods Dispatch</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="GRNReport">
-                            <a class="nav-link" href="~/Report/GRNReport">GRN Report</a>
+                            <a class="nav-link text-wrap" href="~/Report/GRNReport">GRN Report</a>
                         </div>
                     </li>
 
                     <li class="nav-item">
                         <div id="InventoryAnalysisReportFIFO">
-                            <a class="nav-link" href="~/Report/InventoryAnalysisReportFIFO">Inventory Analysis (FIFO)</a>
+                            <a class="nav-link text-wrap" href="~/Report/InventoryAnalysisReportFIFO">Inventory Analysis (FIFO)</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="InventoryFIFOReport">
-                            <a class="nav-link" href="~/Report/InventoryFIFOReport">Inventory FIFO</a>
+                            <a class="nav-link text-wraps" href="~/Report/InventoryFIFOReport">Inventory FIFO</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="IssueNoteReport">
-                            <a class="nav-link" href="~/Report/IssueNoteReport">Issue Note Report</a>
+                            <a class="nav-link text-wrap" href="~/Report/IssueNoteReport">Issue Note Report</a>
                         </div>
                     </li>
 
                     <li class="nav-item">
                         <div id="PurchaseInvoiceReport">
-                            <a class="nav-link" href="~/Report/PurchaseInvoiceReport">Purchase Invoice Report</a>
+                            <a class="nav-link text-wrap" href="~/Report/PurchaseInvoiceReport">Purchase Invoice Report</a>
                         </div>
                     </li>
 
@@ -474,17 +510,17 @@
                     </li>
                     <li class="nav-item">
                         <div id="RawMaterialCostAnalysisReport">
-                            <a class="nav-link" href="~/Report/RawMaterialCostAnalysisReport">Raw Material Cost Analysis Report</a>
+                            <a class="nav-link text-wrap" href="~/Report/RawMaterialCostAnalysisReport">Raw Material Cost Analysis</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="RawMaterialReceivedReport">
-                            <a class="nav-link" href="~/Report/RawMaterialIndex">Raw Material Received</a>
+                            <a class="nav-link text-wrap" href="~/Report/RawMaterialIndex">Raw Material Received</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="SalesInvoiceReport">
-                            <a class="nav-link" href="~/Report/SalesInvoiceReport">Sales Invoice Report</a>
+                            <a class="nav-link text-wrap" href="~/Report/SalesInvoiceReport">Sales Invoice</a>
                         </div>
                     </li>
 
@@ -501,17 +537,17 @@
         </li>*@
                     <li class="nav-item">
                         <div id="RejectionNoteReport">
-                            <a class="nav-link" href="~/Report/RejectionReport">Rejection Report</a>
+                            <a class="nav-link text-wrap" href="~/Report/RejectionReport">Rejection Report</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="StockReconciliationReport">
-                            <a class="nav-link" href="~/Report/StockReconciliationReport">Stock Reconciliation</a>
+                            <a class="nav-link text-wrap" href="~/Report/StockReconciliationReport">Stock Reconciliation</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="StockReport">
-                            <a class="nav-link" href="~/StockReport">Stock</a>
+                            <a class="nav-link text-wrap" href="~/StockReport">Stock</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -525,8 +561,13 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <div id="WastageReport">
+                            <a class="nav-link" href="~/Report/WastageReport">Wastage Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <div id="YeildReport">
-                            <a class="nav-link" href="~/Report/YeildReport">Yeild Report</a>
+                            <a class="nav-link" href="~/Report/YeildReport">Yield Report</a>
                         </div>
                     </li>
 
@@ -554,7 +595,7 @@
                     </li>
                     <li class="nav-item">
                         <div id="RoleRights">
-                            <a class="nav-link" href="@Url.Action("Index","RoleRights")">Roles Rights</a>
+                            <a class="nav-link" href="@Url.Action("Index","RoleRights")">Role Rights</a>
                         </div>
                     </li>
                     <li class="nav-item">

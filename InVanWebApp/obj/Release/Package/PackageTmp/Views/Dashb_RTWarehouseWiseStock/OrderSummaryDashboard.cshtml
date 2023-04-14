@@ -1,5 +1,5 @@
-﻿@model InVanWebApp_BO.OrderSummeryBO
-@{ ViewBag.Title = "OrderSummeryDashboard";
+﻿@model InVanWebApp_BO.OrderSummaryBO 
+@{ ViewBag.Title = "OrderSummaryDashboard";
     Layout = "~/Views/Shared/MainMaster.cshtml";
     //Layout = null; }
 }
@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <title>Sales Order Summery (Open & Close)</title>
+    <title>Sales Order Summary</title>
     <style>
         table {
             border-spacing: 0px;
@@ -25,13 +25,13 @@
 <body>
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Sales Order Summery (Open & Close)</h4>
+            <h4 class="page-title">Sales Order Summary</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Sales Order Summery</li>
+                    <li class="breadcrumb-item active">Sales Order Summary</li>
                 </ol>
             </nav>
         </div>
@@ -66,7 +66,7 @@
                             <br />
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label>Dureation</label>
+                                    <label>Duration</label>
                                 </div>
                                 <div class="col-md-3">
                                     @Html.DropDownListFor(model => model.Duration,
@@ -136,7 +136,7 @@
                                             <div class="col-md-12 text-center">
                                                 <label id="lblwarehouse5" class="font-weight-bold"></label>
                                             </div>
-                                            <div id="OrderSummery"></div>
+                                            <div id="OrderSummary"></div>
                                             <div id="NoDataFound5" style="display:none;"><center>No Data Found</center></div>
                                         </div>
                                     </div>
@@ -189,7 +189,7 @@
         }
 
         if (fromDate > toDate) {
-            alert('Invalid date selection!');
+            alert('Invalid Date! To date is less than from date!');
             $('#fromDate').focus();
             return;
         }
@@ -244,7 +244,7 @@
         }
         debugger
         var request = $.ajax({
-            url: "/Dashb_RTWarehouseWiseStock/GetOrderSummeryDashboardData?fromDate=" + fromday + "&toDate=" + today + "&Duration=" + Duration,
+            url: "/Dashb_RTWarehouseWiseStock/GetOrderSummaryDashboardData?fromDate=" + fromday + "&toDate=" + today + "&Duration=" + Duration,
             contentType: 'application/json;',
             dataType: 'json',
             type: "POST",
@@ -328,13 +328,22 @@
                         //},
                     },
                     title: {
-                        text: 'Sales Order Summery'
+                        text: 'Sales Order Summary'
                     },
                     subtitle: {
                         //text: 'Location: ' + Location
                     },
                     xAxis: {
                         categories: xAxisData,
+                        //Rahul added title 04-04-23.
+                        title: {
+                            text: 'Month-Year',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Black'
+                            }
+                        },
+                        crosshair: true
                     },
                     yAxis: {
                         min: 0,
@@ -426,7 +435,7 @@
         
         //-----------Bind data in the graph Start-----------------------------------------------------------
         var request = $.ajax({
-            url: "/Dashb_RTWarehouseWiseStock/GetOrderSummeryDashboardData?fromDate=" + fromDate + "&toDate=" + toDate + "&Duration=" + Duration ,
+            url: "/Dashb_RTWarehouseWiseStock/GetOrderSummaryDashboardData?fromDate=" + fromDate + "&toDate=" + toDate + "&Duration=" + Duration ,
             contentType: 'application/json;',
             dataType: 'json',
             type: "POST",
@@ -499,7 +508,7 @@
                         type: 'column'
                     },
                     title: {
-                        text: 'Sales Order Summery'
+                        text: 'Sales Order Summary'
                     },
                     subtitle: {
                         //text: 'Location: ' + Location

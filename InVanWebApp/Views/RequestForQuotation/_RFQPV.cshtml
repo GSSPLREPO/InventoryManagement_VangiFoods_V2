@@ -334,6 +334,7 @@
 
     //change on price call functiion
     function changeItemUnitPrice(value, id) {
+        $('#btnSave').prop('disabled', false);
         CalItemTotalPrice(value, id);
     };
 
@@ -410,8 +411,38 @@
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
-       createJson();
+        var table = document.getElementById('submissionTable');
+        var rowCount = table.rows.length;
+
+        var i = 1, flag = 0;
+        while (i < rowCount) {
+            var itemUnitPrice = $('#ItemUnitPrice_' + i).val();
+            if (itemUnitPrice == '' || itemUnitPrice == null) {
+                itemUnitPrice = 0;
+            }
+            else
+                itemUnitPrice = parseFloat(itemUnitPrice);
+
+            if (itemUnitPrice == 0) {
+                flag = 1;
+                break;
+            }
+            i++;
+        }
+
+        if (flag == 1) {
+            alert("Item Unit Price is zero or null! Cannot create RFQ Supplier Details!");
+            $('#btnSave').prop('disabled', true);
+            event.preventDefault();
+            return;
+        }
+        else {
+            $('#btnSave').prop('disabled', false);
+        }
+
+        createJson();
     };
+
     //==========end===============
 
     function createJson() {

@@ -9,6 +9,11 @@
 <html>
 <head>
     <title>Daily Monitoring</title>
+    <style>
+        th {
+            white-space: break-spaces !important;
+        }
+    </style>
     @*<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />*@
 </head>
 <body>
@@ -219,7 +224,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('To date is greater than from date!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }

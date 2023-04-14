@@ -1,0 +1,371 @@
+﻿@model InVanWebApp_BO.RequestForQuotationBO
+@{
+    ViewBag.Title = "ViewRequestForQuotation";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Request For Quotation</title>
+    <style>
+        html2canvas-container {
+            width: 3000px !important;
+            height: 2000px !important;
+        }
+    </style>
+</head>
+<body>
+    @Html.HiddenFor(model => model.RequestForQuotationId)
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row" id="printV" width="1000px">
+            <div class="col-md-12  grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
+                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Request For Quotation</h3>
+
+                            <div class="col">
+                                <div class="col-md-12">
+                                    <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">RFQ Number</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.RFQNO)
+                                </div>
+                                <br />
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">RFQ Document Date</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Delivery Date</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                </div>
+                                <br />
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Indent Number</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.IndentNumber)
+                                </div>
+                            </div>                            
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Bidding Start Date</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.BiddingStartDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                </div>
+                                <br />
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Bidding End Date</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.BiddingEndDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                </div>
+                            </div>                          
+                            <div class="row">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Location Name</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.DisplayFor(model => model.LocationName)
+                                </div>
+                                <br />
+                                <div class="col-md-2">
+                                    <label class="font-weight-bold">Vendors Name</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @*@Html.DisplayFor(model => model.CompanyName)*@
+                                    @Html.DropDownListFor(model => model.CompanyName, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm js-example-basic-multiple mult-sl", multiple = "multiple", onchange = "SelectedIndexChanged($(this).val())", @disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })   @*Rahul added class mult-sl in CompanyName 13-02-23.*@
+                                    @Html.TextBoxFor(model => model.VendorIDs, new { style = "display:none" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="card-title" style="color:darkcyan">Delivery Details</h4>
+                                    <hr />
+                                    @Html.TextAreaFor(model => model.DeliveryAddress, new { style = "border:none; width:100%", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <br />
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                            @*Rahul removed class table-striped and added class table-hover in table tag 16-02-2023.*@
+                                            <table class="table table-hover" id="submissionTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sortStyle">
+                                                            #
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            Item Code
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            Item Description
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            Quantity (Kg)
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            Units
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            Delivery Date
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            HSN Code
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="myTableBody">
+                                                    @{ int c = 1;
+                                                        foreach (var item in Model.itemDetails)
+                                                        {
+                                                            <tr id="tablerow_@c">
+                                                                <td>
+                                                                    <label>@c.</label>
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.Item_Code)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.ItemName)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.ItemQuantity)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.ItemUnit)
+                                                                </td>
+                                                                <td>
+                                                                    @*@Html.DisplayFor(x => item.DeliveryDate)*@
+                                                                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%; font-size: 100%; height:22px;", @readonly = "readonly" })
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.HSN_Code)
+                                                                </td>
+                                                            </tr>
+                                                            { c++; }
+                                                        } }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                            <br />
+                            <br />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
+                                    <div id="imagePreview">
+                                        <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
+                                        @Html.HiddenFor(x => x.Signature)
+                                    </div>
+                                    @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
+                                    <p class="font-weight-bold"> Authorized Signature</p>
+                                </div>
+                            </div>
+                            <br />
+                            <a href="@Url.Action("Index", "RequestForQuotation")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                Back To List
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+
+
+@Html.Raw(TempData["Success"])
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+<script src="~/Theme/MainContent/js/jquery.min.js"></script>
+<script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/jspdf.min.js"></script>
+<script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/html2canvas.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        ////====== multiple Select start ==========
+        //alert('multiple called!')
+        //$('.js-example-basic-multiple').select2(); //17-02-23.
+        //=== Rahul added 'tempArr' for bind multiple 'CompanyName' by 'VendorIDs' 17-02-23 start.
+        var tempArr = [];
+        var selectedValues = $("#VendorIDs").val().split(',');
+        var len = selectedValues.length;
+        i = 0;
+        while (i < len) {
+            tempArr.push(selectedValues[i]);
+            i++;
+        }
+        $('.js-example-basic-multiple').val(tempArr).select2();
+        //=== Rahul added 'tempArr' for bind multiple 'CompanyName' by 'VendorIDs' 17-02-23 end.
+
+        //--- '.js-example-basic-multiple .mult-sl' start rahul added 13-02-23.
+        $('.mult-sl').select2({
+            placeholder: 'Select'
+        })
+
+        $.validator.setDefaults({
+            ignore: []
+        });
+
+        $('#CompanyName').validate({
+            errorElement: 'span',
+            errorClass: 'error',
+            rules: {
+                singleselect: 'required',
+                multipleselect: 'required',
+                name: 'required'
+            },
+
+            highlight: function (element, errorClass, validClass) {
+
+                var elem = $(element);
+
+                if (elem.hasClass('s-select2')) {
+                    var isMulti = (!!elem.attr('multiple')) ? 's' : '';
+                    elem.siblings('.mult-sl').find('.select2-choice' + isMulti + '').addClass(errorClass);
+                } else {
+                    elem.addClass(errorClass);
+                }
+
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+
+                if (elem.hasClass('mult-sl')) {
+                    elem.siblings('.mult-sl').find('.select2-choice').removeClass(errorClass);
+                } else {
+                    elem.removeClass(errorClass);
+                }
+            }
+        });
+
+        $('select').on('change', function () {
+            $(this).valid();
+        });
+        //--- '.js-example-basic-multiple .mult-sl' end rahul added 09-02-23.
+
+        var fileName = $('#tempSign').val();
+
+        //Get a reference to our file input
+        const fileInput = document.querySelector('input[type="file"]');
+        var filePath = '/Signatures/' + fileName;
+
+        // Create a new File object
+        const myFile = new File([filePath], fileName, {
+            type: 'image/jpeg/jpg/png'
+        });
+
+        // Now let's create a DataTransfer to get a FileList
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(myFile);
+        fileInput.files = dataTransfer.files;
+    });
+    ////====== multiple Select end ==========
+
+    ////====== btnExport start ==========
+    $('#btnExport').click(function () {
+        var printD = document.getElementById("printV");
+        $("#btnExport").hide();
+        $("#btnBack").hide();
+        // $("#btnPrint").hide();
+        html2canvas(printD).then(function (canvas) {
+
+            var img = canvas.toDataURL("image/png", 1.0);
+
+            var doc = new jsPDF('p', 'pt', 'a4');
+
+            var specialElementHandlers = {
+                '#editor': function (element, renderer) {
+                    return true;
+                }
+            };
+
+            doc.addImage(img, 'JPEG', 5, 5, 580, 480);
+            doc.fromHTML(printD, 15, 15, {
+                'width': 200,
+                // 'margin':[10,60,40,20],
+                'elementHandlers': specialElementHandlers
+            });
+            var currentDate = new Date();
+            //var time = getTime();
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            console.log(time);
+            var today = formatDate(currentDate);
+            doc.save('Request_For_Quotation_' + today + '_' + time + '.pdf');
+            $("#btnExport").show();
+            $("#btnBack").show();
+            //$("#btnPrint").show();
+        });
+        //window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+    });
+
+    function formatDate(date) {
+        // alert(date);
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        return [day, month, year].join('-');
+        //return [year, month, day].join('-');
+    }
+    ////====== btnExport end ==========
+</script>
+
+
+<style>
+    /*//--- '.js-example-basic-multiple .mult-sl' start rahul added 13-02-23.*/
+    textarea.select2-search__field {
+        position: absolute;
+    }
+</style>

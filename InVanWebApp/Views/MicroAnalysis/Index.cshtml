@@ -10,6 +10,11 @@
 <html>
 <head>
     <title>Micro Analysis</title>
+    <style>
+        th {
+            white-space: break-spaces !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -236,7 +241,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('To date is greater than from date!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }

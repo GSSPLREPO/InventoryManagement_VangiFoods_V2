@@ -249,7 +249,7 @@
         }
 
         if (fromDate > toDate) {
-            alert('Invalid date selection!');
+            alert('Invalid Date! To date is less than from date!');
             $('#fromDate').focus();
             return;
         }
@@ -282,10 +282,10 @@
                 };
                 var SerialForConsumeQty = {
                     name: "Consumed",
-                   
+
                     data: [],
                     className: 'highcharts-color-1',
-                   
+
                     tooltip: {
                         valueSuffix: ' KG'
                     }
@@ -308,7 +308,7 @@
                 });
 
                 var finalSeries = [SerialForProQty, SerialForConsumeQty];
-                Highcharts.chart('mainTPCost', {
+                const chart = Highcharts.chart('mainTPCost', {
                     chart: {
                         type: 'column',
                         styledMode: true
@@ -316,6 +316,9 @@
                     title: {
                         text: 'Raw Material Consumption Vs Production',
                         align: 'center'
+                    },
+                    exporting: {
+                        filename: "Raw Material Consumption Vs Production"
                     },
                     xAxis: {
                         categories: xAxisData,
@@ -338,7 +341,7 @@
                         },
                         opposite: true
                     },
-                        { // Primary yAxis
+                    { // Primary yAxis
                         labels: {
                             format: '{value} KG',
                             style: {
@@ -364,6 +367,14 @@
                     },
                     series: finalSeries
                 });
+
+                setTimeout(function () {
+                    chart.update({
+                        exporting: {
+                            filename: "Raw_Material_Consumption_Vs_Production"
+                        }
+                    });
+                }, 2000);
 
                 if (dataLength > 0) {
                     $("#mainTPCost").show();

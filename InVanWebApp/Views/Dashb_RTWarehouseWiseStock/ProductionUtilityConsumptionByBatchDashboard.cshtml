@@ -192,7 +192,7 @@
         }
 
         if (fromDate > toDate) {
-            alert('To date is greater than from date!');
+            alert('Invalid Date! To date is less than from date!');
             $('#fromDate').focus();
             return;
         }
@@ -239,7 +239,7 @@
                 }
                 console.log(dataArrayFinal);
 
-                Highcharts.chart('itemName', {
+                const chart=Highcharts.chart('itemName', {
                     chart: {
                         plotBackgroundColor: null,
                         plotBorderWidth: null,
@@ -250,6 +250,9 @@
                         align: 'center',
                         verticalAlign: 'middle',
                         y: 50
+                    },
+                    exporting: {
+                        filename: "Raw Material Consumption By Batch"
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.y} KG {series.dataWO}</b>'
@@ -283,6 +286,14 @@
                         data: dataArrayFinal
                     }]
                 });
+
+                setTimeout(function () {
+                    chart.update({
+                        exporting: {
+                            filename: "Raw_Material_Consumption_By_Batch"
+                        }
+                    });
+                }, 2000);
 
                 if (dataLength > 0) {
                     $("#itemName").show();

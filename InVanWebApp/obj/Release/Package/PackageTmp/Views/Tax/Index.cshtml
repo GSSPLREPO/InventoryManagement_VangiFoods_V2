@@ -42,11 +42,8 @@
                                          <th>
                                             @Html.DisplayName("Tax Value")
                                         </th>
-                                        @*<th>
-                                            @Html.DisplayName("Description")
-                                        </th>*@
                                         <th>
-                                            @Html.DisplayName("Edit/Delete")
+                                            @Html.DisplayName("Actions")
                                         </th>
                                     </tr>
 
@@ -63,10 +60,10 @@
                                                 @Html.DisplayFor(modelItem => item.Description)
                                             </td>*@
                                             <td>
-                                                <a href=@Url.Action("EditTax", "Tax", new { Id = item.Id })>
+                                                <a href=@Url.Action("EditTax", "Tax", new { Id = item.Id }) title="Edit Tax">
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </a> &emsp;
-                                                <a href=@Url.Action("DeleteTax", "Tax", new { ID = item.Id }) onclick="return confirm('Are you sure want to delete?');">
+                                                <a href=@Url.Action("DeleteTax", "Tax", new { ID = item.Id }) onclick="return confirm('Are you sure want to delete?');" title="Delete Tax">
                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                 </a>
                                                 @*@Html.ActionLink("Edit", "EditTax", new { Id = item.Id }) |

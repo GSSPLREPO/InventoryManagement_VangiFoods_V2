@@ -1,8 +1,8 @@
 ﻿@model InVanWebApp_BO.DashboardBO
-@{ ViewBag.Title = "FIFOSystem";
+@{ ViewBag.Title = "RawMaterialDashboard";
     Layout = "~/Views/Shared/MainMaster.cshtml";
     //Layout = null; }
-}
+ }
 
 <!DOCTYPE html>
 
@@ -43,6 +43,25 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-1">
+                                    <label>From Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-1">
+                                    <label>To Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-1">
                                     <label>Location</label>
                                 </div>
                                 <div class="col-md-3">
@@ -58,30 +77,7 @@
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
                                 </div>
                             </div>
-                            <br />
 
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <label>From Date:</label>
-                                    <span style="color:red">*</span>
-                                </div>
-                                <div class="col-md-3">
-                                    <!--Rahul added fromDate 04-01-2023.-->
-                                    @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
-                                    @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
-                                    <!--Rahul added fromDateValidate 06-01-2023.-->
-                                </div>
-                                <div class="col-md-1">
-                                    <label>To Date:</label>
-                                    <span style="color:red">*</span>
-                                </div>
-                                <div class="col-md-3">
-                                    <!--Rahul added toDate 04-01-2023.-->
-                                    @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
-                                    @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
-                                    <!--Rahul added toDateValidate 06-01-2023.-->
-                                </div>
-                            </div>
                             <div class="row" id="div_individualDashboard">
                                 <div class="col-md-12">
                                     <div id="mainWarehouse" style="width:100%;"></div>
@@ -187,7 +183,7 @@
         }
 
         if (fromDate > toDate) {
-            alert('Invalid date selection!');
+            alert('Invalid Date! To date is less than from date!');
             $('#fromDate').focus();
             return;
         }
@@ -197,16 +193,16 @@
 </script>
 
 <script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
+@*<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>*@
 <script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
 <script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+@*<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
 <script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>*@
 
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
     function getRandomColor() {
         var Letters = '0123456789ABCDEF';
@@ -219,7 +215,7 @@
 
 
     $("#btnGo").on("click", function () {
-        debugger
+
         $(".spinner-wrapper").fadeIn("slow");
 
         ItemName = [];
@@ -265,10 +261,10 @@
                     var serial2 =
 
                     {
-                        name: "Qunatity" ,
+                        name: "Quantity",
                         type: 'bar',
                         data: [],
-                        color: [],
+                        color: 'black',
                         tooltip: {
                             valueSuffix: 'KG'
                         }
@@ -309,14 +305,17 @@
                             text: 'Location: ' + Location
                         },
                         xAxis: {
-                            
-                            categories: xAxisData
+
+                            categories: xAxisData,
+
                         },
                         yAxis: {
                             min: 0,
                             title: {
                                 style: {
-                                    fontWeight: 'bold'
+                                    fontWeight: 'bold',
+                                    fontSize: '12px',
+                                    color:'red'
                                 },
                                 text: 'Quantity (Kg)'
                             },
@@ -324,25 +323,32 @@
                                 enabled: false,  //true
                                 style: {
                                     fontWeight: 'bold',
+                                    fontSize: '12px',
                                     color: ( // theme
                                         Highcharts.defaultOptions.title.style &&
                                         Highcharts.defaultOptions.title.style.color
-                                    ) || 'gray'
+                                    ) || 'black',
+                                     text: 'Quantity (Kg)'
                                 }
                             }
                         },
                         legend: {
-                            layout: 'vertical',
-                            align: 'right',
-                            verticalAlign: 'top',
-                            x: -40,
-                            y: 80,
-                            floating: true,
-                            borderWidth: 1,
-                            backgroundColor:
-                                Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-                            shadow: true
+                            enabled: false
                         },
+
+                        //legend: {
+                        //    layout: 'vertical',
+                        //    align: 'right',
+                        //    verticalAlign: 'top',
+                        //    x: -40,
+                        //    y: 80,
+                        //    floating: true,
+                        //    borderWidth: 1,
+                        //    backgroundColor:
+                        //        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                        //    shadow: true
+                        //},
+
                         credits: {
                             enabled: false
                         },
@@ -359,19 +365,7 @@
                             },
                         },
                         series: ItemName
-                        //    [{
-                        //    name: 'TOMATO',
-                        //    data: xAxisData
-                        //}, {
-                        //    name: 'Onion',
-                        //    data: [814, 841, 3714, 726, 500]
-                        //}, {
-                        //    name: 'Year 2010',
-                        //    data: [1044, 944, 4170, 735, 40]
-                        //}, {
-                        //    name: 'Year 2018',
-                        //    data: [1276, 1007, 4561, 746, 42]
-                        //}]
+
                     });
 
                     if (dataLength > 0) {
@@ -429,9 +423,9 @@
                             var parsed = $.parseJSON(result);
                             var dataLength = parsed.length;
                             var serialFinal1 = {
-                                name: "Date",
+                                name: "Quantity",
                                 data: [],
-                                color: [],
+                                color: 'black',
                                 tooltip: {
                                     valueSuffix: ' KG'
                                 }
@@ -472,7 +466,9 @@
                                     min: 0,
                                     title: {
                                         style: {
-                                            fontWeight: 'bold'
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
                                         },
                                         text: 'Quantity (Kg)'
                                     },
@@ -487,6 +483,9 @@
                                         }
                                     },
 
+                                },
+                                legend: {
+                                    enabled: false
                                 },
                                 credits: {
                                     enabled: false
@@ -532,9 +531,9 @@
                             var dataLength = parsed.length;
 
                             var serialFinal2 = {
-                                name: "Date",
+                                name: "Quantity",
                                 data: [],
-                                color: [],
+                                color: 'black',
                                 tooltip: {
                                     valueSuffix: ' KG'
                                 }
@@ -575,7 +574,9 @@
                                     min: 0,
                                     title: {
                                         style: {
-                                            fontWeight: 'bold'
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
                                         },
                                         text: 'Quantity (Kg)'
                                     },
@@ -596,6 +597,9 @@
                                 },
                                 tooltip: {
                                     shared: true
+                                },
+                                legend: {
+                                    enabled: false
                                 },
 
                                 plotOptions: {
@@ -633,9 +637,9 @@
                             var parsed = $.parseJSON(result);
                             var dataLength = parsed.length;
                             var serialFinal3 = {
-                                name: "Stock",
+                                name: "Quantity",
                                 data: [],
-                                color: [],
+                                color: 'black',
                                 tooltip: {
                                     valueSuffix: ' KG'
                                 }
@@ -676,7 +680,9 @@
                                     min: 0,
                                     title: {
                                         style: {
-                                            fontWeight: 'bold'
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
                                         },
                                         text: 'Quantity (Kg)'
                                     },
@@ -692,13 +698,17 @@
                                     },
 
                                 },
+
                                 credits: {
                                     enabled: false
                                 },
+
                                 tooltip: {
                                     shared: true
                                 },
-
+                                legend: {
+                                    enabled: false
+                                },
                                 plotOptions: {
                                     column: {
                                         stacking: 'normal',  //'percent',
@@ -709,7 +719,6 @@
                                 },
                                 series: population3
                             });
-
                             if (dataLength > 0) {
                                 $("#warehouse3").show();
                                 $("#NoDataFound3").hide();
@@ -735,9 +744,9 @@
                             var dataLength = parsed.length;
 
                             var serialFinal4 = {
-                                name: "Date",
+                                name: "Quantity",
                                 data: [],
-                                color: [],
+                                color: 'black',
                                 tooltip: {
                                     valueSuffix: ' KG'
                                 }
@@ -778,7 +787,9 @@
                                     min: 0,
                                     title: {
                                         style: {
-                                            fontWeight: 'bold'
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
                                         },
                                         text: 'Quantity (Kg)'
                                     },
@@ -800,7 +811,9 @@
                                 tooltip: {
                                     shared: true
                                 },
-
+                                legend: {
+                                    enabled: false
+                                },
                                 plotOptions: {
                                     column: {
                                         stacking: 'normal',  //'percent',
@@ -837,9 +850,9 @@
                             var dataLength = parsed.length;
 
                             var serialFinal5 = {
-                                name: "Date",
+                                name: "Quantity",
                                 data: [],
-                                color: [],
+                                color: 'black',
                                 tooltip: {
                                     valueSuffix: ' KG'
                                 }
@@ -868,7 +881,7 @@
                             population5.push(serialFinal5);
                             Highcharts.chart('warehouse5', {
                                 chart: {
-                                    type: 'bar'
+                                    type: 'bar',
                                 },
                                 title: {
                                     text: 'Location: ' + Location /*Title*/
@@ -880,8 +893,11 @@
                                     min: 0,
                                     title: {
                                         style: {
-                                            fontWeight: 'bold'
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
                                         },
+
                                         text: 'Quantity (Kg)'/*Title*/
                                     },
                                     stackLabels: {
@@ -902,7 +918,9 @@
                                 tooltip: {
                                     shared: true
                                 },
-
+                                legend: {
+                                    enabled: false
+                                },
                                 plotOptions: {
                                     column: {
                                         stacking: 'normal',  //'percent',

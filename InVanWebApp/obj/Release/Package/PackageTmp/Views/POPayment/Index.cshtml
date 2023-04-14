@@ -74,13 +74,13 @@
                                                             <td>@Html.DisplayFor(x => item.PaymentMode)</td>
                                                             <td>@Html.DisplayFor(x => item.IsPaid)</td>
                                                             <td>
-                                                                <a href=@Url.Action("ViewPOPayment", "POPayment", new { ID = item.ID })>
+                                                                <a href=@Url.Action("ViewPOPayment", "POPayment", new { ID = item.ID }) title="View PO-Payment">
                                                                     <i class="fa fa-eye text-primary"></i>
                                                                 </a>&emsp;
-                                                                <a href=@Url.Action("EditPOPayment", "POPayment", new { ID = item.ID })>
+                                                                <a href=@Url.Action("EditPOPayment", "POPayment", new { ID = item.ID }) title="Edit PO-Payment">
                                                                     <i class="fa fa-edit text-primary"></i>
                                                                 </a> &nbsp;
-                                                                <a href=@Url.Action("DeletePOPayment", "POPayment", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                                <a href=@Url.Action("DeletePOPayment", "POPayment", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete PO-Payment">
                                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                                 </a>
                                                             </td>
@@ -122,6 +122,6 @@
     var table = $('#tblPOPayment').dataTable({
         "serverSide": false,
         "filter": true,
-        "pageLength": 20
+        "pageLength": 10
     });
 </script>

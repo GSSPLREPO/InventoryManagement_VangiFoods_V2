@@ -42,7 +42,7 @@
                 <div class="col-md-4">
                     @Html.DropDownList("PO_Id", (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "--Select--",
                    new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.PO_Id, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.PO_Id, "", new { @class = "error mt-2 text-danger", id = "ValMsgPONumber" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Bill/Challan No")
@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextAreaFor(model => model.ShippingDetails, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.ShippingDetails, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.ShippingDetails, "", new { @class = "error mt-2 text-danger", id = "ValMsgShippingDetails" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Supplier Details")
@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextAreaFor(model => model.SupplierDetails, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.SupplierDetails, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.SupplierDetails, "", new { @class = "error mt-2 text-danger", id = "ValMsgSupplierDetails" })
                 </div>
             </div>
             <br />

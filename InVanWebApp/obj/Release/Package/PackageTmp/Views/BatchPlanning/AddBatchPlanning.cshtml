@@ -80,7 +80,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    <select id="ProductId" name="ProductId" class="form-control form-control-sm" onchange="SelectedIndexChangedProductName($(this).val())">
+                    <select id="ProductId" name="ProductId" class="form-control form-control-sm" onchange="SelectedIndexChangedProductName($(this).val())" data-val="true" data-val-number="The field ProductId must be a number." data-val-required="Select the Product Name!">
                         <option value="">--Select--</option>
                     </select>
                     @*@Html.DropDownListFor(model => model.ProductId, (IEnumerable<SelectListItem>)ViewData["Product_dd"], "--Select--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductName($(this).val())" })*@
@@ -123,7 +123,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.RequiredQuantityInKG, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "8", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.RequiredQuantityInKG, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.RequiredQuantityInKG, "", new { @class = "error mt-2 text-danger", id = "valRequiredQtyMgs" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Remarks")
@@ -367,6 +367,8 @@
 
     //=====================Onchange of Product Name description===========================
     function SelectedIndexChangedProductName(id) {
+
+        $('#valRequiredQtyMgs').hide();
 
         //Checking the packing size value.
         var PackingSize = $('#PackingSize').val();

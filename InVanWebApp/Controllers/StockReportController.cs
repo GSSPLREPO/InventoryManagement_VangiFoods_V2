@@ -55,12 +55,12 @@ namespace InVanWebApp.Controllers
         /// to get stock details
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetStock(string id="")
+        public JsonResult GetStock(string id = "")
         {
             int ItemId = 0;
             if (id != "")
                 ItemId = Convert.ToInt32(id);
-            
+
             Session["ItemId"] = ItemId;
 
             var stockDetails = _StockMasterRepository.GetAllStock(ItemId);
@@ -105,11 +105,13 @@ namespace InVanWebApp.Controllers
             string ReportName = "Stock Report";
             string name = "Vangi Foods";
             string address = ApplicationSession.ORGANISATIONADDRESS;
+            var Date = "Date: ";
+
             sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
             sb.Append("<tr >");
-            sb.Append("<th Colspan='9' style='text-align:right;padding-right:-120px;padding-bottom:-95px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
+            sb.Append("<th Colspan='9' style='text-align:right;padding-right:-120px;padding-bottom:-280px;font-size:11px;'>" + Date + DateTime.Now.ToString("dd/MMM/yyyy"));
             sb.Append("</th></tr>");
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
@@ -121,7 +123,6 @@ namespace InVanWebApp.Controllers
             sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
-
             sb.Append("</th></tr>");
 
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
@@ -266,17 +267,15 @@ namespace InVanWebApp.Controllers
             string ReportName = "Stock Report";/* The Stock Movement Report name are given here  */
             string name = "Vangi Foods";/* The Vangi Foods are given here  */
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
-
-
-
+            string Date = "Date : ";
 
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
                "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
                "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:15px;font-family:Times New Roman;font-weight:bold'>" + name + "</td></tr>" +
                "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
-               //+ "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
-               //+ "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
-               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+               + "</td><td></td><td colspan='10' style='text-align:right; font-size:15px;font-weight:bold'>" + Date + DateTime.Now.ToString("dd/MMM/yyyy")
+               + "</td>"
+               + "</table>"
                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
 
             string style = @"<!--mce:2-->";

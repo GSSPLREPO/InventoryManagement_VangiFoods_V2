@@ -43,7 +43,7 @@
                                             <th>@Html.Label("Inward Date")</th>
                                             <th>@Html.Label("PO Number")</th>
                                             <th>@Html.Label("Bill/Challan Number")</th>
-                                            <th>@Html.Label("View/Delete")</th>
+                                            <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -55,13 +55,13 @@
                                                 <td>@Html.DisplayFor(modelItem => item.PONumber)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.ChallanNo)</td>
                                                 <td>
-                                                    <a href=@Url.Action("ViewInwardNote", "InwardNote", new { ID = item.ID })>
+                                                    <a href=@Url.Action("ViewInwardNote", "InwardNote", new { ID = item.ID }) title="View Inward Note">
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
                                                     @*<a href=@Url.Action("EditInwardNote", "InwardNote", new { ID = item.ID })>
                                                             <i class="fa fa-edit text-primary"></i>
                                                         </a> &emsp;*@
-                                                    <a href=@Url.Action("DeleteInwardNote", "InwardNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("DeleteInwardNote", "InwardNote", new { ID = item.ID}) onclick="return confirm('Are you sure want to delete?');" title="Delete Inward Note">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                     @*@Html.ActionLink("Edit", "EditOrganisation", new { OrganisationId = item.OrganisationId }) |

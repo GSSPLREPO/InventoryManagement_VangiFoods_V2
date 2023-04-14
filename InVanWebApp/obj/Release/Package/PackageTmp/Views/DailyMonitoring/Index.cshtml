@@ -9,6 +9,11 @@
 <html>
 <head>
     <title>Daily Monitoring</title>
+    <style>
+        th {
+            white-space: break-spaces !important;
+        }
+    </style>
     @*<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />*@
 </head>
 <body>
@@ -72,15 +77,13 @@
                             <table id="tblDailyMonitoring" class="table table-striped table-bordered hover table-sm table-responsive-md" width="100%" style="table-layout: fixed;">
                                 <thead class="text-center" style="text-align:center">
                                     <tr>
-                                        @*<th>ID</th>*@
-                                        <th>Date</th>
-                                        <th>Personal Hygiene</th>
-                                        <th>Cleaning And Sanitation</th>
-                                        <th>Cleaning of Equipment</th>
-                                        <th>Water Potability</th>
-                                        <th>Verify By</th>
-                                        <th>Action</th>
-                                        @*<th style="text-align:center">Delete</th>*@
+                                        <th class="text-wrap">Date</th>
+                                        <th class="text-wrap">Personal Hygiene</th>
+                                        <th class="text-wrap">Cleaning And Sanitation</th>
+                                        <th class="text-wrap">Cleaning of Equipment</th>
+                                        <th class="text-wrap">Water Potability</th>
+                                        <th class="text-wrap">Verify By</th>
+                                        <th class="text-wrap">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -221,7 +224,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid date selection!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }

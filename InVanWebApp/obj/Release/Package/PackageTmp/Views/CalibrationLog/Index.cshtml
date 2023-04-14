@@ -69,7 +69,7 @@
                                             <th>@Html.DisplayName("Calibration Done Date")</th>
                                             <th>@Html.DisplayName("Calibration Due Date")</th>
                                             <th>@Html.DisplayName("Verify BY")</th>
-                                            <th>@Html.DisplayName("Action")</th>
+                                            <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -217,7 +217,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid date selection!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }

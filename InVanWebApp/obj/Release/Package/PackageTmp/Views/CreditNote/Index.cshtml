@@ -55,10 +55,10 @@
                                                 <td>@Html.DisplayFor(modelItem => item.VendorName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.UserName)</td>
                                                 <td>
-                                                    <a href=@Url.Action("ViewCreditNote", "CreditNote", new { ID = item.ID })>
+                                                    <a href=@Url.Action("ViewCreditNote", "CreditNote", new { ID = item.ID }) title="View Credit-Note">
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
-                                                    <a href=@Url.Action("DeleteCreditNote", "CreditNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("DeleteCreditNote", "CreditNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Credit-Note">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>

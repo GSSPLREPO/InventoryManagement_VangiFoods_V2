@@ -30,7 +30,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TaxValue, new { @class = "form-control form-control-sm" })
+                    @Html.TextBoxFor(model => model.TaxValue, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "5" })
                     @Html.ValidationMessageFor(model => model.TaxValue, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -57,3 +57,23 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 @Html.Raw(TempData["Success"])
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+</script>
