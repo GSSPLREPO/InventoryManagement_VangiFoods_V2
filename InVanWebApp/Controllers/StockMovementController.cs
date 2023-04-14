@@ -240,7 +240,7 @@ namespace InVanWebApp.Controllers
 
 
                 numberTable.TotalWidth = 50;
-                numberTable.WriteSelectedRows(0, -1, document.Right - 300, document.Bottom + 20, writer.DirectContent);
+                numberTable.WriteSelectedRows(0, -1, document.Right - 300, document.Bottom + 4, writer.DirectContent);
             }
         }
 

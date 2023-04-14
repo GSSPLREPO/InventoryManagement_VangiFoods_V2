@@ -89,6 +89,7 @@ namespace InVanWebApp.Controllers
         {
             var itemId = Convert.ToInt32(Session["ItemId"]);
             var stockDetails = _StockMasterRepository.GetAllStock(itemId);
+            var Date = "Date: ";
             TempData["StockDetailsTemp"] = stockDetails;
             if (TempData["StockDetailsTemp"] == null)
             {
@@ -109,7 +110,8 @@ namespace InVanWebApp.Controllers
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
             sb.Append("<tr >");
-            sb.Append("<th Colspan='9' style='text-align:right;padding-right:-120px;padding-bottom:-95px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
+            //sb.Append("<th Colspan='9' style='text-align:right;padding-right:-120px;padding-bottom:-95px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
+            sb.Append("<th Colspan='9' style='text-align:right;padding-right:-120px;padding-bottom:-280px;font-size:11px;'>" + Date + DateTime.Now.ToString("dd/MMM/yyyy"));
             sb.Append("</th></tr>");
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
@@ -266,14 +268,13 @@ namespace InVanWebApp.Controllers
             string ReportName = "Stock Report";/* The Stock Movement Report name are given here  */
             string name = "Vangi Foods";/* The Vangi Foods are given here  */
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
-
-
-
+            string Date = "Date :"; 
 
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
                "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
                "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:15px;font-family:Times New Roman;font-weight:bold'>" + name + "</td></tr>" +
-               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>" +   
+               "</td><td></td><td colspan='10' style='text-align:right; font-size:15px;font-weight:bold'>" + Date + DateTime.Now.ToString("dd/MMM/yyyy") + "</td></tr>" 
                //+ "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
                //+ "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
                /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"

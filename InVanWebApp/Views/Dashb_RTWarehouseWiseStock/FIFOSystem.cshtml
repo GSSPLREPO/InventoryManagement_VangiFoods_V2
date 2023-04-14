@@ -43,25 +43,6 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-1">
-                                    <label>Location</label>
-                                </div>
-                                <div class="col-md-3">
-                                    @Html.DropDownListFor(model => model.LocationID, (IEnumerable<SelectListItem>)ViewData["LocationName"], "--All--", new { @class = "form-control" })
-                                </div>
-                                <div class="col-md-1">
-                                    <label>Items</label>
-                                </div>
-                                <div class="col-md-3">
-                                    @Html.DropDownListFor(model => model.ItemName, (IEnumerable<SelectListItem>)ViewData["Item"], "--All--", new { @class = "form-control" })
-                                </div>
-                                <div class="col-md-2">
-                                    <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
-                                </div>
-                            </div>
-                            <br />
-
-                            <div class="row">
-                                <div class="col-md-1">
                                     <label>From Date:</label>
                                     <span style="color:red">*</span>
                                 </div>
@@ -82,6 +63,26 @@
                                     <!--Rahul added toDateValidate 06-01-2023.-->
                                 </div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label>Location</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => model.LocationID, (IEnumerable<SelectListItem>)ViewData["LocationName"], "--All--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-1">
+                                    <label>Items</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => model.ItemName, (IEnumerable<SelectListItem>)ViewData["Item"], "--All--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
+                                </div>
+                            </div>
+                            <br />
+
                             <div class="row" id="div_individualDashboard">
                                 <div class="col-md-12">
                                     <div id="mainWarehouse" style="width:100%;"></div>

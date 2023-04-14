@@ -1821,6 +1821,8 @@ namespace InVanWebApp.Controllers
             sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman'>" + name + "</label>");
             sb.Append("<br/><label style='font-size:10px;font-family:Times New Roman'>" + address + "</label>");
             sb.Append("</th></tr>");
+            sb.Append("<th colspan=7 style='text-align:right;font-size:11px;padding-bottom:3px;'>" + "Date: " + " " + DateTime.Now.ToString("dd/MMM/yyyy"));
+            sb.Append("</th>");
             sb.Append("<tr>");
             //sb.Append("<th colspan=5 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
             //sb.Append("</th>");
@@ -1937,6 +1939,7 @@ namespace InVanWebApp.Controllers
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
             string ReportName = "Company Report";
+            string Date = "Date : ";
             //string Fromdate = "From Date : ";/* The From Date are given here  */
             //string Todate = "To Date : ";/* The To Date are given here  */
             string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
@@ -1947,7 +1950,8 @@ namespace InVanWebApp.Controllers
            string content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
                "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
                "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-size:15px;font-family:Times New Roman;font-weight:bold'>" + name + "</td></tr>" +
-               "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
+               "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>" +
+               "<tr><td colspan='7' style='text-align:right; font-size:15px;font-weight:bold'>" + Date + DateTime.Now.ToString("dd/MMM/yyyy") + "</td></tr>"    
                //+ "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
                //+ "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
                /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
