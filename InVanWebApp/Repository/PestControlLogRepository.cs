@@ -245,5 +245,61 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region  Bind grid for datatable
+        /// <summary>
+        /// Date: 14 April'23
+        /// Yatri: This function is for fecthing list of PestControlLog.
+        /// </summary>
+        /// <returns></returns>
+        public List<PestControlLogBO> GetAllPestCntrolLogList(int flagdate, DateTime? FromDate = null, DateTime? ToDate = null)
+        {
+            List<PestControlLogBO> PestControlLogList = new List<PestControlLogBO>();
+            try
+            {
+                if (FromDate == null && ToDate == null)
+                {
+                    FromDate = DateTime.Today;
+                    ToDate = DateTime.Today;
+                }
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_PestControlLog_GetAllByDate", con);
+                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
+                    cmd.Parameters.AddWithValue("@fromDate", FromDate);
+                    cmd.Parameters.AddWithValue("@toDate", ToDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var PestControlLog = new PestControlLogBO()
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Date = Convert.ToDateTime(reader["Date"]),
+                            TypeOfPest = reader["TypeOfPest"].ToString(),
+                            MethodForPestControl = reader["MethodForPestControl"].ToString(),
+                            Area = reader["Area"].ToString(),
+                            Frequncy = reader["Frequncy"].ToString(),
+                            COARecivedFromPestControl = reader["COARecivedFromPestControl"].ToString(),
+                            EffectiveOrNot = reader["EffectiveOrNot"].ToString(),
+                            AnyHazardDetectedAfterPest = reader["AnyHazardDetectedAfterPest"].ToString(),
+                            VerifyByName = reader["VerifyByName"].ToString(),
+                            Remark = reader["Remark"].ToString(),
+                        };
+                        PestControlLogList.Add(PestControlLog);
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return PestControlLogList;
+        }
+        #endregion
+
     }
 }

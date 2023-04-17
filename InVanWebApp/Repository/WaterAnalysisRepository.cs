@@ -276,5 +276,66 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region  Bind grid for datatable
+        /// <summary>
+        /// Date: 17 April'23
+        /// Yatri: This function is for fecthing list of WaterAnalysis.
+        /// </summary>
+        /// <returns></returns>
+        public List<WaterAnalysisBO> GetAllWaterAnalysisList(int flagdate, DateTime? FromDate = null, DateTime? ToDate = null)
+        {
+            List<WaterAnalysisBO> WaterAnalysisList = new List<WaterAnalysisBO>();
+            try
+            {
+                if (FromDate == null && ToDate == null)
+                {
+                    FromDate = DateTime.Today;
+                    ToDate = DateTime.Today;
+                }
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_WaterAnalysis_GetAllByDate", con);
+                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
+                    cmd.Parameters.AddWithValue("@fromDate", FromDate);
+                    cmd.Parameters.AddWithValue("@toDate", ToDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var WaterAnalysis = new WaterAnalysisBO()
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Date = Convert.ToDateTime(reader["Date"]),
+                            Time = reader["Time"].ToString(),
+                            PAPH = Convert.ToDecimal(reader["PAPH"]),
+                            PATDS = reader["PATDS"].ToString(),
+                            PAHardness = reader["PAHardness"].ToString(),
+                            PASaltAdded = reader["PASaltAdded"].ToString(),
+                            SWPH = Convert.ToDecimal(reader["SWPH"]),
+                            SWTDS = reader["SWTDS"].ToString(),
+                            SWHardness = reader["SWHardness"].ToString(),
+                            ETPTEM = reader["ETPTEM"].ToString(),
+                            ETPPH = Convert.ToDecimal(reader["ETPPH"]),
+                            ETPTDS = reader["ETPTDS"].ToString(),
+                            TEM = reader["TEM"].ToString(),
+                            GasReading = Convert.ToDecimal(reader["GasReading"]),
+                            VerifyByName = reader["VerifyByName"].ToString(),
+                            Remark = reader["Remark"].ToString(),
+                        };
+                        WaterAnalysisList.Add(WaterAnalysis);
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return WaterAnalysisList;
+        }
+        #endregion
     }
 }

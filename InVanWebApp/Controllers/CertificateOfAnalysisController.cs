@@ -110,7 +110,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Certificate of Analysis Details Inserted Successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                            TempData["Success"] = "<script>alert('COA is done for the entered batch number! Cannot perform insertion!');</script>";
                             return View();
                         }
                         return RedirectToAction("Index", "CertificateOfAnalysis");
@@ -201,7 +201,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Certificate of Analysis Details updated successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error while updating!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate batch number! Cannot perform update!');</script>";
                             return View();
                         }
                         return RedirectToAction("Index", "CertificateOfAnalysis");

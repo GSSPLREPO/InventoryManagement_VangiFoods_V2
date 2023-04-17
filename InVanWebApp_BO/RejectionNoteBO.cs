@@ -54,7 +54,10 @@ namespace InVanWebApp_BO
         public DateTime toDate { get; set; } 
 
         //Added the below property for saving the item table details. 
-        public List<RejectionNoteItemDetailsBO> itemDetails { get; set; } 
+        public List<RejectionNoteItemDetailsBO> itemDetails { get; set; }
+        // Added the below property for 'InwardQC' option. 
+        [Required(ErrorMessage = "Enter QC number!")]
+        public string InwardQCNo { get; set; } 
     }
     public class RejectionNoteItemDetailsBO 
     {
@@ -96,9 +99,14 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         //Added the below properties for Currency
         public string CurrencyName { get; set; }
+        //Added the below field for Wastage Report 17-04-23. 
+        [Required(ErrorMessage = "Please Select From Date!")]
+        public DateTime fromDate { get; set; }
 
+        [Required(ErrorMessage = "Please Select To Date!")]
+        public DateTime toDate { get; set; }
 
-        //Added the below field for Rejection note Report
+        //Added the below field for Rejection note Report and Wastage Report 17-04-23. 
         public int SrNo { get; set; }
         public string RejectionNoteDate { get; set; }
         public string ApprovedBy { get; set; }

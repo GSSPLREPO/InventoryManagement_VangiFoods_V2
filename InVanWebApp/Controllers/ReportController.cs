@@ -1821,11 +1821,9 @@ namespace InVanWebApp.Controllers
             sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman'>" + name + "</label>");
             sb.Append("<br/><label style='font-size:10px;font-family:Times New Roman'>" + address + "</label>");
             sb.Append("</th></tr>");
+            sb.Append("<tr>");
             sb.Append("<th colspan=7 style='text-align:right;font-size:11px;padding-bottom:3px;'>" + "Date: " + " " + DateTime.Now.ToString("dd/MMM/yyyy"));
             sb.Append("</th>");
-            sb.Append("<tr>");
-            //sb.Append("<th colspan=5 style='text-align:left;font-size:11px;padding-bottom:3px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
-            //sb.Append("</th>");
             //sb.Append("<th colspan=5 style='text-align:right;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
             //sb.Append("</th>");
             sb.Append("</tr>");
@@ -1884,7 +1882,6 @@ namespace InVanWebApp.Controllers
                 }
             }
         }
-
         #endregion
 
         #region Export Excel for Company report
@@ -4036,11 +4033,11 @@ namespace InVanWebApp.Controllers
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
             sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
 
             sb.Append("</th></tr>");
 
@@ -4257,13 +4254,13 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
+            sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:100px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
 
             sb.Append("</th></tr>");
 
@@ -4480,13 +4477,13 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
+            sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:100px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
 
             sb.Append("</th></tr>");
 
@@ -4903,7 +4900,7 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                InwardQCBO model = new InwardQCBO(); 
+                RejectionNoteBO model = new RejectionNoteBO(); ///updated  17 Apr 2023. 
                 model.fromDate = DateTime.Today;
                 model.toDate = DateTime.Today;
                 BindInwardPODropDown();                     
@@ -4948,7 +4945,7 @@ namespace InVanWebApp.Controllers
             }
 
             StringBuilder sb = new StringBuilder();
-            List<InwardQCDetailBO> resultList = TempData["WastageReportDataTemp"] as List<InwardQCDetailBO>;
+            List<RejectionNoteItemDetailsBO> resultList = TempData["WastageReportDataTemp"] as List<RejectionNoteItemDetailsBO>;
 
             if (resultList.Count < 0)
                 return RedirectToAction("WastageReport", "Report");
@@ -4986,16 +4983,17 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejection Number</ th>"); //updated 17-04-23.
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward Number</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward QC Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO Number</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Supplier Name</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price(Rs)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward Quantity (KG)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Received Quantity (KG)</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Balance Quantity (KG)</ th>");
+            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Balance Quantity (KG)</ th>");  ///Remove 17-04-23.
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejected Quantity (KG)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Wastage Quantity (%)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Reason For Wastage</ th>");
@@ -5010,20 +5008,21 @@ namespace InVanWebApp.Controllers
             {
                 sb.Append("<tr style='text-align:center;padding: 10px;'>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardQCDate + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PONumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectionNoteDate + "</td>"); //updated 17-04-23.
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectionNoteNo + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardNumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardQCNumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PONumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SupplierName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Name + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Code + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemUnitPrice + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardQuantity + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.QuantityTookForSorting + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.BalanceQuantity + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectedQuantity + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.BalanceQuantity + "</td>");  ///Remove 17-04-23.
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectedQuantity + "</td>"); 
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.WastageQuantityInPercentage + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ReasonForWastage + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ReasonForRR + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ApprovedBy + "</td>");
                 sb.Append("</tr>");
             }
@@ -5055,6 +5054,34 @@ namespace InVanWebApp.Controllers
                 }
             }
         }
+        /// <summary>
+        /// Rahul added 'PageHeaderFooter' 17-04-23. 
+        /// </summary>
+        public class PageHeaderFooter : PdfPageEventHelper
+        {
+            private readonly Font _pageNumberFont = new Font(Font.NORMAL, 10f, Font.BOLD, BaseColor.BLACK);
+
+            public override void OnEndPage(PdfWriter writer, Document document)
+            {
+                StockReportController stockReportController = new StockReportController();
+                stockReportController.setBorder(writer, document);
+                AddPageNumber(writer, document);
+            }
+
+            private void AddPageNumber(PdfWriter writer, Document document)
+            {
+                var text = writer.PageNumber.ToString();
+
+                var numberTable = new PdfPTable(1);
+                numberTable.DefaultCell.Border = 0;
+                var numberCell = new PdfPCell(new Phrase(text, _pageNumberFont)) { HorizontalAlignment = Element.ALIGN_MIDDLE, PaddingLeft = -150 };
+                numberCell.Border = 0;
+                numberTable.AddCell(numberCell);
+
+                numberTable.TotalWidth = 50;
+                numberTable.WriteSelectedRows(0, -1, document.Right - 300, document.Bottom + 4, writer.DirectContent);
+            }
+        }
         #endregion
 
         #region Excel Wastage Report 
@@ -5065,43 +5092,45 @@ namespace InVanWebApp.Controllers
             var itemId = Convert.ToInt32(Session["ItemId"]);
 
             GridView gv = new GridView();
-            List<InwardQCDetailBO> resultList = _repository.getWastageReportData(fromDate, toDate, itemId);
+            List<RejectionNoteItemDetailsBO> resultList = _repository.getWastageReportData(fromDate, toDate, itemId);
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("Date");
-            dt.Columns.Add("PO Number");
+            dt.Columns.Add("Rejection Number"); ///added 17-04-23.  
             dt.Columns.Add("Inward Number");
             dt.Columns.Add("Inward QC Number");
+            dt.Columns.Add("PO Number");
             dt.Columns.Add("Supplier Name");
             dt.Columns.Add("Item Name");
             dt.Columns.Add("Item Code");
             dt.Columns.Add("Item Unit Price(Rs)");
             dt.Columns.Add("Inward Quantity (KG)");
             dt.Columns.Add("Received Quantity(KG)");
-            dt.Columns.Add("Balance Quantity (KG)");
+            //dt.Columns.Add("Balance Quantity (KG)");///Remove 17-04-23.
             dt.Columns.Add("Rejected Quantity(KG)");
             dt.Columns.Add("Wastage Quantity (%)");
             dt.Columns.Add("Reason For Wastage");
             dt.Columns.Add("Approved By");
 
-            foreach (InwardQCDetailBO st in resultList)
+            foreach (RejectionNoteItemDetailsBO st in resultList)
             {
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = st.SrNo.ToString();
-                dr["Date"] = st.InwardQCDate.ToString();
-                dr["PO Number"] = st.PONumber.ToString();
+                dr["Date"] = st.RejectionNoteDate.ToString(); ///updated 17-04-23.
+                dr["Rejection Number"] = st.RejectionNoteNo.ToString(); ///added 17-04-23.  
                 dr["Inward Number"] = st.InwardNumber.ToString();
                 dr["Inward QC Number"] = st.InwardQCNumber.ToString();
+                dr["PO Number"] = st.PONumber.ToString();
                 dr["Supplier Name"] = st.SupplierName.ToString();
                 dr["Item Name"] = st.Item_Name.ToString();
                 dr["Item Code"] = st.Item_Code.ToString();
                 dr["Item Unit Price(Rs)"] = st.ItemUnitPrice.ToString();
                 dr["Inward Quantity (KG)"] = st.InwardQuantity.ToString();
                 dr["Received Quantity(KG)"] = st.QuantityTookForSorting.ToString();
-                dr["Balance Quantity (KG)"] = st.BalanceQuantity.ToString();
+                //dr["Balance Quantity (KG)"] = st.BalanceQuantity.ToString(); ///Remove 17-04-23.
                 dr["Rejected Quantity(KG)"] = st.RejectedQuantity.ToString();
                 dr["Wastage Quantity (%)"] = st.WastageQuantityInPercentage.ToString();
-                dr["Reason For Wastage"] = (st.ReasonForWastage == null) ? "" : st.ReasonForWastage.ToString();
+                dr["Reason For Wastage"] = (st.ReasonForRR == null) ? "" : st.ReasonForRR.ToString();///updated 17-04-23.
                 dr["Approved By"] = st.ApprovedBy.ToString(); 
 
                 dt.Rows.Add(dr);
@@ -5123,7 +5152,7 @@ namespace InVanWebApp.Controllers
             gv.RenderControl(hw);
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
-            string ReportName = "Wastage Report";/* The Stock Movement Report name are given here  */
+            string ReportName = "Wastage Report";/* The Wastage Report name are given here  */
             string Fromdate = "From Date : ";/* The From Date are given here  */
             string Todate = "To Date:";/* The To Date are given here  */
             string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */

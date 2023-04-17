@@ -117,12 +117,12 @@ namespace InVanWebApp.Controllers
             ViewData["InwardNumber"] = resultList;
         }
 
-        //public void BindInwardNoNumber()
-        //{
-        //    var result = _QCRepository.GetInwNumberForDropdown();
-        //    var resultList = new SelectList(result.ToList(), "ID", "InwardNumber");
-        //    ViewData["InwNumberAndId"] = resultList;
-        //}
+        public void BindInwardNoNumber()
+        {
+            var result = _QCRepository.GetInwNumberForDropdown();
+            var resultList = new SelectList(result.ToList(), "ID", "InwardNumber");
+            ViewData["InwNumberAndId"] = resultList;
+        }
         #endregion
 
         #region 
@@ -149,7 +149,7 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate Rejection Note! Can not be completed!');</script>";
-                            //BindInwardNoNumber();
+                            BindInwardNoNumber();
                             BindInwardNumber(); 
                             model.NoteDate = DateTime.Today;
                             //==========Document number for Rejection note============//
@@ -171,7 +171,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         }
 
-                        //BindInwardNoNumber();
+                        BindInwardNoNumber();
                         BindInwardNumber(); 
                         model.NoteDate = DateTime.Today;
                         //==========Document number for Rejection note============//
@@ -192,7 +192,7 @@ namespace InVanWebApp.Controllers
                 log.Error("Error", ex);
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
-                //BindInwardNoNumber();
+                BindInwardNoNumber();
                 BindInwardNumber(); 
                 model.NoteDate = DateTime.Today;
                 //==========Document number for Rejection note============//

@@ -1,4 +1,4 @@
-﻿@model InVanWebApp_BO.InwardQCBO
+﻿@model InVanWebApp_BO.RejectionNoteBO
 @{
     ViewBag.Title = "WastageReport";
     Layout = "~/Views/Shared/MainMaster.cshtml";
@@ -37,17 +37,17 @@
                                         <label>From Date:</label>
                                         <span style="color:red">*</span>
                                     </div>
-                                    <div class="col-md-3">                                        
+                                    <div class="col-md-3">
                                         @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
-                                        @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })                                        
+                                        @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
                                     <div class="col-md-2">
                                         <label>To Date:</label>
                                         <span style="color:red">*</span>
                                     </div>
-                                    <div class="col-md-3">                                        
+                                    <div class="col-md-3">
                                         @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
-                                        @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })                                        
+                                        @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
                                     <div class="col-md-2">
                                         <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
@@ -83,16 +83,17 @@
                                             <tr>
                                                 <th style="text-align:center" class="text-wrap">Sr.No.</th>
                                                 <th style="text-align:center">Date</th>
-                                                <th style="text-align:center" class="text-wrap">PO Number</th>
+                                                <th style="text-align:center" class="text-wrap">Rejection Number</th> @*///added 17-04-23.*@
                                                 <th style="text-align:center" class="text-wrap">Inward Number</th>
                                                 <th style="text-align:center" class="text-wrap">Inward QC Number</th>
+                                                <th style="text-align:center" class="text-wrap">PO Number</th>
                                                 <th style="text-align:center" class="text-wrap">Supplier Name</th>
                                                 <th style="text-align:center" class="text-wrap">Item Name</th>
                                                 <th style="text-align:center" class="text-wrap">Item Code</th>
                                                 <th style="text-align:center" class="text-wrap">Item Unit Price (Rs)</th>
                                                 <th style="text-align:center" class="text-wrap">Inward Quantity (KG)</th>
                                                 <th style="text-align:center" class="text-wrap">Received Quantity (KG)</th>
-                                                <th style="text-align:center" class="text-wrap">Balance Quantity (KG)</th>
+                                                @*<th style="text-align:center" class="text-wrap">Balance Quantity (KG)</th> ///Remove 17-04-23.*@
                                                 <th style="text-align:center" class="text-wrap">Rejected Quantity (KG)</th>
                                                 <th style="text-align:center" class="text-wrap">Wastage Quantity (%)</th>
                                                 <th style="text-align:center" class="text-wrap">Reason For Wastage</th>
@@ -182,11 +183,11 @@
             $('#tblWastageReport').show();
             var flag = 0;
             $('#tblWastageReport').dataTable().fnDestroy();
-            var t = $('#tblWastageReport').DataTable({
+            var t = $('#tblWastageReport').DataTable({  
                 //"processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
-                "sAjaxSource": "/Report/GetWastageReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + Chec~kItem,//+ "&LocationId=" + warehouse,
+                "sAjaxSource": "/Report/GetWastageReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem,//+ "&LocationId=" + warehouse,
                 "initComplete": function (settings, json) {
                     var result = JSON.stringify(json);
                     flag = parseFloat(result.length);
@@ -204,20 +205,21 @@
                 "scrollX": true,
                 "columns": [
                     { "data": "SrNo", "autoWidth": true },
-                    { "data": "InwardQCDate", "autoWidth": true },
-                    { "data": "PONumber", "autoWidth": true },
+                    { "data": "RejectionNoteDate", "autoWidth": true }, ///updated 17-04-23.
+                    { "data": "RejectionNoteNo", "autoWidth": true }, ///added 17-04-23.
                     { "data": "InwardNumber", "autoWidth": true },
                     { "data": "InwardQCNumber", "autoWidth": true },
+                    { "data": "PONumber", "autoWidth": true },
                     { "data": "SupplierName", "autoWidth": true },
                     { "data": "Item_Name", "autoWidth": true },
                     { "data": "Item_Code", "autoWidth": true },
                     { "data": "ItemUnitPrice", "autoWidth": true },
                     { "data": "InwardQuantity", "autoWidth": true },
                     { "data": "QuantityTookForSorting", "autoWidth": true },
-                    { "data": "BalanceQuantity", "autoWidth": true },
+                    /*{ "data": "BalanceQuantity", "autoWidth": true },*/    ///Remove 17-04-23.
                     { "data": "RejectedQuantity", "autoWidth": true },
                     { "data": "WastageQuantityInPercentage", "autoWidth": true },
-                    { "data": "ReasonForWastage", "autoWidth": true },
+                    { "data": "ReasonForRR", "autoWidth": true },
                     { "data": "ApprovedBy", "autoWidth": true }
                 ]
             });
