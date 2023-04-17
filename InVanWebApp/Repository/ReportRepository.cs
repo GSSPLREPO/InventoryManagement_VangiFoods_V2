@@ -1309,9 +1309,9 @@ namespace InVanWebApp.Repository
         /// <param name="toDate"></param>
         /// <param name="inwardNumber"></param>
         /// <returns></returns>
-        public List<InwardQCDetailBO> getWastageReportData(DateTime fromDate, DateTime toDate, int inwardNumber)
+        public List<RejectionNoteItemDetailsBO> getWastageReportData(DateTime fromDate, DateTime toDate, int inwardNumber)
         {
-            List<InwardQCDetailBO> resultList = new List<InwardQCDetailBO>();
+            List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
             try
             {
                 using (SqlConnection con = new SqlConnection(conStr))
@@ -1326,23 +1326,24 @@ namespace InVanWebApp.Repository
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
                     {
-                        var result = new InwardQCDetailBO()
+                        var result = new RejectionNoteItemDetailsBO()
                         {
                             SrNo = Convert.ToInt32(reader["SrNo"]),
-                            InwardQCDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),
-                            PONumber = reader["PONumber"].ToString(),
+                            RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),  ///updated 17-04-23.
+                            RejectionNoteNo = reader["RejectionNumber"].ToString(), ///added 17-04-23.  
                             InwardNumber = reader["InwardNumber"].ToString(),
                             InwardQCNumber = reader["InwardQCNumber"].ToString(),
+                            PONumber = reader["PONumber"].ToString(),
                             SupplierName = reader["SupplierName"].ToString(),
                             Item_Name = reader["ItemName"].ToString(),
                             Item_Code = reader["ItemCode"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
                             InwardQuantity = Convert.ToDouble(reader["InwardQuantity"]),
                             QuantityTookForSorting = Convert.ToDouble(reader["RecivedQuantity"]),
-                            BalanceQuantity = Convert.ToDouble(reader["BalanceQuantity"]),
+                            //BalanceQuantity = Convert.ToDouble(reader["BalanceQuantity"]), ///Remove 17-04-23.
                             RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
                             WastageQuantityInPercentage = Convert.ToDouble(reader["WastageQuantity"]),
-                            ReasonForWastage = reader["ReasonForWastage"].ToString(),
+                            ReasonForRR = reader["ReasonForWastage"].ToString(),
                             ApprovedBy = reader["ApprovedBy"].ToString(),
                         };
                         resultList.Add(result);
@@ -1359,6 +1360,7 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
+
 
         #region Pre-Production_QC Report data 
         /// <summary>

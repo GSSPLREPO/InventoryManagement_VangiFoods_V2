@@ -101,22 +101,18 @@
                 </div>
                 <div class="col-md-4">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             @Html.Label("Male")
                         </div>
                         <div class="col-md-4">
-                            @*<input type="radio" class="form-check-input"/>*@
-                            @*Rahul added class form-check-input and removed form-control-sm 15-02-2023.*@
                             @Html.RadioButtonFor(model => model.EmployeeGender, "Male", new { @class = "form-check-input form-control", @Value = "Male" })
-                            @*@Html.ValidationMessageFor(model => model.EmployeeGender, "", new { @class = "error mt-2 text-danger" })*@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             @Html.Label("Female")
                         </div>
                         <div class="col-md-4">
-                            @*Rahul added class form-check-input and removed form-control-sm 15-02-2023.*@
                             @Html.RadioButtonFor(model => model.EmployeeGender, "Female", new { @class = "form-check-input form-control", @Value = "Female" })
                         </div>
                         @Html.ValidationMessageFor(model => model.EmployeeGender, "", new { @class = "error mt-2 text-danger" })

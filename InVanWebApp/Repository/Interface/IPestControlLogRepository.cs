@@ -24,5 +24,6 @@ namespace InVanWebApp.Repository.Interface
         //Function define for: Update  PestControlLog record.
         ResponseMessageBO Update(PestControlLogBO model);
 
+        List<PestControlLogBO> GetAllPestCntrolLogList(int flagdate, DateTime? FromDate = null, DateTime? ToDate = null);
     }
 }

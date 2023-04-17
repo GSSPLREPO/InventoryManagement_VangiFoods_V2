@@ -84,7 +84,7 @@
                     {
                         @class = "form-control form-control-sm",
                         type = "date",@*@readonly = "readonly",*@@min = DateTime.Now.ToString("yyyy-MM-dd")
-                    })
+})
                     @Html.ValidationMessageFor(model => model.BestBeforeDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -197,7 +197,7 @@
                     @Html.Label("Lab Analysis Report No")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.LabAnalysisReportNo, new {@id="ReportNo", @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsAlphaNumeric(event)" })
+                    @Html.TextBoxFor(model => model.LabAnalysisReportNo, new { @id = "ReportNo", @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsAlphaNumeric(event)" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Lab Analysis Report")
@@ -237,7 +237,7 @@
     </div>
 }
 
-
+@Html.Raw(TempData["Success"])
 
 
 @section Scripts {
@@ -346,7 +346,7 @@
         var reportNo = $("#ReportNo").val();
         var size = document.getElementById('file').files[0].size;
         var filePath = fileInput.value;
-        
+
         //var _size = size;
         //var fSExt = new Array('Bytes', 'KB', 'MB', 'GB'),
         //    i = 0; while (_size > 900) { _size /= 1024; i++; }
@@ -367,15 +367,15 @@
             fileInput.value = '';
             return false;
         }
-        else if (reportNo == null || reportNo=="") {
+        else if (reportNo == null || reportNo == "") {
             alert('First enter lab anlaysis no ');
             fileInput.value = '';
             return false;
         }
 
         return true;
-     
+
     }
 
-    
+
 </script>

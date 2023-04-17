@@ -24,5 +24,6 @@ namespace InVanWebApp.Repository.Interface
         //Function define for: Update WaterAnalysis record.
         ResponseMessageBO Update(WaterAnalysisBO model);
 
+        List<WaterAnalysisBO> GetAllWaterAnalysisList(int flagdate, DateTime? FromDate = null, DateTime? ToDate = null);
     }
 }

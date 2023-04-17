@@ -209,8 +209,8 @@
 @Html.Raw(TempData["Success"])
 
 <script>
-    function OnOrderQtyChange(value) {
 
+    function OnOrderQtyChange(value) {
         if (value == '' || value == null)
             value = 0;
         value = parseFloat(value);
@@ -317,6 +317,10 @@
 
                 $('#WorkOrderNumber').val(result.WorkOrderNo);
                 var count = result.salesOrderItemsDetails.length;
+
+                $('#PackingSize').removeAttr('readonly');
+                $('#TotalRawMaterialYeild').removeAttr('readonly');
+                
                 var i = 0;
                 $("#ProductId option").remove();
                 $("#ProductId").append($("<option></option>").val('').html('--Select--'));
@@ -433,86 +437,91 @@
             type: "POST",
             data: {},
             success: function (result) {
-                $('#OrderQuantity').val(result[0].SalesOrderQty);
+                if (result.length != 0) {
+                    $('#OrderQuantity').val(result[0].SalesOrderQty);
 
-                var table = document.getElementById('submissionTable');
-                for (var j = 0; j < result.length; j++) {
-                    var rowCount = table.rows.length;
-                    var cellCount = table.rows[0].cells.length;
-                    var row = table.insertRow(rowCount);
+                    var table = document.getElementById('submissionTable');
+                    for (var j = 0; j < result.length; j++) {
+                        var rowCount = table.rows.length;
+                        var cellCount = table.rows[0].cells.length;
+                        var row = table.insertRow(rowCount);
 
-                    for (var i = 0; i < cellCount; i++) {
-                        var cell = 'cell' + i;
-                        cell = row.insertCell(i);
+                        for (var i = 0; i < cellCount; i++) {
+                            var cell = 'cell' + i;
+                            cell = row.insertCell(i);
 
-                        if (i == 0) {
-                            cell.innerHTML = result[j].ItemCode;
-                            cell.setAttribute("id", "ItemCode_" + j);
-                        }
-                        else if (i == 1) {
-                            cell.innerHTML = result[j].ItemId;
-                            cell.setAttribute("class", "d-none");
-                            cell.setAttribute("id", "ItemID_" + j);
-                        }
-                        else if (i == 2) {
-                            cell.innerHTML = result[j].ItemName;
-                            cell.setAttribute("id", "ItemName_" + j);
+                            if (i == 0) {
+                                cell.innerHTML = result[j].ItemCode;
+                                cell.setAttribute("id", "ItemCode_" + j);
+                            }
+                            else if (i == 1) {
+                                cell.innerHTML = result[j].ItemId;
+                                cell.setAttribute("class", "d-none");
+                                cell.setAttribute("id", "ItemID_" + j);
+                            }
+                            else if (i == 2) {
+                                cell.innerHTML = result[j].ItemName;
+                                cell.setAttribute("id", "ItemName_" + j);
 
-                        }
-                        else if (i == 3) {
-                            cell.innerHTML = result[j].RoundedRatio;
-                            cell.setAttribute("id", "RoundedRatio_" + j);
+                            }
+                            else if (i == 3) {
+                                cell.innerHTML = result[j].RoundedRatio;
+                                cell.setAttribute("id", "RoundedRatio_" + j);
 
-                        }
-                        else if (i == 4) {
-                            cell.innerHTML = result[j].BatchSize;
-                            cell.setAttribute("id", "BatchSize_" + j);
-                        }
-                        else if (i == 5) {
-                            var t4 = document.createElement("input");
-                            t4.id = "TotalBatches_" + j;
-                            t4.setAttribute("value", result[j].TotalBatches);
-                            t4.setAttribute("class", "form-control form-control-sm");
-                            t4.setAttribute("readonly", "readonly");
-                            cell.appendChild(t4);
+                            }
+                            else if (i == 4) {
+                                cell.innerHTML = result[j].BatchSize;
+                                cell.setAttribute("id", "BatchSize_" + j);
+                            }
+                            else if (i == 5) {
+                                var t4 = document.createElement("input");
+                                t4.id = "TotalBatches_" + j;
+                                t4.setAttribute("value", result[j].TotalBatches);
+                                t4.setAttribute("class", "form-control form-control-sm");
+                                t4.setAttribute("readonly", "readonly");
+                                cell.appendChild(t4);
+                            }
+
+                            else if (i == 6) {
+                                var t4 = document.createElement("input");
+                                t4.id = "Yield_" + j;
+                                t4.setAttribute("value", result[j].Yield);
+                                t4.setAttribute("class", "form-control form-control-sm");
+                                t4.setAttribute("maxlength", "8");
+                                t4.setAttribute("onkeypress", "return isNumberKey(event)");
+                                t4.setAttribute("onchange", "OnChangeYield($(this).val(),id)");
+                                cell.appendChild(t4);
+                            }
+                            else if (i == 7) {
+                                var t4 = document.createElement("input");
+                                t4.id = "ActualRequirement_" + j;
+                                t4.setAttribute("value", result[j].ActualRequirement);
+                                t4.setAttribute("class", "form-control form-control-sm");
+                                t4.setAttribute("readonly", "readonly");
+                                cell.appendChild(t4);
+                            }
+                            else if (i == 8) {
+                                cell.innerHTML = result[j].StockInHand + " Kg";
+                                cell.setAttribute("id", "StockInHand_" + j);
+                            }
+                            else if (i == 9) {
+                                var t4 = document.createElement("input");
+                                t4.id = "ToBeProcured_" + j;
+                                t4.setAttribute("value", result[j].ToBeProcured);
+                                t4.setAttribute("class", "form-control form-control-sm");
+                                t4.setAttribute("readonly", "readonly");
+                                cell.appendChild(t4);
+                            }
                         }
 
-                        else if (i == 6) {
-                            var t4 = document.createElement("input");
-                            t4.id = "Yield_" + j;
-                            t4.setAttribute("value", result[j].Yield);
-                            t4.setAttribute("class", "form-control form-control-sm");
-                            t4.setAttribute("maxlength", "8");
-                            t4.setAttribute("onkeypress", "return isNumberKey(event)");
-                            t4.setAttribute("onchange", "OnChangeYield($(this).val(),id)");
-                            cell.appendChild(t4);
-                        }
-                        else if (i == 7) {
-                            var t4 = document.createElement("input");
-                            t4.id = "ActualRequirement_" + j;
-                            t4.setAttribute("value", result[j].ActualRequirement);
-                            t4.setAttribute("class", "form-control form-control-sm");
-                            t4.setAttribute("readonly", "readonly");
-                            cell.appendChild(t4);
-                        }
-                        else if (i == 8) {
-                            cell.innerHTML = result[j].StockInHand + " Kg";
-                            cell.setAttribute("id", "StockInHand_" + j);
-                        }
-                        else if (i == 9) {
-                            var t4 = document.createElement("input");
-                            t4.id = "ToBeProcured_" + j;
-                            t4.setAttribute("value", result[j].ToBeProcured);
-                            t4.setAttribute("class", "form-control form-control-sm");
-                            t4.setAttribute("readonly", "readonly");
-                            cell.appendChild(t4);
-                        }
                     }
 
+                    var value = $('#OrderQuantity').val();
+                    OnOrderQtyChange(value);
                 }
+                else
+                    alert('No recipe is made for the selected product name! Create the recipe.')
 
-                var value = $('#OrderQuantity').val();
-                OnOrderQtyChange(value);
             },
             error: function (err) {
                 alert('Not able to fetch recipe!');
