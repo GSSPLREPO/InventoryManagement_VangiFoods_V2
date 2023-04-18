@@ -15,7 +15,8 @@ namespace InVanWebApp.Controllers
     {
         private IRejectionNoteRepository _RejectionNoteRepository;
         private IInwardQCSortingRepository _QCRepository;
-        private IGRNRepository _GRNrepository; 
+        private IGRNRepository _GRNrepository;
+        private IPreProduction_QCRepository _repository;    //Rahul 18 Apr 23.
         private static ILog log = LogManager.GetLogger(typeof(POPaymentController));
 
         #region Initializing Constructor(s)
@@ -27,18 +28,20 @@ namespace InVanWebApp.Controllers
         {
             _RejectionNoteRepository = new RejectionNoteRepository();
             _QCRepository = new InwardQCSortingRepository();
-            _GRNrepository = new GRNRepository(); 
+            _GRNrepository = new GRNRepository();
+            _repository = new PreProduction_QCRepository();    //Rahul 18 Apr 23.
         }
 
         /// <summary>
         /// Raj: Constructor With Parameters for initalizing objects.
         /// </summary>
         /// <param name="RejectionNoteRepository"></param>
-        public RejectionNoteController(IRejectionNoteRepository RejectionNoteRepository, IInwardQCSortingRepository QCRepository)
+        public RejectionNoteController(IRejectionNoteRepository RejectionNoteRepository, IInwardQCSortingRepository QCRepository, IPreProduction_QCRepository preProduction_QCRepository)
         {
             _RejectionNoteRepository = RejectionNoteRepository;
             _QCRepository = QCRepository;
-            _GRNrepository = new GRNRepository();  
+            _GRNrepository = new GRNRepository();
+            _repository = preProduction_QCRepository;     //Rahul 18 Apr 23.
         }
         #endregion
 
@@ -68,6 +71,7 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 //BindInwardNoNumber();
+                BindPreProductionQCNumber();     //Rahul 18 Apr 23.
                 BindInwardNumber();  
                 RejectionNoteBO model = new RejectionNoteBO();
                 model.NoteDate = DateTime.UtcNow;
@@ -107,7 +111,29 @@ namespace InVanWebApp.Controllers
         }
 
         #endregion
-        
+
+        #region Bind all Production material note and it's details including which item Pre Production
+        /// <summary>
+        /// Rahul 18 Apr 23.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="PPINote_Id"></param>
+        /// <returns></returns>
+        public JsonResult ProdIndent_NoDeatils(string id, string PPINote_Id = null)
+        {
+            int PPQCId = 0;
+            int PPNote_Id = 0;
+            if (id != "" && id != null)
+                PPQCId = Convert.ToInt32(id);
+            if (PPINote_Id != "" && PPINote_Id != null)
+                PPNote_Id = Convert.ToInt32(PPINote_Id);
+
+            var result = _repository.GetProdIndent_NoDeatils(PPQCId, PPNote_Id);
+            return Json(result);
+        }
+        #endregion
+
+
         #region Bind dropdown of Inward Number
         public void BindInwardNumber()
         {
@@ -116,13 +142,23 @@ namespace InVanWebApp.Controllers
             var resultList = new SelectList(result.ToList(), "ID", "InwardNumber");
             ViewData["InwardNumber"] = resultList;
         }
-
-        public void BindInwardNoNumber()
+        /// <summary>
+        /// Rahul: Bind dropdown of PreProduction QC Number
+        /// 18 Apr 2023.
+        /// </summary>
+        public void BindPreProductionQCNumber()
         {
-            var result = _QCRepository.GetInwNumberForDropdown();
-            var resultList = new SelectList(result.ToList(), "ID", "InwardNumber");
-            ViewData["InwNumberAndId"] = resultList;
+            var result = _RejectionNoteRepository.GetPreProductionQCNumberForDropdown();
+            var resultList = new SelectList(result.ToList(), "ID", "QCNumber");
+            ViewData["PreProductionQCAndId"] = resultList;
         }
+
+        //public void BindInwardNoNumber()
+        //{
+        //    var result = _QCRepository.GetInwNumberForDropdown();
+        //    var resultList = new SelectList(result.ToList(), "ID", "InwardNumber");
+        //    ViewData["InwNumberAndId"] = resultList;
+        //}
         #endregion
 
         #region 
@@ -149,7 +185,8 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate Rejection Note! Can not be completed!');</script>";
-                            BindInwardNoNumber();
+                            //BindInwardNoNumber();
+                            BindPreProductionQCNumber();    //Rahul 18 Apr 23.
                             BindInwardNumber(); 
                             model.NoteDate = DateTime.Today;
                             //==========Document number for Rejection note============//
@@ -171,7 +208,8 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         }
 
-                        BindInwardNoNumber();
+                        //BindInwardNoNumber();
+                        BindPreProductionQCNumber();    //Rahul 18 Apr 23.
                         BindInwardNumber(); 
                         model.NoteDate = DateTime.Today;
                         //==========Document number for Rejection note============//
@@ -192,7 +230,8 @@ namespace InVanWebApp.Controllers
                 log.Error("Error", ex);
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
-                BindInwardNoNumber();
+                //BindInwardNoNumber();
+                BindPreProductionQCNumber();    //Rahul 18 Apr 23.
                 BindInwardNumber(); 
                 model.NoteDate = DateTime.Today;
                 //==========Document number for Rejection note============//

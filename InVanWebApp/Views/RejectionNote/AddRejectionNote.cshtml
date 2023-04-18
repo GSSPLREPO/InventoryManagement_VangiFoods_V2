@@ -19,6 +19,25 @@
 
             <div class="row">
                 <div class="col-md-2">
+                    @Html.Label("Rejection Note Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RejectionNoteNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.RejectionNoteNo, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    <label id="lblNoteDate">Rejection Note Date</label>
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.NoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                    @Html.ValidationMessageFor(model => model.NoteDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />    @*//Rahul 18 Apr 23.*@
+            <div class="row">
+                <div class="col-md-2">
                     <label>QC Type <span style="color:red">*</span> </label>
                 </div>
                 <div class="col-md-4">
@@ -27,56 +46,9 @@
                         <option value="PreProductionQC">Pre Production QC</option>
                     </select>
                 </div>
-                <div class="col-md-2">
-                    <label id="lblNoteDate">Inward QC Date</label>
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.NoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-                    @Html.ValidationMessageFor(model => model.NoteDate, "", new { @class = "error mt-2 text-danger" })
-                </div>
             </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Inward QC Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.InwardQCNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.InwardQCNo, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Inward Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownList("InwardNote_Id", (IEnumerable<SelectListItem>)ViewData["InwNumberAndId"], "--Select--",
-                        new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.InwardNote_Id, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div id="RNDetails">
-                <div class="row">
-                    <div class="col-md-2">
-                        @Html.Label("Rejection Note Number")
-                        <span style="color:red">*</span>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.RejectionNoteNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
-                        @Html.ValidationMessageFor(model => model.RejectionNoteNo, "", new { @class = "error mt-2 text-danger" })
-                    </div>
-                    <div class="col-md-2">
-                        <label id="lblNoteDate">Rejection Note Date</label>
-                        <span style="color:red">*</span>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.NoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
-                        @Html.ValidationMessageFor(model => model.NoteDate, "", new { @class = "error mt-2 text-danger" })
-                    </div>
-                </div>
-                <br />
+            <br />    @*//Rahul 18 Apr 23.*@
+            <div id="divInwardQC" style="display:none;">
                 <div class="row">
                     <div class="col-md-2">
                         @*Inward Number*@   @*Rahul added Label+span 08-02-23.*@
@@ -85,7 +57,7 @@
                     </div>
                     <div class="col-md-4">
                         @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
-                                           new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())", onmouseleave = "ValMsgInwardQCNumber($(this).val(),id)" })
+                                            new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                         @Html.ValidationMessageFor(model => model.InwardQCId, "", new { id = "ValMsgInwardQCNumber", @class = "error mt-2 text-danger" })
                         @*<span id="ValMsgInwardQCNumber" style="display:none; color:red"></span>*@ @*Rahul removed and added onmouseleave event 09-02-2023.*@
                         @Html.HiddenFor(model => model.InwardQCNumber)
@@ -101,24 +73,48 @@
                     </div>
                     @Html.HiddenFor(model => model.PO_Id)
                 </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Supplier Name")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.SupplierName, "", new { id = "ValMgssuppliername", @class = "error mt-2 text-danger" })
+                    </div>
+                    <div class="col-md-4 d-none">
+                        @Html.TextBoxFor(model => model.SupplierID, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                    </div>
+                </div>
+            </div>
+            <br />  @*//Rahul 18 Apr 23.*@
+            <div id="divProductionQC" style="display:none;">
+                <div class="row">
+                    <div class="col-md-2">
+                        @*Inward Number*@   @*Rahul added Label+span 08-02-23.*@
+                        @Html.Label("Pre-Production QC Number")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.PreProductionQCId, (IEnumerable<SelectListItem>)ViewData["PreProductionQCAndId"], "--Select--",
+                                       new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProduction($(this).val())" })
+                        @Html.ValidationMessageFor(model => model.PreProductionQCId, "", new { id = "ValMsgProductionQCNumber", @class = "error mt-2 text-danger" })
+                        @Html.HiddenFor(model => model.PreProductionQCNumber)
+                        @Html.HiddenFor(model => model.ProductionMaterialIssueNoteNo)
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Production Indent Number")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.ProductionIndentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                    @Html.HiddenFor(model => model.ProductionIndentId)
+                </div>
             </div>
             <br />
-
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Supplier Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { id = "ValMgssuppliername", @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.SupplierID, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
-                </div>
-            </div>
-            <br />
-
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Item QC details")
@@ -175,36 +171,38 @@
 
 
 <script type="text/javascript">
-
+    $(document).ready(function () {
+        
+    });
+   //Rahul 18 Apr 23.
     $('#QCType').change(function () {
         var QCType = $('#QCType option:selected').attr('value');
         if (QCType == 'InwardQC') {
-            $("#lblNoteDate").empty();
-            $("#lblNoteDate").append("Inward QC Date");
-            $("#RNDetails").hide();
+            $("#divInwardQC").show();
+            $("#divProductionQC").hide();
         }
         else {
-            $("#lblNoteDate").empty();
-            $("#lblNoteDate").append("Pre Production QC Date");
+            $("#divInwardQC").hide();
+            $("#divProductionQC").show();
         }
     });
 
     var InwardQuantities = "";
-
+    @*//Rahul 18 Apr 23.*@
     ///---Rahul added onmouseleave event ValMsgInwardQCNumber(value, id) strart 09-02-2023.
-    function ValMsgInwardQCNumber(value, id) {
-        //debugger
-        var InwardQCNumber = $("#InwardQCId option:selected").val();
-        if (InwardQCNumber == '' || InwardQCNumber == 0) {
-            $("#ValMsgInwardQCNumber").text("Please select Inward QC number!");
-            $("#ValMsgInwardQCNumber").show();
-            document.getElementById(id).focus();
-            return
-        }
-        else {
-            $("#ValMsgInwardQCNumber").hide();
-        }
-    }
+    //function ValMsgInwardQCNumber(value, id) {
+    //    //debugger
+    //    var InwardQCNumber = $("#InwardQCId option:selected").val();
+    //    if (InwardQCNumber == '' || InwardQCNumber == 0) {
+    //        $("#ValMsgInwardQCNumber").text("Please select Inward QC number!");
+    //        $("#ValMsgInwardQCNumber").show();
+    //        document.getElementById(id).focus();
+    //        return
+    //    }
+    //    else {
+    //        $("#ValMsgInwardQCNumber").hide();
+    //    }
+    //}
     ///---Rahul added onmouseleave event ValMsgInwardQCNumber(value, id) end.
 
     function SelectedIndexChanged(id) {
@@ -394,7 +392,126 @@
         $('#InwardQuantities').val(InwardQuantities);
         //alert($('#InwardQuantities').val());        
     }
+    ///Rahul 'SelectedIndexChangedProduction' 18 Apr 2023 start.
+    function SelectedIndexChangedProduction(id) {
+        debugger
+        //$('#ValMgssuppliername').hide();
+        var PreProductionQCNumber = $("#PreProductionQCId option:selected").text();
 
+        var PreProductionQcNumSplit = PreProductionQCNumber.split(' (');
+        document.getElementById("PreProductionQCNumber").value = PreProductionQcNumSplit[0];
+        var tempPreProductionQcNumSplit = PreProductionQcNumSplit[1].split(')');
+        document.getElementById("ProductionMaterialIssueNoteNo").value = tempPreProductionQcNumSplit[0];
+
+        //For deleting the rows of Item table if exist.       
+        var table = document.getElementById('ItemTable');
+        var rowCount = table.rows.length;
+        while (rowCount != '1') {
+            var row = table.deleteRow(rowCount - 1);
+            rowCount--;
+        }
+        //Clearing the address textarea
+        $('#SupplierName').val(' ');
+        $.ajax({
+            type: "POST",
+            url: `/RejectionNote/ProdIndent_NoDeatils?id=` + id,
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                $('#ProductionIndentNo').val(result[0].ProductionIndentNo);
+                $('#ProductionIndentId').val(result[0].ProductionIndentID);
+                var ColCount = result.length
+                var flag = 0; //This flag is for checking whether the selected Inward QC is completed or not.
+
+                //===================Create dynamic table for binding Item details====================//
+                var table = document.getElementById('ItemTable');
+                for (var j = 1; j < result.length; j++) {
+                    //debugger
+                    var rowCount = table.rows.length;
+                    var cellCount = table.rows[0].cells.length;
+                    var row = table.insertRow(rowCount);
+                    for (var i = 0; i < cellCount; i++) {
+                        var cell = 'cell' + i;
+                        cell = row.insertCell(i);
+                        if (i == 0) {
+                            cell.setAttribute("id", "ItemName_" + j);
+                            cell.innerHTML = result[j].Item_Name;
+                        }
+                        else if (i == 1) {
+                            cell.setAttribute("id", "ItemCode_" + j);
+                            cell.innerHTML = result[j].Item_Code;
+                        }
+                        else if (i == 2) {
+                            cell.setAttribute("id", "ItemUnitPrice_" + j);
+                            cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
+                        }
+                        else if (i == 3) {
+                            cell.setAttribute("id", "ItemUnit_" + j);
+                            cell.innerHTML = result[j].ItemUnit;
+                        }
+                        else if (i == 4) {
+                            cell.setAttribute("id", "ItemQty" + j);
+                            cell.innerHTML = result[j].TotalQuantity + " " + result[j].ItemUnit;
+                        }
+                        else if (i == 5) {
+                            cell.setAttribute("id", "InwardQuantity_" + j);
+                            cell.innerHTML = result[j].InwardQuantity + " " + result[j].ItemUnit;
+                        }
+                        else if (i == 6) {
+                            cell.setAttribute("id", "RejectedQuantity_" + j);
+                            cell.innerHTML = result[j].RejectedQuantity;
+                            //Rahul added 'RejQty' check if Zero then alert of if (flag == 0) 16-02-23. 
+                            var RejQty = $("#RejectedQuantity_" + j).text();
+                            if (RejQty != '0' && RejQty != '' && RejQty != null && RejQty != 'undefined') {
+                                flag = 1;
+                            }
+                        }
+                        else if (i == 7) {
+                            cell.setAttribute("id", "QuantityTookForSorting_" + j);
+                            cell.innerHTML = result[j].QuantityTookForSorting + " " + result[j].ItemUnit;
+                        }
+                        else if (i == 8) {
+                            cell.setAttribute("id", "WastageQuantityInPercentage_" + j);
+                            cell.innerHTML = result[j].WastageQuantityInPercentage.toFixed(4);
+                        }
+                        else if (i == 9) {
+                            cell.setAttribute("id", "Remarks_" + j);
+                            cell.innerHTML = result[j].Remarks;
+                        }
+                        else if (i == 10) {
+                            var t7 = document.createElement("input");
+                            t7.id = "ItemID" + j;
+                            t7.setAttribute("value", result[j].ItemId);
+                            t7.setAttribute("disabled", "true");
+                            t7.setAttribute("class", "d-none");
+                            cell.appendChild(t7);
+                            cell.setAttribute("style", "display:none"); //Rahul added 12-01-2023.
+                        }
+                        else if (i == 11) {
+                            var t7 = document.createElement("input");
+                            t7.id = "ItemTaxValue" + j;
+                            t7.setAttribute("value", result[j].ItemTaxValue);
+                            t7.setAttribute("disabled", "true");
+                            t7.setAttribute("class", "d-none");
+                            cell.appendChild(t7);
+                            cell.setAttribute("style", "display:none"); //Rahul added 12-01-2023.
+                        }
+                    }
+
+                }
+                //Rahul added 'RejQty' check if Zero then alert of if (flag == 0) 16-02-23. 
+                if (flag == 0) {
+                    alert('Rejected Quantity is zero, Rejection Note can not be created for the selected Pre-Production QC number!');
+                    $('#btnSave').prop('disabled', 'true');
+                }
+                else {
+                    $('#btnSave').prop('disabled', false);
+                }
+            }
+        });
+    }
+    ///Rahul 'SelectedIndexChangedProduction' 18 Apr 2023 end.
 </script>
 
 @Html.Raw(TempData["Success"])

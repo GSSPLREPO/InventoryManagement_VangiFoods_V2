@@ -19,6 +19,8 @@ namespace InVanWebApp.Repository.Interface
         RejectionNoteBO GetRejectionNoteById(int ID);  
         //Function define for: Delete record of item type using it's RejectionID  
         void Delete(int RejectionID, int userId);
+        //Bind dropdown of Pre-Production QC Number 
+        IEnumerable<PreProduction_QCBO> GetPreProductionQCNumberForDropdown();
 
     }
 }

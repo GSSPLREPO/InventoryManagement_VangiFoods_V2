@@ -260,7 +260,6 @@ namespace InVanWebApp.Repository
         }
         #endregion 
 
-
         #region Delete function  
         /// <summary>
         /// Delete record by ID 
@@ -289,6 +288,44 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Bind dropdown of Pre-Production QC Number
+        /// <summary>
+        /// Rahul: Bind dropdown of PreProduction QC Number
+        /// 18 Apr 2023.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PreProduction_QCBO> GetPreProductionQCNumberForDropdown() 
+        {
+            List<PreProduction_QCBO> resultList = new List<PreProduction_QCBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_BindPreProductionQCForRejectionNote_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new PreProduction_QCBO() 
+                        {
+                            ID = Convert.ToInt32(dataReader["ID"]),
+                            QCNumber = dataReader["PreProductionQCNumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
 
     }
 }

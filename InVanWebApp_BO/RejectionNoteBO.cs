@@ -40,6 +40,13 @@ namespace InVanWebApp_BO
         public string WastageQuantities { get; set; }
         public string InwardQuantities { get; set; } //
         public string ReasonsForRejection { get; set; }
+        public string PreProductionQCNumber { get; set; }  //Rahul added 18-04-2023. 
+        public string ProductionMaterialIssueNoteNo { get; set; }  //Rahul added 18-04-2023. 
+        [Required(ErrorMessage = "Enter Production Indent Number!")]
+        public string ProductionIndentNo { get; set; }  //Rahul added 18-04-2023.  
+        [Required(ErrorMessage ="Select Production QC!")]
+        public int PreProductionQCId { get; set; }  //Rahul added 18-04-2023. 
+        public int ProductionIndentId { get; set; }  //Rahul added 18-04-2023.  
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

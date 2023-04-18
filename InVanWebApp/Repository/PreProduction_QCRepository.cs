@@ -252,6 +252,7 @@ namespace InVanWebApp.Repository
                                 Item_Name = dataReader2["Item_Name"].ToString(),
                                 Item_Code = dataReader2["Item_Code"].ToString(),
                                 ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                                ItemUnit = dataReader2["ItemUnit"].ToString(),
                                 IssuedQuantity = Convert.ToDouble(dataReader2["MaterialIssuedQty"]),
                                 QuantityTookForSorting = float.Parse(dataReader2["QuantityTookForSorting"].ToString()),
                                 BalanceQuantity = float.Parse(dataReader2["BalanceQuantity"].ToString()),

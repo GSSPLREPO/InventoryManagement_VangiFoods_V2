@@ -16,17 +16,19 @@
             <h4>Add Rejection Note</h4>
             <hr />
             @Html.ValidationSummary(true)
+
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Rejection Note Number")
-                    <span style="color:red">*</span>
+                    <label>QC Type <span style="color:red">*</span> </label>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.RejectionNoteNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.RejectionNoteNo, "", new { @class = "error mt-2 text-danger" })
+                    <select class="form-control form-control-sm" id="QCType" name="QCType">
+                        <option value="InwardQC">Inward QC</option>
+                        <option value="PreProductionQC">Pre Production QC</option>
+                    </select>
                 </div>
                 <div class="col-md-2">
-                    <label id="lblNoteDate">Rejection Note Date</label>
+                    <label id="lblNoteDate">Inward QC Date</label>
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -37,27 +39,68 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @*Inward Number*@   @*Rahul added Label+span 08-02-23.*@
                     @Html.Label("Inward QC Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
-                   new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())", onmouseleave = "ValMsgInwardQCNumber($(this).val(),id)" })
-                    @Html.ValidationMessageFor(model => model.InwardQCId, "", new { id = "ValMsgInwardQCNumber", @class = "error mt-2 text-danger" })
-                    @*<span id="ValMsgInwardQCNumber" style="display:none; color:red"></span>*@ @*Rahul removed and added onmouseleave event 09-02-2023.*@
-                    @Html.HiddenFor(model => model.InwardQCNumber)
-                    @Html.HiddenFor(model => model.InwardNoteNumber)
+                    @Html.TextBoxFor(model => model.InwardQCNo, new { @class = "form-control form-control-sm", Value = ViewData["InwardQCDocumentNo"], @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.InwardQCNo, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("PO Number")
+                    @Html.Label("Inward Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
+                    @Html.DropDownList("InwardNote_Id", (IEnumerable<SelectListItem>)ViewData["InwNumberAndId"], "--Select--",
+                        new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
+                    @Html.ValidationMessageFor(model => model.InwardNote_Id, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                @Html.HiddenFor(model => model.PO_Id)
+            </div>
+            <br />
+            <div id="RNDetails">
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Rejection Note Number")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.RejectionNoteNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.RejectionNoteNo, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                    <div class="col-md-2">
+                        <label id="lblNoteDate">Rejection Note Date</label>
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.NoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                        @Html.ValidationMessageFor(model => model.NoteDate, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        @*Inward Number*@   @*Rahul added Label+span 08-02-23.*@
+                        @Html.Label("Inward QC Number")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
+                                           new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())", onmouseleave = "ValMsgInwardQCNumber($(this).val(),id)" })
+                        @Html.ValidationMessageFor(model => model.InwardQCId, "", new { id = "ValMsgInwardQCNumber", @class = "error mt-2 text-danger" })
+                        @*<span id="ValMsgInwardQCNumber" style="display:none; color:red"></span>*@ @*Rahul removed and added onmouseleave event 09-02-2023.*@
+                        @Html.HiddenFor(model => model.InwardQCNumber)
+                        @Html.HiddenFor(model => model.InwardNoteNumber)
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("PO Number")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
+                    </div>
+                    @Html.HiddenFor(model => model.PO_Id)
+                </div>
             </div>
             <br />
 
@@ -68,13 +111,14 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { id = "ValMgssuppliername", @class = "error mt-2 text-danger"})
+                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { id = "ValMgssuppliername", @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-4 d-none">
                     @Html.TextBoxFor(model => model.SupplierID, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
                 </div>
             </div>
             <br />
+
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Item QC details")
@@ -131,6 +175,22 @@
 
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        //$("#RNDetails").hide();
+    });
+
+    $('#QCType').change(function () {
+        var QCType = $('#QCType option:selected').attr('value');
+        if (QCType == 'InwardQC') {
+            $("#lblNoteDate").empty();
+            $("#lblNoteDate").append("Inward QC Date");
+            $("#RNDetails").hide();
+        }
+        else {
+            $("#lblNoteDate").empty();
+            $("#lblNoteDate").append("Pre Production QC Date");
+        }
+    });
 
     var InwardQuantities = "";
 

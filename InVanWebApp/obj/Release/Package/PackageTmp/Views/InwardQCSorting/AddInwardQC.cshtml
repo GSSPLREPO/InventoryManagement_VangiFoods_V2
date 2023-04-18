@@ -446,43 +446,91 @@
         var cell = document.getElementById("DeliveredQty" + rowNo);
         var temp_itemQty = cell.innerHTML.split(' ');
         var InwQty = parseFloat(temp_itemQty[0]);
-        value = parseFloat(value);
+
+        if (value == '' || value == null) {
+            value = 0;
+        }
+        else {
+            value = parseFloat(value);
+        }
+
         cell = document.getElementById("txtSortedQty" + rowNo);
         var balQty = cell.innerHTML;
         balQty = parseFloat(balQty);
-        console.log(balQty);
+
         if (value > (InwQty - balQty)) {
             alert("QC quantity cannot be greater then Inward quantity!");
             document.getElementById(id).focus();
-            //document.getElementById(id).setAttribute("style", "border-color:red;");
             document.getElementById(id).setAttribute("class", "border border-1 border-danger");
             $('#btnSave').prop("disabled", true);
             return;
         }
         else {
             $('#btnSave').prop("disabled", false);
+
             var tempInwQty = document.getElementById("txtQCQty" + rowNo).value;
-            //console.log(tempInwQty + " " + InwQty);
+            if (tempInwQty == '' || tempInwQty == null) {
+                tempInwQty = 0;
+            }
+            else {
+                tempInwQty = parseFloat(tempInwQty);
+            }
             document.getElementById("txtBalanceQty" + rowNo).value = ((parseFloat(temp_itemQty[0]) - (parseFloat(balQty))) - parseFloat(tempInwQty));
             QuantitiesForSorting = QuantitiesForSorting + "txtQCQty" + rowNo + "*" + value + ",";
 
             var BalQty = document.getElementById("txtBalanceQty" + rowNo).value;
             BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" + BalQty + ",";
             document.getElementById(id).removeAttribute("class", "border border-1 border-danger");
-            
+
         }
-            document.getElementById(id).setAttribute("style", "background-color:#9999994d;border-radius:5px;");
+        document.getElementById(id).setAttribute("style", "background-color:#9999994d;border-radius:5px;");
     }
 
     function SetInwardQty() {
+        var tableLength = document.getElementById('ItemTable').rows.length;
+        var flag = 0, i = 1;
+
+        if (tableLength > 1) {
+            while (i < tableLength - 1) {
+                var QtySort = document.getElementById("txtQCQty" + i).value;
+                if (QtySort == '' || QtySort == null)
+                    QtySort = 0;
+                else
+                    QtySort = parseFloat(QtySort);
+
+                var InwQty = document.getElementById("DeliveredQty" + i).innerHTML;
+                InwQty = parseFloat(InwQty);
+
+                var BalQty = document.getElementById("txtBalanceQty" + i).value;
+                BalQty = parseFloat(BalQty);
+
+                if (BalQty != 0) {
+                    if (QtySort > BalQty) {
+                        flag = 1;
+                        break;
+                    }
+                }
+                else {
+                    if (QtySort > InwQty) {
+                        flag = 1;
+                        break;
+                    }
+                }
+
+                i++;
+
+            }
+            if (flag == 1) {
+                alert("Quantity quantity is zero or null! Cannot create Inward QC!");
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
+
         createJson();
         $('#QuantitiesForSorting').val(itemTableDetails);
-        //$('#QuantitiesForSorting').val(QuantitiesForSorting);
-        //$('#BalanceQuantities').val(BalanceQuantities);
-        //$('#RejectedQuantities').val(RejectedQuantities);
-        //$('#WastageQuantities').val(WastagePercentages);
-        //$('#ReasonsForRejection').val(Reasons);
-        //console.log(QuantitiesForSorting + "_" + BalanceQuantities + "_" + RejectedQuantities + "_" + WastagePercentages + "_" + Reasons);
     }
 
 </script>
