@@ -23,5 +23,7 @@ namespace InVanWebApp.Repository.Interface
 
         //Function define for: Delete record of VegWasherDosageLog using it's Id
         void Delete(int Id, int userId);
+
+        List<VegWasherDosageLogBO> GetAllVegDoserLogList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null);
     }
 }

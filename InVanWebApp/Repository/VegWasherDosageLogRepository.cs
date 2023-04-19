@@ -256,5 +256,132 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region  Bind grid for Report
+        /// <summary>
+        /// Date: 17 APR'23
+        /// Siddharth: This function is for fecthing list of Sanitization and haygine.
+        /// </summary>
+        /// <returns></returns>
+
+        public List<SanitizationAndHygineBO> SanitizationAndHygineList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+
+            List<SanitizationAndHygineBO> sanitizations = new List<SanitizationAndHygineBO>();
+            try
+            {
+                if (fromDate == null && toDate == null)
+                {
+                    fromDate = DateTime.Today;
+                    toDate = DateTime.Today;
+                }
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_SanitizationAndHygine_GetAllByDate", con);
+                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var sanitize = new SanitizationAndHygineBO()
+                        {
+
+                            Id = Convert.ToInt32(reader["Id"]),
+                            //Date = Convert.ToDateTime(reader["Date"]),
+                            NameOfEmpolyee = reader["NameOfEmpolyee"].ToString(),
+                            Department = reader["Department"].ToString(),
+                            BodyTemperature = reader["BodyTemperature"].ToString(),
+                            HandWash = reader["HandWash"].ToString(),
+                            CleanNails = reader["CleanNails"].ToString(),
+                            CleanUniform = reader["CleanUniform"].ToString(),
+                            AppearAnyCutsandWounds = reader["AppearAnyCutsandWounds"].ToString(),
+                            WearAnyJwellery = reader["WearAnyJwellery"].ToString(),
+                            FullyCoverdHair = reader["FullyCoverdHair"].ToString(),
+                            CleanShoes = reader["CleanShoes"].ToString(),
+                            NoTobacoChewingum = reader["NoTobacoChewingum"].ToString(),
+                            AnyKindOfIllnessSeakness = reader["AnyKindOfIllnessSeakness"].ToString(),
+                            VerifyByName = reader["VerifyByName"].ToString(),
+                            Remark = reader["Remark"].ToString(),
+
+                        };
+                        sanitizations.Add(sanitize);
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return sanitizations;
+        }
+        #endregion
+
+        #region  Bind grid for Report
+        /// <summary>
+        /// Date: 17 APR'23
+        /// Siddharth: This function is for fecthing list of Veg Doser Log.
+        /// </summary>
+        /// <returns></returns>
+
+        public List<VegWasherDosageLogBO> GetAllVegDoserLogList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+
+            List<VegWasherDosageLogBO> vegWasherDosages = new List<VegWasherDosageLogBO>();
+            try
+            {
+                if (fromDate == null && toDate == null)
+                {
+                    fromDate = DateTime.Today;
+                    toDate = DateTime.Today;
+                }
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_VegWasherDosageLog_GetAllByDate", con);
+                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var vegdoserLog = new VegWasherDosageLogBO()
+                        {
+
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Date = Convert.ToDateTime(reader["Date"]),
+                            //VegWasher1SolutionAMl = reader["VegWasher1SolutionAMl"].ToString(),
+                            //VegWasher1SolutionBMl = reader["VegWasher1SolutionBMl"].ToString(),
+                            VegWasher1SolutionAMl = Convert.ToDouble(reader["VegWasher1SolutionAMl"]),
+                            VegWasher1SolutionBMl = Convert.ToDouble(reader["VegWasher1SolutionBMl"]),
+                            NameOfItem1 = reader["NameOfItem1"].ToString(),
+                            WashingTime1 = reader["WashingTime1"].ToString(),
+                            Ppm1 = reader["Ppm1"].ToString(),
+                            VegWasher2SolutionAMl = Convert.ToDouble(reader["VegWasher2SolutionAMl"]),
+                            VegWasher2SolutionBMl = Convert.ToDouble(reader["VegWasher2SolutionBMl"]),
+                            NameOfItem2 = reader["NameOfItem2"].ToString(),
+                            WashingTime2 = reader["WashingTime2"].ToString(),
+                            Ppm2 = reader["Ppm2"].ToString(),
+                            VerifyByName = reader["VerifyByName"].ToString()
+
+                        };
+                        vegWasherDosages.Add(vegdoserLog);
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return vegWasherDosages;
+        }
+        #endregion
     }
 }

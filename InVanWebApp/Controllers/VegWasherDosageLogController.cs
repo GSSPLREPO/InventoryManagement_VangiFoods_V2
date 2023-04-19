@@ -11,6 +11,9 @@ using log4net;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp.Common;
 using System.IO;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Web.UI;
 
 namespace InVanWebApp.Controllers
 {
@@ -196,6 +199,151 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
 
+        #endregion
+
+        #region  Bind Datatable and Export Pdf & Excel
+        /// <summary>
+        /// Develop By Siddharth on 17-04-2023
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetAllVegDoserLogList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+
+
+            var VegDoserLog = _vegWasherDosageLogRepository.GetAllVegDoserLogList(flagdate, fromDate, toDate);
+            TempData["VegWasherDoserExcel"] = VegDoserLog;
+            TempData["VegWasherDoserExcel"] = VegDoserLog;
+            return Json(new { data = VegDoserLog }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Excel Veg Washer Doser
+        //public void ExportAsExcel()
+        public ActionResult VegWasherDoserExcel()
+        {
+            if (TempData["VegWasherDoserExcel"] == null)
+            {
+                return View("Index");
+            }
+
+            GridView gv = new GridView();
+
+            List<VegWasherDosageLogBO> vegWashers = TempData["VegWasherDoserExcel"] as List<VegWasherDosageLogBO>;
+            DataTable dt = new DataTable();
+            //dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Date");
+            dt.Columns.Add("Veg Washer-1 Solution-A (ml)");
+            dt.Columns.Add("Veg Washer-1 Solution-B (ml)");
+            dt.Columns.Add("Veg Washer-1 Name of Item");
+            dt.Columns.Add("Veg Washer-1 Washing Time");
+            dt.Columns.Add("Veg Washer-1 PPM");
+            dt.Columns.Add("Veg Washer-2 Solution-A (ml)");
+            dt.Columns.Add("Veg Washer-2 Solution-B (ml)");
+            dt.Columns.Add("Veg Washer-2 Name of Item");
+            dt.Columns.Add("Veg Washer-2 Washing Time");
+            dt.Columns.Add("Veg Washer-2 PPM");
+            dt.Columns.Add("Verify By");
+
+
+            int i = 1;
+            foreach (VegWasherDosageLogBO st in vegWashers)
+            {
+                DataRow dr = dt.NewRow();
+                // dr["Sr.No"] = i;
+                dr["Date"] = st.Date.ToString();
+                dr["Veg Washer-1 Solution-A (ml)"] = st.VegWasher1SolutionAMl.ToString();
+                dr["Veg Washer-1 Solution-B (ml)"] = st.VegWasher1SolutionBMl.ToString();
+                dr["Veg Washer-1 Name of Item"] = st.NameOfItem1.ToString();
+                dr["Veg Washer-1 Washing Time"] = st.WashingTime1.ToString();
+                dr["Veg Washer-1 PPM"] = st.Ppm1.ToString();
+                dr["Veg Washer-2 Solution-A (ml)"] = st.VegWasher2SolutionAMl.ToString();
+                dr["Veg Washer-2 Solution-B (ml)"] = st.VegWasher2SolutionBMl.ToString();
+                dr["Veg Washer-2 Name of Item"] = st.NameOfItem2.ToString();
+                dr["Veg Washer-2 Washing Time"] = st.WashingTime2.ToString();
+                dr["Veg Washer-2 PPM"] = st.Ppm1.ToString();
+                dr["Verify By"] = st.VerifyByName.ToString();
+
+                dt.Rows.Add(dr);
+                i++;
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_Veg_Washer_Dosage_Log_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Veg Washer Doser Report";/* The Daily Monitoring Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date:";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+
+            if (fromdate == "01-01-0001")
+            {
+                fromdate = "";
+                Fromdate = "From Date : " + DateTime.Today.ToString("dd/MM/yyyy");
+            }
+
+            if (todate == "01-01-0001")
+            {
+                todate = "";
+                Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy");
+            }
+
+            String content1 = "";
+            if (fromdate == "" || fromdate == null && todate == "" || todate == null)
+            {
+                content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+              "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
+              "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
+              "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+               + "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               + "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
+              /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+              + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
+            }
+            else
+            {
+                content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+               "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
+               "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
+               "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+               + "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               + "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
+               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
+            }
+
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+
+            return View("Index");
+        }
         #endregion
     }
 }

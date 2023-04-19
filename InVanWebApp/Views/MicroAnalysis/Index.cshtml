@@ -76,14 +76,8 @@
                                         <th>@Html.DisplayName("Batch No")</th>
                                         <th>@Html.DisplayName("Packing Size")</th>
                                         <th>@Html.DisplayName("Best Before")</th>
-                                       @* <th>@Html.DisplayName("Clostridium Perfringens(/100gm)")</th>*@
-                                        @*<th>@Html.DisplayName("Escherichia Coli (/gm)")</th>*@
-                                        @*<th>@Html.DisplayName("Salmonella(/25gm0) L= ABSENT")</th>*@
-                                        @*<th>@Html.DisplayName("Total Plate Count (cfu/gm) L=1 x 10³")</th>*@
-                                        @*<th>@Html.DisplayName("Yeast & Mould(cfu/gm) L=1 x 10^2")</th>*@
-                                        @*<th>@Html.DisplayName("Coliform (cfu/gm)")</th>*@
                                         <th>@Html.DisplayName("Verify By Name")</th>
-                                        <th>@Html.DisplayName("Action")</th>
+                                        <th>@Html.DisplayName("Actions")</th>
 
                                     </tr>
                                 </thead>
@@ -211,8 +205,8 @@
 
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Micro-Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Micro-Analysis"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -324,8 +318,8 @@
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Micro-Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Micro-Analysis"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]

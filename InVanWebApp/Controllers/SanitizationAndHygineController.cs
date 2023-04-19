@@ -11,6 +11,9 @@ using log4net;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp.Common;
 using System.IO;
+using System.Web.UI.WebControls;
+using System.Web.UI;
+using System.Data;
 
 namespace InVanWebApp.Controllers
 {
@@ -199,6 +202,158 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
 
+        #endregion
+
+        #region  Bind Datatable and Export Pdf & Excel
+        /// <summary>
+        /// Develop By Siddharth on 18-04-2023
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult SanitizationAndHygineList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+
+
+            var SanitizationLog = _sanitizationAndHygineRepository.SanitizationAndHygineList(flagdate, fromDate, toDate);
+            TempData["SanitizationAndHygineExcel"] = SanitizationLog;
+            TempData["SanitizationAndHygineExcel"] = SanitizationLog;
+            return Json(new { data = SanitizationLog }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Excel Sanitization And Hygine
+        //public void ExportAsExcel()
+        public ActionResult SanitizationAndHygineExcel()
+        {
+            if (TempData["SanitizationAndHygineExcel"] == null)
+            {
+                return View("Index");
+            }
+
+            GridView gv = new GridView();
+
+            List<SanitizationAndHygineBO> sanitizations = TempData["SanitizationAndHygineExcel"] as List<SanitizationAndHygineBO>;
+            DataTable dt = new DataTable();
+            //dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Name Of Employee");
+            dt.Columns.Add("Department");
+            dt.Columns.Add("Body Temprature");
+            dt.Columns.Add("Hand Wash");
+            dt.Columns.Add("Any Cuts & Wounds");
+            dt.Columns.Add("Clean Uniform");
+            dt.Columns.Add("Clean Nails");
+            dt.Columns.Add("Wear Any Jewellery");
+            dt.Columns.Add("Clean Shoes");
+            dt.Columns.Add("Fully Coverd Hair");
+            dt.Columns.Add("illness/Seakness");
+            dt.Columns.Add("No Tobaco,Chewingum");
+            dt.Columns.Add("Remarks");
+            dt.Columns.Add("Verify By Name");
+
+
+
+
+            int i = 1;
+            foreach (SanitizationAndHygineBO st in sanitizations)
+            {
+                DataRow dr = dt.NewRow();
+                // dr["Sr.No"] = i;
+                dr["Name Of Employee"] = st.NameOfEmpolyee.ToString();
+                dr["Department"] = st.Department.ToString();
+                dr["Body Temprature"] = st.BodyTemperature.ToString();
+                dr["Hand Wash"] = st.HandWash.ToString();
+                dr["Any Cuts & Wounds"] = st.AppearAnyCutsandWounds.ToString();
+                dr["Clean Uniform"] = st.CleanUniform.ToString();
+                dr["Clean Nails"] = st.CleanNails.ToString();
+                dr["Wear Any Jewellery"] = st.WearAnyJwellery.ToString();
+                dr["Clean Shoes"] = st.CleanShoes.ToString();
+                dr["Fully Coverd Hair"] = st.FullyCoverdHair.ToString();
+                dr["illness/Seakness"] = st.AnyKindOfIllnessSeakness.ToString();
+                dr["No Tobaco,Chewingum"] = st.NoTobacoChewingum.ToString();
+                dr["Remarks"] = st.Remark.ToString();
+                dr["Verify By Name"] = st.VerifyByName.ToString();
+
+
+                dt.Rows.Add(dr);
+                i++;
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_Sanitization_And_Hygiene_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Sanitization And Hyginee";/* The Daily Monitoring Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date:";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+
+            if (fromdate == "01-01-0001")
+            {
+                fromdate = "";
+                Fromdate = "From Date : " + DateTime.Today.ToString("dd/MM/yyyy");
+            }
+
+            if (todate == "01-01-0001")
+            {
+                todate = "";
+                Todate = "To Date : " + DateTime.Today.ToString("dd/MM/yyyy");
+            }
+
+            String content1 = "";
+            if (fromdate == "" || fromdate == null && todate == "" || todate == null)
+            {
+                content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+              "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
+              "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
+              "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+               + "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               + "</td><td colspan='8' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
+              /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+              + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
+            }
+            else
+            {
+                content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+               "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>" + ReportName + "</span></td></tr>" +
+               "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold'>" + name + "</td></tr>" +
+               "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</td></tr>"
+               + "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               + "</td><td colspan='8' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
+               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
+            }
+
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+
+            return View("Index");
+        }
         #endregion
     }
 }

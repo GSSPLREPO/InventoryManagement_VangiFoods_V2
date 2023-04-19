@@ -173,6 +173,9 @@
                             var day = currentTime.getDate();
                             var dayString = day > 9 ? day : '0' + day;
                             var year = currentTime.getFullYear();
+                            //var hours = currentTime.getHours();
+                            //var minutes = currentTime.getMinutes();
+                            //var seconds = currentTime.getSeconds();
                             var date = dayString + "/" + monthString + "/" + year;
                             return date;
                         }
@@ -181,11 +184,16 @@
                     { "data":"Time","autoWidth":true},
                     { "data": "TEM", "autoWidth": true },
                     { "data": "GasReading", "autoWidth": true },
+                    //{ "data": "SrNo", "autoWidth": true },
+                    //{ "data": "PeroxideValue", "autoWidth": true },
+                    //{ "data": "Color", "autoWidth": true },
+                    //{ "data": "Frequncy", "autoWidth": true },
+                    //{ "data": "Odour", "autoWidth": true },
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Water Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Water Analysis"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -232,9 +240,11 @@
                     var result = JSON.stringify(json);
                     var flag = parseFloat(result.length);
                     if (flag > 11) {
+                       // $('#ExportPdf').show();
                         $('#ExportExcel').show();
                     }
                     else {
+                        //$('#ExportPdf').hide();
                         $('#ExportExcel').hide();
                     }
                 },
@@ -256,6 +266,9 @@
                             var day = currentTime.getDate();
                             var dayString = day > 9 ? day : '0' + day;
                             var year = currentTime.getFullYear();
+                            //var hours = currentTime.getHours();
+                            //var minutes = currentTime.getMinutes();
+                            //var seconds = currentTime.getSeconds();
                             var date = dayString + "/" + monthString + "/" + year;
                             return date;
                         }
@@ -264,11 +277,16 @@
                     { "data": "Time", "autoWidth": true },
                     { "data": "TEM", "autoWidth": true },
                     { "data": "GasReading", "autoWidth": true },
+                    //{ "data": "SrNo", "autoWidth": true },
+                    //{ "data": "PeroxideValue", "autoWidth": true },
+                    //{ "data": "Color", "autoWidth": true },
+                    //{ "data": "Frequncy", "autoWidth": true },
+                    //{ "data": "Odour", "autoWidth": true },
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Water Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Water Analysis"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]

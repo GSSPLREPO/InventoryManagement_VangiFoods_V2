@@ -74,7 +74,6 @@
                                             <th>Corrective Action</th>
                                             <th>Verify By</th>
                                             <th>Actions</th>
-                                            @*<th>Delete</th>*@
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -167,8 +166,8 @@
                    
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Foreign Body"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Foreign Body"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -248,8 +247,8 @@
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Foreign Body"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Foreign Body"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]

@@ -4679,11 +4679,11 @@ namespace InVanWebApp.Controllers
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
             sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; color:red; bottom:20px;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
 
             sb.Append("</th></tr>");
 
