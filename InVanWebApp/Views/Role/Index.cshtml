@@ -46,7 +46,7 @@
                                             @Html.DisplayName("Description")
                                         </th>
                                         <th>
-                                            @Html.DisplayName("Edit/Delete")
+                                            @Html.DisplayName("Actions")
                                         </th>
                                     </tr>
 
@@ -60,10 +60,10 @@
                                                 @Html.DisplayFor(modelItem => item.Description)
                                             </td>
                                             <td>
-                                                <a href=@Url.Action("EditRole", "Role", new { RoleId = item.RoleId })>
+                                                <a href=@Url.Action("EditRole", "Role", new { RoleId = item.RoleId }) title="Edit Role">
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </a> &emsp;
-                                                <a href=@Url.Action("DeleteRole", "Role", new { RoleId = item.RoleId }) onclick="return confirm('Are you sure want to delete?');">
+                                                <a href=@Url.Action("DeleteRole", "Role", new { RoleId = item.RoleId }) onclick="return confirm('Are you sure want to delete?');" title="Delete Role">
                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                 </a>
                                                 @*@Html.ActionLink("Edit", "EditRole", new { RoleId = item.RoleId }) |*@

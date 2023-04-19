@@ -16,7 +16,6 @@ namespace InVanWebApp.Controllers
         private IRejectionNoteRepository _RejectionNoteRepository;
         private IInwardQCSortingRepository _QCRepository;
         private IGRNRepository _GRNrepository;
-        private IPreProduction_QCRepository _repository;    //Rahul 18 Apr 23.
         private static ILog log = LogManager.GetLogger(typeof(POPaymentController));
 
         #region Initializing Constructor(s)
@@ -29,19 +28,17 @@ namespace InVanWebApp.Controllers
             _RejectionNoteRepository = new RejectionNoteRepository();
             _QCRepository = new InwardQCSortingRepository();
             _GRNrepository = new GRNRepository();
-            _repository = new PreProduction_QCRepository();    //Rahul 18 Apr 23.
         }
 
         /// <summary>
         /// Raj: Constructor With Parameters for initalizing objects.
         /// </summary>
         /// <param name="RejectionNoteRepository"></param>
-        public RejectionNoteController(IRejectionNoteRepository RejectionNoteRepository, IInwardQCSortingRepository QCRepository, IPreProduction_QCRepository preProduction_QCRepository)
+        public RejectionNoteController(IRejectionNoteRepository RejectionNoteRepository, IInwardQCSortingRepository QCRepository)
         {
             _RejectionNoteRepository = RejectionNoteRepository;
             _QCRepository = QCRepository;
             _GRNrepository = new GRNRepository();
-            _repository = preProduction_QCRepository;     //Rahul 18 Apr 23.
         }
         #endregion
 
@@ -128,7 +125,7 @@ namespace InVanWebApp.Controllers
             if (PPINote_Id != "" && PPINote_Id != null)
                 PPNote_Id = Convert.ToInt32(PPINote_Id);
 
-            var result = _repository.GetProdIndent_NoDeatils(PPQCId, PPNote_Id);
+            var result = _RejectionNoteRepository.GetProdIndent_NoDeatils(PPQCId, PPNote_Id);
             return Json(result);
         }
         #endregion

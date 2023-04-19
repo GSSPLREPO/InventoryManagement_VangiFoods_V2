@@ -75,10 +75,10 @@
                                                 @*<td>@Html.DisplayFor(modelItem => item.Remarks)</td>*@
                                                 <td>@Html.DisplayFor(modelItem => item.CorrectiveActions)</td>
                                                 <td>
-                                                    <a href=@Url.Action("EditHotFillingPackingLineLogSheetCCP", "HotFillingPackingLineLogSheetCCP", new { ID = item.ID })>
+                                                    <a href=@Url.Action("EditHotFillingPackingLineLogSheetCCP", "HotFillingPackingLineLogSheetCCP", new { ID = item.ID }) title="Edit Packing CCP">
                                                         <i class="fa fa-edit text-primary"></i>
                                                     </a> &emsp;
-                                                    <a href=@Url.Action("Delete", "HotFillingPackingLineLogSheetCCP", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("Delete", "HotFillingPackingLineLogSheetCCP", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Packing CCP">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>

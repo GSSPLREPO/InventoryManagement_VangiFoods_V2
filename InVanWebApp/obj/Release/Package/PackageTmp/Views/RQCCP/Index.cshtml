@@ -70,10 +70,10 @@
                                                     <td>@Html.DisplayFor(modelItem => item.Remarks)</td>*@
                                                 <td>@Html.DisplayFor(modelItem => item.Verification)</td>
                                                 <td>
-                                                    <a href=@Url.Action("EditRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID })>
+                                                    <a href=@Url.Action("EditRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID }) title="Edit RQ CCP">
                                                         <i class="fa fa-edit text-primary"></i>
                                                     </a> &emsp;
-                                                    <a href=@Url.Action("DeleteRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("DeleteRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID }) onclick="return confirm('Are you sure want to delete?');" title="Delete RQ CCP">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>

@@ -10,22 +10,22 @@ namespace InVanWebApp_BO
     public class RejectionNoteBO 
     {
         public int ID { get; set; }
-        public string NoteType { get; set; }
+        public string QCType { get; set; }  //'NoteType' replaced by 'QCType' 19-04-23. 
         [Required(ErrorMessage = "Please select the Rejection Note date!")]
         public DateTime NoteDate { get; set; }
-        public int PO_Id { get; set; } //
+        public Nullable<int> PO_Id { get; set; } // 
         public string PONumber { get; set; } // 
         public Nullable<int> SupplierID { get; set; }
-        [Required(ErrorMessage = "Select supplier name!")]
+        //[Required(ErrorMessage = "Select supplier name!")]  ///Rahul commented not in use 19-04-23.   
         public string SupplierName { get; set; }
         [Required(ErrorMessage = "Please enter the Rejection Note number!")] 
         public string RejectionNoteNo { get; set; }
         //---------------
-        [Required(ErrorMessage = "Please select Inward QC number!")]
-        public int InwardQCId { get; set; }
+        //[Required(ErrorMessage = "Please select Inward QC number!")]   ///Rahul commented not in use 19-04-23.
+        public Nullable<int> InwardQCId { get; set; } 
         public string InwardQCNumber { get; set; }
-        [Required(ErrorMessage = "Select inward number!")]
-        public int InwardNote_Id { get; set; }
+        //[Required(ErrorMessage = "Select inward number!")]    ///Rahul commented not in use 19-04-23.
+        //public int InwardNote_Id { get; set; }    ///Rahul commented not in use 19-04-23.  
         public string InwardNoteNumber { get; set; }     ///Rahul updated InwardNoteNumber 13-01-2023.     
         public Nullable<double> TotalQuantity { get; set; } // 
         public Nullable<double> InwardQuantity { get; set; } // 
@@ -45,8 +45,9 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Enter Production Indent Number!")]
         public string ProductionIndentNo { get; set; }  //Rahul added 18-04-2023.  
         [Required(ErrorMessage ="Select Production QC!")]
-        public int PreProductionQCId { get; set; }  //Rahul added 18-04-2023. 
+        public int? PreProductionQCId { get; set; }  //Rahul added 18-04-2023. 
         public int ProductionIndentId { get; set; }  //Rahul added 18-04-2023.  
+        public int ProductionMaterialIssueNoteId { get; set; }  //Rahul added 19-04-2023.  
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -63,8 +64,8 @@ namespace InVanWebApp_BO
         //Added the below property for saving the item table details. 
         public List<RejectionNoteItemDetailsBO> itemDetails { get; set; }
         // Added the below property for 'InwardQC' option. 
-        [Required(ErrorMessage = "Enter QC number!")]
-        public string InwardQCNo { get; set; } 
+        //[Required(ErrorMessage = "Enter QC number!")]     ///Rahul commented not in use 19-04-23.
+        //public string InwardQCNo { get; set; }    ///Rahul commented not in use 19-04-23.
     }
     public class RejectionNoteItemDetailsBO 
     {
@@ -107,11 +108,11 @@ namespace InVanWebApp_BO
         //Added the below properties for Currency
         public string CurrencyName { get; set; }
         //Added the below field for Wastage Report 17-04-23. 
-        [Required(ErrorMessage = "Please Select From Date!")]
-        public DateTime fromDate { get; set; }
+        //[Required(ErrorMessage = "Please Select From Date!")]
+        //public DateTime fromDate { get; set; }
 
-        [Required(ErrorMessage = "Please Select To Date!")]
-        public DateTime toDate { get; set; }
+        //[Required(ErrorMessage = "Please Select To Date!")]
+        //public DateTime toDate { get; set; }
 
         //Added the below field for Rejection note Report and Wastage Report 17-04-23. 
         public int SrNo { get; set; }

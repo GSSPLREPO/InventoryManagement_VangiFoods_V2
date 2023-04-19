@@ -72,7 +72,7 @@
                                                 <a href=@Url.Action("EditUser", "UserDetails", new { ID = item.EmployeeID }) title="Edit User">
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </a> &emsp;
-                                                <a href=@Url.Action("DeleteUser", "UserDetails", new { ID = item.EmployeeID }) onclick="return confirm('Are you sure want to delete?');" title="Edit User">
+                                                <a href=@Url.Action("DeleteUser", "UserDetails", new { ID = item.EmployeeID }) onclick="return confirm('Are you sure want to delete?');" title="Delete User">
                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                 </a>
                                                 @*@Html.ActionLink("Edit", "EditUser", new { ID = item.EmployeeID }) |

@@ -57,9 +57,9 @@
                     </div>
                     <div class="col-md-4">
                         @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
-                                            new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                                      new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                         @Html.ValidationMessageFor(model => model.InwardQCId, "", new { id = "ValMsgInwardQCNumber", @class = "error mt-2 text-danger" })
-                        @*<span id="ValMsgInwardQCNumber" style="display:none; color:red"></span>*@ @*Rahul removed and added onmouseleave event 09-02-2023.*@
+                        <span id="ValMsgInwardQCNumber" style="display:none;" class="error mt-2 text-danger field-validation-error">Please select Inward QC number!</span>  @*///Rahul added 19-04-23.*@
                         @Html.HiddenFor(model => model.InwardQCNumber)
                         @Html.HiddenFor(model => model.InwardNoteNumber)
                     </div>
@@ -98,10 +98,12 @@
                     </div>
                     <div class="col-md-4">
                         @Html.DropDownListFor(model => model.PreProductionQCId, (IEnumerable<SelectListItem>)ViewData["PreProductionQCAndId"], "--Select--",
-                                       new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProduction($(this).val())" })
+                                            new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProduction($(this).val())" })
                         @Html.ValidationMessageFor(model => model.PreProductionQCId, "", new { id = "ValMsgProductionQCNumber", @class = "error mt-2 text-danger" })
+                        <span id="ValMsgProductionQCNumber" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Production QC!</span>
                         @Html.HiddenFor(model => model.PreProductionQCNumber)
                         @Html.HiddenFor(model => model.ProductionMaterialIssueNoteNo)
+                        @Html.HiddenFor(model => model.ProductionMaterialIssueNoteId)
                     </div>
                     <div class="col-md-2">
                         @Html.Label("Production Indent Number")
@@ -109,7 +111,8 @@
                     </div>
                     <div class="col-md-4">
                         @Html.TextBoxFor(model => model.ProductionIndentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                        @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })
+                        @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { id = "ValMsgProductionIndentNumber", @class = "error mt-2 text-danger" })
+                        <span id="ValMsgProductionIndentNumber" style="display:none;" class="error mt-2 text-danger field-validation-error">Enter Production Indent Number!</span>
                     </div>
                     @Html.HiddenFor(model => model.ProductionIndentId)
                 </div>
@@ -131,8 +134,8 @@
                             <th>Code</th>
                             <th>Unit Price</th>
                             <th>Unit</th>
-                            <th>Total Quantity</th>
-                            <th>Inward Quantity</th>
+                            <th id="TotalQtyTextChange">Total Quantity</th>
+                            <th id="InwardQtyTextChange">Inward Quantity</th>
                             <th>Rejected Quantity</th>
                             <th>Quantity took for Sorting (Kg)</th>
                             <th>Wastage (%)</th>
@@ -171,19 +174,56 @@
 
 
 <script type="text/javascript">
+    //Rahul 19 Apr 23.
     $(document).ready(function () {
-        
+        $("#divInwardQC").show();
+        $("#divProductionQC").hide();
+        //For deleting the rows of Item table if exist.       
+        var table = document.getElementById('ItemTable');
+        var rowCount = table.rows.length;
+        while (rowCount != '1') {
+            var row = table.deleteRow(rowCount - 1);
+            rowCount--;
+        }
     });
+    
    //Rahul 18 Apr 23.
     $('#QCType').change(function () {
         var QCType = $('#QCType option:selected').attr('value');
         if (QCType == 'InwardQC') {
             $("#divInwardQC").show();
             $("#divProductionQC").hide();
+            $("#TotalQtyTextChange").text("Total Quantity");
+            $("#InwardQtyTextChange").text("Inward Quantity");
+            //For deleting the rows of Item table if exist.       
+            var table = document.getElementById('ItemTable');
+            var rowCount = table.rows.length;
+            while (rowCount != '1') {
+                var row = table.deleteRow(rowCount - 1);
+                rowCount--;
+            }           
+            document.getElementById('InwardQCId').selectedIndex = 0;
+            $("#PONumber").val("");
+            $("#SupplierName").val("");
+            $('#ValMsgInwardQCNumber').hide();  ///Rahul added 19-04-23. 
+            $('#ValMgssuppliername').hide();
         }
         else {
             $("#divInwardQC").hide();
             $("#divProductionQC").show();
+            $("#TotalQtyTextChange").text("Production Indent Quantity");
+            $("#InwardQtyTextChange").text("Material Issue Quantity");
+            //For deleting the rows of Item table if exist.       
+            var table = document.getElementById('ItemTable');
+            var rowCount = table.rows.length;
+            while (rowCount != '1') {
+                var row = table.deleteRow(rowCount - 1);
+                rowCount--;
+            }
+            document.getElementById('PreProductionQCId').selectedIndex = 0;
+            $("#ProductionIndentNo").val("");
+            $('#ValMsgProductionQCNumber').hide(); //19 Apr 2023. 
+            $('#ValMsgProductionIndentNumber').hide(); //19 Apr 2023.
         }
     });
 
@@ -207,6 +247,7 @@
 
     function SelectedIndexChanged(id) {
 
+        $('#ValMsgInwardQCNumber').hide();  ///Rahul added 19-04-23. 
         $('#ValMgssuppliername').hide();
         var InwardNumber = $("#InwardQCId option:selected").text();
         
@@ -369,7 +410,9 @@
 
             var ItemID = $('#ItemID' + i).val();
             var Tax = $('#ItemTaxValue' + i).val(); Tax = Tax.split(" "); Tax = Tax[0];
-            
+            if (Tax == '' || Tax == null) {
+                Tax = 0;    
+            }
             InwardQuantities = InwardQuantities + "{\"Item_Name\": \"" + ItemName + "\", \"Item_Code\": \"" + ItemCode + "\",\"ItemUnitPrice\": "
                 + UnitPrice + ", \"ItemUnit\": \"" + Unit + "\",\"TotalQuantity\": " + POQty + ",\"InwardQuantity\":" + InwQty + ",\"RejectedQuantity\": "
                 + RejectedQuantity + ", \"QtyTookForSrt\": " + QtyTookForSrt + ",\"WastageQuantityInPercentage\": "
@@ -395,7 +438,8 @@
     ///Rahul 'SelectedIndexChangedProduction' 18 Apr 2023 start.
     function SelectedIndexChangedProduction(id) {
         debugger
-        //$('#ValMgssuppliername').hide();
+        $('#ValMsgProductionQCNumber').hide(); //19 Apr 2023. 
+        $('#ValMsgProductionIndentNumber').hide(); //19 Apr 2023.
         var PreProductionQCNumber = $("#PreProductionQCId option:selected").text();
 
         var PreProductionQcNumSplit = PreProductionQCNumber.split(' (');
@@ -421,6 +465,7 @@
             success: function (result) {
                 $('#ProductionIndentNo').val(result[0].ProductionIndentNo);
                 $('#ProductionIndentId').val(result[0].ProductionIndentID);
+                $('#ProductionMaterialIssueNoteId').val(result[0].ID);
                 var ColCount = result.length
                 var flag = 0; //This flag is for checking whether the selected Inward QC is completed or not.
 
@@ -456,7 +501,7 @@
                         }
                         else if (i == 5) {
                             cell.setAttribute("id", "InwardQuantity_" + j);
-                            cell.innerHTML = result[j].InwardQuantity + " " + result[j].ItemUnit;
+                            cell.innerHTML = result[j].IssuedQuantity + " " + result[j].ItemUnit;
                         }
                         else if (i == 6) {
                             cell.setAttribute("id", "RejectedQuantity_" + j);

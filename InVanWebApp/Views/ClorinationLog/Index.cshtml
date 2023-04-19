@@ -47,7 +47,7 @@
                                             <th>@Html.DisplayName("Portable Water")</th>
                                             <th>@Html.DisplayName("CIP Water Tank")</th>
                                             <th>@Html.DisplayName("Verify By")</th>
-                                            <th>@Html.DisplayName("Action")</th>
+                                            <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
 
@@ -64,10 +64,10 @@
                                             <td>@Html.DisplayFor(modelItem => item.CIPWaterTank)</td>
                                             <td>@Html.DisplayFor(modelItem => item.VerifyByName)</td>
                                             <td>
-                                                <a href=@Url.Action("EditClorinationLog", "ClorinationLog", new { Id = item.Id })>
+                                                <a href=@Url.Action("EditClorinationLog", "ClorinationLog", new { Id = item.Id }) title="Edit Chlorination Log">
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </a> &emsp;
-                                                <a href=@Url.Action("Delete", "ClorinationLog", new { Id = item.Id }) onclick="return confirm('Are you sure want to delete?');">
+                                                <a href=@Url.Action("Delete", "ClorinationLog", new { Id = item.Id }) onclick="return confirm('Are you sure want to delete?');" title="Delete Chlorination Log">
                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                 </a>
                                             </td>

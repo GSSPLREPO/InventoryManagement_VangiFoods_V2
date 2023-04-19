@@ -72,18 +72,18 @@
                                     <br />
                                     @foreach (var item in Model)
                                     {
-                                        <div class=" form-group row">
+                                        
                                             <div class="col-md-1">
                                                 @*@Html.CheckBoxFor(item => item[i].Selected, new { @checked = "checked" })*@
                                                 <input id="@item.ScreenName" class="removeLater" type="checkbox" name="skill" value="@item.ScreenName" />
                                             </div>
-                                            <div class="col-md-8">
+                                            <div class="col-md-3">
                                                 @Html.HiddenFor(modelItem => item.RoleId)
                                                 @Html.HiddenFor(modelItem => item.ScreenId)                                                
                                                 @Html.HiddenFor(modelItem => item.ScreenName)
                                                 @Html.DisplayFor(modelItem => item.DisplayName)
                                             </div>
-                                        </div>
+                                        
                                     }
                                 </div>
                             </div>

@@ -21,6 +21,7 @@ namespace InVanWebApp.Repository.Interface
         void Delete(int RejectionID, int userId);
         //Bind dropdown of Pre-Production QC Number 
         IEnumerable<PreProduction_QCBO> GetPreProductionQCNumberForDropdown();
-
+        //Bind all Pre Production note details  
+        IEnumerable<ProductionMaterialIssueNoteBO> GetProdIndent_NoDeatils(int PPQCId, int PPNote_Id = 0);
     }
 }

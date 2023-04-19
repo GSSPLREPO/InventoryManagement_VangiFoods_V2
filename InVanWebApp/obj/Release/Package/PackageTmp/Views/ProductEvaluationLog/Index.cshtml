@@ -69,7 +69,7 @@
                                         <th style="text-align:center">Salt</th>
                                         <th style="text-align:center">Viscosity</th>
                                         <th style="text-align:center">Verify By</th>
-                                        <th style="text-align:center">Action</th>
+                                        <th style="text-align:center">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody class="text-center"></tbody>
@@ -164,8 +164,8 @@
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Product Evaluation Log"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Product Evaluation Log"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -258,8 +258,8 @@
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Product Evaluation Log"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Product Evaluation Log"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]

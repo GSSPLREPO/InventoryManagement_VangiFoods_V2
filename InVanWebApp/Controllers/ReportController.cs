@@ -4702,11 +4702,11 @@ namespace InVanWebApp.Controllers
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
             sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;color:red;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;'>" + address + "</label>");
+            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
 
             sb.Append("</th></tr>");
 
@@ -4747,6 +4747,7 @@ namespace InVanWebApp.Controllers
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+                    //pdfDoc.SetPageSize(new Rectangle(850f, 1150f));
 
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
@@ -4766,8 +4767,6 @@ namespace InVanWebApp.Controllers
                 }
             }
         }
-
-
         #endregion
 
         #region Excel Debit Note report

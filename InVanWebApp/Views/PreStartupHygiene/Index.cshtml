@@ -7,19 +7,19 @@
 
 <html>
 <head>
-    <title>Micro Analysis</title>
+    <title>Pre-Startup Hygiene</title>
 </head>
 <body>
 
     <div class="content-wrapper" runat="server" id="PreStartupHygiene">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Pre Start up Hygiene</h4>
+            <h4 class="page-title">Pre-Startup Hygiene</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Daily Operations</a>
                     </li>
-                    <li class="breadcrumb-item active">Pre Start up Hygiene</li>
+                    <li class="breadcrumb-item active">Pre-Startup Hygiene</li>
                 </ol>
             </nav>
         </div>
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <a href="@Url.Action("AddPreStartupHygiene","PreStartupHygiene")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                        <span class="fa fa-plus"></span> Pre Start up Hygiene
+                                        <span class="fa fa-plus"></span> Pre-Startup Hygiene    
                                     </a>
                                 </div>
                             </div>
@@ -175,8 +175,8 @@
                     { "data": "VerifyBy", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Pre-Startup Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title = "Delete Pre-Startup Hygiene"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -261,8 +261,8 @@
                     { "data": "VerifyBy", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Pre-Startup Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title = "Delete Pre-Startup Hygiene"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]

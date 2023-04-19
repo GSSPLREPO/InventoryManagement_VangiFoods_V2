@@ -42,7 +42,7 @@
                                             <th>@Html.Label("QC Date")</th>
                                             <th>@Html.Label("Total Issued Quantity (Kg)")</th>
                                             <th>@Html.Label("Rejected Quantity (Kg)")</th>
-                                            <th>@Html.Label("View/Delete")</th>
+                                            <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -55,11 +55,11 @@
                                                 <td>@Html.DisplayFor(modelItem => item.IssuedQuantity)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.RejectedQuantity)</td>
                                                 <td>
-                                                    <a href=@Url.Action("ViewPreProduction", "PreProduction_QC", new { ID = item.ID })>
+                                                    <a href=@Url.Action("ViewPreProduction", "PreProduction_QC", new { ID = item.ID }) title="View Pre-ProductionQC">
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
                                                  
-                                                    <a href=@Url.Action("DeletePreProductionQC", "PreProduction_QC", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                    <a href=@Url.Action("DeletePreProductionQC", "PreProduction_QC", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Pre-ProductionQC">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>
