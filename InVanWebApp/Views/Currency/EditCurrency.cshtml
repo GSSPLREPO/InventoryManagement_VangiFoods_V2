@@ -1,0 +1,88 @@
+﻿@model InVanWebApp_BO.CurrencyBO
+@{ ViewBag.Title = "Edit Currency";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
+
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Edit Currency</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID)
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Currency Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphaNumeric(event);" })
+                                @Html.ValidationMessageFor(model => model.CurrencyName, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Value")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Value, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
+                                @Html.ValidationMessageFor(model => model.Value, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Indian Currency Value")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.IndianCurrencyValue, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
+                                @Html.ValidationMessageFor(model => model.IndianCurrencyValue, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <a href="@Url.Action("Index", "Currency")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
+                            Back To List
+                        </a>
+                        <button type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Update</button>
+                    </div>
+                </div>}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@Html.Raw(TempData["Success"])
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    //Custom validation for only numeric, alphabets, underscore and NA/na character.
+    function IsAlphaNumeric(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    //Custom validation for only numeric, decimal.
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }</script>

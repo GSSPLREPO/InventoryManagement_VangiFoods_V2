@@ -252,7 +252,7 @@ namespace InVanWebApp.Controllers
             gv.RenderControl(hw);
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
-            string ReportName = "&nbsp &nbsp&nbsp &nbsp PO &nbsp Report";/* The Stock Movement Report name are given here  */
+            string ReportName = "PO Report";/* The Stock Movement Report name are given here  */
             string Fromdate = "From Date : ";/* The From Date are given here  */
             string Todate = "To Date:";/* The To Date are given here  */
             string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
@@ -1624,7 +1624,7 @@ namespace InVanWebApp.Controllers
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
 
-                    writer.PageEvent = new PageHeaderFooter();
+                    writer.PageEvent = new PageHeaderFooter1();
                     pdfDoc.Open();
 
                     setBorder(writer, pdfDoc);
@@ -4355,13 +4355,13 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
-                "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-                "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
-                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-                + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
-                + "</td></tr>" + "</table>"
-                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
+              "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + ReportName + "</span></td></tr></tr>" +
+              "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+              "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></tr>" +
+              "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+              + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+              + "</td></tr>" + "</table>"
+              + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 
 
             string style = @"<!--mce:2-->";
@@ -4578,9 +4578,9 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
-                "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-                "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+                "<tr><td colspan='4'style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td><td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
                 "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
                 + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
                 + "</td></tr>" + "</table>"
@@ -4805,7 +4805,7 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + ReportName + "</span></td></tr></tr>" +
                 "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
                 "<tr><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
                 "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
@@ -4972,9 +4972,8 @@ namespace InVanWebApp.Controllers
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
 
-                    writer.PageEvent = new PageHeaderFooter();
+                    writer.PageEvent = new PageHeaderFooter1();
                     pdfDoc.Open();
-                    //pdfDoc.NewPage();
 
                     setBorder(writer, pdfDoc);
 
@@ -4987,7 +4986,7 @@ namespace InVanWebApp.Controllers
             }
         }
 
-        public class PageHeaderFooter : PdfPageEventHelper
+        public class PageHeaderFooter1 : PdfPageEventHelper
         {
             private readonly Font _pageNumberFont = new Font(Font.NORMAL, 10f, Font.BOLD, BaseColor.BLACK);
 
@@ -5256,7 +5255,7 @@ namespace InVanWebApp.Controllers
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
 
-                    writer.PageEvent = new PageHeaderFooter();
+                    writer.PageEvent = new PageHeaderFooter1();
                     pdfDoc.Open();
                     //pdfDoc.NewPage();
 
@@ -5429,6 +5428,7 @@ namespace InVanWebApp.Controllers
 
             //---------------------------------------
         }
+
         #endregion
     }
 }

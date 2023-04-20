@@ -80,6 +80,7 @@ namespace InVanWebApp_BO
         public int CurrencyID { get; set; }
         public string CurrencyName { get; set; }
         public float CurrencyPrice { get; set; }
+        public decimal AvailableStockBeforeDelivery { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

@@ -416,7 +416,11 @@
                     var vendorId = result[0].VendorId;
                     var DeliveryAddress = result[0].SupplierAddress;
                     $('#ClientID').val(vendorId);
-                    $('#DeliveryAddress').val(DeliveryAddress );
+                    $('#DeliveryAddress').val(DeliveryAddress);
+
+                    selectedOption = document.getElementById("ClientID").selectedIndex;
+                    companyName = document.getElementById("ClientID").options[selectedOption].innerText;
+                    document.getElementById("CompanyName").value = companyName;
 
                 }
 

@@ -272,11 +272,6 @@
         }
         $('#TotalBeforeTax').val(total);
         $('#TotalTax').val(totalTax);
-        //var tempGrandTotal = total + totalTax;
-        //$('#TotalAfterTax').val(tempGrandTotal);
-        //$('#GrandTotal').val(tempGrandTotal);
-
-        //createJson();
     }
 
     $('#btnExport').click(function () {
@@ -303,7 +298,6 @@
                 'elementHandlers': specialElementHandlers
             });
             var currentDate = new Date();
-            //var time = getTime();
             var today = new Date();
             var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
             console.log(time);
@@ -311,7 +305,6 @@
             doc.save('RejectionNote_' + today + '_' + time + '.pdf'); 
             $("#btnExport").show();
             $("#btnBack").show();
-            //$("#btnPrint").show();
         });
         //window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
 
