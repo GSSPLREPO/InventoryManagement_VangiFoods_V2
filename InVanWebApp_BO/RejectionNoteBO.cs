@@ -42,12 +42,12 @@ namespace InVanWebApp_BO
         public string ReasonsForRejection { get; set; }
         public string PreProductionQCNumber { get; set; }  //Rahul added 18-04-2023. 
         public string ProductionMaterialIssueNoteNo { get; set; }  //Rahul added 18-04-2023. 
-        [Required(ErrorMessage = "Enter Production Indent Number!")]
+        //[Required(ErrorMessage = "Enter Production Indent Number!")]
         public string ProductionIndentNo { get; set; }  //Rahul added 18-04-2023.  
-        [Required(ErrorMessage ="Select Production QC!")]
+        //[Required(ErrorMessage ="Select Production QC!")]
         public int? PreProductionQCId { get; set; }  //Rahul added 18-04-2023. 
-        public int ProductionIndentId { get; set; }  //Rahul added 18-04-2023.  
-        public int ProductionMaterialIssueNoteId { get; set; }  //Rahul added 19-04-2023.  
+        public int? ProductionIndentId { get; set; }  //Rahul added 18-04-2023.  
+        public int? ProductionMaterialIssueNoteId { get; set; }  //Rahul added 19-04-2023.  
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -105,8 +105,19 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        //Added the below properties for Currency
+        //Added the below properties for Debit Note //Rahul added 20-04-23.
         public string CurrencyName { get; set; }
+        public int? CurrencyID { get; set; } 
+        public Nullable<double> CurrencyPrice { get; set; }
+        public Nullable<int> LocationId { get; set; }
+        public string LocationName { get; set; }
+        public string DeliveryAddress { get; set; }
+        public string SupplierAddress { get; set; }
+        public Nullable<int> TermsAndConditionID { get; set; }
+        public string Terms { get; set; }
+        public decimal OtherTax { get; set; }
+        public Nullable<decimal> TotalItemCost { get; set; }
+
         //Added the below field for Wastage Report 17-04-23. 
         //[Required(ErrorMessage = "Please Select From Date!")]
         //public DateTime fromDate { get; set; }

@@ -173,6 +173,7 @@
     <Compile Include="Controllers\ChillerCCPController.cs" />
     <Compile Include="Controllers\ClorinationLogController.cs" />
     <Compile Include="Controllers\CreditNoteController.cs" />
+    <Compile Include="Controllers\CurrencyController.cs" />
     <Compile Include="Controllers\DailyMonitoringController.cs" />
     <Compile Include="Controllers\Dashb_RTWarehouseWiseStockController.cs" />
     <Compile Include="Controllers\DebitNoteController.cs" />
@@ -570,6 +571,7 @@
     <Compile Include="Repository\ClorinationLogRepository.cs" />
     <Compile Include="Repository\CommonFunctions.cs" />
     <Compile Include="Repository\CreditNoteRepository.cs" />
+    <Compile Include="Repository\CurrencyRepository.cs" />
     <Compile Include="Repository\DailyMonitoringRepository.cs" />
     <Compile Include="Repository\DashboardRepository.cs" />
     <Compile Include="Repository\DebitNoteRepository.cs" />
@@ -587,6 +589,7 @@
     <Compile Include="Repository\Interface\ICommonFunctions.cs" />
     <Compile Include="Repository\Interface\ICompanyRepository.cs" />
     <Compile Include="Repository\Interface\ICreditNoteRepository.cs" />
+    <Compile Include="Repository\Interface\ICurrencyRepository.cs" />
     <Compile Include="Repository\Interface\IDailyMonitoringRepository.cs" />
     <Compile Include="Repository\Interface\IDashboardRepository.cs" />
     <Compile Include="Repository\Interface\IDebitNoteRepository.cs" />
@@ -3191,6 +3194,10 @@
     <Content Include="Views\Report\WastageReport.cshtml" />
     <Content Include="Views\RequestForQuotation\ViewRequestForQuotation.cshtml" />
     <Content Include="Views\Report\PreProduction_QCReport.cshtml" />
+    <Content Include="Views\Currency\AddCurrency.cshtml" />
+    <Content Include="Views\Currency\DeleteItemType.cshtml" />
+    <Content Include="Views\Currency\EditCurrency.cshtml" />
+    <Content Include="Views\Currency\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

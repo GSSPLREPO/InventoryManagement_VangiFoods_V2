@@ -314,12 +314,12 @@ namespace InVanWebApp.Controllers
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
-            String content1 = "<table>" + "<tr><td><td colspan='3' rowspan='5'> <img height='150' width='150' src='" + strPath + "'/></td></td>" +
+            String content1 = "<table>" + "<tr><td><td colspan='3' rowspan='5'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
                 "<tr><td><td><td><td colspan='4' > <span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></td></td></td></tr></tr>" +
                 "<tr><td><td><td><td><td colspan='2'><span align='center' style='font-weight:bold'>" + name + "</span></td></td></td></td></tr>" +
                 "<tr><td><td><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></td></tr>" +
-                "<tr><tr><td><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-                + "<td><td><td><td><td><td><td><td><td><td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td></td></td></td></td></td></td></td></td></td>"
+                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td><td><td><td><td><td><td><td><td></td><td></td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td></td></td></td></td></td></td></td></td></td>"
                 + "</td></tr>" + "</table>"
                 + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 

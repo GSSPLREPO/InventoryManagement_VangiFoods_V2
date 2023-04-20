@@ -1,241 +1,253 @@
 ﻿@model InVanWebApp_BO.DebitNoteBO
-@{
-    ViewBag.Title = "AddDebitNote";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "AddDebitNote";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 
 @using (Html.BeginForm("AddDebitNote", "DebitNote"))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-    <div class="card">
-        <div class="card-body">
-            <h4>Add Debit Note</h4>
-            <hr />
-            @Html.ValidationSummary(true)
-
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Debit Note Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.DebitNoteNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.DebitNoteNo, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Debit Note Date")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.DebitNoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.DebitNoteDate, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("PO Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.PO_ID, (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedPO(id)" })
-                    @Html.ValidationMessageFor(model => model.PO_ID, "", new { @class = "error mt-2 text-danger" })
-                    @Html.HiddenFor(model => model.PO_Number)
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Currency")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.HiddenFor(model => model.CurrencyID)
-                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.CurrencyName, "", new { @class = "error mt-2 text-danger" })
-
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Location Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-
-                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.HiddenFor(model => model.LocationId)
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Vendor Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.VendorName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.VendorName, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.HiddenFor(model => model.VendorID)
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">
-                                Delivery Details
-                                <span style="color:red">*</span>
-                            </h4>
-                            <hr />
-                            <div class="form-group">
-                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">
-                                Supplier Details
-                                <span style="color:red">*</span>
-                            </h4>
-                            <hr />
-                            <div class="form-group">
-                                @Html.TextAreaFor(model => model.VendorAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.VendorAddress, "", new { @class = "error mt-2 text-danger" })
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br />
-            <hr />
-            <div class="row">
-                <h4 style="color:darkcyan">Item Details</h4>
-            </div>
-            <hr />
-
-            <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-striped" id="submissionTable">
-                                        <thead>
-                                            <tr>
-                                                <th class="sortStyle">Item Code</th>
-                                                <th class="sortStyle d-n d-none">Item Id</th>
-                                                <th class="sortStyle">Item</th>
-                                                <th class="sortStyle">PO Quantity</th>
-                                                <th class="sortStyle">Debited Quantity</th>
-                                                <th class="sortStyle">Units</th>
-                                                <th class="sortStyle">Price (Per Unit)</th>
-                                                <th class="sortStyle">Currency</th>
-                                                <th class="sortStyle">Tax</th>
-                                                <th class="sortStyle">Total Item Cost</th>
-                                                <th class="sortStyle">Remarks</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                        <h4>Add Debit Note</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Debit Note Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.DebitNoteNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.DebitNoteNo, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Debit Note Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.DebitNoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.DebitNoteDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("PO Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.PO_ID, (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedPO(id)" })
+                                @Html.ValidationMessageFor(model => model.PO_ID, "", new { @class = "error mt-2 text-danger" })
+                                @Html.HiddenFor(model => model.PO_Number)
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Currency")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.HiddenFor(model => model.CurrencyID)
+                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.CurrencyName, "", new { @class = "error mt-2 text-danger" })
+
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Rejection Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                &nbsp;
+                                @*@Html.DropDownListFor(model => model.RejectionId, (IEnumerable<SelectListItem>)ViewData["RejectionNumberdd"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedRN(id)" })
+                                    @Html.ValidationMessageFor(model => model.RejectionId, "", new { @class = "error mt-2 text-danger" })
+                                    @Html.HiddenFor(model => model.RejectionNoteNo)*@
+                                @Html.TextBoxFor(model => model.RejectionNoteNo, new { id = "RejectionNoteNo", style = "color:black;border:none;", @readonly = "readonly" })
+                                @Html.HiddenFor(model => model.RejectionId)
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Location Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+
+                                @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.HiddenFor(model => model.LocationId)
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Vendor Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.VendorName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.VendorName, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.HiddenFor(model => model.VendorID)
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">
+                                            Delivery Details
+                                            <span style="color:red">*</span>
+                                        </h4>
+                                        <hr />
+                                        <div class="form-group">
+                                            @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">
+                                            Supplier Details
+                                            <span style="color:red">*</span>
+                                        </h4>
+                                        <hr />
+                                        <div class="form-group">
+                                            @Html.TextAreaFor(model => model.VendorAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px", @readonly = "readonly" })
+                                            @Html.ValidationMessageFor(model => model.VendorAddress, "", new { @class = "error mt-2 text-danger" })
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <br />
-            <br />
-            <div class="row">
-                <div class="col-md-2 mb-1">
-                    @Html.Label("Remarks")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength="95" })
-                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <hr />
+                        <br />
+                        <hr />
+                        <div class="row">
+                            <h4 style="color:darkcyan">Item Details</h4>
+                        </div>
+                        <hr />
 
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="col-md-6 grid-margin stretch-card flex-wrap">
-                    <div class="card" h-50>
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Terms and Conditions<span style="color:red"> * </span></h4>
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-3">
-                                    @Html.Label("Term Description")
-                                </div>
-                                <div class="col-md-9">
-                                    @Html.TextAreaFor(model => model.Terms, new { @class = "form-control", placeholder = "Term Description", style = "height:100px" })
-                                    @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
-                                    @Html.HiddenFor(model => model.TermsAndConditionID)
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                <table class="table table-striped" id="submissionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">Item Code</th>
+                                                            <th class="sortStyle d-n d-none">Item Id</th>
+                                                            <th class="sortStyle">Item</th>
+                                                            <th class="sortStyle">PO Quantity</th>
+                                                            <th class="sortStyle">Debited Quantity</th>
+                                                            <th class="sortStyle">Units</th>
+                                                            <th class="sortStyle">Price (Per Unit)</th>
+                                                            <th class="sortStyle">Currency</th>
+                                                            <th class="sortStyle">Tax</th>
+                                                            <th class="sortStyle">Total Item Cost</th>
+                                                            <th class="sortStyle">Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <br />
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2 mb-1">
+                                @Html.Label("Remarks")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "95" })
+                                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <hr />
 
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Payment Details</h4>
-                            <hr />
-                            <div class="form-group">
-                                <div class="row mb-2">
-                                    <label id="lblTotalBeforeTax"><b>Total (before tax): </b></label>
-                                    <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalBeforeTax" value="" readonly="readonly" />
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                                <div class="card" h-50>
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">Terms and Conditions<span style="color:red"> * </span></h4>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                @Html.Label("Term Description")
+                                            </div>
+                                            <div class="col-md-9">
+                                                @Html.TextAreaFor(model => model.Terms, new { @class = "form-control", placeholder = "Term Description", style = "height:100px" })
+                                                @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
+                                                @Html.HiddenFor(model => model.TermsAndConditionID)
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="row mb-2">
-                                    <label><b>Other Tax: </b></label>
-                                    <input class="form-control text-right form-control-sm" id="OtherTax" maxlength="8" name="OtherTax" readonly="readonly" />
-                                </div>
-                                <div class="row mb-2">
-                                    <label><b>Total tax: </b></label>
-                                    <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" readonly="readonly" />
-                                </div>
-                                <div class="row mb-2">
-                                    <label><b>Grand Total: </b></label>
-                                    <input class="form-control text-right form-control-sm" id="GrandTotal" name="GrandTotal" readonly="readonly" />
+                            </div>
+
+                            <div class="col-md-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">Payment Details</h4>
+                                        <hr />
+                                        <div class="form-group">
+                                            <div class="row mb-2">
+                                                <label id="lblTotalBeforeTax"><b>Total (before tax): </b></label>
+                                                <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalBeforeTax" value="" readonly="readonly" />
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label><b>Other Tax: </b></label>
+                                                <input class="form-control text-right form-control-sm" id="OtherTax" maxlength="8" name="OtherTax" readonly="readonly" />
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label><b>Total tax: </b></label>
+                                                <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" readonly="readonly" />
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label><b>Grand Total: </b></label>
+                                                <input class="form-control text-right form-control-sm" id="GrandTotal" name="GrandTotal" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
                                 </div>
                             </div>
                             <br />
+                            <br />
                         </div>
-                    </div>
-                </div>
-                <br />
-                <br />
-            </div>
 
-            <div class="col d-flex justify-content-end" style="margin-left: auto;">
-                <div class="row">
-                    <div class="col">
-                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                        <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                            <div class="row">
+                                <div class="col">
+                                    <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                                </div>
+                                <div class="col">
+                                    <a href="@Url.Action("Index", "DebitNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                                        Back To List
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.txtItemDetails)
                     </div>
-                    <div class="col">
-                        <a href="@Url.Action("Index", "DebitNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                            Back To List
-                        </a>
-                    </div>
-                </div>
-            </div>
-            @Html.HiddenFor(model => model.txtItemDetails)
-        </div>
-    </div>
-}
+                </div>}
 @Html.Raw(TempData["Success"])
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -254,10 +266,11 @@
         createJson();
     };
     //==========end===============
-
+    
     //=====================Onchange of PO===========================
     function SelectedIndexChangedPO(id) {
-
+        debugger
+        $("#RejectionId").val(''); //Rahul added 20-04-23.
         $('#btnSave').prop('disabled', false);
 
         //For deleting the rows of Item table if exist.
@@ -270,6 +283,111 @@
         }
 
         var PO_Id = $("#PO_ID").val();
+        //Rahul added 20-04-23.
+        var RejectionId = $("#RejectionId").val();
+        if (RejectionId == '' || RejectionId == null) {
+            $.ajax({
+                url: '/DebitNote/GetRNDetails?id=' + PO_Id,
+                type: "POST",
+                data: "{ }",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    console.log("RNDetails :", result);
+                    $("#RejectionId").val(result[0].RejectionID);
+                    $("#RejectionNoteNo").val(result[0].RejectionNoteNo);
+                    $("#VendorID").val(result[0].SupplierID);
+                    $("#VendorName").val(result[0].SupplierName);
+
+                    $("#PO_Number").val(result[0].PONumber);
+                    $("#CurrencyID").val(result[0].CurrencyID);
+                    $("#CurrencyName").val(result[0].CurrencyName);
+                    $("#CurrencyPrice").val(result[0].CurrencyPrice);
+                    $("#LocationId").val(result[0].LocationId);
+                    $("#LocationName").val(result[0].LocationName);
+                    $('#DeliveryAddress').val(result[0].DeliveryAddress);
+                    $('#VendorAddress').val(result[0].SupplierAddress);
+                    $('#TermsAndConditionID').val(result[0].TermsAndConditionID);
+                    $('#Terms').val(result[0].Terms);
+                    $('#OtherTax').val((result[0].OtherTax));
+
+                    var table = document.getElementById('submissionTable');
+                    for (var j = 1; j < result.length; j++) {
+                        var rowCount = table.rows.length;
+                        var cellCount = table.rows[0].cells.length;
+                        var row = table.insertRow(rowCount);
+
+                        for (var i = 0; i < cellCount; i++) {
+                            var cell = 'cell' + i;
+                            cell = row.insertCell(i);
+
+                            if (i == 0) {
+                                cell.innerHTML = result[j].Item_Code;
+                                cell.setAttribute("id", "ItemCode_" + j);
+                            }
+                            else if (i == 1) {
+                                cell.innerHTML = result[j].ItemId;
+                                cell.setAttribute("class", "d-none");
+                                cell.setAttribute("id", "ItemID_" + j);
+                            }
+                            else if (i == 2) {
+                                cell.innerHTML = result[j].ItemName;
+                                cell.setAttribute("id", "ItemName_" + j);
+
+                            }
+                            else if (i == 3) {
+                                cell.innerHTML = result[j].TotalQuantity + " " + result[j].ItemUnit;
+                                cell.setAttribute("id", "POQty_" + j);
+
+                            }
+                            else if (i == 4) {
+                                cell.innerHTML = result[j].RejectedQuantity;
+                                cell.setAttribute("id", "RejectedQuantity_" + j);
+                            }
+                            else if (i == 5) {
+                                cell.innerHTML = result[j].ItemUnit;
+                                cell.setAttribute("id", "ItemUnit_" + j);
+                            }
+                            else if (i == 6) {
+                                cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
+                                cell.setAttribute("id", "ItemUnitPrice_" + j);
+                            }
+                            else if (i == 7) {
+                                cell.innerHTML = result[j].CurrencyName
+                                cell.setAttribute("id", "CurrencyName_" + j);
+                            }
+                            else if (i == 8) {
+                                cell.innerHTML = result[j].ItemTaxValue + " %";
+                                cell.setAttribute("id", "ItemTax_" + j);
+                            }
+                            else if (i == 9) {
+                                cell.innerHTML = result[j].TotalItemCost + " " + result[j].CurrencyName;
+                                cell.setAttribute("id", "TotalItemCost_" + j);
+                            }
+                            else if (i == 10) {
+                                cell.innerHTML = result[j].Remarks;
+                                cell.setAttribute("id", "Remarks_" + j);
+                            }
+                        }
+
+                    }
+
+                    CalculateTotalBeforeTax();
+                    var grandTotal = $('#GrandTotal').val()
+                    grandTotal = parseFloat(grandTotal);
+                    if (grandTotal == 0) {
+                        alert('Wastage of all listed items are zero, Cannot create its debit note!');
+                        $('#btnSave').prop('disabled', true);
+                    }
+                    else {
+                        $('#btnSave').prop('disabled', false);
+                    }
+                },
+                error: function (err) {
+                    alert('Not able to fetch Rejection Note item details!');
+                }
+            });
+        }
 
         $.ajax({
             url: '/CreditNote/GetPODetails',
@@ -369,6 +487,8 @@
             }
 
         });
+
+
     }
     //=============End==============
 

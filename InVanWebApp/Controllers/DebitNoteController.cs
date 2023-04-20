@@ -15,6 +15,7 @@ namespace InVanWebApp.Controllers
     {
         private IDebitNoteRepository _repository;
         private ICreditNoteRepository _creditNoteRepository;
+        private IRejectionNoteRepository _rejectionNoteRepository; //Rahul added 20-04-23.
         private static ILog log = LogManager.GetLogger(typeof(POPaymentController));
 
         #region Initializing Constructor(s)
@@ -26,6 +27,7 @@ namespace InVanWebApp.Controllers
         {
             _repository = new DebitNoteRepository();
             _creditNoteRepository = new CreditNoteRepository();
+            _rejectionNoteRepository = new RejectionNoteRepository(); //Rahul added 20-04-23.
         }
 
         /// <summary>
@@ -62,6 +64,7 @@ namespace InVanWebApp.Controllers
             {
                 BindPONumber();
                 GenerateDocumentNo();
+                //BindRejectionDropDown();
                 DebitNoteBO model = new DebitNoteBO();
                 model.DebitNoteDate = DateTime.Today;                              
 
@@ -97,7 +100,7 @@ namespace InVanWebApp.Controllers
                             model.DebitNoteDate = DateTime.Today;
 
                             GenerateDocumentNo();
-
+                            //BindRejectionDropDown();
                             return View(model);
                         }
 
@@ -108,6 +111,7 @@ namespace InVanWebApp.Controllers
                     {
                         BindPONumber();
                         GenerateDocumentNo();
+                        //BindRejectionDropDown();
                         model.DebitNoteDate = DateTime.Today;                        
 
                         return View(model);
@@ -124,6 +128,7 @@ namespace InVanWebApp.Controllers
 
                 BindPONumber();
                 GenerateDocumentNo();
+                //BindRejectionDropDown();
                 model.DebitNoteDate = DateTime.Today;
 
                 return View(model);
@@ -187,6 +192,13 @@ namespace InVanWebApp.Controllers
             var DocumentNumber = objDocNo.GetDocumentNo(6);
             ViewData["DocumentNo"] = DocumentNumber;
         }
+
+        //public void BindRejectionDropDown()
+        //{
+        //    var model = _rejectionNoteRepository.GetAll();
+        //    var RejectionReport_dd = new SelectList(model.ToList(), "ID", "RejectionNoteNo");
+        //    ViewData["RejectionNumberdd"] = RejectionReport_dd;
+        //}
         #endregion
 
         #region Fetch PO details for debit note
@@ -200,5 +212,23 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
         #endregion
+
+        #region Fetch RN details for debit note
+        /// <summary>
+        /// Rahul added 20-04-23. 
+        /// </summary>
+        /// <param name="PO_Id"></param>
+        /// <returns></returns>
+        public JsonResult GetRNDetails(string id) 
+        {
+            int RNId = 0;
+            if (id != "" && id != null)
+                RNId = Convert.ToInt32(id);
+
+            var result = _rejectionNoteRepository.GetRejectionNoteDetailsById(RNId);
+            return Json(result);
+        }
+        #endregion
+
     }
 }

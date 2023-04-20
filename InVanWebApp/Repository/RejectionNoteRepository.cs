@@ -151,10 +151,6 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@InwardQCNumber", model.InwardQCNumber);
                     cmd.Parameters.AddWithValue("@SupplierID", model.SupplierID);
                     cmd.Parameters.AddWithValue("@SupplierName", model.SupplierName);
-                    //if(model.PO_Id == 0)
-                    //{
-                    //    model.PO_Id = null;
-                    //}
                     cmd.Parameters.AddWithValue("@PO_Id", model.PO_Id);
                     cmd.Parameters.AddWithValue("@PONumber", model.PONumber);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
@@ -261,7 +257,7 @@ namespace InVanWebApp.Repository
         /// <param name="RejectionID"></param>        
         public RejectionNoteBO GetRejectionNoteById(int RejectionID) 
         {
-            string rejectionNoteQuery = "SELECT * FROM RejectionNote WHERE ID = @RejectionID AND IsDeleted = 0";
+            string rejectionNoteQuery = "SELECT *, ProductionQCNumber as PreProductionQCNumber FROM RejectionNote WHERE ID = @RejectionID AND IsDeleted = 0";
             string rejectionNoteItemQuery = "SELECT * FROM RejectionNoteItemDetails WHERE RejectionID = @RejectionID AND IsDeleted = 0;";
             using (SqlConnection con = new SqlConnection(connString)) 
             {
@@ -435,6 +431,102 @@ namespace InVanWebApp.Repository
                 log.Error(ex.Message, ex);
             }
             return resultList;
+        }
+        #endregion
+
+        #region Bind all Rejection note details for Debit note item details
+        /// <summary>
+        /// //Rahul added 20-04-23.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public IEnumerable<RejectionNoteItemDetailsBO> GetRejectionNoteDetailsById(int Id) 
+        {
+            List<RejectionNoteItemDetailsBO> resultRNDtlsList = new List<RejectionNoteItemDetailsBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_RejectionNoteDetailsFor_DN_GetByID", con);
+                    cmd.Parameters.AddWithValue("@ID", Id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new RejectionNoteItemDetailsBO()
+                        {
+                            PO_Id = Convert.ToInt32(dataReader["PO_Id"]),
+                            PONumber = dataReader["PONumber"].ToString(),
+                            RejectionID = Convert.ToInt32(dataReader["RejectionID"]),
+                            RejectionNoteNo = dataReader["RejectionNoteNo"].ToString(),
+                            SupplierID = Convert.ToInt32(dataReader["SupplierID"]),
+                            SupplierName = dataReader["SupplierName"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader["CurrencyID"]),
+                            CurrencyName = dataReader["CurrencyName"].ToString(),
+                            CurrencyPrice = Convert.ToDouble(dataReader["CurrencyPrice"]),
+                            LocationId = Convert.ToInt32(dataReader["LocationId"]),
+                            LocationName = dataReader["LocationName"].ToString(),
+                            DeliveryAddress = dataReader["DeliveryAddress"].ToString(),
+                            SupplierAddress = dataReader["SupplierAddress"].ToString(),
+                            TermsAndConditionID = Convert.ToInt32(dataReader["TermsAndConditionID"]),
+                            Terms = dataReader["Terms"].ToString(),
+                            OtherTax = Convert.ToDecimal(dataReader["OtherTax"])    
+                        };
+                        resultRNDtlsList.Add(result);
+                    }
+                    con.Close();
+
+                    SqlCommand cmd1 = new SqlCommand("usp_tbl_RNItemDetailsFor_DN_ItemDetails_GetByID", con);
+                    cmd1.Parameters.AddWithValue("@ID", Id);
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader1 = cmd1.ExecuteReader();
+
+                    while (dataReader1.Read())
+                    {
+                        var resultRNDtls = new RejectionNoteItemDetailsBO()
+                        {
+                            //Item_Name = dataReader1["ItemName"].ToString(),
+                            //Item_Code = dataReader1["ItemCode"].ToString(),
+                            //ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
+                            //CurrencyName = dataReader1["CurrencyName"].ToString(),
+                            //ItemUnit = dataReader1["ItemUnit"].ToString(),
+                            //TotalQuantity = float.Parse(dataReader1["TotalQuantity"].ToString()),
+                            //InwardQuantity = (dataReader1["InwardQuantity"] != null ? Convert.ToDouble(dataReader1["InwardQuantity"]) : 0),
+                            //RejectedQuantity = float.Parse(dataReader1["RejectedQuantity"].ToString()),
+                            //QuantityTookForSorting = float.Parse(dataReader1["QuantityTookForSorting"].ToString()),
+                            //WastageQuantityInPercentage = float.Parse(dataReader1["WastageQuantityInPercentage"].ToString()),
+                            //Remarks = dataReader1["Remarks"].ToString(),
+                            //ItemId = Convert.ToInt32(dataReader1["ItemId"]),
+                            //ItemTaxValue = dataReader1["ItemTaxValue"].ToString(),
+
+                            ItemId = Convert.ToInt32(dataReader1["ItemId"]),
+                            Item_Code = dataReader1["ItemCode"].ToString(),
+                            ItemName = dataReader1["ItemName"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
+                            ItemUnit = dataReader1["ItemUnit"].ToString(),
+                            ItemTaxValue = dataReader1["ItemTaxValue"].ToString(),
+                            TotalQuantity = float.Parse(dataReader1["TotalQuantity"].ToString()),
+                            RejectedQuantity = float.Parse(dataReader1["RejectedQuantity"].ToString()),
+                            CurrencyName = dataReader1["CurrencyName"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader1["CurrencyID"]),
+                            Remarks = dataReader1["Remarks"].ToString(),
+                            TotalItemCost = Convert.ToDecimal(dataReader1["TotalItemCost"])
+
+                        };
+                        resultRNDtlsList.Add(resultRNDtls);
+                    }
+                    con.Close();                    
+                };
+            }
+            catch (Exception ex)
+            {
+                resultRNDtlsList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultRNDtlsList;
         }
         #endregion
 
