@@ -62,9 +62,9 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                BindPONumber();
+                //BindPONumber();
                 GenerateDocumentNo();
-                //BindRejectionDropDown();
+                BindRejectionDropDown();    // Rahul added 21-04-23.
                 DebitNoteBO model = new DebitNoteBO();
                 model.DebitNoteDate = DateTime.Today;                              
 
@@ -81,7 +81,7 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
         [HttpPost]
         public ActionResult AddDebitNote(DebitNoteBO model)
-        {
+         {
             try
             {
                 if (Session[ApplicationSession.USERID] != null)
@@ -96,11 +96,11 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate debit note! Can not be inserted!');</script>";
-                            BindPONumber();
+                            //BindPONumber();
                             model.DebitNoteDate = DateTime.Today;
 
                             GenerateDocumentNo();
-                            //BindRejectionDropDown();
+                            BindRejectionDropDown();// Rahul added 21-04-23.
                             return View(model);
                         }
 
@@ -109,9 +109,9 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        BindPONumber();
+                        //BindPONumber();
                         GenerateDocumentNo();
-                        //BindRejectionDropDown();
+                        BindRejectionDropDown();// Rahul added 21-04-23.
                         model.DebitNoteDate = DateTime.Today;                        
 
                         return View(model);
@@ -126,9 +126,9 @@ namespace InVanWebApp.Controllers
                 log.Error("Error", ex);
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
-                BindPONumber();
+                //BindPONumber();
                 GenerateDocumentNo();
-                //BindRejectionDropDown();
+                BindRejectionDropDown();// Rahul added 21-04-23.
                 model.DebitNoteDate = DateTime.Today;
 
                 return View(model);
@@ -176,12 +176,12 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind dropdowns 
-        public void BindPONumber()
-        {
-            var result = _creditNoteRepository.GetPONumberForDropdown();
-            var resultList = new SelectList(result.ToList(), "PurchaseOrderId", "PONumber");
-            ViewData["PONumberAndId"] = resultList;
-        }
+        //public void BindPONumber()
+        //{
+        //    var result = _repository.GetPONumberForDropdown();
+        //    var resultList = new SelectList(result.ToList(), "PurchaseOrderId", "PONumber");
+        //    ViewData["PONumberAndId"] = resultList;
+        //}
 
         public void GenerateDocumentNo() 
         {
@@ -192,13 +192,13 @@ namespace InVanWebApp.Controllers
             var DocumentNumber = objDocNo.GetDocumentNo(6);
             ViewData["DocumentNo"] = DocumentNumber;
         }
-
-        //public void BindRejectionDropDown()
-        //{
-        //    var model = _rejectionNoteRepository.GetAll();
-        //    var RejectionReport_dd = new SelectList(model.ToList(), "ID", "RejectionNoteNo");
-        //    ViewData["RejectionNumberdd"] = RejectionReport_dd;
-        //}
+        // Rahul added 21-04-23.
+        public void BindRejectionDropDown()
+        {
+            var model = _rejectionNoteRepository.GetAll();
+            var RejectionReport_dd = new SelectList(model.ToList(), "ID", "RejectionNoteNo");
+            ViewData["RejectionNumberdd"] = RejectionReport_dd;
+        }
         #endregion
 
         #region Fetch PO details for debit note
@@ -217,7 +217,7 @@ namespace InVanWebApp.Controllers
         /// <summary>
         /// Rahul added 20-04-23. 
         /// </summary>
-        /// <param name="PO_Id"></param>
+        /// <param name="RejectionID"></param>
         /// <returns></returns>
         public JsonResult GetRNDetails(string id) 
         {

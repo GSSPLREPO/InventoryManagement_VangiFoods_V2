@@ -15,7 +15,7 @@ namespace InVanWebApp_BO
         public DateTime DebitNoteDate { get; set; }
         public Nullable<int> GRNId { get; set; }
         public string GRN_No { get; set; }
-        [Required(ErrorMessage = "Select PO number!")]
+        //[Required(ErrorMessage = "Select PO number!")]//Rahul commented 21-04-23.  
         public Nullable<int> PO_ID { get; set; }
         public string PO_Number { get; set; }
         public Nullable<int> LocationId { get; set; }
@@ -35,7 +35,7 @@ namespace InVanWebApp_BO
         public decimal GrandTotal { get; set; }
         public string Signature { get; set; }
         public string Remarks { get; set; }
-        [Required(ErrorMessage = "Select Rejection number!")]  //Rahul added 20-04-23.
+        [Required(ErrorMessage = "Select Rejection number!")]  //Rahul added 20-04-23. 
         public Nullable<int> RejectionId { get; set; } //Rahul added 20-04-23.
         public string RejectionNoteNo { get; set; } //Rahul added 20-04-23. 
         public Nullable<bool> IsDeleted { get; set; }

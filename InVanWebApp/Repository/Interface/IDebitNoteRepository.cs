@@ -13,5 +13,7 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Insert(DebitNoteBO model);
         void Delete(int Id, int userId);
         DebitNoteBO GetById(int ID);
+        //Function for dropdown Get all PO Numbers. 
+        //List<PurchaseOrderBO> GetPONumberForDropdown();
     }
 }

@@ -472,7 +472,8 @@ namespace InVanWebApp.Repository
                             SupplierAddress = dataReader["SupplierAddress"].ToString(),
                             TermsAndConditionID = Convert.ToInt32(dataReader["TermsAndConditionID"]),
                             Terms = dataReader["Terms"].ToString(),
-                            OtherTax = Convert.ToDecimal(dataReader["OtherTax"])    
+                            OtherTax = Convert.ToDecimal(dataReader["OtherTax"]),
+                            flag = Convert.ToInt32(dataReader["flag"])    
                         };
                         resultRNDtlsList.Add(result);
                     }
