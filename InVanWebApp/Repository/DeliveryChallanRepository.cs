@@ -16,7 +16,6 @@ namespace InVanWebApp.Repository
 {
     public class DeliveryChallanRepository: IDeliveryChallanRepository
     {
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(DeliveryChallanRepository));
 
@@ -117,6 +116,7 @@ namespace InVanWebApp.Repository
                             objItemDetails.ItemUnit = item.ElementAt(8).Value.ToString();
                             objItemDetails.CurrencyName = item.ElementAt(9).Value.ToString();
                             objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(10).Value);
+                            objItemDetails.AvailableStockBeforeDelivery = Convert.ToDecimal(item.ElementAt(11).Value);
                             objItemDetails.CreatedBy = model.CreatedBy;
                             itemDetails.Add(objItemDetails);
                         }
@@ -141,6 +141,7 @@ namespace InVanWebApp.Repository
                             cmdNew.Parameters.AddWithValue("@TotalItemCost", item.TotalItemCost);
                             cmdNew.Parameters.AddWithValue("@LocationId", model.LocationId);
                             cmdNew.Parameters.AddWithValue("@SO_Id", model.SO_Id);
+                            cmdNew.Parameters.AddWithValue("@AvlStockQty", item.AvailableStockBeforeDelivery);
                             cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                             cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
 
@@ -309,7 +310,8 @@ namespace InVanWebApp.Repository
                             OutwardQuantity = Convert.ToDecimal(dataReader2["OutwardQuantity"]),
                             BalanceQuantity = Convert.ToDecimal(dataReader2["BalanceQuantity"]),
                             CurrencyName = dataReader2["CurrencyName"].ToString(),
-                            CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"])
+                            CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"]),
+                            FinishedGoodQuantity=Convert.ToDecimal(dataReader2["FinishedGoodQty"])
                             //TotalItemCost = Convert.ToDecimal(dataReader2["TotalItemCost"])
                         };
                         resultList.Add(result);

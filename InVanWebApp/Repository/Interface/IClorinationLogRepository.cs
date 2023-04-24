@@ -24,5 +24,9 @@ namespace InVanWebApp.Repository.Interface
         //Function define for: Update ClorinationLog record.
         ResponseMessageBO Update(ClorinationLogBO model);
 
+        //To get list of clorination Log for Export 
+        List<ClorinationLogBO> GetAllClorinationList(int flag, DateTime? fromDate = null, DateTime? toDate = null);
+
+
     }
 }

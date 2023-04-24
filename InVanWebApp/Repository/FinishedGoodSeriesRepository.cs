@@ -16,7 +16,6 @@ namespace InVanWebApp.Repository
 {
     public class FinishedGoodSeriesRepository : IFinishedGoodSeriesRepository
     {
-        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(FinishedGoodSeriesRepository));
 
@@ -53,7 +52,7 @@ namespace InVanWebApp.Repository
                             ProductName = reader["ProductName"].ToString(),
                             PackageSize = reader["PackageSize"].ToString(),
                             MfgDate = Convert.ToDateTime(reader["MfgDate"]),
-                            NoOfCartonBox = Convert.ToInt32(reader["NoOfCartonBox"]),
+                            NoOfCartonBox = reader["NoOfCartonBox"] is DBNull?0:Convert.ToInt32(reader["NoOfCartonBox"]),
                             QuantityInKG = Convert.ToDouble(reader["QuantityInKG"]),
                             BatchNo = reader["BatchNo"].ToString(),
                             SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),
@@ -170,7 +169,7 @@ namespace InVanWebApp.Repository
                             ProductName = reader["ProductName"].ToString(),
                             PackageSize = reader["PackageSize"].ToString(),
                             MfgDate = Convert.ToDateTime(reader["MfgDate"]),
-                            NoOfCartonBox = Convert.ToInt32(reader["NoOfCartonBox"]),
+                            NoOfCartonBox = reader["NoOfCartonBox"] is DBNull?0: Convert.ToInt32(reader["NoOfCartonBox"]),
                             QuantityInKG = Convert.ToDouble(reader["QuantityInKG"]),
                             BatchNo = reader["BatchNo"].ToString(),
                             SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),

@@ -122,8 +122,9 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Finished Good Series Details Inserted Successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                            TempData["Success"] = "<script>alert('Already creted FGS of the selected batch number!');</script>";
                             BindSONumber();
+                            BindLocationName();
                             return View();
                         }
                         return RedirectToAction("Index", "FinishedGoodSeries");
@@ -133,7 +134,6 @@ namespace InVanWebApp.Controllers
                 {
                     log.Error("Error", ex);
                     TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-                    BindSONumber();
                     return RedirectToAction("Index", "FinishedGoodSeries");
                 }
                 return View();

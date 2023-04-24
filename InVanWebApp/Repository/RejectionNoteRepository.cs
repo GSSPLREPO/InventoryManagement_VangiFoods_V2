@@ -489,19 +489,6 @@ namespace InVanWebApp.Repository
                     {
                         var resultRNDtls = new RejectionNoteItemDetailsBO()
                         {
-                            //Item_Name = dataReader1["ItemName"].ToString(),
-                            //Item_Code = dataReader1["ItemCode"].ToString(),
-                            //ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
-                            //CurrencyName = dataReader1["CurrencyName"].ToString(),
-                            //ItemUnit = dataReader1["ItemUnit"].ToString(),
-                            //TotalQuantity = float.Parse(dataReader1["TotalQuantity"].ToString()),
-                            //InwardQuantity = (dataReader1["InwardQuantity"] != null ? Convert.ToDouble(dataReader1["InwardQuantity"]) : 0),
-                            //RejectedQuantity = float.Parse(dataReader1["RejectedQuantity"].ToString()),
-                            //QuantityTookForSorting = float.Parse(dataReader1["QuantityTookForSorting"].ToString()),
-                            //WastageQuantityInPercentage = float.Parse(dataReader1["WastageQuantityInPercentage"].ToString()),
-                            //Remarks = dataReader1["Remarks"].ToString(),
-                            //ItemId = Convert.ToInt32(dataReader1["ItemId"]),
-                            //ItemTaxValue = dataReader1["ItemTaxValue"].ToString(),
 
                             ItemId = Convert.ToInt32(dataReader1["ItemId"]),
                             Item_Code = dataReader1["ItemCode"].ToString(),

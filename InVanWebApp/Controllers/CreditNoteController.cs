@@ -59,7 +59,8 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                BindPONumber();
+                //BindPONumber();
+                BindSONumber();
                 CreditNoteBO model = new CreditNoteBO();
                 model.CreditNoteDate = DateTime.Today;
                 //==========Document number for Credit note============//
@@ -97,7 +98,8 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate Credit note! Can not be inserted!');</script>";
-                            BindPONumber();
+                            //BindPONumber();
+                            BindSONumber();
                             model.CreditNoteDate = DateTime.Today;
 
                             GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -112,7 +114,8 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        BindPONumber();
+                        //BindPONumber();
+                        BindSONumber();
                         model.CreditNoteDate = DateTime.Today;
                         GetDocumentNumber objDocNo = new GetDocumentNumber();
                         var DocumentNumber = objDocNo.GetDocumentNo(11);
@@ -130,7 +133,8 @@ namespace InVanWebApp.Controllers
                 log.Error("Error", ex);
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
-                BindPONumber();
+                //BindPONumber();
+                BindSONumber();
                 model.CreditNoteDate = DateTime.Today;
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -200,5 +204,27 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
         #endregion
+
+        #region Fetch SO details for creditNote
+        public JsonResult GetSODetails(string id)
+        {
+            int SOId = 0;
+            if (id != "" && id != null)
+                SOId = Convert.ToInt32(id);
+
+            var result = _repository.GetSODetailsById(SOId);
+            return Json(result);
+        }
+        #endregion
+
+        #region Bind dropdowns 
+        public void BindSONumber()
+        {
+            var result = _repository.GetSONumberForDropdown();
+            var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONumber");
+            ViewData["SONumberAndId"] = resultList;
+        }
+        #endregion
+
     }
 }

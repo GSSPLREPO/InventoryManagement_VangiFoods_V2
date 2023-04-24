@@ -28,26 +28,23 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a href="@Url.Action("AddFinishedGoodSeries","FinishedGoodSeries")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                        <span class="fa fa-plus"></span> Finished Good Series
-                                    </a>
-                                </div>
+                            <a href="@Url.Action("AddFinishedGoodSeries","FinishedGoodSeries")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span> Finished Good Series
+                            </a>
+                            <div class="table-responsive" style="padding-top:15px;">
+                                <table id="tblFinishedGoodSeries" class="table table-striped table-bordered hover table-sm">
+                                    <thead class="text-center" style="text-align:center">
+                                        <tr>
+                                            <th>Sr.No.</th>
+                                            <th class="text-wrap">Product Name</th>
+                                            <th class="text-wrap">Package Size</th>
+                                            <th class="text-wrap">Manufacture Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
-                            <br />
-                            <table id="tblFinishedGoodSeries" class="table table-striped table-bordered hover table-sm table-responsive-md" width="100%" style="table-layout: fixed;">
-                                <thead class="text-center" style="text-align:center">
-                                    <tr>
-                                        <th>Sr.No.</th>
-                                        <th class="text-wrap">Product Name</th>
-                                        <th class="text-wrap">Package Size</th>
-                                        <th class="text-wrap">Manufacture Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -58,7 +55,7 @@
 </html>
 @Html.Raw(TempData["Success"])
 @section scripts{
-    @*<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />*@
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
@@ -136,11 +133,12 @@
                     //{ "data": "WorkOrderNo", "autoWidth": true },
                     {
                         data: "FGSID", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEye" title = "Edit FGS"><i class="fa fa-eye text-primary"/></i></button>' +'<button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title = "Delete FGS"><i class="fa fa-trash"/></i></button>'
+                            return '<button class="btnEye" style="background:transparent !important;" type="button" id="' + data + '" title="View FGS"><i class="fa fa-eye text-primary"/></i></button>' +'<button style="background:transparent !important;" type="button" id="'
+                                + data + '" class = "btnEdit" title="Edit FGS"><i class="fa fa-edit"/></i></button> <button style="background:transparent !important;" type="button" id="'
+                                + data + '"class="btnDelete"  title="Delete FGS"><i class="fa fa-trash text-danger"/></i></button>'
 
-                            //return '<button type="button" id="' + data + '" class = "btn text-primary btnEye"><i class="fa fa-eye text-primary"/></i></button>'+'<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                            //        + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            //return '<button type="button" id="' + data + '" class = "btn text-primary btnEye btn-sm"><i class="fa fa-eye text-primary"/></i></button>'+'<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                            //        + data + '" class = "btn text-danger btnDelete btn-sm"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ],
@@ -164,7 +162,7 @@
                 });
 
        $(document).on("click", ".btnEdit", function () {
-                    var id = $(this).attr("id");
+           var id = $(this).attr("id");
                     window.location.href = '@Url.Action("EditFinishedGoodSeries", "FinishedGoodSeries", new { Id = "Id"})'.replace("Id", parseInt(id));
                 });
        $(document).on("click", ".btnDelete", function () {

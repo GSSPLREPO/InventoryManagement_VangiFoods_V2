@@ -236,5 +236,59 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region  Bind grid for datatable
+        /// <summary>
+        /// Date: 12 APR'23
+        /// Snehal: This function is for fecthing list of Clorination Log
+        /// </summary>
+        /// <returns></returns>
+
+        public List<ClorinationLogBO> GetAllClorinationList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
+        {
+            List<ClorinationLogBO> clorinationLogList = new List<ClorinationLogBO>();
+            try
+            {
+                if (fromDate == null && toDate == null)
+                {
+                    fromDate = DateTime.Today;
+                    toDate = DateTime.Today;
+                }
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_ClorinationLog_GetAllByDate", con);
+                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var clorination = new ClorinationLogBO()
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Date = Convert.ToDateTime(reader["Date"]),
+                            FootWasher = reader["FootWasher"].ToString(),
+                            RoWater = reader["RoWater"].ToString(),
+                            SoftWater = reader["SoftWater"].ToString(),
+                            CoolingWaterTank = reader["CoolingWaterTank"].ToString(),
+                            ProcessingWater = reader["ProcessingWater"].ToString(),
+                            CIPWaterTank = reader["CIPWaterTank"].ToString(),
+                            VerifyByName = reader["VerifyByName"].ToString()
+                        };
+                        clorinationLogList.Add(clorination);
+
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return clorinationLogList;
+        }
+        #endregion
     }
 }

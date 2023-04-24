@@ -7,12 +7,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InVanWebApp_BO
 {
-    public class SOPaymentBO 
+    public class SOPaymentBO
     {
         public int ID { get; set; }
-        public int SalesOrderId { get; set; } 
-      //  [Required(ErrorMessage = "Select PO Number!")]
-        public string SONumber { get; set; }        
+        public int SalesOrderId { get; set; }
+        //  [Required(ErrorMessage = "Select PO Number!")]
+        public string SONumber { get; set; }
         public int VendorID { get; set; }
 
         [Required(ErrorMessage = "Enter Vendor Name!")]
@@ -20,7 +20,7 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Enter Invoice Number!")]
         public string InvoiceNumber { get; set; }
-        
+
         [Required(ErrorMessage = "Select payment date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> PaymentDate { get; set; }
@@ -53,7 +53,7 @@ namespace InVanWebApp_BO
 
         public List<SalesOrderItemsDetailBO> SalesOrderItems { get; set; }
         public decimal AdvancedPayment { get; set; }
-        public float AmountPaid{ get; set; }
+        public float AmountPaid { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -67,11 +67,53 @@ namespace InVanWebApp_BO
 
         //Added the below field for view of PO payment
         public string CurrencyName { get; set; }
+        
+        public string LocationName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public int CurrencyID { get; set; }
+
+        [Required(ErrorMessage = "Select the location name!")]
+        public Nullable<int> LocationId { get; set; }
+
+        [Required(ErrorMessage = "Select vendors name!")]
+        public Nullable<int> VendorsID { get; set; }
+
+        public string CompanyName { get; set; }
+
+        [Required(ErrorMessage = "Enter delivery address!")]
+        //public string BuyerAddress { get; set; }
+        public string DeliveryAddress { get; set; }
+
+        [Required(ErrorMessage = "Enter supplier address!")]
+        public string SupplierAddress { get; set; }
+
+        [Required(ErrorMessage = "Select terms and condition!")]
+        public Nullable<int> TermsAndConditionID { get; set; }
+
+        public string Terms { get; set; }
+
+        public decimal OtherTax { get; set; }
+
+        public Nullable<int> Item_ID { get; set; }
+
+        public string Item_Code { get; set; }
+
+        public string ItemName { get; set; }
+
+        public decimal ItemUnitPrice { get; set; }
+        public string ItemUnit { get; set; }
+        public Nullable<decimal> ItemTaxValue { get; set; }
+        public decimal ItemQuantity { get; set; }
+
+        public decimal RejectedQuantity { get; set; }
+
+        public Nullable<decimal> TotalItemCost { get; set; }
+
     }
-    public class SalesOrderItemsDetailBO 
-     {
+    public class SalesOrderItemsDetailBO
+    {
         public int ID { get; set; }
-        public Nullable<int> SalesOrderId { get; set; } 
+        public Nullable<int> SalesOrderId { get; set; }
         public Nullable<int> Item_ID { get; set; }
         public string ItemName { get; set; }
         public string Item_Code { get; set; }
@@ -88,3 +130,4 @@ namespace InVanWebApp_BO
 
     }
 }
+

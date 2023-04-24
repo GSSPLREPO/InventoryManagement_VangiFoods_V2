@@ -488,5 +488,115 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
+
+        #region Bind all SO details 
+        public IEnumerable<SOPaymentBO> GetSODetailsById(int SO_Id)
+        {
+            List<SOPaymentBO> resultList = new List<SOPaymentBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_SODetails_GetByIDFor_CeditNote", con);
+                    cmd.Parameters.AddWithValue("@ID", SO_Id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new SOPaymentBO()
+                        {
+                            SalesOrderId = Convert.ToInt32(dataReader["SalesOrderId"]),
+                            SONumber = dataReader["SONumber"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader["CurrencyID"]),
+                            CurrencyName = dataReader["CurrencyName"].ToString(),
+                            CurrencyPrice = Convert.ToDouble(dataReader["CurrencyPrice"]),
+                            LocationId = Convert.ToInt32(dataReader["LocationId"]),
+                            LocationName = dataReader["LocationName"].ToString(),
+                            VendorsID = Convert.ToInt32(dataReader["VendorsID"]),
+                            CompanyName = dataReader["CompanyName"].ToString(),
+                            DeliveryAddress = dataReader["DeliveryAddress"].ToString(),
+                            SupplierAddress = dataReader["SupplierAddress"].ToString(),
+                            TermsAndConditionID = Convert.ToInt32(dataReader["TermsAndConditionID"]),
+                            Terms = dataReader["Terms"].ToString(),
+                            OtherTax = Convert.ToDecimal(dataReader["OtherTax"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                    //==========This is for fetching Item details".===========///
+
+                    SqlCommand cmd2 = new SqlCommand("usp_tbl_SOItemDetailsForCreditNote_GetByID", con);
+                    cmd2.Parameters.AddWithValue("@SO_Id", SO_Id);
+                    cmd2.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader2 = cmd2.ExecuteReader();
+
+                    while (dataReader2.Read())
+                    {
+                        var result = new SOPaymentBO()
+                        {
+                            Item_ID = Convert.ToInt32(dataReader2["Item_ID"]),
+                            Item_Code = dataReader2["Item_Code"].ToString(),
+                            ItemName = dataReader2["ItemName"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                            ItemUnit = dataReader2["ItemUnit"].ToString(),
+                            ItemTaxValue = Convert.ToDecimal(dataReader2["ItemTaxValue"]),
+                            ItemQuantity = Convert.ToDecimal(dataReader2["SOQty"]),
+                            RejectedQuantity = ((dataReader2["RejectedQuantity"] != null) ? Convert.ToDecimal(dataReader2["RejectedQuantity"]) : 0),
+                            CurrencyName = dataReader2["CurrencyName"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"]),
+                            Remarks = dataReader2["Remarks"].ToString(),
+                            TotalItemCost = Convert.ToDecimal(dataReader2["TotalItemCost"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Function for dropdown binding
+        public List<SOPaymentBO> GetSONumberForDropdown()
+        {
+            List<SOPaymentBO> resultList = new List<SOPaymentBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_SONumber_Get", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        SOPaymentBO result = new SOPaymentBO()
+                        {
+                            SalesOrderId = Convert.ToInt32(reader["ID"]),
+                            SONumber = reader["SONumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
     }
 }

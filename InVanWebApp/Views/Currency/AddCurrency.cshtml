@@ -18,7 +18,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphaNumeric(event);" })
+                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumeric(event);" })
                                 @Html.ValidationMessageFor(model => model.CurrencyName, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -64,7 +64,7 @@
     function IsAlphaNumeric(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode;
         if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
-            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            || unicode == 95 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122) || unicode==32) {
             return true;
         }
         else {

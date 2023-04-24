@@ -124,55 +124,57 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region Rejection note data
-        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate)
-        {
-            List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
-            try
-            {
-                using (SqlConnection con = new SqlConnection(conStr))
-                {
-                    SqlCommand cmd = new SqlCommand("usp_rpt_RejectionNote_Report", con);
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.CommandType = CommandType.StoredProcedure;
+        //#region Rejection note data Not in use 24-04-2023.
+        //public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate)
+        //{
+        //    List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(conStr))
+        //        {
+        //            SqlCommand cmd = new SqlCommand("usp_rpt_RejectionNote_Report", con);
+        //            cmd.Parameters.AddWithValue("@fromDate", fromDate);
+        //            cmd.Parameters.AddWithValue("@toDate", toDate);
+        //            cmd.Parameters.AddWithValue("@flag", FlagDebitNote);
+        //            cmd.CommandType = CommandType.StoredProcedure;
 
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                    while (reader.Read())
-                    {
-                        var result = new RejectionNoteItemDetailsBO()
-                        {
-                            SrNo = Convert.ToInt32(reader["SrNo"]),
-                            RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy hh:mm:ss"),
-                            Item_Name=reader["ItemName"].ToString(),
-                            Item_Code=reader["ItemCode"].ToString(),
-                            ItemUnitPrice=Convert.ToDecimal(reader["ItemUnitPrice"]),
-                            TotalRecevingQuantiy=Convert.ToDouble(reader["QuantityTookForSorting"]),
-                            RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
-                            RejectionNoteNo = reader["RejectionNoteNo"].ToString(),
-                            InwardQCNumber = reader["InwardQCNumber"].ToString(),
-                            ApprovedBy= reader["ApprovedBy"].ToString(),
-                            CurrencyName=reader["CurrencyName"].ToString(),
-                            ItemUnit=reader["ItemUnit"].ToString()
-                        };
-                        resultList.Add(result);
-                    }
-                    con.Close();
-                }
+        //            con.Open();
+        //            SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+        //            while (reader.Read())
+        //            {
+        //                var result = new RejectionNoteItemDetailsBO()
+        //                {
+        //                    SrNo = Convert.ToInt32(reader["SrNo"]),
+        //                    RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy hh:mm:ss"),
+        //                    Item_Name = reader["ItemName"].ToString(),
+        //                    Item_Code = reader["ItemCode"].ToString(),
+        //                    ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
+        //                    TotalRecevingQuantiy = Convert.ToDouble(reader["QuantityTookForSorting"]),
+        //                    RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
+        //                    RejectionNoteNo = reader["RejectionNoteNo"].ToString(),
+        //                    InwardQCNumber = reader["InwardQCNumber"].ToString(),
+        //                    ApprovedBy = reader["ApprovedBy"].ToString(),
+        //                    CurrencyName = reader["CurrencyName"].ToString(),
+        //                    ItemUnit = reader["ItemUnit"].ToString(),
+        //                    FlagDebitNote = Convert.ToBoolean(reader["ItemUnit"])
+        //                };
+        //                resultList.Add(result);
+        //            }
+        //            con.Close();
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex.Message, ex);
 
-                resultList = null;
+        //        resultList = null;
 
-            }
-            return resultList;
-        }
+        //    }
+        //    return resultList;
+        //}
 
-        #endregion
+        //#endregion
 
         #region Finished Goods Dispatch report
 
@@ -637,8 +639,8 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region Rejection Report data
-        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int rejectionNumber)
+        #region Rejection Report data updated 24-04-2023. 
+        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int FlagDebitNote=0)
         {
             List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
             try
@@ -649,6 +651,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
                     cmd.Parameters.AddWithValue("@RejectionNumber", rejectionNumber);
+                    cmd.Parameters.AddWithValue("@flag", FlagDebitNote);    //updated 24-04-2023. 
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     con.Open();
@@ -667,7 +670,7 @@ namespace InVanWebApp.Repository
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
                             TotalRecevingQuantiy = Convert.ToDouble(reader["RecivedQuantity"]),
                             RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
-                            ApprovedBy = reader["ApprovedBy"].ToString(),
+                            ApprovedBy = reader["ApprovedBy"].ToString()                                
                         };
                         resultList.Add(result);
                     }

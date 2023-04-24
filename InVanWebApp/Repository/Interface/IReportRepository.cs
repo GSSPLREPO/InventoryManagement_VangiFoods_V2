@@ -15,7 +15,8 @@ namespace InVanWebApp.Repository.Interface
 
         //Calling Method For Raw Material Received Report
         List<GRN_BO> getRawMaterialReceivedData(DateTime fromDate, DateTime toDate, int item, int wearhouse);
-        List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate);
+        //Rejection 'getRejectionReportData' commented 24-04-23.
+        //List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate); 
         List<DeliveryChallanItemDetailsBO> getFinishedGoodsReportData(DateTime fromDate, DateTime toDate,int itemId);
         List<StockMasterBO> getInventoryFIFOReportData(DateTime fromDate, DateTime toDate, int itemId);
         List<LocationWiseStockBO> getTotalInventoryCostData(DateTime fromDate, DateTime toDate, int LocationId, int itemId);
@@ -32,8 +33,8 @@ namespace InVanWebApp.Repository.Interface
         //Calling Method For GRN Report
         List<GRN_BO> getGRNReportData(DateTime fromDate, DateTime toDate, int itemId);
 
-        //Calling Method For Rejection Report
-        List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId);
+        //Calling Method For Rejection Report updated 24-04-2023. 
+        List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId, int FlagDebitNote = 0);
 
 
         ///Production Reprot

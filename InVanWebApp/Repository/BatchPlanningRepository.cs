@@ -179,7 +179,7 @@ namespace InVanWebApp.Repository
         #region Bind Work order no
         public SalesOrderBO GetWorkOrderNumber(int id)
         {
-            string purchaseOrderQuery = "SELECT WorkOrderNo FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
+            string purchaseOrderQuery = "SELECT WorkOrderNo,LocationId,LocationName FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
             string itemDetails = "Select Item_ID,ItemName from SalesOrderItemsDetails where SalesOrderId=@Id and IsDeleted=0";
 
             SalesOrderBO result = new SalesOrderBO();

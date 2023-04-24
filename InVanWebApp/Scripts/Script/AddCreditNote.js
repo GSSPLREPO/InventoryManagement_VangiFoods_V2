@@ -21,14 +21,14 @@ function SelectedIndexChangedPO(id) {
         rowCount--;
     }
 
-    var PO_Id = $("#PO_ID").val();
-
+    var SO_Id = $("#PO_ID").val();
+    /*Rename the GetPODetails to GetSODetails*/
     $.ajax({
-        url: '/CreditNote/GetPODetails',
+        url: '/CreditNote/GetSODetails',
         type: "POST",
-        data: { id: PO_Id },
+        data: { id: SO_Id },
         success: function (result) {
-            $("#PO_Number").val(result[0].PONumber);
+            $("#SO_Number").val(result[0].SONumber);
             $("#CurrencyID").val(result[0].CurrencyID);
             $("#CurrencyName").val(result[0].CurrencyName);
             $("#CurrencyPrice").val(result[0].CurrencyPrice);
@@ -68,13 +68,25 @@ function SelectedIndexChangedPO(id) {
 
                     }
                     else if (i == 3) {
-                        cell.innerHTML = result[j].ItemQuantity + " " + result[j].ItemUnit;
+                        cell.innerHTML = result[j].ItemQuantity; /*+ " " + result[j].ItemUnit*/
                         cell.setAttribute("id", "POQty_" + j);
 
                     }
                     else if (i == 4) {
-                        cell.innerHTML = result[j].RejectedQuantity;
-                        cell.setAttribute("id", "RejectedQuantity_" + j);
+                        //cell.text = result[j].RejectedQuantity;
+                        //cell.setAttribute("id", "RejectedQuantity_" + j);
+                        var t4 = document.createElement("input");
+                        t4.id = "RejectedQuantity_" + j;
+                        t4.setAttribute("class", "form-control form-control-sm");
+                        //t4.setAttribute("type", "text");
+                        t4.setAttribute("onchange", "OnChangeWasteQty($(this).val(),id)");
+                        cell.appendChild(t4);
+                        var t6 = document.createElement('span');
+                        t6.id = "spanRemark_" + j;
+                        t6.setAttribute("style", "white-space: break-space !important;");
+                        cell.appendChild(t6);
+
+
                     }
                     else if (i == 5) {
                         cell.innerHTML = result[j].ItemUnit;
@@ -96,10 +108,10 @@ function SelectedIndexChangedPO(id) {
                         cell.innerHTML = result[j].TotalItemCost + " " + result[j].CurrencyName;
                         cell.setAttribute("id", "TotalItemCost_" + j);
                     }
-                    else if (i == 10) {
-                        cell.innerHTML = result[j].Remarks;
-                        cell.setAttribute("id", "Remarks_" + j);
-                    }
+                    //else if (i == 10) {
+                    //    cell.innerHTML = result[j].Remarks;
+                    //    cell.setAttribute("id", "Remarks_" + j);
+                    //}
                 }
 
             }
@@ -159,6 +171,36 @@ function CalculateTotalBeforeTax() {
     createJson();
 }
 
+function OnChangeWasteQty(value, id) {
+
+    $('#btnSave').prop("disabled", false);
+    var rowNo = id.split('_')[1];
+    var cell = document.getElementById("POQty_" + rowNo);
+    var tempPOQty_ = cell.innerHTML.split(' ');
+    value = parseFloat(value);
+
+    if (value > tempPOQty_) {
+        $('#spanRemark_' + rowNo).text('Wastage quantity cannot be greater then SO quantity!');
+        document.getElementById('spanRemark_' + rowNo).setAttribute('style', 'color:red;');
+        document.getElementById("txtRemarks_" + rowNo).focus();
+        $('#btnSave').prop("disabled", true);
+        return;
+    }
+
+    else if (value <= 0) {
+        $('#spanRemark_' + rowNo).text('Wastage quantity can not be zero!');
+        document.getElementById('spanRemark_' + rowNo).setAttribute('style', 'color:red;');
+        document.getElementById("txtRemarks_" + rowNo).focus();
+        $('#btnSave').prop("disabled", true);
+        return;
+    }
+    else {
+        $('#btnSave').prop("disabled", false);
+        $('#spanRemark_' + rowNo).hide();
+    }
+    document.getElementById(id).setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
+}
+
 function createJson() {
 
     var table = document.getElementById('submissionTable');
@@ -180,12 +222,12 @@ function createJson() {
         var Tax = (document.getElementById("ItemTax_" + i)).innerHTML.split(" ")[0];
         var TotalItemCost = (document.getElementById("TotalItemCost_" + i)).innerHTML.split(" ")[0];
         TotalItemCost = (TotalItemCost == null || TotalItemCost == '') ? 0 : TotalItemCost;
-        var Remarks = (document.getElementById("Remarks_" + i)).innerHTML;
+        // var Remarks = (document.getElementById("Remarks_" + i)).innerHTML;
 
         TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
             ", \"ItemName\": \"" + ItemName + "\", \"POQty\": " + POQty + ", \"RejectedQty\": " + RejectedQty +
             ", \"ItemUnit\": \"" + Unit + "\", \"ItemUnitPrice\": " + PricePerUnit + ", \"CurrencyName\": \"" + CurrencyName + "\",\"ItemTaxValue\": " + Tax +
-            ", \"TotalItemCost\": " + TotalItemCost +",\"Remarks\": \""+Remarks+"\"";
+            ", \"TotalItemCost\": " + TotalItemCost; /*+",\"Remarks\": \"" + Remarks + "\""*/
 
         if (i == (rowCount - 1))
             TxtItemDetails = TxtItemDetails + "}";
@@ -195,3 +237,5 @@ function createJson() {
     TxtItemDetails = TxtItemDetails + "]"
     $('#TxtItemDetails').val(TxtItemDetails);
 }
+
+

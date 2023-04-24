@@ -1,8 +1,6 @@
 ﻿@model InVanWebApp_BO.RejectionNoteBO
-@{
-    ViewBag.Title = "RejectionReport";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "RejectionReport";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <!DOCTYPE html>
 
@@ -72,6 +70,13 @@
                                         @Html.DropDownList("RejectionNumber", (IEnumerable<SelectListItem>)ViewData["RejectionNumberdd"], "--Select--", new { @class = "form-control", @id = "RejectionNumberId", onchange = "SelectedIndexChangedItem()" })
                                         @Html.ValidationMessage("RejectionNumber", "", new { id = "RejectionNumberValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
+                                    @*//Rahul added 'FlagDebitNote' 24-04-23.*@
+                                <div class="col-md-2 ms-1">
+                                    <label>Pending Debit Note:</label>
+                                </div>
+                                    <div class="col-md-2" style="padding-top:0.6%;">
+                                        @Html.CheckBoxFor(model => model.FlagDebitNote, new { @class = "form-check-input form-control" })
+                                    </div>
 
                                     @*<div class="col-md-2">
                                             <label>Wearhouse Location:</label>
@@ -81,7 +86,6 @@
                                             @Html.DropDownList("Wearhouse", (IEnumerable<SelectListItem>)ViewData["WearhouseLocation"], "--Select--", new { @class = "form-control", @id = "Wearhouse", onchange = "SelectedIndexChangedWearhouse()" })
                                             @Html.ValidationMessage("Wearhouse", "", new { id = "WearhouseValidate", @class = "col-form-label error mt-2 text-danger" })
                                         </div>*@
-
                                 </div>
                                 <br />
                                 <div style="margin-top:25px;">
@@ -179,6 +183,14 @@
             if (CheckItem == '' || CheckItem == null) {
                 CheckItem = 0;
             }
+            // added 24-04-2023. 
+            var flagDebitNote = 0;
+            if ($('#FlagDebitNote').is(":checked")) {                
+                flagDebitNote = 1;
+            }
+            else {
+                flagDebitNote = 0;
+            }
 
             $('#ExportPdf').show();
             $('#ExportExcel').show();
@@ -189,7 +201,7 @@
                 //"processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
-                "sAjaxSource": "/Report/GetRejectionReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem,//+ "&LocationId=" + warehouse,
+                "sAjaxSource": "/Report/GetRejectionReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem + "&FlagDebitNote=" + flagDebitNote,//+ "&LocationId=" + warehouse,
                 "initComplete": function (settings, json) {
                     var result = JSON.stringify(json);
                     flag = parseFloat(result.length);

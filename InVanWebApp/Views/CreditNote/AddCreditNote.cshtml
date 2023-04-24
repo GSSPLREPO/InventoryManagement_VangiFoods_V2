@@ -36,11 +36,11 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("PO Number")
+                    @Html.Label("SO Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.PO_ID, (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedPO(id)" })
+                    @Html.DropDownListFor(model => model.PO_ID, (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedPO(id)" })
                     @Html.ValidationMessageFor(model => model.PO_ID, "", new { @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.PO_Number)
                 </div>
@@ -73,7 +73,7 @@
                     @Html.HiddenFor(model => model.LocationId)
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Vendor Name")
+                    @Html.Label("Client Name")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -90,13 +90,14 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title" style="color:darkcyan">
-                                Delivery Details
+                                Supplier Details
                                 <span style="color:red">*</span>
                             </h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
+                                @Html.TextAreaFor(model => model.VendorAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.VendorAddress, "", new { @class = "error mt-2 text-danger" })
+
                             </div>
                         </div>
                     </div>
@@ -106,14 +107,13 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title" style="color:darkcyan">
-                                Supplier Details
+                                Delivery Details
                                 <span style="color:red">*</span>
                             </h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.VendorAddress, new { @class = "form-control", placeholder = "Supplier address", style = "height:100px", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.VendorAddress, "", new { @class = "error mt-2 text-danger" })
-
+                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
                     </div>
@@ -138,14 +138,14 @@
                                                 <th class="sortStyle">Item Code</th>
                                                 <th class="sortStyle d-n d-none">Item Id</th>
                                                 <th class="sortStyle">Item</th>
-                                                <th class="sortStyle">PO Quantity</th>
+                                                <th class="sortStyle">SO Quantity</th>
                                                 <th class="sortStyle">Waste Quantity</th>
                                                 <th class="sortStyle">Units</th>
                                                 <th class="sortStyle">Price (Per Unit)</th>
                                                 <th class="sortStyle">Currency</th>
                                                 <th class="sortStyle">Tax</th>
                                                 <th class="sortStyle">Total Item Cost</th>
-                                                <th class="sortStyle">Remarks</th>
+                                                @*<th class="sortStyle">Remarks</th>*@
                                             </tr>
                                         </thead>
                                     </table>
@@ -165,7 +165,7 @@
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength="95" })
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "95" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -248,3 +248,5 @@
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script src="~/Scripts/Script/AddCreditNote.js"></script>
+
+

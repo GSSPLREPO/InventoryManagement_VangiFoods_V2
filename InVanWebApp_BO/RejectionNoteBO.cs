@@ -59,8 +59,8 @@ namespace InVanWebApp_BO
         public DateTime fromDate { get; set; }
 
         [Required(ErrorMessage = "Please Select To Date!")]
-        public DateTime toDate { get; set; } 
-
+        public DateTime toDate { get; set; }
+        public bool FlagDebitNote { get; set; } //Rahul added 24-04-23. 
         //Added the below property for saving the item table details. 
         public List<RejectionNoteItemDetailsBO> itemDetails { get; set; }
         // Added the below property for 'InwardQC' option. 
@@ -134,6 +134,7 @@ namespace InVanWebApp_BO
         public string InwardNumber { get; set; }
         public string InwardQCNumber { get; set; }
         public string ReasonForRR { get; set; }
+        
     }
 
 }
