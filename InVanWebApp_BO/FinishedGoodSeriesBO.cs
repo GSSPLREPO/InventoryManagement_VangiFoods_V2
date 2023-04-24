@@ -18,7 +18,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select Manufacture Date!")]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> MfgDate { get; set; }
-        [Required(ErrorMessage = "Enter No of Carton Box of Product!")]
+        //[Required(ErrorMessage = "Enter No of Carton Box of Product!")]
         public Nullable<int> NoOfCartonBox { get; set; }
         [Required(ErrorMessage = "Enter Quantity of Product!")]
         public Nullable<double> QuantityInKG { get; set; }

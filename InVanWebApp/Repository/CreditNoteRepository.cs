@@ -132,7 +132,7 @@ namespace InVanWebApp.Repository
                         objItemDetails.CurrencyName = item.ElementAt(7).Value.ToString();
                         objItemDetails.ItemTaxValue = item.ElementAt(8).Value.ToString();
                         objItemDetails.ItemTotalAmount = float.Parse(item.ElementAt(9).Value.ToString());
-                        objItemDetails.Remarks= item.ElementAt(10).Value.ToString();
+                        //objItemDetails.Remarks= item.ElementAt(10).Value.ToString();
                         objItemDetails.CreatedBy = model.CreatedBy;
                         
                         //Added the below field for Currency
@@ -176,68 +176,6 @@ namespace InVanWebApp.Repository
                         }
                         con.Close();
                     }
-
-                    ////dt.Columns.Add("ID");
-                    ////dt.Columns.Add("PrimaryTableId");
-                    ////dt.Columns.Add("ItemId");
-                    ////dt.Columns.Add("Item_Code");
-                    ////dt.Columns.Add("Item_Name");
-                    ////dt.Columns.Add("HSN_Code");
-                    ////dt.Columns.Add("ItemTaxValue");
-                    ////dt.Columns.Add("ItemUnit");
-                    ////dt.Columns.Add("ItemUnitPrice");
-                    ////dt.Columns.Add("ItemQuantity");
-                    ////dt.Columns.Add("POQuantity");
-                    ////dt.Columns.Add("RejectedQuantity");
-                    ////dt.Columns.Add("ItemTotalAmount");
-                    ////dt.Columns.Add("CurrencyID");
-                    ////dt.Columns.Add("CurrencyName");
-                    ////dt.Columns.Add("CurrencyPrice");
-                    ////dt.Columns.Add("Remarks");
-                    ////dt.Columns.Add("IsDeleted");
-                    ////dt.Columns.Add("CreatedBy");
-                    ////dt.Columns.Add("CreatedDate");
-                    ////dt.Columns.Add("LastModifiedBy");
-                    ////dt.Columns.Add("LastModifiedDate");
-                    ////int i = 1;
-                    ////foreach (var item in data)
-                    ////{
-                    ////    DataRow dataRow = dt.NewRow();
-                    ////    dataRow["ID"] = i;
-                    ////    dataRow["PrimaryTableId"] = CreditNoteId;
-                    ////    dataRow["Item_Code"] = item.ElementAt(0).Value.ToString();
-                    ////    dataRow["ItemId"] = Convert.ToInt32(item.ElementAt(1).Value.ToString());
-                    ////    dataRow["Item_Name"] = item.ElementAt(2).Value.ToString();
-                    ////    dataRow["POQuantity"] = float.Parse(item.ElementAt(3).Value.ToString());
-                    ////    dataRow["RejectedQuantity"] = float.Parse(item.ElementAt(4).Value.ToString());
-                    ////    dataRow["ItemUnit"] = item.ElementAt(5).Value.ToString();
-                    ////    dataRow["ItemUnitPrice"] = Convert.ToDecimal(item.ElementAt(6).Value.ToString());
-                    ////    dataRow["CurrencyName"] = item.ElementAt(7).Value.ToString();
-                    ////    dataRow["ItemTaxValue"] = item.ElementAt(8).Value.ToString();
-                    ////    dataRow["ItemTotalAmount"] = float.Parse(item.ElementAt(9).Value.ToString());
-                    ////    dataRow["Remarks"] = item.ElementAt(10).Value.ToString();
-                    ////    dataRow["IsDeleted"] = false;
-                    ////    dataRow["CreatedBy"] = model.CreatedBy;
-                    ////    dataRow["LastModifiedBy"] = model.CreatedBy;
-                    ////    dataRow["CreatedDate"] = model.CreatedDate;
-                    ////    dataRow["LastModifiedDate"] = model.CreatedDate;
-                    ////    dt.Rows.Add(dataRow);
-                    ////    i++;
-                    ////}
-
-                    //SqlCommand cmd1 = new SqlCommand("usp_tbl_CreditNoteDetails_Insert", con);
-
-                    //cmd1.CommandType = CommandType.StoredProcedure;
-                    //cmd1.Parameters.AddWithValue("@ItemDetails", dt);
-
-                    //con.Open();
-                    //SqlDataReader dataReader1 = cmd1.ExecuteReader();
-
-                    //while (dataReader1.Read())
-                    //{
-                    //    response.Status = Convert.ToBoolean(dataReader1["Status"]);
-                    //}
-                    //con.Close();
                 }
 
             }
@@ -487,5 +425,115 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
+
+        #region Bind all SO details 
+        public IEnumerable<SOPaymentBO> GetSODetailsById(int SO_Id)
+        {
+            List<SOPaymentBO> resultList = new List<SOPaymentBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_SODetails_GetByIDFor_CeditNote", con);
+                    cmd.Parameters.AddWithValue("@ID", SO_Id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new SOPaymentBO()
+                        {
+                            SalesOrderId = Convert.ToInt32(dataReader["SalesOrderId"]),
+                            SONumber = dataReader["SONumber"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader["CurrencyID"]),
+                            CurrencyName = dataReader["CurrencyName"].ToString(),
+                            CurrencyPrice = Convert.ToDouble(dataReader["CurrencyPrice"]),
+                            LocationId = Convert.ToInt32(dataReader["LocationId"]),
+                            LocationName = dataReader["LocationName"].ToString(),
+                            VendorsID = Convert.ToInt32(dataReader["VendorsID"]),
+                            CompanyName = dataReader["CompanyName"].ToString(),
+                            DeliveryAddress = dataReader["DeliveryAddress"].ToString(),
+                            SupplierAddress = dataReader["SupplierAddress"].ToString(),
+                            TermsAndConditionID = Convert.ToInt32(dataReader["TermsAndConditionID"]),
+                            Terms = dataReader["Terms"].ToString(),
+                            OtherTax = Convert.ToDecimal(dataReader["OtherTax"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                    //==========This is for fetching Item details".===========///
+
+                    SqlCommand cmd2 = new SqlCommand("usp_tbl_SOItemDetailsForCreditNote_GetByID", con);
+                    cmd2.Parameters.AddWithValue("@SO_Id", SO_Id);
+                    cmd2.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader2 = cmd2.ExecuteReader();
+
+                    while (dataReader2.Read())
+                    {
+                        var result = new SOPaymentBO()
+                        {
+                            Item_ID = Convert.ToInt32(dataReader2["Item_ID"]),
+                            Item_Code = dataReader2["Item_Code"].ToString(),
+                            ItemName = dataReader2["ItemName"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                            ItemUnit = dataReader2["ItemUnit"].ToString(),
+                            ItemTaxValue = Convert.ToDecimal(dataReader2["ItemTaxValue"]),
+                            ItemQuantity = Convert.ToDecimal(dataReader2["SOQty"]),
+                            RejectedQuantity = ((dataReader2["RejectedQuantity"] != null) ? Convert.ToDecimal(dataReader2["RejectedQuantity"]) : 0),
+                            CurrencyName = dataReader2["CurrencyName"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"]),
+                            Remarks = dataReader2["Remarks"].ToString(),
+                            TotalItemCost = Convert.ToDecimal(dataReader2["TotalItemCost"])
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Function for dropdown binding
+        public List<SOPaymentBO> GetSONumberForDropdown()
+        {
+            List<SOPaymentBO> resultList = new List<SOPaymentBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_SONumber_Get", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        SOPaymentBO result = new SOPaymentBO()
+                        {
+                            SalesOrderId = Convert.ToInt32(reader["ID"]),
+                            SONumber = reader["SONumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
     }
 }

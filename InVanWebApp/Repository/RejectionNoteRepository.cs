@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
@@ -10,12 +11,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
-using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class RejectionNoteRepository : IRejectionNoteRepository
     {
+        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RejectionNoteRepository));
 
@@ -155,6 +156,15 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+                    ////Added the below field for Rejection note 
+                    cmd.Parameters.AddWithValue("@PreProductionQCId", model.PreProductionQCId);
+                    cmd.Parameters.AddWithValue("@ProductionQCNumber", model.PreProductionQCNumber);
+                    cmd.Parameters.AddWithValue("@ProductionMaterialIssueNoteId", model.ProductionMaterialIssueNoteId);
+                    cmd.Parameters.AddWithValue("@ProductionMaterialIssueNoteNo", model.ProductionMaterialIssueNoteNo);
+                    cmd.Parameters.AddWithValue("@ProductionIndentId", model.ProductionIndentId);
+                    cmd.Parameters.AddWithValue("@ProductionIndentNo", model.ProductionIndentNo);
+                    cmd.Parameters.AddWithValue("@QCType", model.QCType); 
+
                     con.Open();
 
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -247,7 +257,7 @@ namespace InVanWebApp.Repository
         /// <param name="RejectionID"></param>        
         public RejectionNoteBO GetRejectionNoteById(int RejectionID) 
         {
-            string rejectionNoteQuery = "SELECT * FROM RejectionNote WHERE ID = @RejectionID AND IsDeleted = 0";
+            string rejectionNoteQuery = "SELECT *, ProductionQCNumber as PreProductionQCNumber FROM RejectionNote WHERE ID = @RejectionID AND IsDeleted = 0";
             string rejectionNoteItemQuery = "SELECT * FROM RejectionNoteItemDetails WHERE RejectionID = @RejectionID AND IsDeleted = 0;";
             using (SqlConnection con = new SqlConnection(connString)) 
             {
@@ -258,7 +268,6 @@ namespace InVanWebApp.Repository
             }
         }
         #endregion 
-
 
         #region Delete function  
         /// <summary>
@@ -288,6 +297,226 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Bind dropdown of Pre-Production QC Number
+        /// <summary>
+        /// Rahul: Bind dropdown of PreProduction QC Number
+        /// 18 Apr 2023.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PreProduction_QCBO> GetPreProductionQCNumberForDropdown() 
+        {
+            List<PreProduction_QCBO> resultList = new List<PreProduction_QCBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_BindPreProductionQCForRejectionNote_GetAll", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new PreProduction_QCBO() 
+                        {
+                            ID = Convert.ToInt32(dataReader["ID"]),
+                            QCNumber = dataReader["PreProductionQCNumber"].ToString()
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Bind all Pre Production note details 
+        //public IEnumerable<InwardNoteBO> GetInwDetailsById(int PPQCId, int PPNote_Id)
+        public IEnumerable<ProductionMaterialIssueNoteBO> GetProdIndent_NoDeatils(int PPQCId, int PPNote_Id = 0)
+        {
+            List<ProductionMaterialIssueNoteBO> resultList = new List<ProductionMaterialIssueNoteBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+
+                    if (PPNote_Id == 0)
+                    {
+                        SqlCommand cmd = new SqlCommand("[usp_tbl_PINDForRN_GetByID]", con);
+                        cmd.Parameters.AddWithValue("@ID", PPQCId);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+                        SqlDataReader dataReader = cmd.ExecuteReader();
+
+                        while (dataReader.Read())
+                        {
+                            var result = new ProductionMaterialIssueNoteBO()
+                            {                              
+                                ID = Convert.ToInt32(dataReader["MaterialIssue_Id"]),
+                                ProductionIndentID = Convert.ToInt32(dataReader["ProdIndent_Id"]),
+                                ProductionIndentNo = dataReader["ProdIndent_No"].ToString(),
+
+                            };
+                            resultList.Add(result);
+                        }
+                        con.Close();
+
+                        SqlCommand cmd2 = new SqlCommand("[usp_tbl_PreProduction_QCItemDetailsFor_RN_ItemDetails_GetByID]", con);
+                        cmd2.Parameters.AddWithValue("@ID", PPQCId);
+                        cmd2.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+                        SqlDataReader dataReader2 = cmd2.ExecuteReader();
+
+                        while (dataReader2.Read())
+                        {
+                            var result = new ProductionMaterialIssueNoteBO()
+                            {
+                                Item_Name = dataReader2["Item_Name"].ToString(),
+                                Item_Code = dataReader2["Item_Code"].ToString(),
+                                ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                                CurrencyName = dataReader2["CurrencyName"].ToString(),
+                                ItemUnit = dataReader2["ItemUnit"].ToString(),
+                                TotalQuantity = float.Parse(dataReader2["TotalQuantity"].ToString()),
+                                IssuedQuantity = (dataReader2["IssuedQuantity"] != null ? Convert.ToDouble(dataReader2["IssuedQuantity"]) : 0),
+                                RejectedQuantity = float.Parse(dataReader2["RejectedQuantity"].ToString()),
+                                QuantityTookForSorting = float.Parse(dataReader2["QuantityTookForSorting"].ToString()),
+                                WastageQuantityInPercentage = float.Parse(dataReader2["WastageQuantityInPercentage"].ToString()),
+                                Remarks = dataReader2["Remarks"].ToString(),
+                                ItemId = Convert.ToInt32(dataReader2["ItemId"]),
+                                ItemTaxValue = dataReader2["ItemTaxValue"].ToString(),
+
+                            };
+                            resultList.Add(result);
+                        }
+                        con.Close();
+                    }
+                    else
+                    {
+                        SqlCommand cmd3 = new SqlCommand("[usp_tbl_PreQCItemDetailsForView_GetByID]", con);
+                        cmd3.Parameters.AddWithValue("@ID", PPQCId);
+                        cmd3.CommandType = CommandType.StoredProcedure;
+                        con.Open();
+                        SqlDataReader dataReader3 = cmd3.ExecuteReader();
+
+                        while (dataReader3.Read())
+                        {
+                            var result = new ProductionMaterialIssueNoteBO()
+                            {
+                                Item_Name = dataReader3["Item_Name"].ToString(),
+                                Item_Code = dataReader3["Item_Code"].ToString(),
+                                ItemUnitPrice = Convert.ToDecimal(dataReader3["ItemUnitPrice"]),
+                                IssuedQuantity = Convert.ToDouble(dataReader3["IssuedQuantity"]),
+                                QuantityTookForSorting = float.Parse(dataReader3["QuantityTookForSorting"].ToString()),
+                                RejectedQuantity = float.Parse(dataReader3["RejectedQuantity"].ToString()),
+                                Remarks = dataReader3["Remarks"].ToString(),
+                                CurrencyName = dataReader3["CurrencyName"].ToString()
+
+                            };
+                            resultList.Add(result);
+                        }
+                        con.Close();
+                    }
+
+                };
+            }
+            catch (Exception ex)
+            {
+                resultList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
+        #region Bind all Rejection note details for Debit note item details
+        /// <summary>
+        /// //Rahul added 20-04-23.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public IEnumerable<RejectionNoteItemDetailsBO> GetRejectionNoteDetailsById(int Id) 
+        {
+            List<RejectionNoteItemDetailsBO> resultRNDtlsList = new List<RejectionNoteItemDetailsBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_RejectionNoteDetailsFor_DN_GetByID", con);
+                    cmd.Parameters.AddWithValue("@ID", Id);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+
+                    while (dataReader.Read())
+                    {
+                        var result = new RejectionNoteItemDetailsBO()
+                        {
+                            PO_Id = Convert.ToInt32(dataReader["PO_Id"]),
+                            PONumber = dataReader["PONumber"].ToString(),
+                            RejectionID = Convert.ToInt32(dataReader["RejectionID"]),
+                            RejectionNoteNo = dataReader["RejectionNoteNo"].ToString(),
+                            SupplierID = Convert.ToInt32(dataReader["SupplierID"]),
+                            SupplierName = dataReader["SupplierName"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader["CurrencyID"]),
+                            CurrencyName = dataReader["CurrencyName"].ToString(),
+                            CurrencyPrice = Convert.ToDouble(dataReader["CurrencyPrice"]),
+                            LocationId = Convert.ToInt32(dataReader["LocationId"]),
+                            LocationName = dataReader["LocationName"].ToString(),
+                            DeliveryAddress = dataReader["DeliveryAddress"].ToString(),
+                            SupplierAddress = dataReader["SupplierAddress"].ToString(),
+                            TermsAndConditionID = Convert.ToInt32(dataReader["TermsAndConditionID"]),
+                            Terms = dataReader["Terms"].ToString(),
+                            OtherTax = Convert.ToDecimal(dataReader["OtherTax"]),
+                            flag = Convert.ToInt32(dataReader["flag"])    
+                        };
+                        resultRNDtlsList.Add(result);
+                    }
+                    con.Close();
+
+                    SqlCommand cmd1 = new SqlCommand("usp_tbl_RNItemDetailsFor_DN_ItemDetails_GetByID", con);
+                    cmd1.Parameters.AddWithValue("@ID", Id);
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader dataReader1 = cmd1.ExecuteReader();
+
+                    while (dataReader1.Read())
+                    {
+                        var resultRNDtls = new RejectionNoteItemDetailsBO()
+                        {
+
+                            ItemId = Convert.ToInt32(dataReader1["ItemId"]),
+                            Item_Code = dataReader1["ItemCode"].ToString(),
+                            ItemName = dataReader1["ItemName"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(dataReader1["ItemUnitPrice"]),
+                            ItemUnit = dataReader1["ItemUnit"].ToString(),
+                            ItemTaxValue = dataReader1["ItemTaxValue"].ToString(),
+                            TotalQuantity = float.Parse(dataReader1["TotalQuantity"].ToString()),
+                            RejectedQuantity = float.Parse(dataReader1["RejectedQuantity"].ToString()),
+                            CurrencyName = dataReader1["CurrencyName"].ToString(),
+                            CurrencyID = Convert.ToInt32(dataReader1["CurrencyID"]),
+                            Remarks = dataReader1["Remarks"].ToString(),
+                            TotalItemCost = Convert.ToDecimal(dataReader1["TotalItemCost"])
+
+                        };
+                        resultRNDtlsList.Add(resultRNDtls);
+                    }
+                    con.Close();                    
+                };
+            }
+            catch (Exception ex)
+            {
+                resultRNDtlsList = null;
+                log.Error(ex.Message, ex);
+            }
+            return resultRNDtlsList;
+        }
+        #endregion
 
     }
 }

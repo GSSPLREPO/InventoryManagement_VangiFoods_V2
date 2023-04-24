@@ -418,6 +418,7 @@
                     $('#ClientID').val(vendorId);
                     $('#DeliveryAddress').val(DeliveryAddress);
 
+                    var selectedOption, companyName;
                     selectedOption = document.getElementById("ClientID").selectedIndex;
                     companyName = document.getElementById("ClientID").options[selectedOption].innerText;
                     document.getElementById("CompanyName").value = companyName;

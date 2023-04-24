@@ -50,7 +50,6 @@ namespace InVanWebApp_BO
         public string IsPaid { get; set; }
         public string Remarks { get; set; }
 
-
         public List<SalesOrderItemsDetailBO> SalesOrderItems { get; set; }
         public decimal AdvancedPayment { get; set; }
         public float AmountPaid{ get; set; }
@@ -67,6 +66,42 @@ namespace InVanWebApp_BO
 
         //Added the below field for view of PO payment
         public string CurrencyName { get; set; }
+
+        //Added by Siddharth for Credit note.
+        public string LocationName { get; set; }
+        public Nullable<double> CurrencyPrice { get; set; }
+        public int CurrencyID { get; set; }
+
+        [Required(ErrorMessage = "Select the location name!")]
+        public Nullable<int> LocationId { get; set; }
+
+        [Required(ErrorMessage = "Select vendors name!")]
+        public Nullable<int> VendorsID { get; set; }
+
+        public string CompanyName { get; set; }
+
+        [Required(ErrorMessage = "Enter delivery address!")]
+        //public string BuyerAddress { get; set; }
+        public string DeliveryAddress { get; set; }
+
+        [Required(ErrorMessage = "Enter supplier address!")]
+        public string SupplierAddress { get; set; }
+
+        [Required(ErrorMessage = "Select terms and condition!")]
+        public Nullable<int> TermsAndConditionID { get; set; }
+        public string Terms { get; set; }
+        public decimal OtherTax { get; set; }
+
+        public Nullable<int> Item_ID { get; set; }
+        public string Item_Code { get; set; }
+        public string ItemName { get; set; }
+        public decimal ItemUnitPrice { get; set; }
+        public string ItemUnit { get; set; }
+        public Nullable<decimal> ItemTaxValue { get; set; }
+        public decimal ItemQuantity { get; set; }
+        public decimal RejectedQuantity { get; set; }
+        public Nullable<decimal> TotalItemCost { get; set; }
+
     }
     public class SalesOrderItemsDetailBO 
      {

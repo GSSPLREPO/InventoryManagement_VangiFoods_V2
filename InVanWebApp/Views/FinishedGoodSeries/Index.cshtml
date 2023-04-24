@@ -134,6 +134,7 @@
                     {
                         data: "FGSID", "render": function (data) {
                             return '<button class="btnEye" style="background:transparent !important;" type="button" id="' + data + '" title="View FGS"><i class="fa fa-eye text-primary"/></i></button>' +'<button style="background:transparent !important;" type="button" id="'
+                                + data + '" class = "btnEdit" title="Edit FGS"><i class="fa fa-edit"/></i></button> <button style="background:transparent !important;" type="button" id="'
                                 + data + '"class="btnDelete"  title="Delete FGS"><i class="fa fa-trash text-danger"/></i></button>'
 
                             //return '<button type="button" id="' + data + '" class = "btn text-primary btnEye btn-sm"><i class="fa fa-eye text-primary"/></i></button>'+'<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
@@ -161,7 +162,7 @@
                 });
 
        $(document).on("click", ".btnEdit", function () {
-                    var id = $(this).attr("id");
+           var id = $(this).attr("id");
                     window.location.href = '@Url.Action("EditFinishedGoodSeries", "FinishedGoodSeries", new { Id = "Id"})'.replace("Id", parseInt(id));
                 });
        $(document).on("click", ".btnDelete", function () {

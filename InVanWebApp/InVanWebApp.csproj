@@ -194,6 +194,7 @@
     <Compile Include="Controllers\OutwardNoteController.cs" />
     <Compile Include="Controllers\PestControlLogController.cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
+    <Compile Include="Controllers\PostProductionRejectionNoteController.cs" />
     <Compile Include="Controllers\PreProduction_QCController.cs" />
     <Compile Include="Controllers\PreStartupHygieneController.cs" />
     <Compile Include="Controllers\ProductEvaluationLogController.cs" />
@@ -3200,6 +3201,7 @@
     <Content Include="Views\Currency\DeleteItemType.cshtml" />
     <Content Include="Views\Currency\EditCurrency.cshtml" />
     <Content Include="Views\Currency\Index.cshtml" />
+    <Content Include="Views\PostProductionRejectionNote\AddPostProductionRejectionNote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

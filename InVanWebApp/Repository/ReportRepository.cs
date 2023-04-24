@@ -637,7 +637,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Rejection Report data
-        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int rejectionNumber)
+        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int FlagDebitNote = 0)
         {
             List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
             try
@@ -647,7 +647,8 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_rpt_Rejection_Report", con);
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.Parameters.AddWithValue("@RejectionNumber", rejectionNumber);
+                    cmd.Parameters.AddWithValue("@rejectionNumber", rejectionNumber);
+                    cmd.Parameters.AddWithValue("@flag", FlagDebitNote);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     con.Open();

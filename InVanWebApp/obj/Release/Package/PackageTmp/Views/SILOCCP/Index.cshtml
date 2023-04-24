@@ -76,10 +76,10 @@
                                             <td>@Html.DisplayFor(modelItem => item.Verification)</td>
                                             <td>
 
-                                                <a href=@Url.Action("EditSILOCCP", "SILOCCP", new { Id = item.ID })>
+                                                <a href=@Url.Action("EditSILOCCP", "SILOCCP", new { Id = item.ID }) title="Edit SILO CCP">
                                                     <i class="fa fa-edit text-primary"></i>
                                                 </a> &emsp;
-                                                <a href=@Url.Action("Delete", "SILOCCP", new { Id = item.ID }) onclick="return confirm('Are you sure want to delete?');">
+                                                <a href=@Url.Action("Delete", "SILOCCP", new { Id = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete SILO CCP">
                                                     <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                 </a>
                                             </td>

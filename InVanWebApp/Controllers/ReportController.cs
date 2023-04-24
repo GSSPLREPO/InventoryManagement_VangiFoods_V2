@@ -2730,12 +2730,15 @@ namespace InVanWebApp.Controllers
         /// Calling method for Rejection Report Data
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId)
+        public JsonResult GetRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId, int FlagDebitNote = 0)
         {
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
             Session["ItemId"] = ItemId;
-            var rejectionNoteReport = _repository.getRejectionReportData(fromDate, toDate, ItemId);
+            Session["FagDebitNote"] = FlagDebitNote;
+
+            var rejectionNoteReport = _repository.getRejectionReportData(fromDate, toDate, ItemId, FlagDebitNote);
+
             return Json(new { data = rejectionNoteReport }, JsonRequestBehavior.AllowGet);
         }
 
@@ -2866,7 +2869,8 @@ namespace InVanWebApp.Controllers
         public void ExportAsExcelForRejectionReport()
         {
             GridView gv = new GridView();
-            List<RejectionNoteItemDetailsBO> resultList = _repository.getRejectionReportData(Convert.ToDateTime(Session["FromDate"]), Convert.ToDateTime(Session["toDate"]));
+            var itemId = Convert.ToInt32(Session["ItemId"]);
+            List<RejectionNoteItemDetailsBO> resultList = _repository.getRejectionReportData(Convert.ToDateTime(Session["FromDate"]), Convert.ToDateTime(Session["toDate"]), itemId);
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("Date");

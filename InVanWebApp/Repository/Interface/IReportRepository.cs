@@ -33,7 +33,7 @@ namespace InVanWebApp.Repository.Interface
         List<GRN_BO> getGRNReportData(DateTime fromDate, DateTime toDate, int itemId);
 
         //Calling Method For Rejection Report
-        List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId);
+        List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId, int FlagDebitNote = 0);
 
 
         ///Production Reprot

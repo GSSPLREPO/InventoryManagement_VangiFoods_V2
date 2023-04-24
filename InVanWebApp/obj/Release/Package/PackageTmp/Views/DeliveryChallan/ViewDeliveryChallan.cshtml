@@ -88,7 +88,7 @@
                                     <label class="font-weight-bold">Remarks</label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
+                                    @Html.DisplayFor(model => model.Remarks, new { style = "color:black;", @class="text-wrap;" })
                                 </div>
                             </div>
                             <br />
@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            <table class="table table-striped" id="submissionTable">
+                                            <table class="table table-hover" id="submissionTable">
                                                 <thead>
                                                     <tr>
                                                         <th class="sortStyle">Sr. No.</th>
@@ -154,7 +154,7 @@
                                                                     @Html.DisplayFor(x => item.ItemUnit)
                                                                 </td>
                                                                 <td>
-                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;width:60px;", @readonly = "readonly" })
+                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;width:60px;height:20px;", @readonly = "readonly" })
                                                                     @*@Html.DisplayFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c })*@
                                                                     @Html.DisplayFor(x => item.CurrencyName)
                                                                 </td>

@@ -16,6 +16,7 @@ namespace InVanWebApp.Repository
 {
     public class DebitNoteRepository : IDebitNoteRepository
     {
+        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(DebitNoteRepository));
 
@@ -28,8 +29,8 @@ namespace InVanWebApp.Repository
         {
             List<DebitNoteBO> resultList = new List<DebitNoteBO>();
             try
-            {
-                string queryString = "Select dn.ID,dn.DebitNoteNo, dn.DebitNoteDate, dn.PO_Number, dn.VendorName, (Select ud.UserName from UserDetails ud where ud.IsDeleted=0 and ud.EmployeeID=dn.CreatedBy) as UserName from DebitNote dn where dn.IsDeleted=0";
+            {   //Rahul added 'RejectionNoteNo' 21-04-23.
+                  string queryString = "Select dn.RejectionNoteNo, dn.ID,dn.DebitNoteNo, dn.DebitNoteDate, dn.PO_Number, dn.VendorName, (Select ud.UserName from UserDetails ud where ud.IsDeleted=0 and ud.EmployeeID=dn.CreatedBy) as UserName from DebitNote dn where dn.IsDeleted=0";
                 using (SqlConnection con = new SqlConnection(connString))
                 {
                     resultList = con.Query<DebitNoteBO>(queryString).ToList();
@@ -64,6 +65,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@DebitNoteDate", model.DebitNoteDate);
                     cmd.Parameters.AddWithValue("@PO_ID", model.PO_ID);
                     cmd.Parameters.AddWithValue("@PO_Number", model.PO_Number);
+                    cmd.Parameters.AddWithValue("@RejectionId", model.RejectionId); // Rahul added 21-04-23.
+                    cmd.Parameters.AddWithValue("@RejectionNoteNo", model.RejectionNoteNo);// Rahul added 21-04-23.
                     cmd.Parameters.AddWithValue("@CurrencyID", model.CurrencyID);
                     cmd.Parameters.AddWithValue("@CurrencyName", model.CurrencyName);
                     cmd.Parameters.AddWithValue("@CurrencyPrice", model.CurrencyPrice);
@@ -214,8 +217,8 @@ namespace InVanWebApp.Repository
         {
             DebitNoteBO result = new DebitNoteBO();
             try
-            {
-                string stringQuery = "Select dn.DebitNoteNo, dn.DebitNoteDate, dn.PO_Number,dn.Remarks, dn.CurrencyName, dn.LocationName, dn.VendorName, (Select ud.UserName from UserDetails ud where ud.IsDeleted=0 and ud.EmployeeID=dn.CreatedBy) as UserName, dn.DeliveryAddress, dn.VendorAddress, dn.TotalBeforeTax, dn.TotalTax, dn.OtherTax, dn.GrandTotal, dn.Terms from DebitNote dn where dn.IsDeleted=0 and dn.ID=@ID";
+            {   //Rahul added 'dn.RejectionNoteNo,' 21-04-23.
+                string stringQuery = "Select dn.RejectionNoteNo, dn.DebitNoteNo, dn.DebitNoteDate, dn.PO_Number,dn.Remarks, dn.CurrencyName, dn.LocationName, dn.VendorName, (Select ud.UserName from UserDetails ud where ud.IsDeleted=0 and ud.EmployeeID=dn.CreatedBy) as UserName, dn.DeliveryAddress, dn.VendorAddress, dn.TotalBeforeTax, dn.TotalTax, dn.OtherTax, dn.GrandTotal, dn.Terms from DebitNote dn where dn.IsDeleted=0 and dn.ID=@ID";
                 string stringItemQuery = "Select Item_Code, Item_Name, POQuantity, DebitedQuantity, ItemUnit, ItemUnitPrice, CurrencyName, Round(ItemTaxValue,2) as ItemTaxValue, ItemTotalAmount, Remarks from DebitNoteDetails where IsDeleted=0 and DebitNoteId=@ID";
                 using (SqlConnection con = new SqlConnection(connString))
                 {
@@ -276,5 +279,44 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region  Bind grid
+        /// <summary>
+        /// Farheen: This function is for fecthing list of inward QC data. 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<RejectionNoteBO> GetRejctionNoteNoForDD()
+        {
+            List<RejectionNoteBO> resultList = new List<RejectionNoteBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_tbl_BindRejectionNoteDD_ForDebitNote", con); //Rahul updated 12-01-2023. 
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new RejectionNoteBO()
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            RejectionNoteNo = reader["RejectionNoteNo"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+        #endregion
+
     }
 }

@@ -40,6 +40,7 @@
                                 <div class="col-md-4">
                                     @Html.DropDownList("RoleId", (IEnumerable<SelectListItem>)ViewData["Roles"], "--Select--",
                                     new { @Id = "role", @class = "form-control" })
+                                    <span id="valMsgRole" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Batch Number!</span>
                                 </div>
                             </div>
                             <br />
@@ -69,17 +70,15 @@
                                     <br />
                                     @foreach (var item in Model)
                                     {
-                                        <div class=" form-group row">
-                                            <div class="col-md-1">
-                                                @*@Html.CheckBoxFor(item => item[i].Selected, new { @checked = "checked" })*@
-                                                <input id="@item.ScreenName" class="removeLater" type="checkbox" name="skill" value="@item.ScreenName" />
-                                            </div>
-                                            <div class="col-md-8">
-                                                @Html.HiddenFor(modelItem => item.RoleId)
-                                                @Html.HiddenFor(modelItem => item.ScreenId)
-                                                @Html.HiddenFor(modelItem => item.ScreenName)
-                                                @Html.DisplayFor(modelItem => item.DisplayName)
-                                            </div>
+                                        <div class="col-md-1">
+                                            @*@Html.CheckBoxFor(item => item[i].Selected, new { @checked = "checked" })*@
+                                            <input id="@item.ScreenName" class="removeLater" type="checkbox" name="skill" value="@item.ScreenName" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.HiddenFor(modelItem => item.RoleId)
+                                            @Html.HiddenFor(modelItem => item.ScreenId)
+                                            @Html.HiddenFor(modelItem => item.ScreenName)
+                                            @Html.DisplayFor(modelItem => item.DisplayName)
                                         </div>
                                     }
                                 </div>
@@ -123,7 +122,7 @@
     });
 
     document.getElementById("role").addEventListener("change", function () {
-
+        $('#valMsgRole').hide();
         //to uncheck all checkboxes
         $(':checkbox').each(function () {
             this.checked = false;
@@ -154,47 +153,53 @@
     })
 </script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        document.getElementById("btnSave").disabled = true;
-    });
-
+   
     $("#btnSave").click(function (e) {
-        if (confirm("Do you want to save?")) {
-            var checkboxValues = [];
-            var roleId = document.getElementById("role").value;
-            checkboxValues.push(roleId);
-            $('input.removeLater:checked').map(function () {
-                //checkboxValues.push($("input:checked").val());
-                checkboxValues.push($(this).val());
-            });
-
-            //alert(checkboxValues);
-            //return true;
-            $.ajax({
-                type: "POST",
-                url: `/RoleRights/AddRoleRights/`,
-                data: JSON.stringify(checkboxValues),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                async: true,
-                success: function (result) {
-                    $.each(result, function (key, item) {
-
-                        $(':checkbox').each(function () {
-                            if (this.id == item.ScreenName) {
-                                this.checked = true;
-                            }
-                        });
-                        document.getElementById("btnSave").disabled = false;
-                    });
-
-                    alert('Rights assigned successfully!');
-                }
-            });
-        } else {
-            alert('Some error occurred! Please try again!');
-            return false;
+        if ($('#role').val() == '' || $('#role').val() == null) {
+            $('#valMsgRole').show();
+            $('#valMsgRole').text('Select Role!');
+            document.getElementById('valMsgRole').setAttribute('style', 'color:red;');
+            return;
         }
+        else {
+            if (confirm("Do you want to save?")) {
+                var checkboxValues = [];
+                var roleId = document.getElementById("role").value;
+                checkboxValues.push(roleId);
+                $('input.removeLater:checked').map(function () {
+                    //checkboxValues.push($("input:checked").val());
+                    checkboxValues.push($(this).val());
+                });
+
+                //alert(checkboxValues);
+                //return true;
+                $.ajax({
+                    type: "POST",
+                    url: `/RoleRights/AddRoleRights/`,
+                    data: JSON.stringify(checkboxValues),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,
+                    success: function (result) {
+                        $.each(result, function (key, item) {
+
+                            $(':checkbox').each(function () {
+                                if (this.id == item.ScreenName) {
+                                    this.checked = true;
+                                }
+                            });
+                            document.getElementById("btnSave").disabled = false;
+                        });
+
+                        alert('Rights assigned successfully!');
+                    }
+                });
+            } else {
+                alert('Some error occurred! Please try again!');
+                return false;
+            }
+        }
+
     });
 
 

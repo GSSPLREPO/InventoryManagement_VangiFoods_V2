@@ -1,9 +1,7 @@
 ﻿@model IEnumerable<InVanWebApp_BO.WaterAnalysisBO>
 
-@{
-    ViewBag.Title = "Water Analysis";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "Water Analysis";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <!DOCTYPE html>
 
@@ -31,68 +29,61 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <a href="@Url.Action("AddWaterAnalysis", "WaterAnalysis")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span> Water Analysis
-                            </a>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>From Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.TextBox("fromDate", "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessage("msgfromDate", "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label>To Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.TextBox("toDate", "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessage("toDate", "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
+
+                                    @*<a id="ExportPdf" style="float:left;" href="@Url.Action("ExportAsPDF", "OilAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
+                                    <a id="ExportExcel" style="float:left;" href="@Url.Action("ExportAsExcel", "WaterAnalysis")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="@Url.Action("AddWaterAnalysis", "WaterAnalysis")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                        <span class="fa fa-plus"></span> Water Analysis
+                                    </a>
+                                </div>
+                            </div>
                             <div class="table-responsive" style="padding-top:15px;">
 
-                                <table class="table table-striped table-bordered hover table-sm" id="WaterAnalysisdt">
+                                <table id="tblWaterAnalysis" class="table table-striped table-bordered hover table-sm table-responsive-md" width="100%" style="table-layout: fixed" ;>
                                     <thead>
                                         <tr>
                                             <th>Sr No.</th>
-                                            <th>@Html.DisplayName("Date")</th>
-                                            <th>@Html.DisplayName("Time")</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
                                             @*<th>@Html.DisplayName("Production Area PH")</th>
-                                            <th>@Html.DisplayName("Production Area TDS")</th>
-                                            <th>@Html.DisplayName("Production Area Hardness")</th>
-                                            <th>@Html.DisplayName("Production Area SaltAdded")</th>
-                                            <th>@Html.DisplayName("Soft Water PH")</th>
-                                            <th>@Html.DisplayName("Soft Water TDS")</th>
-                                            <th>@Html.DisplayName("Soft Water Hardness")</th>
-                                            <th>@Html.DisplayName("ETP Plant Temprechure")</th>
-                                            <th>@Html.DisplayName("ETP Plant PH")</th>
-                                            <th>@Html.DisplayName("ETP Plant TDS")</th>*@
-                                            <th>@Html.DisplayName("Temperature(°C)")</th>
-                                            <th>@Html.DisplayName("Gas Reading")</th>
-                                            <th>@Html.DisplayName("Verify By")</th>
-                                            <th>@Html.DisplayName("Actions")</th>
+                                                <th>@Html.DisplayName("Production Area TDS")</th>
+                                                <th>@Html.DisplayName("Production Area Hardness")</th>
+                                                <th>@Html.DisplayName("Production Area SaltAdded")</th>
+                                                <th>@Html.DisplayName("Soft Water PH")</th>
+                                                <th>@Html.DisplayName("Soft Water TDS")</th>
+                                                <th>@Html.DisplayName("Soft Water Hardness")</th>
+                                                <th>@Html.DisplayName("ETP Plant Temprechure")</th>
+                                                <th>@Html.DisplayName("ETP Plant PH")</th>
+                                                <th>@Html.DisplayName("ETP Plant TDS")</th>*@
+                                            <th>Temperature(°C)</th>
+                                            <th>Gas Reading</th>
+                                            <th>Verify By</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        @{int SrNo = 1;}
-                                            @foreach (var item in Model)
-                                            {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => SrNo)</td>
-                                            @*<td>@Html.DisplayFor(modelItem => item.dateGridBinding)</td>*@
-                                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                           <td>@Html.DisplayFor(modelItem=>item.Time)</td>
-                                            @*<td>@Html.DisplayFor(modelItem => item.PAPH)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.PATDS)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.PAHardness)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.PASaltAdded)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.SWPH)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.SWTDS)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.SWHardness)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ETPTEM)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ETPPH)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ETPTDS)</td>*@
-                                            <td>@Html.DisplayFor(modelItem => item.TEM)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.GasReading)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.VerifyByName)</td>
-                                            <td>
-
-                                                <a href=@Url.Action("EditWaterAnalysis", "WaterAnalysis", new { Id = item.Id })>
-                                                    <i class="fa fa-edit text-primary"></i>
-                                                </a> &emsp;
-                                                <a href=@Url.Action("Delete", "WaterAnalysis", new { Id = item.Id }) onclick="return confirm('Are you sure want to delete?');">
-                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        SrNo++;
-                                            }
                                     </tbody>
                                 </table>
                             </div>
@@ -113,27 +104,206 @@
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>*@
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css" />
     @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
         <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
 
 
     <script type="text/javascript">
-    $(document).ready(function () {
-        $('#WaterAnalysisdt').dataTable().fnDestroy();
-        $('#WaterAnalysisdt').dataTable({
-                "iDisplayLength": 10,
-                //"columnDefs": [{ "targets": 3, "type": "date-eu" }],
-                //"order": [[3, 'desc']],
+        $(document).ready(function () {
+            BindWaterAnalysis();
+            setCurrentDate();
+        });
+
+        function setCurrentDate()
+        {
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            $('#fromDate').val(today);
+            $('#toDate').val(today);
+        }
+        function OnChangedFromDate() {
+            $('#fromDateValidate').hide();
+        }
+
+        function OnChangedToDate() {
+            $('#toDateValidate').hide();
+        }
+
+        function BindWaterAnalysis() {
+            var flagdate = 1;
+            var i = 1;
+            $('#tblWaterAnalysis').dataTable().fnDestroy();
+            var t = $('#tblWaterAnalysis').dataTable({
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "pageLength": 10,
+                "sAjaxSource": "/WaterAnalysis/GetAllWaterAnalysisList?flagdate=" + flagdate,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
+                        //$('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        //$('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "scrollX": true,
+                "columns": [
+                    {
+                        "render": function (data, type, full, meta) {
+                            return i++;
+                        }
+                    },
+                    {
+                        "data": "Date",
+                        "autoWidth": true,
+                        "render": function (value) {
+                            var dateString = value.substr(6);
+                            var currentTime = new Date(parseInt(dateString));
+                            var month = currentTime.getMonth() + 1;
+                            var monthString = month > 9 ? month : '0' + month;
+                            var day = currentTime.getDate();
+                            var dayString = day > 9 ? day : '0' + day;
+                            var year = currentTime.getFullYear();
+                            //var hours = currentTime.getHours();
+                            //var minutes = currentTime.getMinutes();
+                            //var seconds = currentTime.getSeconds();
+                            var date = dayString + "/" + monthString + "/" + year;
+                            return date;
+                        }
+
+                    },
+                    { "data":"Time","autoWidth":true},
+                    { "data": "TEM", "autoWidth": true },
+                    { "data": "GasReading", "autoWidth": true },
+                    //{ "data": "SrNo", "autoWidth": true },
+                    //{ "data": "PeroxideValue", "autoWidth": true },
+                    //{ "data": "Color", "autoWidth": true },
+                    //{ "data": "Frequncy", "autoWidth": true },
+                    //{ "data": "Odour", "autoWidth": true },
+                    { "data": "VerifyByName", "autoWidth": true },
+                    {
+                        data: "Id", "render": function (data) {
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Water Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Water Analysis"><i class="fa fa-trash"/></i></button>'
+                        }
+                    }
+                ]
+
+
+            });
+        }
+
+        $("#btnGo").on("click", function () {
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+            var flagdate = 2;
+            var i = 1;
+            if (fromDate == null || fromDate == "") {
+                $('#fromDateValidate').text('Select from date!');
+                $('#fromDateValidate').show();
+                $("#fromDate").focus();
+                return;
+            }
+
+            if (toDate == null || toDate == "") {
+                $('#toDateValidate').text('Select to date!');
+                $('#toDateValidate').show();
+                $("#toDate").focus();
+                return;
+            }
+
+            if (fromDate > toDate) {
+                alert('Invalid date! To date is less than From date!');
+                $('#fromDate').focus();
+                return;
+            }
+           // $('#ExportPdf').show();
+            $('#ExportExcel').show();
+
+            $('#tblWaterAnalysis').dataTable().fnDestroy();
+            var t = $('#tblWaterAnalysis').dataTable({
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "pageLength": 10,
+                "sAjaxSource": "/WaterAnalysis/GetAllWaterAnalysisList?flagdate=" + flagdate + "&fromDate=" + fromDate + "&toDate=" + toDate,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    var flag = parseFloat(result.length);
+                    if (flag > 11) {
+                       // $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        //$('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "scrollX": true,
+                "columns": [
+                    {
+                        "render": function (data, type, full, meta) {
+                            return i++;
+                        }
+                    },
+                    {
+                        "data": "Date",
+                        "autoWidth": true,
+                        "render": function (value) {
+                            var dateString = value.substr(6);
+                            var currentTime = new Date(parseInt(dateString));
+                            var month = currentTime.getMonth() + 1;
+                            var monthString = month > 9 ? month : '0' + month;
+                            var day = currentTime.getDate();
+                            var dayString = day > 9 ? day : '0' + day;
+                            var year = currentTime.getFullYear();
+                            //var hours = currentTime.getHours();
+                            //var minutes = currentTime.getMinutes();
+                            //var seconds = currentTime.getSeconds();
+                            var date = dayString + "/" + monthString + "/" + year;
+                            return date;
+                        }
+
+                    },
+                    { "data": "Time", "autoWidth": true },
+                    { "data": "TEM", "autoWidth": true },
+                    { "data": "GasReading", "autoWidth": true },
+                    //{ "data": "SrNo", "autoWidth": true },
+                    //{ "data": "PeroxideValue", "autoWidth": true },
+                    //{ "data": "Color", "autoWidth": true },
+                    //{ "data": "Frequncy", "autoWidth": true },
+                    //{ "data": "Odour", "autoWidth": true },
+                    { "data": "VerifyByName", "autoWidth": true },
+                    {
+                        data: "Id", "render": function (data) {
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Water Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete Water Analysis"><i class="fa fa-trash"/></i></button>'
+                        }
+                    }
+                ]
             });
         });
 
-        var table = $('#WaterAnalysisdt').dataTable({
-            "serverSide": false,
-            "filter": true,
-            //"columnDefs": [{ "targets": 3, "type": "date-eu" }],
-            //"order": [[3, 'desc']],
-            "pageLength": 20
-        });
+        $(document).on("click", ".btnEdit", function () {
+                    var id = $(this).attr("id");
+                    window.location.href = '@Url.Action("EditWaterAnalysis", "WaterAnalysis", new { Id = "Id"})'.replace("Id", parseInt(id));
+                });
+
+
+       $(document).on("click", ".btnDelete", function () {
+                    var id = $(this).attr("id");
+                    if (confirm("Are you sure want to delete?")) {
+                        window.location.href = '@Url.Action("Delete", "WaterAnalysis", new { Id = "Id"})'.replace("Id", parseInt(id));
+                    }
+                })
     </script>
 }

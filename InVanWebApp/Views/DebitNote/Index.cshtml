@@ -37,6 +37,7 @@
                                             <th>@Html.Label("Debit Note Number")</th>
                                             <th>@Html.Label("Debit Note Date")</th>
                                             <th>@Html.Label("PO Number")</th>
+                                            <th>@Html.Label("Rejection Note Number")</th>   @*//Rahul added 'RejectionNoteNo' 21-04-23.*@
                                             <th>@Html.Label("Vendor")</th>
                                             <th>@Html.Label("Created By")</th>
                                             <th>@Html.Label("Actions")</th>
@@ -49,6 +50,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.DebitNoteNo)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.DebitNoteDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PO_Number)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.RejectionNoteNo)</td>    @*//Rahul added 'RejectionNoteNo' 21-04-23.*@
                                                 <td>@Html.DisplayFor(modelItem => item.VendorName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.UserName)</td>
                                                 <td>
@@ -64,7 +66,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <h7 class="text-danger font-bold" style="font-size:x-small;float:right;">NOTE*: Please note debit note can be created of PO whose inward and inward QC of all items are completed!</h7>
+                            @*Rahul commented 20-04-23. <h7 class="text-danger font-bold" style="font-size:x-small;float:right;">NOTE*: Please note debit note can be created of PO whose inward and inward QC of all items are completed!</h7>*@
                         </div>
                     </div>
                 </div>

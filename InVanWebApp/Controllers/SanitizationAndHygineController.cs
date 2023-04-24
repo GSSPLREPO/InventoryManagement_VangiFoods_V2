@@ -298,7 +298,7 @@ namespace InVanWebApp.Controllers
             gv.RenderControl(hw);
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
-            string ReportName = "Sanitization And Hyginee";/* The Daily Monitoring Report name are given here  */
+            string ReportName = "Sanitization And Hygiene";/* The Daily Monitoring Report name are given here  */
             string Fromdate = "From Date : ";/* The From Date are given here  */
             string Todate = "To Date:";/* The To Date are given here  */
             string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */

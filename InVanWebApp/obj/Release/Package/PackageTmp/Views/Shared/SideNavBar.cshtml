@@ -51,7 +51,7 @@
             <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
-        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
+                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
                     <li class="nav-item d-none d-lg-block">
                         <div id="FIFOSystem">
                             <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/FIFOSystem">Raw Material Dashboard</a>
@@ -360,7 +360,11 @@
                             <a class="nav-link" href="@Url.Action("Index","FinishedGoodSeries")">Finished Good Series</a>
                         </div>
                     </li>
-
+                    <li class="nav-item">
+                        <div id="PostProductionRejectionNote">
+                            <a class="nav-link" href="@Url.Action("AddPostProductionRejectionNote","PostProductionRejectionNote")">Post Production Rejection Note</a>
+                        </div>
+                    </li>
 
                 </ul>
             </div>
@@ -378,6 +382,11 @@
                     <li class="nav-item">
                         <div id="Company">
                             <a class="nav-link" href="@Url.Action("Index","Company")">Company</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="Currency">
+                            <a class="nav-link" href="@Url.Action("Index","Currency")">Currency</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -406,15 +415,15 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                            <div id="ProductMaster">
-                                <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div id="RecipeMaster">
-                                <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
-                            </div>
-                        </li>
+                        <div id="ProductMaster">
+                            <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RecipeMaster">
+                            <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
+                        </div>
+                    </li>
                     <li class="nav-item">
                         <div id="TermsAndCondition">
                             <a class="nav-link" href="@Url.Action("Index","TermsAndCondition")">Terms and Condition</a>
@@ -495,6 +504,11 @@
                             <a class="nav-link text-wrap" href="~/Report/IssueNoteReport">Issue Note Report</a>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <div id="PreProduction_QCReport">
+                            <a class="nav-link" href="~/Report/PreProduction_QCReport">Pre Production QC Report</a>
+                        </div>
+                    </li>
 
                     <li class="nav-item">
                         <div id="PurchaseInvoiceReport">
@@ -531,10 +545,10 @@
                     </li>
 
                     @*<li class="nav-item">
-            <div id="RejectionNoteReport">
-                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
-            </div>
-        </li>*@
+                            <div id="RejectionNoteReport">
+                                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+                            </div>
+                        </li>*@
                     <li class="nav-item">
                         <div id="RejectionNoteReport">
                             <a class="nav-link text-wrap" href="~/Report/RejectionReport">Rejection Report</a>
@@ -572,10 +586,10 @@
                     </li>
 
                     @*<li class="nav-item">
-            <div id="InventoryControlReport">
-                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-            </div>
-        </li>*@
+                            <div id="InventoryControlReport">
+                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+                            </div>
+                        </li>*@
                 </ul>
             </div>
         </li>
@@ -590,12 +604,12 @@
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
                         <div id="Roles">
-                            <a class="nav-link" href="@Url.Action("Index","Role")">Roles</a>
+                            <a class="nav-link" id="RolesId" href="@Url.Action("Index","Role")">Roles</a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div id="RoleRights">
-                            <a class="nav-link" href="@Url.Action("Index","RoleRights")">Role Rights</a>
+                            <a class="nav-link" id="RolesRightsId" href="@Url.Action("Index","RoleRights")">Role Rights</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -621,6 +635,13 @@
         HideShowMenu();
     });
 
+    //$('a#RolesId').click(function () {
+    //    window.location('Role/Index');
+    //    $('a#RolesRightsId').removeClass("nav-link active");
+    //    $('a#RolesRightsId').addClass("nav-link");
+    //    event.preventDefault();
+    //    return;
+    //});
 
     function HideShowMenu() {
         //alert('hi');
