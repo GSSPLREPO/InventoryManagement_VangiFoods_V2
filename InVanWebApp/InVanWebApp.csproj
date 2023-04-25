@@ -610,6 +610,7 @@
     <Compile Include="Repository\Interface\IOilAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IPestControlLogRepository.cs" />
+    <Compile Include="Repository\Interface\IPostProductionRN_Repository.cs" />
     <Compile Include="Repository\Interface\IPreProduction_QCRepository.cs" />
     <Compile Include="Repository\Interface\IPreStartupHygieneRepository.cs" />
     <Compile Include="Repository\Interface\IProductEvaluationLogRepository.cs" />
@@ -659,6 +660,7 @@
     <Compile Include="Repository\OutwardNoteRepository.cs" />
     <Compile Include="Repository\PestControlLogRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
+    <Compile Include="Repository\PostProductionRN_Repository.cs" />
     <Compile Include="Repository\PreProduction_QCRepository.cs" />
     <Compile Include="Repository\PreStartupHygieneRepository.cs" />
     <Compile Include="Repository\ProductEvaluationLogRepository.cs" />
@@ -3202,6 +3204,7 @@
     <Content Include="Views\Currency\EditCurrency.cshtml" />
     <Content Include="Views\Currency\Index.cshtml" />
     <Content Include="Views\PostProductionRejectionNote\AddPostProductionRejectionNote.cshtml" />
+    <Content Include="Views\PostProductionRejectionNote\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
