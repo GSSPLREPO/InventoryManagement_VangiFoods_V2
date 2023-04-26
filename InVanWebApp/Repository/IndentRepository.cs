@@ -410,5 +410,36 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region This function is for pdf export/view
+        /// <summary>
+        /// Farheen: This function is for fetch data for editing by ID and for downloading pdf
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+
+        public IndentBO GetItemDetailsByIndentById(int ID)
+        {
+            IndentBO result = new IndentBO();
+            try
+            {
+                string stringQuery = "select * From Indent where ID = @IndentId AND IsDeleted = 0";
+                string stringItemQuery = "select * From Indent_Details where IndentID = @IndentId AND IsDeleted = 0";
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    result = con.Query<IndentBO>(stringQuery, new { @IndentId = ID }).FirstOrDefault();
+                    var ItemList = con.Query<Indent_DetailsBO>(stringItemQuery, new { @IndentId = ID }).ToList();
+                    result.indent_Details = ItemList;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
+
+        #endregion
+
     }
 }

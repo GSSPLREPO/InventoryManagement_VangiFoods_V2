@@ -12,7 +12,7 @@
     <title>Sanitization And Hygiene</title>
 </head>
 <body>
-
+    
     <div class="content-wrapper" runat="server" id="SanitizationAndHygine">
         <div class="page-header" style="height:5px;">
             <h4 class="page-title">Sanitization And Hygiene</h4>
@@ -51,11 +51,11 @@
                                 <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
                                     @*<a id="ExportPdf" style="float:right;" href="@Url.Action("MicroAnalysisPDF", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
-                                    <a id="ExportExcel" style="float: right; width: 45px; height: 45px; padding-top: 1px" href="@Url.Action("SanitizationAndHygineExcel", "SanitizationAndHygine")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" /> </a>
+                                    <a id="ExportExcel" style="margin-left:5%;" href="@Url.Action("SanitizationAndHygineExcel", "SanitizationAndHygine")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px"/> </a>
                                 </div>
                                 <div class="col-md-2">
-                                    <a href="@Url.Action("AddSanitizationAndHygine","SanitizationAndHygine")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                        <span class="fa fa-plus"></span> Sanitization And Hygiene
+                                    <a href="@Url.Action("AddSanitizationAndHygine","SanitizationAndHygine")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top: 10%; background: linear-gradient(85deg, #392c70, #6a005b); ">
+                                        <span class="fa fa-plus"></span> Sanitization And Hygiene 
                                     </a>
                                 </div>
                             </div>
@@ -146,6 +146,27 @@
                 },
                 "scrollX": true,
                 "columns": [
+                   /* { "data": "Date", "autoWidth": true },*/
+                    //{
+                    //   /* "data": "Date",*/
+                    //    "autoWidth": true,
+                    //    "render": function (value) {
+                    //        var dateString = value.substr(6);
+                    //        var currentTime = new Date(parseInt(dateString));
+                    //        var month = currentTime.getMonth() + 1;
+                    //        var monthString = month > 9 ? month : '0' + month;
+                    //        var day = currentTime.getDate();
+                    //        var dayString = day > 9 ? day : '0' + day;
+                    //        var year = currentTime.getFullYear();
+                    //        //var hours = currentTime.getHours();
+                    //        //var minutes = currentTime.getMinutes();
+                    //        //var seconds = currentTime.getSeconds();
+                    //        var date = dayString + "/" + monthString + "/" + year;
+                    //        return date;
+                    //    }
+
+                    //},
+
                     { "data": "NameOfEmpolyee", "autoWidth": true },
                     { "data": "Department", "autoWidth": true },
                     { "data": "BodyTemperature", "autoWidth": true },
@@ -157,8 +178,8 @@
 
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Sanitization And Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title="Delete Sanitization And Hygiene"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit"  style="background:transparent !important;" title = "Edit Sanitization And Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "text-danger btnDelete"  style="background:transparent !important;" title = "Delete Sanitization And Hygiene"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -216,6 +237,25 @@
                 },
                 "scrollX": true,
                 "columns": [
+                    //{
+                    //    /*"data": "Date",*/
+                    //    "autoWidth": true,
+                    //    "render": function (value) {
+                    //        var dateString = value.substr(6);
+                    //        var currentTime = new Date(parseInt(dateString));
+                    //        var month = currentTime.getMonth() + 1;
+                    //        var monthString = month > 9 ? month : '0' + month;
+                    //        var day = currentTime.getDate();
+                    //        var dayString = day > 9 ? day : '0' + day;
+                    //        var year = currentTime.getFullYear();
+                    //        //var hours = currentTime.getHours();
+                    //        //var minutes = currentTime.getMinutes();
+                    //        //var seconds = currentTime.getSeconds();
+                    //        var date = dayString + "/" + monthString + "/" + year;
+                    //        //return date;
+                    //    }
+
+                    //},
                     { "data": "NameOfEmpolyee", "autoWidth": true },
                     { "data": "Department", "autoWidth": true },
                     { "data": "BodyTemperature", "autoWidth": true },
@@ -226,8 +266,8 @@
 
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit Sanitization And Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title="Delete Sanitization And Hygiene"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit"  style="background:transparent !important;" title = "Edit Sanitization And Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "text-danger btnDelete"  style="background:transparent !important;" title = "Delete Sanitization And Hygiene"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -259,3 +299,8 @@
                 })
     </script>
 }
+<style>
+    th {
+        white-space: break-spaces !important;
+    }
+</style>
