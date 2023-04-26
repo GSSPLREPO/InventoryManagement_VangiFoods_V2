@@ -108,6 +108,7 @@ namespace InVanWebApp_BO
         public decimal RejectedQuantity { get; set; }
 
         public Nullable<decimal> TotalItemCost { get; set; }
+        public string SOPaymentDueDate { get; set; } 
 
     }
     public class SalesOrderItemsDetailBO

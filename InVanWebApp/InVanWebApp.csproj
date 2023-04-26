@@ -188,6 +188,7 @@
     <Compile Include="Controllers\InwardQCSortingController.cs" />
     <Compile Include="Controllers\IssueNoteController.cs" />
     <Compile Include="Controllers\MicroAnalysisController.cs" />
+    <Compile Include="Controllers\Notifications.cs" />
     <Compile Include="Controllers\OilAnalysisController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\DeliveryChallanController.cs" />
@@ -606,6 +607,7 @@
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
     <Compile Include="Repository\Interface\IDeliveryChallanRepository.cs" />
     <Compile Include="Repository\Interface\IMicroAnalysisRepository.cs" />
+    <Compile Include="Repository\Interface\INotificationsRepository.cs" />
     <Compile Include="Repository\Interface\IOilAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IPestControlLogRepository.cs" />
@@ -652,6 +654,7 @@
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />
     <Compile Include="Repository\MicroAnalysisRepository.cs" />
+    <Compile Include="Repository\NotificationsRepository.cs" />
     <Compile Include="Repository\OilAnalysisRepository.cs" />
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\DeliveryChallanRepository.cs" />
@@ -2032,6 +2035,7 @@
     <Content Include="Scripts\Script\EditOutwardNote.js" />
     <Content Include="Theme\MainContent\css\customLogin.css" />
     <Content Include="Theme\MainContent\images\LoginBackImg.jpg" />
+    <Content Include="Theme\MainContent\images\nty.png" />
     <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
     <Content Include="Views\RejectionNote\Index.cshtml" />
     <Content Include="Views\RejectionNote\ViewRejectionNote.cshtml" />
