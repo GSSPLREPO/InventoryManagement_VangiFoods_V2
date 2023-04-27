@@ -35,14 +35,18 @@
                         <br />
                         <div class="row">
                             <div class="col-md-2">
-                                @Html.Label("PO Number")
+                                @Html.Label("Rejection Number")
                                 <span style="color:red">*</span>
                             </div>
-                            <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.PO_ID, (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedPO(id)" })
-                                @Html.ValidationMessageFor(model => model.PO_ID, "", new { @class = "error mt-2 text-danger" })
-                                @Html.HiddenFor(model => model.PO_Number)
+                            <div class="col-md-4">                                
+                                @Html.DropDownListFor(model => model.RejectionId, (IEnumerable<SelectListItem>)ViewData["RejectionNumberdd"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedRN(id)" })
+                                    @Html.ValidationMessageFor(model => model.RejectionId, "", new { @class = "error mt-2 text-danger" })
+                                    @Html.HiddenFor(model => model.RejectionNoteNo)
+                                @*@Html.TextBoxFor(model => model.RejectionNoteNo, new { id = "RejectionNoteNo", style = "color:black;border:none;", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.RejectionNoteNo, "", new { @class = "error mt-2 text-danger" })
+                                @Html.HiddenFor(model => model.RejectionId)*@
                             </div>
+
                             <div class="col-md-2">
                                 @Html.Label("Currency")
                                 <span style="color:red">*</span>
@@ -60,16 +64,16 @@
                         <br />
                         <div class="row">
                             <div class="col-md-2">
-                                @Html.Label("Rejection Number")
+                                @Html.Label("PO Number")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                &nbsp;
-                                @*@Html.DropDownListFor(model => model.RejectionId, (IEnumerable<SelectListItem>)ViewData["RejectionNumberdd"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedRN(id)" })
-                                    @Html.ValidationMessageFor(model => model.RejectionId, "", new { @class = "error mt-2 text-danger" })
-                                    @Html.HiddenFor(model => model.RejectionNoteNo)*@
-                                @Html.TextBoxFor(model => model.RejectionNoteNo, new { id = "RejectionNoteNo", style = "color:black;border:none;", @readonly = "readonly" })
-                                @Html.HiddenFor(model => model.RejectionId)
+                                @*@Html.DropDownListFor(model => model.PO_ID, (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedPO(id)" })
+                                    @Html.ValidationMessageFor(model => model.PO_ID, "", new { @class = "error mt-2 text-danger" })
+                                    @Html.HiddenFor(model => model.PO_Number)*@ &nbsp;
+                                @Html.TextBoxFor(model => model.PO_Number, new { id = "PO_Number", style = "color:black;border:none;", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.PO_Number, "", new { @class = "error mt-2 text-danger" })
+                                @Html.HiddenFor(model => model.PO_ID)
                             </div>
                         </div>
                         <br />
@@ -260,17 +264,26 @@
 <script type="text/javascript">
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
-        var PONumber = $("#PO_ID option:selected").text();
-        $("#PO_Number").val(PONumber);
+        var RejectionNoteNo = $("#RejectionId option:selected").text();
+        $("#RejectionNoteNo").val(RejectionNoteNo);
 
         createJson();
     };
     //==========end===============
-    
-    //=====================Onchange of PO===========================
-    function SelectedIndexChangedPO(id) {
-        debugger
-        $("#RejectionId").val(''); //Rahul added 20-04-23.
+
+    //=====================Onchange of RN===========================
+    function SelectedIndexChangedRN(id) {
+        //debugger
+        $("#PO_ID").val(''); //Rahul added 21-04-23.
+        $("#PO_Number").val(''); //Rahul added 21-04-23.
+        $('#TotalBeforeTax').val(''); //Rahul added 21-04-23.
+        $('#OtherTax').val(''); //Rahul added 21-04-23.
+        $('#TotalTax').val(''); //Rahul added 21-04-23.
+        $('#GrandTotal').val(''); //Rahul added 21-04-23.
+        $('#TermsAndConditionID').val(''); //Rahul added 21-04-23.
+        $('#Terms').val(''); //Rahul added 21-04-23.
+        $('#Remarks').val(''); //Rahul added 21-04-23.
+
         $('#btnSave').prop('disabled', false);
 
         //For deleting the rows of Item table if exist.
@@ -282,132 +295,50 @@
             rowCount--;
         }
 
-        var PO_Id = $("#PO_ID").val();
+        //var PO_Id = $("#PO_ID").val();
         //Rahul added 20-04-23.
-        var RejectionId = $("#RejectionId").val();
-        if (RejectionId == '' || RejectionId == null) {
-            $.ajax({
-                url: '/DebitNote/GetRNDetails?id=' + PO_Id,
-                type: "POST",
-                data: "{ }",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    console.log("RNDetails :", result);
-                    $("#RejectionId").val(result[0].RejectionID);
-                    $("#RejectionNoteNo").val(result[0].RejectionNoteNo);
-                    $("#VendorID").val(result[0].SupplierID);
-                    $("#VendorName").val(result[0].SupplierName);
-
-                    $("#PO_Number").val(result[0].PONumber);
-                    $("#CurrencyID").val(result[0].CurrencyID);
-                    $("#CurrencyName").val(result[0].CurrencyName);
-                    $("#CurrencyPrice").val(result[0].CurrencyPrice);
-                    $("#LocationId").val(result[0].LocationId);
-                    $("#LocationName").val(result[0].LocationName);
-                    $('#DeliveryAddress').val(result[0].DeliveryAddress);
-                    $('#VendorAddress').val(result[0].SupplierAddress);
-                    $('#TermsAndConditionID').val(result[0].TermsAndConditionID);
-                    $('#Terms').val(result[0].Terms);
-                    $('#OtherTax').val((result[0].OtherTax));
-
-                    var table = document.getElementById('submissionTable');
-                    for (var j = 1; j < result.length; j++) {
-                        var rowCount = table.rows.length;
-                        var cellCount = table.rows[0].cells.length;
-                        var row = table.insertRow(rowCount);
-
-                        for (var i = 0; i < cellCount; i++) {
-                            var cell = 'cell' + i;
-                            cell = row.insertCell(i);
-
-                            if (i == 0) {
-                                cell.innerHTML = result[j].Item_Code;
-                                cell.setAttribute("id", "ItemCode_" + j);
-                            }
-                            else if (i == 1) {
-                                cell.innerHTML = result[j].ItemId;
-                                cell.setAttribute("class", "d-none");
-                                cell.setAttribute("id", "ItemID_" + j);
-                            }
-                            else if (i == 2) {
-                                cell.innerHTML = result[j].ItemName;
-                                cell.setAttribute("id", "ItemName_" + j);
-
-                            }
-                            else if (i == 3) {
-                                cell.innerHTML = result[j].TotalQuantity + " " + result[j].ItemUnit;
-                                cell.setAttribute("id", "POQty_" + j);
-
-                            }
-                            else if (i == 4) {
-                                cell.innerHTML = result[j].RejectedQuantity;
-                                cell.setAttribute("id", "RejectedQuantity_" + j);
-                            }
-                            else if (i == 5) {
-                                cell.innerHTML = result[j].ItemUnit;
-                                cell.setAttribute("id", "ItemUnit_" + j);
-                            }
-                            else if (i == 6) {
-                                cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
-                                cell.setAttribute("id", "ItemUnitPrice_" + j);
-                            }
-                            else if (i == 7) {
-                                cell.innerHTML = result[j].CurrencyName
-                                cell.setAttribute("id", "CurrencyName_" + j);
-                            }
-                            else if (i == 8) {
-                                cell.innerHTML = result[j].ItemTaxValue + " %";
-                                cell.setAttribute("id", "ItemTax_" + j);
-                            }
-                            else if (i == 9) {
-                                cell.innerHTML = result[j].TotalItemCost + " " + result[j].CurrencyName;
-                                cell.setAttribute("id", "TotalItemCost_" + j);
-                            }
-                            else if (i == 10) {
-                                cell.innerHTML = result[j].Remarks;
-                                cell.setAttribute("id", "Remarks_" + j);
-                            }
-                        }
-
-                    }
-
-                    CalculateTotalBeforeTax();
-                    var grandTotal = $('#GrandTotal').val()
-                    grandTotal = parseFloat(grandTotal);
-                    if (grandTotal == 0) {
-                        alert('Wastage of all listed items are zero, Cannot create its debit note!');
-                        $('#btnSave').prop('disabled', true);
-                    }
-                    else {
-                        $('#btnSave').prop('disabled', false);
-                    }
-                },
-                error: function (err) {
-                    alert('Not able to fetch Rejection Note item details!');
-                }
-            });
-        }
-
+        var RejectionID = $("#RejectionId").val();
         $.ajax({
-            url: '/CreditNote/GetPODetails',
+            url: '/DebitNote/GetRNDetails?id=' + RejectionID,
             type: "POST",
-            data: { id: PO_Id },
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
             success: function (result) {
+                console.log("RNDetails :", result);
+                if (result.length == 0) {
+                    alert('First create Rejection Note, then create its Debit Note!'); //Rahul added 21-04-23.
+                    $('#TotalBeforeTax').val(''); //Rahul added 21-04-23.
+                    $('#OtherTax').val(''); //Rahul added 21-04-23.
+                    $('#TotalTax').val(''); //Rahul added 21-04-23.
+                    $('#GrandTotal').val(''); //Rahul added 21-04-23.
+                    $('#TermsAndConditionID').val(''); //Rahul added 21-04-23.
+                    $('#Terms').val(''); //Rahul added 21-04-23.
+                    $('#Remarks').val(''); //Rahul added 21-04-23.
+                    $('#btnSave').prop('disabled', true); //Rahul added 21-04-23.
+                }
+                else if (result[0].flag == 1) {                    
+                    alert("Debit note is already created for the slelected Rejection note!");
+                    $('#btnSave').prop('disabled', true); //Rahul added 21-04-23.
+                }
+                $("#RejectionId").val(result[0].RejectionID);
+                $("#RejectionNoteNo").val(result[0].RejectionNoteNo);
+                $("#VendorID").val(result[0].SupplierID);
+                $("#VendorName").val(result[0].SupplierName);
+                $("#PO_ID").val(result[0].PO_Id); //Rahul added 21-04-23.
                 $("#PO_Number").val(result[0].PONumber);
                 $("#CurrencyID").val(result[0].CurrencyID);
                 $("#CurrencyName").val(result[0].CurrencyName);
                 $("#CurrencyPrice").val(result[0].CurrencyPrice);
                 $("#LocationId").val(result[0].LocationId);
                 $("#LocationName").val(result[0].LocationName);
-                $("#VendorID").val(result[0].VendorsID);
-                $("#VendorName").val(result[0].CompanyName);
                 $('#DeliveryAddress').val(result[0].DeliveryAddress);
                 $('#VendorAddress').val(result[0].SupplierAddress);
-
                 $('#TermsAndConditionID').val(result[0].TermsAndConditionID);
                 $('#Terms').val(result[0].Terms);
                 $('#OtherTax').val((result[0].OtherTax));
+
+            //===================Create dynamic table for binding Item details====================//
 
                 var table = document.getElementById('submissionTable');
                 for (var j = 1; j < result.length; j++) {
@@ -424,7 +355,7 @@
                             cell.setAttribute("id", "ItemCode_" + j);
                         }
                         else if (i == 1) {
-                            cell.innerHTML = result[j].Item_ID;
+                            cell.innerHTML = result[j].ItemId;
                             cell.setAttribute("class", "d-none");
                             cell.setAttribute("id", "ItemID_" + j);
                         }
@@ -434,7 +365,7 @@
 
                         }
                         else if (i == 3) {
-                            cell.innerHTML = result[j].ItemQuantity + " " + result[j].ItemUnit;
+                            cell.innerHTML = result[j].TotalQuantity + " " + result[j].ItemUnit;
                             cell.setAttribute("id", "POQty_" + j);
 
                         }
@@ -467,7 +398,6 @@
                             cell.setAttribute("id", "Remarks_" + j);
                         }
                     }
-
                 }
 
                 CalculateTotalBeforeTax();
@@ -482,11 +412,110 @@
                 }
             },
             error: function (err) {
-                alert('Not able to fetch indent item details!');
-
+                alert('Not able to fetch Rejection Note item details!');
+                $('#btnSave').prop('disabled', true); //Rahul added 21-04-23.
             }
-
         });
+
+
+        //$.ajax({
+        //    url: '/CreditNote/GetPODetails',
+        //    type: "POST",
+        //    data: { id: PO_Id },
+        //    success: function (result) {
+        //        $("#PO_Number").val(result[0].PONumber);
+        //        $("#CurrencyID").val(result[0].CurrencyID);
+        //        $("#CurrencyName").val(result[0].CurrencyName);
+        //        $("#CurrencyPrice").val(result[0].CurrencyPrice);
+        //        $("#LocationId").val(result[0].LocationId);
+        //        $("#LocationName").val(result[0].LocationName);
+        //        $("#VendorID").val(result[0].VendorsID);
+        //        $("#VendorName").val(result[0].CompanyName);
+        //        $('#DeliveryAddress').val(result[0].DeliveryAddress);
+        //        $('#VendorAddress').val(result[0].SupplierAddress);
+
+        //        $('#TermsAndConditionID').val(result[0].TermsAndConditionID);
+        //        $('#Terms').val(result[0].Terms);
+        //        $('#OtherTax').val((result[0].OtherTax));
+
+        //        var table = document.getElementById('submissionTable');
+        //        for (var j = 1; j < result.length; j++) {
+        //            var rowCount = table.rows.length;
+        //            var cellCount = table.rows[0].cells.length;
+        //            var row = table.insertRow(rowCount);
+
+        //            for (var i = 0; i < cellCount; i++) {
+        //                var cell = 'cell' + i;
+        //                cell = row.insertCell(i);
+
+        //                if (i == 0) {
+        //                    cell.innerHTML = result[j].Item_Code;
+        //                    cell.setAttribute("id", "ItemCode_" + j);
+        //                }
+        //                else if (i == 1) {
+        //                    cell.innerHTML = result[j].Item_ID;
+        //                    cell.setAttribute("class", "d-none");
+        //                    cell.setAttribute("id", "ItemID_" + j);
+        //                }
+        //                else if (i == 2) {
+        //                    cell.innerHTML = result[j].ItemName;
+        //                    cell.setAttribute("id", "ItemName_" + j);
+
+        //                }
+        //                else if (i == 3) {
+        //                    cell.innerHTML = result[j].ItemQuantity + " " + result[j].ItemUnit;
+        //                    cell.setAttribute("id", "POQty_" + j);
+
+        //                }
+        //                else if (i == 4) {
+        //                    cell.innerHTML = result[j].RejectedQuantity;
+        //                    cell.setAttribute("id", "RejectedQuantity_" + j);
+        //                }
+        //                else if (i == 5) {
+        //                    cell.innerHTML = result[j].ItemUnit;
+        //                    cell.setAttribute("id", "ItemUnit_" + j);
+        //                }
+        //                else if (i == 6) {
+        //                    cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
+        //                    cell.setAttribute("id", "ItemUnitPrice_" + j);
+        //                }
+        //                else if (i == 7) {
+        //                    cell.innerHTML = result[j].CurrencyName
+        //                    cell.setAttribute("id", "CurrencyName_" + j);
+        //                }
+        //                else if (i == 8) {
+        //                    cell.innerHTML = result[j].ItemTaxValue + " %";
+        //                    cell.setAttribute("id", "ItemTax_" + j);
+        //                }
+        //                else if (i == 9) {
+        //                    cell.innerHTML = result[j].TotalItemCost + " " + result[j].CurrencyName;
+        //                    cell.setAttribute("id", "TotalItemCost_" + j);
+        //                }
+        //                else if (i == 10) {
+        //                    cell.innerHTML = result[j].Remarks;
+        //                    cell.setAttribute("id", "Remarks_" + j);
+        //                }
+        //            }
+
+        //        }
+
+        //        CalculateTotalBeforeTax();
+        //        var grandTotal = $('#GrandTotal').val()
+        //        grandTotal = parseFloat(grandTotal);
+        //        if (grandTotal == 0) {
+        //            alert('Wastage of all listed items are zero, Cannot create its debit note!');
+        //            $('#btnSave').prop('disabled', true);
+        //        }
+        //        else {
+        //            $('#btnSave').prop('disabled', false);
+        //        }
+        //    },
+        //    error: function (err) {
+        //        alert('Not able to fetch indent item details!');
+
+        //    }
+
+        //});
 
 
     }

@@ -69,7 +69,7 @@
                     </div>
                     <div class="col-md-4">
                         @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                        @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
+                        @Html.ValidationMessageFor(model => model.PONumber, "", new { id = "ValMsgPONumber", @class = "error mt-2 text-danger" })
                     </div>
                     @Html.HiddenFor(model => model.PO_Id)
                 </div>
@@ -177,7 +177,7 @@
     //Rahul 19 Apr 23.
     $(document).ready(function () {
         $("#divInwardQC").show();
-        $("#divProductionQC").hide();
+        $("#divProductionQC").hide();   
         //For deleting the rows of Item table if exist.       
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
@@ -207,6 +207,7 @@
             $("#SupplierName").val("");
             $('#ValMsgInwardQCNumber').hide();  ///Rahul added 19-04-23. 
             $('#ValMgssuppliername').hide();
+            $('#ValMsgPONumber').hide();
         }
         else {
             $("#divInwardQC").hide();
@@ -249,6 +250,7 @@
 
         $('#ValMsgInwardQCNumber').hide();  ///Rahul added 19-04-23. 
         $('#ValMgssuppliername').hide();
+        $('#ValMsgPONumber').hide();
         var InwardNumber = $("#InwardQCId option:selected").text();
         
         var InwNumQcNumSplit = InwardNumber.split(' (');
@@ -431,13 +433,50 @@
     }
 
     function SetInwardQty() {
+        ///Rahul added 21-04-23.
+        debugger
+        var QCType = $('#QCType option:selected').attr('value');
+        if (QCType == 'InwardQC') {
+            $("#divInwardQC").show();
+            $("#divProductionQC").hide();
+        
+            if ($('#InwardQCId').val() == '' || $('#InwardQCId').val() == null) {
+                $('#ValMsgInwardQCNumber').show();
+                $('#ValMsgInwardQCNumber').text('Please select Inward QC number!');
+                document.getElementById('ValMsgInwardQCNumber').setAttribute('style', 'color:text;');
+                $('#ValMgssuppliername').show();
+                $('#ValMgssuppliername').text('Supplier Name requred!');
+                document.getElementById('ValMgssuppliername').setAttribute('style', 'color:text;');
+                $('#ValMsgPONumber').show();
+                $('#ValMsgPONumber').text('PO Number required!');
+                document.getElementById('ValMsgPONumber').setAttribute('style', 'color:text;');
+
+                event.preventDefault();
+                return;
+            }
+        }
+        else {
+            $("#divInwardQC").hide();
+            $("#divProductionQC").show();
+            
+            if ($('#PreProductionQCId').val() == '' || $('#PreProductionQCId').val() == null) {
+                $('#ValMsgProductionQCNumber').show(); //19 Apr 2023.
+                $('#ValMsgProductionQCNumber').text('Please select Production QC number!');
+                document.getElementById('ValMsgInwardQCNumber').setAttribute('style', 'color:text;');
+                $('#ValMsgProductionIndentNumber').show(); //19 Apr 2023.
+                $('#ValMsgProductionIndentNumber').text('Production Indent number required!');
+                document.getElementById('ValMgssuppliername').setAttribute('style', 'color:text;');
+                event.preventDefault();
+                return;
+            }
+        }
+
         createJson();        
         $('#InwardQuantities').val(InwardQuantities);
         //alert($('#InwardQuantities').val());        
     }
     ///Rahul 'SelectedIndexChangedProduction' 18 Apr 2023 start.
     function SelectedIndexChangedProduction(id) {
-        debugger
         $('#ValMsgProductionQCNumber').hide(); //19 Apr 2023. 
         $('#ValMsgProductionIndentNumber').hide(); //19 Apr 2023.
         var PreProductionQCNumber = $("#PreProductionQCId option:selected").text();

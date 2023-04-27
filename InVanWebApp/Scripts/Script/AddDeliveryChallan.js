@@ -156,7 +156,7 @@ function SelectedIndexChangedSO(id) {
                             t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                         }
 
-                        t5.setAttribute("type", "number");
+                       /* t5.setAttribute("type", "number");*/
                         t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
                         t5.setAttribute("maxlength", "8");
                         t5.setAttribute("class", "form-control form-control-sm");

@@ -12,8 +12,8 @@ using InVanWebApp.Repository.Interface;
 using InVanWebApp.Common;
 using System.IO;
 using System.Web.UI.WebControls;
-using System.Data;
 using System.Web.UI;
+using System.Data;
 
 namespace InVanWebApp.Controllers
 {
@@ -212,14 +212,17 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
         public JsonResult SanitizationAndHygineList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
         {
+
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
+
 
             var SanitizationLog = _sanitizationAndHygineRepository.SanitizationAndHygineList(flagdate, fromDate, toDate);
             TempData["SanitizationAndHygineExcel"] = SanitizationLog;
             TempData["SanitizationAndHygineExcel"] = SanitizationLog;
             return Json(new { data = SanitizationLog }, JsonRequestBehavior.AllowGet);
         }
+
         #endregion
 
         #region Excel Sanitization And Hygine
@@ -352,6 +355,5 @@ namespace InVanWebApp.Controllers
             return View("Index");
         }
         #endregion
-
     }
 }

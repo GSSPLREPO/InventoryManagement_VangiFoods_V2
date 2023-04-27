@@ -660,7 +660,7 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <param name="RequestForQuotationId"></param> 
         /// <returns></returns>
-        public ActionResult ViewRequestForQuotation(int RequestForQuotationId) 
+        public ActionResult ViewRequestForQuotation(int RequestForQuotationId)
         {
             if (Session[ApplicationSession.USERID] == null)
                 return RedirectToAction("Index", "Login");
@@ -674,7 +674,6 @@ namespace InVanWebApp.Controllers
 
         }
         #endregion
-
 
     }
 }

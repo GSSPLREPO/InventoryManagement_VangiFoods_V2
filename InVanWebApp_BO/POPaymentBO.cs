@@ -67,7 +67,6 @@ namespace InVanWebApp_BO
 
         //Added the below field for view of PO payment
         public string CurrencyName { get; set; }
-        public string POPaymentDueDate { get; set; } 
     }
     public class PurchaseOrderItemsDetailBO
     {

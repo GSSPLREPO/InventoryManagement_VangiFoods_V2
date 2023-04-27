@@ -86,7 +86,7 @@ function SelectedIndexChanged(id) {
             $('#ShippingDetails').val(result[0].DeliveryAddress);
             $('#SupplierDetails').val(result[0].SupplierAddress);
             var ColCount = result.length
-            var flag = 0; //This flag is for checking whether the selected Inward Note is completed or not.
+            var flag = 0;
             //===================Create dynamic table for binding Item details====================//
             var table = document.getElementById('ItemTable');
             for (var j = 1; j < result.length; j++) {
@@ -147,21 +147,25 @@ function SelectedIndexChanged(id) {
                         t6.id = "txtInwardQty" + j;
                         t6.removeAttribute("disabled", "false");
                         t6.removeAttribute("disabled", "true");
+                        //Rahul added 'maxlength' and 'isNumberKey' 27-04-23. 
+                        t6.setAttribute("maxlength", "8");
+                        t6.setAttribute("onkeypress", "return isNumberKey(event)");
 
                         var cellData = document.getElementById("ItemQty" + j);
                         var temp_itemQty = cellData.innerHTML.split(' ');
                         cellData = document.getElementById("DeliveredQty" + j);
                         var deliveredQty = cellData.innerHTML;
                         if (parseFloat(temp_itemQty[0]) == parseFloat(deliveredQty)) {
-                            t6.setAttribute("disabled", "true");                           
+                            t6.setAttribute("disabled", "true");
+
                         }
-                        else {                            
+                        else {
                             t6.removeAttribute("disabled", "false");
                             t6.removeAttribute("disabled", "true");
                             t6.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
                             flag = 1;
                         }
-                        t6.setAttribute("type", "number");
+                        //t6.setAttribute("type", "number");
                         t6.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
                         cell.appendChild(t6);
                     }
@@ -188,12 +192,12 @@ function SelectedIndexChanged(id) {
 
             }
             if (flag == 0) {
-                $('#btnSave').prop('disabled','true');
-                alert('Inward is done for the selected Inward number!');
+                $('#btnSave').prop('disabled', 'true');
+                alert('The Inward is done for the selected PO!');
             }
-            else {
-                 $('#btnSave').prop('disabled', false);
-            }
+            else
+                $('#btnSave').prop('disabled',false);
+
         }
     });
 }
@@ -246,14 +250,23 @@ function fileValidation() {
 }
 
 function SetInwardQty() {
+
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
 
     var tableLength = document.getElementById('ItemTable').rows.length;
     var flag = 0, i = 1;
 
     if (tableLength > 1) {
-        while (i < tableLength - 1) {
+        while (i < tableLength - 1) {            
             var PhyQty = document.getElementById("txtInwardQty" + i).value;
+            /*Rahul : Add Javascript validation ' if (PhyQty == '' || PhyQty == "")' on 27 Apr 2023 start.*/
+            if (PhyQty == '' || PhyQty == "") {                
+                alert("Deliverd quantity is zero or null! Cannot create inward note!");
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            /*Rahul : Add Javascript validation ' if (PhyQty == '' || PhyQty == "")' on 27 Apr 2023 end.*/
+
             PhyQty = parseFloat(PhyQty);
 
             if (PhyQty != 0) {
@@ -271,6 +284,7 @@ function SetInwardQty() {
         else
             $('#btnSave').prop('disabled', false);
     }
+
     createJson();
     $('#InwardQuantities').val(InwardQuantities);
     //$('#BalanceQuantities').val(BalanceQuantities);
@@ -280,7 +294,7 @@ function SetInwardQty() {
 
 function isAlphaNumericKey(evt) {
     var keycode = (evt.which) ? evt.which : evt.keyCode;
-    if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95) )) {
+    if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95))) {
         $('#ValChallanNo').text('Only \"/, _, -\" are allowed!');
         $('#ValChallanNo').css('display', 'contents');
 
@@ -292,4 +306,20 @@ function isAlphaNumericKey(evt) {
     }
 }
 
+/*Rahul : Add Javascript validation 'isNumberKey' on 27 Apr 2023 start.*/
+function isNumberKey(evt) {
+    var keycode = (evt.which) ? evt.which : evt.keyCode;
+    if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+        return false;
+    }
+    else {
+        var parts = evt.srcElement.value.split('.');
+        if (parts.length > 1 && keycode == 46)
+            return false;
+        else
+            return true;
+    }
+    return true;
+}
+/*Rahul : Add Javascript validation 'isNumberKey' on 27 Apr 2023 end.*/
 //</script>

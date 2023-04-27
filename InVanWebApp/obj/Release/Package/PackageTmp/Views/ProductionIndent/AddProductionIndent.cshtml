@@ -63,48 +63,28 @@
                                                 <span style="color:red">*</span>
                                             </div>
                                             <div class="col-md-4">
-                                                @*@Html.DropDownList("SalesOrderId", (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "--Select--",
-                                                                            new { @class = "form-control", onchange = "SelectedIndexChangedSO($(this).val(),id)" })
-                                                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
-                                                    @Html.HiddenFor(model => model.SONo)*@
                                                 @Html.DropDownListFor(model => model.SO_Id, (IEnumerable<SelectListItem>)ViewData["SO_dd"], "--Select--",
-                                                                                     new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                                                  new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                                                 @Html.ValidationMessageFor(model => model.SO_Id, "", new { @class = "error mt-2 text-danger" })
                                                 @Html.HiddenFor(model => model.SONo)
+
                                             </div>
                                             <div class="col-md-2">
                                                 @Html.Label("Work Order No")
                                             </div>
                                             <div class="col-md-4">
-                                                @*@Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
-                                                    new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })*@
                                                 @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                                                 @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
-                                                @*@Html.HiddenFor(model => model.WorkOrderNo)*@
                                             </div>
                                         </div>
 
                                         <div class="row">
-                                            @*<div class="col-md-2">
-                                                    @Html.Label("Product Name")
-                                                    <span style="color:red">*</span>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    @Html.DropDownListFor(model => model.RecipeID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val(),id)" })
-                                                    @Html.ValidationMessageFor(model => model.RecipeID, "", new { @class = "error mt-2 text-danger" })
-                                                    @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
-                                                </div>*@
-
                                             <div class="col-md-2">
                                                 @Html.Label("Product Name")
                                                 <span style="color:red">*</span>
                                             </div>
                                             <div class="col-md-4">
-                                                @*<select id="RecipeID" name="RecipeID" class="form-control form-control-sm" onchange="SelectedIndexChangedProductNameList($(this).val())">
-                                                        <option value="">--Select--</option>
-                                                    </select>*@
-                                                @*//data-val="true" added 06-04-23.*@
-                                                <select id="RecipeID" name="RecipeID" class="form-control form-control-sm" onchange="SelectedIndexChangedProductNameList($(this).val())" data-val="true" data-val-number="The field RecipeID must be a number." data-val-required="Select the Product Name!">
+                                                <select id="RecipeID" name="RecipeID" class="form-control form-control-sm" onchange="SelectedIndexChangedProductNameList($(this).val())"  data-val="true" data-val-number="The field RecipeID must be a number." data-val-required="Select the Product Name!">
                                                     <option value="">--Select--</option>
                                                 </select>
                                                 @Html.ValidationMessageFor(model => model.RecipeID, "", new { @class = "error mt-2 text-danger" })
@@ -200,8 +180,6 @@
 
             for (var j = 0; j < count - 1; j++) {
                 var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
-                //var value = document.getElementById("ItemQty_" + j).innerHTML;
-                //alert(value);
                 $("#txtFinalQty_" + j).val(FinalQty.toFixed(4));
             }
 
@@ -219,18 +197,22 @@
                         batchNumber = batchNumber + ",";
                 }
                 document.getElementById("BatchNumber").value = batchNumber;
+
+
             },
             error: function (err) {
                 alert('Not able to fetch Batch Number, do batch planning!');
                 $('#TotalBatches').val('');
                 $('#BatchNumber').val('');
-                $('#SO_Id').focus();    //added 06-04-23.
+                $('#SO_Id').focus();   
             }
         });
+
     });
+
     // SO Number New Start
     function SelectedIndexChanged(id) {
-        $('#btnSave').prop('disabled', false);    //added 06-04-23.
+        $('#btnSave').prop('disabled', false);
 
         var selectedSONumber_No, SONumber_No;
         selectedSONumber_No = document.getElementById("SO_Id").selectedIndex;
@@ -257,6 +239,7 @@
                 alert('Not able to get the work order number!');
             }
         });
+
         //Check whether the Total Batches is entered or not 06-04-23.
         var TotalBatchesCheck = $('#TotalBatches').val();
         if (TotalBatchesCheck == '' || TotalBatchesCheck == null) {
@@ -271,7 +254,7 @@
     // So Number New End
 
     function SelectedIndexChangedProductNameList(id) {
-        $('#btnSave').prop('disabled', false);    //added 06-04-23.
+        $('#btnSave').prop('disabled', false);
 
         var selectedOptionRecipeName, RecipeName;
 
@@ -287,7 +270,6 @@
         }
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
-
         while (rowCount != '1') {
             var row = table.deleteRow(rowCount - 1);
             rowCount--;
@@ -302,7 +284,7 @@
             dataType: "json",
             success: function (result) {
                 var ColCount = result.length;
-                //added 06-04-23.
+
                 if (ColCount > 1) {
                     $('#btnSave').prop('disabled', false);
                 }
@@ -311,7 +293,7 @@
                     $('#RecipeID').focus();
                     $('#btnSave').prop('disabled', true);
                 }
-                //console.log(result);
+
                 //===================Create dynamic table for binding Item details====================//
                 var table = document.getElementById('ItemTable');
                 for (var j = 0; j < result.length; j++) {
@@ -375,9 +357,11 @@
                             cell.innerHTML = result[j].UnitName;
                             cell.setAttribute("id", "ItemUnit_" + j);
                         }
+
+
                     }
                 }
-            },
+            }
         });
     }
 

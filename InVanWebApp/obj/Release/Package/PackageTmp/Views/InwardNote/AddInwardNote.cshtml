@@ -42,15 +42,14 @@
                 <div class="col-md-4">
                     @Html.DropDownList("PO_Id", (IEnumerable<SelectListItem>)ViewData["PONumberAndId"], "--Select--",
                    new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.PO_Id, "", new {
-                   id = "ValMsgPONumber", @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.PO_Id, "", new { @class = "error mt-2 text-danger", id = "ValMsgPONumber" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Bill/Challan No")
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.ChallanNo, new { @class = "form-control form-control-sm", onkeypress = "return isAlphaNumericKey(event)", maxlength="17"})
-                    @Html.ValidationMessageFor(model => model.ChallanNo, "", new { id = "ValChallanNo", @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.ChallanNo, "", new { @class = "error mt-2 text-danger", id="ValChallanNo" })
                 </div>
                 @*<div class="col-md-2">
                         @Html.Label("PO Date")
@@ -69,7 +68,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextAreaFor(model => model.ShippingDetails, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.ShippingDetails, "", new { id = "ValMsgShippingDetails", @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.ShippingDetails, "", new { @class = "error mt-2 text-danger", id = "ValMsgShippingDetails" })
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Supplier Details")
@@ -77,7 +76,7 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextAreaFor(model => model.SupplierDetails, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.SupplierDetails, "", new { id = "ValMsgSupplierDetails", @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.SupplierDetails, "", new { @class = "error mt-2 text-danger", id = "ValMsgSupplierDetails" })
                 </div>
             </div>
             <br />

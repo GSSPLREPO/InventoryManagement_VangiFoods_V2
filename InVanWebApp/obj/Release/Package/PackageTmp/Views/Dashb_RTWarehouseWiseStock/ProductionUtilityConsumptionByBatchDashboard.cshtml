@@ -192,7 +192,7 @@
         }
 
         if (fromDate > toDate) {
-            alert('Invalid date!, To date is less than From date!');
+            alert('Invalid Date! To date is less than from date!');
             $('#fromDate').focus();
             return;
         }
@@ -239,7 +239,7 @@
                 }
                 console.log(dataArrayFinal);
 
-                const chart = Highcharts.chart('itemName', {
+                const chart=Highcharts.chart('itemName', {
                     chart: {
                         plotBackgroundColor: null,
                         plotBorderWidth: null,
@@ -253,7 +253,7 @@
                     },
                     exporting: {
                         filename: "Raw Material Consumption By Batch"
-                    },  
+                    },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.y} KG {series.dataWO}</b>'
                     },

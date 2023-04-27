@@ -16,7 +16,6 @@ namespace InVanWebApp.Repository
     public class LocationRepository : ILocationRepository
     {
         //private readonly InVanDBContext _context;
-        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(LocationRepository));
 

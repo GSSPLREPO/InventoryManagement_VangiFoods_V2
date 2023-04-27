@@ -6,16 +6,15 @@ using InVanWebApp_BO;
 using System.Data.Entity;
 using System.Configuration;
 using System.Data.SqlClient;
+using InVanWebApp.Common;
 using System.Data;
 using log4net;
-using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class UnitRepository : IUnitRepository
     {
         //private readonly InVanDBContext _context;
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(UnitRepository));
 

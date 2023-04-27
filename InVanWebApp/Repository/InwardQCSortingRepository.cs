@@ -16,7 +16,6 @@ namespace InVanWebApp.Repository
     public class InwardQCSortingRepository : IInwardQCSortingRepository
     {
         //private readonly InVanDBContext _context;
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(InwardQCSortingRepository));
 

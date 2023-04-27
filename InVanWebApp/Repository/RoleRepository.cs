@@ -13,7 +13,6 @@ namespace InVanWebApp.Repository
 {
     public class RoleRepository : IRolesRepository
     {
-        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RoleRepository));
 
@@ -208,7 +207,7 @@ namespace InVanWebApp.Repository
                         {
                             ScreenId = Convert.ToInt32(dataReader["ScreenId"]),
                             ScreenName = dataReader["ScreenName"].ToString(),
-                            DisplayName = dataReader["DisplayName"].ToString()  
+                            DisplayName = dataReader["DisplayName"].ToString()
                         };
                         resultList.Add(result);
                     }
@@ -337,7 +336,7 @@ namespace InVanWebApp.Repository
                 using (SqlConnection con = new SqlConnection(conString))
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_GetScreensNotInRoleRightsById", con);
-                    cmd.Parameters.AddWithValue("@RoleId", roleId);
+                    cmd.Parameters.AddWithValue("@RoleId",roleId);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -348,7 +347,7 @@ namespace InVanWebApp.Repository
                         {
                             ScreenId = Convert.ToInt32(dataReader["ScreenId"]),
                             ScreenName = dataReader["ScreenName"].ToString(),
-                            DisplayName = dataReader["DisplayName"].ToString()
+                            DisplayName=dataReader["DisplayName"].ToString()
                         };
                         resultList.Add(result);
                     }

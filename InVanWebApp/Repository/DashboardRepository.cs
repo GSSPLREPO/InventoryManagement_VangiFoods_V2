@@ -15,7 +15,6 @@ namespace InVanWebApp.Repository
 {
     public class DashboardRepository : IDashboardRepository
     {
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(ItemTypeRepository));
 
@@ -241,7 +240,7 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region Function for Order Summary
+        #region Function for Order Summery
         public List<OrderSummaryBO> GetOrderSummaryDashboardData(DateTime fromDate, DateTime toDate, int DurationID = 0)
         {
             List<OrderSummaryBO> resultList = new List<OrderSummaryBO>();
@@ -249,7 +248,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("Usp_Dashboard_OderSummary", con);
+                    SqlCommand cmd = new SqlCommand("Usp_Dashboard_OderSummery", con);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@flag", DurationID);
@@ -352,7 +351,7 @@ namespace InVanWebApp.Repository
                             //WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
                             //ProductionMaterailIssueNoteNumber = (reader["POMaterialIssueNoteNumber"].ToString()),
                             ItemName = (reader["RawMaterial"].ToString()),
-                            //BatchNumber = (reader["BatchNumber"].ToString()),
+                           // BatchNumber = (reader["BatchNumber"].ToString()),
                             RawMaterialCost = Convert.ToDecimal(reader["RawMaterialConsumption"])
                         };
                         resultList.Add(result);

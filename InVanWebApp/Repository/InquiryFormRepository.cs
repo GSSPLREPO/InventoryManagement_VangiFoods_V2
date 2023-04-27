@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
@@ -11,12 +10,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class InquiryFormRepository : IInquiryFormRepository
     {
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RequestForQuotationRepository));
 
@@ -342,7 +341,6 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-
         #region Delete function 
         /// <summary>
         /// Delete record by ID 
@@ -370,7 +368,5 @@ namespace InVanWebApp.Repository
             }
         }
         #endregion
-
-
     }
 }

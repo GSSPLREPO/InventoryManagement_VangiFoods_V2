@@ -79,7 +79,7 @@
                     @Html.ValidationMessageFor(model => model.PackageSize, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Quantity (kg)")
+                    @Html.Label("Quantity (Packets)")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -91,7 +91,6 @@
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("No of Carton Box")
-                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.NoOfCartonBox, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNumeric(event);" })
@@ -102,7 +101,8 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    <select id="BatchNo" name="BatchNo" class="form-control form-control-sm"> @*onchange="SelectedBatchNo()*@
+                    <select id="BatchNo" name="BatchNo" class="form-control form-control-sm">
+                        onchange="SelectedBatchNo()
                         <option>--Select--</option>
                     </select>
                     <span id="valMsgBatchNo" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Batch Number!</span>
@@ -185,20 +185,20 @@
 
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Expected Yield (kg)")
+                    @Html.Label("Expected Yield (%)")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ExpectedYield, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return isNumberKeyDecimal(event);" })
+                    @Html.TextBoxFor(model => model.ExpectedYield, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return isNumberKeyDecimal(event);", onkeyup = "this.value = minmax(this.value, 0, 100)" })
                     @Html.ValidationMessageFor(model => model.ExpectedYield, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
                 <div class="col-md-2">
-                    @Html.Label("Actual Yield (kg)")
+                    @Html.Label("Actual Yield (%)")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ActualYield, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return isNumberKeyDecimal(event);" })
+                    @Html.TextBoxFor(model => model.ActualYield, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return isNumberKeyDecimal(event);", onkeyup = "this.value = minmax(this.value, 0, 100)" })
                     @Html.ValidationMessageFor(model => model.ActualYield, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -232,6 +232,10 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+@Html.Raw(TempData["Success"])
+
+
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
@@ -245,52 +249,67 @@
             var LocationName = $("#LocationId option:selected").text();
             $('#LocationName').val(LocationName);
             if ($('#ProductId').val() == 0 || $('#ProductId').val() == '') {
-                $('#ProductId').focus();
-                $('#valMsgProd').show();
+                if ($('#BatchNo').val() == '--Select--' || $('#BatchNo').val() == 0 || $('#BatchNo').val() == '') {
+                    //$('#ProductId').focus();
+                    $('#valMsgProd').show();
+                    //$('#BatchNo').focus();
+                    $('#valMsgBatchNo').show();
+                }
+                else {
+                    $('#valMsgBatchNo').hide();
+                }
                 event.preventDefault();
                 return;
             }
             else {
-                $('#valMsgProd').hide();
+                if ($('#BatchNo').val() == '--Select--' || $('#BatchNo').val() == 0 || $('#BatchNo').val() == '') {
+                    $('#BatchNo').focus();
+                    $('#valMsgBatchNo').show();
+                    $('#valMsgProd').hide();
+                    event.preventDefault();
+                    return;
+                }
+                else {
+                    $('#valMsgBatchNo').hide();
+                }
+
             }
 
-            //if ($('#BatchNo').val() == 0 || $('#BatchNo').val() == '') {
-            //    $('#BatchNo').focus();
-            //    $('#valMsgBatchNo').show();
-            //    event.preventDefault();
-            //    return;
-            //}
-            //else {
-            //    $('#valMsgBatchNo').hide();
-            //}
+
         }
         else {
             if ($('#ProductId').val() == 0 || $('#ProductId').val() == '') {
-                $('#ProductId').focus();
-                $('#valMsgProd').show();
+                if ($('#BatchNo').val() == '--Select--' || $('#BatchNo').val() == 0 || $('#BatchNo').val() == '') {
+                    //$('#ProductId').focus();
+                    $('#valMsgProd').show();
+                    //$('#BatchNo').focus();
+                    $('#valMsgBatchNo').show();
+                }
+                else {
+                    $('#valMsgBatchNo').hide();
+                }
                 event.preventDefault();
                 return;
             }
             else {
-                $('#valMsgProd').hide();
+                if ($('#BatchNo').val() == '--Select--' || $('#BatchNo').val() == 0 || $('#BatchNo').val() == '') {
+                    $('#BatchNo').focus();
+                    $('#valMsgBatchNo').show();
+                    $('#valMsgProd').hide();
+                    event.preventDefault();
+                    return;
+                }
+                else {
+                    $('#valMsgBatchNo').hide();
+                }
             }
-
-            //if ($('#BatchNo').val() == 0 || $('#BatchNo').val() == '') {
-            //    $('#BatchNo').focus();
-            //    $('#valMsgBatchNo').show();
-            //    event.preventDefault();
-            //    return;
-            //}
-            //else {
-            //    $('#valMsgBatchNo').hide();
-            //}
         }
 
     });
 
-    //function SelectedBatchNo() {
-    //    $('#valMsgBatchNo').hide();
-    //}
+    function SelectedBatchNo() {
+        $('#valMsgBatchNo').hide();
+    }
 
     function SelectedIndexChangedProductName(id) {
         var ProductNumber = $("#ProductId option:selected").text();
@@ -308,9 +327,15 @@
                 var i = 0;
                 $("#BatchNo option").remove();
                 $("#BatchNo").append($("<option></option>").val('').html('--Select--'));
-                while (i < count) {
-                    $("#BatchNo").append($("<option></option>").val(result[i].BatchNumber).html(result[i].BatchNumber));
-                    i++;
+                if (count != 0) {
+                    while (i < count) {
+                        $("#BatchNo").append($("<option></option>").val(result[i].BatchNumber).html(result[i].BatchNumber));
+                        i++;
+                    }
+                }
+                else {
+                    alert('First create Batch planning of the selected product of the selected SO!');
+                    window.location.href = '/BatchPlanning';
                 }
             },
             error: function (err) {
@@ -382,6 +407,7 @@
 
     function SelectedIndexChangedSoNumber(id) {
         $('#valMsgProd').hide();
+        $('#valMsgBatchNo').hide();
 
         $.ajax({
             url: '/BatchPlanning/GetWorkOrderNumber',
@@ -400,6 +426,9 @@
                 $('#SONo').val(SalesNo);
 
                 $('#WorkOrderNo').val(result.WorkOrderNo);
+                $('#LocationId').val(result.LocationId);
+                $('#LocationName').val(result.LocationName);
+
                 var count = result.salesOrderItemsDetails.length;
                 var i = 0;
                 $("#ProductId option").remove();
@@ -432,5 +461,17 @@
         //});
     }
 
+    function minmax(value, min, max) {
 
+        //value = Math.round((value + Number.EPSILON) * 100) / 100;
+        min = parseFloat(min);
+        max = parseFloat(max);
+        if (parseFloat(value) < min || isNaN(parseFloat(value)))
+            return min;
+        else if (parseFloat(value) > max)
+            return min;
+        else {
+            return value;
+        }
+    }
 </script>

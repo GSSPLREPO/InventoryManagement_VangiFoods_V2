@@ -1,12 +1,14 @@
 ﻿@model InVanWebApp_BO.PurchaseOrderBO
-@{ ViewBag.Title = "PurchaseInvoiceReport";
-    Layout = "~/Views/Shared/MainMaster.cshtml"; }
+@{
+    ViewBag.Title = "PurchaseInvoiceReport";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    @*Rahul updated title tag text 'Received' to 'Dispatch' 16-02-23.*@
+    @*Rahul updated title tag text 'Received' to 'Dispatch' 16-02-23.*@ 
     <title>FG Dispatch Report</title>
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
 </head>
@@ -20,8 +22,8 @@
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Reports</a>
                     </li>
-                    @*Rahul updated anchor tag text 'Received' to 'Dispatch' 16-02-23.*@
-                    <li class="breadcrumb-item active">Purchase Invoice Report</li>
+                    @*Rahul updated anchor tag text 'Received' to 'Dispatch' 16-02-23.*@ 
+                <li class="breadcrumb-item active">Purchase Invoice Report</li>
                 </ol>
             </nav>
         </div>
@@ -70,47 +72,43 @@
                                         @Html.DropDownList("PoNumber", (IEnumerable<SelectListItem>)ViewData["PONumberdd"], "--Select--", new { @class = "form-control", @id = "POId", onchange = "SelectedIndexChangedItem()" })
                                         @Html.ValidationMessage("PoNumber", "", new { id = "POValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
-
-                                    <div class="col-md-2">
-                                        <label>Payment Status:</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        @Html.DropDownList("Status", new List<SelectListItem> {
+                              
+                                        <div class="col-md-2">
+                                            <label>Payment Status:</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            @Html.DropDownList("Status", new List<SelectListItem> {
                                                 new SelectListItem { Text = "--All--", Value = "--All--" },
                                                 new SelectListItem { Text = "Paid", Value = "Paid" },
                                                 new SelectListItem { Text = "Un-Paid", Value = "Un-Paid" },
                                                 new SelectListItem { Text = "Hold", Value = "Hold" }}, new { @class = "form-control", @id = "Status" })
 
-                                    </div>
+                                        </div>
 
                                     <br />
-                                    @*<div style="margin-top:25px;">*@
-                                    <!--Rahul added class  display nowrap, style="width:100%" 05-01-2023.-->
-                                    @*<table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblPurchaseOrderInvoice" style="width:100%">
-                                    <thead>*@
-                                    <table id="tblPurchaseOrderInvoice" class="ui celled table table-striped table-bordered hover table-sm" style="width: 1742px !important">
-                                        <thead class="text-center" style="text-align:center">
-
-                                            <tr>
-                                                <th style="text-align:center">Sr.No.</th>
-                                                <th style="text-align:center">PO Number</th>
-                                                <th style="text-align:center">PO Date</th>
-                                                <th style="text-align:center">Delivery Date</th>
-                                                <th style="text-align:center">Company Name</th>
-                                                <th style="text-align:center">Invoice Amount</th>
-                                                <th style="text-align:center">Advance Amount</th>
-                                                <th style="text-align:center">Amount Paid</th>
-                                                <th style="text-align:center">Balance Payment</th>
-                                                <th style="text-align:center">Payment Date</th>
-                                                <th style="text-align:center">Payment Status</th>
-                                                @*<th style="text-align:center">UOM</th>*@
-                                            </tr>
-                                        </thead>
-                                        <tbody class="text-center"></tbody>
-                                    </table>
-                                    @*</div>*@
+                                    <div style="margin-top:25px;">
+                                        <!--Rahul added class  display nowrap, style="width:100%" 05-01-2023.-->
+                                        <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblPurchaseOrderInvoice" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:center">Sr.No.</th>
+                                                    <th style="text-align:center">PO Number</th>
+                                                    <th style="text-align:center">PO Date</th>
+                                                    <th style="text-align:center">Delivery Date</th>
+                                                    <th style="text-align:center">Company Name</th>
+                                                    <th style="text-align:center">Invoice Amount</th>
+                                                    <th style="text-align:center">Advance Amount</th>
+                                                    <th style="text-align:center">Amount Paid</th>
+                                                    <th style="text-align:center">Balance Payment</th>
+                                                    <th style="text-align:center">Payment Date</th>
+                                                    <th style="text-align:center">Payment Status</th>
+                                                    @*<th style="text-align:center">UOM</th>*@
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center"></tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -121,13 +119,12 @@
 
 </html>
 
-@*@Html.Raw(TempData["Success"])*@
+@Html.Raw(TempData["Success"])
 
 @section scripts{
 
     @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
         <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
-    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
@@ -175,7 +172,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid date!, To date is less than From date!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }
@@ -193,10 +190,10 @@
             var flag = 0;
             $('#tblPurchaseOrderInvoice').dataTable().fnDestroy();
             var t = $('#tblPurchaseOrderInvoice').DataTable({
-                "processing": true, // for show progress bar
+                //"processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
-                "sAjaxSource": "/Report/GetPurchaseInvoiceReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem + "&Status=" + Status,//+ "&LocationId=" + warehouse,
+                "sAjaxSource": "/Report/GetPurchaseInvoiceReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem + "&Status=" + Status ,//+ "&LocationId=" + warehouse,
                 "initComplete": function (settings, json) {
                     var result = JSON.stringify(json);
                     flag = parseFloat(result.length);

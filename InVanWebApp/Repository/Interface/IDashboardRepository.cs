@@ -20,7 +20,7 @@ namespace InVanWebApp.Repository.Interface
         List<ReportBO> GetProductionUtilityConsumptionByBatchDashboardData(DateTime fromDate, DateTime toDate, string BatchNumber = "0", string WorkOrderNumber = "0");
         List<ReportBO> GetDashboardUtilityConsumptionProduction(int SO_ID, DateTime? fromDate = null, DateTime? toDate = null);
         IEnumerable<ReportBO> GetAllWorkOrderNumber();
-        List<LocationWiseStockBO> GetTotalInventoryValue(); 
+        List<LocationWiseStockBO> GetTotalInventoryValue();
 
     }
 }

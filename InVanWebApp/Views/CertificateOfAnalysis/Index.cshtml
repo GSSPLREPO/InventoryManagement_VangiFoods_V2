@@ -1,13 +1,20 @@
 ﻿@model IEnumerable<InVanWebApp_BO.CertificateOfAnalysisBO>
 
-@{ ViewBag.Title = "Micro Analysis";
-                Layout = "~/Views/Shared/MainMaster.cshtml"; }
+@{
+    ViewBag.Title = "Micro Analysis";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
 
 <!DOCTYPE html>
 
 <html>
 <head>
     <title>Micro Analysis</title>
+    <style>
+        td {
+            white-space: break-spaces !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -174,8 +181,8 @@
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit COA"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title = "Delete COA"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title="Edit COA"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title="Delete COA"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -200,7 +207,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid date!, To date is less than From date!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }
@@ -286,9 +293,3 @@
                 })
     </script>
 }
-
-<style>
-    td {
-        white-space: break-spaces !important;
-    }
-</style>

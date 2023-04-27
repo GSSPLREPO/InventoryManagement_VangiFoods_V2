@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
@@ -12,12 +11,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class RequestForQuotationRepository : IRequestForQuotationRepository
     {
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RequestForQuotationRepository));
 
@@ -48,7 +47,8 @@ namespace InVanWebApp.Repository
                             BiddingStartDate = Convert.ToDateTime(reader["BiddingStartDate"]),
                             BiddingEndDate = Convert.ToDateTime(reader["BiddingEndDate"]),
                             CreatedByDate = Convert.ToDateTime(reader["CreatedByDate"]),
-                            RFQCount = Convert.ToInt32(reader["RFQCount"])  //Rahul added 'RFQCount' 10-04-23. 
+                            RFQCount = Convert.ToInt32(reader["RFQCount"])
+
                         };
                         requestForQuotationMastersList.Add(requestForQuotationMasters);
                     }

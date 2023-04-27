@@ -377,5 +377,31 @@ namespace InVanWebApp.Controllers
         }
 
         #endregion
+
+        #region View Indent
+        /// <summary>
+        /// Created By: Yatri
+        /// Created Date : 24-04-2023
+        /// Description: This method responsible for View of Indent details.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+
+        [HttpGet]
+        public ActionResult ViewIndent(int ID)
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                //BindUsers();
+                //BindLocation();
+                IndentBO model = _repository.GetItemDetailsByIndentById(ID);
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+
+        }
+        #endregion
+
     }
 }

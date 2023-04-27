@@ -9,21 +9,19 @@ using InVanWebApp_BO;
 using System.Data.SqlClient;
 using System.Data;
 using System.Web.Script.Serialization;
-using Dapper;
 using InVanWebApp.Common;
+using Dapper;
 
 namespace InVanWebApp.Repository
 {
     public class SalesOrderRepository : ISalesOrderRepository
     {
-        //private readonly InVanDBContext _context;
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(SalesOrderRepository));
 
         #region  Bind grid
         /// <summary>
-        /// Rahul : This function is for fecthing list of order master's.
+        /// Farheen : This function is for fecthing list of order master's.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<SalesOrderBO> GetAll()
@@ -51,7 +49,8 @@ namespace InVanWebApp.Repository
                             LastModifiedById = Convert.ToInt32(reader["LastModifiedBy"]),
                             LastModifiedDate = Convert.ToDateTime(reader["LastModifiedDate"]),
                             DraftFlag = Convert.ToBoolean(reader["DraftFlag"]),
-                            OutwardCount = Convert.ToInt32(reader["OutwardCount"])
+                            OutwardCount = Convert.ToInt32(reader["OutwardCount"]),
+                            WorkOrderNo=reader["WorkOrderNo"].ToString()
                         };
                         resultList.Add(result);
                     }
@@ -70,7 +69,7 @@ namespace InVanWebApp.Repository
 
         #region Insert function
         /// <summary>
-        /// Rahul: Insert record.
+        /// Farheen: Insert record.
         /// </summary>
         /// <param name="model"></param>                
         public ResponseMessageBO Insert(SalesOrderBO model)
@@ -232,7 +231,7 @@ namespace InVanWebApp.Repository
 
         #region Update functions
         /// <summary>
-        /// Rahul: This function is for fetch data for editing by ID
+        /// Farheen: This function is for fetch data for editing by ID
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>

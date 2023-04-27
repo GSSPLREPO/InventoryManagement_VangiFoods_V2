@@ -189,7 +189,6 @@
                                                             @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                                                         </td>
                                                         <td>
-                                                            @*//Rahul added 'onkeypress' and 'maxlength' 10-04-23.*@
                                                             @Html.TextBox("HSN_Code_" + c, item.HSN_Code, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", onkeypress = "return isNumberKey(event)", maxlength = "10" })
                                                         </td>
                                                     </tr>
@@ -217,7 +216,6 @@
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
-                    @*//Rahul added 'maxlength' 10-04-23.*@
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "100" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -434,7 +432,6 @@
     var TxtItemDetails = "";
 
     function UpdateBtnClick() {
-        createJson();  //Rahul added 10-04-23.
         var tableLength = document.getElementById('submissionTable').rows.length;
         var flag = 0, i = 1, rowNo = 0;
         if (tableLength > 1) {
@@ -460,16 +457,9 @@
                 todaysDate(rowCount);   //Rahul added 17-02-23.
         }
         ValidMsgBiddingEndDate();
-        //createJson(); //Rahul removed 10-04-23.
+        createJson();
     };
     //==========end===============
-
-    function SelectedIndexChanged(id) {
-        var selectedOption;
-        selectedOption = document.getElementById("CompanyName").selectedIndex;
-        document.getElementById("VendorIDs").value = id;
-        //console.log(id);
-    }
 
     function SelectedIndexChangedLocation(id) {
         var selectedOptionLocationName, locationName;
@@ -576,7 +566,6 @@
         }
         TxtItemDetails = TxtItemDetails + "]";
         $('#TxtItemDetails').val(TxtItemDetails);
-        console.log("TxtItemDetails : " + TxtItemDetails);
     }
     //==================createJson Set value in txtItemDetails onCick of Save/Update button end======--------
 </script>

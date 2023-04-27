@@ -81,7 +81,8 @@ namespace InVanWebApp_BO
         public Nullable<decimal> ItemUnitPrice { get; set; }
 
         //This field is used in Dashboard of Production QC.
-        public string BatchNumber { get; set; }
+        public string BatchNumber { get; set; }        
+        public Nullable<int> flag { get; set; }//Rahul added 27-04-23.  
     }
 
     public class ProductionMaterialIssueNoteDetailsBO

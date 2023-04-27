@@ -23,7 +23,8 @@ namespace InVanWebApp.Repository.Interface
 
         //Function define for: Update SanitizationAndHygine record.
         ResponseMessageBO Update(SanitizationAndHygineBO model);
-        //Bind grid for Report, This function is for fecthing list of Sanitization and haygine. 
+
         List<SanitizationAndHygineBO> SanitizationAndHygineList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null);
+
     }
 }

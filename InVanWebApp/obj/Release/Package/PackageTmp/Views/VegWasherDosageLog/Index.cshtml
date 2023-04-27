@@ -60,10 +60,10 @@
                                 <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
                                     @*<a id="ExportPdf" style="float:right;" href="@Url.Action("MicroAnalysisPDF", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
-                                    <a id="ExportExcel" style="float: right; width: 45px; height: 45px; padding-top: 1px" href="@Url.Action("VegWasherDoserExcel", "VegWasherDosageLog")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" /> </a>
+                                    <a id="ExportExcel" style="margin-left:5%;" href="@Url.Action("VegWasherDoserExcel", "VegWasherDosageLog")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png"   style="width: 45px; height: 45px; padding-top: 1px"/> </a>
                                 </div>
                                 <div class="col-md-2">
-                                    <a href="@Url.Action("AddVegWasherDosageLog","VegWasherDosageLog")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                    <a href="@Url.Action("AddVegWasherDosageLog","VegWasherDosageLog")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top:12%; background: linear-gradient(85deg, #392c70, #6a005b);">
                                         <span class="fa fa-plus"></span> Veg-Washer Dosage Log
                                     </a>
                                 </div>
@@ -192,8 +192,8 @@
 
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Veg-Washer Dosage Log"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title = "Delete Veg-Washer Dosage Log"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit"  style="background:transparent !important;" title = "Edit Veg-Washer Dosage Log"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "text-danger btnDelete"  style="background:transparent !important;" title = "Delete Veg-Washer Dosage Log"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -280,8 +280,8 @@
 
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Veg-Washer Dosage Log"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title = "Delete Veg-Washer Dosage Log"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit"  style="background:transparent !important;" title = "Edit Veg-Washer Dosage Log"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "text-danger btnDelete"  style="background:transparent !important;" title = "Delete Veg-Washer Dosage Log"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -314,3 +314,8 @@
     </script>
 
 }
+<style>
+    th {
+        white-space: break-spaces !important;
+    }
+</style>

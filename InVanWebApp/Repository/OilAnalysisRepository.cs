@@ -14,7 +14,6 @@ namespace InVanWebApp.Repository
 {
     public class OilAnalysisRepository : IOilAnalysisRepository
     {
-        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(OilAnalysisRepository));
 
