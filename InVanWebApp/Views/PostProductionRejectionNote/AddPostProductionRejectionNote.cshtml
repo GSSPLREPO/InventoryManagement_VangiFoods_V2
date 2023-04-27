@@ -21,7 +21,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.PostProdRejectionNoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                                @Html.TextBoxFor(model => model.PostProdRejectionNoteDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.PostProdRejectionNoteDate, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
@@ -29,7 +29,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.PostProdRejectionNoteNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                                @Html.TextBoxFor(model => model.PostProdRejectionNoteNo, new { @class = "form-control form-control-sm", type = "text", Value = ViewData["DocumentNo"], @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.PostProdRejectionNoteNo, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -52,20 +52,21 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.SO_Id, (IEnumerable<SelectListItem>)ViewData["WorkOrderDD"], "---Select---", new { @class = "form-control form-control-sm" })
+                                @Html.DropDownListFor(model => model.FGS_ID, (IEnumerable<SelectListItem>)ViewData["WorkOrderDD"], "---Select---", new { @class = "form-control form-control-sm", onchange = "WorkOrderChange($(this).val())" })
                                 @Html.HiddenFor(model => model.WorkOrderNo)
                                 @Html.HiddenFor(model => model.SO_No)
-                                @Html.ValidationMessageFor(model => model.SO_Id, "", new { @class = "error mt-2 text-danger" })
+                                @Html.HiddenFor(model => model.SO_Id)
+                                @Html.ValidationMessageFor(model => model.FGS_ID, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
                         <br />
                         <div class="row">
-                            <div class="col-md">
+                            <div class="col-md-2">
                                 @Html.Label("Batch Number")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.BatchNumber, (IEnumerable<SelectListItem>)ViewData["BatchNoDD"], "---Select---", new { @class = "form-control form-control-sm" })
+                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -89,24 +90,24 @@
                                     @Html.Label("Batch Rejection")
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.WholeBatchRejection, new { @class = "form-control form-control-sm", type = "checkbox", value = "falses" })
+                                    @Html.TextBoxFor(model => model.WholeBatchRejection, new { @class = "form-check-input form-control", type = "checkbox", value = "falses" })
                                 </div>
                             </div>
                         </div>
                         <br />
-                        <div class="row">
+                        <div class="row" id="divLabel">
                             <div class="col-md-2">
                                 @Html.Label("Item QC Details")
                             </div>
                         </div>
                         <hr />
-                        <div class="row">
+                        <div class="row" id="divTbl">
                             <div class="col-md-12 table-responsive">
                                 <table class="table table-striped" id="ItemTable">
                                     <thead>
                                         <tr>
-                                            <th>Item Code</th>
                                             <th class="d-n d-none">Item Id</th>
+                                            <th>Item Code</th>
                                             <th>Item</th>
                                             <th>Ordered Quantity</th>
                                             <th>Total Quantity</th>
@@ -145,20 +146,121 @@
 
 
 <script type="text/javascript">
-    //Rahul 19 Apr 23.
-    //$(document).ready(function () {
-    //    $("#divInwardQC").show();
-    //    $("#divProductionQC").hide();
-    //    //For deleting the rows of Item table if exist.
-    //    var table = document.getElementById('ItemTable');
-    //    var rowCount = table.rows.length;
-    //    while (rowCount != '1') {
-    //        var row = table.deleteRow(rowCount - 1);
-    //        rowCount--;
-    //    }
-    //});
 
-    //Rahul 18 Apr 23.
+    function WorkOrderChange(id) {
+        $('#btnSave').prop('disabled', false);
+        $('#RejectionType').prop('disabled', true);
+
+        var RejType = $('#RejectionType').val()
+        var Stage = 0;
+        if (RejType == 'FGS') {
+            var Stage = $('#Stage').val();
+        }
+
+        var WO = $('#FGS_ID option:selected').text();
+        $('#WorkOrderNo').val(WO);
+
+
+        $.ajax({
+            type: "POST",
+            url: '/PostProductionRejectionNote/GetItemDetails?FGS_Id=' + id + "&Stage=" + Stage + "&Type=" + RejType,
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result != null) {
+                    $('#BatchNumber').val(result.BatchNo);
+
+                    if (result.SalesOrderId != 0) {
+                        $('#SO_No').val(result.SONo);
+                        $('#SO_Id').val(result.SalesOrderId);
+
+                        //===================Create dynamic table for binding Item details====================//
+                        var table = document.getElementById('ItemTable');
+                        var j = 0;
+                        // for (var j = 0; j < result.length; j++) {
+                        var rowCount = table.rows.length;
+                        var cellCount = table.rows[0].cells.length;
+                        var row = table.insertRow(rowCount);
+                        for (var i = 0; i < cellCount; i++) {
+                            var cell = 'cell' + i;
+                            cell = row.insertCell(i);
+                            if (i == 0) {
+                                var t0 = document.createElement("input");
+                                t0.id = "ItemID_" + j;
+                                t0.setAttribute("disabled", "true");
+                                t0.setAttribute("class", "d-none");
+                                t0.setAttribute("value", result.ItemId);
+                                cell.setAttribute("class", "d-none");
+                                cell.appendChild(t0);
+                            }
+                            else if (i == 1) {
+                                var t1 = document.createElement("input");
+                                t1.id = "ItemCode_" + j;
+                                t1.setAttribute("disabled", "true");
+                                t1.setAttribute("style", "background:transparent;border:none;");
+                                t1.setAttribute("value", result.Item_Code);
+                                cell.appendChild(t1);
+                            }
+                            else if (i == 2) {
+                                var t2 = document.createElement("input");
+                                t2.id = "ItemName_" + j;
+                                t2.setAttribute("disabled", "true");
+                                t2.setAttribute("style", "background:transparent;border:none;");
+                                t2.setAttribute("value", result.ProductName);
+                                cell.appendChild(t2);
+                            }
+                            else if (i == 3) {
+                                var t2 = document.createElement("input");
+                                t2.id = "OrderQty_" + j;
+                                t2.setAttribute("disabled", "true");
+                                t2.setAttribute("style", "background:transparent;border:none;");
+                                t2.setAttribute("value", result.OrderQty);
+                                cell.appendChild(t2);
+                            }
+                            else if (i == 4) {
+                                var t2 = document.createElement("input");
+                                t2.id = "FGSQty_" + j;
+                                t2.setAttribute("disabled", "true");
+                                t2.setAttribute("style", "background:transparent;border:none;");
+                                t2.setAttribute("value", result.QuantityInKG);
+                                cell.appendChild(t2);
+                            }
+                            else if (i == 5) {
+                                var t4 = document.createElement("input");
+                                t4.id = "txRejectedQty_" + j;
+                                t4.removeAttribute("disabled", "false");
+                                t4.removeAttribute("disabled", "true");
+                                t4.setAttribute("maxlength", "8");
+                                t4.setAttribute("onkeypress", "return isNumberKey(event)");
+                                t4.setAttribute("class", "form-control form-control-sm");
+                                cell.appendChild(t4);
+                            }
+                            else if (i == 6) {
+                                var t4 = document.createElement("input");
+                                t4.id = "txRemark_" + j;
+                                t4.removeAttribute("disabled", "false");
+                                t4.removeAttribute("disabled", "true");
+                                t4.setAttribute("maxlength", "50");
+                                t4.setAttribute("class", "form-control form-control-sm");
+                                cell.appendChild(t4);
+                            }
+
+
+                        }
+                        // }
+                    }
+                    else {
+                        $('#divTbl').hide();
+                        $('#divLabel').hide();
+                        alert('There is no COA/Product evaluation log generated for the selected Work-Orders\' batch no: ' + result.BatchNo+'!');
+                        window.location.href = '/PostProductionRejectionNote';
+                    }
+                }
+            }
+        });
+    }
+
     $('#RejectionType').change(function () {
         var QCType = $('#RejectionType option:selected').attr('value');
         if (QCType == 'FGS') {
@@ -173,6 +275,21 @@
         }
 
     });
+
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
 
 </script>
 

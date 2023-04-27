@@ -55,7 +55,9 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-
+        public int ItemId { get; set; }
+        public string Item_Code { get; set; }
+        public decimal OrderQty { get; set; }
         //Added the below field for report
         //[Required(ErrorMessage = "Please Select From Date!")]
         //public DateTime fromDate { get; set; }

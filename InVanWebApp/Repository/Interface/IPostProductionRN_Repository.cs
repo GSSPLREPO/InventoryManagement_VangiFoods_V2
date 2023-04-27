@@ -11,5 +11,7 @@ namespace InVanWebApp.Repository.Interface
     {
         //Define function for fetching details of Sales Order.
         IEnumerable<PostProductionRejectionNoteBO> GetAll();
+        IEnumerable<FinishedGoodSeriesBO> BindWorkOrderDD();
+        FinishedGoodSeriesBO GetItemDetails(int FGSID, int FGSStage, string RNType);
     }
 }

@@ -85,5 +85,9 @@ namespace InVanWebApp.Repository.Interface
         //To Bind Pre-Production_QC report against each WO.     
         List<PreProduction_QC_Details> getPreProduction_QCReportData(DateTime fromDate, DateTime toDate, int PreProductionQCId);
 
+        //Post Production Rejection Reprot
+        List<ReportBO> getPostProductionRejectionReportData(DateTime fromDate, DateTime toDate, string BatchNumber, string WorkOrderNumber);
+
+
     }
 }

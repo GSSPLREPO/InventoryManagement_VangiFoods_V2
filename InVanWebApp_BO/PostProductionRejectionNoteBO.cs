@@ -18,6 +18,7 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Please select the Type!")]
         public string PostProdRejectionType { get; set; }
+        public int FGS_ID { get; set; }
         public int SO_Id { get; set; }
         public string SO_No { get; set; }
 

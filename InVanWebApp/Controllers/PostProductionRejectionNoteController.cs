@@ -56,7 +56,16 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddPostProductionRejectionNote()
         {
-            return View();
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+            else
+            {
+                BindSONumber();
+                BindDocumentNo();
+                PostProductionRejectionNoteBO model = new PostProductionRejectionNoteBO();
+                model.PostProdRejectionNoteDate = DateTime.Now;
+                return View(model);
+            }
         }
 
         /// <summary>
@@ -85,7 +94,7 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate Post-production RN! Can not be inserted!');</script>";
-                           
+
                             return View(model);
                         }
 
@@ -95,7 +104,7 @@ namespace InVanWebApp.Controllers
                     else
                     {
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-                       
+
                         return View(model);
                     }
                 }
@@ -110,6 +119,37 @@ namespace InVanWebApp.Controllers
             return View();
         }
 
+        #endregion
+
+        #region Bind item details
+        public JsonResult GetItemDetails(string FGS_Id,string Stage, string Type)
+        {
+            int FGSID = 0,FGSStage=0;
+
+            if (FGS_Id != null & FGS_Id != "")
+                FGSID = Convert.ToInt32(FGS_Id);
+            if (Stage != null & Stage != "")
+                FGSStage = Convert.ToInt32(Stage);
+
+            var result = _repository.GetItemDetails(FGSID,FGSStage,Type);
+            return Json(result);
+        }
+        #endregion
+
+        #region Bind Dropdowns
+        public void BindSONumber()
+        {
+            var result = _repository.BindWorkOrderDD();
+            var resultList = new SelectList(result.ToList(), "FGSID", "WorkOrderNo");
+            ViewData["WorkOrderDD"] = resultList;
+        }
+
+        public void BindDocumentNo()
+        {
+            GetDocumentNumber objDocNo = new GetDocumentNumber();
+            var DocumentNumber = objDocNo.GetDocumentNo(21);
+            ViewData["DocumentNo"] = DocumentNumber;
+        }
         #endregion
     }
 }

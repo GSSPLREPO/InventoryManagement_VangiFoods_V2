@@ -49,7 +49,8 @@ namespace InVanWebApp.Repository
                             LastModifiedById = Convert.ToInt32(reader["LastModifiedBy"]),
                             LastModifiedDate = Convert.ToDateTime(reader["LastModifiedDate"]),
                             DraftFlag = Convert.ToBoolean(reader["DraftFlag"]),
-                            OutwardCount = Convert.ToInt32(reader["OutwardCount"])
+                            OutwardCount = Convert.ToInt32(reader["OutwardCount"]),
+                            WorkOrderNo=reader["WorkOrderNo"].ToString()
                         };
                         resultList.Add(result);
                     }

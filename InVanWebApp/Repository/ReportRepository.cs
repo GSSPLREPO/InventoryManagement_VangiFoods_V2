@@ -1362,7 +1362,6 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-
         #region Pre-Production_QC Report data 
         /// <summary>
         /// Rahul 11 Apr 2023
@@ -1422,5 +1421,58 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Post Production Rejection note data
+        public List<ReportBO> getPostProductionRejectionReportData(DateTime fromDate, DateTime toDate, string BatchNumber, string WorkOrderNumber)
+        {
+            List<ReportBO> resultList = new List<ReportBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_PostProductionRejection_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@batchNumber", BatchNumber);
+                    cmd.Parameters.AddWithValue("@workOrderNumber", WorkOrderNumber);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new ReportBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            RNDate = Convert.ToDateTime(reader["RNDate"]).ToString("dd/MM/yyyy"),
+                            WorkOrderNumber = reader["WONumber"].ToString(),
+                            BatchNumber = reader["BatchNumber"].ToString(),
+                            PostProductionRejectionNoteNo = reader["PostProductionRejectionNoteNo"].ToString(),
+                            Stage = reader["Stage"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),
+                            ItemCode = reader["ItemCode"].ToString(),
+                            ItemUnitPrice = reader["ItemUnitPrice"].ToString(),
+                            TotalQty = Convert.ToDecimal(reader["TotalQty"]),
+                            RejectedQty = Convert.ToDecimal(reader["RejectedQty"]),
+                            Remarks = reader["Remarks"].ToString(),
+                            ApprovedBy = reader["ApprovedBy"].ToString()
+
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
     }
 }

@@ -162,7 +162,7 @@ function SelectedIndexChanged(id) {
                             t6.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
                             flag = 1;
                         }
-                        t6.setAttribute("type", "number");
+                        //t6.setAttribute("type", "number");
                         t6.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
                         cell.appendChild(t6);
                     }
