@@ -188,6 +188,7 @@
     <Compile Include="Controllers\InwardQCSortingController.cs" />
     <Compile Include="Controllers\IssueNoteController.cs" />
     <Compile Include="Controllers\MicroAnalysisController.cs" />
+    <Compile Include="Controllers\Notifications.cs" />
     <Compile Include="Controllers\OilAnalysisController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\DeliveryChallanController.cs" />
@@ -607,6 +608,7 @@
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
     <Compile Include="Repository\Interface\IDeliveryChallanRepository.cs" />
     <Compile Include="Repository\Interface\IMicroAnalysisRepository.cs" />
+    <Compile Include="Repository\Interface\INotificationsRepository.cs" />
     <Compile Include="Repository\Interface\IOilAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IPestControlLogRepository.cs" />
@@ -654,6 +656,7 @@
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />
     <Compile Include="Repository\MicroAnalysisRepository.cs" />
+    <Compile Include="Repository\Notifications.cs" />
     <Compile Include="Repository\OilAnalysisRepository.cs" />
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\DeliveryChallanRepository.cs" />
@@ -3207,6 +3210,8 @@
     <Content Include="Views\PostProductionRejectionNote\Index.cshtml" />
     <Content Include="Views\Indent\ViewIndent.cshtml" />
     <Content Include="Views\Report\PostProductionRejectionReport.cshtml" />
+    <Content Include="Views\PostProductionRejectionNote\EditPostProdRN.cshtml" />
+    <Content Include="Views\PostProductionRejectionNote\ViewPostProdRN.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

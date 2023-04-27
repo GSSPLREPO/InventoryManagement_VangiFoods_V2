@@ -72,22 +72,22 @@ namespace InVanWebApp_BO
         public Nullable<double> CurrencyPrice { get; set; }
         public int CurrencyID { get; set; }
 
-        [Required(ErrorMessage = "Select the location name!")]
+        //[Required(ErrorMessage = "Select the location name!")]
         public Nullable<int> LocationId { get; set; }
 
-        [Required(ErrorMessage = "Select vendors name!")]
+        //[Required(ErrorMessage = "Select vendors name!")]
         public Nullable<int> VendorsID { get; set; }
 
         public string CompanyName { get; set; }
 
-        [Required(ErrorMessage = "Enter delivery address!")]
+        //[Required(ErrorMessage = "Enter delivery address!")]
         //public string BuyerAddress { get; set; }
         public string DeliveryAddress { get; set; }
 
-        [Required(ErrorMessage = "Enter supplier address!")]
+        //[Required(ErrorMessage = "Enter supplier address!")]
         public string SupplierAddress { get; set; }
 
-        [Required(ErrorMessage = "Select terms and condition!")]
+        //[Required(ErrorMessage = "Select terms and condition!")]
         public Nullable<int> TermsAndConditionID { get; set; }
         public string Terms { get; set; }
         public decimal OtherTax { get; set; }

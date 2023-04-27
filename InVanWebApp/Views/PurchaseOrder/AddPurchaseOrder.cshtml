@@ -69,6 +69,17 @@
                 <div class="col-md-4 d-none">
                     @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
                 </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Indent Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.IndentID, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control listbox", onchange = "SelectedIndexChangedIndent($(this).val())" })
+                    @Html.ValidationMessageFor(model => model.IndentID, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                </div>
             </div>
             <br />
             <div class="row">
@@ -142,35 +153,14 @@
                     @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2 mb-1">
-                    @Html.Label("Indent Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.IndentID, (IEnumerable<SelectListItem>)ViewData["IndentDD"], "---Select---", new { @class = "form-control listbox", onchange = "SelectedIndexChangedIndent($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.IndentID, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-
-            <div class="row">
-                <div class="col-md-2 mb-1">
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                @*<div class="col-md-2 mb-1">
-                        @Html.Label("Indent Summary")
-                    </div>
-                    <div class="col-md-4">
-                            @Html.TextAreaFor(modal => modal.IndentDescription, new { @class = "form-control form-control-sm", @readonly = "readonly", id = "IndentDescription" })
-                            @Html.ValidationMessageFor(model => model.IndentDescription, "", new { @class = "error mt-2 text-danger" })
-                        </div>*@
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                </div>
             </div>
+           
             <br />
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">

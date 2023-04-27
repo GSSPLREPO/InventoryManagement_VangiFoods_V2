@@ -83,7 +83,8 @@ namespace InVanWebApp.Repository
                             PO_Id = Convert.ToInt32(dataReader["PO_Id"]),
                             PONumber = dataReader["PONumber"].ToString(),
                             SupplierID = Convert.ToInt32(dataReader["SupplierID"]),
-                            SupplierName = dataReader["SupplierName"].ToString()
+                            SupplierName = dataReader["SupplierName"].ToString(),
+                            flag = Convert.ToInt32(dataReader["flag"])  //Rahul added 27-04-23.  
                         };
                         resultRNDtlsList.Add(result);
                     }
@@ -361,6 +362,7 @@ namespace InVanWebApp.Repository
                                 ID = Convert.ToInt32(dataReader["MaterialIssue_Id"]),
                                 ProductionIndentID = Convert.ToInt32(dataReader["ProdIndent_Id"]),
                                 ProductionIndentNo = dataReader["ProdIndent_No"].ToString(),
+                                flag = Convert.ToInt32(dataReader["flag"])  //Rahul added 27-04-23.  
 
                             };
                             resultList.Add(result);

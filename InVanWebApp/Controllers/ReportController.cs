@@ -4897,10 +4897,10 @@ namespace InVanWebApp.Controllers
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
             sb.Append("<thead>");
             sb.Append("<tr >");
-            sb.Append("<th  style='text-align:left;padding-right:-80px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("<th colspan='8' style='text-align:left;padding-right:-80px;padding-bottom:-290px;font-size:11px;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
             sb.Append("</th></tr>");
             sb.Append("<tr >");
-            sb.Append("<th colspan=9 style='text-align:right;padding-right:-480px;padding-bottom:-290px;font-size:11px;'>" + "Todate :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("<th colspan='9' style='text-align:right;padding-right:-480px;padding-bottom:-290px;font-size:11px;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
             sb.Append("</th></tr>");
             //sb.Append("<tr >");
             //sb.Append("<th Colspan='9' style='text-align:right;padding-right:-370px;padding-bottom:-85px;font-size:11px;'>" + DateTime.Now.ToString("dd/MMM/yyyy"));
@@ -4932,7 +4932,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward Quantity (KG)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Received Quantity (KG)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejected Quantity (KG)</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Wastage Quantity (%)</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Wastage Percentage</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Reason For Wastage</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Approved By</ th>");
 
@@ -5043,7 +5043,7 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Received Quantity(KG)");
             //dt.Columns.Add("Balance Quantity (KG)");///Remove 17-04-23.
             dt.Columns.Add("Rejected Quantity(KG)");
-            dt.Columns.Add("Wastage Quantity (%)");
+            dt.Columns.Add("Wastage Percentage");
             dt.Columns.Add("Reason For Wastage");
             dt.Columns.Add("Approved By");
 
@@ -5064,7 +5064,7 @@ namespace InVanWebApp.Controllers
                 dr["Received Quantity(KG)"] = st.QuantityTookForSorting.ToString();
                 //dr["Balance Quantity (KG)"] = st.BalanceQuantity.ToString(); ///Remove 17-04-23.
                 dr["Rejected Quantity(KG)"] = st.RejectedQuantity.ToString();
-                dr["Wastage Quantity (%)"] = st.WastageQuantityInPercentage.ToString();
+                dr["Wastage Percentage"] = st.WastageQuantityInPercentage.ToString();
                 dr["Reason For Wastage"] = (st.ReasonForRR == null) ? "" : st.ReasonForRR.ToString();///updated 17-04-23.
                 dr["Approved By"] = st.ApprovedBy.ToString();
 

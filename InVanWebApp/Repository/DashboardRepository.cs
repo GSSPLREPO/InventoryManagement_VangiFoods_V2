@@ -147,7 +147,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Function for Fifo system 
-        public List<DashboardBO> GetFIFOSystem(DateTime fromDate, DateTime toDate, int ItemId = 0, int LocationID = 0)
+        public List<DashboardBO> GetFIFOSystem(int ItemId = 0, int LocationID = 0)
         {
             List<DashboardBO> resultList = new List<DashboardBO>();
             try
@@ -158,8 +158,8 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ItemId", ItemId);
                     cmd.Parameters.AddWithValue("@locationId", LocationID);
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    //cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    //cmd.Parameters.AddWithValue("@toDate", toDate);
 
                     con.Open();
 
@@ -248,7 +248,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("Usp_Dashboard_OderSummery", con);
+                    SqlCommand cmd = new SqlCommand("Usp_Dashboard_OderSummary", con);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@flag", DurationID);

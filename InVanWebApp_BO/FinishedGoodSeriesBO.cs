@@ -58,6 +58,10 @@ namespace InVanWebApp_BO
         public int ItemId { get; set; }
         public string Item_Code { get; set; }
         public decimal OrderQty { get; set; }
+
+        //Added the below fields for Post-production rejection note
+        public string WorkOrderAndBN { get; set; }
+
         //Added the below field for report
         //[Required(ErrorMessage = "Please Select From Date!")]
         //public DateTime fromDate { get; set; }

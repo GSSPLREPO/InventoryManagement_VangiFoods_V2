@@ -1,17 +1,20 @@
 ﻿@model InVanWebApp_BO.PostProductionRejectionNoteBO
-@{ ViewBag.Title = "AddPostProductionRejectionNote";
-    Layout = "~/Views/Shared/MainMaster.cshtml"; }
+@{
+    ViewBag.Title = "EditPostProdRN";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
 
-@using (Html.BeginForm("AddPostProductionRejectionNote", "PostProductionRejectionNote"))
+@using (Html.BeginForm("EditPostProdRN", "PostProductionRejectionNote"))
 {
 @Html.AntiForgeryToken()
                 <div class="card">
                     <div class="card-body">
 
-                        <h4>Add Post Production Rejection Note</h4>
+                        <h4>Edit Post Production Rejection Note</h4>
                         <hr />
                         @Html.ValidationSummary(true)
-
+                        @Html.HiddenFor(model => model.ID)
+                        
                         <div class="row">
                             <div class="col-md-2">
                                 <label id="lblNoteDate">Rejection Note Date</label>
@@ -37,39 +40,22 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model=>model.PostProdRejectionType,new List<SelectListItem>{
-                                    new SelectListItem{ Text="--Select--",Value=""},
-                                    new SelectListItem{ Text="FGS",Value="FGS"},
-                                    new SelectListItem{ Text="COA", Value="COA"},
-                                    new SelectListItem{ Text="Product Evaluation Log", Value="ProductEvaluationLog"} }, new{ @class="form-control form-control-sm", id = "RejectionType" })
-                                @*<select class="form-control form-control-sm" id="RejectionType" name="PostProdRejectionType" data-val="true" data-val-required="Select the Rejection Type!">
-                                    <option value="">--Select--</option>
-                                    <option value="FGS">FGS</option>
-                                    <option value="COA">COA</option>
-                                    <option value="ProductEvaluationLog">Product Evaluation Log</option>
-                                </select>*@
+                                @Html.TextBoxFor(model => model.PostProdRejectionType, new { @class = "form-control form-control-sm", type = "text", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.PostProdRejectionType, "", new { @class = "error mt-2 text-danger" })
                             </div>
-                            @*<div id="StageDiv" style="display:none;">*@
-                                <div class="col-md-2 StageDiv" style="display:none;">
-                                    @Html.Label("Stages")
-                                    <span style="color:red">*</span>
-                                </div>
-                                <div class="col-md-4 StageDiv" style="display:none;">
-                                    <select class="form-control form-control-sm" id="Stage" name="Stage">
-                                        <option value="1">Stage-1</option>
-                                        <option value="2">Stage-2</option>
-                                    </select>
-                                </div>
-                            @*</div>*@
-                            @*<div id="BatchRejectionDiv" style="display:none;">*@
-                                <div class="col-md-2 BatchRejectionDiv" style="display:none;">
-                                    @Html.Label("Batch Rejection")
-                                </div>
-                                <div class="col-md-4 BatchRejectionDiv" style="display:none;">
-                                    @Html.TextBoxFor(model => model.WholeBatchRejection, new { @class = "form-check-input form-control", type = "checkbox", value = "falses" })
-                                </div>
-                            @*</div>*@
+                            <div class="col-md-2 StageDiv" style="display:none;">
+                                @Html.Label("Stages")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4 StageDiv" style="display:none;">
+                                @Html.TextBoxFor(model => model.Stage, new { @class = "form-control form-control-sm", id= "Stage", type = "text", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-2 BatchRejectionDiv" style="display:none;">
+                                @Html.Label("Batch Rejection")
+                            </div>
+                            <div class="col-md-4 BatchRejectionDiv" style="display:none;">
+                                @Html.TextBoxFor(model => model.WholeBatchRejection, new { @class = "form-check-input form-control", type = "checkbox", value = "falses" })
+                            </div>
                         </div>
                         <br />
                         <div class="row">
@@ -78,11 +64,11 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.FGS_ID, (IEnumerable<SelectListItem>)ViewData["WorkOrderDD"], "---Select---", new { @class = "form-control form-control-sm", onchange = "WorkOrderChange($(this).val())" })
-                                @Html.HiddenFor(model => model.WorkOrderNo)
+                                @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-check-input form-control", @readonly = "readonly" })
+                                @Html.HiddenFor(model => model.FGS_ID)
                                 @Html.HiddenFor(model => model.SO_No)
                                 @Html.HiddenFor(model => model.SO_Id)
-                                @Html.ValidationMessageFor(model => model.FGS_ID, "", new { @class = "error mt-2 text-danger" })
+                                @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
                                 @Html.Label("Batch Number")
@@ -115,6 +101,38 @@
                                             <th>Remarks</th>
                                         </tr>
                                     </thead>
+                                    <tbody id="myTableBody">
+                                        @{ int c = 0;
+                                            foreach (var item in Model.note_DetailsBOs)
+                                            {
+                                                <tr id="tablerow_@c">
+                                                    <td class="col-md-4 d-none">
+                                                        @Html.TextBox("ItemID_" + c, item.ItemId, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox("ItemCode_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox("OrderQty_" + c, item.OrderedQuantity, new{@class = "form-control form-control-sm",@readonly = "readonly"})
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox("FGSQty_" + c, item.TotalQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox("txRejectedQty_" +c, item.RejectedQuantity, new { @class = "form-control form-control-sm", onkeypress= "return isNumberKey(event)", onchange = "OnChangeRejQty($(this).val(),id)" })
+                                                        <span style="display:none;" id="spanRejQty_@c"></span>
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox("txRemark_" + c, item.Remarks, new { @class = "form-control form-control-sm", onchange= "OnChangeRejQty($(this).val(),id)" })
+                                                    </td>
+                                                </tr>
+                                                { c++; }
+                                            }
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -133,7 +151,7 @@
                         <div class="col d-flex justify-content-end" style="margin-left: auto;">
                             <div class="row">
                                 <div class="col-3">
-                                    <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Save</button>
+                                    <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
                                 </div>
                                 <div class="col-4">
                                     <button type="submit" id="btn_SaveDraft" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
@@ -148,7 +166,7 @@
                     </div>
 
                 </div>
-                                @Html.HiddenFor(model => model.DraftFlag, new { @Value = "false" })}
+                @Html.HiddenFor(model => model.DraftFlag, new { @Value = "false" })}
 
 
 @section Scripts {
@@ -160,6 +178,20 @@
 
 
 <script type="text/javascript">
+
+    $(document).ready(function () {
+        var QCType = $('#RejectionType').val();
+        if (QCType == 'FGS') {
+            $(".StageDiv").show();
+            $(".BatchRejectionDiv").hide();
+
+        }
+        else {
+            $(".StageDiv").hide();
+            $(".BatchRejectionDiv").show();
+
+        }
+    });
 
     $("#btn_SaveDraft").click(function () {
         $("#DraftFlag").val('true');
@@ -330,21 +362,6 @@
         }
     }
 
-    $('#RejectionType').change(function () {
-        var QCType = $('#RejectionType option:selected').attr('value');
-        if (QCType == 'FGS') {
-            $(".StageDiv").show();
-            $(".BatchRejectionDiv").hide();
-
-        }
-        else {
-            $(".StageDiv").hide();
-            $(".BatchRejectionDiv").show();
-
-        }
-
-    });
-
     function isNumberKey(evt) {
         var keycode = (evt.which) ? evt.which : evt.keyCode;
         if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
@@ -375,7 +392,7 @@
             RejecQty = (RejecQty == null || RejecQty == '') ? 0 : RejecQty;
 
             var Remark = ((document.getElementById("txRemark_" + i)).value);
-           
+
             TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
                 ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty
                 + ", \"FGSQty\": \"" + FGSQty + "\", \"RejecQty\": " + RejecQty + ",\"Remark\": \"" + Remark +

@@ -133,7 +133,6 @@ namespace InVanWebApp_BO
         public decimal OtherTax { get; set; }
         public Nullable<decimal> TotalItemCost { get; set; }
         public Nullable<int> flag { get; set; }//Rahul added 21-04-23.  
-
     }
 
 }

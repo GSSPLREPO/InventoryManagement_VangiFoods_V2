@@ -7,25 +7,28 @@ using System.Threading.Tasks;
 
 namespace InVanWebApp_BO
 {
-    public class PostProductionRejectionNoteBO 
+    public class PostProductionRejectionNoteBO
     {
         public int ID { get; set; }
         public string PostProdRejectionNoteNo { get; set; }
-        
-        [Required(ErrorMessage = "Please select the Rejection Note date!")]
+        public Boolean DraftFlag { get; set; }
+
+        [Required(ErrorMessage = "Select the Rejection Note date!")]
         [DataType(DataType.Date)]
         public DateTime PostProdRejectionNoteDate { get; set; }
 
-        [Required(ErrorMessage = "Please select the Type!")]
+        [Required(ErrorMessage = "Select the rejection type!")]
         public string PostProdRejectionType { get; set; }
+
+        [Required(ErrorMessage = "Select the work order!")]
         public int FGS_ID { get; set; }
         public int SO_Id { get; set; }
         public string SO_No { get; set; }
-
-        [Required(ErrorMessage = "Please select the WorkOrderNo!")]
         public string WorkOrderNo { get; set; }
         public string Stage { get; set; }
         public bool WholeBatchRejection { get; set; }
+
+        [Required(ErrorMessage = "Enter the batch number!")]
         public string BatchNumber { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
@@ -53,6 +56,7 @@ namespace InVanWebApp_BO
         public decimal CurrencyPrice { get; set; }
         public decimal TotalQuantity { get; set; }
         public decimal RejectedQuantity { get; set; }
+        public decimal OrderedQuantity { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

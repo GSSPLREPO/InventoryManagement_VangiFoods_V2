@@ -248,8 +248,7 @@
                                                             @*@Html.TextBoxFor(model => model.ExpectedPrice, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })*@
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("CloserPrice_" + c, item.CloserPrice, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "8", onchange = "CalItemTotalCloserPrice($(this).val(),id)" })
-                                                            @*@Html.TextBox("CloserPrice", "", new { Value = "0", @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })*@
+                                                            @Html.TextBox("CloserPrice_" + c, item.CloserPrice, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "CalItemTotalCloserPrice($(this).val(),id)" })
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("CurrencyName_" + c, item.CurrencyName, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
