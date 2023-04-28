@@ -96,8 +96,9 @@ namespace InVanWebApp.Controllers
                         }
                         else
                         {
+                            BindSONumber();
+                            BindDocumentNo();
                             TempData["Success"] = "<script>alert('Duplicate Post-production RN! Can not be inserted!');</script>";
-
                             return View(model);
                         }
 
@@ -106,8 +107,9 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
+                        BindSONumber();
+                        BindDocumentNo();
                         TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-
                         return View(model);
                     }
                 }
@@ -117,9 +119,12 @@ namespace InVanWebApp.Controllers
             }
             catch (Exception ex)
             {
+                BindSONumber();
+                BindDocumentNo();
                 log.Error("Error", ex);
+                TempData["Success"] = "<script>alert('Some error occurred!');</script>";
+                return RedirectToAction("Index", "PostProductionRejectionNote");
             }
-            return View();
         }
 
         #endregion
@@ -249,16 +254,16 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind item details
-        public JsonResult GetItemDetails(string FGS_Id,string Stage, string Type)
+        public JsonResult GetItemDetails(string FGS_Id, string Stage, string Type)
         {
-            int FGSID = 0,FGSStage=0;
+            int FGSID = 0, FGSStage = 0;
 
             if (FGS_Id != null & FGS_Id != "")
                 FGSID = Convert.ToInt32(FGS_Id);
             if (Stage != null & Stage != "")
                 FGSStage = Convert.ToInt32(Stage);
 
-            var result = _repository.GetItemDetails(FGSID,FGSStage,Type);
+            var result = _repository.GetItemDetails(FGSID, FGSStage, Type);
             return Json(result);
         }
         #endregion

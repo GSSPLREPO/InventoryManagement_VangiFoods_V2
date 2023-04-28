@@ -656,7 +656,7 @@
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />
     <Compile Include="Repository\MicroAnalysisRepository.cs" />
-    <Compile Include="Repository\Notifications.cs" />
+    <Compile Include="Repository\NotificationsRepository.cs" />
     <Compile Include="Repository\OilAnalysisRepository.cs" />
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\DeliveryChallanRepository.cs" />
@@ -2038,6 +2038,8 @@
     <Content Include="Scripts\Script\EditOutwardNote.js" />
     <Content Include="Theme\MainContent\css\customLogin.css" />
     <Content Include="Theme\MainContent\images\LoginBackImg.jpg" />
+    <Content Include="Theme\MainContent\images\nty.png" />
+    <Content Include="Theme\MainContent\images\nty1.png" />
     <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
     <Content Include="Views\RejectionNote\Index.cshtml" />
     <Content Include="Views\RejectionNote\ViewRejectionNote.cshtml" />

@@ -29,7 +29,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.PostProdRejectionNoteNo, new { @class = "form-control form-control-sm", type = "text", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                                @Html.TextBoxFor(model => model.PostProdRejectionNoteNo, new { @class = "form-control form-control-sm", type = "text", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.PostProdRejectionNoteNo, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-check-input form-control", @readonly = "readonly" })
+                                @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control-sm form-control", @readonly = "readonly" })
                                 @Html.HiddenFor(model => model.FGS_ID)
                                 @Html.HiddenFor(model => model.SO_No)
                                 @Html.HiddenFor(model => model.SO_Id)
@@ -180,7 +180,7 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
-        var QCType = $('#RejectionType').val();
+        var QCType = $('#PostProdRejectionType').val();
         if (QCType == 'FGS') {
             $(".StageDiv").show();
             $(".BatchRejectionDiv").hide();

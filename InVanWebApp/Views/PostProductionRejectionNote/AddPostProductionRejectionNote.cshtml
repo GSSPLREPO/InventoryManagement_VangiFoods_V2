@@ -37,12 +37,15 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model=>model.PostProdRejectionType,new List<SelectListItem>{
+                                @Html.DropDownListFor(model=>model.PostProdRejectionType, new List<SelectListItem>{
                                     new SelectListItem{ Text="--Select--",Value=""},
                                     new SelectListItem{ Text="FGS",Value="FGS"},
                                     new SelectListItem{ Text="COA", Value="COA"},
                                     new SelectListItem{ Text="Product Evaluation Log", Value="ProductEvaluationLog"} }, new{ @class="form-control form-control-sm", id = "RejectionType" })
-                                @*<select class="form-control form-control-sm" id="RejectionType" name="PostProdRejectionType" data-val="true" data-val-required="Select the Rejection Type!">
+                                
+                                @Html.HiddenFor(model=>model.PostProdRejectionType) 
+
+                                    @*<select class="form-control form-control-sm" id="RejectionType" name="PostProdRejectionType" data-val="true" data-val-required="Select the Rejection Type!">
                                     <option value="">--Select--</option>
                                     <option value="FGS">FGS</option>
                                     <option value="COA">COA</option>
@@ -287,6 +290,16 @@
                                 cell.appendChild(t4);
                             }
                         }
+
+                        var WholeRejFlag = $('#WholeBatchRejection').val();
+                        if (WholeRejFlag=='True') {
+                            var FGSQty = $('#FGSQty_0').val();
+                            $('#txRejectedQty_0').val(FGSQty);
+                            document.getElementById('txRejectedQty_0').setAttribute('disabled', 'disabled');
+                        }
+                        else {
+                            document.getElementById('txRejectedQty_0').removeAttribute('disabled', 'disabled');
+                        }
                         // }
                     }
                     else {
@@ -332,6 +345,8 @@
 
     $('#RejectionType').change(function () {
         var QCType = $('#RejectionType option:selected').attr('value');
+        $('#PostProdRejectionType').val(QCType);
+
         if (QCType == 'FGS') {
             $(".StageDiv").show();
             $(".BatchRejectionDiv").hide();

@@ -49,158 +49,119 @@
                         <span class="fas fa-bars"></span>
                     </button>
                     @*<ul class="navbar-nav">
-                            <li class="nav-item nav-search d-none d-md-flex">
-                                <div class="nav-link">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                                <i class="fas fa-search"></i>
-                                            </span>
-                                        </div>
-                                        <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                        <li class="nav-item nav-search d-none d-md-flex">
+                            <div class="nav-link">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>*@
+                <ul class="navbar-nav navbar-nav-right d-flex justify-content-end">
+                    <li class="nav-item navbar navbar-menu-wrapper" style="border-right:1px solid #e0e0ef;width:auto;">
+
+                        @if (@Session["UserName"] != null)
+                        {
+                            <h6 style="font-family: 'Comic Sans MS'; white-space: nowrap;">Welcome @Session["UserName"] !</h6>
+                        }
+
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                            <i class="fas fa-bell mx-0"></i>
+                            <span class="count">1</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                            <a class="dropdown-item">
+                                <p class="mb-0 font-weight-normal float-left">
+                                    You have 1 new notifications
+                                </p>
+                                <span class="badge badge-pill badge-warning float-right">View all</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-danger">
+                                        <i class="fas fa-exclamation-circle mx-0"></i>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>*@
-                    <ul class="navbar-nav navbar-nav-right d-flex justify-content-end">
-                        <li class="nav-item navbar navbar-menu-wrapper" style="border-right:1px solid #e0e0ef;width:auto;">
-
-                            @if (@Session["UserName"] != null)
-                            {
-                <h6 style="font-family: 'Comic Sans MS'; white-space: nowrap;">Welcome @Session["UserName"] !</h6>}
-
-                        </li>
-                        <li class="nav-item dropdown">
-                            @* Add 'noti glyphicon' for 'signalR' 25-04-23 start. *@
-                            @*<span class="noti glyphicon glyphicon-bell"><i class="fas fa-bell mx-0"></i><span class="count">&nbsp;</span></span>
-        <div class="noti-content">
-            <div class="noti-top-arrow"></div>
-            <ul id="notiContent"></ul>
-        </div>*@
-                            @* Add 'noti glyphicon' for 'signalR' 25-04-23 end. *@
-
-                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                                <i class="fas fa-bell mx-0"></i>
-                                @*Added 'countNotify' 26-04-23*@
-                                <span id="countNotify" class="count">1</span>
-                            </a>
-                            @*Added 'ul' 26-04-23*@
-                            @*<ul class="dropdown-menu" id="myNotifyList">
-                            </ul>*@
-                            <div  id="myNotifyList" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown"
-                                 style="width: max-content;padding: 5px 5px;">
-                            </div>
-                                 @*<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                                <a class="dropdown-item">
-                                        <p class="mb-0 font-weight-normal float-left">
-                                            You have 1 new notifications
-                                        </p>
-                                        <span class="badge badge-pill badge-warning float-right">View all</span>
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item preview-item">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-danger">
-                                                <i class="fas fa-exclamation-circle mx-0"></i>
-                                            </div>
-                                        </div>
-                                        <div class="preview-item-content">
-                                            <h6 class="preview-subject font-weight-medium">Application Error</h6>
-                                            <p class="font-weight-light small-text">
-                                                Just now
-                                            </p>
-                                        </div>
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item preview-item">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-warning">
-                                                <i class="fas fa-wrench mx-0"></i>
-                                            </div>
-                                        </div>
-                                        <div class="preview-item-content">
-                                            <h6 class="preview-subject font-weight-medium">Settings</h6>
-                                            <p class="font-weight-light small-text">
-                                                Private message
-                                            </p>
-                                        </div>
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item preview-item">
-                                        <div class="preview-thumbnail">
-                                            <div class="preview-icon bg-info">
-                                                <i class="far fa-envelope mx-0"></i>
-                                            </div>
-                                        </div>
-                                        <div class="preview-item-content">
-                                            <h6 class="preview-subject font-weight-medium">New user registration</h6>
-                                            <p class="font-weight-light small-text">
-                                                2 days ago
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>*@
-                        </li>
-                        <li class="nav-item nav-profile dropdown d-flex flex-column justify-content-around">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                                <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href=@Url.Action("Index","Login") onclick="return confirm('Are you sure, you wants to logout?');">
-                                    <i class="fas fa-power-off text-primary"></i>
-                                    Logout
-                                </a>
-                            </div>
-                            @*Rahul added UserName 08-02-23.*@
-                            @if (@Session["UserName"] != null)
-                            {
-                <h6 style="font-family:'Comic Sans MS'">@Session["UserName"]</h6>}
-                        </li>
-                        @*<li class="nav-item nav-profile dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                                    <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
-                                        <i class="fas fa-power-off text-primary"></i>
-                                        Logout
-                                    </a>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-medium">Application Error</h6>
+                                    <p class="font-weight-light small-text">
+                                        Just now
+                                    </p>
                                 </div>
-                            </li>*@
-                    </ul>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="fas fa-wrench mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-medium">Settings</h6>
+                                    <p class="font-weight-light small-text">
+                                        Private message
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="far fa-envelope mx-0"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content">
+                                    <h6 class="preview-subject font-weight-medium">New user registration</h6>
+                                    <p class="font-weight-light small-text">
+                                        2 days ago
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-profile dropdown d-flex flex-column justify-content-around">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href=@Url.Action("Index","Login") onclick="return confirm('Are you sure, you wants to logout?');">
+                                <i class="fas fa-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                        @*Rahul added UserName 08-02-23.*@
+                        @if (@Session["UserName"] != null)
+                        {
+                            <h6 style="font-family:'Comic Sans MS'">@Session["UserName"]</h6>
+                        }
+                    </li>
+                    @*<li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                            <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
+                                <i class="fas fa-power-off text-primary"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>*@
+                </ul>
                     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                         <span class="fas fa-bars"></span>
                     </button>
                 </div>
             </nav>
-
-            <!-- Modal Start 26-04-23-->
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">
-                                <img src="~/Theme/MainContent/images/nty.png" style="height: 50px; width: 50px">
-                                Notifications
-                            </h4>
-                            <button type="button" class="close" data-dismiss="modal">
-                                ×
-                            </button>
-                        </div>
-                        <div class="modal-body" id="myAllNotifications">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal End 26-04-23-->
             <!-- partial -->
             <div class="container-fluid page-body-wrapper">
                 <!-- partial:../../partials/_settings-panel.html -->
@@ -449,11 +410,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @*Rahul added Multiple select cdn 19-12-2022 end*@
 
-    @* Add Jquery Library 'signalR' 25-04-23 start. *@
-    @*<script src="~/Scripts/jquery.signalR-2.2.0.min.js"></script>
-        <script src="/signalr/hubs"></script>*@
-    @* Add Jquery Library 'signalR' 25-04-23 end. *@
-
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
@@ -498,177 +454,3 @@
         margin: 10px;
     }
 </style>
-
-
-<script>
-    $(document).ready(function () {
-        setInterval(function () {
-            UpdateNotifications();
-        }, 10000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds  
-    });
-
-    function UpdateNotifications() {
-        $.ajax({
-            type: "GET",
-            url: "/Notifications/GetNotifications",
-            //url: "/Dashb_RTWarehouseWiseStock/GetDashboardDataReorderPointOfStocks",
-            data: '{}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {                
-                console.log(response[0].ItemName);
-                console.log(response[0].MinimumStock);
-
-                if (response != null) {
-                    
-                    var j = ""; var p = 0; var Q = "";
-                    $.each(response, function (k, v) {
-                        p++;
-                        if (p < 6) {
-                            //j += "<li><a> <strong>  " + v.Notification.toString() + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> updated : " + v.LastUpdated.toString() + "</i></div></a></li>";
-                            j += "<li><a> <strong>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
-                        }
-                        //Q += "<a>  " + v.Notification.toString() + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> updated : " + v.LastUpdated.toString() + "</i></div></a>";
-                        Q += "<a>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a>";
-                        
-                    });
-                    $('#myNotifyList').html("");
-                    j += "<li><a data-toggle='modal' data-target='#myModal'><div style='text-align:center'><strong> Show more </strong></div></li>";
-                    $('#myNotifyList').append(j);
-                    $('#countNotify').html("<span>" + p + "</span>");
-                    $('#myAllNotifications').html("");
-                    $('#myAllNotifications').append(Q);
-                }
-            },
-            failure: function (response) {
-                alert(response.d);
-            }
-        });
-    }
-</script>
-
-@*// 'SignalR' added 25-04-23 start.*@
-@*<style type="text/css">
-        /*Added css for design notification area, you can design by your self*/
-        /* COPY css content from youtube video description*/
-        .noti-content {
-            position: fixed;
-            right: 100px;
-            background: #e5e5e5;
-            border-radius: 4px;
-            top: 47px;
-            width: 250px;
-            display: none;
-            border: 1px solid #9E988B;
-        }
-
-        ul#notiContent {
-            max-height: 200px;
-            overflow: auto;
-            padding: 0px;
-            margin: 0px;
-            padding-left: 20px;
-        }
-
-            ul#notiContent li {
-                margin: 3px;
-                padding: 6px;
-                background: #fff;
-            }
-
-        .noti-top-arrow {
-            border-color: transparent;
-            border-bottom-color: #F5DEB3;
-            border-style: dashed dashed solid;
-            border-width: 0 8.5px 8.5px;
-            position: absolute;
-            right: 32px;
-            top: -8px;
-        }
-
-        span.noti {
-            color: #FF2323;
-            margin: 15px;
-            position: fixed;
-            right: 100px;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        span.count {
-            position: relative;
-            top: -3px;
-        }
-    </style>*@
-
-@* Add jquery code for Get Notification & setup signalr *@
-@*<script type="text/javascript">
-        $(function () {
-            // Click on notification icon for show notification
-            $('span.noti').click(function (e) {
-                e.stopPropagation();
-                $('.noti-content').show();
-                var count = 0;
-                count = parseInt($('span.count').html()) || 0;
-                //only load notification if not already loaded
-                if (count > 0) {
-                    updateNotification();
-                }
-                $('span.count', this).html('&nbsp;');
-            })
-            // hide notifications
-            $('html').click(function () {
-                $('.noti-content').hide();
-            })
-            // update notification
-            function updateNotification() {
-                $('#notiContent').empty();
-                $('#notiContent').append($('<li>Loading...</li>'));
-                $.ajax({
-                    type: 'GET',
-                    url: '/Dashb_RTWarehouseWiseStock/GetNotificationGetUsers',
-                    success: function (response) {
-                        $('#notiContent').empty();
-                        if (response.length == 0) {
-                            $('#notiContent').append($('<li>No data available</li>'));
-                        }
-                        $.each(response, function (index, value) {
-                            $('#notiContent').append($('<li>New contact : ' + value.EmployeeName + ' (' + value.EmployeeMobileNo + ') added</li>'));
-                        });
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                })
-            }
-            // update notification count
-            function updateNotificationCount() {
-                var count = 0;
-                count = parseInt($('span.count').html()) || 0;
-                count++;
-                $('span.count').html(count);
-            }
-            (function ($, window) {
-                // signalr js code for start hub and send receive notification
-                var notificationHub = $.connection.notificationHub;
-                // Setting logging to true so that we can see whats happening in the browser console log. [OPTIONAL]
-                $.connection.hub.logging = false;
-                // Start the hub
-                $.connection.hub.start().done(function () {
-                    console.log('Notification hub started');
-                    init();
-                });
-                function init() {
-                    alert('hello');
-                }
-                //signalr method for push server message to client
-                notificationHub.client.notify = function (message) {
-                    if (message && message.toLowerCase() == "added") {
-                        updateNotificationCount();
-                    }
-                }
-            }(jQuery, window, undefined));
-        })
-    </script>*@
-@*// 'SignalR' added 25-04-23 end.*@
-
