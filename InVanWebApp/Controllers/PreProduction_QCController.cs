@@ -182,7 +182,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-     
         #region Bind all Production material note and it's details including which item Pre Production
         public JsonResult ProdIndent_NoDeatils(string id, string PPINote_Id = null)
         {

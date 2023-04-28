@@ -94,7 +94,7 @@ namespace InVanWebApp.Repository
                         {
                             SrNo = Convert.ToInt32(reader["SrNo"]),
                             GRNCode = reader["GRN_Number"].ToString(),
-                            GRN_Date = Convert.ToDateTime(reader["GRN_Date"]).ToString("dd/MM/yyyy hh:mm:ss"),
+                            GRN_Date = Convert.ToDateTime(reader["GRN_Date"]).ToString("dd/MM/yyyy"),
                             ItemCode = reader["Item_Code"].ToString(),
                             ItemName = reader["Item_Name"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["Price_Per_unit"]),

@@ -52,7 +52,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
                                 <td>@Html.DisplayFor(modelItem => item.ProductionDate)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                                <td class="text-wrap">@Html.DisplayFor(modelItem => item.Description)</td>
                                 <td>
                                     @if (item.IndentCount == 0)
                                     {

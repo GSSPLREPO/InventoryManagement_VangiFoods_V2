@@ -147,6 +147,8 @@ function SelectedIndexChanged(id) {
                         t6.id = "txtInwardQty" + j;
                         t6.removeAttribute("disabled", "false");
                         t6.removeAttribute("disabled", "true");
+                        t6.setAttribute("maxlength", "8");
+                        t6.setAttribute("onkeypress", "return isNumberKey(event)");
 
                         var cellData = document.getElementById("ItemQty" + j);
                         var temp_itemQty = cellData.innerHTML.split(' ');
@@ -162,7 +164,7 @@ function SelectedIndexChanged(id) {
                             t6.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
                             flag = 1;
                         }
-                        t6.setAttribute("type", "number");
+                        //t6.setAttribute("type", "number");
                         t6.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
                         cell.appendChild(t6);
                     }
@@ -256,6 +258,13 @@ function SetInwardQty() {
     if (tableLength > 1) {
         while (i < tableLength - 1) {
             var PhyQty = document.getElementById("txtInwardQty" + i).value;
+
+            if (PhyQty == '' || PhyQty == "") {
+                alert("Deliverd quantity is zero or null! Cannot create inward note!");
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+           
             PhyQty = parseFloat(PhyQty);
 
             if (PhyQty != 0) {
@@ -294,5 +303,21 @@ function isAlphaNumericKey(evt) {
         return true;
     }
 }
+
+function isNumberKey(evt) {
+    var keycode = (evt.which) ? evt.which : evt.keyCode;
+    if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+        return false;
+    }
+    else {
+        var parts = evt.srcElement.value.split('.');
+        if (parts.length > 1 && keycode == 46)
+            return false;
+        else
+            return true;
+    }
+    return true;
+}
+
 
 //</script>

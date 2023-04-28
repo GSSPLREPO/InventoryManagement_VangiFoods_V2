@@ -2800,7 +2800,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejection Number</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward QC/Pre-Production QC Number</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Reason For Rejection</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</ th>");
@@ -2875,7 +2875,7 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("Date");
             dt.Columns.Add("Rejection Number");
-            dt.Columns.Add("Inward Number");
+            dt.Columns.Add("Inward QC or Pre-Production QC Number");
             dt.Columns.Add("Reason For Rejection");
             dt.Columns.Add("Item Name");
             dt.Columns.Add("Item Code");
@@ -2890,7 +2890,7 @@ namespace InVanWebApp.Controllers
                 dr["Sr.No"] = st.SrNo.ToString();
                 dr["Date"] = st.RejectionNoteDate.ToString();
                 dr["Rejection Number"] = st.RejectionNoteNo.ToString();
-                dr["Inward Number"] = st.InwardQCNumber.ToString();
+                dr["Inward QC or Pre-Production QC Number"] = st.InwardNumber.ToString();
                 dr["Reason For Rejection"] = (st.ReasonForRR == null) ? "" : st.ReasonForRR.ToString();
                 dr["Item Name"] = st.Item_Name.ToString();
                 dr["Item Code"] = st.Item_Code.ToString();

@@ -66,6 +66,17 @@
                     @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", @readonly = "readonly" })
                     @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control", @readonly = "readonly" })
                 </div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Indent Number")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.HiddenFor(model => model.IndentID)
+                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                </div>
             </div>
             <br />
             <div class="row">
@@ -129,19 +140,6 @@
                     @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", Value = "0", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <br />
-                <br />
-                <div class="col-md-2 mb-1">
-                    @Html.Label("Indent Number")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model=>model.IndentNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.HiddenFor(model=>model.IndentID)
-                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Remarks")
                 </div>
@@ -149,11 +147,9 @@
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                </div>
             </div>
             <br />
+            
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">

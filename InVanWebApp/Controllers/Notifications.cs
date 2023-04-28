@@ -42,33 +42,10 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region GetNotification 
+        #region Get MinStock Notifications 
         //Added 'GetNotification' 25-04-23 start.
-        //[HttpGet]
-        //public JsonResult GetNotifications()
-        //{
-        //    List<StockMasterBO> lstDataSubmit = new List<StockMasterBO>();
-
-        //    /// Should update from DB  
-        //    ///  
-        //    ///e.g. Generating Notification manually  
-        //    var No = 10;
-        //    while (No != 0)
-        //    {
-        //        lstDataSubmit.Add(new StockMasterBO()
-        //        {
-        //            Notification = "This is dynamic notification..." + No,
-        //            LastUpdated = DateTime.Now.ToString("ss") + " seconds ago..."
-
-        //        });
-        //        No--;
-        //    }
-        //    return Json(lstDataSubmit, JsonRequestBehavior.AllowGet);
-        //}
-        //Added 'GetNotification' 25-04-23 end.
-
         [HttpGet]
-        public JsonResult GetNotifications(string id = "")
+        public JsonResult GetMinStockNotifications(string id = "") 
         {
             var ItemId = 0;
             if (id != "")
@@ -82,9 +59,56 @@ namespace InVanWebApp.Controllers
             //var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
+        //Added 'GetNotification' 25-04-23 end.
         #endregion
 
+        #region Get Calibration DueDate Notifications 
+        //Added 'GetCalibrationDueDateNotifications' 25-04-23 start.
+        [HttpGet]
+        public JsonResult GetCalibrationDueDateNotifications() 
+        {
+            string jsonstring = string.Empty;
+
+            var result = _notificationsRepository.GetCalibrationDueDateData();
+            //jsonstring = JsonConvert.SerializeObject(result);
+
+            //var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //Added 'GetCalibrationDueDateNotifications' 25-04-23 end.
+        #endregion
+
+        #region Get POPayment Details Notifications
+        //Added 'GetPOPaymentDetailsNotifications' 25-04-23 start.
+        [HttpGet]
+        public JsonResult GetPOPaymentDetailsNotifications() 
+        {
+            string jsonstring = string.Empty;
+
+            var result = _notificationsRepository.GetPOPaymentDueDateData(); 
+            //jsonstring = JsonConvert.SerializeObject(result);
+
+            //var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //Added 'GetPOPaymentDetailsNotifications' 25-04-23 end.
+        #endregion
+
+        #region Get SOPayment Details Notifications
+        //Added 'GetSOPaymentDetailsNotifications' 25-04-23 start.
+        [HttpGet]
+        public JsonResult GetSOPaymentDetailsNotifications()
+        {
+            string jsonstring = string.Empty;
+
+            var result = _notificationsRepository.GetSOPaymentDueDateData();
+            //jsonstring = JsonConvert.SerializeObject(result);
+
+            //var jsonResult = Json(jsonstring, JsonRequestBehavior.AllowGet);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        //Added 'GetSOPaymentDetailsNotifications' 25-04-23 end.
+        #endregion
 
     }
 }

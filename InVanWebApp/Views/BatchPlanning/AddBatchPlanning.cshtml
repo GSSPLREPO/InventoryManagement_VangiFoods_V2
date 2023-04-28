@@ -236,6 +236,7 @@
                 i++;
             }
             var totalBatchYield = ((totalRawYield * TotalBatchSize) / totalPercentage);
+            TotalBatchSize = Math.round(TotalBatchSize*100)/100;
             $('#TotalBatchSize').val(TotalBatchSize);
 
             var RequiredQuantityInKG = $('#RequiredQuantityInKG').val();

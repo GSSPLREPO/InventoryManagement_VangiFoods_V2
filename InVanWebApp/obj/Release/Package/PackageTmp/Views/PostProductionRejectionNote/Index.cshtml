@@ -5,19 +5,19 @@
 }
 <html>
 <head>
-    <title>Post-Production Rejection Note</title>
+    <title>Post-Production RN</title>
 </head>
 <body>
 
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Post-Production Rejection Note</h4>
+            <h4 class="page-title">Post-Production RN</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Production</a>
                     </li>
-                    <li class="breadcrumb-item active">Post-Production RN</li>
+                    <li class="breadcrumb-item active">Post-Production Rejection Note</li>
                 </ol>
             </nav>
         </div>
@@ -28,10 +28,10 @@
                     <div class="card">
                         <div class="card-body">
                             <a href="@Url.Action("AddPostProductionRejectionNote","PostProductionRejectionNote")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span> Post-Production Rejection Note
+                                <span class="fa fa-plus"></span> Post-Production RN
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
-                                <table class="table table-striped table-bordered" id="tbl_PO">
+                                <table class="table table-striped table-bordered hover table-sm" id="tbl_PO">
                                     <thead>
                                         <tr>
                                             <th>@Html.DisplayName("Document Date")</th>
@@ -54,11 +54,17 @@
                                                 <td>@Html.DisplayFor(modelItem => item.WorkOrderNo)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.SO_No)</td>
                                                 <td>
-                                                    <a href=@Url.Action("EditPostProdRN", new { ID = item.ID }) title="Edit SO">
-                                                        <i class="fa fa-edit text-primary"></i>
-                                                    </a>
-                                                    <a href=@Url.Action("DeletePostProdRN", new { ID = item.ID, }) onclick="return confirm('Are you sure want to delete the SO?');" title="Delete SO">
+                                                    @if (item.DraftFlag == true)
+                                                    {
+                                                        <a href=@Url.Action("EditPostProdRN", new { ID = item.ID }) title="Edit Post-Production RN">
+                                                            <i class="fa fa-edit text-primary"></i>
+                                                        </a>
+                                                    }
+                                                    <a href=@Url.Action("DeletePostProdRN", new { ID = item.ID, }) onclick="return confirm('Are you sure, you want to delete?');" title="Delete Post-Production RN">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a>
+                                                    <a href=@Url.Action("ViewPostProdRN", new { ID = item.ID }) title="View Post-Production RN">
+                                                        <i class="fa fa-eye text-primary"></i>
                                                     </a>
                                                 </td>
                                             </tr>

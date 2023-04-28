@@ -102,6 +102,9 @@ namespace InVanWebApp_BO
         public decimal RejectedQuantity { get; set; }
         public Nullable<decimal> TotalItemCost { get; set; }
 
+        //Added the below field for notification
+        public string SOPaymentDueDate { get; set; }
+
     }
     public class SalesOrderItemsDetailBO 
      {

@@ -5,11 +5,16 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Finished Good Series</title>
+    <title>Finished Goods Series</title>
     <style>
         html2canvas-container {
             width: 3000px !important;
             height: 2000px !important;
+        }
+
+        hr {
+            color: black;
+            height: -1%
         }
     </style>
 </head>
@@ -23,163 +28,164 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
-                                    <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Finished Good Series</h3>
+                                    <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
+                                    <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;">Finished Goods Series</h3>
 
                                     <div class="col">
                                         <div class="col-md-12">
-                                            <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" onclick="ExportPdfFunction('printV','FinishedGoodSeries',590, 400)" />
+                                            <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" onclick="ExportPdfFunction('printV','FinishedGoodsSeries_',590, 400)" />
                                         </div>
                                     </div>
                                 </div>
 
                                 <hr />
                                 <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Sales Order Number </label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.SONo)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Work Order No</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.WorkOrderNo)
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Location</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.LocationName)
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Product</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.ProductName)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Manufacture Date</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.MfgDate)
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Package Size</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.PackageSize)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Quantity (Packets)</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.QuantityInKG)
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">No of Carton Box of Product</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.NoOfCartonBox)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Batch No</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.BatchNo)
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Packaging</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.Packaging)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Sealing</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.Sealing)
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Labelling</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.Labelling)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Quality Control Check</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.QCCheck)
-                                        </div>
-                                    </div>
-                                   
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Expected Packets</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.ExpectedPackets)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Actual Packets</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.ActualPackets)
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Expected Yield</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.ExpectedYield) %
+                                    <div style="font-size:110%; color:black;">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Sales Order Number </label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.SONo)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Work Order No</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.WorkOrderNo)
+                                            </div>
                                         </div>
 
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Actual Yield</label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Location</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.LocationName)
+                                            </div>
                                         </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.ActualYield) %
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Product</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.ProductName)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Manufacture Date</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.MfgDate)
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Package Size</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.PackageSize)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Quantity (Packets)</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.QuantityInKG)
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">No of Carton Box of Product</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.NoOfCartonBox)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Batch No</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.BatchNo)
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Packaging</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.Packaging)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Sealing</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.Sealing)
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Labelling</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.Labelling)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Quality Control Check</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.QCCheck)
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Expected Packets</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.ExpectedPackets)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Actual Packets</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.ActualPackets)
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Expected Yield</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.ExpectedYield) %
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Actual Yield</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.ActualYield) %
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Remarks</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.Remarks)
+                                            </div>
                                         </div>
                                     </div>
-                                    
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Remarks</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.Remarks)
-                                        </div>
                                     </div>
+                                    <br />
+                                    <a href="@Url.Action("Index", "FinishedGoodSeries")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                        Back To List
+                                    </a>
                                 </div>
-
-                                <br />
-                                <a href="@Url.Action("Index", "FinishedGoodSeries")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
-                                    Back To List
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>}

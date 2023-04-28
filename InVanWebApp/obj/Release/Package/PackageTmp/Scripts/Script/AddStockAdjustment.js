@@ -133,7 +133,7 @@ function SelectedIndexChangedLocation(id) {
                         t5.id = "txtPhysicalStock_" + j;
                         t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                         t5.setAttribute("value", "0");
-                        t5.setAttribute("type", "number");
+                        //t5.setAttribute("type", "number");
                         t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
@@ -151,7 +151,7 @@ function SelectedIndexChangedLocation(id) {
                         t5.id = "txtTransferPrice_" + j;
                         t5.setAttribute("readonly", "readonly");
                         t5.setAttribute("value", "0");
-                        t5.setAttribute("type", "number");
+                        //t5.setAttribute("type", "number");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
                     }
@@ -252,7 +252,7 @@ function SelectedIndexChangedItem(id) {
                         t5.id = "txtPhysicalStock_" + j;
                         t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                         t5.setAttribute("value", "0");
-                        t5.setAttribute("type", "number");
+                        //t5.setAttribute("type", "number");
                         t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);

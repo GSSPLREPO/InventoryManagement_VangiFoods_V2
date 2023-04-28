@@ -43,5 +43,8 @@ namespace InVanWebApp_BO
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public int SrNo { get; set; }
+
+        //Added the below the fields for notification
+        public string CalibrationLogDueDate { get; set; }
     }
 }

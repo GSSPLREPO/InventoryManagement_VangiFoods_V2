@@ -312,6 +312,7 @@ namespace InVanWebApp.Repository
                             RecipeID = Convert.ToInt32(reader["RecipeID"]),
                             RecipeName = reader["RecipeName"].ToString(),
                             SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),
+                            SO_Id = Convert.ToInt32(reader["SalesOrderId"]),
                             SONo = reader["SONo"].ToString(),
                             WorkOrderNo = reader["WorkOrderNo"].ToString(),
                             TotalBatches = Convert.ToInt32(reader["TotalBatches"]),
