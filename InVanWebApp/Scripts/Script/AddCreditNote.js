@@ -3,8 +3,25 @@ function SaveBtnClick() {
     var PONumber = $("#PO_ID option:selected").text();
     $("#PO_Number").val(PONumber);
 
+    var grandTotal = $('#GrandTotal').val();
+    if (grandTotal == '' || grandTotal == null) {
+        grandTotal = 0;
+    }
+    else {
+        grandTotal = parseFloat(grandTotal);
+    }
+    if (grandTotal == 0) {
+        alert('Wastage of all listed items are zero, Cannot create its credit note!');
+        $('#btnSave').prop('disabled', true);
+        event.preventDefault();
+        return;
+    }
+    else {
+        $('#btnSave').prop('disabled', false);
+    }
     createJson();
 };
+
 //==========end===============
 
 //=====================Onchange of PO===========================
@@ -294,27 +311,29 @@ function SelectedIndexChangedPO(id) {
                         cell.setAttribute("id", "ItemTax_" + j);
                     }
                     else if (i == 9) {
-                        cell.innerHTML = result[j].TotalItemCost + " " + result[j].CurrencyName;
-                        cell.setAttribute("id", "TotalItemCost_" + j);
+                        //cell.innerHTML = result[j].TotalItemCost + " " + result[j].CurrencyName;
+                        //cell.setAttribute("id", "TotalItemCost_" + j);
+
+                        var t9 = document.createElement("input");
+                        t9.id = "TotalItemCost_" + j;
+                        t9.setAttribute("class", "form-control form-control-sm");
+                        t9.setAttribute("readonly", "readonly");
+                        cell.appendChild(t9);
                     }
-                    //else if (i == 10) {
-                    //    cell.innerHTML = result[j].Remarks;
-                    //    cell.setAttribute("id", "Remarks_" + j);
-                    //}
                 }
 
             }
 
-            CalculateTotalBeforeTax();
-            var grandTotal = $('#GrandTotal').val()
-            grandTotal = parseFloat(grandTotal);
-            if (grandTotal == 0) {
-                alert('Wastage of all listed items are zero, Cannot create its credit note!');
-                $('#btnSave').prop('disabled', true);
-            }
-            else {
-                $('#btnSave').prop('disabled', false);
-            }
+            //CalculateTotalBeforeTax();
+            //var grandTotal = $('#GrandTotal').val()
+            //grandTotal = parseFloat(grandTotal);
+            //if (grandTotal == 0) {
+            //    alert('Wastage of all listed items are zero, Cannot create its credit note!');
+            //    $('#btnSave').prop('disabled', true);
+            //}
+            //else {
+            //    $('#btnSave').prop('disabled', false);
+            //}
         },
         error: function (err) {
             alert('Not able to fetch indent item details!');
@@ -340,7 +359,10 @@ function CalculateTotalBeforeTax() {
 
     var i = 1;
     while (i <= length) {
-        var temp = ((document.getElementById("TotalItemCost_" + i)).innerHTML).split(" ")[0];
+        var temp = ((document.getElementById("TotalItemCost_" + i)).value);
+        if (temp == '' || temp == null) {
+            temp = 0;
+        }
         var tempTotalTax = ((document.getElementById("ItemTax_" + i)).innerHTML).split(" %")[0];
         total = parseFloat(temp) + total;
 
@@ -386,6 +408,18 @@ function OnChangeWasteQty(value, id) {
     else {
         $('#btnSave').prop("disabled", false);
         $('#spanRemark_' + rowNo).hide();
+
+        var unitPrice = document.getElementById('ItemUnitPrice_' + rowNo).innerText.split(' ')[0];
+        if (unitPrice == null || unitPrice == '') {
+            unitPrice = 0;
+        }
+        else {
+            unitPrice = parseFloat(unitPrice);
+        }
+        var totalItrmCost = unitPrice * value;
+        $('#TotalItemCost_' + rowNo).val(totalItrmCost);
+
+        CalculateTotalBeforeTax();
     }
     document.getElementById(id).setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
 }
@@ -409,7 +443,7 @@ function createJson() {
 
         var CurrencyName = (document.getElementById("CurrencyName_" + i)).innerHTML;
         var Tax = (document.getElementById("ItemTax_" + i)).innerHTML.split(" ")[0];
-        var TotalItemCost = (document.getElementById("TotalItemCost_" + i)).innerHTML.split(" ")[0];
+        var TotalItemCost = (document.getElementById("TotalItemCost_" + i)).value;
         TotalItemCost = (TotalItemCost == null || TotalItemCost == '') ? 0 : TotalItemCost;
         // var Remarks = (document.getElementById("Remarks_" + i)).innerHTML;
 

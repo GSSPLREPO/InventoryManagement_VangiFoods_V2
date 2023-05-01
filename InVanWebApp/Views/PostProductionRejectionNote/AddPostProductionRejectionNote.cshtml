@@ -291,8 +291,8 @@
                             }
                         }
 
-                        var WholeRejFlag = $('#WholeBatchRejection').val();
-                        if (WholeRejFlag=='True') {
+                        var WholeRejFlag = $("#WholeBatchRejection").is(":checked");
+                        if (WholeRejFlag) {
                             var FGSQty = $('#FGSQty_0').val();
                             $('#txRejectedQty_0').val(FGSQty);
                             document.getElementById('txRejectedQty_0').setAttribute('disabled', 'disabled');
@@ -404,7 +404,7 @@
         TxtItemDetails = TxtItemDetails + "]";
         $('#txtItemDetails').val(TxtItemDetails);
 
-        console.log(TxtItemDetails);
+       /// console.log(TxtItemDetails);
     }
 
 </script>

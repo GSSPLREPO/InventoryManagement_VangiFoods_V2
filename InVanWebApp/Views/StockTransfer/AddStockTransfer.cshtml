@@ -577,12 +577,19 @@
             $("#transferQuantityErr_" + rowNo).text("Enter Transfer Quantity!");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             return;
         }
+        else if (TransferQuantity > currentQty) {
+            alert("Transfer quantity cannot be greater then Current quantity!");
+            $('#' + id).focus();
+            $('#btnSave').prop('disabled', 'true');
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+        }
+
         else {
             //Set transfer Quantity in item grid.
             $("#transferQuantityErr_" + rowNo).hide();//Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             document.getElementById(id).setAttribute("style", "");
-            //$("#TransferQuantity").val();
-            //$("#transferQuantity_" + rowNo).val();
+            $('#btnSave').prop('disabled', false);
+
         }
     }
     //---OnChangeQuantity end ------
@@ -633,7 +640,7 @@
             '</td>' +
             '<td>' +
             /*'<input type="text" id="' + transferQuantity + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="" required="required" />' +*/
-            '<input type="text" id="' + transferQuantity + '" onchange="CalItemTotalPrice($(this).val(),id)"; class="form-control form-control-sm text-right valid" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="0" maxlength="8" onkeypress="return isNumberKey(event)" onchange= "OnChangeQuantity($(this).val(),id)" required="required" />' +
+            '<input type="text" id="' + transferQuantity + '" class="form-control form-control-sm text-right valid" style = "height:30px;width:100px;" name="' + transferQuantity + '" value="0" maxlength="8" onkeypress="return isNumberKey(event)" onchange= "OnChangeQuantity($(this).val(),id)" required="required" />' +
             '<span id="' + transferQtyErrMsg + '">' +
             '</td>' +
             '<td>' +
@@ -804,5 +811,6 @@
             $("#remarks_" + rowNo).val();
         }
     }
+  }
 
 </script>

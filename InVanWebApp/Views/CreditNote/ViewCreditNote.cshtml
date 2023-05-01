@@ -155,7 +155,6 @@
                                                             <th class="sortStyle">Currency</th>
                                                             <th class="sortStyle">Tax</th>
                                                             <th class="sortStyle">Total Item Cost</th>
-                                                            <th class="sortStyle">Remarks</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="myTableBody">
@@ -192,9 +191,6 @@
                                                 </td>
                                                 <td>
                                                     @Html.TextBoxFor(x => item.ItemTotalAmount, new { id = "totalItemCost_" + c, style = "border:none;background: none;line-height: 1.5rem;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(x => item.Remarks)
                                                 </td>
                                             </tr> { c++; }
                                                             } }
