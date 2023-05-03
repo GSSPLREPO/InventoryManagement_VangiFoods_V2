@@ -46,7 +46,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.WOPO, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsBatchNo(event);" })
+                    @Html.TextBoxFor(model => model.WOPO, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsBatchNo(event);" })
                     @Html.ValidationMessageFor(model => model.WOPO, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -65,7 +65,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsBatchNo(event);" })
+                    @Html.TextBoxFor(model => model.BatchNo, new { @class = "form-control form-control-sm", maxlength = "100", @onkeypress = "return IsBatchNo(event);" })
                     @Html.ValidationMessageFor(model => model.BatchNo, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">

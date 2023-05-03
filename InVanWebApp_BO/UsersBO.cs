@@ -9,7 +9,7 @@ namespace InVanWebApp_BO
 {
     public class UsersBO
     {
-        public int UserId { get; set; }
+        public Nullable<int> UserId { get; set; }
         public Nullable<int> RoleId { get; set; }
         public Nullable<int> EmployeeId { get; set; }
 
@@ -24,5 +24,8 @@ namespace InVanWebApp_BO
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public bool IsActive { get; set; }
+
+        //Added the following for stopping the system after 3 months
+        public Boolean flag { get; set; }
     }
 }

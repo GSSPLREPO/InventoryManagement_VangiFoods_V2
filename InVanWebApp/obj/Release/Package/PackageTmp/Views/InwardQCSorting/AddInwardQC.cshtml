@@ -258,6 +258,8 @@
                                 t6.removeAttribute("disabled", "false");
                                 t6.removeAttribute("disabled", "true");
                                 t6.setAttribute("onchange", "OnChangeQCQty($(this).val(),id)");
+                                t6.setAttribute("maxlength", "8");
+                                t6.setAttribute("onkeypress", "return isNumberKey(event)");
                                 flag = 1;
                             }
                             //t6.setAttribute("type", "number");
@@ -284,10 +286,12 @@
                                 t7.removeAttribute("disabled", "false");
                                 t7.removeAttribute("disabled", "true");
                                 t7.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
+                                t7.setAttribute("maxlength", "8");
+                                t7.setAttribute("onkeypress", "return isNumberKey(event)");
                             }
                             //t7.setAttribute("disabled", "true");
                             //t7.setAttribute("value", result[j].RejectedQuantity != 0 ? result[j].RejectedQuantity : '0');
-                            t7.setAttribute("type", "number");
+                            //t7.setAttribute("type", "number");
                             cell.appendChild(t7);
                         }
                         else if (i == 8) {
@@ -310,8 +314,8 @@
                             else {
                                 //t7.removeAttribute("disabled", "false");
                                 t7.removeAttribute("disabled", "true");
-                                t7.setAttribute("onkeyup", "OnKeyRemark($(this).val(),id)");
-                                t7.setAttribute("onchange", "OnChangeRemarkQty($(this).val(),id)");
+                                //t7.setAttribute("onkeyup", "OnKeyRemark($(this).val(),id)");
+                                //t7.setAttribute("onchange", "OnChangeRemarkQty($(this).val(),id)");
                             }
                             cell.appendChild(t7);
                         }
@@ -521,7 +525,7 @@
 
             }
             if (flag == 1) {
-                alert("Quantity quantity is zero or null! Cannot create Inward QC!");
+                alert("Quantity is zero or null or greate than Inward/balance quantity! Cannot create Inward QC!");
                 $('#btnSave').prop('disabled', true);
                 return;
             }
@@ -531,6 +535,21 @@
 
         createJson();
         $('#QuantitiesForSorting').val(itemTableDetails);
+    }
+
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
     }
 
 </script>

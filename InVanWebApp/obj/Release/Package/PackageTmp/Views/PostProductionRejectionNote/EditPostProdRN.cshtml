@@ -319,6 +319,15 @@
                                 cell.appendChild(t4);
                             }
                         }
+                        var WholeRejFlag = $('#WholeBatchRejection').val();
+                        if (WholeRejFlag == 'True') {
+                            var FGSQty = $('#FGSQty_0').val();
+                            $('#txRejectedQty_0').val(FGSQty);
+                            document.getElementById('txRejectedQty_0').setAttribute('disabled', 'disabled');
+                        }
+                        else {
+                            document.getElementById('txRejectedQty_0').removeAttribute('disabled', 'disabled');
+                        }
                         // }
                     }
                     else {

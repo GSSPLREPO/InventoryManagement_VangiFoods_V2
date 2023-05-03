@@ -42,7 +42,8 @@ namespace InVanWebApp.Repository
                         {
                             ID = Convert.ToInt32(reader["ID"]),
                             LocationName = reader["LocationName"].ToString(),
-                            Remark = reader["Remark"].ToString()
+                            Remark = reader["Remark"].ToString(), 
+                            LocationCount=Convert.ToInt32(reader["LocationCount"])
                         };
                         LocationList.Add(location);
 

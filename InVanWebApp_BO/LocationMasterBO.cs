@@ -33,5 +33,8 @@ namespace InVanWebApp_BO
 
         //Added th below field for real-time dashboard
         public int ItemID { get; set; }
+
+        //Added the below field for counting the warehouse
+        public int LocationCount { get; set; }
     }
 }

@@ -328,12 +328,14 @@ function OnChangeQty(value, id) {
         DiffQty = parseFloat(DiffQty);
         document.getElementById("txtDifference_" + rowNo).value = "-" + DiffQty;
         document.getElementById("txtDifference_" + rowNo).setAttribute("style", "color:red;");
+        document.getElementById("txtTransferPrice_" + rowNo).setAttribute("style", "color:red;");
     }
     else {
         DiffQty = avalQty - value;
         DiffQty = parseFloat(DiffQty);
         document.getElementById("txtDifference_" + rowNo).value = DiffQty;
         document.getElementById("txtDifference_" + rowNo).setAttribute("style", "color:none;");
+        document.getElementById("txtTransferPrice_" + rowNo).setAttribute("style", "color:none;");
     }
 
     var TransferPrice = (UnitPrice * DiffQty);

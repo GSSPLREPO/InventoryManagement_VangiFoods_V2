@@ -44,12 +44,18 @@ namespace InVanWebApp.Repository
                     {
                         result = new UsersBO()
                         {
-                            UserId = Convert.ToInt32(reader["UserId"]),
-                            RoleId = Convert.ToInt32(reader["RoleId"]),
+                            UserId = reader["UserId"] is DBNull?0: Convert.ToInt32(reader["UserId"]),
+                            RoleId = reader["RoleId"] is DBNull?0: Convert.ToInt32(reader["RoleId"]),
                             Username = reader["Username"].ToString(),
-                            Password = reader["Password"].ToString()
+                            Password = reader["Password"].ToString(),
+                            flag=Convert.ToBoolean(reader["Status"])
                         };
                     }
+                    if (result.flag) {
+                        result.UserId = null;
+                        result.RoleId = null;
+                    }
+
                     con.Close();
                 }
             }

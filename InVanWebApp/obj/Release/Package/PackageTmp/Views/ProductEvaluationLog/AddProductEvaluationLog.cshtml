@@ -47,7 +47,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BatchCode, new { @class = "form-control form-control-sm", maxlength = "30", @onkeypress = "return IsAlphabets(event);" })
+                    @Html.TextBoxFor(model => model.BatchCode, new { @class = "form-control form-control-sm", maxlength = "100", @onkeypress = "return IsAlphabets(event);" })
                     @Html.ValidationMessageFor(model => model.BatchCode, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -107,7 +107,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.WorkOrder, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
+                    @Html.TextBoxFor(model => model.WorkOrder, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.WorkOrder, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
