@@ -21,7 +21,7 @@ namespace InVanWebApp.Repository
         /// Farheen: This function is for fecthing list of role master's.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<RoleBO> GetAll()
+        public IEnumerable<RoleBO> GetAll(int UserId = 0)
         {
             List<RoleBO> RoleMastersList = new List<RoleBO>();
             try
@@ -30,6 +30,7 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_Role_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserId",UserId);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())

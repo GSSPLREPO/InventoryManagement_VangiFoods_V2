@@ -35,44 +35,47 @@
                                 <span class="fa fa-plus"></span> Role
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
-                                <table class="table table-striped table-bordered" style="table-layout:fixed;">
-                                    <tr>
-                                        <th>
-                                            @*@Html.DisplayNameFor(model => model.UnitName)*@
-                                            @Html.DisplayName("Role")
-                                        </th>
-                                        <th>
-                                            @*@Html.DisplayNameFor(model => model.Description)*@
-                                            @Html.DisplayName("Description")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Actions")
-                                        </th>
-                                    </tr>
-
-                                    @foreach (var item in Model)
-                                    {
+                                <table class="table table-striped table-bordered hover table-sm" id="tblItem">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.RoleName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Description)
-                                            </td>
-                                            <td>
-                                                <a href=@Url.Action("EditRole", "Role", new { RoleId = item.RoleId }) title="Edit Role">
-                                                    <i class="fa fa-edit text-primary"></i>
-                                                </a> &emsp;
-                                                <a href=@Url.Action("DeleteRole", "Role", new { RoleId = item.RoleId }) onclick="return confirm('Are you sure want to delete?');" title="Delete Role">
-                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                </a>
-                                                @*@Html.ActionLink("Edit", "EditRole", new { RoleId = item.RoleId }) |*@
-                                                @*@Html.ActionLink("Delete", "DeleteRole", new { RoleId = item.RoleId, },
-                                                    new { onclick = "return confirm('Are you sure, you wants to delete?');" })*@
-
-                                            </td>
+                                            <th>
+                                                @*@Html.DisplayNameFor(model => model.UnitName)*@
+                                                @Html.DisplayName("Role")
+                                            </th>
+                                            <th>
+                                                @*@Html.DisplayNameFor(model => model.Description)*@
+                                                @Html.DisplayName("Description")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Actions")
+                                            </th>
                                         </tr>
-                                    }
+                                    </thead>
+                                    <tbody style="overflow-wrap: anywhere;">
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.RoleName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Description)
+                                                </td>
+                                                <td>
+                                                    <a href=@Url.Action("EditRole", "Role", new { RoleId = item.RoleId }) title="Edit Role">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a> &emsp;
+                                                    <a href=@Url.Action("DeleteRole", "Role", new { RoleId = item.RoleId }) onclick="return confirm('Are you sure want to delete?');" title="Delete Role">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a>
+                                                    @*@Html.ActionLink("Edit", "EditRole", new { RoleId = item.RoleId }) |*@
+                                                    @*@Html.ActionLink("Delete", "DeleteRole", new { RoleId = item.RoleId, },
+                    new { onclick = "return confirm('Are you sure, you wants to delete?');" })*@
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -85,3 +88,32 @@
 
 </html>
 @Html.Raw(TempData["Success"])
+@section scripts{
+
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tblItem').dataTable().fnDestroy();
+            $('#tblItem').dataTable({
+                //"aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+                "iDisplayLength": 10
+            });
+        });
+
+        var table = $('#tblItem').dataTable({
+            "serverSide": false,
+            "filter": true,
+            "pageLength": 10
+            // "searching": true,
+            //"bLengthChange": false,
+            // "bPaginate": true
+            //"pageLength": 15
+        });
+    </script>
+}

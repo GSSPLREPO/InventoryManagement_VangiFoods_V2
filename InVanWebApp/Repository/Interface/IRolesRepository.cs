@@ -10,7 +10,7 @@ namespace InVanWebApp.Repository
     public interface IRolesRepository
     {
         //Define function for fetching details of Role master.
-        IEnumerable<RoleBO> GetAll();
+        IEnumerable<RoleBO> GetAll(int UserId=0);
 
         //Define function for fetching details of Role master by ID.
         RoleBO GetById(int RoleId);

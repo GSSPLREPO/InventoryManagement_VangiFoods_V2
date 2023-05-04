@@ -10,12 +10,12 @@ namespace InVanWebApp.Repository.Interface
     public interface IUserDetailsRepository
     {
         //Define function for fetching details of Item type.
-        IEnumerable<UserDetailsBO> GetAll();
+        IEnumerable<UserDetailsBO> GetAll(int UserId=0);
 
         //Function for fetching lists for dropdowns.
         IEnumerable<OrganisationsBO> GetOrganisationForDropDown();
         IEnumerable<DesignationBO> GetDesignationForDropDown();
-        IEnumerable<RoleBO> GetRoleForDropDown();
+        IEnumerable<RoleBO> GetRoleForDropDown(int UserId=0);
         
         //Function define for: Insert record.
         ResponseMessageBO Insert(UserDetailsBO model);

@@ -45,7 +45,8 @@ namespace InVanWebApp.Controllers
         /// </summary>
         public void BindRoles()
         {
-            var roles = _rolesRepository.GetAll();
+            var UserId = Convert.ToInt32(Session[ApplicationSession.USERID]);            
+            var roles = _rolesRepository.GetAll(UserId);
             var rolesList = new SelectList(roles.ToList(), "RoleId", "RoleName");
             ViewData["Roles"] = rolesList;
         }
@@ -54,6 +55,10 @@ namespace InVanWebApp.Controllers
         #region Bind Role Rights page
         public ActionResult Index()
         {
+            if (Session[ApplicationSession.USERID] == null) {
+                return RedirectToAction("Index","Login");
+            }
+
             //bind roles to dropdownlist
             BindRoles();
             var Screens = _rolesRepository.GetAllScreens();

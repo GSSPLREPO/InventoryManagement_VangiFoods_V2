@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using InVanWebApp_BO;
 using InVanWebApp.Repository;
 using log4net;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Controllers
 {
@@ -43,7 +44,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _rolesRepository.GetAll();
+            if (Session[ApplicationSession.USERID] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            var UserId = Convert.ToInt32(Session[ApplicationSession.USERID]);
+            var model = _rolesRepository.GetAll(UserId);
             return View(model);
         }
         #endregion
@@ -56,6 +63,11 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddRole()
         {
+            if (Session[ApplicationSession.USERID] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             return View();
         }
 
@@ -104,6 +116,11 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditRole(int RoleId)
         {
+            if (Session[ApplicationSession.USERID] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             RoleBO model = _rolesRepository.GetById(RoleId);
             return View(model);
         }
@@ -159,6 +176,11 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteRole(int RoleId)
         {
+            if (Session[ApplicationSession.USERID] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             _rolesRepository.Delete(RoleId);
             //_unitRepository.Save();
             TempData["Success"] = "<script>alert('Role deleted successfully!');</script>";
