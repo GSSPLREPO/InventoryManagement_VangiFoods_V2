@@ -59,7 +59,6 @@
                                 <div class="row">
                                     <div class="col-md-2 ms-1">
                                         <label>Item:</label>
-                                        <span style="color:red">*</span>
                                     </div>
                                     <div class="col-md-3">
                                         @Html.DropDownList("Item", (IEnumerable<SelectListItem>)ViewData["Item"], "--Select--", new { @class = "form-control", @id = "ItemId", onchange = "SelectedIndexChangedItem()" })
@@ -68,7 +67,6 @@
 
                                     <div class="col-md-2">
                                         <label>Wearhouse Location:</label>
-                                        <span style="color:red">*</span>
                                     </div>
                                     <div class="col-md-3">
                                         @Html.DropDownList("Wearhouse", (IEnumerable<SelectListItem>)ViewData["WearhouseLocation"], "--Select--", new { @class = "form-control", @id = "Wearhouse", onchange = "SelectedIndexChangedWearhouse()" })
@@ -165,12 +163,7 @@
 
             var Check = $('#Wearhouse').val();
             if (Check == '' || Check == null) {
-                $('#WearhouseValidate').text("Select Location!");
-                $('#WearhouseValidate').show();
-                $('#Wearhouse').focus();
-                document.getElementById('Wearhouse').selectedIndex = 0;
-                flag = 1;
-                //return;
+                Check = 0;
             }
             else {
                 SelectedIndexChangedWearhouse();
@@ -178,27 +171,18 @@
 
             var CheckItem = $('#ItemId').val();
             if (CheckItem == '' || CheckItem == null) {
-                $('#ItemValidate').text("Select Item!");
-                $('#ItemValidate').show();
-                $('#ItemId').focus();
-                document.getElementById('ItemId').selectedIndex = 0;
-                flag = 1;
-                //return;
+                CheckItem = 0;
             }
             else {
                 SelectedIndexChangedItem();
-            }
-
-            if (flag == 1) {
-                return;
             }
 
             $('#ExportPdf').show();
             $('#ExportExcel').show();
             $('#tblInward').show();
 
-            var item = $('#ItemId').val();
-            var warehouse = $('#Wearhouse').val();
+            var item = CheckItem;
+            var warehouse = Check;
 
             $('#tblInward').dataTable().fnDestroy();
             var t = $('#tblInward').DataTable({

@@ -55,42 +55,42 @@
                                 @using (Html.BeginForm("Index", "Login", FormMethod.Post))
                                 {
                                     @Html.AntiForgeryToken()
-                            <form class="pt-3">
-                                <div class="form-group">
-                                    @*<h5>Username</h5>*@
-                                    <div class="input-group">
-                                        <div class="input-group-prepend bg-transparent">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fa fa-user text-primary"></i>
-                                            </span>
+                                    <form class="pt-3">
+                                        <div class="form-group">
+                                            @*<h5>Username</h5>*@
+                                            <div class="input-group">
+                                                <div class="input-group-prepend bg-transparent">
+                                                    <span class="input-group-text bg-transparent border-right-0">
+                                                        <i class="fa fa-user text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Username, new { @class = "form-control form-control-lg border-left-0", placeholder = "Username", type = "text" })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "error mt-2 text-danger" })
                                         </div>
-                                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control form-control-lg border-left-0", placeholder = "Username", type = "text" })
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "error mt-2 text-danger" })
-                                </div>
-                                <div class="form-group">
-                                    @*<h5>Password</h5>*@
-                                    <div class="input-group">
-                                        <div class="input-group-prepend bg-transparent">
-                                            <span class="input-group-text bg-transparent border-right-0">
-                                                <i class="fa fa-lock text-primary"></i>
-                                            </span>
+                                        <div class="form-group">
+                                            @*<h5>Password</h5>*@
+                                            <div class="input-group">
+                                                <div class="input-group-prepend bg-transparent">
+                                                    <span class="input-group-text bg-transparent border-right-0">
+                                                        <i class="fa fa-lock text-primary"></i>
+                                                    </span>
+                                                </div>
+                                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control form-control-lg border-left-0", placeholder = "Password", type = "password" })
+                                            </div>
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error mt-2 text-danger" })
                                         </div>
-                                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control form-control-lg border-left-0", placeholder = "Password", type = "password" })
-                                    </div>
-                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "error mt-2 text-danger" })
-                                </div>
-                                <div style="color:red;padding-right:0.1%;" id="txtBox">@ViewBag.Login</div>
-                                <div class="my-3">
-                                    <button id="btnLogin" type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style="background: linear-gradient(85deg, #392c70, #6a005b); line-height: 0.5;">Login</button>
-                                </div>
-                                <div class=" justify-content-space-between mb-4">
-                                    <span class="float-left mt-1" style="font-size:12px;">Version: 2.1.0</span>
-                                    <a class="float-right brand-logo-mini mb-3" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="20" alt="logo" /></a>
-                                    <span class="float-right mt-1" style="font-size:12px;">Powered by:</span>
+                                        <div style="color:red;padding-right:0.1%;" id="txtBox">@ViewBag.Login</div>
+                                        <div class="my-3">
+                                            <button id="btnLogin" type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" style="background: linear-gradient(85deg, #392c70, #6a005b); line-height: 0.5;">Login</button>
+                                        </div>
+                                        <div class=" justify-content-space-between mb-4">
+                                            <span class="float-left mt-1" style="font-size:12px;">Version: 2.1.0</span>
+                                            <a class="float-right brand-logo-mini mb-3" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="20" alt="logo" /></a>
+                                            <span class="float-right mt-1" style="font-size:12px;">Powered by:</span>
 
-                                </div>
-                            </form>
+                                        </div>
+                                    </form>
                                     @*<div class=" justify-content-space-between mb-5">
                                             <span class="float-left" style="font-size:12px;">Version: 1.1.0</span>
                                             <div class="float-right">
@@ -139,10 +139,10 @@
 @if (ViewBag.Login == null)
 {
     <script type="text/javascript">
-    $('#txtBox').hide();
-            @*window.onload = function () {
-                alert('@ViewBag.Login');*@
-                //console.log('hi');
-            //}
+        $('#txtBox').hide();
+        //Added the below scripts for disabling the right click on the page:
+        document.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+        });
     </script>
 }

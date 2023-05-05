@@ -56,7 +56,6 @@
                                 <div class="row">
                                     <div class="col-md-2 ms-1">
                                         <label>Item:</label>
-                                        <span style="color:red">*</span>
                                     </div>
                                     <div class="col-md-3">
                                         @Html.DropDownList("Item", (IEnumerable<SelectListItem>)ViewData["Item"], "--ALL--", new { @class = "form-control", @id = "ItemId", onchange = "SelectedIndexChangedItem()" })
@@ -171,43 +170,17 @@
 
             var CheckItem = $('#ItemId').val();
             if (CheckItem == '' || CheckItem == null) {
-                $('#ItemValidate').text("Select Item!");
-                $('#ItemValidate').show();
-                $('#ItemId').focus();
-                document.getElementById('ItemId').selectedIndex = 0;
-                flag = 1;
+                CheckItem = 0;
             }
             else {
                 SelectedIndexChangedItem();
             }
 
-            if (flag == 1) {
-                return;
-            }
-
-            //===========OnChange of item if From date is not selected================
-            //var fromDateCheck = $('#fromDate').val();
-            //var toDateCheck = $('#toDate').val();
-            //if (fromDateCheck == '' || fromDateCheck == null) {
-            //    $('#fromDateValidate').text("Select from date!");
-            //    $('#fromDateValidate').show();
-            //    $('#fromDate').focus();
-            //    return;
-            //}
-            //else if (toDateCheck == '' || toDateCheck == null) {
-            //    $('#toDateValidate').text("Select to date!");
-            //    $('#toDateValidate').show();
-            //    $('#toDate').focus();
-            //    return;
-            //}
-
-            //==================end======================
-
             $('#ExportPdf').show();
             $('#ExportExcel').show();
             $('#tblInward').show();
 
-            var item = $('#ItemId').val();
+            var item = CheckItem;
 
             //if (item == '' || item == nul) {
             //    item = 0;
