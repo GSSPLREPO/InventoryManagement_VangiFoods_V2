@@ -1,164 +1,155 @@
 ﻿@model InVanWebApp_BO.RecipeMasterBO
-@{
-    ViewBag.Title = "EditRecipeItem";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "EditRecipeItem";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
-@using (Html.BeginForm())
+
+@using (Html.BeginForm("AddRecipeItems", "RecipeMater", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-    <div class="card">
-        <div class="card-body">
-            <h4>Edit Recipe Item</h4>
-            <hr />
-            @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.RecipeID)
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Edit Recipe Item</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.RecipeID)
 
-            @using (Html.BeginForm("AddRecipeItems", "RecipeMater", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                @Html.AntiForgeryToken()
-                <div id="AddDiv">
-                    <div class="row">
-                        <div class="col-md-2">
-                            @Html.Label("Product Name")
-                            <span style="color:red">*</span>
-                        </div>
-                        <div class="col-md-4">
-                            @Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val())" })
-                            @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error mt-2 text-danger" })
-                            @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
-                        </div>
-                    </div>
+                        <div id="AddDiv">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.Label("Product Name")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.HiddenFor(model => model.ProductID)
+                                    @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            @Html.Label("Recipe Item Name")
-                            <span style="color:red">*</span>
+                                    @*@Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val())" })*@
+                                    @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.Label("Recipe Name")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "40" })
+                                    @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.Label("Description")
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "40" })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "40" })
-                            @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
+                        <br />
+                        <div class="row">
+                            <div class="col-md-4" style="color:darkcyan">
+                                @Html.Label("Recipe Ingredient Details")
+                            </div>
                         </div>
-                        <div class="col-md-2">
-                            @Html.Label("Recipe Description")
-                            <span style="color:red">*</span>
-                        </div>
-                        <div class="col-md-4">
-                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "40" })
-                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
-                        </div>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4" style="color:darkcyan">
-                        @Html.Label("Recipe Ingredients detail")
-                    </div>
-                </div>
-                <hr />
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                        <table class="table table-hover" id="submissionTable">
-                                            <thead>
-                                                <tr>
-                                                    <th class="sortStyle">
-                                                        Item Code
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Selected Item Code
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Item
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Units
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Percentage (%)
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Batch Size (KG)
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Description
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="myTableBody">
-                                                @{ int c = 1;
-                                                    foreach (var item in Model.recipe_Details)
-                                                    {
-                                                        string Ingredients = "Ingredients";
-                                                        Ingredients = Ingredients + (c - 1);
-                                                        <tr id="tablerow_@c">
-                                                            <td>
-                                                                @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[Ingredients], "--Select Item---",
-                                                                    new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
-                                                            </td>
-                                                            <td class="col-md-4">
-                                                                @Html.TextBox("Item_Code_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                                            </td>
-                                                            <td>
-                                                                @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                            </td>
-                                                            <td>
-                                                                @Html.TextBox("ItemUnit_" + c, item.UnitName, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                            </td>
-                                                            <td>
-                                                                @Html.TextBox("Ratio_" + c, item.Ratio, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeRatioForFirstRow($(this).val(),id)" })
-                                                            </td>
-                                                            <td>
-                                                                @Html.TextBox("BatchSize_" + c, item.BatchSize, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeBatchSizeForFirstRow($(this).val(),id)" })
-                                                            </td>
-                                                            <td>                                                                
-                                                                @Html.TextBox("Description_" + c, item.Description, "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", onkeypress = "createJson();" })
-                                                            </td>
-                                                            <td>
-                                                                @*<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>*@
-                                                            @if (c == 1)
-                                                            {
-                                                                <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);" disabled>Delete</button>
-                                                            }
-                                                            else
-                                                            {
-                                                                <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
-                                                            }
-                                                            </td>
+                        <hr />
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                <table class="table table-hover" id="submissionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">
+                                                                Ingredient
+                                                            </th>
+                                                            <th class="sortStyle d-n d-none">
+                                                                Selected Item Code
+                                                            </th>
+                                                            <th class="sortStyle d-n d-none">
+                                                                Item
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Unit
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Percentage (%)
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Batch Size (KG)
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Description
+                                                            </th>
                                                         </tr>
-                                                        { c++; }
-                                                    }
-
-                                                }
-                                            </tbody>
-                                        </table>
-                                        <br />
-                                        <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddRecipeItem">
-                                            + Add Recipe
-                                        </button>
+                                                    </thead>
+                                                    <tbody id="myTableBody">
+                                                        @{ int c = 1;
+                                                            foreach (var item in Model.recipe_Details)
+                                                            {
+                                                                string Ingredients = "Ingredients";
+                                                                Ingredients = Ingredients + (c - 1);
+                                            <tr id="tablerow_@c">
+                                                <td>
+                                                    @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[Ingredients], "--Select Item---",
+                                                                                                                     new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
+                                                </td>
+                                                <td class="col-md-4 d-n d-none">
+                                                    @Html.TextBox("Item_Code_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                </td>
+                                                <td class="d-n d-none">
+                                                    @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("ItemUnit_" + c, item.UnitName, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("Ratio_" + c, item.Ratio, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeRatioForFirstRow($(this).val(),id)" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("BatchSize_" + c, item.BatchSize, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeBatchSizeForFirstRow($(this).val(),id)" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("Description_" + c, item.Description, "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", onkeypress = "createJson();" })
+                                                </td>
+                                                <td>
+                                                    @*<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>*@
+                                                    @if (c == 1)
+                                                    {
+                                <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);" disabled>Delete</button> }
+                            else
+                            {
+        <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>}
+                                                </td>
+                                            </tr>
+ { c++; }
+                                        } }
+                                                    </tbody>
+                                                </table>
+                                                <br />
+                                                <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddRecipeItem">
+                                                    + Add Recipe
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
-                            </div>
                         </div>
-                    </div>
-                </div>
-                <br />
-                <a href="@Url.Action("Index", "RecipeMater")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
-                    Back To List
-                </a>
-                <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" onclick="SaveBtnClick()">Update</button>
-            }
+                        <br />
+                        <a href="@Url.Action("Index", "RecipeMater")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
+                            Back To List
+                        </a>
+                        <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" onclick="SaveBtnClick()">Update</button>}
 
-        </div>
-    </div>
-}
+                    </div>
+                </div>}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -285,10 +276,10 @@
             '<select id="' + itemId + '" onchange="getRecipeItemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID_1').html() + '</select>' +
             '<span id="' + dynValMsgItemList + '">' +
             '</td>' +
-            '<td class="">' +
+            '<td class="d-n d-none">' +
             '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" readonly="readonly"/>' +
             '</td>' +
-            '<td>' +
+            '<td class="d-n d-none">' +
             '<input type="text" id="' + itemName + '" class="form-control form-control-sm" style = "height:30px;" name="' + itemName + '" readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
@@ -308,7 +299,7 @@
             '<td>' +
             '<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
             '</td>' +
-            '</tr>').appendTo('#submissionTable');  
+            '</tr>').appendTo('#submissionTable');
         /////////////This is piece of code is for de-selecting the Item list in the dropdown of newly created/added row//////////////////////
         document.getElementById('Item_ID_' + counter).selectedIndex = 0;
         /////////////////////end.../////////////////
@@ -334,7 +325,7 @@
                             $("#Item_Code_" + count).val(itemDescription.Item_Code);
                             $("#ItemName_" + count).val(itemDescription.Item_Name);
                             $("#ItemUnit_" + count).val(itemDescription.UnitCode);
-                            
+
                 },
                 failure: function () {
                     alert('Failed to retrieved item detals!');
@@ -360,7 +351,7 @@
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
             document.getElementById("RatioErr").setAttribute("style", "color:red;");
-            $("#RatioErr").text("Enter Ratio!");
+            $("#RatioErr").text("Enter Percentage!");
             return;
         }
         else {
@@ -386,7 +377,7 @@
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
             document.getElementById("RatioErr_" + rowNo).setAttribute("style", "color:red;");
-            $("#RatioErr_" + rowNo).text("Enter Ratio!");
+            $("#RatioErr_" + rowNo).text("Enter Percentage!");
             return;
         }
         else {
@@ -448,7 +439,7 @@
     }
     //---OnChangeBatchSize end ------
 
-    function removeTr(index) {        
+    function removeTr(index) {
     //    var length = document.getElementById("submissionTable").rows.length;
     //    length = parseFloat(length) - 1;
     //    if (counter > 1 & length == index) {
@@ -457,7 +448,7 @@
     //    }
     //    else {
     //        $('#tablerow' + index).remove();
-    //    }        
+    //    }
     //    return false;
         /////Finding the length of existing table 10-04-23.
         var table = document.getElementById('submissionTable');
@@ -467,7 +458,7 @@
                 $('#tablerow_' + index).remove();
                 counter--;
             }
-        }        
+        }
         return false;
     }
 
@@ -489,4 +480,3 @@
 
 </script>
 @Html.Raw(TempData["Success"])
-

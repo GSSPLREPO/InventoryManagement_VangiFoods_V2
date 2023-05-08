@@ -54,11 +54,11 @@
                                                 <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>
                                                 <td class="text-wrap w-25">@Html.DisplayFor(modelItem => item.Description)</td>
                                                 <td>
+                                                    <a href=@Url.Action("ViewIndent", new { ID = item.ID }) title="View Indent">
+                                                        <i class="fa fa-eye text-primary"></i>
+                                                    </a><span>&emsp;</span>
                                                     @if (item.IndentCount == 0)
                                                     {
-                                                        <a href=@Url.Action("ViewIndent", new { ID = item.ID }) title="View Indent">
-                                                            <i class="fa fa-eye text-primary"></i>
-                                                        </a><span>&emsp;</span>
                                                         <a href=@Url.Action("EditIndent", "Indent", new { ID = item.ID }) title="Edit Indent">
                                                             <i class="fa fa-edit text-primary"></i>
                                                         </a> <span>&emsp;</span>

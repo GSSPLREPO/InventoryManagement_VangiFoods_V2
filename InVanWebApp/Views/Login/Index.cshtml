@@ -144,5 +144,17 @@
         document.addEventListener("contextmenu", (event) => {
             event.preventDefault();
         });
+
+        $(document).ready(function () {
+            function disableBack() {
+                window.history.forward();
+            }
+            window.onload = disableBack();
+            window.onpageshow = function (e) {
+                if (e.persisted)
+                    disableBack();
+            }
+        });
+
     </script>
 }

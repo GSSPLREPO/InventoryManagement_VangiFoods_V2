@@ -168,7 +168,7 @@
                 </div>
             </nav>
             <!-- Modal Start 26-04-23-->
-            <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal fade" id="myModalNotification" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -487,6 +487,16 @@
 
 <script>
     $(document).ready(function () {
+
+        function disableBack() {
+            window.history.forward();
+        }
+        window.onload = disableBack();
+        window.onpageshow = function (e) {
+            if (e.persisted)
+                disableBack();
+        }
+
         setInterval(function () {
             UpdateMinStockNotifications();
         }, 10000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
@@ -499,7 +509,6 @@
         setInterval(function () {
             UpdateSOPaymentDetailsNotifications();
         }, 50000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
-
     });
     @*//Added 'UpdateMinStockNotifications' 26-04-23 start.*@
     function UpdateMinStockNotifications() {
@@ -522,7 +531,7 @@
 
                     });
                     $('#myNotifyList').html("");
-                    j += "<li><a data-toggle='modal' data-target='#myModal'><div style='text-align:center'><strong> Show more </strong></div></li>";
+                    j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
                     $('#myNotifyList').append(j);
                     $('#countNotify').html("<span>" + p + "</span>");
                     $('#myAllNotifications').html("");
@@ -557,7 +566,7 @@
 
                         });
                         $('#myNotifyList').html("");
-                        j += "<li><a data-toggle='modal' data-target='#myModal'><div style='text-align:center'><strong> Show more </strong></div></li>";
+                        j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
                         $('#myNotifyList').append(j);
                         $('#countNotify').html("<span>" + p + "</span>");
                         $('#myAllNotifications').html("");
@@ -592,7 +601,7 @@
 
                         });
                         $('#myNotifyList').html("");
-                        j += "<li><a data-toggle='modal' data-target='#myModal'><div style='text-align:center'><strong> Show more </strong></div></li>";
+                        j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
                         $('#myNotifyList').append(j);
                         $('#countNotify').html("<span>" + p + "</span>");
                         $('#myAllNotifications').html("");
@@ -627,7 +636,7 @@
 
                         });
                         $('#myNotifyList').html("");
-                        j += "<li><a data-toggle='modal' data-target='#myModal'><div style='text-align:center'><strong> Show more </strong></div></li>";
+                        j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
                         $('#myNotifyList').append(j);
                         $('#countNotify').html("<span>" + p + "</span>");
                         $('#myAllNotifications').html("");
@@ -641,4 +650,9 @@
         }
     @*//Added 'UpdateSOPaymentDetailsNotifications' 26-04-23 end.*@
 
+
+    //Added the below scripts for disabling the right click on the page:
+    document.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+    });
 </script>
