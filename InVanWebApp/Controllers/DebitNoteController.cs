@@ -195,7 +195,7 @@ namespace InVanWebApp.Controllers
         // Rahul added 21-04-23.
         public void BindRejectionDropDown()
         {
-            var model = _repository.GetRejctionNoteNoForDD();
+            var model = _rejectionNoteRepository.GetAll();
             var RejectionReport_dd = new SelectList(model.ToList(), "ID", "RejectionNoteNo");
             ViewData["RejectionNumberdd"] = RejectionReport_dd;
         }

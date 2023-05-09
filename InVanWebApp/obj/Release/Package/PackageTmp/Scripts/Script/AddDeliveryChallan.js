@@ -1,5 +1,6 @@
 ﻿//==================Set value in txtItemDetails onCick of Save/Update button======--------
 function SaveBtnClick() {
+    
     var SONumber = $("#SO_Id option:selected").text();
     $("#SONumber").val(SONumber);
 
@@ -41,7 +42,7 @@ function SaveBtnClick() {
     }
 
 
-    createJson();
+    createJson(); 
 };
 //==========end===============
 
@@ -78,21 +79,6 @@ function SelectedIndexChangedSO(id) {
             $('#SupplierAddress').val(result[0].SupplierAddress);
             $('#TermsAndCondition_ID').val(result[0].TermsAndConditionID);
             $('#Terms').val(result[0].Terms);
-
-            var flag = 0;
-
-            for (var j = 1; j < result.length; j++) {
-                if (result[j].FinishedGoodQuantity != 0) {
-                    flag = 1;
-                    break;
-                }
-            }
-            if (flag == 0) {
-                alert('Please create FGS for the selected Sales Order!');
-                window.location.href='/FinishedGoodSeries';
-            }
-            else
-                $('#btnSave').prop('disabled', false);
 
             var table = document.getElementById('submissionTable');
             for (var j = 1; j < result.length; j++) {
@@ -134,14 +120,10 @@ function SelectedIndexChangedSO(id) {
                         cell.setAttribute("id", "ItemUnitPrice_" + j);
                     }
                     else if (i == 6) {
-                        cell.innerHTML = result[j].FinishedGoodQuantity + " " + result[j].ItemUnit;
-                        cell.setAttribute("id", "FinishedGoodQty_" + j);
-                    }
-                    else if (i == 7) {
                         cell.innerHTML = result[j].OutwardQuantity + " " + result[j].ItemUnit;
                         cell.setAttribute("id", "OutwardQty_" + j);
                     }
-                    else if (i == 8) {
+                    else if (i == 7) {
                         var t5 = document.createElement("input");
                         t5.id = "txtShippingQty_" + j;
                         t5.removeAttribute("disabled", "false");
@@ -169,16 +151,16 @@ function SelectedIndexChangedSO(id) {
                         cell.appendChild(t6);
 
                     }
-                    else if (i == 9) {
+                    else if (i == 8) {
                         cell.innerHTML = result[j].BalanceQuantity + " " + result[j].ItemUnit;
                         cell.setAttribute("id", "BalQty_" + j);
                     }
-                    else if (i == 10) {
+                    else if (i == 9) {
                         cell.innerHTML = result[j].ItemUnit;
                         cell.setAttribute("id", "ItemUnit_" + j);
                     }
 
-                    else if (i == 11) {
+                    else if (i == 10) {
                         var t5 = document.createElement("input");
                         t5.id = "txtTotalItemCost_" + j;
                         t5.setAttribute("class", "form-control form-control-sm text-wrap");
@@ -186,11 +168,11 @@ function SelectedIndexChangedSO(id) {
                         t5.setAttribute("value", "0");
                         cell.appendChild(t5);
                     }
-                    else if (i == 12) {
+                    else if (i == 11) {
                         cell.innerHTML = result[j].CurrencyName;
                         cell.setAttribute("id", "CurrencyName_" + j);
                     }
-                    else if (i == 13) {
+                    else if (i == 12) {
                         cell.innerHTML = result[j].BalanceQuantity;
                         cell.setAttribute("id", "txtBalQty_" + j);
                         cell.setAttribute("class", "d-none");
@@ -243,22 +225,9 @@ function OnChangeQty(value, id) {
 
     var ShippingQty = parseFloat(value);
 
-    var AvlQtyOfFGS = document.getElementById('FinishedGoodQty_' + rowNo).innerHTML;
-    if (AvlQtyOfFGS == '' || AvlQtyOfFGS == null)
-        AvlQtyOfFGS = 0;
-    else
-        AvlQtyOfFGS = parseFloat(AvlQtyOfFGS);
-
     var DiffQty = 0;
 
-    if (ShippingQty > AvlQtyOfFGS) {
-        $('#spanShippingQty_' + rowNo).text('Shipped quantity cannot be greater than available quantity!');
-        document.getElementById('spanShippingQty_' + rowNo).setAttribute('style', 'color:red;');
-        document.getElementById(id).focus();
-        $('#btnSave').prop("disabled", true);
-        return;
-    }
-    else if (ShippingQty > BalQty) {
+    if (ShippingQty > BalQty) {
         $('#spanShippingQty_' + rowNo).text('Shipped quantity cannot be greater than balance quantity!');
         document.getElementById('spanShippingQty_' + rowNo).setAttribute('style', 'color:red;');
         document.getElementById(id).focus();
@@ -349,17 +318,15 @@ function createJson() {
         var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
         var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
         var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
-        var SOQty = (document.getElementById("SOQty_" + i)).innerHTML.split(' ')[0];
-        SOQty = (SOQty == null || SOQty == '') ? 0 : SOQty;
-
+        var SOQty = (document.getElementById("SOQty_" + i)).innerHTML;
         var Tax = (document.getElementById("ItemTaxValue_" + i)).innerHTML.split(" %")[0];
         Tax = (Tax == null || Tax == '') ? 0 : Tax;
 
         var PricePerUnit = (document.getElementById("ItemUnitPrice_" + i)).innerHTML.split(' ')[0];
         PricePerUnit = (PricePerUnit == null || PricePerUnit == '') ? 0 : PricePerUnit;
 
-        var OutwardQty = document.getElementById("OutwardQty_" + i).value;
-        var ShippingQty = document.getElementById("txtShippingQty_" + i).value;
+        var OutwardQty = document.getElementById("txtShippingQty_" + i).value;
+        var ShippingQty = document.getElementById("OutwardQty_" + i).value;
         var BalQty = (document.getElementById("BalQty_" + i)).innerHTML;
         var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
 
@@ -367,22 +334,29 @@ function createJson() {
         TotalItemCost = (TotalItemCost == null || TotalItemCost == '') ? 0 : TotalItemCost;
 
         var CurrencyName = (document.getElementById("CurrencyName_" + i)).innerHTML;
-        var AvlQty = (document.getElementById("FinishedGoodQty_" + i)).innerHTML.split(' ')[0];
 
         TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
             ", \"ItemName\": \"" + ItemName + "\", \"SOQty\": " + SOQty+ ",\"ItemTaxValue\": " + Tax +
             ", \"ItemUnitPrice\": " + PricePerUnit /*+ ", \"OutwardQty\": " + OutwardQty*/
             + ", \"ShippingQty\": " + ShippingQty + ", \"BalQty\": " + BalQty +
             ", \"ItemUnit\": \"" + Unit +  "\", \"CurrencyName\": \""
-            + CurrencyName + "\", \"TotalItemCost\": " + TotalItemCost+",\"AvlQty\": "+AvlQty;
+            + CurrencyName + "\", \"TotalItemCost\": " + TotalItemCost;
 
         if (i == (rowCount - 1))
             TxtItemDetails = TxtItemDetails + "}";
         else
             TxtItemDetails = TxtItemDetails + "},";
+        //i++;   //Rahul added 12-04-23.
     }
-    TxtItemDetails = TxtItemDetails + "]"
-    $('#txtItemDetails').val(TxtItemDetails);
+    TxtItemDetails = TxtItemDetails + "]"   
+    //Rahul added 'tempTxt' 12-04-23.
+    //var tempTxt = TxtItemDetails.split(',]')[0];
+    //Rahul added 'flag' 12-04-23.
+    //if (flag == 0)
+    //    TxtItemDetails = tempTxt + "]";
+
+    $('#txtItemDetails').val(TxtItemDetails);debugger
+    console.log("TxtItemDetails: " + TxtItemDetails);
 }
 
 function isNumberKey(evt, id) {

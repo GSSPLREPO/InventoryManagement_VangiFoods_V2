@@ -41,17 +41,20 @@
                                         <span style="color:red">*</span>
                                     </div>
                                     <div class="col-md-3">
+                                        <!--Rahul added fromDate 04-01-2023.-->
                                         @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                                         @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                        <!--Rahul added fromDateValidate 06-01-2023.-->
                                     </div>
                                     <div class="col-md-2">
                                         <label>To Date:</label>
                                         <span style="color:red">*</span>
                                     </div>
                                     <div class="col-md-3">
+                                        <!--Rahul added toDate 04-01-2023.-->
                                         @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                                         @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
-                                      
+                                        <!--Rahul added toDateValidate 06-01-2023.-->
                                     </div>
                                     <div class="col-md-2">
                                         <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
@@ -82,6 +85,7 @@
                                 </div>
                                 <br />
                                 <div style="margin-top:25px;">
+                                    <!--Rahul added class  display nowrap, style="width:100%" 05-01-2023.-->
                                     <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblBatchwiseProductionCostReport" style="width:100%">
                                         <thead>
                                             <tr>
@@ -160,7 +164,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid Date! To date is less than from date!');
+                alert('Invalid date!, To date is less than From date!');
                 $('#fromDate').focus();
                 return;
             }

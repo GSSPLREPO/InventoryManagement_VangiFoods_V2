@@ -47,7 +47,6 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        
         //Date:14 Apirl'23
         //Author: Yatri
         //Added:Below fileds are for report.

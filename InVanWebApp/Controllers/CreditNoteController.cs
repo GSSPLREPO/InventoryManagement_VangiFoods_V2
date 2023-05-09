@@ -98,7 +98,7 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate Credit note! Can not be inserted!');</script>";
-                            // BindPONumber();
+                            //BindPONumber();
                             BindSONumber();
                             model.CreditNoteDate = DateTime.Today;
 
@@ -191,13 +191,6 @@ namespace InVanWebApp.Controllers
             var resultList = new SelectList(result.ToList(), "PurchaseOrderId", "PONumber");
             ViewData["PONumberAndId"] = resultList;
         }
-        public void BindSONumber()
-        {
-            var result = _repository.GetSONumberForDropdown();
-            var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONumber");
-            ViewData["SONumberAndId"] = resultList;
-        }
-
         #endregion
 
         #region Fetch PO details for creditNote
@@ -221,6 +214,15 @@ namespace InVanWebApp.Controllers
 
             var result = _repository.GetSODetailsById(SOId);
             return Json(result);
+        }
+        #endregion
+
+        #region Bind dropdowns 
+        public void BindSONumber()
+        {
+            var result = _repository.GetSONumberForDropdown();
+            var resultList = new SelectList(result.ToList(), "SalesOrderId", "SONumber");
+            ViewData["SONumberAndId"] = resultList;
         }
         #endregion
 

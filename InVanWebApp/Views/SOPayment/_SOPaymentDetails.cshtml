@@ -366,6 +366,18 @@
 
     });
 
+    $('#btnSave').click(function () {
+        var payment = $('#TotalPaybleAmount').val();
+        if (payment == null || payment == '' || payment == 0) {
+            $('#btnSave').prop('disabled', 'true');
+            $('#TotalPaybleAmount').focus();
+            event.preventDefault();
+            return;
+        }
+        else
+            $('#btnSave').prop('disabled', false);
+    });
+
     $('#PaymentMode').change(function () {
         var mode = $('#PaymentMode option:selected').attr('value');
         $('#dvCheque').hide();
@@ -521,8 +533,6 @@
 
             return true;
         }
-
-
     }
 
     function isPriceKey(evt) {
@@ -570,17 +580,4 @@
         }
 
     }
-
-    $('#btnSave').click(function () {
-        var payment = $('#TotalPaybleAmount').val();
-        if (payment == null || payment == '' || payment == 0) {
-            $('#btnSave').prop('disabled', 'true');
-            $('#TotalPaybleAmount').focus();
-            event.preventDefault();
-            return;
-        }
-        else
-            $('#btnSave').prop('disabled', false);
-    });
-
 </script>

@@ -59,7 +59,6 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @*@Html.DropDownList("Currency", (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", id = "CurrencyID" })*@
                     @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", id = "CurrencyID" })
                     @Html.HiddenFor(model => model.CurrencyID, new { id = "tempCurrencyID" })
                     @Html.HiddenFor(model => model.CurrencyName)
@@ -67,6 +66,7 @@
 
                 </div>
                 <div class="col-md-4 d-none">
+                    @*@Html.TextBox("CurrencyID","1",new { id= "CurrencyID" })*@
                     @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
                 </div>
             </div>

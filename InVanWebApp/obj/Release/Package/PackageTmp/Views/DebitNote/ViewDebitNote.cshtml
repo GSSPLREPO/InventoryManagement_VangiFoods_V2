@@ -80,7 +80,7 @@
                                     @Html.DisplayFor(model => model.CurrencyName)
                                 </div>
                             </div>
-
+                           
                             <div class="row">
                                 <div class="col-md-2">
                                     <label class="font-weight-bold">Location Name</label>
@@ -95,16 +95,7 @@
                                     @Html.DisplayFor(model => model.VendorName)
                                 </div>
                             </div>
-                            @*//Rahul added 'RejectionNoteNo' 21-04-23.*@
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Rejection Note Number</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.RejectionNoteNo)
-                                </div>
-                            </div>
-
+                           
                             <div class="row">
                                 <div class="col-md-6">
                                     <h4 class="card-title" style="color:darkcyan">Delivery Details</h4>
@@ -149,42 +140,45 @@
                                                     @{ int c = 1;
                                                         foreach (var item in Model.debitNoteDetails)
                                                         {
-                                        <tr id="tablerow_@c">
-                                            <td>
-                                                <label>@c.</label>
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => item.Item_Code)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => item.Item_Name)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => item.POQuantity)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => item.DebitedQuantity)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => item.ItemUnit)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => item.ItemUnitPrice)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => item.CurrencyName)
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; height:20px;", @readonly = "readonly" })     @*///Rahul added ' height:20px;' 20-04-23.*@
-                                            </td>
-                                            <td>
-                                                @Html.TextBoxFor(x => item.ItemTotalAmount, new { id = "totalItemCost_" + c, style = "border:none;background: none; height:20px;", @readonly = "readonly" })    @*///Rahul added ' height:20px;' 20-04-23.*@
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(x => item.Remarks)
-                                            </td>
-                                        </tr> { c++; }
-                                                        } }
+                                                            <tr id="tablerow_@c">
+                                                                <td>
+                                                                    <label>@c.</label>
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.Item_Code)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.Item_Name)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.POQuantity)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.DebitedQuantity)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.ItemUnit)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.CurrencyName)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; height:20px;", @readonly = "readonly" })     @*///Rahul added ' height:20px;' 20-04-23.*@
+                                                                </td>
+                                                                <td>
+                                                                    @Html.TextBoxFor(x => item.ItemTotalAmount, new { id = "totalItemCost_" + c, style = "border:none;background: none; height:20px;", @readonly = "readonly" })    @*///Rahul added ' height:20px;' 20-04-23.*@
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(x => item.Remarks)
+                                                                </td>
+                                                            </tr>
+                                                            { c++; }
+                                                        }
+
+                                                    }
 
                                                 </tbody>
                                             </table>
@@ -211,7 +205,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             @Html.TextBoxFor(model => model.TotalBeforeTax, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
-                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType" name="TotalBeforeTax" style="border: none; width: 14%;" readonly="readonly" />  @*Rahul updated ' width: 10%' to ' width: 14%' 21-04-23.*@
+                                            @*<input class="text-right" id="TotalBeforeTax" name="TotalBeforeTax" style="border:none;" readonly="readonly" />*@
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
                                             @Html.TextBoxFor(model => model.CurrencyName, new { @class = "font-weight-bold d-none" })
                                         </div>
                                     </div>
@@ -221,7 +216,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             @Html.TextBoxFor(model => model.TotalTax, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
-                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType1" name="TotalBeforeTax" style="border: none; width: 14%;" readonly="readonly" />  @*Rahul updated ' width: 10%' to ' width: 14%' 21-04-23.*@
+                                            @*<input class="text-right" id="TotalTax" name="TotalTax" style="border:none;" readonly="readonly" />*@
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType1" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -230,7 +226,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             @Html.TextBoxFor(model => model.OtherTax, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
-                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType2" name="TotalBeforeTax" style="border: none; width: 14%;" readonly="readonly" />  @*Rahul updated ' width: 10%' to ' width: 14%' 21-04-23.*@
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType2" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -239,7 +235,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             @Html.TextBoxFor(model => model.GrandTotal, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
-                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType3" name="TotalBeforeTax" style="border: none; width: 14%;" readonly="readonly" />  @*Rahul updated ' width: 10%' to ' width: 14%' 21-04-23.*@
+                                            <input class="text-left font-weight-bold CurrencyType" id="CurrencyType3" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
                                         </div>
                                     </div>
                                 </div>

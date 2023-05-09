@@ -103,21 +103,5 @@ namespace InVanWebApp_BO
         public string POQuantity { get; set; }
 
         public string DebitedQuantity { get; set; }
-
-        //Added the below field for Post-production rejection report
-        //This BO used for Post Production Rejection Report
-
-        public string RNDate { get; set; }
-        public string PostProductionRejectionNoteNo { get; set; }
-
-        public string Stage { get; set; }
-
-        public decimal TotalQty { get; set; }
-
-        public decimal RejectedQty { get; set; }
-
-        public string Remarks { get; set; }
-
-        public string ApprovedBy { get; set; }
     }
 }

@@ -209,17 +209,14 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
         public JsonResult GetAllVegDoserLogList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
         {
-
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
-
 
             var VegDoserLog = _vegWasherDosageLogRepository.GetAllVegDoserLogList(flagdate, fromDate, toDate);
             TempData["VegWasherDoserExcel"] = VegDoserLog;
             TempData["VegWasherDoserExcel"] = VegDoserLog;
             return Json(new { data = VegDoserLog }, JsonRequestBehavior.AllowGet);
         }
-
         #endregion
 
         #region Excel Veg Washer Doser

@@ -242,15 +242,17 @@
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("QuotedPrice_" + c, item.QuotedPrice, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            @*@Html.TextBox("QuotedPrice", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })*@
                                                         </td>
                                                         <td>
+                                                            @*///Rahul added 'isNumberKey(event)','MaxLength' 12-04-23.*@
                                                             @Html.TextBox("ExpectedPrice_" + c, item.ExpectedPrice, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
                                                             @*@Html.TextBoxFor(model => model.ExpectedPrice, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })*@
                                                         </td>
                                                         <td>
-                                                            @*Rahul updated 'CloserPrice_' added 'isNumberKey' and removed 'readonly' 27-04-2023.*@
+                                                            @*///Rahul added 'CalItemTotalCloserPrice(value, id)','isNumberKey(event)','MaxLength' 12-04-23.*@
                                                             @Html.TextBox("CloserPrice_" + c, item.CloserPrice, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "CalItemTotalCloserPrice($(this).val(),id)" })
-                                                            @*@Html.TextBox("CloserPrice_" + c, item.CloserPrice, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "8", onchange = "CalItemTotalCloserPrice($(this).val(),id)" })*@
+                                                            @*@Html.TextBox("CloserPrice_" + c, item.CloserPrice, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "8" })*@
                                                             @*@Html.TextBox("CloserPrice", "", new { Value = "0", @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })*@
                                                         </td>
                                                         <td>
@@ -494,7 +496,6 @@
             '<input type="text" id="' + quotedPrice + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + quotedPrice + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            //'<input type="text" id="' + expectedPrice + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + expectedPrice + '" value="" required="required" />' +
             '<input type="text" id="' + expectedPrice + '" , onkeypress = "return isNumberKey(event)";, MaxLength = "8", class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + expectedPrice + '" value="" required="required" />' +
             '</td>' +
             '<td>' +
@@ -531,25 +532,25 @@
     });
 
     function CalItemTotalPrice(value, id) {
-        
+        debugger
         var temp_rowNo = id.split('_');
         var rowNo = temp_rowNo[1];   
         if (value == '') {
             value = 0;
         }
         value = parseFloat(value);
-        if (value != 0) {
+        if (value != 0) {debugger
             var price = $("#ItemUnitPrice_" + rowNo).val();
             price = parseFloat(price);
             var totalPrice = price * value;
             totalPrice = Math.round(totalPrice);
             $("#totalItemCost_" + rowNo).val(totalPrice);
         }
-
         CalculateTotalBeforeTax();
     }
-
+    ///Rahul added 'CalItemTotalCloserPrice(value, id)' 12-04-23. start
     function CalItemTotalCloserPrice(value, id) {
+        debugger
         var temp_rowNo = id.split('_');
         var rowNo = temp_rowNo[1];
         if (value == '') {
@@ -557,6 +558,7 @@
         }
         value = parseFloat(value);
         if (value != 0) {
+            debugger
             var itemQuantity = $("#ItemQuantity_" + rowNo).val();
             itemQuantity = parseFloat(itemQuantity);
             var totalPriceCloser = itemQuantity * value;
@@ -573,7 +575,7 @@
         }
         CalculateTotalBeforeTax();
     }
-
+    ///Rahul added 'CalItemTotalCloserPrice(value, id)' 12-04-23. end 
     function CalculateTotalBeforeTax() {
         
         $('#TotalBeforeTax').val('');
@@ -640,7 +642,9 @@
 
 
     function SelectedIndexChangedLocation(id) {
-         var selectedOptionLocationName, locationName;
+        ///alert(id);
+        ///debugger
+        var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
         locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
         document.getElementById("LocationName").value = locationName;
@@ -651,6 +655,8 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
+                ///debugger;
+                ///console.log(result);
                 var deliveryAdd = result[0].DeliveryAddress;
                 $("#DeliveryAddress").val(deliveryAdd);
             }

@@ -46,13 +46,13 @@
                                     @Html.TextBox("toDate", "{0:yyyy-MM-dd }", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                                     @Html.ValidationMessage("toDate", "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-1">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
                                     @*<a id="ExportPdf" style="float:right;" href="@Url.Action("PreStartupHygienePDF", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
-                                    <a id="ExportExcel" style="margin-left:5%;" href="@Url.Action("PreStartupHygieneExcel", "PreStartupHygiene")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    <a id="ExportExcel" style="float:right;" href="@Url.Action("PreStartupHygieneExcel", "PreStartupHygiene")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                 </div>
-                                <div class="col-md-2">
-                                    <a href="@Url.Action("AddPreStartupHygiene","PreStartupHygiene")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top: 8%; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <div class="col-md-3">
+                                    <a href="@Url.Action("AddPreStartupHygiene","PreStartupHygiene")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
                                         <span class="fa fa-plus"></span> Pre-Startup Hygiene    
                                     </a>
                                 </div>
@@ -175,8 +175,8 @@
                     { "data": "VerifyBy", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit" style="background:transparent !important;"  title = "Edit Pre-Startup Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "text-danger btnDelete" style="background:transparent !important;" title = "Delete Pre-Startup Hygiene"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Pre-Startup Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title = "Delete Pre-Startup Hygiene"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -261,8 +261,8 @@
                     { "data": "VerifyBy", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit" style="background:transparent !important;"  title = "Edit Pre-Startup Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "text-danger btnDelete" style="background:transparent !important;" title = "Delete Pre-Startup Hygiene"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Pre-Startup Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "btn text-danger btnDelete" title = "Delete Pre-Startup Hygiene"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -283,8 +283,3 @@
                 })
     </script>
 }
-<style>
-    th {
-        white-space: break-spaces !important;
-    }
-</style>

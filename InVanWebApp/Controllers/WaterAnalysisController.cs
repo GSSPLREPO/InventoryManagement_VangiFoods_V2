@@ -11,11 +11,11 @@ using log4net;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp.Common;
 using System.IO;
+using System.Web.UI.WebControls;
+using System.Data;
+using System.Web.UI;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
-using System.Web.UI.WebControls;
-using System.Web.UI;
-using System.Data;
 
 namespace InVanWebApp.Controllers
 {
@@ -222,7 +222,6 @@ namespace InVanWebApp.Controllers
             return Json(new { data = WaterAnalysisBOs }, JsonRequestBehavior.AllowGet);
 
         }
-
         #endregion
 
         #region Excel WaterAnalysis

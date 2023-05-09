@@ -8,15 +8,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using Dapper;
+using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
-using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class IndentRepository : IIndentRepository
     {
+        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(IndentRepository));
 
@@ -410,36 +411,5 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
-
-        #region This function is for pdf export/view
-        /// <summary>
-        /// Farheen: This function is for fetch data for editing by ID and for downloading pdf
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
-
-        public IndentBO GetItemDetailsByIndentById(int ID)
-        {
-            IndentBO result = new IndentBO();
-            try
-            {
-                string stringQuery = "select * From Indent where ID = @IndentId AND IsDeleted = 0";
-                string stringItemQuery = "select * From Indent_Details where IndentID = @IndentId AND IsDeleted = 0";
-                using (SqlConnection con = new SqlConnection(conString))
-                {
-                    result = con.Query<IndentBO>(stringQuery, new { @IndentId = ID }).FirstOrDefault();
-                    var ItemList = con.Query<Indent_DetailsBO>(stringItemQuery, new { @IndentId = ID }).ToList();
-                    result.indent_Details = ItemList;
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-            }
-            return result;
-        }
-
-        #endregion
-
     }
 }

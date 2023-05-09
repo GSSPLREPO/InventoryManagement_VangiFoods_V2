@@ -188,13 +188,13 @@
     <Compile Include="Controllers\InwardQCSortingController.cs" />
     <Compile Include="Controllers\IssueNoteController.cs" />
     <Compile Include="Controllers\MicroAnalysisController.cs" />
+    <Compile Include="Controllers\Notifications.cs" />
     <Compile Include="Controllers\OilAnalysisController.cs" />
     <Compile Include="Controllers\OrganisationController.cs" />
     <Compile Include="Controllers\DeliveryChallanController.cs" />
     <Compile Include="Controllers\OutwardNoteController.cs" />
     <Compile Include="Controllers\PestControlLogController.cs" />
     <Compile Include="Controllers\POPaymentController.cs" />
-    <Compile Include="Controllers\PostProductionRejectionNoteController.cs" />
     <Compile Include="Controllers\PreProduction_QCController.cs" />
     <Compile Include="Controllers\PreStartupHygieneController.cs" />
     <Compile Include="Controllers\ProductEvaluationLogController.cs" />
@@ -607,10 +607,10 @@
     <Compile Include="Repository\Interface\ILoginRepository.cs" />
     <Compile Include="Repository\Interface\IDeliveryChallanRepository.cs" />
     <Compile Include="Repository\Interface\IMicroAnalysisRepository.cs" />
+    <Compile Include="Repository\Interface\INotificationsRepository.cs" />
     <Compile Include="Repository\Interface\IOilAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\IOutwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IPestControlLogRepository.cs" />
-    <Compile Include="Repository\Interface\IPostProductionRN_Repository.cs" />
     <Compile Include="Repository\Interface\IPreProduction_QCRepository.cs" />
     <Compile Include="Repository\Interface\IPreStartupHygieneRepository.cs" />
     <Compile Include="Repository\Interface\IProductEvaluationLogRepository.cs" />
@@ -654,13 +654,13 @@
     <Compile Include="Repository\LocationRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs" />
     <Compile Include="Repository\MicroAnalysisRepository.cs" />
+    <Compile Include="Repository\NotificationsRepository.cs" />
     <Compile Include="Repository\OilAnalysisRepository.cs" />
     <Compile Include="Repository\OrganisationRepository.cs" />
     <Compile Include="Repository\DeliveryChallanRepository.cs" />
     <Compile Include="Repository\OutwardNoteRepository.cs" />
     <Compile Include="Repository\PestControlLogRepository.cs" />
     <Compile Include="Repository\POPaymentRepository.cs" />
-    <Compile Include="Repository\PostProductionRN_Repository.cs" />
     <Compile Include="Repository\PreProduction_QCRepository.cs" />
     <Compile Include="Repository\PreStartupHygieneRepository.cs" />
     <Compile Include="Repository\ProductEvaluationLogRepository.cs" />
@@ -2027,6 +2027,8 @@
     <Content Include="Highcharts-10.3.1\code\themes\sand-signika.js.map" />
     <Content Include="Highcharts-10.3.1\code\themes\skies.js.map" />
     <Content Include="Highcharts-10.3.1\code\themes\sunset.js.map" />
+    <Content Include="Scripts\jquery-ui-1.13.2.js" />
+    <Content Include="Scripts\jquery-ui-1.13.2.min.js" />
     <Content Include="Scripts\Script\AddDeliveryChallan.js" />
     <Content Include="Scripts\Script\AddIssueNote.js" />
     <Content Include="Scripts\Script\AddOutwardNote.js" />
@@ -2035,6 +2037,7 @@
     <Content Include="Scripts\Script\EditOutwardNote.js" />
     <Content Include="Theme\MainContent\css\customLogin.css" />
     <Content Include="Theme\MainContent\images\LoginBackImg.jpg" />
+    <Content Include="Theme\MainContent\images\nty.png" />
     <Content Include="Views\RejectionNote\AddRejectionNote.cshtml" />
     <Content Include="Views\RejectionNote\Index.cshtml" />
     <Content Include="Views\RejectionNote\ViewRejectionNote.cshtml" />
@@ -2045,8 +2048,6 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-ui-1.13.1.js" />
-    <Content Include="Scripts\jquery-ui-1.13.1.min.js" />
     <Content Include="Scripts\jquery.dataTables.js" />
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -3124,7 +3125,6 @@
     <Content Include="Views\CalibrationLog\AddCalibrationLog.cshtml" />
     <Content Include="Views\CalibrationLog\EditCalibrationLog.cshtml" />
     <Content Include="Views\CalibrationLog\Index.cshtml" />
-    <Content Include="Views\DailyMonitoring\Index - Copy.cshtml" />
     <Content Include="Views\SanitizationAndHygine\AddSanitizationAndHygine.cshtml" />
     <Content Include="Views\SanitizationAndHygine\EditSanitizationAndHygine.cshtml" />
     <Content Include="Views\SanitizationAndHygine\Index.cshtml" />
@@ -3159,7 +3159,6 @@
     <Content Include="Views\ChillerCCP\Index.cshtml" />
     <Content Include="Views\ForeignBodyFound\AddForeignBodyFound.cshtml" />
     <Content Include="Views\ForeignBodyFound\EditForeignBodyFound.cshtml" />
-    <Content Include="Views\ForeignBodyFound\Index - Copy.cshtml" />
     <Content Include="Views\ForeignBodyFound\Index.cshtml" />
     <Content Include="Views\SalesOrder\EditSalesOrder.cshtml" />
     <Content Include="Views\SalesOrder\ViewSalesOrder.cshtml" />
@@ -3182,6 +3181,7 @@
     <Content Include="Views\ProductionIndent\ViewProductionIndent.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\FIFOSystem.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\ProductionCostByBatchNumber.cshtml" />
+    <Content Include="Views\Dashb_RTWarehouseWiseStock\OrderSummaryDashboard.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\WorkOrderwiseProductionCostDashboard.cshtml" />
     <Content Include="Views\Dashb_RTWarehouseWiseStock\ProductionUtilityConsumptionByBatchDashboard.cshtml" />
     <Content Include="Views\Dashboard\UtilityConsumptionProduction.cshtml" />
@@ -3195,7 +3195,6 @@
     <Content Include="Views\SOPayment\Index.cshtml" />
     <Content Include="Views\SOPayment\ViewSOPayment.cshtml" />
     <Content Include="Views\SOPayment\_SOPaymentDetails.cshtml" />
-    <Content Include="Views\Dashb_RTWarehouseWiseStock\OrderSummaryDashboard.cshtml" />
     <Content Include="Views\Report\WastageReport.cshtml" />
     <Content Include="Views\RequestForQuotation\ViewRequestForQuotation.cshtml" />
     <Content Include="Views\Report\PreProduction_QCReport.cshtml" />
@@ -3203,10 +3202,6 @@
     <Content Include="Views\Currency\DeleteItemType.cshtml" />
     <Content Include="Views\Currency\EditCurrency.cshtml" />
     <Content Include="Views\Currency\Index.cshtml" />
-    <Content Include="Views\PostProductionRejectionNote\AddPostProductionRejectionNote.cshtml" />
-    <Content Include="Views\PostProductionRejectionNote\Index.cshtml" />
-    <Content Include="Views\Indent\ViewIndent.cshtml" />
-    <Content Include="Views\Report\PostProductionRejectionReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3236,6 +3231,9 @@
       <Project>{87bb3b0a-7f55-4780-b403-82d9c0e1a6ff}</Project>
       <Name>InVanWebApp_BO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

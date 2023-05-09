@@ -8,8 +8,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*Rahul added 'Content-Security-Policy' for 'Mix-content error' 09-05-23.*@
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Vangi Foods</title>
-
+    
     @*Rahul added Multiple select cdn 19-12-2022 start*@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     @*Rahul added Multiple select cdn 19-12-2022 end*@
@@ -49,119 +51,149 @@
                         <span class="fas fa-bars"></span>
                     </button>
                     @*<ul class="navbar-nav">
-                        <li class="nav-item nav-search d-none d-md-flex">
-                            <div class="nav-link">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-search"></i>
-                                        </span>
+                            <li class="nav-item nav-search d-none d-md-flex">
+                                <div class="nav-link">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-search"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Search" aria-label="Search">
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Search" aria-label="Search">
                                 </div>
-                            </div>
+                            </li>
+                        </ul>*@
+                    <ul class="navbar-nav navbar-nav-right d-flex justify-content-end">
+                        <li class="nav-item navbar navbar-menu-wrapper" style="border-right:1px solid #e0e0ef;width:auto;">
+
+                            @if (@Session["UserName"] != null)
+                            {
+                                <h6 style="font-family: 'Comic Sans MS'; white-space: nowrap;">Welcome @Session["UserName"] !</h6>
+                            }
+
                         </li>
-                    </ul>*@
-                <ul class="navbar-nav navbar-nav-right d-flex justify-content-end">
-                    <li class="nav-item navbar navbar-menu-wrapper" style="border-right:1px solid #e0e0ef;width:auto;">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                                <i class="fas fa-bell mx-0"></i>
+                                @*<span class="count">1</span>*@
+                                <span id="countNotify" class="count">1</span>
+                            </a>
+                            <div id="myNotifyList" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown"
+                                 style="width: max-content;padding: 5px 5px;">
+                            </div>
 
-                        @if (@Session["UserName"] != null)
-                        {
-                            <h6 style="font-family: 'Comic Sans MS'; white-space: nowrap;">Welcome @Session["UserName"] !</h6>
-                        }
-
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                            <i class="fas fa-bell mx-0"></i>
-                            <span class="count">1</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                            <a class="dropdown-item">
-                                <p class="mb-0 font-weight-normal float-left">
-                                    You have 1 new notifications
-                                </p>
-                                <span class="badge badge-pill badge-warning float-right">View all</span>
+                            @*<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                                    <a class="dropdown-item">
+                                        <p class="mb-0 font-weight-normal float-left">
+                                            You have 1 new notifications
+                                        </p>
+                                        <span class="badge badge-pill badge-warning float-right">View all</span>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item preview-item">
+                                        <div class="preview-thumbnail">
+                                            <div class="preview-icon bg-danger">
+                                                <i class="fas fa-exclamation-circle mx-0"></i>
+                                            </div>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <h6 class="preview-subject font-weight-medium">Application Error</h6>
+                                            <p class="font-weight-light small-text">
+                                                Just now
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item preview-item">
+                                        <div class="preview-thumbnail">
+                                            <div class="preview-icon bg-warning">
+                                                <i class="fas fa-wrench mx-0"></i>
+                                            </div>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <h6 class="preview-subject font-weight-medium">Settings</h6>
+                                            <p class="font-weight-light small-text">
+                                                Private message
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item preview-item">
+                                        <div class="preview-thumbnail">
+                                            <div class="preview-icon bg-info">
+                                                <i class="far fa-envelope mx-0"></i>
+                                            </div>
+                                        </div>
+                                        <div class="preview-item-content">
+                                            <h6 class="preview-subject font-weight-medium">New user registration</h6>
+                                            <p class="font-weight-light small-text">
+                                                2 days ago
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>*@
+                        </li>
+                        <li class="nav-item nav-profile dropdown d-flex flex-column justify-content-around">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                                <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
                             </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-danger">
-                                        <i class="fas fa-exclamation-circle mx-0"></i>
-                                    </div>
+                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href=@Url.Action("Index","Login") onclick="return confirm('Are you sure, you wants to logout?');">
+                                    <i class="fas fa-power-off text-primary"></i>
+                                    Logout
+                                </a>
+                            </div>
+                            @*Rahul added UserName 08-02-23.*@
+                            @if (@Session["UserName"] != null)
+                            {
+                                <h6 style="font-family:'Comic Sans MS'">@Session["UserName"]</h6>
+                            }
+                        </li>
+                        @*<li class="nav-item nav-profile dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                                    <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
+                                        <i class="fas fa-power-off text-primary"></i>
+                                        Logout
+                                    </a>
                                 </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject font-weight-medium">Application Error</h6>
-                                    <p class="font-weight-light small-text">
-                                        Just now
-                                    </p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-warning">
-                                        <i class="fas fa-wrench mx-0"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject font-weight-medium">Settings</h6>
-                                    <p class="font-weight-light small-text">
-                                        Private message
-                                    </p>
-                                </div>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <div class="preview-icon bg-info">
-                                        <i class="far fa-envelope mx-0"></i>
-                                    </div>
-                                </div>
-                                <div class="preview-item-content">
-                                    <h6 class="preview-subject font-weight-medium">New user registration</h6>
-                                    <p class="font-weight-light small-text">
-                                        2 days ago
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item nav-profile dropdown d-flex flex-column justify-content-around">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                            <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href=@Url.Action("Index","Login") onclick="return confirm('Are you sure, you wants to logout?');">
-                                <i class="fas fa-power-off text-primary"></i>
-                                Logout
-                            </a>
-                        </div>
-                        @*Rahul added UserName 08-02-23.*@
-                        @if (@Session["UserName"] != null)
-                        {
-                            <h6 style="font-family:'Comic Sans MS'">@Session["UserName"]</h6>
-                        }
-                    </li>
-                    @*<li class="nav-item nav-profile dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                            <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
-                                <i class="fas fa-power-off text-primary"></i>
-                                Logout
-                            </a>
-                        </div>
-                    </li>*@
-                </ul>
+                            </li>*@
+                    </ul>
                     <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
                         <span class="fas fa-bars"></span>
                     </button>
                 </div>
             </nav>
+            <!-- Modal Start 26-04-23-->
+            <div class="modal fade" id="myModalNotification" role="dialog" aria-labelledby="myModalNotificationLabel" tabindex="-1" >
+                <div class="modal-dialog" role="document">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalNotificationLabel">
+                                <img src="~/Theme/MainContent/images/nty.png" style="height: 50px; width: 50px">
+                                Notifications
+                            </h4>
+                            <button type="button" class="close" data-dismiss="modal">
+                                ×
+                            </button>
+                        </div>
+                        <div class="modal-body" id="myAllNotifications">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal End 26-04-23-->
             <!-- partial -->
             <div class="container-fluid page-body-wrapper">
                 <!-- partial:../../partials/_settings-panel.html -->
@@ -342,12 +374,12 @@
                    Date : 02-02-2022
                    Description: Make and Calling Partial View for Side Nav Bar and using All Master Page [SideNavBar.cshtml].
                 -->
-                <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <nav class="sidebar sidebar-offcanvas" id="sidebar" style="margin-top: 70px;">
                     @Html.Partial("SideNavBar")
                 </nav>
                 <!-- partial -->
                 <div class="main-panel">
-                    <div class="content-wrapper">
+                    <div class="content-wrapper" style="margin-top: 80px;">
                         @RenderBody()
                     </div>
                     <!-- content-wrapper ends -->
@@ -404,8 +436,8 @@
         <!-- Custom js for this page-->
         <!-- End custom js for this page-->
     </div>
-    @Scripts.Render("~/bundles/jquery")
 
+    @Scripts.Render("~/bundles/jquery")    
     @*Rahul added Multiple select cdn 19-12-2022 start*@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @*Rahul added Multiple select cdn 19-12-2022 end*@
@@ -454,3 +486,175 @@
         margin: 10px;
     }
 </style>
+
+<script>
+    $(document).ready(function () {
+
+        function disableBack() {
+            window.history.forward();
+        }
+        window.onload = disableBack();
+        window.onpageshow = function (e) {
+            if (e.persisted)
+                disableBack();
+        }
+
+        setInterval(function () {
+            UpdateMinStockNotifications();
+        }, 10000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
+        setInterval(function () {
+            UpdateCalibrationDueDateNotifications();
+        }, 30000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
+        setInterval(function () {
+            UpdatePOPaymentDetailsNotifications();
+        }, 40000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
+        setInterval(function () {
+            UpdateSOPaymentDetailsNotifications();
+        }, 50000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
+    });
+    @*//Added 'UpdateMinStockNotifications' 26-04-23 start.*@
+    function UpdateMinStockNotifications() {
+        $.ajax({
+            type: "GET",
+            url: "/Notifications/GetMinStockNotifications",
+            data: '{}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response != null) {
+
+                    var j = ""; var p = 0; var Q = "";
+                    $.each(response, function (k, v) {
+                        p++;
+                        if (p < 6) {
+                            j += "<li><a> <strong>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
+                        }
+                        Q += "<a>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a>";
+
+                    });
+                    $('#myNotifyList').html("");
+                    j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
+                    $('#myNotifyList').append(j);
+                    $('#countNotify').html("<span>" + p + "</span>");
+                    $('#myAllNotifications').html("");
+                    $('#myAllNotifications').append(Q);
+                }
+            },
+            failure: function (response) {
+                alert(response.d);
+            }
+        });
+    }
+    @*//Added 'UpdateMinStockNotifications' 26-04-23 end.*@
+
+    @*//Added 'UpdateCalibrationDueDateNotifications' 26-04-23 start.*@
+    function UpdateCalibrationDueDateNotifications() {
+            $.ajax({
+                type: "GET",
+                url: "/Notifications/GetCalibrationDueDateNotifications",
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+
+                        var j = ""; var p = 0; var Q = "";
+                        $.each(response, function (k, v) {
+                            p++;
+                            if (p < 6) {
+                                j += "<li><a> <strong>  " + v.NameOfEquipment + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Calibration Due Date : " + v.CalibrationLogDueDate + "</i></div></a></li>";
+                            }
+                            Q += "<a>  " + v.NameOfEquipment + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Calibration Due Date : " + v.CalibrationLogDueDate + "</i></div></a>";
+
+                        });
+                        $('#myNotifyList').html("");
+                        j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
+                        $('#myNotifyList').append(j);
+                        $('#countNotify').html("<span>" + p + "</span>");
+                        $('#myAllNotifications').html("");
+                        $('#myAllNotifications').append(Q);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+    @*//Added 'UpdateCalibrationDueDateNotifications' 26-04-23 end.*@
+
+    @*//Added 'UpdatePOPaymentDetailsNotifications' 26-04-23 start.*@
+    function UpdatePOPaymentDetailsNotifications() {
+            $.ajax({
+                type: "GET",
+                url: "/Notifications/GetPOPaymentDetailsNotifications",
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+
+                        var j = ""; var p = 0; var Q = "";
+                        $.each(response, function (k, v) {
+                            p++;
+                            if (p < 6) {
+                                j += "<li><a> <strong>  PO Id: " + v.PurchaseOrderId + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> PO Payment Due Date : " + v.POPaymentDueDate + "</i></div></a></li>";
+                            }
+                            Q += "<a>  PO Id: " + v.PurchaseOrderId + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> PO Payment Due Date : " + v.POPaymentDueDate + "</i></div></a>";
+
+                        });
+                        $('#myNotifyList').html("");
+                        j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
+                        $('#myNotifyList').append(j);
+                        $('#countNotify').html("<span>" + p + "</span>");
+                        $('#myAllNotifications').html("");
+                        $('#myAllNotifications').append(Q);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+    @*//Added 'UpdatePOPaymentDetailsNotifications' 26-04-23 end.*@
+
+    @*//Added 'UpdateSOPaymentDetailsNotifications' 26-04-23 start.*@
+        function UpdateSOPaymentDetailsNotifications() {
+            $.ajax({
+                type: "GET",
+                url: "/Notifications/GetSOPaymentDetailsNotifications",
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+
+                        var j = ""; var p = 0; var Q = "";
+                        $.each(response, function (k, v) {
+                            p++;
+                            if (p < 6) {
+                                j += "<li><a> <strong>  SO Id: " + v.SalesOrderId + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> SO Payment Due Date : " + v.SOPaymentDueDate + "</i></div></a></li>";
+                            }
+                            Q += "<a>  SO Id: " + v.SalesOrderId + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> SO Payment Due Date : " + v.SOPaymentDueDate + "</i></div></a>";
+
+                        });
+                        $('#myNotifyList').html("");
+                        j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
+                        $('#myNotifyList').append(j);
+                        $('#countNotify').html("<span>" + p + "</span>");
+                        $('#myAllNotifications').html("");
+                        $('#myAllNotifications').append(Q);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
+    @*//Added 'UpdateSOPaymentDetailsNotifications' 26-04-23 end.*@
+
+
+    //Added the below scripts for disabling the right click on the page:
+    document.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+    });
+</script>

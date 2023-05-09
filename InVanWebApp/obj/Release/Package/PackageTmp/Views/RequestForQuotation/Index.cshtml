@@ -58,15 +58,16 @@
                                                 <td>@Html.DisplayFor(modelItem => item.BiddingEndDate)</td>                                                
                                                 <td>@Html.DisplayFor(modelItem => item.CreatedByDate)</td>
                                                 <td>
+                                                    @*//Rahul added 'RFQCount' 10-04-23.*@
                                                     @if (item.RFQCount <= 0)
                                                     {
-                                                        <a href=@Url.Action("EditRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId }) title="Edit RFQ">
-                                                            <i class="fa fa-edit text-primary"></i>
-                                                        </a>
-                                                        <span>&nbsp;&nbsp;</span>
-                                                        <a href=@Url.Action("DeleteRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId, }) onclick="return confirm('Are you sure want to delete the RFQ?');" title="Delete RFQ">
-                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                        </a><span>&nbsp;&nbsp;</span>
+                                                    <a href=@Url.Action("EditRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId }) title="Edit RFQ">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a>
+                                                    <span>&nbsp;&nbsp;</span>
+                                                    <a href=@Url.Action("DeleteRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId, }) onclick="return confirm('Are you sure want to delete the RFQ?');" title="Delete RFQ">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
                                                     }
                                                     <a href=@Url.Action("ViewRequestForQuotation", new { RequestForQuotationId = item.RequestForQuotationId }) title="View RFQ">
                                                         <i class="fa fa-eye text-primary"></i>
@@ -83,7 +84,8 @@
                                         <!-- Modal content-->
                                         <div class="modal-content">                                            
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="myModalLabel" style="color:darkcyan">RFQ Summary</h4>                                                
+                                                <h4 class="modal-title" id="myModalLabel" style="color:darkcyan">RFQ Summary</h4>
+                                                @*/*Rahul added function locationReload() for _RFQ_PV 08-04-2023.*/*@
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="locationReload()">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -120,7 +122,12 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
     <script type="text/javascript">
-        $(document).ready(function () {
+        /*Rahul added function locationReload() for _RFQ_PV 08-04-2023.*/
+        function locationReload() {
+            location.reload(true);
+        }
+
+        $(document).ready(function () {        
             $('#tbl_PO').dataTable().fnDestroy();
             $('#tbl_PO').dataTable({
                 "iDisplayLength": 10
@@ -151,10 +158,5 @@
                 modal.find('.modal-body input').val(recipient)
             });
         }
-
-        function locationReload() {
-            location.reload(true);
-        }
-
     </script>
 }

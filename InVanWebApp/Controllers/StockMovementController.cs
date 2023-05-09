@@ -116,7 +116,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='9' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:-350px'>");
+            sb.Append("<th Colspan='9' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:-350px;'>");
             //sb.Append("<br/>");
             sb.Append("<label style='font-size:22px; bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");

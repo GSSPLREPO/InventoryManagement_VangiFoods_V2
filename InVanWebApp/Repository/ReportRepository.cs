@@ -14,6 +14,7 @@ namespace InVanWebApp.Repository
 {
     public class ReportRepository : IReportRepository
     {
+        //private readonly string conStr = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conStr = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(ReportRepository));
 
@@ -123,55 +124,57 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region Rejection note data
-        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate)
-        {
-            List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
-            try
-            {
-                using (SqlConnection con = new SqlConnection(conStr))
-                {
-                    SqlCommand cmd = new SqlCommand("usp_rpt_RejectionNote_Report", con);
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.CommandType = CommandType.StoredProcedure;
+        //#region Rejection note data Not in use 24-04-2023.
+        //public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate)
+        //{
+        //    List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(conStr))
+        //        {
+        //            SqlCommand cmd = new SqlCommand("usp_rpt_RejectionNote_Report", con);
+        //            cmd.Parameters.AddWithValue("@fromDate", fromDate);
+        //            cmd.Parameters.AddWithValue("@toDate", toDate);
+        //            cmd.Parameters.AddWithValue("@flag", FlagDebitNote);
+        //            cmd.CommandType = CommandType.StoredProcedure;
 
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                    while (reader.Read())
-                    {
-                        var result = new RejectionNoteItemDetailsBO()
-                        {
-                            SrNo = Convert.ToInt32(reader["SrNo"]),
-                            RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy hh:mm:ss"),
-                            Item_Name=reader["ItemName"].ToString(),
-                            Item_Code=reader["ItemCode"].ToString(),
-                            ItemUnitPrice=Convert.ToDecimal(reader["ItemUnitPrice"]),
-                            TotalRecevingQuantiy=Convert.ToDouble(reader["QuantityTookForSorting"]),
-                            RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
-                            RejectionNoteNo = reader["RejectionNoteNo"].ToString(),
-                            InwardQCNumber = reader["InwardQCNumber"].ToString(),
-                            ApprovedBy= reader["ApprovedBy"].ToString(),
-                            CurrencyName=reader["CurrencyName"].ToString(),
-                            ItemUnit=reader["ItemUnit"].ToString()
-                        };
-                        resultList.Add(result);
-                    }
-                    con.Close();
-                }
+        //            con.Open();
+        //            SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+        //            while (reader.Read())
+        //            {
+        //                var result = new RejectionNoteItemDetailsBO()
+        //                {
+        //                    SrNo = Convert.ToInt32(reader["SrNo"]),
+        //                    RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy hh:mm:ss"),
+        //                    Item_Name = reader["ItemName"].ToString(),
+        //                    Item_Code = reader["ItemCode"].ToString(),
+        //                    ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
+        //                    TotalRecevingQuantiy = Convert.ToDouble(reader["QuantityTookForSorting"]),
+        //                    RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
+        //                    RejectionNoteNo = reader["RejectionNoteNo"].ToString(),
+        //                    InwardQCNumber = reader["InwardQCNumber"].ToString(),
+        //                    ApprovedBy = reader["ApprovedBy"].ToString(),
+        //                    CurrencyName = reader["CurrencyName"].ToString(),
+        //                    ItemUnit = reader["ItemUnit"].ToString(),
+        //                    FlagDebitNote = Convert.ToBoolean(reader["ItemUnit"])
+        //                };
+        //                resultList.Add(result);
+        //            }
+        //            con.Close();
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex.Message, ex);
 
-                resultList = null;
+        //        resultList = null;
 
-            }
-            return resultList;
-        }
+        //    }
+        //    return resultList;
+        //}
 
-        #endregion
+        //#endregion
 
         #region Finished Goods Dispatch report
 
@@ -636,8 +639,8 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region Rejection Report data
-        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int FlagDebitNote = 0)
+        #region Rejection Report data updated 24-04-2023. 
+        public List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int FlagDebitNote=0)
         {
             List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
             try
@@ -647,8 +650,8 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_rpt_Rejection_Report", con);
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.Parameters.AddWithValue("@rejectionNumber", rejectionNumber);
-                    cmd.Parameters.AddWithValue("@flag", FlagDebitNote);
+                    cmd.Parameters.AddWithValue("@RejectionNumber", rejectionNumber);
+                    cmd.Parameters.AddWithValue("@flag", FlagDebitNote);    //updated 24-04-2023. 
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     con.Open();
@@ -667,7 +670,7 @@ namespace InVanWebApp.Repository
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
                             TotalRecevingQuantiy = Convert.ToDouble(reader["RecivedQuantity"]),
                             RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
-                            ApprovedBy = reader["ApprovedBy"].ToString(),
+                            ApprovedBy = reader["ApprovedBy"].ToString()                                
                         };
                         resultList.Add(result);
                     }
@@ -1327,15 +1330,15 @@ namespace InVanWebApp.Repository
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
                     {
-                        var result = new RejectionNoteItemDetailsBO()
+                        var result = new RejectionNoteItemDetailsBO()  
                         {
                             SrNo = Convert.ToInt32(reader["SrNo"]),
                             RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),  ///updated 17-04-23.
                             RejectionNoteNo = reader["RejectionNumber"].ToString(), ///added 17-04-23.  
                             InwardNumber = reader["InwardNumber"].ToString(),
-                            InwardQCNumber = reader["InwardQCNumber"].ToString(),
-                            PONumber = reader["PONumber"].ToString(),
-                            SupplierName = reader["SupplierName"].ToString(),
+                            InwardQCNumber = reader["InwardQCNumber"].ToString(), 
+                            PONumber = reader["PONumber"].ToString(), 
+                            SupplierName = reader["SupplierName"].ToString(), 
                             Item_Name = reader["ItemName"].ToString(),
                             Item_Code = reader["ItemCode"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
@@ -1384,11 +1387,11 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@PreProductionQCId", PreProductionQCId);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    con.Open();
+                    con.Open(); 
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row. 
-                    while (reader.Read())
+                    while (reader.Read()) 
                     {
-                        var result = new PreProduction_QC_Details()
+                        var result = new PreProduction_QC_Details() 
                         {
                             SrNo = Convert.ToInt32(reader["SrNo"]),
                             InwardQCDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),
@@ -1421,58 +1424,5 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-        #region Post Production Rejection note data
-        public List<ReportBO> getPostProductionRejectionReportData(DateTime fromDate, DateTime toDate, string BatchNumber, string WorkOrderNumber)
-        {
-            List<ReportBO> resultList = new List<ReportBO>();
-            try
-            {
-                using (SqlConnection con = new SqlConnection(conStr))
-                {
-                    SqlCommand cmd = new SqlCommand("usp_rpt_PostProductionRejection_Report", con);
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.Parameters.AddWithValue("@batchNumber", BatchNumber);
-                    cmd.Parameters.AddWithValue("@workOrderNumber", WorkOrderNumber);
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                    while (reader.Read())
-                    {
-                        var result = new ReportBO()
-                        {
-                            SrNo = Convert.ToInt32(reader["SrNo"]),
-                            RNDate = Convert.ToDateTime(reader["RNDate"]).ToString("dd/MM/yyyy"),
-                            WorkOrderNumber = reader["WONumber"].ToString(),
-                            BatchNumber = reader["BatchNumber"].ToString(),
-                            PostProductionRejectionNoteNo = reader["PostProductionRejectionNoteNo"].ToString(),
-                            Stage = reader["Stage"].ToString(),
-                            ItemName = reader["ItemName"].ToString(),
-                            ItemCode = reader["ItemCode"].ToString(),
-                            ItemUnitPrice = reader["ItemUnitPrice"].ToString(),
-                            TotalQty = Convert.ToDecimal(reader["TotalQty"]),
-                            RejectedQty = Convert.ToDecimal(reader["RejectedQty"]),
-                            Remarks = reader["Remarks"].ToString(),
-                            ApprovedBy = reader["ApprovedBy"].ToString()
-
-                        };
-                        resultList.Add(result);
-                    }
-                    con.Close();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-
-                resultList = null;
-
-            }
-            return resultList;
-        }
-
-        #endregion
     }
 }

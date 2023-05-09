@@ -14,6 +14,7 @@ namespace InVanWebApp.Repository
 {
     public class VegWasherDosageLogRepository : IVegWasherDosageLogRepository
     {
+        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(VegWasherDosageLogRepository));
         #region  Bind grid
@@ -255,70 +256,6 @@ namespace InVanWebApp.Repository
             }
         }
 
-        #endregion
-
-        #region  Bind grid for Report
-        /// <summary>
-        /// Date: 17 APR'23
-        /// Siddharth: This function is for fecthing list of Sanitization and haygine.
-        /// </summary>
-        /// <returns></returns>
-
-        public List<SanitizationAndHygineBO> SanitizationAndHygineList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
-        {
-
-            List<SanitizationAndHygineBO> sanitizations = new List<SanitizationAndHygineBO>();
-            try
-            {
-                if (fromDate == null && toDate == null)
-                {
-                    fromDate = DateTime.Today;
-                    toDate = DateTime.Today;
-                }
-                using (SqlConnection con = new SqlConnection(conString))
-                {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_SanitizationAndHygine_GetAllByDate", con);
-                    cmd.Parameters.AddWithValue("@flagdate", flagdate);
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                    while (reader.Read())
-                    {
-                        var sanitize = new SanitizationAndHygineBO()
-                        {
-
-                            Id = Convert.ToInt32(reader["Id"]),
-                            //Date = Convert.ToDateTime(reader["Date"]),
-                            NameOfEmpolyee = reader["NameOfEmpolyee"].ToString(),
-                            Department = reader["Department"].ToString(),
-                            BodyTemperature = reader["BodyTemperature"].ToString(),
-                            HandWash = reader["HandWash"].ToString(),
-                            CleanNails = reader["CleanNails"].ToString(),
-                            CleanUniform = reader["CleanUniform"].ToString(),
-                            AppearAnyCutsandWounds = reader["AppearAnyCutsandWounds"].ToString(),
-                            WearAnyJwellery = reader["WearAnyJwellery"].ToString(),
-                            FullyCoverdHair = reader["FullyCoverdHair"].ToString(),
-                            CleanShoes = reader["CleanShoes"].ToString(),
-                            NoTobacoChewingum = reader["NoTobacoChewingum"].ToString(),
-                            AnyKindOfIllnessSeakness = reader["AnyKindOfIllnessSeakness"].ToString(),
-                            VerifyByName = reader["VerifyByName"].ToString(),
-                            Remark = reader["Remark"].ToString(),
-
-                        };
-                        sanitizations.Add(sanitize);
-
-                    }
-                    con.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-            }
-            return sanitizations;
-        }
         #endregion
 
         #region  Bind grid for Report

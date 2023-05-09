@@ -179,14 +179,9 @@ namespace InVanWebApp.Controllers
                     TempData["Success"] = "<script>alert('Error while update!');</script>";
                     return RedirectToAction("Index", "OilAnalysis");
                 }
-
-
             }
-
-
-                return RedirectToAction("Index", "Login");
+            return RedirectToAction("Index", "Login");
         }
-
         #endregion
 
         #region Delete function

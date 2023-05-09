@@ -104,9 +104,8 @@ namespace InVanWebApp_BO
         public Nullable<int> VendorsID { get; set; }
         //Rahul Added the below field for SO payment module 
         public float AmountPaid { get; set; }
-
         //Added the below the field for Delivery Challan including the Finished goods quantity in it.
-        public decimal FinishedGoodQuantity { get; set; }
+        public decimal FinishedGoodQuantity { get; set; }   
     }
 
     public class SalesOrderItemsDetail

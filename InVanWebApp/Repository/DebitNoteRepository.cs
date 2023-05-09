@@ -280,43 +280,43 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region  Bind grid
-        /// <summary>
-        /// Farheen: This function is for fecthing list of inward QC data. 
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<RejectionNoteBO> GetRejctionNoteNoForDD()
-        {
-            List<RejectionNoteBO> resultList = new List<RejectionNoteBO>();
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connString))
-                {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_BindRejectionNoteDD_ForDebitNote", con); //Rahul updated 12-01-2023. 
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
-                    while (reader.Read())
-                    {
-                        var result = new RejectionNoteBO()
-                        {
-                            ID = Convert.ToInt32(reader["ID"]),
-                            RejectionNoteNo = reader["RejectionNoteNo"].ToString()
+        //#region Function for dropdown Get all PO Numbers.
+        ///// <summary>
+        ///// Rahul 21-04-23. 
+        ///// </summary>
+        ///// <returns></returns>
+        //public List<PurchaseOrderBO> GetPONumberForDropdown()
+        //{
+        //    List<PurchaseOrderBO> resultList = new List<PurchaseOrderBO>();
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(connString))
+        //        {
+        //            SqlCommand cmd = new SqlCommand("usp_tbl_PurchaseOrder_GetAll", con);
+        //            cmd.CommandType = CommandType.StoredProcedure;
+        //            con.Open();
+        //            SqlDataReader reader = cmd.ExecuteReader();
+        //            while (reader.Read())
+        //            {
+        //                PurchaseOrderBO result = new PurchaseOrderBO()
+        //                {
+        //                    PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderId"]),
+        //                    PONumber = reader["PONumber"].ToString()
+        //                };
+        //                resultList.Add(result);
+        //            }
+        //            con.Close();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        log.Error(ex.Message, ex);
+        //    }
+        //    return resultList;
+        //}
+        //#endregion
 
-                        };
-                        resultList.Add(result);
-                    }
-                    con.Close();
 
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message, ex);
-            }
-            return resultList;
-        }
-        #endregion
 
     }
 }

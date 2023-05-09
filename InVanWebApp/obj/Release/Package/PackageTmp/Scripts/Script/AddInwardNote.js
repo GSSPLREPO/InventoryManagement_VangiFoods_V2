@@ -86,7 +86,7 @@ function SelectedIndexChanged(id) {
             $('#ShippingDetails').val(result[0].DeliveryAddress);
             $('#SupplierDetails').val(result[0].SupplierAddress);
             var ColCount = result.length
-            var flag = 0;
+            var flag = 0; //This flag is for checking whether the selected Inward Note is completed or not.
             //===================Create dynamic table for binding Item details====================//
             var table = document.getElementById('ItemTable');
             for (var j = 1; j < result.length; j++) {
@@ -153,10 +153,9 @@ function SelectedIndexChanged(id) {
                         cellData = document.getElementById("DeliveredQty" + j);
                         var deliveredQty = cellData.innerHTML;
                         if (parseFloat(temp_itemQty[0]) == parseFloat(deliveredQty)) {
-                            t6.setAttribute("disabled", "true");
-
+                            t6.setAttribute("disabled", "true");                           
                         }
-                        else {
+                        else {                            
                             t6.removeAttribute("disabled", "false");
                             t6.removeAttribute("disabled", "true");
                             t6.setAttribute("onchange", "OnChangeIWQty($(this).val(),id)");
@@ -189,12 +188,12 @@ function SelectedIndexChanged(id) {
 
             }
             if (flag == 0) {
-                $('#btnSave').prop('disabled', 'true');
-                alert('The Inward is done for the selected PO!');
+                $('#btnSave').prop('disabled','true');
+                alert('Inward is done for the selected Inward number!');
             }
-            else
-                $('#btnSave').prop('disabled',false);
-
+            else {
+                 $('#btnSave').prop('disabled', false);
+            }
         }
     });
 }
@@ -247,7 +246,6 @@ function fileValidation() {
 }
 
 function SetInwardQty() {
-
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
 
     var tableLength = document.getElementById('ItemTable').rows.length;
@@ -273,7 +271,6 @@ function SetInwardQty() {
         else
             $('#btnSave').prop('disabled', false);
     }
-
     createJson();
     $('#InwardQuantities').val(InwardQuantities);
     //$('#BalanceQuantities').val(BalanceQuantities);
@@ -283,7 +280,7 @@ function SetInwardQty() {
 
 function isAlphaNumericKey(evt) {
     var keycode = (evt.which) ? evt.which : evt.keyCode;
-    if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95))) {
+    if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45) || (keycode == 95) )) {
         $('#ValChallanNo').text('Only \"/, _, -\" are allowed!');
         $('#ValChallanNo').css('display', 'contents');
 

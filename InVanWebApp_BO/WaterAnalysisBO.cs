@@ -75,11 +75,9 @@ namespace InVanWebApp_BO
         //public DateTime dateGridBinding { get; set; }
 
         public int SrNo { get; set; }
-        
         //Date:14 Apirl23
         //Author: Yatri
         //Added:Below fileds are for report.
-
         [Required(ErrorMessage = "Invalid date selection!")]
         public DateTime fromDate { get; set; }
 

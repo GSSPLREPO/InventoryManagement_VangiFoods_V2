@@ -32,9 +32,8 @@ namespace InVanWebApp.Controllers
         private IPOPaymentRepository _pOPaymentRepository;
         private IIssueNoteRepository _issueNoteRepository;
         private IGRNRepository _gRNRepository;
-        private IRejectionNoteRepository _rejectionNoteRepository;
-        private IPurchaseOrderRepository _purchaseOrderRepository;
-
+        private IRejectionNoteRepository _rejectionNoteRepository;        
+        private IPurchaseOrderRepository _purchaseOrderRepository;//Bind PONo. for Wastage report 07-04-23.  
 
         private static ILog log = LogManager.GetLogger(typeof(ReportController));
 
@@ -50,7 +49,7 @@ namespace InVanWebApp.Controllers
             _issueNoteRepository = new IssueNoteRepository();
             _gRNRepository = new GRNRepository();
             _rejectionNoteRepository = new RejectionNoteRepository();
-            _purchaseOrderRepository = new PurchaseOrderRepository();
+            _purchaseOrderRepository = new PurchaseOrderRepository();   //Bind PONo. for Wastage report 07-04-23.  
         }
 
         public ReportController(IReportRepository reportRepository)
@@ -90,7 +89,7 @@ namespace InVanWebApp.Controllers
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
             int VendorId = 0; //Rahul added 13-04-23.
-            if (vendor != "" && vendor != null)
+            if (vendor != "" && vendor != null) //Rahul added 13-04-23.
                 VendorId = Convert.ToInt32(vendor);
             Session["Status"] = status;
             Session["Vendor"] = vendor;
@@ -1883,7 +1882,6 @@ namespace InVanWebApp.Controllers
                 }
             }
         }
-
         #endregion
 
         #region Export Excel for Company report
@@ -1939,16 +1937,22 @@ namespace InVanWebApp.Controllers
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
             string ReportName = "Company Report";
             string Date = "Date : ";
+            //string Fromdate = "From Date : ";/* The From Date are given here  */
+            //string Todate = "To Date : ";/* The To Date are given here  */
             string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            //String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            //string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
 
-            string content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
-                "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
-                "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-size:15px;font-family:Times New Roman;font-weight:bold'>" + name + "</td></tr>" +
-                "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>" +
-                "<tr><td colspan='7' style='text-align:right; font-size:15px;font-weight:bold'>" + Date + DateTime.Now.ToString("dd/MMM/yyyy") + "</td></tr>"
-                + "</table>"
-                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
+           string content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+               "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
+               "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-size:15px;font-family:Times New Roman;font-weight:bold'>" + name + "</td></tr>" +
+               "<tr><td colspan='3' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>" +
+               "<tr><td colspan='7' style='text-align:right; font-size:15px;font-weight:bold'>" + Date + DateTime.Now.ToString("dd/MMM/yyyy") + "</td></tr>"    
+               //+ "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold'>" + Fromdate + fromdate
+               //+ "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold'>" + Todate + todate
+               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
 
 
             string style = @"<!--mce:2-->";
@@ -2730,15 +2734,14 @@ namespace InVanWebApp.Controllers
         /// Calling method for Rejection Report Data
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId, int FlagDebitNote = 0)
+        public JsonResult GetRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId, int FlagDebitNote=0) 
         {
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
             Session["ItemId"] = ItemId;
-            Session["FagDebitNote"] = FlagDebitNote;
+            Session["FagDebitNote"] = FlagDebitNote; 
 
             var rejectionNoteReport = _repository.getRejectionReportData(fromDate, toDate, ItemId, FlagDebitNote);
-
             return Json(new { data = rejectionNoteReport }, JsonRequestBehavior.AllowGet);
         }
 
@@ -2870,7 +2873,8 @@ namespace InVanWebApp.Controllers
         {
             GridView gv = new GridView();
             var itemId = Convert.ToInt32(Session["ItemId"]);
-            List<RejectionNoteItemDetailsBO> resultList = _repository.getRejectionReportData(Convert.ToDateTime(Session["FromDate"]), Convert.ToDateTime(Session["toDate"]), itemId);
+
+            List<RejectionNoteItemDetailsBO> resultList = _repository.getRejectionReportData(Convert.ToDateTime(Session["FromDate"]), Convert.ToDateTime(Session["toDate"]),itemId);
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("Date");
@@ -3468,7 +3472,26 @@ namespace InVanWebApp.Controllers
             var BatchNumberdd = new SelectList(model.ToList(), "ID", "BatchNumber");
             ViewData["BatchNumberdd"] = BatchNumberdd;
         }
-
+        /// <summary>
+        /// Rahul 07-04-23. 
+        /// Bind PONo. for Wastage report.  
+        /// </summary>
+        public void BindInwardPODropDown()
+        {
+            var model = _purchaseOrderRepository.GetAll();
+            var WastageReport_dd = new SelectList(model.ToList(), "PurchaseOrderId", "PONumber");
+            ViewData["PONumberdd"] = WastageReport_dd;
+        }
+        /// <summary>
+        /// Rahul 12-04-23. 
+        /// Bind WONo. for Pre-production QC report.  
+        /// </summary>
+        public void BindPreProduction_QCWODropDown()
+        {
+            var model = _reportRepository.Getall();
+            var WastageReport_dd = new SelectList(model.ToList(), "ID", "WorkOrderNumber");
+            ViewData["WONumberdd"] = WastageReport_dd;
+        }
         #endregion
 
         #region  Raw Material Cost analysis 
@@ -4014,7 +4037,7 @@ namespace InVanWebApp.Controllers
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
             sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
@@ -4237,7 +4260,7 @@ namespace InVanWebApp.Controllers
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
             sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:100px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
@@ -4359,14 +4382,13 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-              "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + ReportName + "</span></td></tr></tr>" +
-              "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-              "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></tr>" +
-              "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-              + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
-              + "</td></tr>" + "</table>"
-              + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
-
+                "<tr><td colspan='4' ><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + ReportName + "</span></td></tr></tr>" +
+                "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+                "<tr><td><td colspan='4'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></tr>" +
+                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+                + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+                + "</td></tr>" + "</table>"
+                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 
             string style = @"<!--mce:2-->";
             Response.Write(style);
@@ -4460,7 +4482,7 @@ namespace InVanWebApp.Controllers
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
             sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:100px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
@@ -4582,14 +4604,13 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='3'> <img height='150' width='150' src='" + strPath + "'/></td>" +
-                "<tr><td colspan='4'style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
-                "<tr><td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
-                "<tr><td><td><td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
-                "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
-                + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
-                + "</td></tr>" + "</table>"
-                + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
-
+               "<tr><td colspan='4'style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;'>&nbsp;" + ReportName + "</span></td></tr></tr>" +
+               "<tr><td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold'>" + name + "</span></td></tr>" +
+               "<tr><td><td><td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold'>" + address + "</span></td></td></td></tr>" +
+               "<tr><tr><td Style='font-size:15px;Font-weight:bold;'>" + Fromdate + fromdate
+               + "<td><td><td></td><td></td><td Style='font-size:15px;Font-weight:bold;'>" + Todate + todate + "</td></td>"
+               + "</td></tr>" + "</table>"
+               + "<table><tr align='center'><td>" + sw.ToString() + "</tr></td></table>";
 
             string style = @"<!--mce:2-->";
             Response.Write(style);
@@ -4683,7 +4704,7 @@ namespace InVanWebApp.Controllers
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
             sb.Append("<th Colspan='6' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
             //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; color:red; bottom:20px;font-family:Times New Roman;'>" + ReportName + "</label>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;color:red;font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
             //sb.Append("<br/>");
@@ -4728,6 +4749,7 @@ namespace InVanWebApp.Controllers
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+                    //pdfDoc.SetPageSize(new Rectangle(850f, 1150f));
 
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
@@ -4747,8 +4769,6 @@ namespace InVanWebApp.Controllers
                 }
             }
         }
-
-
         #endregion
 
         #region Excel Debit Note report
@@ -4831,6 +4851,49 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
+        #region Bind dropdown
+        public void BindSONumberDropDown()
+        {
+            var model = _repository.GetSONumber();
+            var SONumberdd = new SelectList(model.ToList(), "SONumber", "SONumber");
+            ViewData["SONumberdd"] = SONumberdd;
+
+        }
+
+        public void BindDBNoteNumberDropDown()
+        {
+            var model = _repository.GetDebitNoteNumber();
+            var DBNoteNumberdd = new SelectList(model.ToList(), "ID", "DebitNoteNo");
+            ViewData["DBNoteNumberdd"] = DBNoteNumberdd;
+
+        }
+        #endregion
+
+        #region Set Border
+        /// <summary>
+        /// setting border to pdf document
+        /// </summary>
+        /// <param name="writer"></param>
+        /// <param name="pdfDoc"></param>
+        public void setBorder(PdfWriter writer, Document pdfDoc)
+        {
+            //---------------------------------------
+            var content = writer.DirectContent;
+            var pageBorderRect = new Rectangle(pdfDoc.PageSize);
+
+            pageBorderRect.Left += pdfDoc.LeftMargin;
+            pageBorderRect.Right -= pdfDoc.RightMargin;
+            pageBorderRect.Top -= pdfDoc.TopMargin;
+            pageBorderRect.Bottom += pdfDoc.BottomMargin;
+
+            content.SetColorStroke(BaseColor.LIGHT_GRAY);
+            content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom, pageBorderRect.Width, pageBorderRect.Height);
+            content.Stroke();
+
+            //---------------------------------------
+        }
+        #endregion
+
         #region Wastage Report 
 
         #region Binding the Wastage report data 
@@ -4838,10 +4901,10 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                RejectionNoteBO model = new RejectionNoteBO();
+                RejectionNoteBO model = new RejectionNoteBO(); ///updated  17 Apr 2023. 
                 model.fromDate = DateTime.Today;
                 model.toDate = DateTime.Today;
-                BindInwardPODropDown();
+                BindInwardPODropDown();                     
                 return View(model);
             }
             else
@@ -4921,7 +4984,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejection Number</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejection Number</ th>"); //updated 17-04-23.
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward Number</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward QC Number</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO Number</ th>");
@@ -4931,6 +4994,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price(Rs)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward Quantity (KG)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Received Quantity (KG)</ th>");
+            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Balance Quantity (KG)</ th>");  ///Remove 17-04-23.
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejected Quantity (KG)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Wastage Quantity (%)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Reason For Wastage</ th>");
@@ -4945,7 +5009,7 @@ namespace InVanWebApp.Controllers
             {
                 sb.Append("<tr style='text-align:center;padding: 10px;'>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectionNoteDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectionNoteDate + "</td>"); //updated 17-04-23.
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectionNoteNo + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardNumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardQCNumber + "</td>");
@@ -4956,7 +5020,8 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemUnitPrice + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardQuantity + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.QuantityTookForSorting + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectedQuantity + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.BalanceQuantity + "</td>");  ///Remove 17-04-23.
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectedQuantity + "</td>"); 
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.WastageQuantityInPercentage + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ReasonForRR + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ApprovedBy + "</td>");
@@ -4978,6 +5043,7 @@ namespace InVanWebApp.Controllers
 
                     writer.PageEvent = new PageHeaderFooter1();
                     pdfDoc.Open();
+                    //pdfDoc.NewPage();
 
                     setBorder(writer, pdfDoc);
 
@@ -4989,8 +5055,10 @@ namespace InVanWebApp.Controllers
                 }
             }
         }
-
-        public class PageHeaderFooter1 : PdfPageEventHelper
+        /// <summary>
+        /// Rahul added 'PageHeaderFooter' 17-04-23. 
+        /// </summary>
+        public class PageHeaderFooter1 : PdfPageEventHelper 
         {
             private readonly Font _pageNumberFont = new Font(Font.NORMAL, 10f, Font.BOLD, BaseColor.BLACK);
 
@@ -5015,12 +5083,10 @@ namespace InVanWebApp.Controllers
                 numberTable.WriteSelectedRows(0, -1, document.Right - 300, document.Bottom + 4, writer.DirectContent);
             }
         }
-
-
         #endregion
 
         #region Excel Wastage Report 
-        public void ExportAsExcelForWastageReport()
+        public void ExportAsExcelForWastageReport() 
         {
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
@@ -5066,7 +5132,7 @@ namespace InVanWebApp.Controllers
                 dr["Rejected Quantity(KG)"] = st.RejectedQuantity.ToString();
                 dr["Wastage Quantity (%)"] = st.WastageQuantityInPercentage.ToString();
                 dr["Reason For Wastage"] = (st.ReasonForRR == null) ? "" : st.ReasonForRR.ToString();///updated 17-04-23.
-                dr["Approved By"] = st.ApprovedBy.ToString();
+                dr["Approved By"] = st.ApprovedBy.ToString(); 
 
                 dt.Rows.Add(dr);
             }
@@ -5154,7 +5220,7 @@ namespace InVanWebApp.Controllers
         /// </summary>
         /// <returns></returns>
         [Obsolete]
-        public ActionResult ExprotAsPDFForPreProduction_QCReport()
+        public ActionResult ExprotAsPDFForPreProduction_QCReport() 
         {
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
@@ -5276,7 +5342,7 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Excel Pre-production QC Report 
-        public void ExportAsExcelForPreProduction_QCReport()
+        public void ExportAsExcelForPreProduction_QCReport() 
         {
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
@@ -5356,7 +5422,7 @@ namespace InVanWebApp.Controllers
                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
 
 
-            string style = @"<!--mce:2-->";
+            string style = @"<!--mce:2-->"; 
             Response.Write(style);
             Response.Output.Write(content1);
             gv.GridLines = GridLines.None;
@@ -5368,331 +5434,5 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-        #region Post production Rejection Report
-
-        #region Binding the  Post Production Rejection report
-
-        public ActionResult PostProductionRejectionReport()
-        {
-            if (Session[ApplicationSession.USERID] != null)
-            {
-                ReportBO model = new ReportBO();
-                model.fromDate = DateTime.Today;
-                model.toDate = DateTime.Today;
-                BindBatchNumberDropDown();
-                BindWorkOrderNumberDropDown();
-                return View(model);
-            }
-            else
-                return RedirectToAction("Index", "Login");
-        }
-
-
-        /// <summary>
-        /// Develop By Siddharth on 25 APR 2023
-        /// Calling method for  Post Production Rejection report Data
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult GetPostProductionRejectionData(DateTime fromDate, DateTime toDate, string BatchNumber = "", string WorkOrderNumber = "")
-        {
-            Session["FromDate"] = fromDate;
-            Session["ToDate"] = toDate;
-            Session["BatchNumber"] = BatchNumber;
-            Session["WorkOrderNumber"] = WorkOrderNumber;
-            var postProductionRejectionNoteReport = _repository.getPostProductionRejectionReportData(fromDate, toDate, BatchNumber, WorkOrderNumber);
-            return Json(new { data = postProductionRejectionNoteReport }, JsonRequestBehavior.AllowGet);
-        }
-
-        #endregion
-
-        #region Export PDF Post Production Rejection Report
-        /// <summary>
-        /// Create by Siddhareth on 13 MAR 2023
-        /// </summary>
-        /// <returns></returns>
-        [Obsolete]
-        public ActionResult ExprotAsPDFForPostProjectionRejection()
-        {
-            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
-            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
-            var batchNumber = Convert.ToString(Session["BatchNumber"]);
-            var workOrderNumber = Convert.ToString(Session["WorkOrderNumber"]);
-
-            var PostProductionRejectionReportDetails = _repository.getPostProductionRejectionReportData(fromDate, toDate, batchNumber, workOrderNumber);
-            TempData["PostProductionRejectionReportDataTemp"] = PostProductionRejectionReportDetails;
-            if (TempData["PostProductionRejectionReportDataTemp"] == null)
-            {
-                return RedirectToAction("PostProductionRejectionReport", "Report");
-            }
-
-            StringBuilder sb = new StringBuilder();
-            List<ReportBO> resultList = TempData["PostProductionRejectionReportDataTemp"] as List<ReportBO>;
-
-            if (resultList.Count < 0)
-                return RedirectToAction("PostProductionRejectionReport", "Report");
-
-            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
-            //string address = ApplicationSession.ORGANISATIONADDRESS;
-            string ReportName = "Post Production Rejection Report";
-            string name = ApplicationSession.ORGANISATIONTIITLE;
-            string address = ApplicationSession.ORGANISATIONADDRESS;
-            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
-            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
-            sb.Append("<thead>");
-            sb.Append("<tr >");
-            sb.Append("<th  style='text-align:right;padding-right:-90px;padding-bottom:-290px;font-size:11px;font-family:Times New Roman;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
-            sb.Append("</th></tr>");
-            sb.Append("<tr > <th></th>");
-            sb.Append("<th colspan=9 style='text-align:right;padding-right:-170px;padding-bottom:-290px;font-size:11px;font-family:Times New Roman;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
-            sb.Append("</th></tr>");
-            sb.Append("<tr>");
-            sb.Append("<th style='text-align:center;' Colspan='1'>" +
-                "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='12' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
-            //sb.Append("<br/>");
-            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;font-family:Times New Roman;font-weight:bold;color:Red;'>" + ReportName + "</label>");
-            sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
-            //sb.Append("<br/>");
-            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
-
-            sb.Append("</th></tr>");
-
-            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr.No</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:20%;font-size:13px;border: 0.05px  #e2e9f3;'>RNDate</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:17%;font-size:13px;border: 0.05px  #e2e9f3;'>WO Number</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:17%;font-size:13px;border: 0.05px  #e2e9f3;'>Batch Number</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:18%;font-size:13px;border: 0.05px  #e2e9f3;'>Post-Production RN Number</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Stage</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price (Rs)</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:17%;font-size:13px;border: 0.05px  #e2e9f3;'>Total Quantity (KG)</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:17%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejected Quantity (KG)</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:17%;font-size:13px;border: 0.05px  #e2e9f3;'>Remarks</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:19%;font-size:13px;border: 0.05px  #e2e9f3;'>Approved By</ th>");
-
-            sb.Append("</tr>");
-            sb.Append("</thead>");
-            sb.Append("<tbody>");
-            resultList.Count();
-            //stockReport.r
-            foreach (var item in resultList)
-            {
-
-                sb.Append("<tr style='text-align:center;padding: 10px;'>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RNDate + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.WorkOrderNumber + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.BatchNumber + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PostProductionRejectionNoteNo + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Stage + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemName + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemCode + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemUnitPrice + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.TotalQty + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectedQty + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Remarks + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ApprovedBy + "</td>");
-
-                sb.Append("</tr>");
-            }
-            sb.Append("</tbody>");
-            sb.Append("</table>");
-            sb.Append("</div>");
-
-            using (var sr = new StringReader(sb.ToString()))
-            {
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
-
-                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
-                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
-
-                    writer.PageEvent = new PageHeaderFooter();
-                    pdfDoc.Open();
-                    //pdfDoc.NewPage();
-
-
-                    setBorder(writer, pdfDoc);
-
-                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
-                    pdfDoc.Close();
-                    byte[] bytes = memoryStream.ToArray();
-                    string filename = "Rpt_Rejection_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
-                    return File(memoryStream.ToArray(), "application/pdf", filename);
-                }
-            }
-        }
-
-
-        #endregion
-
-        #region Excel Post Production Rejection Report
-        public void ExportAsExcelForPostProjectionRejection()
-        {
-            GridView gv = new GridView();
-            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
-            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
-            string BatchNumber = Convert.ToString(Session["BatchNumber"]);
-            string WorkOrderNumber = Convert.ToString(Session["WorkOrderNumber"]);
-
-
-            List<ReportBO> resultList = _repository.getPostProductionRejectionReportData(fromDate, toDate, BatchNumber, WorkOrderNumber);
-            DataTable dt = new DataTable();
-            dt.Columns.Add("Sr.No");
-            dt.Columns.Add("RN Date");
-            dt.Columns.Add("WO Number");
-            dt.Columns.Add("Batch Number");
-            dt.Columns.Add("Post-Production RN Number");
-            dt.Columns.Add("Stage");
-            dt.Columns.Add("Item Name");
-            dt.Columns.Add("Item Code");
-            dt.Columns.Add("Item Unit Price (Rs)");
-            dt.Columns.Add("Total Quantity (KG)");
-            dt.Columns.Add("Rejected Quantity (KG)");
-            dt.Columns.Add("Remarks");
-            dt.Columns.Add("Approved By");
-
-            foreach (ReportBO st in resultList)
-            {
-                DataRow dr = dt.NewRow();
-                dr["Sr.No"] = st.SrNo.ToString();
-                dr["RN Date"] = st.RNDate.ToString();
-                dr["WO Number"] = st.WorkOrderNumber.ToString();
-                dr["Batch Number"] = st.BatchNumber.ToString();
-                dr["Post-Production RN Number"] = st.PostProductionRejectionNoteNo.ToString();
-                dr["Stage"] = st.Stage.ToString();
-                dr["Item Name"] = st.ItemName.ToString();
-                dr["Item Code"] = st.ItemCode.ToString();
-                dr["Item Unit Price (Rs)"] = st.ItemUnitPrice.ToString();
-                dr["Total Quantity (KG)"] = st.TotalQty.ToString();
-                dr["Rejected Quantity (KG)"] = st.RejectedQty.ToString();
-                dr["Remarks"] = st.Remarks.ToString();
-                dr["Approved By"] = st.ApprovedBy.ToString();
-
-
-                dt.Rows.Add(dr);
-            }
-            gv.DataSource = dt;
-            gv.DataBind();
-            Response.Clear();
-            Response.Buffer = true;
-            Response.ContentType = "application/vnd.ms-excel";
-            Response.ContentEncoding = System.Text.Encoding.Unicode;
-            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
-            string filename = "Rpt_Post_Production_Rejection_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
-            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
-            Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            StringWriter sw = new StringWriter();
-            HtmlTextWriter hw = new HtmlTextWriter(sw);
-            gv.AllowPaging = false;
-            gv.GridLines = GridLines.Both;
-            gv.RenderControl(hw);
-
-            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
-            string ReportName = "Post Production Rejection Report";/* The Stock Movement Report name are given here  */
-            string Fromdate = "From Date : ";/* The From Date are given here  */
-            string Todate = "To Date:";/* The To Date are given here  */
-            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
-            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
-            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
-            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
-            String content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
-               "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
-               "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + name + "</td></tr>" +
-               "<tr><td colspan='12' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
-               + "<tr><td colspan='7' style='text-align:left; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Fromdate + fromdate
-               + "</td><td colspan='6' style='text-align:right; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Todate + todate
-               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
-               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
-
-
-            string style = @"<!--mce:2-->";
-            Response.Write(style);
-            Response.Output.Write(content1);
-            gv.GridLines = GridLines.None;
-            Response.Flush();
-            Response.Clear();
-            Response.End();
-        }
-        #endregion
-        #endregion
-
-        #region Bind dropdown
-
-        public void BindWorkOrderNumberDropDown()
-        {
-            var model = _repository.Getall();
-            var WorkOrderNumberdd = new SelectList(model.ToList(), "ID", "WorkOrderNumber");
-            ViewData["WorkOrderNumberdd"] = WorkOrderNumberdd;
-        }
-        public void BindSONumberDropDown()
-        {
-            var model = _repository.GetSONumber();
-            var SONumberdd = new SelectList(model.ToList(), "SONumber", "SONumber");
-            ViewData["SONumberdd"] = SONumberdd;
-
-        }
-
-        public void BindDBNoteNumberDropDown()
-        {
-            var model = _repository.GetDebitNoteNumber();
-            var DBNoteNumberdd = new SelectList(model.ToList(), "ID", "DebitNoteNo");
-            ViewData["DBNoteNumberdd"] = DBNoteNumberdd;
-
-        }
-
-        /// <summary>
-        /// Rahul 07-04-23. 
-        /// Bind Inward PONo. for Wastage report.  
-        /// </summary>
-        public void BindInwardPODropDown()
-        {
-            var model = _purchaseOrderRepository.GetAll();
-            var WastageReport_dd = new SelectList(model.ToList(), "PurchaseOrderId", "PONumber");
-            ViewData["PONumberdd"] = WastageReport_dd;
-        }
-
-        /// <summary>
-        /// Rahul 12-04-23. 
-        /// Bind WONo. for Pre-production QC report.  
-        /// </summary>
-        public void BindPreProduction_QCWODropDown()
-        {
-            var model = _reportRepository.Getall();
-            var WastageReport_dd = new SelectList(model.ToList(), "ID", "WorkOrderNumber");
-            ViewData["WONumberdd"] = WastageReport_dd;
-        }
-
-        #endregion
-
-        #region Set Border
-        /// <summary>
-        /// setting border to pdf document
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="pdfDoc"></param>
-        public void setBorder(PdfWriter writer, Document pdfDoc)
-        {
-            //---------------------------------------
-            var content = writer.DirectContent;
-            var pageBorderRect = new Rectangle(pdfDoc.PageSize);
-
-            pageBorderRect.Left += pdfDoc.LeftMargin;
-            pageBorderRect.Right -= pdfDoc.RightMargin;
-            pageBorderRect.Top -= pdfDoc.TopMargin;
-            pageBorderRect.Bottom += pdfDoc.BottomMargin;
-
-            content.SetColorStroke(BaseColor.LIGHT_GRAY);
-            content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom, pageBorderRect.Width, pageBorderRect.Height);
-            content.Stroke();
-
-            //---------------------------------------
-        }
-
-        #endregion
     }
 }
