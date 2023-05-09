@@ -2,6 +2,10 @@
 @model IEnumerable<InVanWebApp_BO.CurrencyBO>
 @{ ViewBag.Title = "Currency";
     Layout = "~/Views/Shared/MainMaster.cshtml"; }
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 <!DOCTYPE html>
 
 <html>
@@ -89,8 +93,7 @@
 
                                     @*@Html.ActionLink("Delete", "DeleteItemType", new { ID = item.ID })*@
                                 </td>
-                            </tr>
-}
+                            </tr>}
                                     </tbody>
                                 </table>
                             </div>

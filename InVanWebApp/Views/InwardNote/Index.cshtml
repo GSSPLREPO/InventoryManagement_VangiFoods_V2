@@ -3,6 +3,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -32,9 +35,9 @@
                             @*<a href="@Url.Action("AddInwardNote","InwardNote")" class="btn btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
                                     <span class="fa fa-plus"></span>  Add Inward Note
                                 </a>*@
-                                <a href="@Url.Action("AddInwardNote","InwardNote")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                    <span class="fa fa-plus"></span> Inward Note
-                                </a>
+                            <a href="@Url.Action("AddInwardNote","InwardNote")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span> Inward Note
+                            </a>
                             <div class="table-responsive" style="padding-top:15px;">
                                 <table class="table table-striped table-bordered" id="tblInward">
                                     <thead>
@@ -108,11 +111,11 @@
             "pageLength": 20
         });
 
-        //var table = $('#tblInward').dataTable({
-        //    "searching": true,
-        //    "bLengthChange": false,
-        //    "bPaginate": true
-        //    //"pageLength": 15
-        //});
+            //var table = $('#tblInward').dataTable({
+            //    "searching": true,
+            //    "bLengthChange": false,
+            //    "bPaginate": true
+            //    //"pageLength": 15
+            //});
     </script>
 }

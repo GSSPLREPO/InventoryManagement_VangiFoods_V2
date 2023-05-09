@@ -1,8 +1,11 @@
 ﻿@model IEnumerable<InVanWebApp_BO.PreStartupHygieneBO>
 
 @{ ViewBag.Title = "Pre Start up Hygiene";
-    Layout = "~/Views/Shared/MainMaster.cshtml"; }
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -53,7 +56,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <a href="@Url.Action("AddPreStartupHygiene","PreStartupHygiene")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top: 8%; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                        <span class="fa fa-plus"></span> Pre-Startup Hygiene    
+                                        <span class="fa fa-plus"></span> Pre-Startup Hygiene
                                     </a>
                                 </div>
                             </div>

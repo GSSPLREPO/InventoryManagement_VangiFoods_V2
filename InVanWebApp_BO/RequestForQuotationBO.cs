@@ -17,12 +17,16 @@ namespace InVanWebApp_BO
         ///public Nullable<int> UnitId { get; set; } ///Rahul removed 'UnitId' 17-12-2022.  
         ///public Nullable<int> ItemId { get; set; } ///Rahul removed 'ItemId' 17-12-2022.  
         [Required(ErrorMessage = "Please select the RFQ Date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
         [Required(ErrorMessage = "Please select the Delivery date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         [Required(ErrorMessage = "Please select the Bidding Start date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> BiddingStartDate { get; set; }
         [Required(ErrorMessage = "Please select the Bidding End date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> BiddingEndDate { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public string Signature { get; set; }
