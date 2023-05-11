@@ -157,7 +157,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO Number</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Indent Number</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO Status</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Vendor Name</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Supplier Name</th>");
 
             sb.Append("</tr>");
             sb.Append("</thead>");
@@ -221,7 +221,7 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("PO Number");
             dt.Columns.Add("Indent Number");
             dt.Columns.Add("PO Status");
-            dt.Columns.Add("Vendor Name");
+            dt.Columns.Add("Supplier Name");
 
             foreach (PurchaseOrderBO st in purchaseOrders)
             {
@@ -231,7 +231,7 @@ namespace InVanWebApp.Controllers
                 dr["PO Number"] = st.PONumber.ToString();
                 dr["Indent Number"] = st.IndentNumber.ToString();
                 dr["PO Status"] = st.PurchaseOrderStatus.ToString();
-                dr["Vendor Name"] = st.CompanyName.ToString();
+                dr["Supplier Name"] = st.CompanyName.ToString();
 
                 dt.Rows.Add(dr);
             }

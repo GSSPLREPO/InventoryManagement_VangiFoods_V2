@@ -112,7 +112,7 @@
                 <div class="col-md-6 grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">@Html.Label("Vendor Name")<span style="color:red">*</span></h4>
+                            <h4 class="card-title" style="color:darkcyan">@Html.Label("Supplier Name")<span style="color:red">*</span></h4>
                             <hr />                            
                             <div class="form-group">                                
                                 @Html.DropDownListFor(model => model.CompanyName, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm js-example-basic-multiple mult-sl", multiple = "multiple", onchange = "SelectedIndexChanged($(this).val())" })

@@ -105,7 +105,7 @@
 
                                                             { c++; }
                                                         }
-                                                        @Html.Hidden("ItemCount", Model.itemDetails.Count() )
+                                                        @Html.Hidden("ItemCount", Model.itemDetails.Count())
                                                         <tr>
                                                             <td></td>
                                                             @{
@@ -113,11 +113,11 @@
                                                                 while (c3 <= Model.vendorIdLength)
                                                                 {
                                                                     <td class="text-left">
-                                                                                                                                              
+
                                                                         <button type="button" class="btn btn-sm btn-link btn-pq text-dark" style="background-color:transparent"
-                                                                                id="BtnPunchQuot_@c3" onclick="RFQSupplierDetails(this.id,@Model.RequestForQuotationId)">
-                                                                            <i class="fa fa-reply me-1 text-dark" aria-hidden="true"></i>Punch Quotation
-                                                                        </button>
+                                                                                    id="BtnPunchQuot_@c3" onclick="RFQSupplierDetails(this.id,@Model.RequestForQuotationId)">
+                                                                                <i class="fa fa-reply me-1 text-dark" aria-hidden="true"></i>Punch Quotation
+                                                                            </button>
                                                                     </td>
                                                                     { c3++; }
                                                                 }
@@ -229,7 +229,7 @@
                     var vendorId = myObj[i].VendorsID;
                     setItemPrice(vendorId, (i + 1), id);
                 }
-                console.log(tempArray);
+                //console.log(tempArray);
             },
             error: function (data) {
                 alert("Bind Company details failed!");
@@ -237,14 +237,14 @@
             }
         });
     }
-   
+
     //============The below function is for redirecting the user to new tab on-click of View in RFQ Summary modal.===========//
     function redirectToView(ID, RequestForQuotationId) {
         var rowNo = ID.split('_')[1];
         var VendorsID = $("#VendorsID_" + rowNo).text();
         window.open("RequestForQuotation/ViewRFQSupplierDetails?ID=" + VendorsID + "&RfqID=" + RequestForQuotationId, '_blank');
         event.preventDefault();
-        return;       
+        return;
     }
     //=========================================================End===================================================================//
 
@@ -449,9 +449,9 @@
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
-        console.log(res);
+       // console.log(res);
         var TxtItemDetails = JSON.stringify(res);
-        console.log(TxtItemDetails);
+        //console.log(TxtItemDetails);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 

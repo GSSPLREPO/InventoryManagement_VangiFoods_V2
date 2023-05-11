@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -17,7 +19,7 @@
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        @*Rahul updated anchor tag text 'Transactions' to 'Inventory' 16-02-23.*@ 
+                        @*Rahul updated anchor tag text 'Transactions' to 'Inventory' 16-02-23.*@
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Inventory</a>
                     </li>
                     <li class="breadcrumb-item active">Stock Adjustment</li>

@@ -46,7 +46,8 @@ namespace InVanWebApp.Repository
                             DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
                             BiddingStartDate = Convert.ToDateTime(reader["BiddingStartDate"]),
                             BiddingEndDate = Convert.ToDateTime(reader["BiddingEndDate"]),
-                            CreatedByDate = Convert.ToDateTime(reader["CreatedByDate"]),
+                            LastModifiedByDate = Convert.ToDateTime(reader["LastModifiedByDate"]),
+                            UserName=reader["UserName"].ToString(),
                             RFQCount = Convert.ToInt32(reader["RFQCount"])
 
                         };

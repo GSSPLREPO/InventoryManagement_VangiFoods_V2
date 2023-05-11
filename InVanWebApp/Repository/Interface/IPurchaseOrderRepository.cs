@@ -25,7 +25,7 @@ namespace InVanWebApp.Repository
         ResponseMessageBO Update(PurchaseOrderBO model);
 
         //Function for Get Company List dropdown 
-        IEnumerable<PurchaseOrderBO> GetCompanyList();
+        IEnumerable<PurchaseOrderBO> GetCompanyList(int type = 0);
 
         //Function for Get Company Address List dropdown 
         IEnumerable<PurchaseOrderBO> GetCompanyAddressList(int id); 

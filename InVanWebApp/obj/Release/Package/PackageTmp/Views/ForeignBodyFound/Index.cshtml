@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<InVanWebApp_BO.ForeignBodyFoundBO>
 
-@{
-    ViewBag.Title = "ForeignBodyFound";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
+@{ ViewBag.Title = "ForeignBodyFound";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; 
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -31,7 +32,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                           
+
                             <div style="padding-top:15px;">
                                 <div class="row">
                                     <div class="col-md-2">
@@ -101,7 +102,7 @@
             BindForeignBodyFound();
             setCurrentDate();
         });
-        
+
         function setCurrentDate()
         {
         var now = new Date();
@@ -164,7 +165,7 @@
                     { "data": "PostProcessing", "autoWidth": true },
                     { "data": "CorrectiveAction", "autoWidth": true },
                     { "data": "VerifyByName", "autoWidth": true },
-                   
+
                     {
                         data: "Id", "render": function (data) {
                             return '<button type="button" id="' + data + '" class = "text-primary btnEdit" style="background:transparent !important;"  title = "Edit Foreign Body Found"><i class="fa fa-edit"/></i></button> <button type="button" id="'

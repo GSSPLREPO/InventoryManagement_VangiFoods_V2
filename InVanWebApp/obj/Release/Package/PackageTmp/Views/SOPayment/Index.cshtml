@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<InVanWebApp_BO.SOPaymentBO>
-@{
-    ViewBag.Title = "Sales Order Payment";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "Sales Order Payment";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <html>
 <head>
     <title>SO Payment Details</title>
@@ -27,10 +27,10 @@
                 <div class="col-md-12">
                     @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
-                        @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
                         <div class="card">
                             <div class="card-body">
-                               
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <a href="@Url.Action("AddSOPayment","SOPayment")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
@@ -48,9 +48,9 @@
                                                         <th>Vendor</th>
                                                         <th>Invoice No.</th>
                                                         @*<th>Invoice Amount</th>
-                                                        <th>PO Total Amount</th>
-                                                        <th>Paid Amount</th>
-                                                        <th>Balance Pay</th>*@
+                                                            <th>PO Total Amount</th>
+                                                            <th>Paid Amount</th>
+                                                            <th>Balance Pay</th>*@
                                                         <th>Payment Due Date</th>
                                                         <th>Payment Date</th>
                                                         <th>Payment Mode</th>
@@ -61,40 +61,37 @@
                                                 <tbody>
                                                     @foreach (var item in Model)
                                                     {
-                                                        <tr>
-                                                            <td>@Html.DisplayFor(x => item.SONumber)</td> 
-                                                            <td>@Html.DisplayFor(x => item.VendorName)</td>
-                                                            <td>@Html.DisplayFor(x => item.InvoiceNumber)</td>
-                                                            @*<td>@Html.DisplayFor(x => item.PaymentAmount)</td>
-                                                            <td>@Html.DisplayFor(x => item.TotalPOAmount)</td>
-                                                            <td>@Html.DisplayFor(x => item.TotalPaybleAmount)</td>
-                                                            <td>@Html.DisplayFor(x => item.BalanceAmount)</td>*@
-                                                            <td>@Html.DisplayFor(x => item.PaymentDueDate)</td>
-                                                            <td>@Html.DisplayFor(x => item.PaymentDate)</td>
-                                                            <td>@Html.DisplayFor(x => item.PaymentMode)</td>
-                                                            <td>@Html.DisplayFor(x => item.IsPaid)</td>
-                                                            <td>
-                                                                <a href=@Url.Action("ViewSOPayment", "SOPayment", new { ID = item.ID }) title="View SO-Payment">
-                                                                    <i class="fa fa-eye text-primary"></i>
-                                                                </a>&emsp;
-                                                                <a href=@Url.Action("EditSOPayment", "SOPayment", new { ID = item.ID }) title="Edit SO-Payment">
-                                                                    <i class="fa fa-edit text-primary"></i>
-                                                                </a> &nbsp;
-                                                                <a href=@Url.Action("DeleteSOPayment", "SOPayment", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete SO-Payment">
-                                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-                                                    }
+                                    <tr>
+                                        <td>@Html.DisplayFor(x => item.SONumber)</td>
+                                        <td>@Html.DisplayFor(x => item.VendorName)</td>
+                                        <td>@Html.DisplayFor(x => item.InvoiceNumber)</td>
+                                        @*<td>@Html.DisplayFor(x => item.PaymentAmount)</td>
+                                            <td>@Html.DisplayFor(x => item.TotalPOAmount)</td>
+                                            <td>@Html.DisplayFor(x => item.TotalPaybleAmount)</td>
+                                            <td>@Html.DisplayFor(x => item.BalanceAmount)</td>*@
+                                        <td>@Html.DisplayFor(x => item.PaymentDueDate)</td>
+                                        <td>@Html.DisplayFor(x => item.PaymentDate)</td>
+                                        <td>@Html.DisplayFor(x => item.PaymentMode)</td>
+                                        <td>@Html.DisplayFor(x => item.IsPaid)</td>
+                                        <td>
+                                            <a href=@Url.Action("ViewSOPayment", "SOPayment", new { ID = item.ID }) title="View SO-Payment">
+                                                <i class="fa fa-eye text-primary"></i>
+                                            </a>&emsp;
+                                            <a href=@Url.Action("EditSOPayment", "SOPayment", new { ID = item.ID }) title="Edit SO-Payment">
+                                                <i class="fa fa-edit text-primary"></i>
+                                            </a> &nbsp;
+                                            <a href=@Url.Action("DeleteSOPayment", "SOPayment", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete SO-Payment">
+                                                <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                            </a>
+                                        </td>
+                                    </tr>}
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                    }
+                        </div>}
                 </div>
             </div>
         </div>

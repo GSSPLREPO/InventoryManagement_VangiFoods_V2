@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<InVanWebApp_BO.ProductionMaterialIssueNoteBO>
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -46,21 +46,20 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.ProductionMaterialIssueNoteNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ProductionMaterialIssueNoteDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ProductionIndentNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IssueByName)</td>
-                                                <td>
-                                                    <a href=@Url.Action("ViewProductionMaterialIssueNote", "ProductionMaterialIssueNote", new { ID = item.ID }) title="Edit Production Issue Note">
-                                                        <i class="fa fa-eye text-primary"></i>
-                                                    </a>&emsp;
-                                                    <a href=@Url.Action("DeleteProductionMaterialIssueNote", "ProductionMaterialIssueNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Production Issue Note">
-                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        }
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.ProductionMaterialIssueNoteNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ProductionMaterialIssueNoteDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ProductionIndentNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.IssueByName)</td>
+                                <td>
+                                    <a href=@Url.Action("ViewProductionMaterialIssueNote", "ProductionMaterialIssueNote", new { ID = item.ID }) title="Edit Production Issue Note">
+                                        <i class="fa fa-eye text-primary"></i>
+                                    </a>&emsp;
+                                    <a href=@Url.Action("DeleteProductionMaterialIssueNote", "ProductionMaterialIssueNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Production Issue Note">
+                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                    </a>
+                                </td>
+                            </tr>}
                                     </tbody>
                                 </table>
                             </div>

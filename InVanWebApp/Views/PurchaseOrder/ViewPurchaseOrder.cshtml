@@ -114,7 +114,7 @@
                                     </div>
                                     <br />
                                     <div class="col-md-2">
-                                        <label class="font-weight-bold">Vendors Name</label>
+                                        <label class="font-weight-bold">Supplier Name</label>
                                     </div>
                                     <div class="col-md-4">
                                         @Html.DisplayFor(model => model.CompanyName)
@@ -205,11 +205,11 @@
                                                 </td>
                                                 <td>
                                                     @*Rahul added style line-height: 1.5rem; in ItemTaxValue tag 16-02-2023.*@
-                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;line-height: 1.5rem;", @readonly = "readonly" })
+                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;line-height: 1.5rem;width:110%;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
                                                     @*Rahul added style line-height: 1.5rem; in TotalItemCost tag 16-02-2023.*@
-                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;line-height: 1.5rem;", @readonly = "readonly" })
+                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;line-height: 1.5rem;width:100%;", @readonly = "readonly" })
                                                 </td>
                                             </tr> { c++; }
                                                             } }

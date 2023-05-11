@@ -43,7 +43,8 @@
                                             <th>@Html.DisplayName("Delivery Date")</th>
                                             <th>@Html.DisplayName("Bidding Start Date")</th>
                                             <th>@Html.DisplayName("Bidding End Date")</th>
-                                            <th>@Html.DisplayName("Created By Date")</th>
+                                            <th>@Html.DisplayName("Last Modified By")</th>
+                                            <th>@Html.DisplayName("Last Modified Date")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
@@ -58,7 +59,8 @@
                                                 <td>@Html.DisplayFor(modelItem => item.DeliveryDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.BiddingStartDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.BiddingEndDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.CreatedByDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.LastModifiedByDate)</td>
                                                 <td>
                                                     @if (item.RFQCount <= 0)
                                                     {

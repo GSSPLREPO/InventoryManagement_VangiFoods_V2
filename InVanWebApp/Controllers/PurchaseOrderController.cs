@@ -505,7 +505,7 @@ namespace InVanWebApp.Controllers
         #region Bind dropdowns Company 
         public void BindCompany()
         {
-            var result = _purchaseOrderRepository.GetCompanyList();
+            var result = _purchaseOrderRepository.GetCompanyList(1);
             var resultList = new SelectList(result.ToList(), "VendorsID", "CompanyName");
             ViewData["CompanyName"] = resultList;
         }

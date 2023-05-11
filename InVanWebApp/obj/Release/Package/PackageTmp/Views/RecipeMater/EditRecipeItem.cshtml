@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 
-@using (Html.BeginForm("AddRecipeItems", "RecipeMater", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditRecipeItem", "RecipeMater", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 @Html.AntiForgeryToken()
 
@@ -95,7 +95,7 @@
                                             <tr id="tablerow_@c">
                                                 <td>
                                                     @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[Ingredients], "--Select Item---",
-                                                                                                                     new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
+                                                                                                                               new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
                                                 </td>
                                                 <td class="col-md-4 d-n d-none">
                                                     @Html.TextBox("Item_Code_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
@@ -146,7 +146,7 @@
                         <a href="@Url.Action("Index", "RecipeMater")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
                             Back To List
                         </a>
-                        <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" onclick="SaveBtnClick()">Update</button>}
+                        <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" onclick="SaveBtnClick()">Update</button>
 
                     </div>
                 </div>}

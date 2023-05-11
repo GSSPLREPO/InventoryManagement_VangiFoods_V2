@@ -71,7 +71,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_InwardNote_GetAll", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_GetInwardNote_ForInwardQC", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();

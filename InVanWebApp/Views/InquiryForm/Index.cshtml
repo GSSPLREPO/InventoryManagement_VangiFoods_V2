@@ -103,6 +103,9 @@
                                                 <td>
                                                     @if (item.InquiryStatus == "Open")
                                                     {
+                                                        <a href=@Url.Action("ViewInquiryForm", new { InquiryID = item.InquiryID }) title="View Inquiry">
+                                                            <i class="fa fa-eye text-primary"></i>
+                                                        </a><span>&nbsp;&nbsp;</span>
                                                         <a href=@Url.Action("EditInquiryForm", new { InquiryID = item.InquiryID }) title="Edit Inquiry">
                                                             <i class="fa fa-edit text-primary"></i>
                                                         </a>

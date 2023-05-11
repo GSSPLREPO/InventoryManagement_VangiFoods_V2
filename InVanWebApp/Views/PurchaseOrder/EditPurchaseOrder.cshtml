@@ -92,7 +92,7 @@
                 </div>
                 <br />
                 <div class="col-md-2">
-                    @Html.Label("Vendors Name")
+                    @Html.Label("Supplier Name")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -149,7 +149,7 @@
                 </div>
             </div>
             <br />
-            
+
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
@@ -195,13 +195,27 @@
                                                             @Html.TextBox("RequiredQuantity_" + c, item.RequiredQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
+                                                            @if (item.BalanceQuantity == 0 && item.TotalItemCost == 0)
                                                             {
-                                                                @class = "form-control form-control-sm",
-                                                           style = "height:30px;width:100px;",
-                                                                onkeypress = "return isNumberKey(event)",
-                                                           onchange = "OnChangeQty($(this).val(),id,"+item.ItemQuantity+")"
-                                                            })
+                                                                @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
+                                                           {
+                                                               @class = "form-control form-control-sm",
+                                                               style = "height:30px;width:100px;",
+                                                               onkeypress = "return isNumberKey(event)",
+                                                               onchange = "OnChangeQty($(this).val(),id," + item.ItemQuantity + ")",
+                                                               @readonly = "readonly"
+                                                           })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
+                                                                {
+                                                                    @class = "form-control form-control-sm",
+                                                               style = "height:30px;width:100px;",
+                                                                    onkeypress = "return isNumberKey(event)",
+                                                               onchange = "OnChangeQty($(this).val(),id," + item.ItemQuantity + ")"
+                                                                })
+                                                            }
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("BalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
@@ -210,7 +224,13 @@
                                                             @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)" })
+                                                            @if (item.BalanceQuantity == 0 && item.TotalItemCost == 0)
+                                                            {
+                                                                @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)", @readonly="readonly" })
+                                                            }
+                                                            else { 
+                                                                @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)" })
+                                                            }
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
@@ -313,7 +333,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Other Tax: </b></label>
-                                    @Html.TextBox("OtherTax", Model.OtherTax, new { @class = "form-control form-control-sm text-right", onkeypress = "return isNumberKey(event)", onchange = "CalculateTotalBeforeTax()", maxlength="8" })
+                                    @Html.TextBox("OtherTax", Model.OtherTax, new { @class = "form-control form-control-sm text-right", onkeypress = "return isNumberKey(event)", onchange = "CalculateTotalBeforeTax()", maxlength = "8" })
                                 </div>
                                 <div class="row mb-2">
                                     <label>Total (after tax):</label>

@@ -6,28 +6,12 @@ var BalanceQuantities = "";
 
 //===========This function will create a json format of the item details
 function createJson() {
-    //var table = document.getElementById('ItemTable');
-    //var rowCount = table.rows.length;
-    //var i = 1;
-    //InwardQuantities = "";
-    //BalanceQuantities ="";
-    //for (i = 1; i < rowCount; i++) {
-    //    var value = $('#txtInwardQty' + i).val();
-    //    var BalQty = $('#txtBalanceQty' + i).val();
-    //    var UnitPrice = $('#UnitPrice_' + i).val();
-    //    var ItemID = $('#ItemID_' + i).val();
-    //    InwardQuantities = InwardQuantities + "txtInwardQty" + i + "*" + value + ",";
-    //    BalanceQuantities = BalanceQuantities + "txtBalanceQty" + i + "*" + BalQty + ",";
-    //    alert(InwardQuantities);
-    //    //JSON.stringify(res)
-    //}
-
     var table = document.getElementById('ItemTable');
     var rowCount = table.rows.length;
-    var i = 1;
+    var i = 1, flag = 0;;
     InwardQuantities = "[";
     BalanceQuantities = "";
-    for (i = 1; i < rowCount; i++) {
+    while (i < rowCount) {
         var ItemName = $('#ItemName_' + i).val();
         var ItemCode = $('#ItemCode_' + i).val();
         var cellData = document.getElementById("ItemQty" + i);
@@ -42,17 +26,33 @@ function createJson() {
         var CurrencyName = UnitPrice[1];
         UnitPrice = UnitPrice[0];
         var ItemID = $('#ItemID_' + i).val();
+
+        if (value == 0) {
+            i++;
+            continue;
+        }
+
         InwardQuantities = InwardQuantities + "{\"InwardQuantity\":" + value + ", \"ItemId\":" + ItemID +
             ", \"ItemUnitPrice\": " + UnitPrice + ", \"BalanceQuantity\": " + BalQty +
             ", \"Item_Name\": \"" + ItemName + "\", \"Item_Code\": \"" + ItemCode + "\",\"POQuantity\": " + POQty +
             ", \"ItemUnit\": \"" + Unit + "\", \"ItemTaxValue\": " + Tax + ", \"CurrencyName\": \"" + CurrencyName + "\"";
 
-        if (i == (rowCount - 1))
+        if (i == (rowCount - 1)) {
             InwardQuantities = InwardQuantities + "}";
+            flag = 1;
+        }
         else
             InwardQuantities = InwardQuantities + "},";
+
+        i++;
     }
-    InwardQuantities = InwardQuantities + "]"
+    InwardQuantities = InwardQuantities + "]";
+
+    var tempTxt = InwardQuantities.split(',]')[0];
+
+    if (flag == 0)
+        InwardQuantities = tempTxt + "]";
+
 }
 
 function SelectedIndexChanged(id) {
@@ -195,7 +195,7 @@ function SelectedIndexChanged(id) {
                 alert('The Inward is done for the selected PO!');
             }
             else
-                $('#btnSave').prop('disabled',false);
+                $('#btnSave').prop('disabled', false);
 
         }
     });
@@ -221,6 +221,9 @@ function OnChangeIWQty(value, id) {
     else {
         $('#btnSave').prop("disabled", false);
         var tempInwQty = document.getElementById("txtInwardQty" + rowNo).value;
+        if (tempInwQty == '' || tempInwQty == null)
+            tempInwQty = 0;
+
         document.getElementById("txtBalanceQty" + rowNo).value = parseFloat(temp_itemQty[0]) - (parseFloat(deliveredQty) + parseFloat(tempInwQty));
         InwardQuantities = InwardQuantities + "txtInwardQty" + rowNo + "*" + value + ",";
 
@@ -256,26 +259,35 @@ function SetInwardQty() {
     var flag = 0, i = 1;
 
     if (tableLength > 1) {
-        while (i < tableLength - 1) {
+        while (i < tableLength) {
             var PhyQty = document.getElementById("txtInwardQty" + i).value;
+            var DelvQty = document.getElementById("DeliveredQty" + i).innerHTML;
+            var POQty = document.getElementById("ItemQty" + i).innerHTML;
+            DelvQty = DelvQty.split(' ')[0];
+            DelvQty = parseFloat(DelvQty);
 
-            if (PhyQty == '' || PhyQty == "") {
-                alert("Deliverd quantity is zero or null! Cannot create inward note!");
-                $('#btnSave').prop('disabled', true);
-                return;
-            }
-           
+            POQty = POQty.split(' ')[0];
+            POQty = parseFloat(POQty);
+
+            PhyQty = (PhyQty == '' || PhyQty == null) ? 0 : PhyQty;
             PhyQty = parseFloat(PhyQty);
+
+            if (PhyQty == 0) {
+                if (DelvQty != POQty) {
+                    alert("Delivered quantity is zero or null! Cannot create inward note!");
+                    $('#btnSave').prop('disabled', true);
+                    return;
+                }
+            }
 
             if (PhyQty != 0) {
                 flag = 1;
-
             }
             i++;
 
         }
         if (flag != 1) {
-            alert("Deliverd quantity is zero or null! Cannot create inward note!");
+            alert("Delivered quantity is zero or null! Cannot create inward note as!");
             $('#btnSave').prop('disabled', true);
             return;
         }
@@ -285,9 +297,6 @@ function SetInwardQty() {
 
     createJson();
     $('#InwardQuantities').val(InwardQuantities);
-    //$('#BalanceQuantities').val(BalanceQuantities);
-    //alert($('#InwardQuantities').val());
-    //alert($('#BalanceQuantities').val());
 }
 
 function isAlphaNumericKey(evt) {

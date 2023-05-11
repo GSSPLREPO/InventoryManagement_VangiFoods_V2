@@ -128,6 +128,9 @@ function SelectedIndexChangedIndent(id) {
                         t4.setAttribute("class", "form-control form-control-sm");
                         t4.setAttribute("maxlength", "8");
                         t4.setAttribute("onchange", "OnChangeUnitPrice($(this).val(),id)");
+                        if (parseFloat(result[j].BalanceQuantity) == 0) {
+                            t4.setAttribute("disabled", "true");
+                        }
                         cell.appendChild(t4);
                     }
 

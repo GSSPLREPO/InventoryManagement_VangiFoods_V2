@@ -97,7 +97,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Tax inserted successfully!');</script>";
                         else
                         { 
-                            TempData["Success"] = "<script>alert('Duplicate insertion!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate tax name! Cannot perform insert!');</script>";
                             return View(model);
                         }
 
@@ -163,7 +163,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Tax updated successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Duplicate tax name!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate tax name! Cannot perform update!');</script>";
                             return View(model);
                         }
 

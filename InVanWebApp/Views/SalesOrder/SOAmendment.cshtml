@@ -43,7 +43,16 @@
                     @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", type = "text", @readonly = "readonly" })
                     @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <div class="col-md-6"></div>
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Inquiry Number")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.InquiryNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.InquiryNumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.InquiryID, new { @class = "form-control", @readonly = "readonly" })
+                </div>
             </div>
             <br />
             <div class="row">
@@ -152,20 +161,6 @@
                     @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2 mb-1">
-                    @Html.Label("Inquiry Number")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.InquiryNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.InquiryNumber, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.InquiryID, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-            </div>
-            <br />
-
-            <div class="row">
-                <div class="col-md-2 mb-1">
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
@@ -174,6 +169,7 @@
                 </div>
             </div>
             <br />
+
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">

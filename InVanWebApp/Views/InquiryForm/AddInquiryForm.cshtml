@@ -171,7 +171,7 @@
                                                 <th class="sortStyle d-n d-none">
                                                     Selected Item Code
                                                 </th>
-                                                <th class="sortStyle">
+                                                <th class="sortStyle d-n d-none">
                                                     Item
                                                 </th>
                                                 <th class="sortStyle">
@@ -207,7 +207,6 @@
                                                 </th>
                                                 <th class="sortStyle">
                                                     Remarks
-                                                    <span style="color:red">*</span>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -219,7 +218,7 @@
                                                 <td class="col-md-4 d-none">
                                                     @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                 </td>
-                                                <td>
+                                                <td class="d-n d-none">
                                                     @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
@@ -379,18 +378,25 @@
         if (ItemQuantity == 0) {
             flag = 0;
         }
+        else {
+            flag = 1;
+        }
 
         if (tableLength > 1) {
-            while (i < tableLength - 2) {
+            while (i <= tableLength - 2) {
                 ItemQuantity = document.getElementById("itemQuantity_" + i).value;
-               
-                if (ItemQuantity == '' || ItemQuantity == null || ItemQuantity == 0) {
+                ItemQuantity = (ItemQuantity == '' || ItemQuantity == null) ? 0 : ItemQuantity;
+                ItemQuantity = parseFloat(ItemQuantity);
+
+                if (ItemQuantity == 0) {
                     alert("Ordering quantity cannot be zero/null! Cannot generate inquiry!");
                     $('#btnSave').prop('disabled', true);
                     event.preventDefault();
                     return;
                 }
-
+                else {
+                    flag = 1;
+                }
                 i++;
 
             }
@@ -541,7 +547,7 @@
             '<td class="d-none">' +
             '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
             '</td>' +
-            '<td>' +
+            '<td class="d-n d-none">' +
             '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
@@ -659,7 +665,6 @@
                 [el.name, el.value])));
         console.log(res);
         var TxtItemDetails = JSON.stringify(res);
-        console.log(TxtItemDetails);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 

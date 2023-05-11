@@ -33,6 +33,9 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Enter remakrs!")]
         public string Remarks { get; set; }
+
+        public string UserName { get; set; }
+
         //Added below fields for Indent dropdown in RFQ 02-02-2023. 
         [Required(ErrorMessage = "Select indent number!")] ////added 
         public int IndentID { get; set; }

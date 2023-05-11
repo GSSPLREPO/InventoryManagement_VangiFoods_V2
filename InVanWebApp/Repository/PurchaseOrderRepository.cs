@@ -408,7 +408,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Function for binding dropdown Get Company List.
-        public IEnumerable<PurchaseOrderBO> GetCompanyList()
+        public IEnumerable<PurchaseOrderBO> GetCompanyList(int type = 0)
         {
             List<PurchaseOrderBO> resultList = new List<PurchaseOrderBO>();
             try
@@ -417,6 +417,7 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_CompanyList_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Type", type);
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
 
