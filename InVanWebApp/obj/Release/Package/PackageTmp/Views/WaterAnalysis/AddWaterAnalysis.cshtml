@@ -167,7 +167,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.GasReading, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return isNumberKey(event);" })
+                    @Html.TextBoxFor(model => model.GasReading, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.GasReading, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

@@ -40,9 +40,9 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.Label("Gate Pass Number")</th>
-                                            <th>@Html.Label("Genrated Date")</th>
                                             <th>@Html.Label("Location")</th>
                                             <th>@Html.Label("Verified By")</th>
+                                            <th>@Html.Label("Genrated Date")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
@@ -51,9 +51,9 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.OutwardNumber)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.OutwardDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.VerifiedByName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.OutwardDate)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewOutwardNote", "OutwardNote", new { ID = item.ID}) title="View Gate-Pass">
                                                         <i class="fa fa-eye text-primary"></i>

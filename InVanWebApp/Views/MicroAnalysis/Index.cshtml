@@ -52,7 +52,7 @@
                                 <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
                                     @*<a id="ExportPdf" style="float:right;" href="@Url.Action("MicroAnalysisPDF", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
-                                    <a id="ExportExcel" style="margin-left:5%;" href="@Url.Action("MicroAnalysisExcel", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    <a id="ExportExcel" style="margin-left:10%;" href="@Url.Action("MicroAnalysisExcel", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                 </div>
                                 <div class="col-md-2">
                                     <a href="@Url.Action("AddMicroAnalysis","MicroAnalysis")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top: 10%; background: linear-gradient(85deg, #392c70, #6a005b);">
@@ -172,11 +172,11 @@
                     },
 
                   //  { "data": "Date", "autoWidth": true },
-                    { "data": "Source", "autoWidth": true },
-                    { "data": "WOPO", "autoWidth": true },
-                    { "data": "ProductName", "autoWidth": true },
-                    { "data": "BatchNo", "autoWidth": true },
-                    { "data": "PackingSize", "autoWidth": true },
+                    { "data": "Source", "autoWidth": true, "class":"text-wrap" },
+                    { "data": "WOPO", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "ProductName", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "BatchNo", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "PackingSize", "autoWidth": true, "class": "text-wrap" },
                    /* { "data": "BestBeforeDate", "autoWidth": true },*/
                     {
                         "data": "BestBeforeDate",
@@ -203,7 +203,7 @@
                     //{ "data": "TotalPlateCountNumber", "autoWidth": true },
                     //{ "data": "YeastandMould", "autoWidth": true },
                     //{ "data": "Coliform", "autoWidth": true },
-                    { "data": "VerifyByName", "autoWidth": true },
+                    { "data": "VerifyByName", "autoWidth": true, "class": "text-wrap" },
 
                     {
                         data: "Id", "render": function (data) {

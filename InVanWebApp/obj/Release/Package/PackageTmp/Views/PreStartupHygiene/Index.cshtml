@@ -51,12 +51,11 @@
                                 </div>
                                 <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
-                                    @*<a id="ExportPdf" style="float:right;" href="@Url.Action("PreStartupHygienePDF", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
-                                    <a id="ExportExcel" style="margin-left:5%;" href="@Url.Action("PreStartupHygieneExcel", "PreStartupHygiene")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    <a id="ExportExcel" style="margin-left:10%;" href="@Url.Action("PreStartupHygieneExcel", "PreStartupHygiene")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                 </div>
                                 <div class="col-md-2">
                                     <a href="@Url.Action("AddPreStartupHygiene","PreStartupHygiene")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top: 8%; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                        <span class="fa fa-plus"></span> Pre-Startup Hygiene
+                                        <span class="fa fa-plus"></span> Startup Hygiene
                                     </a>
                                 </div>
                             </div>
@@ -170,12 +169,12 @@
                         }
 
                     },
-                    { "data": "RMRecevingArea", "autoWidth": true },
-                    { "data": "WeightingArea", "autoWidth": true },
-                    { "data": "Water", "autoWidth": true },
-                    { "data": "HygineArea", "autoWidth": true },
-                    { "data": "WalkWay", "autoWidth": true },
-                    { "data": "VerifyBy", "autoWidth": true },
+                    { "data": "RMRecevingArea", "autoWidth": true, "class":"text-wrap" },
+                    { "data": "WeightingArea", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "Water", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "HygineArea", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "WalkWay", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "VerifyBy", "autoWidth": true, "class": "text-wrap" },
                     {
                         data: "Id", "render": function (data) {
                             return '<button type="button" id="' + data + '" class = "text-primary btnEdit" style="background:transparent !important;"  title = "Edit Pre-Startup Hygiene"><i class="fa fa-edit"/></i></button> <button type="button" id="'

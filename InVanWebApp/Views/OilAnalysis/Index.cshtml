@@ -54,8 +54,8 @@
                                     <div class="col-md-2">
                                         <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
 
-                                        <a id="ExportPdf" style="float:left;" href="@Url.Action("ExportAsPDF", "OilAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
-                                        <a id="ExportExcel" style="float:left;" href="@Url.Action("ExportAsExcel", "OilAnalysis")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportPdf" style="margin-left:10%;" href="@Url.Action("ExportAsPDF", "OilAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportExcel" style="margin-left: 5%;" href="@Url.Action("ExportAsExcel", "OilAnalysis")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                     </div>
                                     <div class="col-md-2">
                                         <a href="@Url.Action("AddOilAnalysis", "OilAnalysis")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top: 10%; background: linear-gradient(85deg, #392c70, #6a005b);">
@@ -167,15 +167,15 @@
                         }
 
                     },
-                    { "data":"Time","autoWidth":true},
-                    { "data": "LotNo", "autoWidth": true },
-                    { "data": "SampleName", "autoWidth": true },
+                    { "data":"Time","autoWidth":true,"class":"text-wrap"},
+                    { "data": "LotNo", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "SampleName", "autoWidth": true, "class": "text-wrap" },
                     //{ "data": "ACIDValue", "autoWidth": true },
                     //{ "data": "PeroxideValue", "autoWidth": true },
                     //{ "data": "Color", "autoWidth": true },
-                    { "data": "Flavour", "autoWidth": true },
-                    { "data": "Odour", "autoWidth": true },
-                    { "data": "VerifyByName", "autoWidth": true },
+                    { "data": "Flavour", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "Odour", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "VerifyByName", "autoWidth": true, "class": "text-wrap" },
                     //{
                     //    data: "Id", "render": function (data) {
                     //        return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button>'

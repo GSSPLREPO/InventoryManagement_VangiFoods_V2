@@ -105,7 +105,7 @@
 
                                                             { c++; }
                                                         }
-                                                        @Html.Hidden("ItemCount", Model.itemDetails.Count() )
+                                                        @Html.Hidden("ItemCount", Model.itemDetails.Count())
                                                         <tr>
                                                             <td></td>
                                                             @{
@@ -113,7 +113,7 @@
                                                                 while (c3 <= Model.vendorIdLength)
                                                                 {
                                                                     <td class="text-left">
-                                                                                                                                              
+
                                                                         <button type="button" class="btn btn-sm btn-link btn-pq text-dark" style="background-color:transparent"
                                                                                 id="BtnPunchQuot_@c3" onclick="RFQSupplierDetails(this.id,@Model.RequestForQuotationId)">
                                                                             <i class="fa fa-reply me-1 text-dark" aria-hidden="true"></i>Punch Quotation
@@ -163,7 +163,7 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body">
+                                                        <div class="modal-body" id="punchQuotation">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -229,7 +229,7 @@
                     var vendorId = myObj[i].VendorsID;
                     setItemPrice(vendorId, (i + 1), id);
                 }
-                console.log(tempArray);
+                //console.log(tempArray);
             },
             error: function (data) {
                 alert("Bind Company details failed!");
@@ -237,14 +237,14 @@
             }
         });
     }
-   
+
     //============The below function is for redirecting the user to new tab on-click of View in RFQ Summary modal.===========//
     function redirectToView(ID, RequestForQuotationId) {
         var rowNo = ID.split('_')[1];
         var VendorsID = $("#VendorsID_" + rowNo).text();
         window.open("RequestForQuotation/ViewRFQSupplierDetails?ID=" + VendorsID + "&RfqID=" + RequestForQuotationId, '_blank');
         event.preventDefault();
-        return;       
+        return;
     }
     //=========================================================End===================================================================//
 
@@ -297,8 +297,9 @@
 
         $.get("@Url.Action("AddRFQSupplierDetails", "RequestForQuotation")?RequestForQuotationId="+RequestForQuotationId+"&VendorsID="+VendorsID
 
-                ,function (data) {
-                    $('.modal-body').html(data);
+            , function (data) {
+                $('#modelRFQ').html(data);
+                  //$('.modal-body').html(data);
             });
 
             $("#myModal").modal("show");
@@ -310,8 +311,8 @@
                 //// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
                 //// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this)
-                //modal.find('.modal-title').text('New message to ' + recipient)
-                modal.find('.modal-body input').val(recipient)
+                //modal.find('.modal-body input').val(recipient)
+                modal.find('#modelRFQ input').val(recipient)
             });
     }
 
@@ -372,7 +373,8 @@
 
     //changeItemTax
     function changeItemTax(value, id) {
-        CalItemTotalPrice(value, id);
+        //CalItemTotalPrice(value, id);
+        CalculateTotalBeforeTax();
     }
 
     function CalculateTotalBeforeTax() {
@@ -449,9 +451,9 @@
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
-        console.log(res);
+       // console.log(res);
         var TxtItemDetails = JSON.stringify(res);
-        console.log(TxtItemDetails);
+        //console.log(TxtItemDetails);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 

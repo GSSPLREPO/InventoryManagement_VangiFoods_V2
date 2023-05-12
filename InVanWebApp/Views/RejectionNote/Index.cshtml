@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<InVanWebApp_BO.RejectionNoteBO>
 
 @{ ViewBag.Title = "Rejection Note";
-                Layout = "~/Views/Shared/MainMaster.cshtml"; }
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -39,11 +39,11 @@
                                 <table class="table table-striped table-bordered hover table-sm" id="tblInward">
                                     <thead>
                                         <tr>
-                                            <th>@Html.Label("Rejection Date")</th>
                                             <th>@Html.Label("Rejection Number")</th>
                                             <th class="text-wrap">@Html.Label("Inward / Production Material Issue Note Number")</th>
                                             <th class="text-wrap">@Html.Label("Inward / Material Issue Quantity (Kg)")</th>
                                             <th>@Html.Label("Rejected Quantity (Kg)")</th>
+                                            <th>@Html.Label("Rejection Date")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
@@ -51,11 +51,11 @@
                                         @foreach (var item in Model)
                                         {
                             <tr>
-                                <td class="text-wrap">@Html.DisplayFor(modelItem => item.NoteDate)</td>
                                 <td class="text-wrap">@Html.DisplayFor(modelItem => item.RejectionNoteNo)</td>
                                 <td class="text-wrap">@Html.DisplayFor(modelItem => item.InwardNoteNumber)</td>     @*//Rahul updated 13-01-2023.*@
                                 <td class="text-wrap">@Html.DisplayFor(modelItem => item.InwardQuantity)</td>
                                 <td class="text-wrap">@Html.DisplayFor(modelItem => item.RejectedQuantity)</td>
+                                <td class="text-wrap">@Html.DisplayFor(modelItem => item.NoteDate)</td>
                                 <td class="text-wrap">
                                     <a href=@Url.Action("ViewRejectionNote", "RejectionNote", new { RejectionID = item.ID }) title="View Rejection Note">
                                         <i class="fa fa-eye text-primary"></i>
@@ -66,7 +66,8 @@
                                     </a>
 
                                 </td>
-                            </tr>}
+                            </tr>
+}
                                     </tbody>
                                 </table>
                             </div>

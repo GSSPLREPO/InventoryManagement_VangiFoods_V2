@@ -34,14 +34,14 @@
                                 <span class="fa fa-plus"></span> Purchase Order
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
-                                <table class="table table-striped table-bordered" id="tbl_PO">
+                                <table class="table table-striped table-bordered hover table-sm" id="tbl_PO">
                                     <thead>
                                         <tr>
-                                            <th>@Html.DisplayName("Title")</th>
                                             <th>@Html.DisplayName("PO Number")</th>
-                                            <th>@Html.DisplayName("Purchase Order Status")</th>
-                                            <th>@Html.DisplayName("Last Modified Date")</th>
+                                            <th>@Html.DisplayName("Title")</th>
                                             <th>@Html.DisplayName("Supplier Name")</th>
+                                            <th>@Html.DisplayName("Last Modified Date")</th>
+                                            <th>@Html.DisplayName("PO Status")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
@@ -49,13 +49,16 @@
                                         @foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.Tittle)</td>
-                                                @*<td>@Html.DisplayFor(modelItem => item.PONumber)</td>*@
                                                 <td>
                                                     <button type="button" class="btn btn-sm btn-link" style="background-color:transparent" data-toggle="modal" title="PO Timeline" data-target="#myModal" id="@item.PurchaseOrderId" onclick="TimelineViewDetails(this.id)" >@Html.DisplayFor(modelItem => item.PONumber)</button>
-                                                    @*<a href="#" class="btn btn-sm btn-link" id="@item.PurchaseOrderId" onclick="TimelineViewDetails(this.id)">
-                                                        @Html.DisplayFor(modelItem => item.PONumber)
-                                                    </a>*@
+                                                </td>
+                                                <td class="text-wrap">@Html.DisplayFor(modelItem => item.Tittle)</td>
+                                                @*<td>@Html.DisplayFor(modelItem => item.PONumber)</td>*@
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.SupplierAddress)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.LastModifiedDate)
                                                 </td>
                                                 <td>
                                                     @*@Html.DisplayFor(modelItem => item.PurchaseOrderStatus)*@
@@ -87,12 +90,6 @@
                                                             @Html.DisplayFor(modelItem => item.PurchaseOrderStatus, new { style = "color:#ffbc00" })
                                                         </p>
                                                     }
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.LastModifiedDate)
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.SupplierAddress)
                                                 </td>
                                                 <td>
 

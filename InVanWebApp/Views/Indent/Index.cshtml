@@ -42,8 +42,8 @@
                                         <tr>
                                             <th>@Html.DisplayName("Indent Number")</th>
                                             <th>@Html.DisplayName("Indent Date")</th>
+                                            @*<th>@Html.DisplayName("Remarks")</th>*@
                                             <th>@Html.DisplayName("Status")</th>
-                                            <th>@Html.DisplayName("Remarks")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
@@ -53,8 +53,24 @@
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.IndentNo)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.IndentDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>
-                                                <td class="text-wrap w-25">@Html.DisplayFor(modelItem => item.Description)</td>
+                                                <td>
+
+
+                                                    @if (item.IndentStatus == "Close")
+                                                    {
+                                                        <p style="color: #17d317;font-weight:bold" class="btn">
+                                                            @Html.DisplayFor(modelItem => item.IndentStatus, new { style = "color:green" })
+                                                        </p>
+                                                    }
+                                                    else if (item.IndentStatus == "Open")
+                                                    {
+                                                        <p style="color: darkorange; font-weight: bold" class="btn">
+                                                            @Html.DisplayFor(modelItem => item.IndentStatus, new { style = "color:#c900e1" })
+                                                        </p>
+                                                    }
+                                                </td>
+
+                                                @*<td class="text-wrap w-25">@Html.DisplayFor(modelItem => item.Description)</td>*@
                                                 <td>
                                                     <a href=@Url.Action("ViewIndent", new { ID = item.ID }) title="View Indent">
                                                         <i class="fa fa-eye text-primary"></i>

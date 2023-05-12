@@ -161,7 +161,7 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while updating!');</script>";
-                            return View();
+                            return RedirectToAction("Index", "WaterAnalysis");
                         }
 
                         return RedirectToAction("Index", "WaterAnalysis");

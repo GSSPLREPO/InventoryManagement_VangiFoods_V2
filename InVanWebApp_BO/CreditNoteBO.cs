@@ -11,6 +11,7 @@ namespace InVanWebApp_BO
     {
         public int ID { get; set; }
         public string CreditNoteNo { get; set; }
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> CreditNoteDate { get; set; }
         public Nullable<int> GRNId { get; set; }
         public string GRN_No { get; set; }

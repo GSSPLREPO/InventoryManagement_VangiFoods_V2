@@ -27,10 +27,10 @@ function createJson() {
         UnitPrice = UnitPrice[0];
         var ItemID = $('#ItemID_' + i).val();
 
-        if (value == 0) {
-            i++;
-            continue;
-        }
+        //if (value == 0) {
+        //    i++;
+        //    continue;
+        //}
 
         InwardQuantities = InwardQuantities + "{\"InwardQuantity\":" + value + ", \"ItemId\":" + ItemID +
             ", \"ItemUnitPrice\": " + UnitPrice + ", \"BalanceQuantity\": " + BalQty +
@@ -272,16 +272,19 @@ function SetInwardQty() {
             PhyQty = (PhyQty == '' || PhyQty == null) ? 0 : PhyQty;
             PhyQty = parseFloat(PhyQty);
 
-            if (PhyQty == 0) {
-                if (DelvQty != POQty) {
-                    alert("Delivered quantity is zero or null! Cannot create inward note!");
-                    $('#btnSave').prop('disabled', true);
-                    return;
-                }
-            }
+            //if (PhyQty == 0) {
+            //    if (DelvQty != POQty) {
+            //        alert("Delivered quantity is zero or null! Cannot create inward note!");
+            //        $('#btnSave').prop('disabled', true);
+            //        return;
+            //    }
+            //    else
+            //        flag = 0;
+            //}
 
             if (PhyQty != 0) {
                 flag = 1;
+                break;
             }
             i++;
 

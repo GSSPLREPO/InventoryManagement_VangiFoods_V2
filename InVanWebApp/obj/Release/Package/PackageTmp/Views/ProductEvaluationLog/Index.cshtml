@@ -51,32 +51,30 @@
                                 </div>
                                 <div class="col-md-2 right">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
-                                    @*<a id="ExportPdf" style="float: left;" href="@Url.Action("ExportAsPDF", "ProductEvaluationLog")"><img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /></a>*@
-                                    @*<a id="ExportPdf" style="float: left;" href="#"><img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /></a>*@
-                                    <a id="ExportExcel" style="margin-left:5%;" href="@Url.Action("ExportAsExcel", "ProductEvaluationLog")"><img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /></a>
+                                    <a id="ExportExcel" style="margin-left:10%;" href="@Url.Action("ExportAsExcel", "ProductEvaluationLog")"><img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /></a>
                                 </div>
                                 <div class="col-md-2">
                                     <a href="@Url.Action("AddProductEvaluationLog","ProductEvaluationLog")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top: 10%; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                        <span class="fa fa-plus"></span> Product Evaluation Log
+                                        <span class="fa fa-plus"></span> Evaluation
                                     </a>
                                 </div>
                             </div>
                             <table id="tblProductEvaluationLog" class="table table-striped table-bordered hover table-sm table-responsive-md" width="100%" style="table-layout: fixed;">
-                                <thead class="text-center" style="text-align:center">
+                                <thead>
                                     <tr>
-                                        <th style="text-align:center">Date</th>
-                                        <th style="text-align:center">Product Name</th>
-                                        <th style="text-align:center">Batch Code</th>
-                                        <th style="text-align:center">PH</th>
-                                        <th style="text-align:center">Tex, Col&Taste</th>
-                                        <th style="text-align:center">Acid</th>
-                                        <th style="text-align:center">Salt</th>
-                                        <th style="text-align:center">Viscosity</th>
-                                        <th style="text-align:center">Verify By</th>
-                                        <th style="text-align:center">Actions</th>
+                                        <th>Date</th>
+                                        <th>Product Name</th>
+                                        <th>Batch Code</th>
+                                        <th>PH</th>
+                                        <th>Tex, Col&Taste</th>
+                                        <th>Acid</th>
+                                        <th>Salt</th>
+                                        <th>Viscosity</th>
+                                        <th>Verify By</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-center"></tbody>
+                                <tbody></tbody>
                             </table>
 
                         </div>
@@ -158,14 +156,14 @@
                             return date;
                         }
                     },
-                    { "data": "ProductName", "autoWidth": true },
-                    { "data": "BatchCode", "autoWidth": true },
-                    { "data": "Ph", "autoWidth": true },
-                    { "data": "TexColTaste", "autoWidth": true },
-                    { "data": "Acid", "autoWidth": true },
-                    { "data": "Salt", "autoWidth": true },
-                    { "data": "Viscosity", "autoWidth": true },
-                    { "data": "VerifyByName", "autoWidth": true },
+                    { "data": "ProductName", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "BatchCode", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "Ph", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "TexColTaste", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "Acid", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "Salt", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "Viscosity", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "VerifyByName", "autoWidth": true, "class": "text-wrap" },
                     {
                         data: "Id", "render": function (data) {
                             return '<button type="button" id="' + data + '" class = "text-primary btnEdit" style="background:transparent !important;"  title="Edit Product Evaluation Log"><i class="fa fa-edit"/></i></button> <button type="button" id="'
