@@ -31,7 +31,7 @@ namespace InVanWebApp_BO
         public Nullable<decimal> Quantity { get; set; }
         public string Signature { get; set; }
 
-        [Required(ErrorMessage = "Enter remakrs!")]
+        //[Required(ErrorMessage = "Enter remakrs!")]
         public string Remarks { get; set; }
 
         public string UserName { get; set; }

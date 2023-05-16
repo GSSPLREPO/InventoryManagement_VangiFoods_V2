@@ -124,7 +124,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@TotalAfterTax", purchaseOrderMaster.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", purchaseOrderMaster.GrandTotal);
                     cmd.Parameters.AddWithValue("@TermDescription", purchaseOrderMaster.Terms);
-                    cmd.Parameters.AddWithValue("@OtherTax",purchaseOrderMaster.OtherTax);
+                    cmd.Parameters.AddWithValue("@OtherTax", purchaseOrderMaster.OtherTax);
                     //FN: Added the below field for Indent, currency and terms description
                     cmd.Parameters.AddWithValue("@IndentID", purchaseOrderMaster.IndentID);
                     cmd.Parameters.AddWithValue("@CurrencyID", purchaseOrderMaster.CurrencyID);
@@ -220,10 +220,15 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="PurchaseOrderId"></param>
         /// <returns></returns>
-        public PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId)
+        public PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId, int flagView = 0)
         {
             string purchaseOrderQuery = "SELECT * FROM PurchaseOrder WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
             string purchaseOrderItemQuery = "SELECT * FROM PurchaseOrderItemsDetails WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0";
+            if (flagView == 1)
+            {
+                purchaseOrderItemQuery = "SELECT * FROM PurchaseOrderItemsDetails WHERE PurchaseOrderId = @purchaseOrderId AND IsDeleted = 0 AND ItemQuantity<>0";
+            }
+
             PurchaseOrderBO purchaseOrder = new PurchaseOrderBO();
             try
             {
@@ -279,7 +284,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
-                    cmd.Parameters.AddWithValue("@OtherTax",model.OtherTax);
+                    cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
                     //FN: Added the below field for Indent, currency and terms description
 
                     cmd.Parameters.AddWithValue("@IndentID", model.IndentID);

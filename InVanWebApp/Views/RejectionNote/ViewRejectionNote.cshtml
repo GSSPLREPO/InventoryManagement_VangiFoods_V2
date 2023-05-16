@@ -180,20 +180,20 @@
                                                                     <th class="sortStyle text-sm">
                                                                         Currency
                                                                     </th>
-                                                                    <th class="sortStyle text-sm">
-                                                                        Units
-                                                                    </th>
                                                                     <th id="TotalQtyTextChange" class="sortStyle text-sm text-wrap">
-                                                                        Total Quantity (Kg)
+                                                                        Total Quantity
                                                                     </th>
                                                                     <th id="InwardQtyTextChange" class="sortStyle text-sm text-wrap">
-                                                                        Inward Quantity (Kg)
+                                                                        Inward Quantity
                                                                     </th>
                                                                     <th class="sortStyle text-sm text-wrap">
-                                                                        Rejected Quantity (Kg)
+                                                                        Rejected Quantity
                                                                     </th>
                                                                     <th class="sortStyle text-sm text-wrap">
-                                                                        Quantity took for Sorting (Kg)
+                                                                        Quantity took for Sorting
+                                                                    </th>
+                                                                    <th class="sortStyle text-sm">
+                                                                        Units
                                                                     </th>
                                                                     <th class="sortStyle text-sm text-wrap">
                                                                         Wastage (%)
@@ -210,48 +210,48 @@
                                                                 @{ int c = 1;
                                                                     foreach (var item in Model.itemDetails)
                                                                     {
-                                                    <tr id="tablerow_@c">
-                                                        <td class=" text-sm">
-                                                            <label>@c.</label>
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.ItemName)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.ItemCode)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.ItemUnitPrice)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.CurrencyName)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.ItemUnit)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.TotalQuantity)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.InwardQuantity)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.RejectedQuantity)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.QuantityTookForSorting)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @Html.DisplayFor(x => item.WastageQuantityInPercentage)
-                                                        </td>
-                                                        <td class=" text-sm">
-                                                            @*Rahul added style width in ItemTaxValue tag 09-02-23.*@
-                                                            @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;width: 70px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td class=" text-sm text-wrap">
-                                                            @Html.DisplayFor(x => item.Remarks, new { style = "width: 200px;" })
-                                                        </td>
-                                                    </tr> { c++; }
+                                                                                                                                <tr id="tablerow_@c">
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        <label>@c.</label>
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.ItemName)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.ItemCode)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.ItemUnitPrice)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.CurrencyName)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.TotalQuantity)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.InwardQuantity)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.RejectedQuantity)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.QuantityTookForSorting)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.ItemUnit)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @Html.DisplayFor(x => item.WastageQuantityInPercentage)
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm">
+                                                                                                                                        @*Rahul added style width in ItemTaxValue tag 09-02-23.*@
+                                                                                                                                        @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none;width: 70px;", @readonly = "readonly" })
+                                                                                                                                    </td>
+                                                                                                                                    <td class=" text-sm text-wrap">
+                                                                                                                                        @Html.DisplayFor(x => item.Remarks, new { style = "width: 200px;" })
+                                                                                                                                    </td>
+                                                                                                                                </tr> { c++; }
                                                                     } }
                                                             </tbody>
                                                         </table>

@@ -442,7 +442,7 @@ namespace InVanWebApp.Controllers
             BindLocationName();
             //BindIndentDropDown("POAmendment");
 
-            PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID);
+            PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID,1);
             return View(model);
 
         }

@@ -76,7 +76,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.WashingTime1, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphaNumericRound(event);" })
+                    @Html.TextBoxFor(model => model.WashingTime1, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return IsAlphaNumericRound(event);" })
                     @Html.ValidationMessageFor(model => model.WashingTime1, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -131,7 +131,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.WashingTime2, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumericRound(event);" })
+                    @Html.TextBoxFor(model => model.WashingTime2, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return IsAlphaNumericRound(event);" })
                     @Html.ValidationMessageFor(model => model.WashingTime2, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -150,7 +150,7 @@
                     @Html.Label("Remarks")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", title = "Maximum length for remakrs are 100 characters" })
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", title = "Only 100 characters are allowed in remarks!" })
                     @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

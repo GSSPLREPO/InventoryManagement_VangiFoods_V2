@@ -354,6 +354,7 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@LastModifiedBy", stockTransferMaster.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                        cmdNew.Parameters.AddWithValue("@InwardDateOfItem", stockTransferMaster.InwardDateOfItem);
 
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
 

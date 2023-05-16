@@ -166,7 +166,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">
-                                                    Item Code
+                                                    Item
                                                 </th>
                                                 <th class="sortStyle d-n d-none">
                                                     Selected Item Code
@@ -663,7 +663,7 @@
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
-        console.log(res);
+        //console.log(res);
         var TxtItemDetails = JSON.stringify(res);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
@@ -742,6 +742,7 @@
         var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
         itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
+        itemCode = itemCode.split(' (')[0];
         document.getElementById("ItemCode").value = itemCode;
     }
 

@@ -123,7 +123,7 @@ namespace InVanWebApp.Controllers
             var WorkOrderNumberId = 0;
             if (BatchNumber != "")
                 BatchNumberId = BatchNumber;
-                //BatchNumberId = Convert.ToInt32(BatchNumber);
+            //BatchNumberId = Convert.ToInt32(BatchNumber);
             if (WorkOrderNumber != "")
                 WorkOrderNumberId = Convert.ToInt32(WorkOrderNumber);
 
@@ -145,8 +145,6 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] == null)
                 return RedirectToAction("Index", "Login");
             DashboardBO model = new DashboardBO();
-            //model.toDate = DateTime.Now;
-            //model.fromDate = DateTime.Now;
             BindLocationDropdown();
             BindItemDropDown();
             return View(model);
@@ -161,9 +159,7 @@ namespace InVanWebApp.Controllers
                 itemId = Convert.ToInt32(ItemId);
 
             DashboardBO model = new DashboardBO();
-            //model.fromDate = DateTime.Today;
-            //model.toDate = DateTime.Today;
-
+            
             string jsonstring = string.Empty;
 
             var result = _repository.GetFIFOSystem(itemId, LocationId);

@@ -13,7 +13,7 @@ namespace InVanWebApp.Repository
         //Define function for fetching details of Purchase Order.
         IEnumerable<PurchaseOrderBO> GetAll();
         //Define function for fetching details of company master by ID.
-        PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId);
+        PurchaseOrderBO GetPurchaseOrderById(int PurchaseOrderId, int flagView = 0);
 
         //Define function for fetching details of Purchase Order by PurchaseOrderId.
         //PurchaseOrderBO GetById(int PurchaseOrderId);

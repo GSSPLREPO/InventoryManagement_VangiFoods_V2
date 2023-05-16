@@ -39,10 +39,10 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.Label("Issue Note Number")</th>
-                                            <th>@Html.Label("Issue Date")</th>
+                                            <th>@Html.Label("Issued By")</th>
                                             <th>@Html.Label("Purpose")</th>
                                             <th>@Html.Label("Location")</th>
-                                            <th>@Html.Label("Issued By")</th>
+                                            <th>@Html.Label("Issue Date")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
@@ -51,10 +51,10 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.IssueNoteNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IssueNoteDate)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.IssueByName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Purpose)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IssueByName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.IssueNoteDate)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewIssueNote", "IssueNote", new { ID = item.ID }) title="View Issue-Note">
                                                         <i class="fa fa-eye text-primary"></i>
