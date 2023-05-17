@@ -132,7 +132,11 @@ namespace InVanWebApp_BO
         public string Terms { get; set; }
         public decimal OtherTax { get; set; }
         public Nullable<decimal> TotalItemCost { get; set; }
-        public Nullable<int> flag { get; set; }//Rahul added 21-04-23.  
+        public Nullable<int> flag { get; set; }//Rahul added 21-04-23.
+        //Added the below field for wastage report.
+        public string ProductionQCNumber { get; set; }    
+
+
     }
 
 }

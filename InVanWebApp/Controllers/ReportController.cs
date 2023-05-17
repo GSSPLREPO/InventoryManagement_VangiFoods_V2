@@ -4923,7 +4923,8 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejection Number</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward Number</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward QC Number</ th>");
+            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Inward QC Number</ th>");    ///Remove 17-05-23.
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Production QC Number</ th>");  ///added 17-05-23.  
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>PO Number</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Supplier Name</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</ th>");
@@ -4948,7 +4949,8 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectionNoteDate + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectionNoteNo + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardNumber + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardQCNumber + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardQCNumber + "</td>");     ///Remove 17-05-23.
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ProductionQCNumber + "</td>");  ///added 17-05-23.  
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PONumber + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SupplierName + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Name + "</td>");
@@ -5033,7 +5035,8 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Date");
             dt.Columns.Add("Rejection Number"); ///added 17-04-23.  
             dt.Columns.Add("Inward Number");
-            dt.Columns.Add("Inward QC Number");
+            //dt.Columns.Add("Inward QC Number"); ///Remove 17-05-23.
+            dt.Columns.Add("Production QC Number"); ///added 17-05-23.
             dt.Columns.Add("PO Number");
             dt.Columns.Add("Supplier Name");
             dt.Columns.Add("Item Name");
@@ -5054,7 +5057,8 @@ namespace InVanWebApp.Controllers
                 dr["Date"] = st.RejectionNoteDate.ToString(); ///updated 17-04-23.
                 dr["Rejection Number"] = st.RejectionNoteNo.ToString(); ///added 17-04-23.  
                 dr["Inward Number"] = st.InwardNumber.ToString();
-                dr["Inward QC Number"] = st.InwardQCNumber.ToString();
+                //dr["Inward QC Number"] = st.InwardQCNumber.ToString();    ///Remove 17-05-23.
+                dr["Production QC Number"] = st.ProductionQCNumber.ToString();  ///added 17-05-23.
                 dr["PO Number"] = st.PONumber.ToString();
                 dr["Supplier Name"] = st.SupplierName.ToString();
                 dr["Item Name"] = st.Item_Name.ToString();

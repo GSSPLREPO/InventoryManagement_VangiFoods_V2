@@ -38,6 +38,7 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.DisplayName("PO Number")</th>
+                                            <th>@Html.DisplayName("Indent Number")</th>
                                             <th>@Html.DisplayName("Title")</th>
                                             <th>@Html.DisplayName("Supplier Name")</th>
                                             <th>@Html.DisplayName("Last Modified Date")</th>
@@ -52,6 +53,7 @@
                                                 <td>
                                                     <button type="button" class="btn btn-sm btn-link" style="background-color:transparent" data-toggle="modal" title="PO Timeline" data-target="#myModal" id="@item.PurchaseOrderId" onclick="TimelineViewDetails(this.id)" >@Html.DisplayFor(modelItem => item.PONumber)</button>
                                                 </td>
+                                                <td class="text-wrap">@Html.DisplayFor(modelItem => item.IndentNumber)</td>
                                                 <td class="text-wrap">@Html.DisplayFor(modelItem => item.Tittle)</td>
                                                 @*<td>@Html.DisplayFor(modelItem => item.PONumber)</td>*@
                                                 <td class="text-wrap">

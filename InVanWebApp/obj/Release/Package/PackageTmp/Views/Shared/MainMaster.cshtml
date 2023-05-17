@@ -64,22 +64,24 @@
                             </li>
                         </ul>*@
                     <ul class="navbar-nav navbar-nav-right d-flex justify-content-end">
-                        <li class="nav-item navbar navbar-menu-wrapper" style="border-right:1px solid #e0e0ef;width:auto;">
-
-                            @if (@Session["UserName"] != null)
-                            {
-                                <h6 style="font-family: 'Comic Sans MS'; white-space: nowrap;">Welcome @Session["UserName"] !</h6>
-                            }
-
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-                                <i class="fas fa-bell mx-0"></i>
-                                <span id="countNotify" class="count">1</span>
-                            </a>
-                            <div id="myNotifyList" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown"
-                                 style="width: max-content;padding: 5px 5px;">
-                            </div>
+                        @*Rahul removed 'Welcome' 17-05-2023.*@
+                        @*<li class="nav-item navbar navbar-menu-wrapper" style="border-right:1px solid #e0e0ef;width:auto;">
+                                @if (@Session["UserName"] != null)
+                                {
+                                <h6 style="font-family: 'Comic Sans MS'; white-space: nowrap;">Welcome @Session["UserName"] !</h6>}
+                            </li>*@ @*Rahul added 'style','width','margin' 17-05-2023.*@
+                            <li class="nav-item dropdown navbar navbar-menu-wrapper" style="border-right: 1px solid #e0e0ef; width: auto; margin: inherit;">
+                                <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown" title="Notifications">
+                                    <i class="fas fa-bell mx-0"></i>
+                                    <span id="countNotify" class="count">1</span>
+                                </a>
+                                <div id="myNotifyList" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown"
+                                     style="width: max-content;padding: 5px 5px;">
+                                </div>
+                                @*Rahul added 'Help' 17-05-2023.*@
+                            <li class="nav-item navbar navbar-menu-wrapper m-0">
+                                <a href="#" onclick="redirectToHelp()"><i class="fa fa-question-circle" style="color: #392C70; font-size: x-large;" title="Help"></i></a>
+                            </li>
 
                             @*<div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
                                     <a class="dropdown-item">
@@ -131,319 +133,319 @@
                                         </div>
                                     </a>
                                 </div>*@
-                        </li>
-                        <li class="nav-item nav-profile dropdown d-flex flex-column justify-content-around">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                                <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href=@Url.Action("Index","Login") onclick="return confirm('Are you sure, you wants to logout?');">
-                                    <i class="fas fa-power-off text-primary"></i>
-                                    Logout
-                                </a>
-                            </div>
-                            @*Rahul added UserName 08-02-23.*@
-                            @if (@Session["UserName"] != null)
-                            {
-                                <h6 style="font-family:'Comic Sans MS'">@Session["UserName"]</h6>
-                            }
-                        </li>
-                        @*<li class="nav-item nav-profile dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+
+                            <li class="nav-item nav-profile dropdown d-flex flex-column justify-content-around">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown" title="User">
                                     <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
+                                    <a class="dropdown-item" href=@Url.Action("Index","Login") onclick="return confirm('Are you sure, you wants to logout?');">
                                         <i class="fas fa-power-off text-primary"></i>
                                         Logout
                                     </a>
                                 </div>
-                            </li>*@
-                    </ul>
-                    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                        <span class="fas fa-bars"></span>
-                    </button>
-                </div>
-            </nav>
-            <!-- Modal Start 26-04-23-->
-            <div class="modal fade" id="myModalNotification" role="dialog">
-                <div class="modal-dialog">
-                    Modal content
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">
-                                <img src="~/Theme/MainContent/images/nty.png" style="height: 50px; width: 50px">
-                                Notifications
-                            </h4>
-                            <button type="button" class="close" data-dismiss="modal">
-                                ×
-                            </button>
-                        </div>
-                        <div class="modal-body" id="myAllNotifications">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal End 26-04-23-->
-            <!-- partial -->
-            <div class="container-fluid page-body-wrapper">
-                <!-- partial:../../partials/_settings-panel.html -->
-                <div class="theme-setting-wrapper">
-                    @*<div id="settings-trigger"><i class="fas fa-fill-drip"></i></div>*@
-                    <div id="theme-settings" class="settings-panel">
-                        <i class="settings-close fa fa-times"></i>
-                        <p class="settings-heading">SIDEBAR SKINS</p>
-                        <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
-                        <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
-                        <p class="settings-heading mt-2">HEADER SKINS</p>
-                        <div class="color-tiles mx-0 px-4">
-                            <div class="tiles primary"></div>
-                            <div class="tiles success"></div>
-                            <div class="tiles warning"></div>
-                            <div class="tiles danger"></div>
-                            <div class="tiles info"></div>
-                            <div class="tiles dark"></div>
-                            <div class="tiles default"></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="right-sidebar" class="settings-panel">
-                    <i class="settings-close fa fa-times"></i>
-                    <ul class="nav nav-tabs" id="setting-panel" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="setting-content">
-                        <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
-                            <div class="add-items d-flex px-3 mb-0">
-                                <form class="form w-100">
-                                    <div class="form-group d-flex">
-                                        <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
-                                        <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task-todo">Add</button>
+                                @*Rahul added UserName 08-02-23.*@
+                                @if (@Session["UserName"] != null)
+                                {@*<h6 style="font-family:'Comic Sans MS'">@Session["UserName"]</h6>*@ @*Rahul added 'Welcome' 17-03-23.*@
+                                                <h6 style="font-family: 'Comic Sans MS'; white-space: nowrap;">Welcome @Session["UserName"] !</h6>}
+                            </li>
+                            @*<li class="nav-item nav-profile dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                                        <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="profile" />
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown mt-5" aria-labelledby="profileDropdown">
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href=@Url.Action("Index","Login",new { onclick = "return confirm('Are you sure, you wants to logout?');"})>
+                                            <i class="fas fa-power-off text-primary"></i>
+                                            Logout
+                                        </a>
                                     </div>
-                                </form>
+                                </li>*@
+                        </ul>
+                        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                            <span class="fas fa-bars"></span>
+                        </button>
+                    </div>
+                </nav>
+                <!-- Modal Start 26-04-23-->
+                <div class="modal fade" id="myModalNotification" role="dialog">
+                    <div class="modal-dialog">
+                        Modal content
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    <img src="~/Theme/MainContent/images/nty.png" style="height: 50px; width: 50px">
+                                    Notifications
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    ×
+                                </button>
                             </div>
-                            <div class="list-wrapper px-3">
-                                <ul class="d-flex flex-column-reverse todo-list">
-                                    <li>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox">
-                                                Team review meeting at 3.00 PM
-                                            </label>
+                            <h6 id="modalTitle" class="ps-5 mt-5"></h6>
+                            <div class="modal-body" id="myAllNotifications">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal End 26-04-23-->
+                <!-- partial -->
+                <div class="container-fluid page-body-wrapper">
+                    <!-- partial:../../partials/_settings-panel.html -->
+                    <div class="theme-setting-wrapper">
+                        @*<div id="settings-trigger"><i class="fas fa-fill-drip"></i></div>*@
+                        <div id="theme-settings" class="settings-panel">
+                            <i class="settings-close fa fa-times"></i>
+                            <p class="settings-heading">SIDEBAR SKINS</p>
+                            <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+                            <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+                            <p class="settings-heading mt-2">HEADER SKINS</p>
+                            <div class="color-tiles mx-0 px-4">
+                                <div class="tiles primary"></div>
+                                <div class="tiles success"></div>
+                                <div class="tiles warning"></div>
+                                <div class="tiles danger"></div>
+                                <div class="tiles info"></div>
+                                <div class="tiles dark"></div>
+                                <div class="tiles default"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="right-sidebar" class="settings-panel">
+                        <i class="settings-close fa fa-times"></i>
+                        <ul class="nav nav-tabs" id="setting-panel" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="setting-content">
+                            <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+                                <div class="add-items d-flex px-3 mb-0">
+                                    <form class="form w-100">
+                                        <div class="form-group d-flex">
+                                            <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                                            <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task-todo">Add</button>
                                         </div>
-                                        <i class="remove fa fa-times-circle"></i>
+                                    </form>
+                                </div>
+                                <div class="list-wrapper px-3">
+                                    <ul class="d-flex flex-column-reverse todo-list">
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox">
+                                                    Team review meeting at 3.00 PM
+                                                </label>
+                                            </div>
+                                            <i class="remove fa fa-times-circle"></i>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox">
+                                                    Prepare for presentation
+                                                </label>
+                                            </div>
+                                            <i class="remove fa fa-times-circle"></i>
+                                        </li>
+                                        <li>
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox">
+                                                    Resolve all the low priority tickets due today
+                                                </label>
+                                            </div>
+                                            <i class="remove fa fa-times-circle"></i>
+                                        </li>
+                                        <li class="completed">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox" checked>
+                                                    Schedule meeting for next week
+                                                </label>
+                                            </div>
+                                            <i class="remove fa fa-times-circle"></i>
+                                        </li>
+                                        <li class="completed">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input class="checkbox" type="checkbox" checked>
+                                                    Project review
+                                                </label>
+                                            </div>
+                                            <i class="remove fa fa-times-circle"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="events py-4 border-bottom px-3">
+                                    <div class="wrapper d-flex mb-2">
+                                        <i class="fa fa-times-circle text-primary mr-2"></i>
+                                        <span>Feb 11 2018</span>
+                                    </div>
+                                    <p class="mb-0 font-weight-thin text-gray">Creating component page</p>
+                                    <p class="text-gray mb-0">build a js based app</p>
+                                </div>
+                                <div class="events pt-4 px-3">
+                                    <div class="wrapper d-flex mb-2">
+                                        <i class="fa fa-times-circle text-primary mr-2"></i>
+                                        <span>Feb 7 2018</span>
+                                    </div>
+                                    <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
+                                    <p class="text-gray mb-0 ">Call Sarah Graves</p>
+                                </div>
+                            </div>
+                            <!-- To do section tab ends -->
+                            <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+                                <div class="d-flex align-items-center justify-content-between border-bottom">
+                                    <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+                                    <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+                                </div>
+                                <ul class="chat-list">
+                                    <li class="list active">
+                                        <div class="profile"><img src="~/Theme/MainContent/images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                                        <div class="info">
+                                            <p>Thomas Douglas</p>
+                                            <p>Available</p>
+                                        </div>
+                                        <small class="text-muted my-auto">19 min</small>
                                     </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox">
-                                                Prepare for presentation
-                                            </label>
+                                    <li class="list">
+                                        @*<div class="profile"><img src="~/Theme/MainContent/images/faces/face2.jpg" alt="image"><span class="offline"></span></div>*@
+                                        <div class="profile"><img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image"><span class="online"></span></div>
+                                        <div class="info">
+                                            <div class="wrapper d-flex">
+                                                <p>Catherine</p>
+                                            </div>
+                                            <p>Away</p>
                                         </div>
-                                        <i class="remove fa fa-times-circle"></i>
+                                        <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                                        <small class="text-muted my-auto">23 min</small>
                                     </li>
-                                    <li>
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox">
-                                                Resolve all the low priority tickets due today
-                                            </label>
+                                    <li class="list">
+                                        <div class="profile"><img src="~/Theme/MainContent/images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                                        <div class="info">
+                                            <p>Daniel Russell</p>
+                                            <p>Available</p>
                                         </div>
-                                        <i class="remove fa fa-times-circle"></i>
+                                        <small class="text-muted my-auto">14 min</small>
                                     </li>
-                                    <li class="completed">
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox" checked>
-                                                Schedule meeting for next week
-                                            </label>
+                                    <li class="list">
+                                        <div class="profile"><img src="~/Theme/MainContent/images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                                        <div class="info">
+                                            <p>James Richardson</p>
+                                            <p>Away</p>
                                         </div>
-                                        <i class="remove fa fa-times-circle"></i>
+                                        <small class="text-muted my-auto">2 min</small>
                                     </li>
-                                    <li class="completed">
-                                        <div class="form-check">
-                                            <label class="form-check-label">
-                                                <input class="checkbox" type="checkbox" checked>
-                                                Project review
-                                            </label>
+                                    <li class="list">
+                                        @*<div class="profile"><img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image"><span class="online"></span></div>*@
+                                        <div class="profile"><img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image"><span class="online"></span></div>
+                                        <div class="info">
+                                            <p>Madeline Kennedy</p>
+                                            <p>Available</p>
                                         </div>
-                                        <i class="remove fa fa-times-circle"></i>
+                                        <small class="text-muted my-auto">5 min</small>
+                                    </li>
+                                    <li class="list">
+                                        <div class="profile"><img src="~/Theme/MainContent/images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                                        <div class="info">
+                                            <p>Sarah Graves</p>
+                                            <p>Available</p>
+                                        </div>
+                                        <small class="text-muted my-auto">47 min</small>
                                     </li>
                                 </ul>
                             </div>
-                            <div class="events py-4 border-bottom px-3">
-                                <div class="wrapper d-flex mb-2">
-                                    <i class="fa fa-times-circle text-primary mr-2"></i>
-                                    <span>Feb 11 2018</span>
-                                </div>
-                                <p class="mb-0 font-weight-thin text-gray">Creating component page</p>
-                                <p class="text-gray mb-0">build a js based app</p>
-                            </div>
-                            <div class="events pt-4 px-3">
-                                <div class="wrapper d-flex mb-2">
-                                    <i class="fa fa-times-circle text-primary mr-2"></i>
-                                    <span>Feb 7 2018</span>
-                                </div>
-                                <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
-                                <p class="text-gray mb-0 ">Call Sarah Graves</p>
-                            </div>
+                            <!-- chat tab ends -->
                         </div>
-                        <!-- To do section tab ends -->
-                        <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
-                            <div class="d-flex align-items-center justify-content-between border-bottom">
-                                <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
-                                <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
-                            </div>
-                            <ul class="chat-list">
-                                <li class="list active">
-                                    <div class="profile"><img src="~/Theme/MainContent/images/faces/face1.jpg" alt="image"><span class="online"></span></div>
-                                    <div class="info">
-                                        <p>Thomas Douglas</p>
-                                        <p>Available</p>
-                                    </div>
-                                    <small class="text-muted my-auto">19 min</small>
-                                </li>
-                                <li class="list">
-                                    @*<div class="profile"><img src="~/Theme/MainContent/images/faces/face2.jpg" alt="image"><span class="offline"></span></div>*@
-                                    <div class="profile"><img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image"><span class="online"></span></div>
-                                    <div class="info">
-                                        <div class="wrapper d-flex">
-                                            <p>Catherine</p>
-                                        </div>
-                                        <p>Away</p>
-                                    </div>
-                                    <div class="badge badge-success badge-pill my-auto mx-2">4</div>
-                                    <small class="text-muted my-auto">23 min</small>
-                                </li>
-                                <li class="list">
-                                    <div class="profile"><img src="~/Theme/MainContent/images/faces/face3.jpg" alt="image"><span class="online"></span></div>
-                                    <div class="info">
-                                        <p>Daniel Russell</p>
-                                        <p>Available</p>
-                                    </div>
-                                    <small class="text-muted my-auto">14 min</small>
-                                </li>
-                                <li class="list">
-                                    <div class="profile"><img src="~/Theme/MainContent/images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
-                                    <div class="info">
-                                        <p>James Richardson</p>
-                                        <p>Away</p>
-                                    </div>
-                                    <small class="text-muted my-auto">2 min</small>
-                                </li>
-                                <li class="list">
-                                    @*<div class="profile"><img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image"><span class="online"></span></div>*@
-                                    <div class="profile"><img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image"><span class="online"></span></div>
-                                    <div class="info">
-                                        <p>Madeline Kennedy</p>
-                                        <p>Available</p>
-                                    </div>
-                                    <small class="text-muted my-auto">5 min</small>
-                                </li>
-                                <li class="list">
-                                    <div class="profile"><img src="~/Theme/MainContent/images/faces/face6.jpg" alt="image"><span class="online"></span></div>
-                                    <div class="info">
-                                        <p>Sarah Graves</p>
-                                        <p>Available</p>
-                                    </div>
-                                    <small class="text-muted my-auto">47 min</small>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- chat tab ends -->
                     </div>
-                </div>
-                <!-- partial -->
-                <!-- partial:../../partials/_sidebar.html -->
-                <!--
-                   Name : Arpit Shah
-                   Date : 02-02-2022
-                   Description: Make and Calling Partial View for Side Nav Bar and using All Master Page [SideNavBar.cshtml].
-                -->
-                <nav class="sidebar sidebar-offcanvas" id="sidebar" style="margin-top: 70px;">
-                    @Html.Partial("SideNavBar")
-                </nav>
-                <!-- partial -->
-                <div class="main-panel">
-                    <div class="content-wrapper" style="margin-top: 80px;">
-                        @RenderBody()
-                    </div>
-                    <!-- content-wrapper ends -->
-                    @*///Rahul added 29-12-2022 Back to top" button will appear in the bottom right corner*@
-                    <!--start Back to top" button bottom right corner-->
-                    <div>
-                        <button type="button"
-                                class="btn btn-sm btn-primary btn-floating btn-lg btn-rounded"
-                                id="btn-back-to-top" style="background: linear-gradient(85deg, #392c70, #6a005b); box-shadow: 0px 0px 31px 6px rgb(0 0 0 / 17%);">
-                            <i class="fas fa-arrow-up"></i>
-                        </button>
-                    </div>
-                    <!--Back to top" button bottom right corner-->
-                    <!-- partial:../../partials/_footer.html -->
-                    <footer class="footer">
-                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a href="https://garimasystem.com/" target="_blank"></a>. All rights reserved.</span>
-                            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
-                                Powered by @*<i class="far fa-heart text-danger"></i>*@
-                                <a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
-                                &ensp;<b>Version : 2.2.0 </b>
-                            </span>
-                        </div>
-                    </footer>
                     <!-- partial -->
+                    <!-- partial:../../partials/_sidebar.html -->
+                    <!--
+                       Name : Arpit Shah
+                       Date : 02-02-2022
+                       Description: Make and Calling Partial View for Side Nav Bar and using All Master Page [SideNavBar.cshtml].
+                    -->
+                    <nav class="sidebar sidebar-offcanvas" id="sidebar" style="margin-top: 70px;">
+                        @Html.Partial("SideNavBar")
+                    </nav>
+                    <!-- partial -->
+                    <div class="main-panel">
+                        <div class="content-wrapper" style="margin-top: 80px;">
+                            @RenderBody()
+                        </div>
+                        <!-- content-wrapper ends -->
+                        @*///Rahul added 29-12-2022 Back to top" button will appear in the bottom right corner*@
+                        <!--start Back to top" button bottom right corner-->
+                        <div>
+                            <button type="button"
+                                    class="btn btn-sm btn-primary btn-floating btn-lg btn-rounded"
+                                    id="btn-back-to-top" style="background: linear-gradient(85deg, #392c70, #6a005b); box-shadow: 0px 0px 31px 6px rgb(0 0 0 / 17%);">
+                                <i class="fas fa-arrow-up"></i>
+                            </button>
+                        </div>
+                        <!--Back to top" button bottom right corner-->
+                        <!-- partial:../../partials/_footer.html -->
+                        <footer class="footer">
+                            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2023 <a href="https://garimasystem.com/" target="_blank"></a>. All rights reserved.</span>
+                                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+                                    Powered by @*<i class="far fa-heart text-danger"></i>*@
+                                    <a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
+                                    &ensp;<b>Version : 2.2.0 </b>
+                                </span>
+                            </div>
+                        </footer>
+                        <!-- partial -->
+                    </div>
+                    <!-- main-panel ends -->
                 </div>
-                <!-- main-panel ends -->
+                <!-- page-body-wrapper ends -->
             </div>
-            <!-- page-body-wrapper ends -->
+            <!-- container-scroller -->
+            <!-- plugins:js -->
+            <script src="~/Theme/MainContent/vendors/js/vendor.bundle.base.js"></script>
+            <script src="~/Theme/MainContent/vendors/js/vendor.bundle.addons.js"></script>
+            <!-- endinject -->
+            <!-- Plugin js for this page-->
+            <!-- End plugin js for this page-->
+            <!--Custom js for page-->
+            <script src="~/Theme/MainContent/js/alerts.js"></script>
+            <script src="~/Theme/MainContent/js/avgrund.js"></script>
+            <!--End custom js for page-->
+            <!-- inject:js -->
+            <script src="~/Theme/MainContent/js/off-canvas.js"></script>
+            <script src="~/Theme/MainContent/js/hoverable-collapse.js"></script>
+            <script src="~/Theme/MainContent/js/misc.js"></script>
+            <script src="~/Theme/MainContent/js/settings.js"></script>
+            <script src="~/Theme/MainContent/js/todolist.js"></script>
+            <!-- endinject -->
+
+            <script src="~/Theme/MainContent/js/file-upload.js"></script>
+            <script src="~/Theme/MainContent/js/formpickers.js"></script>
+            <script src="~/Theme/MainContent/js/form-addons.js"></script>
+
+            <!-- Custom js for this page-->
+            <!-- End custom js for this page-->
         </div>
-        <!-- container-scroller -->
-        <!-- plugins:js -->
-        <script src="~/Theme/MainContent/vendors/js/vendor.bundle.base.js"></script>
-        <script src="~/Theme/MainContent/vendors/js/vendor.bundle.addons.js"></script>
-        <!-- endinject -->
-        <!-- Plugin js for this page-->
-        <!-- End plugin js for this page-->
-        <!--Custom js for page-->
-        <script src="~/Theme/MainContent/js/alerts.js"></script>
-        <script src="~/Theme/MainContent/js/avgrund.js"></script>
-        <!--End custom js for page-->
-        <!-- inject:js -->
-        <script src="~/Theme/MainContent/js/off-canvas.js"></script>
-        <script src="~/Theme/MainContent/js/hoverable-collapse.js"></script>
-        <script src="~/Theme/MainContent/js/misc.js"></script>
-        <script src="~/Theme/MainContent/js/settings.js"></script>
-        <script src="~/Theme/MainContent/js/todolist.js"></script>
-        <!-- endinject -->
+        @Scripts.Render("~/bundles/jquery")
 
-        <script src="~/Theme/MainContent/js/file-upload.js"></script>
-        <script src="~/Theme/MainContent/js/formpickers.js"></script>
-        <script src="~/Theme/MainContent/js/form-addons.js"></script>
+        @*Rahul added Multiple select cdn 19-12-2022 start*@
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        @*Rahul added Multiple select cdn 19-12-2022 end*@
 
-        <!-- Custom js for this page-->
-        <!-- End custom js for this page-->
-    </div>
-    @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 
-    @*Rahul added Multiple select cdn 19-12-2022 start*@
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    @*Rahul added Multiple select cdn 19-12-2022 end*@
-
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-
-</body>
+    </body>
 </html>
 
 <script>
@@ -499,16 +501,24 @@
 
         setInterval(function () {
             UpdateMinStockNotifications();
+            $('#modalTitle').text(''); @* Rahul added 'modalTitle' 17 - 05 - 2023. *@
+            $('#modalTitle').text('Stock Reorder Alert!');
         }, 10000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
         setInterval(function () {
             UpdateCalibrationDueDateNotifications();
+            $('#modalTitle').text(''); @* Rahul added 'modalTitle' 17 - 05 - 2023. *@
+            $('#modalTitle').text('Calibration Due Date Alert!');
         }, 30000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
         setInterval(function () {
             UpdatePOPaymentDetailsNotifications();
-        }, 40000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
+            $('#modalTitle').text(''); @* Rahul added 'modalTitle' 17 - 05 - 2023. *@
+            $('#modalTitle').text('PO Payment Details Alert!');
+        }, 50000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
         setInterval(function () {
             UpdateSOPaymentDetailsNotifications();
-        }, 50000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
+            $('#modalTitle').text(''); @* Rahul added 'modalTitle' 17 - 05 - 2023. *@
+            $('#modalTitle').text('SO Payment Details Alert!');
+        }, 70000);//ie. Function to be called in every 3(3000 Milisecond/1000) seconds
     });
     @*//Added 'UpdateMinStockNotifications' 26-04-23 start.*@
     function UpdateMinStockNotifications() {
@@ -520,15 +530,13 @@
             dataType: "json",
             success: function (response) {
                 if (response != null) {
-
                     var j = ""; var p = 0; var Q = "";
                     $.each(response, function (k, v) {
                         p++;
                         if (p < 6) {
-                            j += "<li><a> <strong>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
+                            j += "<li> <a> <strong>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
                         }
                         Q += "<a>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a>";
-
                     });
                     $('#myNotifyList').html("");
                     j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
@@ -555,7 +563,6 @@
                 dataType: "json",
                 success: function (response) {
                     if (response != null) {
-
                         var j = ""; var p = 0; var Q = "";
                         $.each(response, function (k, v) {
                             p++;
@@ -563,7 +570,6 @@
                                 j += "<li><a> <strong>  " + v.NameOfEquipment + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Calibration Due Date : " + v.CalibrationLogDueDate + "</i></div></a></li>";
                             }
                             Q += "<a>  " + v.NameOfEquipment + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Calibration Due Date : " + v.CalibrationLogDueDate + "</i></div></a>";
-
                         });
                         $('#myNotifyList').html("");
                         j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
@@ -590,15 +596,13 @@
                 dataType: "json",
                 success: function (response) {
                     if (response != null) {
-
                         var j = ""; var p = 0; var Q = "";
                         $.each(response, function (k, v) {
                             p++;
                             if (p < 6) {
-                                j += "<li><a> <strong>  PO Id: " + v.PurchaseOrderId + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> PO Payment Due Date : " + v.POPaymentDueDate + "</i></div></a></li>";
+                                j += "<li><a> <strong>  PO Number: " + v.PONumber + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> PO Payment Due Date : " + v.POPaymentDueDate + "</i></div></a></li>";
                             }
-                            Q += "<a>  PO Id: " + v.PurchaseOrderId + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> PO Payment Due Date : " + v.POPaymentDueDate + "</i></div></a>";
-
+                            Q += "<a>  PO Number: " + v.PONumber + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> PO Payment Due Date : " + v.POPaymentDueDate + "</i></div></a>";
                         });
                         $('#myNotifyList').html("");
                         j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
@@ -625,15 +629,13 @@
                 dataType: "json",
                 success: function (response) {
                     if (response != null) {
-
                         var j = ""; var p = 0; var Q = "";
                         $.each(response, function (k, v) {
                             p++;
                             if (p < 6) {
-                                j += "<li><a> <strong>  SO Id: " + v.SalesOrderId + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> SO Payment Due Date : " + v.SOPaymentDueDate + "</i></div></a></li>";
+                                j += "<li><a> <strong>  SO Number: " + v.SONumber + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> SO Payment Due Date : " + v.SOPaymentDueDate + "</i></div></a></li>";
                             }
-                            Q += "<a>  SO Id: " + v.SalesOrderId + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> SO Payment Due Date : " + v.SOPaymentDueDate + "</i></div></a>";
-
+                            Q += "<a>  SO Number: " + v.SONumber + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> SO Payment Due Date : " + v.SOPaymentDueDate + "</i></div></a>";
                         });
                         $('#myNotifyList').html("");
                         j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";
@@ -655,4 +657,13 @@
     document.addEventListener("contextmenu", (event) => {
         event.preventDefault();
     });
+    @* Rahul added 'Help' 17 - 05 - 2023. *@
+    //============The below function is for redirecting the user to new tab on-click of View in redirect To Help. 17-05-23===========//
+    function redirectToHelp() {
+        window.open("/Help/Operations Guide_InVan.pdf", '_blank');
+        event.preventDefault();
+        return;
+    }
+    //=========================================================End===================================================================//
+
 </script>

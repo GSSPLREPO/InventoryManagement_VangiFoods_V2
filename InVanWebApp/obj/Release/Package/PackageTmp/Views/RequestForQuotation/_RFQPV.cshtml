@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Purchase Order</title>
+    <title>Punch Quotation</title>
     <style>
         html2canvas-container {
             width: 3000px !important;
@@ -48,7 +48,7 @@
                                                             int c1 = 1;
                                                             while (c1 <= Model.vendorIdLength)
                                                             {
-                                                                <th id="tableHeader_@c1" class="text-left">
+                                                                <th id="tableHeader_@c1" class="text-left text-wrap">
                                                                     <span><label id="CompanyName_@c1"></label></span>
                                                                     <span class="d-none"><label id="VendorsID_@c1"></label></span>
                                                                 </th>
@@ -65,7 +65,7 @@
                                                         {
                                                             @*<tr id="tablerow_@c" class="d-inline-flex flex-nowrap">*@
                                                             <tr id="tablerow_@c">
-                                                                <td class="text-left">
+                                                                <td class="text-left text-wrap">
                                                                     <label>Item Code:</label>
                                                                     @Html.DisplayFor(x => item.Item_Code)<br />
                                                                     <label>Item Name: </label>
@@ -78,7 +78,7 @@
                                                                     int c2 = 1;
                                                                     while (c2 <= Model.vendorIdLength)
                                                                     {
-                                                                        <td class="text-left">
+                                                                        <td class="text-left text-wrap">
                                                                             <label>Quoted Quantity: </label>
                                                                             @Html.DisplayFor(x => item.ItemQuantity) @Html.DisplayFor(x => item.ItemUnit)<br />
 
@@ -113,8 +113,7 @@
                                                                 while (c3 <= Model.vendorIdLength)
                                                                 {
                                                                     <td class="text-left">
-
-                                                                        <button type="button" class="btn btn-sm btn-link btn-pq text-dark" style="background-color:transparent"
+                                                                        <button type="button" class="text-wrap btn btn-sm btn-link btn-pq text-dark" style="background-color:transparent"
                                                                                 id="BtnPunchQuot_@c3" onclick="RFQSupplierDetails(this.id,@Model.RequestForQuotationId)">
                                                                             <i class="fa fa-reply me-1 text-dark" aria-hidden="true"></i>Punch Quotation
                                                                         </button>

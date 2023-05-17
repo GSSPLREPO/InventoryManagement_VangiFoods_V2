@@ -134,7 +134,8 @@ function SelectedIndexChangedLocation(id) {
                         t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                         t5.setAttribute("value", "0");
                         //t5.setAttribute("type", "number");
-                        t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                        t5.setAttribute("onkeypress", "return isNumberKey(event)");
+                        t5.setAttribute("maxlength", "8");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
                     }
@@ -253,7 +254,8 @@ function SelectedIndexChangedItem(id) {
                         t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                         t5.setAttribute("value", "0");
                         //t5.setAttribute("type", "number");
-                        t5.setAttribute("onkeypress", "return isNumberKey(event,id)");
+                        t5.setAttribute("onkeypress", "return isNumberKey(event)");
+                        t5.setAttribute("maxlength", "8");
                         t5.setAttribute("class", "form-control form-control-sm");
                         cell.appendChild(t5);
                     }
@@ -321,6 +323,7 @@ function OnChangeQty(value, id) {
         DiffQty = parseFloat(DiffQty);
         document.getElementById("txtDifference_" + rowNo).value = "+" + DiffQty;
         document.getElementById("txtDifference_" + rowNo).setAttribute("style", "color:none;");
+        document.getElementById("txtTransferPrice_" + rowNo).setAttribute("style", "color:none;");
 
     }
     else if (value < avalQty) {
@@ -339,6 +342,7 @@ function OnChangeQty(value, id) {
     }
 
     var TransferPrice = (UnitPrice * DiffQty);
+    TransferPrice = Math.round(TransferPrice * 100) / 100;
     document.getElementById("txtTransferPrice_" + rowNo).value = TransferPrice;
 
     $('#spanRemark_' + rowNo).text('Comment is mandatory!');
@@ -398,14 +402,7 @@ function createJson() {
     $('#TxtItemDetails').val(TxtItemDetails);
 }
 
-function isNumberKey(evt, id) {
-    var len = $('#' + id).val().length;
-    len = parseFloat(len);
-    if (len > 8)
-        return false;
-    else
-        return true;
-
+function isNumberKey(evt) {
     var keycode = (evt.which) ? evt.which : evt.keyCode;
     if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
         return false;
@@ -416,7 +413,6 @@ function isNumberKey(evt, id) {
             return false;
         else
             return true;
-
     }
     return true;
 }

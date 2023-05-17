@@ -1333,7 +1333,8 @@ namespace InVanWebApp.Repository
                             RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),  ///updated 17-04-23.
                             RejectionNoteNo = reader["RejectionNumber"].ToString(), ///added 17-04-23.  
                             InwardNumber = reader["InwardNumber"].ToString(),
-                            InwardQCNumber = reader["InwardQCNumber"].ToString(),
+                            //InwardQCNumber = reader["InwardQCNumber"].ToString(), ///Remove 17-05-23.
+                            ProductionQCNumber = reader["ProductionQCNumber"].ToString(),   ///added 17-05-23.  
                             PONumber = reader["PONumber"].ToString(),
                             SupplierName = reader["SupplierName"].ToString(),
                             Item_Name = reader["ItemName"].ToString(),
@@ -1361,6 +1362,7 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
+
 
         #region Pre-Production_QC Report data 
         /// <summary>

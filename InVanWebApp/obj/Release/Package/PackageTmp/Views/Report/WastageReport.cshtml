@@ -62,7 +62,9 @@
                                         <span style="color:red">*</span>
                                     </div>
                                     <div class="col-md-3">
-                                        @Html.DropDownList("PONumber", (IEnumerable<SelectListItem>)ViewData["PONumberdd"], "--Select--", new { @class = "form-control", @id = "PONumberId", onchange = "SelectedIndexChangedItem()" })
+                                        @*@Html.DropDownList("PONumber", (IEnumerable<SelectListItem>)ViewData["PONumberdd"], "--Select--", new { @class = "form-control", @id = "PONumberId", onchange = "SelectedIndexChangedItem()" })
+                                        VAN-1198: Rahul updated "--Select--" to "--Select All--" 17-05-2023 *@
+                                        @Html.DropDownList("PONumber", (IEnumerable<SelectListItem>)ViewData["PONumberdd"], "--Select All--", new { @class = "form-control", @id = "PONumberId", onchange = "SelectedIndexChangedItem()" })
                                         @Html.ValidationMessage("PONumber", "", new { id = "PONumberValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
 
@@ -85,7 +87,8 @@
                                                 <th style="text-align:center">Date</th>
                                                 <th style="text-align:center" class="text-wrap">Rejection Number</th> @*///added 17-04-23.*@
                                                 <th style="text-align:center" class="text-wrap">Inward Number</th>
-                                                <th style="text-align:center" class="text-wrap">Inward QC Number</th>
+                                                @*<th style="text-align:center" class="text-wrap">Inward QC Number</th> ///Remove 17-05-23.*@
+                                                <th style="text-align:center" class="text-wrap">Production QC Number</th>   @*///added 17-05-23.*@
                                                 <th style="text-align:center" class="text-wrap">PO Number</th>
                                                 <th style="text-align:center" class="text-wrap">Supplier Name</th>
                                                 <th style="text-align:center" class="text-wrap">Item Name</th>
@@ -208,7 +211,8 @@
                     { "data": "RejectionNoteDate", "autoWidth": true }, ///updated 17-04-23.
                     { "data": "RejectionNoteNo", "autoWidth": true }, ///added 17-04-23.
                     { "data": "InwardNumber", "autoWidth": true },
-                    { "data": "InwardQCNumber", "autoWidth": true },
+                    //{ "data": "InwardQCNumber", "autoWidth": true }, ///Remove 17-05-23.
+                    { "data": "ProductionQCNumber", "autoWidth": true },   ///added 17-05-23.
                     { "data": "PONumber", "autoWidth": true },
                     { "data": "SupplierName", "autoWidth": true },
                     { "data": "Item_Name", "autoWidth": true },

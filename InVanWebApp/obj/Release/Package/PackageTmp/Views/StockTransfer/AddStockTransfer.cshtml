@@ -61,17 +61,16 @@
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">Item Code<span style="color:red">*</span></th>
-                                                <th class="sortStyle">Selected Item Code</th>
-                                                <th class="sortStyle">Inward Item Date</th>
-                                                <th class="sortStyle">Item Description</th>
+                                                <th class="sortStyle d-none">Selected Item Code</th>
+                                                <th class="sortStyle d-none">Inward Item Date</th>
+                                                <th class="sortStyle">Item</th>
                                                 <th class="sortStyle">Current Quantity</th>
                                                 <th class="sortStyle">Units</th>
                                                 <th class="sortStyle">Unit Price</th>
-                                                <th class="sortStyle">Transfer Quantity<span style="color:red">*</span></th>  @*Rahul updated Current to Transfer Qty 14-02-23.*@
+                                                <th class="sortStyle">Transfer Quantity</th>  @*Rahul updated Current to Transfer Qty 14-02-23.*@
                                                 <th class="sortStyle">Final Quantity</th>
                                                 <th class="sortStyle">
-                                                    Remarks
-                                                    <span style="color:red">*</span>
+                                                    Remarks <span style="color:red">*</span>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -86,10 +85,10 @@
                                                     <span id="ValMsgItemList" style="display:none; color:red"></span>
                                                     @*@Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" }) Rahul removed ValidationMessageFor ItemId and added ValMsgItemList in span tag onchange SelectedIndexChangedItemList 09-02-23. *@
                                                 </td>
-                                                <td>
+                                                <td class="d-none">
                                                     @Html.TextBoxFor(model => model.Item_Code, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:auto;" })
                                                 </td>
-                                                <td>
+                                                <td class="d-none">
                                                     @Html.TextBoxFor(model => model.InwardDateOfItem, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:auto;" })
                                                 </td>
                                                 <td>
@@ -106,7 +105,8 @@
                                                 </td>
                                                 <td>
                                                     @Html.TextBoxFor(model => model.TransferQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeQuantityForFirstRow($(this).val(),id)" })
-                                                    @Html.ValidationMessageFor(model => model.TransferQuantity, "", new { id= "transferQuantityErr", @class = "error mt-2 text-danger" })
+                                                    @*@Html.ValidationMessageFor(model => model.TransferQuantity, "", new { id = "transferQuantityErr", @class = "error mt-2 text-danger" })*@
+                                                    <span id="transferQuantityErr" style="display:none;"></span>
                                                 </td>
                                                 <td>
                                                     @Html.TextBox("FinalQuantity", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
@@ -144,7 +144,7 @@
             <!-- Rahul updated class col 30-12-2022. -->
             <div class="col d-flex justify-content-end" style="margin-left: auto;">
                 <div class="row">
-                    <div class="col mb-1"><button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2 float-right" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="AddStockTransfer" onclick="createJson()">Submit</button></div>
+                    <div class="col mb-1"><button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2 float-right" style="background: linear-gradient(85deg, #392c70, #6a005b);" formaction="AddStockTransfer" onclick="OnBtnSave()">Submit</button></div>
                     <div class="col p-0">
                         <a href="@Url.Action("Index", "StockTransfer")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                             Back To List
@@ -167,6 +167,65 @@
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+
+    function OnBtnSave() {
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 1;
+
+        if (tableLength > 1) {
+            var TransQty = document.getElementById("TransferQuantity").value;
+            var CurrentQty = document.getElementById("RequiredQuantity").value;
+            CurrentQty = parseFloat(CurrentQty);
+            TransQty = (TransQty == null || TransQty == "") ? parseFloat(0) : parseFloat(TransQty);
+
+            if (TransQty == 0) {
+                alert("Transfer quantity is zero or null! Cannot perform stock transfer!");
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else {
+                if (TransQty > CurrentQty) {
+                    alert("Transfer quantity is greater than the current quantity! Cannot perform stock transfer!");
+                    $('#btnSave').prop('disabled', true);
+                    return;
+                }
+                else
+                    flag = 0;
+            }
+
+            while (i < tableLength-1) {
+                TransQty = document.getElementById("transferQuantity_" + i).value;
+                TransQty = (TransQty == null || TransQty == "") ? parseFloat(0) : parseFloat(TransQty);
+
+                CurrentQty = document.getElementById("itemQuantity_"+i).value;
+                CurrentQty = parseFloat(CurrentQty);
+
+                if (TransQty == 0) {
+                    flag = 1;
+                    break;
+                }
+                else if (TransQty > CurrentQty) {
+                    flag = 1;
+                    break;
+                }
+                else
+                    flag = 0;
+
+                i++;
+
+            }
+            if (flag == 1) {
+                alert("Transfer quantity is zero or null or greater than the current quantity! Cannot perform stock transfer!");
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
+
+
+        createJson();
+    }
 
     var flag = 0; //This flag is for checking whether the add Item details or not.
     function SelectedIndexChangedFromLocation(id) {
@@ -191,21 +250,7 @@
             flag = 1;
             return;
         }
-        //else if (ToLocationCheck == '' || ToLocationCheck == null) {
-        //    //debugger
-        //    if (FromLocationCheck == '' || FromLocationCheck == null) {
-        //        alert('Select To Location!');
-        //    }
-        //    else
-        //        alert('Select Different From Location');
-
-        //    document.getElementById('Item_ID').selectedIndex = 0;
-        //    $('#ToLocationId').focus();
-        //    flag = 1;
-        //    return;
-        //}
         else if (FromLocationCheck == ToLocationCheck) {
-            //debugger
             if (ToLocationCheck != '' || ToLocationCheck != null) {
                 alert('Select Different From Location');
             }
@@ -214,14 +259,6 @@
             flag = 1;
             return;
         }
-        //else if (ToLocationCheck == FromLocationCheck) {
-        //    //debugger
-        //    alert('Select Different ToLocation');
-        //    document.getElementById('Item_ID').selectedIndex = 0;
-        //    $('#ToLocationId').focus();
-        //    flag = 1;
-        //    return;
-        //}
         else {
             $('#ToLocationId').focus();
             //$('#Item_ID').focus();
@@ -257,17 +294,23 @@
                                 text: region.Item_Code
                             }));
                         });
-                    };
-                    /* debugger*/
-                //// states contains the JSON formatted list
-                //// of states passed from the controller
-                //    var description = JSON.stringify(itemDescription);
-                //    $("#Item_Code").val(itemDescription.Item_Code);
-                //    //$("#ItemUnit").val(itemDescription.UnitCode);
-                //    //$("#RequiredQuantity").val(itemDescription.RequiredQuantity);
-                //    //$("#TransferQuantity").val('0');
-                //    //$("#FinalQuantity").val('0');
-                },
+                };
+                //For deleting the rows of Item table if exist.
+
+                var table = document.getElementById('submissionTable');
+                var rowCount = table.rows.length;
+                while (rowCount != '2') {
+                    var row = table.deleteRow(rowCount - 1);
+                    rowCount--;
+                }
+                $('#Item_Name').val('');
+                $('#RequiredQuantity').val('');
+                $('#ItemUnit').val('');
+                $('#ItemUnitPrice').val('');
+                $('#TransferQuantity').val('');
+                $('#FinalQuantity').val('');
+                $('#Remarks').val('');
+                   },
                 failure: function () {
                 alert('Failed to retrieved item detals!');
                 },
@@ -509,29 +552,8 @@
                 });
     }
 
-    $("#TransferQuantity").change(function () {
-        //debugger
-        var transferQuantity = $("#TransferQuantity").val();
-        var requiredQuantity = $("#RequiredQuantity").val();
-
-        //Set current quantity in item grid.
-        var finalQuantity = requiredQuantity - transferQuantity;
-        $("#FinalQuantity").val(finalQuantity);
-        if (finalQuantity < (transferQuantity - requiredQuantity)) {
-            alert("Transfer quantity cannot be greater then Current quantity!");
-            $("#TransferQuantity").focus();
-            $('#btnSave').prop('disabled', 'true');
-            document.getElementById("TransferQuantity").setAttribute("style", "border-color:red;");
-        }
-        else {
-            $("#FinalQuantity").val(finalQuantity);
-            document.getElementById('TransferQuantity').setAttribute("style", "");
-            $('#btnSave').prop('disabled', false);
-        }
-    });
-
-    //---OnChangeQuantity start rahul added on 04-02-23------
     function OnChangeQuantityForFirstRow(value, id) {
+
         var itemId = $("#Item_ID").val();
         if (itemId == '' || itemId == null) {
             $("#Item_ID").focus();
@@ -539,26 +561,48 @@
             return;
         }
 
+        var requiredQuantity = $("#RequiredQuantity").val();
+        requiredQuantity = parseFloat(requiredQuantity);
+
+        //Set current quantity in item grid.
         var TransferQuantity = parseFloat(value);
+        var finalQuantity = requiredQuantity - TransferQuantity;
+
         if (TransferQuantity <= 0 || value == null || value == '') {
             //alert("Quantity cannot be negative, null or zero!"); //rahul removed alert on 04-02-23
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
+            $("#transferQuantityErr").show();
             document.getElementById("transferQuantityErr").setAttribute("style", "color:red;");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             $("#transferQuantityErr").text("Enter Transfer Quantity!");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             return;
+        }
+        else if (finalQuantity < (TransferQuantity - requiredQuantity)) {
+            $("#transferQuantityErr").text("Transfer quantity cannot be greater then Current quantity!");
+            $("#transferQuantityErr").show();
+            document.getElementById("transferQuantityErr").setAttribute("style", "color:red;");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
+            document.getElementById("transferQuantityErr").setAttribute("class", "text-wrap");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
+            //alert("Transfer quantity cannot be greater then Current quantity!");
+            $("#TransferQuantity").focus();
+            $("#FinalQuantity").val(0);
+            $('#btnSave').prop('disabled', 'true');
+            document.getElementById("TransferQuantity").setAttribute("style", "border-color:red;");
+            $("#transferQuantityErr").show();
         }
         else {
             //Set transfer Quantity in item grid.
             $("#transferQuantityErr").hide();//Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             document.getElementById(id).setAttribute("style", "");
+            $("#FinalQuantity").val(finalQuantity);
+            $('#btnSave').prop('disabled', false);
         }
     }
 
     function OnChangeQuantity(value, id) {
-        //debugger
-        var rowNo = id.split('_')[1];
 
+        var rowNo = id.split('_')[1];
+        var currentQty = $('#itemQuantity_' + rowNo).val();
+        currentQty = parseFloat(currentQty);
         var itemId = $("#ItemID_"+rowNo).val();
         if (itemId == '' || itemId == null) {
             $("#ItemID_" + rowNo).focus;
@@ -571,13 +615,19 @@
             //alert("Quantity cannot be negative, null or zero!"); //rahul removed alert on 04-02-23
             document.getElementById(id).focus();
             document.getElementById(id).setAttribute("style", "border-color:red;");
+            $("#transferQuantityErr_" + rowNo).show();
             document.getElementById("transferQuantityErr_" + rowNo).setAttribute("style", "color:red;");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             $("#transferQuantityErr_" + rowNo).text("Enter Transfer Quantity!");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             return;
         }
         else if (TransferQuantity > currentQty) {
-            alert("Transfer quantity cannot be greater then Current quantity!");
+            document.getElementById("transferQuantityErr_" + rowNo).setAttribute("style", "color:red;");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
+            document.getElementById("transferQuantityErr_" + rowNo).setAttribute("class", "text-wrap");    //Rahul added for span tag 'transferQuantityErr_' 14-02-23.
+            $("#transferQuantityErr_" + rowNo).text("Transfer quantity cannot be greater then Current quantity!");
+           // alert("Transfer quantity cannot be greater then Current quantity!");
             $('#' + id).focus();
+            $("#transferQuantityErr_" + rowNo).show();
+            $('#finalQuantity_' + rowNo).val(0);
             $('#btnSave').prop('disabled', 'true');
             document.getElementById(id).setAttribute("style", "border-color:red;");
         }
@@ -586,12 +636,13 @@
             //Set transfer Quantity in item grid.
             $("#transferQuantityErr_" + rowNo).hide();//Rahul added for span tag 'transferQuantityErr_' 14-02-23.
             document.getElementById(id).setAttribute("style", "");
+            var diffQty = (currentQty - TransferQuantity);
+            $('#finalQuantity_' + rowNo).val(diffQty);
             $('#btnSave').prop('disabled', false);
 
         }
     }
     //---OnChangeQuantity end ------
-
 
     var counter = 1;
 
@@ -618,10 +669,10 @@
             '<select id="' + itemId + '" onchange="getitemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:270px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
             '<span id="' + dynValMsgItemList + '">' +
             '</td>' +
-            '<td>' +
+            '<td class="d-none">' +
             '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:auto;" name="' + itemCode + '" value="" required="required" readonly="readonly" />' +
             '</td>' +
-            '<td>' +
+            '<td class="d-none">' +
             '<input type="text" id="' + inwardDateOfItem + '" class="form-control form-control-sm" style = "height:30px;width:auto;" name="' + inwardDateOfItem + '" value="" required="required" readonly="readonly" />' +
             '</td>' +
             '<td>' +
@@ -683,7 +734,7 @@
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
-      
+
         if ((res[0].Item_ID == null || res[0].Item_ID == '' || res[0].Item_ID == 'undefined') &&
             (document.getElementById('FromLocationId').selectedIndex == 0))
         {
@@ -691,7 +742,7 @@
             //alert('Select Different FromLocation and ToLocation!');
         }
         else if (document.getElementById('Item_ID').selectedIndex == 0) {
-            
+
             var ItemList = $("#Item_ID option:selected").val();
             if (ItemList == '' || ItemList == 0) {
                 $("#ValMsgItemList").text("Please select Item!");
