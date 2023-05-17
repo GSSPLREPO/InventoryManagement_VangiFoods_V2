@@ -5,16 +5,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
+using InVanWebApp.Common;
 using log4net;
 
 namespace InVanWebApp.Repository
 {
     public class UserDetailsRepository : IUserDetailsRepository
     {
-        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(ItemTypeRepository));
 
@@ -23,7 +22,7 @@ namespace InVanWebApp.Repository
         /// Farheen: This function is for fecthing list of item master's.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserDetailsBO> GetAll()
+        public IEnumerable<UserDetailsBO> GetAll(int UserId = 0)
         {
             List<UserDetailsBO> userList = new List<UserDetailsBO>();
             try
@@ -32,6 +31,7 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_UserDetails_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserId", UserId);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
@@ -291,7 +291,7 @@ namespace InVanWebApp.Repository
             }
             return designationList;
         }
-        public IEnumerable<RoleBO> GetRoleForDropDown()
+        public IEnumerable<RoleBO> GetRoleForDropDown(int UserId = 0)
         {
             List<RoleBO> roleList = new List<RoleBO>();
             try
@@ -300,6 +300,7 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_Role_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserId", UserId);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())

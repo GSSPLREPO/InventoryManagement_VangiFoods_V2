@@ -16,14 +16,14 @@
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
             @*Rahul updated heading tag text 'Received' to 'Dispatch' 16-02-23.*@
-            <h4 class="page-title">Yield Report</h4>
+            <h4 class="page-title">Yeild Report</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Reports</a>
                     </li>
                     @*Rahul updated anchor tag text 'Received' to 'Dispatch' 16-02-23.*@
-                <li class="breadcrumb-item active">Yield Report</li>
+                <li class="breadcrumb-item active">Yeild Report</li>
                 </ol>
             </nav>
         </div>
@@ -164,7 +164,7 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid date!, To date is less than From date!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }

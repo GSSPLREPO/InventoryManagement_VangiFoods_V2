@@ -15,111 +15,110 @@
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Id)
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("User")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Date")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4" @*id="datetimepicker"*@>
+            <div class="row">
+                <div class="col-md-3">
+                    @Html.Label("User")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-3">
+                    @Html.Label("Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-3" @*id="datetimepicker"*@>
 
-                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
-            </div>
-            @*<div class="col-md-2">
-                @Html.Label("Time")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                @*<div class="col-md-2">
+                        @Html.Label("Time")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
 
-                @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
-                @Html.ValidationMessageFor(model => model.Time, "", new { @class = "error mt-2 text-danger" })
-            </div>*@
+                        @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                        @Html.ValidationMessageFor(model => model.Time, "", new { @class = "error mt-2 text-danger" })
+                    </div>*@
 
-        </div>
+            </div>
 
             <div class="row">
-                <div class="col-md-2 mb-1">
+                <div class="col-md-3">
                     @Html.Label("Type of Pest")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     @Html.TextBoxFor(model => model.TypeOfPest, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.TypeOfPest, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <div class="col-md-2 mb-1">
+                <div class="col-md-3">
                     @Html.Label("Method For Pest Control")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     @Html.TextBoxFor(model => model.MethodForPestControl, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.MethodForPestControl, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-2 mb-1">
+                <div class="col-md-3">
                     @Html.Label("Area")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     @Html.TextBoxFor(model => model.Area, new { @class = "form-control form-control-sm", maxlength = "50", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.Area, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <div class="col-md-2 mb-1">
+                <div class="col-md-3">
                     @Html.Label("Frequency")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     @Html.TextBoxFor(model => model.Frequncy, new { @class = "form-control form-control-sm", maxlength = "10", @onkeypress = "return IsAlphaNumeric(event);" })
                     @Html.ValidationMessageFor(model => model.Frequncy, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-2 mb-1">
-                    @Html.Label("COA Received From Pest companyQ")
+                <div class="col-md-3">
+                    @Html.Label("COA Received From Pest Control Company")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.COARecivedFromPestControl, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphabate(event);" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.COARecivedFromPestControl, new { @class = "form-control form-control-sm", maxlength = "30", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.COARecivedFromPestControl, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <div class="col-md-2 mb-1">
+                <div class="col-md-3">
                     @Html.Label("Effective or Not")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     @Html.TextBoxFor(model => model.EffectiveOrNot, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.EffectiveOrNot, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-2 mb-1">
+                <div class="col-md-3">
                     @Html.Label("Any Hazard Detected After Pest")
                     <span style="color:red">*</span>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     @Html.TextBoxFor(model => model.AnyHazardDetectedAfterPest, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphabate(event);" })
                     @Html.ValidationMessageFor(model => model.AnyHazardDetectedAfterPest, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
 
-
             <div class="row">
-                <div class="col-md-2 mb-1">
+                <div class="col-md-3">
                     @Html.Label("Remarks")
                 </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Remarks Will be Allow 100 Charachter" })
+                <div class="col-md-3">
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", Title = "100 charachters are allowed in remark!" })
                     @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
                 </div>
 

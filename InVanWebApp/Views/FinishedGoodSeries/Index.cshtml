@@ -3,22 +3,25 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Finished Good Series</title>
+    <title>Finished Goods Series</title>
     @*<link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />*@
 </head>
 <body>
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Finished Good Series</h4>
+            <h4 class="page-title">Finished Goods Series</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Production</a>
                     </li>
-                    <li class="breadcrumb-item active">Finished Good Series</li>
+                    <li class="breadcrumb-item active">Finished Goods Series</li>
                 </ol>
             </nav>
         </div>
@@ -29,7 +32,7 @@
                     <div class="card">
                         <div class="card-body">
                             <a href="@Url.Action("AddFinishedGoodSeries","FinishedGoodSeries")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span> Finished Good Series
+                                <span class="fa fa-plus"></span> Finished Goods Series
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
                                 <table id="tblFinishedGoodSeries" class="table table-striped table-bordered hover table-sm">

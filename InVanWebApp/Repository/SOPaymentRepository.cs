@@ -21,7 +21,6 @@ namespace InVanWebApp.Repository
 {
     public class SOPaymentRepository : ISOPaymentRepository
     {
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(PurchaseOrderRepository));
 
@@ -37,7 +36,7 @@ namespace InVanWebApp.Repository
             {
                 using (SqlConnection con = new SqlConnection(connString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_SalesOrder_GetAll", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_GetSalesOrder_ForSOPayment", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.

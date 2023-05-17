@@ -13,6 +13,31 @@
             width: 3000px !important;
             height: 2000px !important;
         }
+        #submissionTable tr td {
+            white-space: normal;
+            table-layout: auto;
+            border-color: darkgrey;
+            font-size: 110%;
+            width: -1%;
+            /*width: 100%;*/
+        }
+        #submissionTable label {
+            font-size: 120%;
+        }
+
+        #submissionTable th {
+            white-space: normal;
+            border-color: darkgrey;
+            font-size: 120%;
+        }
+
+        hr {
+            color: black;
+            height: -1%
+        }
+       /* Label {
+            color: black;
+        }*/
     </style>
 </head>
 <body>
@@ -25,8 +50,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
-                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">PO Payment Invoice</h3>
+                            <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
+                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;">PO Payment Invoice</h3>
 
                             <div class="col">
                                 <div class="col-md-12">
@@ -37,272 +62,277 @@
 
                         <hr />
                         <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">PO Number</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.PONumber, new { style = "color:black;" })
-                                </div>
-                                <br />
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Payment Date</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.PaymentDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Invoice Number</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.InvoiceNumber, new { style = "color:black;" })
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Invoice Amount</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.PaymentAmount, new { style = "color:black;" })
-                                    @Html.DisplayFor(model => model.CurrencyName, new { style = "color:black;" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Payment Due Date </label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.PaymentDueDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Vendor</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.VendorName, new { style = "color:black;" })
-                                </div>
-                            </div>
-                            <br />
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <Center><h5 class="font-weight-bold">Item Details</h5></Center>
-                                    <hr />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            <table class="table table-hover" id="submissionTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="sortStyle">Sr. No.</th>
-                                                        <th class="sortStyle">Item Code</th>
-                                                        <th class="sortStyle">Item</th>
-                                                        <th class="sortStyle">Quantity</th>
-                                                        <th class="sortStyle">Units</th>
-                                                        <th class="sortStyle">Unit Price</th>
-                                                        <th class="sortStyle">Tax</th>
-                                                        <th class="sortStyle">Total Payable (Before Tax)</th>
-                                                        <th class="sortStyle">Currency</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="myTableBody">
-                                                    @{ int c = 1;
-                                                        foreach (var item in Model.PurchaseOrderItems)
-                                                        {
-                                                            <tr id="tablerow_@c">
-                                                                <td>
-                                                                    <label>@c.</label>
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.Item_Code)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemName)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemQuantity)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemUnit)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemTaxValue)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.TotalItemCost)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(model => model.CurrencyName, new { style = "color:black;" })
-                                                                </td>
-                                                            </tr>
-                                                            { c++; }
-                                                        }
-
-                                                    }
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                            <div style="font-size:110%; color:black;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">PO Number</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.PONumber, new { style = "color:black;" })
                                     </div>
                                     <br />
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Payment Date</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.PaymentDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Invoice Number</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.InvoiceNumber, new { style = "color:black;" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Invoice Amount</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.PaymentAmount, new { style = "color:black;" })
+                                        @Html.DisplayFor(model => model.CurrencyName, new { style = "color:black;" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Payment Due Date </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.PaymentDueDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Supplier</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.VendorName, new { style = "color:black;" })
+                                    </div>
+                                </div>
+                                </div>
+                                <br />
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                <table class="table table-hover" id="submissionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">Sr. No.</th>
+                                                            <th class="sortStyle">Item Code</th>
+                                                            <th class="sortStyle">Item</th>
+                                                            <th class="sortStyle">Quantity</th>
+                                                            <th class="sortStyle">Units</th>
+                                                            <th class="sortStyle">Unit Price</th>
+                                                            <th class="sortStyle">Tax</th>
+                                                            <th class="sortStyle">Total Payable (Before Tax)</th>
+                                                            <th class="sortStyle">Currency</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="myTableBody">
+                                                        @{ int c = 1;
+                                                            foreach (var item in Model.PurchaseOrderItems)
+                                                            {
+                                            <tr id="tablerow_@c">
+                                                <td>
+                                                    <label>@c.</label>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.Item_Code)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemQuantity)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnit)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemTaxValue)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.TotalItemCost)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(model => model.CurrencyName, new { style = "color:black;" })
+                                                </td>
+                                            </tr> { c++; }
+                                                            } }
 
-                            <div class="row">
-                                <div class="col-md-6 grid-margin stretch-card">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title">PAYMENT MODE</h5>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    @Html.Label("Payment Mode")
+                                        <br />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-header font-weight-bold" style=" border:  1px solid; color: black;">
+                                                <h5 class="card-title" style="font-size:150%;">PAYMENT MODE</h5>
+                                            </div>
+                                            <div class="card-body" style="border: 1px solid; color: black;">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        @*@Html.Label("Payment Mode")*@
+                                                        <label style="font-size:120%">Payment Mode</label>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.TextBoxFor(model => model.PaymentMode, new { id = "PaymentMode", style = "color:black;font-size:110%;border:none;", @readonly = "readonly" })
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-7">
-                                                    @Html.TextBoxFor(model=>model.PaymentMode, new { id= "PaymentMode",style ="color:black;border:none;", @readonly="readonly"})
+                                                <br />
+                                                <div class="row" id="dvBankName" style="display:none;">
+                                                    <div class="col-md-5">
+                                                        @Html.Label("Bank Name")
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.BankName, new { style = "color:black;" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row" id="dvBranchName" style="display:none;">
+                                                    <div class="col-md-5">
+                                                        @Html.Label("Branch Name")
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.BranchName, new { style = "color:black;" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row" id="dvCheque" style="display:none;">
+                                                    <div class="col-md-5">
+                                                        @Html.Label("Cheque Number")
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.ChequeNumber, new { style = "color:black;" })
+                                                    </div>
+                                                </div>
+                                                <div class="row" id="dvAccountNo" style="display:none;">
+                                                    <div class="col-md-5">
+                                                        @Html.Label("Account Number")
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.AccountNumber, new { style = "color:black;" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row" id="dvIFSC" style="display:none;">
+                                                    <div class="col-md-5">
+                                                        @Html.Label("RTGS/NEFT IFSC code")
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.IFSCCode, new { style = "color:black;" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row" id="dvUTR" style="display:none;">
+                                                    <div class="col-md-5">
+                                                        @Html.Label("UTR Number")
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.UTRNo, new { style = "color:black;" })
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <br />
-                                            <div class="row" id="dvBankName" style="display:none;">
-                                                <div class="col-md-5">
-                                                    @Html.Label("Bank Name")
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-header" style="border:1px solid; color: black;">
+                                                <h5 class="card-title" style="font-size:150%;">PAYMENT DETAILS</h5>
+                                            </div>
+                                            <div class="card-body" style="border:1px solid; color:black;">
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        @*@Html.Label("Total PO Amount")*@
+                                                        <label style="font-size:120%; color:black;">Total PO Amount</label>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.TotalPOAmount, new { style = "color:black;" })
+                                                        @Html.DisplayFor(model => model.CurrencyName, new { style = "color:black;" })
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model => model.BankName, new { style = "color:black;" })
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        @*@Html.Label("Advance Payment")*@
+                                                        <label style="font-size:120%; color:black;">Advance Payment</label>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.AdvancedPayment, new { style = "color:black;" })
+                                                        @Html.DisplayFor(model => model.CurrencyName, new { style = "color:black;" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        @*@Html.Label("Paid Amount")*@
+                                                        <label style="font-size:120%; color:black;">Paid Amount</label>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.AmountPaid, new { style = "color:black;" })
+                                                        @Html.DisplayFor(model => model.CurrencyName, new { style = "color:black;" })
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-md-5">
+                                                        @*@Html.Label("Balance Amount")*@
+                                                        <label style="font-size:120%; color:black;">Balance Amount</label>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        @Html.DisplayFor(model => model.BalanceAmount, new { style = "color:black;" })
+                                                        @Html.DisplayFor(model => model.CurrencyName, new { style = "color:black;" })
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <br />
-                                            <div class="row" id="dvBranchName" style="display:none;">
-                                                <div class="col-md-5">
-                                                    @Html.Label("Branch Name")
-                                                </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model => model.BranchName, new { style = "color:black;" })
-                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title"></h5>
                                             </div>
-                                            <br />
-                                            <div class="row" id="dvCheque" style="display:none;">
-                                                <div class="col-md-5">
-                                                    @Html.Label("Cheque Number")
-                                                </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model => model.ChequeNumber, new { style = "color:black;" })
-                                                </div>
-                                            </div>
-                                            <div class="row" id="dvAccountNo" style="display:none;">
-                                                <div class="col-md-5">
-                                                    @Html.Label("Account Number")
-                                                </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model => model.AccountNumber, new { style = "color:black;" })
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="row" id="dvIFSC" style="display:none;">
-                                                <div class="col-md-5">
-                                                    @Html.Label("RTGS/NEFT IFSC code")
-                                                </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model => model.IFSCCode, new { style = "color:black;" })
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="row" id="dvUTR" style="display:none;">
-                                                <div class="col-md-5">
-                                                    @Html.Label("UTR Number")
-                                                </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model => model.UTRNo, new { style = "color:black;" })
+                                            <div class="card-body">
+                                                <div class="row" style="color:black;">
+                                                    <div class="col-md-2">
+                                                        @*@Html.Label("Paid/Un Paid")*@
+                                                        <label class="font-weight-bold">Paid/Un Paid</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        @Html.DisplayFor(model => model.IsPaid, new { style = "color:black;" })
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label class="font-weight-bold">Remarks</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 grid-margin stretch-card">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title">PAYMENT DETAILS</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    @Html.Label("Total PO Amount")
-                                                </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model=>model.TotalPOAmount, new { style = "color:black;" })
-                                                    @Html.DisplayFor(model=>model.CurrencyName, new { style = "color:black;" })
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    @Html.Label("Advance Payment")
-                                                </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model=>model.AdvancedPayment, new { style = "color:black;" })
-                                                    @Html.DisplayFor(model=>model.CurrencyName, new { style = "color:black;" })
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    @Html.Label("Paid Amount")
-                                                </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model=>model.AmountPaid, new { style = "color:black;" })
-                                                    @Html.DisplayFor(model=>model.CurrencyName, new { style = "color:black;" })
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    @Html.Label("Balance Amount")
-                                                </div>
-                                                <div class="col-md-7">
-                                                    @Html.DisplayFor(model=>model.BalanceAmount, new { style = "color:black;" })
-                                                    @Html.DisplayFor(model=>model.CurrencyName, new { style = "color:black;" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 grid-margin stretch-card">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5 class="card-title"></h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    @Html.Label("Paid/Un Paid")
-                                                </div>
-                                                <div class="col-md-4">
-                                                    @Html.DisplayFor(model => model.IsPaid, new { style = "color:black;" })
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label class="font-weight-bold">Remarks</label>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <br />
+                                <br />
+                                <a href="@Url.Action("Index", "POPayment")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                    Back To List
+                                </a>
                             </div>
-                            <br />
-                            <br />
-                            <a href="@Url.Action("Index", "POPayment")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
-                                Back To List
-                            </a>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

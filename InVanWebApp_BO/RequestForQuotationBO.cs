@@ -10,26 +10,32 @@ namespace InVanWebApp_BO
     public class RequestForQuotationBO
     {
         public int RequestForQuotationId { get; set; }
-        ///public Nullable<int> OrganisationId { get; set; } ///Rahul removed 'OrganisationId' 17-12-2022.  
-        ///public Nullable<int> BranchId { get; set; } ///Rahul removed 'BranchId' 17-12-2022.  
         public string RFQNO { get; set; }
-        //public Nullable<int> CompanyId { get; set; } ///Rahul updated 'CompanyId' to 'VendorsID' 14-12-2022. 
-        [Required(ErrorMessage = "Select Location Name!")]  ///Rahul added 'ErrorMessage' 10-04-2023.   
+
+        [Required(ErrorMessage = "Select Location Name!")]
         public Nullable<int> LocationId { get; set; }
         ///public Nullable<int> UnitId { get; set; } ///Rahul removed 'UnitId' 17-12-2022.  
         ///public Nullable<int> ItemId { get; set; } ///Rahul removed 'ItemId' 17-12-2022.  
         [Required(ErrorMessage = "Please select the RFQ Date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> Date { get; set; }
         [Required(ErrorMessage = "Please select the Delivery date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         [Required(ErrorMessage = "Please select the Bidding Start date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> BiddingStartDate { get; set; }
         [Required(ErrorMessage = "Please select the Bidding End date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> BiddingEndDate { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public string Signature { get; set; }
-        [Required(ErrorMessage = "Enter remakrs!")] ////added 
+
+        //[Required(ErrorMessage = "Enter remakrs!")]
         public string Remarks { get; set; }
+
+        public string UserName { get; set; }
+
         //Added below fields for Indent dropdown in RFQ 02-02-2023. 
         [Required(ErrorMessage = "Select indent number!")] ////added 
         public int IndentID { get; set; }
@@ -37,10 +43,12 @@ namespace InVanWebApp_BO
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedByID { get; set; }
         public Nullable<System.DateTime> CreatedByDate { get; set; }
-        //Rahul added 'RFQCount' 10-04-23.
-        public int RFQCount { get; set; }
         public Nullable<int> LastModifiedByID { get; set; }
         public Nullable<System.DateTime> LastModifiedByDate { get; set; }
+
+        //Added the below field for enabling and disabling the edit and delete button
+        public int RFQCount { get; set; }
+
         //==============Rahul: These fields are for Request For Quotation details 14/12/2022==============//
         public string LocationName { get; set; }
         public Nullable<int> VendorsID { get; set; }

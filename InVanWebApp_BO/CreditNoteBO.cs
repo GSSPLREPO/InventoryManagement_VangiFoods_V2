@@ -11,10 +11,11 @@ namespace InVanWebApp_BO
     {
         public int ID { get; set; }
         public string CreditNoteNo { get; set; }
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> CreditNoteDate { get; set; }
         public Nullable<int> GRNId { get; set; }
         public string GRN_No { get; set; }
-        [Required(ErrorMessage ="Select PO number!")]
+        [Required(ErrorMessage ="Select SO number!")]
         public Nullable<int> PO_ID { get; set; }
         public string PO_Number { get; set; }
         public Nullable<int> LocationId { get; set; }

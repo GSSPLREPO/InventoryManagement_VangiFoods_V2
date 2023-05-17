@@ -13,6 +13,29 @@
             width: 3000px !important;
             height: 2000px !important;
         }
+        #submissionTable tr td {
+            white-space: normal;
+            table-layout: auto;
+            border-color: darkgrey;
+            font-size: 110%;
+            width: -1%;
+            /*width: 100%;*/
+        }
+
+        #submissionTable label {
+            font-size: 120%;
+        }
+
+        #submissionTable th {
+            white-space: normal;
+            border-color: darkgrey;
+            font-size: 120%;
+        }
+
+        hr {
+            color: black;
+            height: -1%
+        }
     </style>
 </head>
 <body>
@@ -25,8 +48,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
-                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Delivery Challan</h3>
+                            <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
+                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;">Delivery Challan</h3>
 
                             <div class="col">
                                 <div class="col-md-12">
@@ -37,241 +60,238 @@
 
                         <hr />
                         <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Delivery Challan Number</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.DeliveryChallanNumber, new { style = "color:black;" })
-                                </div>
-                                <br />
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Delivery Challan Date</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.DeliveryChallanDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Sales Order Number</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.SONumber, new { style = "color:black;" })
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Currency</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.CurrencyName, new { id = "lblCurrencyName", style = "color:black;" })
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Supplier Details</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.LocationName, new { style = "color:black;" })
-                                    @Html.DisplayFor(model => model.SupplierAddress)
-                                </div>
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Client Details</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.CompanyName, new { style = "color:black;" })
-                                    @Html.DisplayFor(model => model.ShippingAddress, new { style = "color:black;" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Remarks</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
-                                </div>
-                            </div>
-                            <br />
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <Center><h5 class="font-weight-bold">Item Details</h5></Center>
-                                    <hr />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            <table class="table table-hover" id="submissionTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="sortStyle">Sr. No.</th>
-                                                        <th class="sortStyle">Item Code</th>
-                                                        <th class="sortStyle">Item</th>
-                                                        <th class="sortStyle">Price (Per Unit)</th>
-                                                        <th class="sortStyle">Item Tax</th>
-                                                        <th class="sortStyle">SO Quantity</th>
-                                                        <th class="sortStyle">Balance Quantity</th>
-                                                        <th class="sortStyle">Outward Quantity</th>
-                                                        <th class="sortStyle">UOM</th>
-                                                        <th class="sortStyle">Total Item Cost</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="myTableBody">
-                                                    @{ int c = 1;
-                                                        foreach (var item in Model.deliveryChallanItemDetails)
-                                                        {
-                                                            <tr id="tablerow_@c">
-                                                                <td>
-                                                                    <label>@c.</label>
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.Item_Code)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemName)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
-                                                                    @Html.DisplayFor(x => item.CurrencyName)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; width:30px;height:25px", @readonly = "readonly" })
-                                                                    %
-                                                                    @*@Html.DisplayFor(x => item.ItemTaxValue, new { id = "itemTax_" + c })*@
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.OrderedQuantity)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.BalanceQuantity)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.OutwardQuantity)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemUnit)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;width:60px;", @readonly = "readonly" })
-                                                                    @*@Html.DisplayFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c })*@
-                                                                    @Html.DisplayFor(x => item.CurrencyName)
-                                                                </td>
-                                                            </tr>
-                                                            { c++; }
-                                                        }
-
-                                                    }
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                            <div style="font-size:110%; color:black;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Delivery Challan Number</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.DeliveryChallanNumber, new { style = "color:black;" })
                                     </div>
                                     <br />
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Delivery Challan Date</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.DeliveryChallanDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                    </div>
                                 </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-md-5"></div>
-                                <div class="col-md-7">
-                                    <hr />
-                                    <Center><h5 class="font-weight-bold">Payment Details</h5></Center>
-                                    <hr />
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Sales Order Number</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.SONumber, new { style = "color:black;" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Currency</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.CurrencyName, new { id = "lblCurrencyName", style = "color:black;" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5"></div>
-                                <div class="col-md-7">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="font-weight-bold">Total (before tax): </label>&emsp;
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input class="text-right" id="TotalBeforeTax" name="TotalBeforeTax" style="border:none;" readonly="readonly" />
-                                            @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="font-weight-bold">Discount (%): </label>&emsp;
-                                        </div>
-                                        <div class="col-md-6">
-                                            @Html.TextBoxFor(model => model.DiscountPercentage, new { @class = "text-right", style = "border:none;", @readonly = "readonly" })
-                                            <label class="font-weight-bold" style="color:black;"><b>%</b></label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="font-weight-bold">Total tax: </label>&emsp;
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input class="text-right" id="TotalTax" name="TotalTax" style="border:none;" readonly="readonly" />
-                                            @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="font-weight-bold">Other tax:</label>&emsp;
-                                        </div>
-                                        <div class="col-md-6" style="color: black;">
-                                            @Html.TextBoxFor(model => model.OtherTax, new { @class = "text-right", style = "border:none;", @readonly = "readonly" })
-                                            @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="font-weight-bold">Total (after tax):</label>&emsp;
-                                        </div>
-                                        <div class="col-md-6" style="color: black;">
-                                            @Html.TextBoxFor(model => model.TotalAfterTax, new { @class = "text-right", @readonly = "readonly", style = "border:none;" })
-                                            @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
 
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Supplier Details</label>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="font-weight-bold">Grand Total:</label>&emsp;
-                                        </div>
-                                        <div class="col-md-6" style="color: black;">
-                                            @Html.TextBoxFor(model => model.GrandTotal, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
-                                            @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
-                                        </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.LocationName, new { style = "color:black;" })
+                                        @Html.DisplayFor(model => model.SupplierAddress)
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Client Details</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.CompanyName, new { style = "color:black;" })
+                                        @Html.DisplayFor(model => model.ShippingAddress, new { style = "color:black;" })
                                     </div>
                                 </div>
-                            </div>
-                            <br />
-                            <br />
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Terms And Condition</label>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Remarks</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.Remarks, new { style = "color:black;", @class = "text-wrap;" })
+                                    </div>
                                 </div>
-                                <div class="col-md-10 text-justify">
-                                    @Html.DisplayFor(model => model.Terms)
                                 </div>
-                            </div>
-                            <br />
-                            <br />
-                            <div class="row">
-                                <div class="col-md-10"></div>
-                                <div class="col-md-2">
-                                    @{if (Model.Signature != null)
-                                        {
-                                            <div id="imagePreview">
-                                                <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
-                                                @Html.HiddenFor(x => x.Signature)
+                                <br />
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                <table class="table table-hover" id="submissionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">Sr. No.</th>
+                                                            <th class="sortStyle">Item Code</th>
+                                                            <th class="sortStyle">Item</th>
+                                                            <th class="sortStyle">Price (Per Unit)</th>
+                                                            <th class="sortStyle">Item Tax</th>
+                                                            <th class="sortStyle">SO Quantity</th>
+                                                            <th class="sortStyle">Balance Quantity</th>
+                                                            <th class="sortStyle">Outward Quantity</th>
+                                                            <th class="sortStyle">UOM</th>
+                                                            <th class="sortStyle">Total Item Cost</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="myTableBody">
+                                                        @{ int c = 1;
+                                                            foreach (var item in Model.deliveryChallanItemDetails)
+                                                            {
+                                            <tr id="tablerow_@c">
+                                                <td>
+                                                    <label>@c.</label>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.Item_Code)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
+                                                    @Html.DisplayFor(x => item.CurrencyName)
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; width:30px;height:25px", @readonly = "readonly" })
+                                                    %
+                                                    @*@Html.DisplayFor(x => item.ItemTaxValue, new { id = "itemTax_" + c })*@
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.OrderedQuantity)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.BalanceQuantity)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.OutwardQuantity)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnit)
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none;width:60px;height:20px;", @readonly = "readonly" })
+                                                    @*@Html.DisplayFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c })*@
+                                                    @Html.DisplayFor(x => item.CurrencyName)
+                                                </td>
+                                            </tr> { c++; }
+                                                            } }
+
+                                                    </tbody>
+                                                </table>
                                             </div>
-                                        }
-                                    }
-                                    <p class="font-weight-bold"> Authorized Signature</p>
+                                        </div>
+                                        <br />
+                                    </div>
                                 </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-7">
+                                        <hr />
+                                        <Center><h5 class="font-weight-bold">Payment Details</h5></Center>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-7">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Total (before tax): </label>&emsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="text-right" id="TotalBeforeTax" name="TotalBeforeTax" style="border:none;" readonly="readonly" />
+                                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Discount (%): </label>&emsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.TextBoxFor(model => model.DiscountPercentage, new { @class = "text-right", style = "border:none;", @readonly = "readonly" })
+                                                <label class="font-weight-bold" style="color:black;"><b>%</b></label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Total tax: </label>&emsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="text-right" id="TotalTax" name="TotalTax" style="border:none;" readonly="readonly" />
+                                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Other tax:</label>&emsp;
+                                            </div>
+                                            <div class="col-md-6" style="color: black;">
+                                                @Html.TextBoxFor(model => model.OtherTax, new { @class = "text-right", style = "border:none;", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Total (after tax):</label>&emsp;
+                                            </div>
+                                            <div class="col-md-6" style="color: black;">
+                                                @Html.TextBoxFor(model => model.TotalAfterTax, new { @class = "text-right", @readonly = "readonly", style = "border:none;" })
+                                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Grand Total:</label>&emsp;
+                                            </div>
+                                            <div class="col-md-6" style="color: black;">
+                                                @Html.TextBoxFor(model => model.GrandTotal, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
+                                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "text-left font-weight-bold", style = "border: none;width: 10%;", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold"style="color:black;">Terms And Condition</label>
+                                    </div>
+                                    <div class="col-md-10 text-justify">
+                                        @Html.DisplayFor(model => model.Terms)
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-10"></div>
+                                    <div class="col-md-2">
+                                        @{if (Model.Signature != null)
+                                            {
+                            <div id="imagePreview">
+                                <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
+                                @Html.HiddenFor(x => x.Signature)
+                            </div> } }
+                                        <p class="font-weight-bold"> Authorized Signature</p>
+                                    </div>
+                                </div>
+                                <br />
+                                <a href="@Url.Action("Index", "DeliveryChallan")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                    Back To List
+                                </a>
                             </div>
-                            <br />
-                            <a href="@Url.Action("Index", "DeliveryChallan")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
-                                Back To List
-                            </a>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

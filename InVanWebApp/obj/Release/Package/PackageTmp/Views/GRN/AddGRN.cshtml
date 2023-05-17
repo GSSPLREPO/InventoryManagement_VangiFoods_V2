@@ -40,18 +40,16 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.InwardQCId, (IEnumerable<SelectListItem>)ViewData["InwardNumber"], "--Select--",
-                             new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
+                   new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
                     @Html.ValidationMessageFor(model => model.InwardQCId, "", new { id = "InwardQCIdErr", @class = "error mt-2 text-danger" })
-                    @*///Rahul added 'InwardQCIdErr' 13-04-23.*@
                 </div>
                 <div class="col-md-2">
                     @Html.Label("PO Number")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly="readonly" })
                     @Html.ValidationMessageFor(model => model.PONumber, "", new { id = "PONumberErr", @class = "error mt-2 text-danger" })
-                    @*///Rahul added 'PONumberErr' 13-04-23.*@
                 </div>
                 @Html.HiddenFor(model => model.PO_ID)
             </div>
@@ -63,9 +61,8 @@
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "--Select--",
-                            new { @class = "form-control", onchange = "LocationChanged($(this).val())" })
+                  new { @class = "form-control", onchange = "LocationChanged($(this).val())" })
                     @Html.ValidationMessageFor(model => model.LocationId, "", new { id = "LocationIdErr", @class = "error mt-2 text-danger" })
-                    @*///Rahul added 'LocationIdErr' 13-04-23.*@
                 </div>
             </div>
             <br />
@@ -131,8 +128,10 @@
 <script type="text/javascript">
 
     function SelectedIndexChanged(id) {
+
+        $('#InwardQCIdErr').hide();
         //For deleting the rows of Item table if exist.
-        $('#InwardQCIdErr').hide(); ///Rahul added 13-04-23.
+
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
         while (rowCount != '1') {
@@ -151,13 +150,12 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                console.log(result);
-                //$('#PODate').val(result[0].PODate);
+                $('#PONumberErr').hide();
+                $('#LocationIdErr').hide();
+
                 $('#PO_ID').val(result[0].PO_Id);
                 $('#PONumber').val(result[0].PONumber);
-                $('#PONumberErr').hide(); ///Rahul added 13-04-23.
                 $('#LocationId').val(result[0].LocationStockID);
-                $('#LocationIdErr').hide(); ///Rahul added 13-04-23.
                 $('#DeliveryAddress').val(result[0].DeliveryAddress);
                 $('#SupplierDetails').val(result[0].SupplierAddress);
 
@@ -201,7 +199,8 @@
     }
 
     function LocationChanged(id) {
-        $('#LocationIdErr').hide(); ///Rahul added 13-04-23.
+        $('#LocationIdErr').hide();
+
         $.ajax({
             type: "POST",
             url: `/GRN/BindLocationMaster?id=` + id,
@@ -209,8 +208,6 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                ////debugger;
-                //console.log(result);
                 var deliveryAdd = result[0].DeliveryAddress;
                 $("#DeliveryAddress").val(deliveryAdd);
             }

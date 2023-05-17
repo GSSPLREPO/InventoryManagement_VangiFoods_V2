@@ -15,7 +15,6 @@ namespace InVanWebApp.Repository
 {
     public class GRNRepository : IGRNRepository
     {
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(GRNRepository));
 
@@ -322,6 +321,5 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
-
     }
 }

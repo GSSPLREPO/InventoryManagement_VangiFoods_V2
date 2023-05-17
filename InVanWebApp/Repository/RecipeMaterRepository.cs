@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
@@ -12,12 +11,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class RecipeMaterRepository : IRecipeMaterRepository
     {
-        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ToString();
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RecipeMaterRepository));
 
@@ -43,8 +42,8 @@ namespace InVanWebApp.Repository
                         {
                             RecipeID = Convert.ToInt32(reader["RecipeID"]),
                             RecipeName = reader["RecipeName"].ToString(),
-                            Description = reader["Description"].ToString(),                            
-                            ProductID = reader["ProductID"] is DBNull ? 0 : Convert.ToInt32(reader["ProductID"]),
+                            Description = reader["Description"].ToString(),
+                            //ProductID = reader["ProductID"] is DBNull ? 0 : Convert.ToInt32(reader["ProductID"]),
                             ProductName = reader["ProductName"] is DBNull ? "" : reader["ProductName"].ToString(),
                             CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
                         };
@@ -80,7 +79,7 @@ namespace InVanWebApp.Repository
                     {
                         ID = Convert.ToInt32(reader["ID"]),
                         Item_Code = reader["Item_Code"].ToString(),
-                        UnitOfMeasurement_ID = Convert.ToInt32(reader["UOM_Id"]), 
+                        UnitOfMeasurement_ID = Convert.ToInt32(reader["UOM_Id"]),
                         UnitCode = reader["UnitCode"].ToString(),
                     };
                     RecipeList.Add(recipe);
@@ -96,7 +95,7 @@ namespace InVanWebApp.Repository
         /// <summary>
         /// Rahul: This function is for fecthing list of items by ID. 
         /// </summary>
-        public ItemBO GetRecipeDetails(int itemID)  
+        public ItemBO GetRecipeDetails(int itemID)
         {
             try
             {
@@ -154,11 +153,11 @@ namespace InVanWebApp.Repository
                 using (SqlConnection con = new SqlConnection(conString))
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_RecipeMaster_Insert", con);
-                    cmd.CommandType = CommandType.StoredProcedure;                    
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
-                    cmd.Parameters.AddWithValue("@Description", model.Description);                                     
-                    cmd.Parameters.AddWithValue("@ProductID", model.ProductID);                    
-                    cmd.Parameters.AddWithValue("@ProductName", model.ProductName);                    
+                    cmd.Parameters.AddWithValue("@Description", model.Description);
+                    cmd.Parameters.AddWithValue("@ProductID", model.ProductID);
+                    cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
@@ -174,52 +173,56 @@ namespace InVanWebApp.Repository
                     }
                     con.Close();
 
-                    var json = new JavaScriptSerializer();
-                    var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails); 
-
-                    List<Recipe_DetailsBO> itemDetails = new List<Recipe_DetailsBO>();
-
-                    foreach (var item in data)
+                    if (response.Status)
                     {
-                        Recipe_DetailsBO objItemDetails = new Recipe_DetailsBO(); 
-                        objItemDetails.RecipeID = RecipeID;
-                        objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
-                        objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
-                        objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.UnitName = item.ElementAt(3).Value.ToString();
-                        objItemDetails.Ratio = float.Parse(item.ElementAt(4).Value);
-                        objItemDetails.BatchSize = float.Parse(item.ElementAt(5).Value);
-                        objItemDetails.Description = item.ElementAt(6).Value.ToString();
-                        
-                        itemDetails.Add(objItemDetails);
-                    }
+                        var json = new JavaScriptSerializer();
+                        var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
 
-                    foreach (var item in itemDetails)
-                    {
-                        con.Open();
-                        SqlCommand cmdNew = new SqlCommand("usp_tbl_Recipe_Details_Insert", con);
-                        cmdNew.CommandType = CommandType.StoredProcedure;
+                        List<Recipe_DetailsBO> itemDetails = new List<Recipe_DetailsBO>();
 
-                        cmdNew.Parameters.AddWithValue("@RecipeID", item.RecipeID);
-                        cmdNew.Parameters.AddWithValue("@RecipeName", model.RecipeName);
-                        cmdNew.Parameters.AddWithValue("@Item_ID", item.ItemId);
-                        cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
-                        cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
-                        cmdNew.Parameters.AddWithValue("@Ratio", item.Ratio);
-                        cmdNew.Parameters.AddWithValue("@BatchSize", item.BatchSize);                        
-                        cmdNew.Parameters.AddWithValue("@UnitName", item.UnitName);
-                        cmdNew.Parameters.AddWithValue("@Description", item.Description);
-                        cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
-                        cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
-
-                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
-
-                        while (dataReaderNew.Read())
+                        foreach (var item in data)
                         {
-                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                            Recipe_DetailsBO objItemDetails = new Recipe_DetailsBO();
+                            objItemDetails.RecipeID = RecipeID;
+                            objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
+                            objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
+                            objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                            objItemDetails.UnitName = item.ElementAt(3).Value.ToString();
+                            objItemDetails.Ratio = float.Parse(item.ElementAt(4).Value);
+                            objItemDetails.BatchSize = float.Parse(item.ElementAt(5).Value);
+                            objItemDetails.Description = item.ElementAt(6).Value.ToString();
+
+                            itemDetails.Add(objItemDetails);
                         }
-                        con.Close();
+
+                        foreach (var item in itemDetails)
+                        {
+                            con.Open();
+                            SqlCommand cmdNew = new SqlCommand("usp_tbl_Recipe_Details_Insert", con);
+                            cmdNew.CommandType = CommandType.StoredProcedure;
+
+                            cmdNew.Parameters.AddWithValue("@RecipeID", item.RecipeID);
+                            cmdNew.Parameters.AddWithValue("@RecipeName", model.RecipeName);
+                            cmdNew.Parameters.AddWithValue("@Item_ID", item.ItemId);
+                            cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
+                            cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
+                            cmdNew.Parameters.AddWithValue("@Ratio", item.Ratio);
+                            cmdNew.Parameters.AddWithValue("@BatchSize", item.BatchSize);
+                            cmdNew.Parameters.AddWithValue("@UnitName", item.UnitName);
+                            cmdNew.Parameters.AddWithValue("@Description", item.Description);
+                            cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
+                            cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+
+                            SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                            while (dataReaderNew.Read())
+                            {
+                                response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                            }
+                            con.Close();
+                        }
                     }
+
                 };
             }
             catch (Exception ex)
@@ -238,16 +241,16 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="Recipe_ID"></param>
         /// <returns></returns>
-        public RecipeMasterBO GetById(int Recipe_ID) 
+        public RecipeMasterBO GetById(int Recipe_ID)
         {
             var item = new RecipeMasterBO();
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_RecipeMaster_GetByID", con); 
+                    SqlCommand cmd = new SqlCommand("usp_tbl_RecipeMaster_GetByID", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Recipe_ID", Recipe_ID); 
+                    cmd.Parameters.AddWithValue("@Recipe_ID", Recipe_ID);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -268,7 +271,7 @@ namespace InVanWebApp.Repository
             {
                 log.Error(ex.Message, ex);
             }
-            return item;    
+            return item;
         }
         public List<Recipe_DetailsBO> GetItemDetailsByRecipeId(int Recipe_ID)
         {
@@ -278,7 +281,7 @@ namespace InVanWebApp.Repository
                 var result = con.Query<Recipe_DetailsBO>(queryString, new { @RecipeID = Recipe_ID }).ToList();
                 return result;
             }
-        } 
+        }
 
 
         /// <summary>
@@ -294,7 +297,7 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_RecipeMaster_Update", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Recipe_ID", item.RecipeID); 
+                    cmd.Parameters.AddWithValue("@Recipe_ID", item.RecipeID);
                     cmd.Parameters.AddWithValue("@RecipeName", item.RecipeName);
                     cmd.Parameters.AddWithValue("@Description", item.Description);
                     cmd.Parameters.AddWithValue("@ProductID", item.ProductID);
@@ -302,7 +305,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedBy", item.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
-                    
+
                     SqlDataReader dataReader = cmd.ExecuteReader();
 
                     while (dataReader.Read())
@@ -311,67 +314,70 @@ namespace InVanWebApp.Repository
                     }
                     con.Close();
 
-                    var json = new JavaScriptSerializer();
-                    var data = json.Deserialize<Dictionary<string, string>[]>(item.TxtItemDetails);
-
-                    List<Recipe_DetailsBO> itemDetails = new List<Recipe_DetailsBO>();
-
-                    foreach (var items in data)
+                    if (response.Status)
                     {
-                        Recipe_DetailsBO objItemDetails = new Recipe_DetailsBO();
-                        objItemDetails.RecipeID = item.RecipeID;
-                        objItemDetails.RecipeName = items.ElementAt(0).Value.ToString();
-                        objItemDetails.ItemId = Convert.ToInt32(items.ElementAt(0).Value);
-                        objItemDetails.ItemCode = items.ElementAt(1).Value.ToString();
-                        objItemDetails.ItemName = items.ElementAt(2).Value.ToString();
-                        objItemDetails.Ratio = float.Parse(items.ElementAt(4).Value);
-                        objItemDetails.BatchSize = float.Parse(items.ElementAt(5).Value);
-                        objItemDetails.UnitName = items.ElementAt(3).Value.ToString();
-                        objItemDetails.Description = items.ElementAt(6).Value.ToString();
+                        var json = new JavaScriptSerializer();
+                        var data = json.Deserialize<Dictionary<string, string>[]>(item.TxtItemDetails);
 
-                        itemDetails.Add(objItemDetails);
+                        List<Recipe_DetailsBO> itemDetails = new List<Recipe_DetailsBO>();
+
+                        foreach (var items in data)
+                        {
+                            Recipe_DetailsBO objItemDetails = new Recipe_DetailsBO();
+                            objItemDetails.RecipeID = item.RecipeID;
+                            objItemDetails.RecipeName = items.ElementAt(0).Value.ToString();
+                            objItemDetails.ItemId = Convert.ToInt32(items.ElementAt(0).Value);
+                            objItemDetails.ItemCode = items.ElementAt(1).Value.ToString();
+                            objItemDetails.ItemName = items.ElementAt(2).Value.ToString();
+                            objItemDetails.Ratio = float.Parse(items.ElementAt(4).Value);
+                            objItemDetails.BatchSize = float.Parse(items.ElementAt(5).Value);
+                            objItemDetails.UnitName = items.ElementAt(3).Value.ToString();
+                            objItemDetails.Description = items.ElementAt(6).Value.ToString();
+
+                            itemDetails.Add(objItemDetails);
+                        }
+                        var count = itemDetails.Count;
+                        var i = 1;
+                        foreach (var items in itemDetails)
+                        {
+                            con.Open();
+                            SqlCommand cmdNew = new SqlCommand("usp_tbl_Recipe_Details_Update", con);
+                            cmdNew.CommandType = CommandType.StoredProcedure;
+
+                            cmdNew.Parameters.AddWithValue("@RecipeID", items.RecipeID);
+                            cmdNew.Parameters.AddWithValue("@RecipeName", item.RecipeName);
+                            cmdNew.Parameters.AddWithValue("@Item_ID", items.ItemId);
+                            cmdNew.Parameters.AddWithValue("@Item_Code", items.ItemCode);
+                            cmdNew.Parameters.AddWithValue("@ItemName", items.ItemName);
+                            cmdNew.Parameters.AddWithValue("@Ratio", items.Ratio);
+                            cmdNew.Parameters.AddWithValue("@BatchSize", items.BatchSize);
+                            cmdNew.Parameters.AddWithValue("@UnitName", items.UnitName);
+                            cmdNew.Parameters.AddWithValue("@Description", items.Description);
+                            cmdNew.Parameters.AddWithValue("@LastModifiedBy", item.LastModifiedBy);
+                            cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                            if (count == 1)
+                                cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
+                            else
+                            {
+                                cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 0);
+                                cmdNew.Parameters.AddWithValue("@flagCheck", i);
+                            }
+                            i++;
+
+                            SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                            while (dataReaderNew.Read())
+                            {
+                                response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                            }
+                            con.Close();
+                        }
                     }
-                    var count = itemDetails.Count;
-                    var i = 1;
-                    foreach (var items in itemDetails)
-                    {
-                        con.Open();
-                        SqlCommand cmdNew = new SqlCommand("usp_tbl_Recipe_Details_Update", con);
-                        cmdNew.CommandType = CommandType.StoredProcedure;
-
-                        cmdNew.Parameters.AddWithValue("@RecipeID", items.RecipeID);
-                        cmdNew.Parameters.AddWithValue("@RecipeName", item.RecipeName);
-                        cmdNew.Parameters.AddWithValue("@Item_ID", items.ItemId);
-                        cmdNew.Parameters.AddWithValue("@Item_Code", items.ItemCode);
-                        cmdNew.Parameters.AddWithValue("@ItemName", items.ItemName);
-                        cmdNew.Parameters.AddWithValue("@Ratio", items.Ratio);
-                        cmdNew.Parameters.AddWithValue("@BatchSize", items.BatchSize);                        
-                        cmdNew.Parameters.AddWithValue("@UnitName", items.UnitName);
-                        cmdNew.Parameters.AddWithValue("@Description", items.Description);
-                        cmdNew.Parameters.AddWithValue("@LastModifiedBy", item.LastModifiedBy);
-                        cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
-                        if (count == 1)
-                            cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
-                        else
-                        {
-                            cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 0);
-                            cmdNew.Parameters.AddWithValue("@flagCheck", i);
-                        }
-                        i++;
-
-                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
-
-                        while (dataReaderNew.Read())
-                        {
-                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
-                        }
-                        con.Close();
-                    }                    
                 }
             }
             catch (Exception ex)
             {
-                log.Error(ex.Message, ex);                
+                log.Error(ex.Message, ex);
                 response.Status = false;
             }
             return response;
@@ -379,7 +385,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Delete function 
-        public void Delete(int Recipe_ID, int userId) 
+        public void Delete(int Recipe_ID, int userId)
         {
             try
             {

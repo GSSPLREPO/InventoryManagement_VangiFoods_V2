@@ -44,6 +44,13 @@ namespace InVanWebApp_BO
         public string ItemTaxValue { get; set; }
         public float WastageQuantityInPercentage { get; set; }
         public float QuantityTookForSorting { get; set; }
+
+        //Additional fields for reProduction_QC 
+        public string txtItemDetails { get; set; }
+
+        //Added the below property for saving the item table details.
+        public List<PreProduction_QC_Details> itemDetails { get; set; }
+
         //Added the below field for PreProduction_QC Report 12-04-23. 
         [Required(ErrorMessage = "Please Select From Date!")]
         public DateTime fromDate { get; set; }
@@ -51,11 +58,6 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Please Select To Date!")]
         public DateTime toDate { get; set; }
 
-        //Additional fields for PreProduction_QC 
-        public string txtItemDetails { get; set; }
-
-        //Added the below property for saving the item table details.
-        public List<PreProduction_QC_Details> itemDetails { get; set; }
     }
 
     public class PreProduction_QC_Details
@@ -83,11 +85,12 @@ namespace InVanWebApp_BO
 
         //Added the below properties for Currency
         public string CurrencyName { get; set; }
+
         //Added the below field for PreProduction_QC Report 12-04-23.  
         public int SrNo { get; set; }
         public string InwardQCDate { get; set; }
-        public string WONumber { get; set; } 
-        public string MaterialIssueNumber { get; set; } 
+        public string WONumber { get; set; }
+        public string MaterialIssueNumber { get; set; }
         public string PQCNumber { get; set; }
         public string ReasonForWastage { get; set; }
         public string ApprovedBy { get; set; }

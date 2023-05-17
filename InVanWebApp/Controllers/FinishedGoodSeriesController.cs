@@ -122,7 +122,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Finished Good Series Details Inserted Successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Already creted FGS of the selected batch number!');</script>";
+                            TempData["Success"] = "<script>alert('Already created FGS of the selected batch number!');</script>";
                             BindSONumber();
                             BindLocationName();
                             return View();

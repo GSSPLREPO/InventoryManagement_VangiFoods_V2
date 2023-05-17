@@ -16,7 +16,6 @@ namespace InVanWebApp.Repository
     public class PreProduction_QCRepository : IPreProduction_QCRepository
     {
         //private readonly InVanDBContext _context;
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(PreProduction_QCRepository));
 
@@ -248,17 +247,17 @@ namespace InVanWebApp.Repository
                         {
                             var result = new ProductionMaterialIssueNoteBO()
                             {
-                                ItemId = Convert.ToInt32(dataReader2["ItemId"]),
+                                ItemId = dataReader2["ItemId"] is DBNull ? 0 : Convert.ToInt32(dataReader2["ItemId"]),
                                 Item_Name = dataReader2["Item_Name"].ToString(),
                                 Item_Code = dataReader2["Item_Code"].ToString(),
-                                ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
-                                IssuedQuantity = Convert.ToDouble(dataReader2["MaterialIssuedQty"]),
+                                ItemUnitPrice = dataReader2["ItemUnitPrice"] is DBNull?0: Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
+                                IssuedQuantity = dataReader2["MaterialIssuedQty"] is DBNull?0:Convert.ToDouble(dataReader2["MaterialIssuedQty"]),
                                 QuantityTookForSorting = float.Parse(dataReader2["QuantityTookForSorting"].ToString()),
                                 BalanceQuantity = float.Parse(dataReader2["BalanceQuantity"].ToString()),
                                 RejectedQuantity = float.Parse(dataReader2["RejectedQuantity"].ToString()),
                                 WastageQuantityInPercentage = float.Parse(dataReader2["WastageQuantityInPercentage"].ToString()),
                                 Remarks = dataReader2["Remarks"].ToString(),
-                                CurrencyID = Convert.ToInt32(dataReader2["CurrencyID"]),
+                                CurrencyID = dataReader2["CurrencyID"] is DBNull?0:Convert.ToInt32(dataReader2["CurrencyID"]),
                                 CurrencyName = dataReader2["CurrencyName"].ToString()
                             };
                             resultList.Add(result);
@@ -279,8 +278,8 @@ namespace InVanWebApp.Repository
                             {
                                 Item_Name = dataReader3["Item_Name"].ToString(),
                                 Item_Code = dataReader3["Item_Code"].ToString(),
-                                ItemUnitPrice = Convert.ToDecimal(dataReader3["ItemUnitPrice"]),
-                                IssuedQuantity = Convert.ToDouble(dataReader3["IssuedQuantity"]),
+                                ItemUnitPrice = dataReader3["ItemUnitPrice"] is DBNull?0:(Convert.ToDecimal(dataReader3["ItemUnitPrice"])),
+                                IssuedQuantity = dataReader3["IssuedQuantity"] is DBNull?0:(Convert.ToDouble(dataReader3["IssuedQuantity"])),
                                 QuantityTookForSorting = float.Parse(dataReader3["QuantityTookForSorting"].ToString()),
                                 RejectedQuantity = float.Parse(dataReader3["RejectedQuantity"].ToString()),
                                 Remarks = dataReader3["Remarks"].ToString(),

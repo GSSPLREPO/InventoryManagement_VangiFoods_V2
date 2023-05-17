@@ -14,6 +14,29 @@
             width: 3000px !important;
             height: 3000px !important;
         }
+        #ItemTable tr td {
+            white-space: normal;
+            table-layout: auto;
+            border-color: darkgrey;
+            font-size: 110%;
+            width: -1%;
+            /*width: 100%;*/
+        }
+
+        #ItemTable label {
+            font-size: 120%;
+        }
+
+        #ItemTable th {
+            white-space: normal;
+            border-color: darkgrey;
+            font-size: 120%;
+        }
+
+        hr {
+            color: black;
+            height: -1%
+        }
     </style>
 </head>
 <body>
@@ -28,8 +51,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
-                                <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Inward QC (Check-1)</h3>
+                                <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
+                                <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;">Inward QC (Check-1)</h3>
                                 <div class="col">
                                     <div class="col-md-12">
                                         <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" />
@@ -39,36 +62,38 @@
                             <hr />
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-lg-2">
-                                            <p class="font-weight-bold">Inward QC Number</p>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.InwardQCNo)
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <p class="font-weight-bold">Inward QC Date</p>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.InwardQCDate)
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-2">
-                                            <p class="font-weight-bold">Inward Number</p>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.InwardNumber)
-                                        </div>
-                                        @*<div class="col-lg-2">
-                                                <p class="font-weight-bold">Inward Quantity</p>
+                                    <div style="font-size:110%; color:black;">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <p class="font-weight-bold">Inward QC Number</p>
                                             </div>
                                             <div class="col-lg-4">
-                                                @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
-                                            </div>*@
+                                                @Html.DisplayFor(model => model.InwardQCNo)
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <p class="font-weight-bold">Inward QC Date</p>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                @Html.DisplayFor(model => model.InwardQCDate)
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <p class="font-weight-bold">Inward Number</p>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                @Html.DisplayFor(model => model.InwardNumber)
+                                            </div>
+                                            @*<div class="col-lg-2">
+                    <p class="font-weight-bold">Inward Quantity</p>
+                </div>
+                <div class="col-lg-4">
+                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
+                </div>*@
+                                        </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             <br />
                             <hr />
                             <div class="row">

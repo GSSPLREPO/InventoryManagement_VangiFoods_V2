@@ -92,7 +92,7 @@
                                                 <th class="sortStyle d-n d-none">
                                                     Selected Item Code
                                                 </th>
-                                                <th class="sortStyle">
+                                                <th class="sortStyle d-n d-none">
                                                     Item
                                                 </th>
                                                 <th class="sortStyle">
@@ -118,7 +118,7 @@
                                                         <td class="col-md-4 d-none">
                                                             @Html.TextBox("Item_Code_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;" })
                                                         </td>
-                                                        <td>
+                                                        <td class="col-md-4 d-none">
                                                             @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
                                                         </td>
                                                         <td>
@@ -128,7 +128,7 @@
                                                                 style = "height:30px;",
                                                                 value = "0",
                                                                 onkeypress = "return isNumberKey(event)",
-                                                           onchange = "CalItemTotalPrice($(this).val(),id)", maxlength="8"
+                                                           onchange = "OnchangeQty()", maxlength="8"
                                                             })
                                                         </td>
                                                         <td>
@@ -179,6 +179,10 @@
 
 <script type="text/javascript">
 
+    function OnchangeQty() {
+        $('#btnSave').prop('disabled', false);
+    }
+
     function SetUserName() {
         var selectedOptionTerms = document.getElementById("RaisedBy").selectedIndex;
         var tempUserName = document.getElementById("RaisedBy").options[selectedOptionTerms].innerText;
@@ -201,6 +205,37 @@
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 1;
+
+        if (tableLength > 1) {
+            while (i <= tableLength - 1) {
+                var PhyQty = document.getElementById("ItemQuantity_" + i).value;
+                PhyQty = (PhyQty == null || PhyQty == '') ? 0 : PhyQty;
+                PhyQty = parseFloat(PhyQty);
+
+                if (PhyQty == 0) {
+                    alert("Required quantity is zero or null! Cannot update indent!");
+                    $('#btnSave').prop('disabled', true);
+                    event.preventDefault();
+                    return;
+                }
+                else {
+                    flag = 1;
+                }
+
+                i++;
+
+            }
+            if (flag != 1) {
+                alert("Required quantity is zero or null! Cannot update indent!");
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
+
         createJson();
     };
 
@@ -265,11 +300,11 @@
             '<td class="d-none">' +
             '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
             '</td>' +
-            '<td>' +
+            '<td class="d-none">' +
             '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + itemQuantity + '" class="form-control form-control-sm text-right" style = "height:30px;" name="' + itemQuantity + '" value="0"  onkeypress = "return isNumberKey(event)" required="required" />' +
+            '<input type="text" id="' + itemQuantity + '" onchange="OnchangeQty()" class="form-control form-control-sm text-right" style = "height:30px;" name="' + itemQuantity + '" value="0"  onkeypress = "return isNumberKey(event)" required="required" />' +
             '</td>' +
             '<td>' +
             '<input type="text" id="' + itemUnit + '" class="form-control form-control-sm" style = "height:30px;width:100px;" name="' + itemUnit + '"readonly = "readonly" value="" required="required" />' +

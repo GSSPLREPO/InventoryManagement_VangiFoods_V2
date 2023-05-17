@@ -12,6 +12,29 @@
             width: 3000px !important;
             height: 2000px !important;
         }
+        #submissionTable tr td {
+            white-space: normal;
+            table-layout: auto;
+            border-color: darkgrey;
+            font-size: 110%;
+            width: -1%;
+            /*width: 100%;*/
+        }
+
+        #submissionTablelabel {
+            font-size: 120%;
+        }
+
+        #submissionTable th {
+            white-space: normal;
+            border-color: darkgrey;
+            font-size: 120%;
+        }
+
+        hr {
+            color: black;
+            height: -1%
+        }
     </style>
 </head>
 <body>
@@ -24,8 +47,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
-                                    <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
-                                    <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Batch Planning</h3>
+                                    <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
+                                    <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;">Batch Planning</h3>
 
                                     <div class="col">
                                         <div class="col-md-12">
@@ -36,165 +59,168 @@
 
                                 <hr />
                                 <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Document Number</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.BatchPlanningDocumentNo)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Planning Date</label>
-                                        </div>
-                                        <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.CreatedDate, "{0:yyyy-MM-dd HH:mm:ss}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">SO Number</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.SONumber)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Work Order Number</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.WorkOrderNumber)
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Location</label>
-                                        </div>
-                                        <div class="col-md-4">
-                                            @Html.DisplayFor(model => model.LocationName)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Product</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.ProductName)
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Packing Size</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.PackingSize)
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Raw Material Yield</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.TotalRawMaterialYeild)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Packing Type</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.PackingType)
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Order Quantity</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.OrderQuantity)
-                                            @Html.DisplayFor(model => model.OrderQuantityUnit)
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Required Quantity</label>
-                                        </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.RequiredQuantityInKG) KG
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <Center><h5 class="font-weight-bold">Item Details</h5></Center>
-                                            <hr />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                                    <table class="table table-hover" id="submissionTable">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Sr. No.</th>
-                                                                <th>Item Code</th>
-                                                                <th>Item</th>
-                                                                <th>Percentage (%)</th>
-                                                                <th>Batch Size</th>
-                                                                <th>Total Batches</th>
-                                                                <th>Yield (%)</th>
-                                                                <th>Actual Requirement</th>
-                                                                <th>Stock In Hand</th>
-                                                                <th>To be Procured</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody id="myTableBody">
-                                                            @{ int c = 1;
-                                                                foreach (var item in Model.batchPlanningItemDetails)
-                                                                {
-                                                <tr id="tablerow_@c">
-                                                    <td><label>@c.</label></td>
-                                                    <td>@Html.DisplayFor(x => item.ItemCode)</td>
-                                                    <td>@Html.DisplayFor(x => item.ItemName)</td>
-                                                    <td>@Html.DisplayFor(x => item.QuantityPercentage)</td>
-                                                    <td>@Html.DisplayFor(x => item.BatchSize) KG</td>
-                                                    <td>@Html.DisplayFor(x => item.TotalQuantityInBatch) KG</td>
-                                                    <td>@Html.DisplayFor(x => item.YieldPercentage)</td>
-                                                    <td>@Html.DisplayFor(x => item.ActualRequirement) KG</td>
-                                                    <td>@Html.DisplayFor(x => item.StockInHand) KG</td>
-                                                    <td>@Html.DisplayFor(x => item.ToBeProcured) KG</td>
-                                                </tr> { c++; }
-                                                                } }
-
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                    <div style="font-size:110%; color:black;">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Document Number</label>
                                             </div>
-                                            <br />
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.BatchPlanningDocumentNo)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Planning Date</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(model => model.CreatedDate, "{0:yyyy-MM-dd HH:mm:ss}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                            </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.txtItemDetails, new { style = "display:none" })
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">SO Number</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.SONumber)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Work Order Number</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.WorkOrderNumber)
+                                            </div>
                                         </div>
-                                    </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Total Batch Size</label>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Location</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DisplayFor(model => model.LocationName)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Product</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.ProductName)
+                                            </div>
                                         </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.TotalBatchSize)
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Packing Size</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.PackingSize)
+                                            </div>
                                         </div>
-                                        <div class="col-md-2">
-                                            <label class="font-weight-bold">Total No Batches</label>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Raw Material Yield</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.TotalRawMaterialYeild)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Packing Type</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.PackingType)
+                                            </div>
                                         </div>
-                                        <div class="col-md-4" style="color:black;">
-                                            @Html.DisplayFor(model => model.TotalNoBatches)
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Order Quantity</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.OrderQuantity)
+                                                @Html.DisplayFor(model => model.OrderQuantityUnit)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Required Quantity</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.RequiredQuantityInKG) KG
+                                            </div>
                                         </div>
-                                    </div>
-                                    <br />
+                                        </div>
+                                        <br />
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                                <hr />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                        <table class="table table-hover" id="submissionTable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Sr. No.</th>
+                                                                    <th>Item Code</th>
+                                                                    <th>Item</th>
+                                                                    <th>Percentage (%)</th>
+                                                                    <th>Batch Size</th>
+                                                                    <th>Total Batches</th>
+                                                                    <th>Yield (%)</th>
+                                                                    <th>Actual Requirement</th>
+                                                                    <th>Stock In Hand</th>
+                                                                    <th>To be Procured</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="myTableBody">
+                                                                @{ int c = 1;
+                                                                    foreach (var item in Model.batchPlanningItemDetails)
+                                                                    {
+                                                    <tr id="tablerow_@c">
+                                                        <td><label>@c.</label></td>
+                                                        <td>@Html.DisplayFor(x => item.ItemCode)</td>
+                                                        <td>@Html.DisplayFor(x => item.ItemName)</td>
+                                                        <td>@Html.DisplayFor(x => item.QuantityPercentage)</td>
+                                                        <td>@Html.DisplayFor(x => item.BatchSize) KG</td>
+                                                        <td>@Html.DisplayFor(x => item.TotalQuantityInBatch) KG</td>
+                                                        <td>@Html.DisplayFor(x => item.YieldPercentage)</td>
+                                                        <td>@Html.DisplayFor(x => item.ActualRequirement) KG</td>
+                                                        <td>@Html.DisplayFor(x => item.StockInHand) KG</td>
+                                                        <td>@Html.DisplayFor(x => item.ToBeProcured) KG</td>
+                                                    </tr>
+ { c++; }
+                                                } }
 
-                                    <br />
-                                    <a href="@Url.Action("Index", "BatchPlanning")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
-                                        Back To List
-                                    </a>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(model => model.txtItemDetails, new { style = "display:none" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold" style="color:black;">Total Batch Size</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.TotalBatchSize)
+                                            </div>
+                                            <div class="col-md-2" style="color:black;">
+                                                <label class="font-weight-bold">Total No Batches</label>
+                                            </div>
+                                            <div class="col-md-4" style="color:black;">
+                                                @Html.DisplayFor(model => model.TotalNoBatches)
+                                            </div>
+                                        </div>
+                                        <br />
+
+                                        <br />
+                                        <a href="@Url.Action("Index", "BatchPlanning")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                            Back To List
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>}

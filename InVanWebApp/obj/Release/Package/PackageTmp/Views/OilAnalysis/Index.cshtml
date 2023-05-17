@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<InVanWebApp_BO.OilAnalysisBO>
 
-@{
-    ViewBag.Title = "Oil Analysis";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
+@{ ViewBag.Title = "Oil Analysis";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; 
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -31,7 +32,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                           
+
                             <div style="padding-top:15px;">
                                 <div class="row">
                                     <div class="col-md-2">
@@ -53,11 +54,11 @@
                                     <div class="col-md-2">
                                         <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
 
-                                        <a id="ExportPdf" style="float:left;" href="@Url.Action("ExportAsPDF", "OilAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
-                                        <a id="ExportExcel" style="float:left;" href="@Url.Action("ExportAsExcel", "OilAnalysis")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportPdf" style="margin-left:10%;" href="@Url.Action("ExportAsPDF", "OilAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportExcel" style="margin-left: 5%;" href="@Url.Action("ExportAsExcel", "OilAnalysis")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                     </div>
                                     <div class="col-md-2">
-                                        <a href="@Url.Action("AddOilAnalysis", "OilAnalysis")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                        <a href="@Url.Action("AddOilAnalysis", "OilAnalysis")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top: 10%; background: linear-gradient(85deg, #392c70, #6a005b);">
                                             <span class="fa fa-plus"></span> Oil Analysis
                                         </a>
                                     </div>
@@ -71,8 +72,8 @@
                                             <th>Lot No</th>
                                             <th>Sample Name</th>
                                             @*<th style="text-align:center">ACIDValue</th>
-                                            <th style="text-align:center">PeroxideValue</th>
-                                            <th style="text-align:center">Color</th>*@
+                                                <th style="text-align:center">PeroxideValue</th>
+                                                <th style="text-align:center">Color</th>*@
                                             <th>Flavour</th>
                                             <th>Odour</th>
                                             <th>Verify By</th>
@@ -104,7 +105,7 @@
             BindOilAnalysis();
             setCurrentDate();
         });
-        
+
         function setCurrentDate()
         {
         var now = new Date();
@@ -166,15 +167,15 @@
                         }
 
                     },
-                    { "data":"Time","autoWidth":true},
-                    { "data": "LotNo", "autoWidth": true },
-                    { "data": "SampleName", "autoWidth": true },
+                    { "data":"Time","autoWidth":true,"class":"text-wrap"},
+                    { "data": "LotNo", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "SampleName", "autoWidth": true, "class": "text-wrap" },
                     //{ "data": "ACIDValue", "autoWidth": true },
                     //{ "data": "PeroxideValue", "autoWidth": true },
                     //{ "data": "Color", "autoWidth": true },
-                    { "data": "Flavour", "autoWidth": true },
-                    { "data": "Odour", "autoWidth": true },
-                    { "data": "VerifyByName", "autoWidth": true },
+                    { "data": "Flavour", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "Odour", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "VerifyByName", "autoWidth": true, "class": "text-wrap" },
                     //{
                     //    data: "Id", "render": function (data) {
                     //        return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button>'
@@ -188,8 +189,8 @@
                     //},
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Oil-Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title = "Delete Oil-Analysis"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit" style="background:transparent !important;"  title = "Edit Oil-Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "text-danger btnDelete" style="background:transparent !important;"  title = "Delete Oil-Analysis"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -284,8 +285,8 @@
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit" style="background:transparent !important;" ><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "text-danger btnDelete" style="background:transparent !important;"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]

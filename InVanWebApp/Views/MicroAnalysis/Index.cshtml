@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<InVanWebApp_BO.MicroAnalysisBO>
 
-@{
-    ViewBag.Title = "Micro Analysis";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
+@{ ViewBag.Title = "Micro Analysis";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; 
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -48,13 +49,13 @@
                                     @Html.TextBox("toDate", "{0:yyyy-MM-dd }", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                                     @Html.ValidationMessage("toDate", "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
                                     @*<a id="ExportPdf" style="float:right;" href="@Url.Action("MicroAnalysisPDF", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
-                                    <a id="ExportExcel" style="float:right;" href="@Url.Action("MicroAnalysisExcel", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    <a id="ExportExcel" style="margin-left:10%;" href="@Url.Action("MicroAnalysisExcel", "MicroAnalysis")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                 </div>
-                                <div class="col-md-3">
-                                    <a href="@Url.Action("AddMicroAnalysis","MicroAnalysis")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <div class="col-md-2">
+                                    <a href="@Url.Action("AddMicroAnalysis","MicroAnalysis")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; margin-top: 10%; background: linear-gradient(85deg, #392c70, #6a005b);">
                                         <span class="fa fa-plus"></span> Micro Analysis
                                     </a>
                                 </div>
@@ -71,7 +72,7 @@
                                         <th>@Html.DisplayName("Batch No")</th>
                                         <th>@Html.DisplayName("Packing Size")</th>
                                         <th>@Html.DisplayName("Best Before")</th>
-                                       @* <th>@Html.DisplayName("Clostridium Perfringens(/100gm)")</th>*@
+                                        @* <th>@Html.DisplayName("Clostridium Perfringens(/100gm)")</th>*@
                                         @*<th>@Html.DisplayName("Escherichia Coli (/gm)")</th>*@
                                         @*<th>@Html.DisplayName("Salmonella(/25gm0) L= ABSENT")</th>*@
                                         @*<th>@Html.DisplayName("Total Plate Count (cfu/gm) L=1 x 10³")</th>*@
@@ -82,7 +83,7 @@
 
                                     </tr>
                                 </thead>
-                                <tbody class="text-center"></tbody>
+                                <tbody></tbody>
                             </table>
                             @*</div>*@
                         </div>
@@ -171,11 +172,11 @@
                     },
 
                   //  { "data": "Date", "autoWidth": true },
-                    { "data": "Source", "autoWidth": true },
-                    { "data": "WOPO", "autoWidth": true },
-                    { "data": "ProductName", "autoWidth": true },
-                    { "data": "BatchNo", "autoWidth": true },
-                    { "data": "PackingSize", "autoWidth": true },
+                    { "data": "Source", "autoWidth": true, "class":"text-wrap" },
+                    { "data": "WOPO", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "ProductName", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "BatchNo", "autoWidth": true, "class": "text-wrap" },
+                    { "data": "PackingSize", "autoWidth": true, "class": "text-wrap" },
                    /* { "data": "BestBeforeDate", "autoWidth": true },*/
                     {
                         "data": "BestBeforeDate",
@@ -202,12 +203,12 @@
                     //{ "data": "TotalPlateCountNumber", "autoWidth": true },
                     //{ "data": "YeastandMould", "autoWidth": true },
                     //{ "data": "Coliform", "autoWidth": true },
-                    { "data": "VerifyByName", "autoWidth": true },
+                    { "data": "VerifyByName", "autoWidth": true, "class": "text-wrap" },
 
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Micro-Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title = "Delete Micro-Analysis"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit" style="background:transparent !important;"  title = "Edit Micro-Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "text-danger btnDelete" style="background:transparent !important;"  title = "Delete Micro-Analysis"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]
@@ -319,8 +320,8 @@
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Micro-Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title = "Delete Micro-Analysis"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "text-primary btnEdit" style="background:transparent !important;"  title = "Edit Micro-Analysis"><i class="fa fa-edit"/></i></button> <button type="button" id="'
+                                + data + '" class = "text-danger btnDelete" style="background:transparent !important;"  title = "Delete Micro-Analysis"><i class="fa fa-trash"/></i></button>'
                         }
                     }
                 ]

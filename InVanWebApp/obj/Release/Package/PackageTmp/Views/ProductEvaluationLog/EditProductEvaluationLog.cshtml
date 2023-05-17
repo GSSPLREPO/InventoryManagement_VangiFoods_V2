@@ -54,7 +54,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BatchCode, new { @class = "form-control form-control-sm", maxlength = "30", @onkeypress = "return IsAlphabets(event);" })
+                    @Html.TextBoxFor(model => model.BatchCode, new { @class = "form-control form-control-sm", maxlength = "100", @onkeypress = "return IsAlphabets(event);" })
                     @Html.ValidationMessageFor(model => model.BatchCode, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -114,7 +114,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.WorkOrder, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
+                    @Html.TextBoxFor(model => model.WorkOrder, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.WorkOrder, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -127,12 +127,21 @@
 
             <div class="row">
                 <div class="col-md-2">
+                    @Html.Label("Date")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PELDateAfter7Days, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.PELDateAfter7Days, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
                     @Html.Label("PH")
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.PhAfter7Days, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.PhAfter7Days, "", new { @class = "error mt-2 text-danger" })
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Tex, Col & Taste")
                 </div>
@@ -143,8 +152,6 @@
                     }, "---Select---", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.TexColTasteAfter7Days, "", new { @class = "error mt-2 text-danger" })
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Acid")
                 </div>
@@ -153,6 +160,9 @@
                     @Html.ValidationMessageFor(model => model.AcidAfter7Days, "", new { @class = "error mt-2 text-danger" })
                 </div>
 
+            </div>
+
+            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Salt")
                 </div>
@@ -160,22 +170,12 @@
                     @Html.TextBoxFor(model => model.SaltAfter7Days, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.SaltAfter7Days, "", new { @class = "error mt-2 text-danger" })
                 </div>
-            </div>
-
-            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Viscosity")
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.ViscosityAfter7Days, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.ViscosityAfter7Days, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Date")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PELDateAfter7Days, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.PELDateAfter7Days, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
 

@@ -63,8 +63,8 @@ namespace InVanWebApp.Controllers
                 if (ModelState.IsValid)
                 {
                     var userData = _loginRepository.AuthenticateUser(model.Username, model.Password);
-                    if (userData != null && userData.Username!=null && userData.RoleId!=null 
-                        && userData.Username!="" && userData.RoleId!=0)
+                    if (userData != null && userData.Username != null && userData.RoleId != null
+                        && userData.Username != "" && userData.RoleId != 0)
                     {
                         Session[ApplicationSession.USERID] = userData.UserId;
                         Session[ApplicationSession.USERNAME] = userData.Username;
@@ -77,8 +77,16 @@ namespace InVanWebApp.Controllers
                     }
                     else
                     {
-                        ViewBag.Login = "Login Failed ! Invalid Username or Password";
-                        return View();
+                        if (userData.flag)
+                        {
+                            ViewBag.Login = "Error! Contact to your system administrator!";
+                            return View();
+                        }
+                        else
+                        {
+                            ViewBag.Login = "Login Failed ! Invalid Username or Password";
+                            return View();
+                        }
 
                         // return View();
                         //ViewData["message"] = "Login Failed !\n Invalid Username or Password";

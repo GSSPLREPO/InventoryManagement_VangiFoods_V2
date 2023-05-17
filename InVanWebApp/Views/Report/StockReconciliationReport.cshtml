@@ -161,19 +161,14 @@
             }
 
             if (fromDate > toDate) {
-                alert('Invalid date!, To date is less than From date!');
+                alert('Invalid Date! To date is less than from date!');
                 $('#fromDate').focus();
                 return;
             }
 
             var Check = $('#Wearhouse').val();
             if (Check == '' || Check == null) {
-                $('#WearhouseValidate').text("Select Location!");
-                $('#WearhouseValidate').show();
-                $('#Wearhouse').focus();
-                document.getElementById('Wearhouse').selectedIndex = 0;
-                flag = 1;
-                //return;
+                Check = 0;
             }
             else {
                 SelectedIndexChangedWearhouse();
@@ -181,27 +176,20 @@
 
             var CheckItem = $('#ItemId').val();
             if (CheckItem == '' || CheckItem == null) {
-                $('#ItemValidate').text("Select Item!");
-                $('#ItemValidate').show();
-                $('#ItemId').focus();
-                document.getElementById('ItemId').selectedIndex = 0;
-                flag = 1;
+                CheckItem = 0;
+                //flag = 1;
                 //return;
             }
             else {
                 SelectedIndexChangedItem();
             }
 
-            if (flag == 1) {
-                return;
-            }
-
             $('#ExportPdf').show();
             $('#ExportExcel').show();
             $('#tblInward').show();
 
-            var item = $('#ItemId').val();
-            var warehouse = $('#Wearhouse').val();
+            var item = CheckItem;
+            var warehouse = Check;
 
             $('#tblInward').dataTable().fnDestroy();
             var t = $('#tblInward').DataTable({
@@ -222,7 +210,7 @@
                         $('#ExportExcel').hide();
                     }
                 },
-                "pageLength": 20,
+                "pageLength": 10,
                 "scrollX": true,
                 "columns": [
                     { "data": "SrNo", "autoWidth": true },

@@ -13,7 +13,6 @@ namespace InVanWebApp.Repository
 {
     public class RoleRepository : IRolesRepository
     {
-        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RoleRepository));
 
@@ -22,7 +21,7 @@ namespace InVanWebApp.Repository
         /// Farheen: This function is for fecthing list of role master's.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<RoleBO> GetAll()
+        public IEnumerable<RoleBO> GetAll(int UserId = 0)
         {
             List<RoleBO> RoleMastersList = new List<RoleBO>();
             try
@@ -31,6 +30,7 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_Role_GetAll", con);
                     cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserId",UserId);
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
                     while (reader.Read())
@@ -208,7 +208,7 @@ namespace InVanWebApp.Repository
                         {
                             ScreenId = Convert.ToInt32(dataReader["ScreenId"]),
                             ScreenName = dataReader["ScreenName"].ToString(),
-                            DisplayName = dataReader["DisplayName"].ToString()  
+                            DisplayName = dataReader["DisplayName"].ToString()
                         };
                         resultList.Add(result);
                     }
@@ -337,7 +337,7 @@ namespace InVanWebApp.Repository
                 using (SqlConnection con = new SqlConnection(conString))
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_GetScreensNotInRoleRightsById", con);
-                    cmd.Parameters.AddWithValue("@RoleId", roleId);
+                    cmd.Parameters.AddWithValue("@RoleId",roleId);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -348,7 +348,7 @@ namespace InVanWebApp.Repository
                         {
                             ScreenId = Convert.ToInt32(dataReader["ScreenId"]),
                             ScreenName = dataReader["ScreenName"].ToString(),
-                            DisplayName = dataReader["DisplayName"].ToString()
+                            DisplayName=dataReader["DisplayName"].ToString()
                         };
                         resultList.Add(result);
                     }

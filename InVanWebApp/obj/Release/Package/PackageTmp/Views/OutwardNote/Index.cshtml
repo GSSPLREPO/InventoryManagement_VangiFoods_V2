@@ -4,6 +4,9 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -37,9 +40,9 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.Label("Gate Pass Number")</th>
-                                            <th>@Html.Label("Genrated Date")</th>
                                             <th>@Html.Label("Location")</th>
                                             <th>@Html.Label("Verified By")</th>
+                                            <th>@Html.Label("Genrated Date")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
@@ -48,9 +51,9 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.OutwardNumber)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.OutwardDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.VerifiedByName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.OutwardDate)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewOutwardNote", "OutwardNote", new { ID = item.ID}) title="View Gate-Pass">
                                                         <i class="fa fa-eye text-primary"></i>
@@ -58,7 +61,7 @@
                                                     <a href=@Url.Action("EditOutwardNote", "OutwardNote", new { ID = item.ID}) title="Edit Gate-Pass">
                                                         <i class="fa fa-edit text-primary"></i>
                                                     </a>&emsp;
-                                                    <a href=@Url.Action("DeleteOutwardNote", "OutwardNote", new { ID = item.ID}) onclick="return confirm('Are you sure want to delete?');" title="Delete Outward Note">
+                                                    <a href=@Url.Action("DeleteOutwardNote", "OutwardNote", new { ID = item.ID}) onclick="return confirm('Are you sure want to delete?');" title="Delete Gate-Pass">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>

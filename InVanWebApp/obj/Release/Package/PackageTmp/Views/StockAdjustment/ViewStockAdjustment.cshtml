@@ -13,6 +13,29 @@
             width: 3000px !important;
             height: 2000px !important;
         }
+        #submissionTable tr td {
+            white-space: normal;
+            table-layout: auto;
+            border-color: darkgrey;
+            font-size: 110%;
+            width: -1%;
+            /*width: 100%;*/
+        }
+
+        #submissionTable label {
+            font-size: 120%;
+        }
+
+        #submissionTable th {
+            white-space: normal;
+            border-color: darkgrey;
+            font-size: 120%;
+        }
+
+        hr {
+            color: black;
+            height: -1%
+        }
     </style>
 </head>
 <body>
@@ -25,8 +48,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <img src="~/Theme/MainContent/images/logo-mini.png" alt="client-logo" class="align-self-center" style="width:80px;height:50px;">
-                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 16pt;">Stock Adjustment</h3>
+                            <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
+                            <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;">Stock Adjustment</h3>
 
                             <div class="col">
                                 <div class="col-md-12">
@@ -37,143 +60,138 @@
 
                         <hr />
                         <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Document Number</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.DocumentNo, new { style = "color:black;" })
-                                </div>
-                                <br />
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Document Date</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.DocumentDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Location Name</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.LocationName, new { style = "color:black;" })
-                                </div>
-                                <br />
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Remarks</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <label class="font-weight-bold">Adjust By</label>
-                                </div>
-                                <div class="col-md-4">
-                                    @Html.DisplayFor(model => model.UserName, new { style = "color:black;" })
-                                </div>
-                            </div>
-                            <br />
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <Center><h5 class="font-weight-bold">Item Details</h5></Center>
-                                    <hr />
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            <table class="table table-striped" id="submissionTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="sortStyle">Sr. No.</th>
-                                                        <th class="sortStyle">Item Code</th>
-                                                        <th class="sortStyle">Item</th>
-                                                        <th class="sortStyle">Price (Per Unit)</th>
-                                                        <th class="sortStyle">Availabled Stock</th>
-                                                        <th class="sortStyle">Physical Stock</th>
-                                                        <th class="sortStyle">Difference</th>
-                                                        <th class="sortStyle">UOM</th>
-                                                        <th class="sortStyle">Transfer Price</th>
-                                                        <th class="sortStyle">Remarks</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="myTableBody">
-                                                    @{ int c = 1;
-                                                        foreach (var item in Model.stockAdjustmentDetails)
-                                                        {
-                                                            <tr id="tablerow_@c">
-                                                                <td>
-                                                                    <label>@c.</label>
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.Item_Code)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.Item_Name)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
-                                                                    @Html.DisplayFor(x => item.CurrencyName)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.AvailableStock)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.PhysicalStock)
-                                                                </td>
-                                                                @{
-                                                                        if (item.DifferenceInStock < 0)
-                                                                        {
-                                                                        <td style="color:red;">
-                                                                            @Html.DisplayFor(x => item.DifferenceInStock)
-                                                                        </td>
-                                                                        }
-                                                                        else {
-                                                                        <td>
-                                                                            @Html.DisplayFor(x => item.DifferenceInStock)
-                                                                        </td>
-                                                                        }
-
-                                                                }
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemUnit)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.TransferPrice)
-                                                                    @Html.DisplayFor(x => item.CurrencyName)
-                                                                </td>
-                                                                @*<td>
-                                                                        @Html.TextBoxFor(x => item.ItemTotalAmount, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
-                                                                    </td>*@
-                                                                <td style="width:auto;">
-                                                                    @*@Html.TextAreaFor(x => item.Remarks, new { style = "border:none;background: none; height:65px;width: 210px", @readonly = "readonly" })*@
-                                                                    <label style="border:none;background:none;height:65px;width:210px" class="text-wrap">@item.Remarks</label>
-                                                                </td>
-                                                            </tr>
-                                                            { c++; }
-                                                        }
-
-                                                    }
-
-                                                </tbody>
-                                            </table>
-                                        </div>
+                            <div style="font-size:110%; color:black;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Document Number</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.DocumentNo, new { style = "color:black;" })
                                     </div>
                                     <br />
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Document Date</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.DocumentDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Location Name</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.LocationName, new { style = "color:black;" })
+                                    </div>
+                                    <br />
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Remarks</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Adjust By</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.UserName, new { style = "color:black;" })
+                                    </div>
+                                </div>
+                                </div>
+                                <br />
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                <table class="table table-hover" id="submissionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">Sr. No.</th>
+                                                            <th class="sortStyle">Item Code</th>
+                                                            <th class="sortStyle">Item</th>
+                                                            <th class="sortStyle">Price (Per Unit)</th>
+                                                            <th class="sortStyle">Availabled Stock</th>
+                                                            <th class="sortStyle">Physical Stock</th>
+                                                            <th class="sortStyle">Difference</th>
+                                                            <th class="sortStyle">UOM</th>
+                                                            <th class="sortStyle">Transfer Price</th>
+                                                            <th class="sortStyle text-wrap">Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="myTableBody">
+                                                        @{ int c = 1;
+                                                            foreach (var item in Model.stockAdjustmentDetails)
+                                                            {
+                                            <tr id="tablerow_@c">
+                                                <td>
+                                                    <label>@c.</label>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.Item_Code)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.Item_Name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
+                                                    @Html.DisplayFor(x => item.CurrencyName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.AvailableStock)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.PhysicalStock)
+                                                </td>
+                                                @{ if (item.DifferenceInStock < 0)
+                                                                        {
+                                                    <td style="color:red;">
+                                                        @Html.DisplayFor(x => item.DifferenceInStock)
+                                                    </td> }
+                                                                        else
+                                                                        {
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.DifferenceInStock)
+                                                    </td> } }
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnit)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.TransferPrice)
+                                                    @Html.DisplayFor(x => item.CurrencyName)
+                                                </td>
+                                                @*<td>
+                                @Html.TextBoxFor(x => item.ItemTotalAmount, new { id = "totalItemCost_" + c, style = "border:none;background: none;", @readonly = "readonly" })
+                            </td>*@
+                                                <td style="width:auto;">
+                                                    @*@Html.TextAreaFor(x => item.Remarks, new { style = "border:none;background: none; height:65px;width: 210px", @readonly = "readonly" })*@
+                                                    <label style="border:none;background:none;height:65px;width:210px" class="text-wrap">@item.Remarks</label>
+                                                </td>
+                                            </tr> { c++; }
+                                                            } }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <a href="@Url.Action("Index", "StockAdjustment")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                    Back To List
+                                </a>
                             </div>
-                            <br />
-                            <br />
-                            <a href="@Url.Action("Index", "StockAdjustment")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
-                                Back To List
-                            </a>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

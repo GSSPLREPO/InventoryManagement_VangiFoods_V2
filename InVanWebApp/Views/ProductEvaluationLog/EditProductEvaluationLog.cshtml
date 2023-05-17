@@ -35,7 +35,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PELDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", @readonly = "readonly",type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.TextBoxFor(model => model.PELDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", @readonly = "readonly", type = "date", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                     @Html.ValidationMessageFor(model => model.PELDate, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BatchCode, new { @class = "form-control form-control-sm", maxlength = "30", @onkeypress = "return IsAlphabets(event);" })
+                    @Html.TextBoxFor(model => model.BatchCode, new { @class = "form-control form-control-sm", maxlength = "100", @onkeypress = "return IsAlphaNumeric(event);" })
                     @Html.ValidationMessageFor(model => model.BatchCode, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -76,7 +76,7 @@
                     @Html.DropDownListFor(model => model.TexColTaste, new List<SelectListItem>{
                     new SelectListItem{ Text="Yes", Value = "Yes" },
                     new SelectListItem{ Text="No", Value = "No" }
-                    }, "---Select---", new { @class = "form-control"})
+                    }, "---Select---", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.TexColTaste, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -106,7 +106,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Viscosity, new { @class = "form-control form-control-sm",  maxlength = "8", @onkeypress = "return isNumberKey(event);" })
+                    @Html.TextBoxFor(model => model.Viscosity, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.Viscosity, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
@@ -114,7 +114,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.WorkOrder, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
+                    @Html.TextBoxFor(model => model.WorkOrder, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return isNumberKey(event);" })
                     @Html.ValidationMessageFor(model => model.WorkOrder, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -127,55 +127,61 @@
 
             <div class="row">
                 <div class="col-md-2">
+                    @Html.Label("Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PELDateAfter7Days, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.PELDateAfter7Days, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
                     @Html.Label("PH")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.PhAfter7Days, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
-                    @Html.ValidationMessageFor(model => model.PhAfter7Days, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.PhAfter7Days, "", new { id = "MsgPhAfter7Days", @class = "error mt-2 text-danger" })
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Tex, Col & Taste")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.DropDownListFor(model => model.TexColTasteAfter7Days, new List<SelectListItem>{
                     new SelectListItem{ Text="Yes", Value = "Yes" },
                     new SelectListItem{ Text="No", Value = "No" }
                     }, "---Select---", new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.TexColTasteAfter7Days, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.TexColTasteAfter7Days, "", new { id = "MsgTexColTasteAfter7Days", @class = "error mt-2 text-danger" })
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Acid")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.AcidAfter7Days, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
-                    @Html.ValidationMessageFor(model => model.AcidAfter7Days, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.AcidAfter7Days, "", new { id = "MsgAcidAfter7Days", @class = "error mt-2 text-danger" })
                 </div>
 
-                <div class="col-md-2">
-                    @Html.Label("Salt")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.SaltAfter7Days, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
-                    @Html.ValidationMessageFor(model => model.SaltAfter7Days, "", new { @class = "error mt-2 text-danger" })
-                </div>
             </div>
 
             <div class="row">
                 <div class="col-md-2">
+                    @Html.Label("Salt")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.SaltAfter7Days, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
+                    @Html.ValidationMessageFor(model => model.SaltAfter7Days, "", new { id = "MsgSaltAfter7Days", @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
                     @Html.Label("Viscosity")
+                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.ViscosityAfter7Days, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return isNumberKey(event);" })
-                    @Html.ValidationMessageFor(model => model.ViscosityAfter7Days, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Date")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PELDateAfter7Days, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.PELDateAfter7Days, "", new { @class = "error mt-2 text-danger" })
+                    @Html.ValidationMessageFor(model => model.ViscosityAfter7Days, "", new { id = "MsgViscosityAfter7Days", @class = "error mt-2 text-danger" })
                 </div>
             </div>
 
@@ -233,7 +239,7 @@
     function IsAlphaNumeric(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode;
         if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
-           || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122) || unicode == 32 || unicode == 95) {
             return true;
         }
         else {
@@ -243,7 +249,7 @@
     //Custom validation for only alphabets, underscore and NA/na character.
     function IsAlphabets(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 || unicode == 95 || unicode == 32 || unicode == 45 || unicode == 46 ||(unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+        if (unicode == 8 || unicode == 9 || unicode == 95 || unicode == 32 || unicode == 45 || unicode == 46 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
             return true;
         }
         else {
@@ -280,6 +286,109 @@
         }
 
     }
-    
 
+    function SaveBtnClick() {
+        var pH2 = $('#PhAfter7Days').val();
+        var txtColor = $('#TexColTasteAfter7Days').val();
+        var acid = $('#AcidAfter7Days').val();
+        var salt = $('#SaltAfter7Days').val();
+        var Viscosity2 = $('#ViscosityAfter7Days').val();
+
+        if (pH2 == null || pH2 == "") {
+            $('#MsgPhAfter7Days').text('Enter PH Value!');
+            $('#MsgPhAfter7Days').show();
+            document.getElementById('MsgPhAfter7Days').setAttribute('style', 'color:red;');
+            if (txtColor == null || txtColor == "") {
+                $('#MsgTexColTasteAfter7Days').text('Select whether Texture, Colour & Taste is OK?');
+                $('#MsgTexColTasteAfter7Days').show();
+                document.getElementById('MsgTexColTasteAfter7Days').setAttribute('style', 'color:red;');
+            }
+            if (salt == null || salt == "") {
+                $('#MsgSaltAfter7Days').text('Enter amount of salt present!');
+                $('#MsgSaltAfter7Days').show();
+                document.getElementById('MsgSaltAfter7Days').setAttribute('style', 'color:red;');
+            }
+            if (acid == null || acid == "") {
+                $('#MsgAcidAfter7Days').text('Enter acid value!');
+                $('#MsgAcidAfter7Days').show();
+                document.getElementById('MsgAcidAfter7Days').setAttribute('style', 'color:red;');
+            }
+            if (Viscosity2 == null || Viscosity2 == "") {
+                $('#MsgViscosityAfter7Days').text('Enter viscosity!');
+                $('#MsgViscosityAfter7Days').show();
+                document.getElementById('MsgViscosityAfter7Days').setAttribute('style', 'color:red;');
+            }
+            event.preventDefault();
+            return;
+        }
+        else if (txtColor == null || txtColor == "") {
+            $('#MsgTexColTasteAfter7Days').text('Select whether Texture, Colour & Taste is OK?');
+            $('#MsgTexColTasteAfter7Days').show();
+            document.getElementById('MsgTexColTasteAfter7Days').setAttribute('style', 'color:red;');
+            if (salt == null || salt == "") {
+                $('#MsgSaltAfter7Days').text('Enter amount of salt present!');
+                $('#MsgSaltAfter7Days').show();
+                document.getElementById('MsgSaltAfter7Days').setAttribute('style', 'color:red;');
+            }
+            if (acid == null || acid == "") {
+                $('#MsgAcidAfter7Days').text('Enter acid value!');
+                $('#MsgAcidAfter7Days').show();
+                document.getElementById('MsgAcidAfter7Days').setAttribute('style', 'color:red;');
+            }
+            if (Viscosity2 == null || Viscosity2 == "") {
+                $('#MsgViscosityAfter7Days').text('Enter viscosity!');
+                $('#MsgViscosityAfter7Days').show();
+                document.getElementById('MsgViscosityAfter7Days').setAttribute('style', 'color:red;');
+            }
+            event.preventDefault();
+            return;
+        }
+        else if (salt == null || salt == "") {
+            $('#MsgSaltAfter7Days').text('Enter amount of salt present!');
+            $('#MsgSaltAfter7Days').show();
+            document.getElementById('MsgSaltAfter7Days').setAttribute('style', 'color:red;');
+            if (acid == null || acid == "") {
+                $('#MsgAcidAfter7Days').text('Enter acid value!');
+                $('#MsgAcidAfter7Days').show();
+                document.getElementById('MsgAcidAfter7Days').setAttribute('style', 'color:red;');
+            }
+            if (Viscosity2 == null || Viscosity2 == "") {
+                $('#MsgViscosityAfter7Days').text('Enter viscosity!');
+                $('#MsgViscosityAfter7Days').show();
+                document.getElementById('MsgViscosityAfter7Days').setAttribute('style', 'color:red;');
+            }
+            event.preventDefault();
+            return;
+        }
+        else if (acid == null || acid == "") {
+            $('#MsgAcidAfter7Days').text('Enter acid value!');
+            $('#MsgAcidAfter7Days').show();
+            document.getElementById('MsgAcidAfter7Days').setAttribute('style', 'color:red;');
+            if (Viscosity2 == null || Viscosity2 == "") {
+                $('#MsgViscosityAfter7Days').text('Enter viscosity!');
+                $('#MsgViscosityAfter7Days').show();
+                document.getElementById('MsgViscosityAfter7Days').setAttribute('style', 'color:red;');
+            }
+            event.preventDefault();
+            return;
+        }
+        else if (Viscosity2 == null || Viscosity2 == "") {
+            $('#MsgViscosityAfter7Days').text('Enter viscosity!');
+            $('#MsgViscosityAfter7Days').show();
+            document.getElementById('MsgViscosityAfter7Days').setAttribute('style', 'color:red;');
+            event.preventDefault();
+            return;
+        }
+        else {
+            $('#MsgPhAfter7Days').hide();
+            $('#MsgTexColTasteAfter7Days').hide();
+            $('#MsgSaltAfter7Days').hide();
+            $('#MsgAcidAfter7Days').hide();
+            $('#MsgViscosityAfter7Days').hide();
+        }
+    }
+
+    $('#TexColTasteAfter7Days').change(function(){
+        $('#MsgTexColTasteAfter7Days').hide();
+    })
 </script>

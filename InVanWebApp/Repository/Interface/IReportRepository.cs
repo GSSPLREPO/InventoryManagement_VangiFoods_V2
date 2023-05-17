@@ -15,8 +15,7 @@ namespace InVanWebApp.Repository.Interface
 
         //Calling Method For Raw Material Received Report
         List<GRN_BO> getRawMaterialReceivedData(DateTime fromDate, DateTime toDate, int item, int wearhouse);
-        //Rejection 'getRejectionReportData' commented 24-04-23.
-        //List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate); 
+        List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate);
         List<DeliveryChallanItemDetailsBO> getFinishedGoodsReportData(DateTime fromDate, DateTime toDate,int itemId);
         List<StockMasterBO> getInventoryFIFOReportData(DateTime fromDate, DateTime toDate, int itemId);
         List<LocationWiseStockBO> getTotalInventoryCostData(DateTime fromDate, DateTime toDate, int LocationId, int itemId);
@@ -33,7 +32,7 @@ namespace InVanWebApp.Repository.Interface
         //Calling Method For GRN Report
         List<GRN_BO> getGRNReportData(DateTime fromDate, DateTime toDate, int itemId);
 
-        //Calling Method For Rejection Report updated 24-04-2023. 
+        //Calling Method For Rejection Report
         List<RejectionNoteItemDetailsBO> getRejectionReportData(DateTime fromDate, DateTime toDate, int ItemId, int FlagDebitNote = 0);
 
 
@@ -79,10 +78,16 @@ namespace InVanWebApp.Repository.Interface
 
         //To Bind GetDebitNoteNumber for Debit Note Report
         IEnumerable<ReportBO> GetDebitNoteNumber();
-        //To Bind Vendor-wise wastage report against each PO.    
+
+        //To Bind Vendor-wise Inward wastage report against each PO.    
         List<RejectionNoteItemDetailsBO> getWastageReportData(DateTime fromDate, DateTime toDate, int inwardNumber);
+
         //To Bind Pre-Production_QC report against each WO.     
         List<PreProduction_QC_Details> getPreProduction_QCReportData(DateTime fromDate, DateTime toDate, int PreProductionQCId);
+
+        //Post Production Rejection Reprot
+        List<ReportBO> getPostProductionRejectionReportData(DateTime fromDate, DateTime toDate, string BatchNumber, string WorkOrderNumber);
+
 
     }
 }

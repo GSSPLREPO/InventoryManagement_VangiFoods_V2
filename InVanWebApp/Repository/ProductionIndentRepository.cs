@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
@@ -11,12 +10,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class ProductionIndentRepository : IProductionIndentRepository 
     {
-        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(IProductionIndentRepository));
 
@@ -313,6 +312,7 @@ namespace InVanWebApp.Repository
                             RecipeID = Convert.ToInt32(reader["RecipeID"]),
                             RecipeName = reader["RecipeName"].ToString(),
                             SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),
+                            SO_Id = Convert.ToInt32(reader["SalesOrderId"]),
                             SONo = reader["SONo"].ToString(),
                             WorkOrderNo = reader["WorkOrderNo"].ToString(),
                             TotalBatches = Convert.ToInt32(reader["TotalBatches"]),

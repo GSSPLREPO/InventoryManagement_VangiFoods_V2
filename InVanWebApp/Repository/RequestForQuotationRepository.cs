@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
 using log4net;
@@ -12,12 +11,12 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class RequestForQuotationRepository : IRequestForQuotationRepository
     {
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(RequestForQuotationRepository));
 
@@ -47,8 +46,10 @@ namespace InVanWebApp.Repository
                             DeliveryDate = Convert.ToDateTime(reader["DeliveryDate"]),
                             BiddingStartDate = Convert.ToDateTime(reader["BiddingStartDate"]),
                             BiddingEndDate = Convert.ToDateTime(reader["BiddingEndDate"]),
-                            CreatedByDate = Convert.ToDateTime(reader["CreatedByDate"]),
-                            RFQCount = Convert.ToInt32(reader["RFQCount"])  //Rahul added 'RFQCount' 10-04-23. 
+                            LastModifiedByDate = Convert.ToDateTime(reader["LastModifiedByDate"]),
+                            UserName = reader["UserName"].ToString(),
+                            RFQCount = Convert.ToInt32(reader["RFQCount"])
+
                         };
                         requestForQuotationMastersList.Add(requestForQuotationMasters);
                     }
@@ -134,7 +135,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LocationName", requestForQuotationMaster.LocationName);
                     cmd.Parameters.AddWithValue("@DeliveryAddress", requestForQuotationMaster.DeliveryAddress);
                     cmd.Parameters.AddWithValue("@Date", Convert.ToDateTime(System.DateTime.Now));
-                    cmd.Parameters.AddWithValue("@DeliveryDate", Convert.ToDateTime(System.DateTime.Now));
+                    cmd.Parameters.AddWithValue("@DeliveryDate", requestForQuotationMaster.DeliveryDate);
                     cmd.Parameters.AddWithValue("@BiddingStartDate", requestForQuotationMaster.BiddingStartDate);
                     cmd.Parameters.AddWithValue("@BiddingEndDate", requestForQuotationMaster.BiddingEndDate);
                     cmd.Parameters.AddWithValue("@IndentID", requestForQuotationMaster.IndentID);
@@ -159,58 +160,60 @@ namespace InVanWebApp.Repository
                     }
                     con.Close();
 
-                    var json = new JavaScriptSerializer();
-                    var data = json.Deserialize<Dictionary<string, string>[]>(requestForQuotationMaster.TxtItemDetails);
-
-                    List<RequestForQuotationItemDetailsBO> itemDetails = new List<RequestForQuotationItemDetailsBO>();
-                    if (RequestForQuotationId != 0)
+                    if (response.Status)
                     {
-                        foreach (var item in data)
+                        var json = new JavaScriptSerializer();
+                        var data = json.Deserialize<Dictionary<string, string>[]>(requestForQuotationMaster.TxtItemDetails);
+
+                        List<RequestForQuotationItemDetailsBO> itemDetails = new List<RequestForQuotationItemDetailsBO>();
+                        if (RequestForQuotationId != 0)
                         {
-                            RequestForQuotationItemDetailsBO objItemDetails = new RequestForQuotationItemDetailsBO();
-                            objItemDetails.RequestForQuotationId = RequestForQuotationId;
-                            objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
-                            objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
-                            objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                            objItemDetails.Quantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                            objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                            objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(5).Value);
-                            objItemDetails.HSN_Code = item.ElementAt(6).Value.ToString();
-                            //objItemDetails.Remarks = item.ElementAt(7).Value.ToString();
-
-                            itemDetails.Add(objItemDetails);
-                        }
-                        foreach (var item in itemDetails)
-                        {
-                            con.Open();
-                            SqlCommand cmdNew = new SqlCommand("usp_tbl_RequestForQuotationItemDetails_Insert", con);
-                            cmdNew.CommandType = CommandType.StoredProcedure;
-                            cmdNew.Parameters.AddWithValue("@RequestForQuotationId", item.RequestForQuotationId);
-                            cmdNew.Parameters.AddWithValue("@Item_ID", item.Item_ID);
-                            cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
-                            cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
-                            cmdNew.Parameters.AddWithValue("@ItemQuantity", item.Quantity);
-                            cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
-                            cmdNew.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
-                            cmdNew.Parameters.AddWithValue("@DeliveryDate", item.DeliveryDate);
-                            cmdNew.Parameters.AddWithValue("@Remarks", requestForQuotationMaster.Remarks);
-                            //cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks); 
-                            //cmdNew.Parameters.AddWithValue("@CreatedByID", item.CreatedByID);
-                            cmdNew.Parameters.AddWithValue("@CreatedByID", requestForQuotationMaster.CreatedByID);
-                            cmdNew.Parameters.AddWithValue("@CreatedByDate", Convert.ToDateTime(System.DateTime.Now));
-                            //cmdNew.Parameters.AddWithValue("@LastModifiedBy", 1);
-                            //cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));    
-
-                            SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
-
-                            while (dataReaderNew.Read())
+                            foreach (var item in data)
                             {
-                                response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                                RequestForQuotationItemDetailsBO objItemDetails = new RequestForQuotationItemDetailsBO();
+                                objItemDetails.RequestForQuotationId = RequestForQuotationId;
+                                objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
+                                objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
+                                objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                                objItemDetails.Quantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                                objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
+                                objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(5).Value);
+                                objItemDetails.HSN_Code = item.ElementAt(6).Value.ToString();
+                                //objItemDetails.Remarks = item.ElementAt(7).Value.ToString();
+
+                                itemDetails.Add(objItemDetails);
                             }
-                            con.Close();
+                            foreach (var item in itemDetails)
+                            {
+                                con.Open();
+                                SqlCommand cmdNew = new SqlCommand("usp_tbl_RequestForQuotationItemDetails_Insert", con);
+                                cmdNew.CommandType = CommandType.StoredProcedure;
+                                cmdNew.Parameters.AddWithValue("@RequestForQuotationId", item.RequestForQuotationId);
+                                cmdNew.Parameters.AddWithValue("@Item_ID", item.Item_ID);
+                                cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                                cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
+                                cmdNew.Parameters.AddWithValue("@ItemQuantity", item.Quantity);
+                                cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                                cmdNew.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
+                                cmdNew.Parameters.AddWithValue("@DeliveryDate", item.DeliveryDate);
+                                cmdNew.Parameters.AddWithValue("@Remarks", requestForQuotationMaster.Remarks);
+                                //cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks); 
+                                //cmdNew.Parameters.AddWithValue("@CreatedByID", item.CreatedByID);
+                                cmdNew.Parameters.AddWithValue("@CreatedByID", requestForQuotationMaster.CreatedByID);
+                                cmdNew.Parameters.AddWithValue("@CreatedByDate", Convert.ToDateTime(System.DateTime.Now));
+                                //cmdNew.Parameters.AddWithValue("@LastModifiedBy", 1);
+                                //cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));    
+
+                                SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                                while (dataReaderNew.Read())
+                                {
+                                    response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                                }
+                                con.Close();
+                            }
                         }
                     }
-
 
                 }
             }
@@ -263,62 +266,65 @@ namespace InVanWebApp.Repository
                     }
                     con.Close();
 
-                    var json = new JavaScriptSerializer();
-                    var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
-
-                    List<RequestForQuotationItemDetailsBO> itemDetails = new List<RequestForQuotationItemDetailsBO>();
-
-                    foreach (var item in data)
+                    if (response.Status)
                     {
-                        RequestForQuotationItemDetailsBO objItemDetails = new RequestForQuotationItemDetailsBO();
-                        objItemDetails.RequestForQuotationId = model.RequestForQuotationId;
-                        objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
-                        objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
-                        objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.Quantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                        objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(5).Value);
-                        objItemDetails.HSN_Code = item.ElementAt(6).Value.ToString();
+                        var json = new JavaScriptSerializer();
+                        var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
 
-                        itemDetails.Add(objItemDetails);
-                    }
+                        List<RequestForQuotationItemDetailsBO> itemDetails = new List<RequestForQuotationItemDetailsBO>();
 
-                    var count = itemDetails.Count;
-                    var i = 1;
-
-                    foreach (var item in itemDetails)
-                    {
-                        con.Open();
-                        SqlCommand cmdNew = new SqlCommand("usp_tbl_RFQItemsDetails_Update", con);
-                        cmdNew.CommandType = CommandType.StoredProcedure;
-
-                        cmdNew.Parameters.AddWithValue("@RequestForQuotationId", item.RequestForQuotationId);
-                        cmdNew.Parameters.AddWithValue("@Item_ID", item.Item_ID);
-                        cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
-                        cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
-                        cmdNew.Parameters.AddWithValue("@ItemQuantity", item.Quantity);
-                        cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
-                        cmdNew.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
-                        cmdNew.Parameters.AddWithValue("@DeliveryDate", model.DeliveryDate);
-                        cmdNew.Parameters.AddWithValue("@LastModifiedByID", model.LastModifiedByID);
-                        cmdNew.Parameters.AddWithValue("@LastModifiedByDate", Convert.ToDateTime(System.DateTime.Now));
-
-                        if (count == 1)
-                            cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
-                        else
+                        foreach (var item in data)
                         {
-                            cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 0);
-                            cmdNew.Parameters.AddWithValue("@flagCheck", i);
+                            RequestForQuotationItemDetailsBO objItemDetails = new RequestForQuotationItemDetailsBO();
+                            objItemDetails.RequestForQuotationId = model.RequestForQuotationId;
+                            objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
+                            objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
+                            objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                            objItemDetails.Quantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                            objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
+                            objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(5).Value);
+                            objItemDetails.HSN_Code = item.ElementAt(6).Value.ToString();
+
+                            itemDetails.Add(objItemDetails);
                         }
-                        i++;
 
-                        SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+                        var count = itemDetails.Count;
+                        var i = 1;
 
-                        while (dataReaderNew.Read())
+                        foreach (var item in itemDetails)
                         {
-                            response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                            con.Open();
+                            SqlCommand cmdNew = new SqlCommand("usp_tbl_RFQItemsDetails_Update", con);
+                            cmdNew.CommandType = CommandType.StoredProcedure;
+
+                            cmdNew.Parameters.AddWithValue("@RequestForQuotationId", item.RequestForQuotationId);
+                            cmdNew.Parameters.AddWithValue("@Item_ID", item.Item_ID);
+                            cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
+                            cmdNew.Parameters.AddWithValue("@Item_Code", item.Item_Code);
+                            cmdNew.Parameters.AddWithValue("@ItemQuantity", item.Quantity);
+                            cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+                            cmdNew.Parameters.AddWithValue("@HSN_Code", item.HSN_Code);
+                            cmdNew.Parameters.AddWithValue("@DeliveryDate", model.DeliveryDate);
+                            cmdNew.Parameters.AddWithValue("@LastModifiedByID", model.LastModifiedByID);
+                            cmdNew.Parameters.AddWithValue("@LastModifiedByDate", Convert.ToDateTime(System.DateTime.Now));
+
+                            if (count == 1)
+                                cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 1);
+                            else
+                            {
+                                cmdNew.Parameters.AddWithValue("@OneItemIdentifier", 0);
+                                cmdNew.Parameters.AddWithValue("@flagCheck", i);
+                            }
+                            i++;
+
+                            SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+                            while (dataReaderNew.Read())
+                            {
+                                response.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                            }
+                            con.Close();
                         }
-                        con.Close();
                     }
                 }
             }

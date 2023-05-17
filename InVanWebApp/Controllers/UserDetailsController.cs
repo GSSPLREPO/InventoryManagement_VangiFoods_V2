@@ -7,6 +7,7 @@ using log4net;
 using InVanWebApp_BO;
 using InVanWebApp.Repository;
 using InVanWebApp.Repository.Interface;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Controllers
 {
@@ -41,7 +42,13 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var model = _userDetailsRepository.GetAll();
+            if (Session[ApplicationSession.USERID] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            var UserId = Convert.ToInt32(Session[ApplicationSession.USERID]);
+            var model = _userDetailsRepository.GetAll(UserId);
             return View(model);
         }
         #endregion
@@ -54,6 +61,11 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult AddUser()
         {
+            if (Session[ApplicationSession.USERID] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             BindOrganizations();
             BindDesignations();
             BindRoles();
@@ -107,6 +119,11 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult EditUser(int ID)
         {
+            if (Session[ApplicationSession.USERID] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             BindOrganizations();
             BindDesignations();
             BindRoles();
@@ -171,6 +188,11 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult DeleteUser(int ID)
         {
+            if (Session[ApplicationSession.USERID] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             _userDetailsRepository.Delete(ID);
             //_unitRepository.Save();
             TempData["Success"] = "<script>alert('User deleted successfully!');</script>";
@@ -197,7 +219,8 @@ namespace InVanWebApp.Controllers
 
         public void BindRoles()
         {
-            var roles = _userDetailsRepository.GetRoleForDropDown();
+            var UserId = Convert.ToInt32(Session[ApplicationSession.USERID]);
+            var roles = _userDetailsRepository.GetRoleForDropDown(UserId);
             var rolesList = new SelectList(roles.ToList(), "RoleId", "RoleName");
             ViewData["Roles"] = rolesList;
         }

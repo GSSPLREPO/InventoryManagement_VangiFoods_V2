@@ -104,7 +104,7 @@ namespace InVanWebApp_BO
         public decimal OtherTax { get; set; }
 
         //==============Rahul: These fields are for PO Currency details 02/12/2022==============//
-        [Required(ErrorMessage = "Select the Currency!")]
+        [Required(ErrorMessage = "Select the currency!")]
         public int CurrencyID { get; set; }
         public int CountryID { get; set; }
         public string CurrencyName { get; set; }
@@ -112,7 +112,8 @@ namespace InVanWebApp_BO
         public Nullable<double> IndianCurrencyValue { get; set; }
 
         //Added below fields for Indent dropdown in PO.
-        [Required(ErrorMessage = "Select the indent number!")] 
+        /* added Yatri:7-4-23 validation mgs*/
+        [Required(ErrorMessage = "Select the indent number!")]
         public int IndentID { get; set; }
 
         //Added below fields for Indent items bind in PO.

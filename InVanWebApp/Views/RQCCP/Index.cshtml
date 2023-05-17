@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -43,12 +45,7 @@
                                             <th>@Html.DisplayName("Item Name")</th>
                                             <th>@Html.DisplayName("No of Batches")</th>
                                             <th>@Html.DisplayName("Batch Weight")</th>
-                                            @*<th>@Html.DisplayName("Monitoring Parameter")</th>*@
                                             <th>@Html.DisplayName("Batch Release Time Of RQ")</th>
-                                            @*<th>@Html.DisplayName("Mandatory Temperature")</th>*@
-                                            @*<th>@Html.DisplayName("Frequency")</th>*@
-                                            @*<th>@Html.DisplayName("Responsibility")</th>*@
-                                            @*<th>@Html.DisplayName("Remarks")</th>*@
                                             <th>@Html.DisplayName("Verification")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
@@ -62,12 +59,7 @@
                                                 <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.NoBatches)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.BatchWeight)</td>
-                                                @*<td>@Html.DisplayFor(modelItem => item.MonitoringParameter)</td>*@
                                                 <td>@Html.DisplayFor(modelItem => item.BatchReleaseTimeOfRQ)</td>
-                                                @*<td>@Html.DisplayFor(modelItem => item.MandatoryTemp)</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.Frequency)</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.Responsibility)</td>
-                                                    <td>@Html.DisplayFor(modelItem => item.Remarks)</td>*@
                                                 <td>@Html.DisplayFor(modelItem => item.Verification)</td>
                                                 <td>
                                                     <a href=@Url.Action("EditRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID }) title="Edit RQ CCP">

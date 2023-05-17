@@ -27,5 +27,8 @@ namespace InVanWebApp.Repository.Interface
         List<Indent_DetailsBO> GetItemDetailsByIndentId(int IndentId);
 
         List<ItemBO> GetItemDetailsForDD();
+        //This function is for pdf export/view
+        IndentBO GetItemDetailsByIndentById(int ID);
+
     }
 }

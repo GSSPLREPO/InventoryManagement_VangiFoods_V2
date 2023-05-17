@@ -228,6 +228,8 @@ namespace InVanWebApp.Controllers
                         else
                             return Json("No item inserted! And list of duplicate items: " + ItemList, JsonRequestBehavior.AllowGet);
                     }
+                    else if (count == 0)
+                        return Json("Data is not entered correctly! Check your uploaded file!", JsonRequestBehavior.AllowGet);
                     else
                         return Json("All Items Uploaded Successfully!", JsonRequestBehavior.AllowGet);
                 }

@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<InVanWebApp_BO.ProductionIndentBO>
 @{ ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/MainMaster.cshtml"; }
+    Layout = "~/Views/Shared/MainMaster.cshtml"; 
+}
 
+
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -47,26 +52,26 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.ProductionIndentNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ProductionDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Description)</td>
-                                                <td>
-                                                    @if (item.IndentCount == 0)
-                                                    {
-                                                        <a href=@Url.Action("ViewProductionIndent", "ProductionIndent", new { ID = item.ID }) title="View Production Indent">
-                                                            <i class="fa fa-eye text-primary"></i>
-                                                        </a><span>&emsp;</span>
-                                                        <a href=@Url.Action("EditProductionIndent", "ProductionIndent", new { ID = item.ID }) title="Edit Production Indent">
-                                                            <i class="fa fa-edit text-primary"></i>
-                                                        </a> <span>&emsp;</span>
-                                                        <a href=@Url.Action("DeleteProductionIndent", "ProductionIndent", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Production Indent">
-                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                        </a>}
-                                                </td>
-                                            </tr>}
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.ProductionIndentNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.ProductionDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>
+                                <td class="text-wrap">@Html.DisplayFor(modelItem => item.Description)</td>
+                                <td>
+                                    @if (item.IndentCount == 0)
+                                    {
+                    <a href=@Url.Action("ViewProductionIndent", "ProductionIndent", new { ID = item.ID }) title="View Production Indent">
+                        <i class="fa fa-eye text-primary"></i>
+                    </a><span>&emsp;</span>
+                                        <a href=@Url.Action("EditProductionIndent", "ProductionIndent", new { ID = item.ID }) title="Edit Production Indent">
+                                            <i class="fa fa-edit text-primary"></i>
+                                        </a> <span>&emsp;</span>
+                                                            <a href=@Url.Action("DeleteProductionIndent", "ProductionIndent", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Production Indent">
+                                                                <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                            </a>}
+                                </td>
+                            </tr>}
                                     </tbody>
                                 </table>
                             </div>

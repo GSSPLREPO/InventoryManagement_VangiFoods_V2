@@ -16,7 +16,9 @@ namespace InVanWebApp.Repository.Interface
         CreditNoteBO GetById(int ID);
         List<PurchaseOrderBO> GetPONumberForDropdown();
         IEnumerable<PurchaseOrderBO> GetPODetailsById(int POId);
-        List<SOPaymentBO> GetSONumberForDropdown();        
+
+        List<SOPaymentBO> GetSONumberForDropdown();
+
         //used for SO number
         IEnumerable<SOPaymentBO> GetSODetailsById(int SOId);
 

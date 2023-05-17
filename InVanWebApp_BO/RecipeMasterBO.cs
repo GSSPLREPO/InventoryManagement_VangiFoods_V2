@@ -13,7 +13,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Enter recipe name!")]
         [StringLength(100, ErrorMessage = "Legth of recipe name is exceeded!")]
         public string RecipeName { get; set; }
-        [Required(ErrorMessage = "Enter recipe description!")]
+        //[Required(ErrorMessage = "Enter recipe description!")]
         [StringLength(100, ErrorMessage = "Legth of recipe description is exceeded!")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Select product name!")] 

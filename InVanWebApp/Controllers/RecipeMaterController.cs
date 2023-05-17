@@ -15,9 +15,8 @@ namespace InVanWebApp.Controllers
 {
     public class RecipeMaterController : Controller
     {
-        private IRecipeMaterRepository _productionRecipeRepository;        
-        private IProductMasterRepository _productMasterRepository;
-        //private IIndentRepository _repository;
+        private IRecipeMaterRepository _productionRecipeRepository;
+        private IPurchaseOrderRepository _purchaseOrderRepository;
         private static ILog log = LogManager.GetLogger(typeof(RecipeMaterController));
 
         #region Initializing constructor
@@ -27,8 +26,8 @@ namespace InVanWebApp.Controllers
         /// </summary>
         public RecipeMaterController()
         {
-            _productionRecipeRepository = new RecipeMaterRepository();            
-            _productMasterRepository = new ProductMasterRepository();
+            _productionRecipeRepository = new RecipeMaterRepository();
+            _purchaseOrderRepository = new PurchaseOrderRepository();
         }
 
         /// <summary>
@@ -64,9 +63,11 @@ namespace InVanWebApp.Controllers
         #region For binding the dropdown of Production Recipe Item Packing Size Unit. 
         public void BindItemTypeCategory()
         {
-            var product = _productMasterRepository.GetAll();
-            var dd4 = new SelectList(product.ToList(), "ProductID", "ProductCode", "ProductName");
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            var dd4 = new SelectList(itemList.ToList(), "ID", "Item_Code");
             ViewData["ProductName"] = dd4;
+            //var product = _productMasterRepository.GetAll();
+            //var dd4 = new SelectList(product.ToList(), "ProductID", "ProductCode", "ProductName");
 
             //Binding item grid with Recipe. 
             var recipeList = _productionRecipeRepository.GetItemDetailsForRecipe();
@@ -121,9 +122,9 @@ namespace InVanWebApp.Controllers
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _productionRecipeRepository.Insert(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Recipe Item Inserted Successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Recipe inserted successfully!');</script>";
                         else
-                            TempData["Success"] = "<script>alert('Duplicate Recipe Item! Can not be inserted!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate recipe name! Can not be inserted!');</script>";
 
                         return RedirectToAction("Index", "RecipeMater");
 
@@ -212,11 +213,11 @@ namespace InVanWebApp.Controllers
                         response = _productionRecipeRepository.Update(model);
 
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Recipe Item updated successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Recipe updated successfully!');</script>";
 
                         else
                         {
-                            TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                            TempData["Success"] = "<script>alert('Dublicate recipe name! Cannot be updated!');</script>";
 
                             BindItemTypeCategory();
                             RecipeMasterBO model1 = _productionRecipeRepository.GetById(model.RecipeID);
@@ -307,14 +308,13 @@ namespace InVanWebApp.Controllers
             {
                 int userId = Convert.ToInt32(Session[ApplicationSession.USERID]);
                 _productionRecipeRepository.Delete(Recipe_ID, userId);
-                TempData["Success"] = "<script>alert('Recipe Item deleted successfully!');</script>";
+                TempData["Success"] = "<script>alert('Recipe deleted successfully!');</script>";
                 return RedirectToAction("Index", "RecipeMater");
             }
             else
                 return RedirectToAction("Index", "Login");
         }
         #endregion
-
 
     }
 }

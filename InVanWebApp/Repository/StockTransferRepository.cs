@@ -1,5 +1,4 @@
 ﻿using Dapper;
-using InVanWebApp.Common;
 using InVanWebApp.DAL;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
@@ -13,13 +12,13 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using InVanWebApp.Common;
 
 namespace InVanWebApp.Repository
 {
     public class StockTransferRepository : IStockTransferRepository
     {
         //private readonly InVanDBContext _context;
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(StockTransferRepository));
 
@@ -355,6 +354,7 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                         cmdNew.Parameters.AddWithValue("@LastModifiedBy", stockTransferMaster.CreatedBy);
                         cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                        cmdNew.Parameters.AddWithValue("@InwardDateOfItem", stockTransferMaster.InwardDateOfItem);
 
                         SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
 

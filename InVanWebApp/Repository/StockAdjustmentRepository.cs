@@ -7,8 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using Dapper;
-using InVanWebApp.Common;
 using InVanWebApp.Repository.Interface;
+using InVanWebApp.Common;
 using InVanWebApp_BO;
 using log4net;
 
@@ -16,7 +16,6 @@ namespace InVanWebApp.Repository
 {
     public class StockAdjustmentRepository : IStockAdjustmentRepository
     {
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(StockAdjustmentRepository));
 

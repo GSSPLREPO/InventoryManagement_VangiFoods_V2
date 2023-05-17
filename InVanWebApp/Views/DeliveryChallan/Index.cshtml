@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -37,9 +39,9 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.Label("Delivery Challan Number")</th>
-                                            <th>@Html.Label("Delivery Challan Date")</th>
                                             <th>@Html.Label("SO Number")</th>
-                                            <th>@Html.Label("Location")</th>
+                                            <th>@Html.Label("Client")</th>
+                                            <th>@Html.Label("Delivery Challan Date")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
@@ -48,9 +50,9 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.DeliveryChallanNumber)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.DeliveryChallanDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.SONumber)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CompanyName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.DeliveryChallanDate)</td>
                                                 <td>
                                                     <a href=@Url.Action("ViewDeliveryChallan", "DeliveryChallan", new { ID = item.ID }) title="View Delivery-Challan">
                                                         <i class="fa fa-eye text-primary"></i>

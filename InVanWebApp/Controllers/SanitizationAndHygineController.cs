@@ -12,8 +12,8 @@ using InVanWebApp.Repository.Interface;
 using InVanWebApp.Common;
 using System.IO;
 using System.Web.UI.WebControls;
-using System.Data;
 using System.Web.UI;
+using System.Data;
 
 namespace InVanWebApp.Controllers
 {
@@ -212,14 +212,17 @@ namespace InVanWebApp.Controllers
         /// <returns></returns>
         public JsonResult SanitizationAndHygineList(int flagdate, DateTime? fromDate = null, DateTime? toDate = null)
         {
+
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
+
 
             var SanitizationLog = _sanitizationAndHygineRepository.SanitizationAndHygineList(flagdate, fromDate, toDate);
             TempData["SanitizationAndHygineExcel"] = SanitizationLog;
             TempData["SanitizationAndHygineExcel"] = SanitizationLog;
             return Json(new { data = SanitizationLog }, JsonRequestBehavior.AllowGet);
         }
+
         #endregion
 
         #region Excel Sanitization And Hygine
@@ -238,7 +241,7 @@ namespace InVanWebApp.Controllers
             //dt.Columns.Add("Sr.No");
             dt.Columns.Add("Name Of Employee");
             dt.Columns.Add("Department");
-            dt.Columns.Add("Body Temprature");
+            dt.Columns.Add("Body Temperature");
             dt.Columns.Add("Hand Wash");
             dt.Columns.Add("Any Cuts & Wounds");
             dt.Columns.Add("Clean Uniform");
@@ -261,7 +264,7 @@ namespace InVanWebApp.Controllers
                 // dr["Sr.No"] = i;
                 dr["Name Of Employee"] = st.NameOfEmpolyee.ToString();
                 dr["Department"] = st.Department.ToString();
-                dr["Body Temprature"] = st.BodyTemperature.ToString();
+                dr["Body Temperature"] = st.BodyTemperature.ToString();
                 dr["Hand Wash"] = st.HandWash.ToString();
                 dr["Any Cuts & Wounds"] = st.AppearAnyCutsandWounds.ToString();
                 dr["Clean Uniform"] = st.CleanUniform.ToString();
@@ -352,6 +355,5 @@ namespace InVanWebApp.Controllers
             return View("Index");
         }
         #endregion
-
     }
 }

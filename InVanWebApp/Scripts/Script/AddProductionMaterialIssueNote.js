@@ -256,7 +256,11 @@ function OnChangeQty(value, id) {
         else {
             finalStockQty = AvailableStock - value;
         }
+        
         finalStockQty = parseFloat(finalStockQty);
+        finalStockQty = Math.round(finalStockQty * 100) / 100;
+
+        DiffQty = Math.round(DiffQty * 100) / 100;
 
         document.getElementById("BalanceQty_" + rowNo).innerHTML = DiffQty;
         document.getElementById("FinalStock_" + rowNo).innerHTML = finalStockQty;

@@ -16,94 +16,49 @@
             @Html.ValidationSummary(true)
             @Html.HiddenFor(model => model.Date)
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Verify By Name")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Name of Employee")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.NameOfEmpolyee, new { @class = "form-control form-control-sm", maxlength = "30", @onkeypress = "return IsAlphabate(event);" })
-                @Html.ValidationMessageFor(model => model.NameOfEmpolyee, "", new { @class = "error mt-2 text-danger" })
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Verify By Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.VerifyByName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.VerifyByName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Name of Employee")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.NameOfEmpolyee, new { @class = "form-control form-control-sm", maxlength = "30", @onkeypress = "return IsAlphabate(event);" })
+                    @Html.ValidationMessageFor(model => model.NameOfEmpolyee, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
             </div>
 
-        </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Department")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Department, new { @class = "form-control form-control-sm", maxlength = "40", @onkeypress = "return IsAlphaNumeric(event);" })
+                    @Html.ValidationMessageFor(model => model.Department, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Body Temperature")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.BodyTemperature, new List<SelectListItem>{
+                    new SelectListItem{ Text="Normal", Value = "Normal" },
+                    new SelectListItem{ Text="Modrate", Value = "Modrate" },
+                    new SelectListItem{ Text="High", Value = "High" }
+                    }, "---Select---", new { @class = "form-control" })
 
-            @*<div class="row">
-                    <div class="col-md-2">
-                        @Html.Label("Hand Wash")
-                        <span style="color:red">*</span>
-                    </div>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.HandWash, new List<SelectListItem>{
-                        new SelectListItem{ Text="Normal", Value = "Normal" },
-                        new SelectListItem{ Text="Modrate", Value = "Modrate" },
-                        new SelectListItem{ Text="High", Value = "High" },
-                        }, "---Select---", new { @class = "form-control" })
-
-                        @Html.ValidationMessageFor(model => model.HandWash, "", new { @class = "error mt-2 text-danger" })
-                    </div>
-                </div>*@
-
-            @*<div class="row">
-                <h4 style="color:darkcyan">Body Temprature</h4>
+                    @Html.ValidationMessageFor(model => model.BodyTemperature, "", new { @class = "error mt-2 text-danger" })
+                </div>
             </div>
-            <br />*@
-        <div class="row">
-            @*<div class="col-md-2">
-            @Html.Label("Normal")
-            <span style="color:red">*</span>
-        </div>
-        <div class="col-md-2">
-            @Html.RadioButtonFor(model => model.BodyTemperature, "Normal", new { @class = "form-check-input form-control", @Value = "Normal" })
-
-        </div>
-        <div class="col-md-2">
-            @Html.Label("Modrate")
-            <span style="color:red">*</span>
-        </div>
-        <div class="col-md-2">
-            @Html.RadioButtonFor(model => model.BodyTemperature, "Modrate", new { @class = "form-check-input form-control", @Value = "Modrate" })
-        </div>
-        <div class="col-md-2">
-            @Html.Label("High")
-            <span style="color:red">*</span>
-        </div>
-        <div class="col-md-2">
-            @Html.RadioButtonFor(model => model.BodyTemperature, "High", new { @class = "form-check-input form-control", @Value = "High" })
-        </div>
-        <div class="col-md-6">
-            @Html.ValidationMessageFor(model => model.BodyTemperature, "", new { @class = "error mt-2 text-danger" })
-        </div>*@
-            <div class="col-md-2">
-                @Html.Label("Department")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.Department, new { @class = "form-control form-control-sm", maxlength = "15", @onkeypress = "return IsAlphaNumeric(event);" })
-                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "error mt-2 text-danger" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Body Temprature")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.DropDownListFor(model => model.BodyTemperature, new List<SelectListItem>{
-                new SelectListItem{ Text="Normal", Value = "Normal" },
-                new SelectListItem{ Text="Modrate", Value = "Modrate" },
-                new SelectListItem{ Text="High", Value = "High" }
-                }, "---Select---", new { @class = "form-control" })
-
-                @Html.ValidationMessageFor(model => model.BodyTemperature, "", new { @class = "error mt-2 text-danger" })
-            </div>
-        </div>
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Hand Wash")
@@ -225,29 +180,27 @@
                     }, "---Select---", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.AnyKindOfIllnessSeakness, "", new { @class = "error mt-2 text-danger" })
                 </div>
-                <div class="row">
-                    <div class="row">
-                        <div class="col-md-2 mb-1">
-                            @Html.Label("Remarks")
-                        </div>
-                        <div class="col-md-4">
-                            @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", title = "Remark allow only 100 Charachters" })
-                            @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
-                        </div>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Remarks")
                 </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remark, new { @class = "form-control form-control-sm", maxlength = "100", title = "Only 100 charachters are allowed in remark!" })
+                    @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
 
-                <br />
-                <div class="col d-flex justify-content-end" style="margin-left: auto;">
-                    <div class="row">
-                        <div class="col">
-                            <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
-                        </div>
-                        <div class="col">
-                            <a href="@Url.Action("Index", "SanitizationAndHygine")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                                Back To List
-                            </a>
-                        </div>
+            <br />
+            <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                    </div>
+                    <div class="col">
+                        <a href="@Url.Action("Index", "SanitizationAndHygine")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
                     </div>
                 </div>
             </div>
@@ -318,5 +271,5 @@
          return true;
      }*/
 
-   
+
 </script>

@@ -61,16 +61,16 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                     @Html.HiddenFor(model => model.CurrencyID, new { id = "tempCurrencyID" })
                     @*@Html.DisplayFor(model => model.CurrencyName)*@
-                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                     @Html.HiddenFor(model => model.CurrencyName)
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
 
                 </div>
                 <div class="col-md-4 d-none">
                     @*@Html.TextBox("CurrencyID","1",new { id= "CurrencyID" })*@
-                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
                 </div>
             </div>
             <br />
@@ -80,16 +80,16 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                     @Html.HiddenFor(model => model.IndentID)
                     @*@Html.DisplayFor(model => model.IndentNumber)*@
-                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                     @Html.HiddenFor(model => model.IndentNumber)
                     @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
 
                 </div>
                 <div class="col-md-4 d-none">
                     @*@Html.TextBox("CurrencyID","1",new { id= "CurrencyID" })*@
-                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
                 </div>
             </div>
             <br />
@@ -99,19 +99,19 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @*@Html.DisplayFor(model => model.LocationName)*@
                     @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @*@Html.DisplayFor(model => model.LocationName)*@
                     @Html.HiddenFor(model => model.LocationName)
                     @Html.HiddenFor(model => model.LocationId)
                     @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Vendor Name")
+                    @Html.Label("Supplier Name")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @*@Html.DisplayFor(model => model.CompanyName)*@
                     @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @*@Html.DisplayFor(model => model.CompanyName)*@
                     @Html.HiddenFor(model => model.CompanyName)
                     @Html.HiddenFor(model => model.VendorsID)
                     @Html.ValidationMessageFor(model => model.VendorsID, "", new { @class = "error mt-2 text-danger" })
@@ -128,7 +128,7 @@
                             </h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px" })
+                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm", placeholder = "Delivery address", style = "height:100px" })
                                 @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
@@ -144,7 +144,7 @@
                             </h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.Address, new { id = "SupplierAddress", @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
+                                @Html.TextAreaFor(model => model.Address, new { id = "SupplierAddress", @class = "form-control form-control-sm", placeholder = "Supplier address", style = "height:100px" })
                                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "error mt-2 text-danger" })
 
                             </div>
@@ -168,8 +168,8 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @*@Html.DisplayFor(model => model.RFQNO, new { @class = "form-control form-control-sm" })*@
                     @Html.TextBoxFor(model => model.RFQNO, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @*@Html.DisplayFor(model => model.RFQNO, new { @class = "form-control form-control-sm" })*@
                     @Html.HiddenFor(model => model.RFQNO)
                     @Html.ValidationMessageFor(model => model.RFQNO, "", new { @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.RequestForQuotationId)
@@ -387,7 +387,9 @@
         $("#" + id).val(tempDate);
         document.getElementById(id).setAttribute("min", tempDate.toString());
     }
-    //---DeliveryDate todaysDate end ------
+    //---DeliveryDate todaysDate end -----
+
+
 
     function SaveBtnClick() {
         var terms = $('#TermsAndConditionID').val();

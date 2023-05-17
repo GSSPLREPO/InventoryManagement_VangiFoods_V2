@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -46,27 +48,25 @@
                                     <tbody style="overflow-wrap: anywhere;">
                                         @foreach (var item in Model)
                                         {
-                                        <tr>
-                                            @*Rahul added 'td class="text-wrap"' 05-04-2023.*@
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.ProductCode)
-                                            </td>
-                                            @*Rahul added 'td class="text-wrap"' 05-04-2023.*@
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.ProductName)
-                                            </td>
-                                            <td class="text-wrap">
-                                                @Html.DisplayFor(modelItem => item.Description)
-                                            </td>
-                                            <td>
-                                                <a href=@Url.Action("EditProductItem", "ProductMaster", new { Product_ID = item.ProductID }) title="Edit Product">
-                                                    <i class="fa fa-edit text-primary"></i>
-                                                </a> &emsp;
-                                                <a href=@Url.Action("DeleteProductItem", "ProductMaster", new { Product_ID = item.ProductID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Product">
-                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.ProductCode)
+                                                </td>
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.ProductName)
+                                                </td>
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.Description)
+                                                </td>
+                                                <td>
+                                                    <a href=@Url.Action("EditProductItem", "ProductMaster", new { Product_ID = item.ProductID }) title="Edit Product">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a> &emsp;
+                                                    <a href=@Url.Action("DeleteProductItem", "ProductMaster", new { Product_ID = item.ProductID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Product">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -86,7 +86,7 @@
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-   
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#tblItem').dataTable().fnDestroy();

@@ -15,7 +15,6 @@ namespace InVanWebApp.Repository
 {
     public class DashboardRepository : IDashboardRepository
     {
-        //private readonly string connString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string connString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(ItemTypeRepository));
 
@@ -148,7 +147,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Function for Fifo system 
-        public List<DashboardBO> GetFIFOSystem(DateTime fromDate, DateTime toDate, int ItemId = 0, int LocationID = 0)
+        public List<DashboardBO> GetFIFOSystem(int ItemId = 0, int LocationID = 0)
         {
             List<DashboardBO> resultList = new List<DashboardBO>();
             try
@@ -159,8 +158,8 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ItemId", ItemId);
                     cmd.Parameters.AddWithValue("@locationId", LocationID);
-                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
-                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    //cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    //cmd.Parameters.AddWithValue("@toDate", toDate);
 
                     con.Open();
 
@@ -241,7 +240,7 @@ namespace InVanWebApp.Repository
 
         #endregion
 
-        #region Function for Order Summary
+        #region Function for Order Summery
         public List<OrderSummaryBO> GetOrderSummaryDashboardData(DateTime fromDate, DateTime toDate, int DurationID = 0)
         {
             List<OrderSummaryBO> resultList = new List<OrderSummaryBO>();
@@ -352,7 +351,7 @@ namespace InVanWebApp.Repository
                             //WorkOrderNumber = (reader["WorkOrderNumber"].ToString()),
                             //ProductionMaterailIssueNoteNumber = (reader["POMaterialIssueNoteNumber"].ToString()),
                             ItemName = (reader["RawMaterial"].ToString()),
-                            //BatchNumber = (reader["BatchNumber"].ToString()),
+                           // BatchNumber = (reader["BatchNumber"].ToString()),
                             RawMaterialCost = Convert.ToDecimal(reader["RawMaterialConsumption"])
                         };
                         resultList.Add(result);

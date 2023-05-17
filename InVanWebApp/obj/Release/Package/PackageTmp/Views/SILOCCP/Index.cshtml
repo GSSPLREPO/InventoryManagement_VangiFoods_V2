@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
 <!DOCTYPE html>
 
 <html>
@@ -32,7 +35,7 @@
                     <div class="card">
                         <div class="card-body">
                             <a href="@Url.Action("AddSILOCCP", "SILOCCP")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span> SILO CCP 
+                                <span class="fa fa-plus"></span> SILO CCP
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
 
@@ -58,34 +61,34 @@
 
                                     <tbody>
                                         @*@{int SrNo = 1;}*@
-                                            @foreach (var item in Model)
-                                            {
-                                        <tr>
-                                            @*<td>ID</td>*@
-                                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Time)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Activity)</td>
-                                            @*<td>@Html.DisplayFor(modelItem => item.MonitoringParameter)</td>*@
-                                            <td>@Html.DisplayFor(modelItem => item.TranseferedTimeFromRQS)</td>
-                                            @*<td>@Html.DisplayFor(modelItem => item.MandatoryRange)</td>*@
-                                            <td>@Html.DisplayFor(modelItem => item.Frequency)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.WeightOfHoldingMaterial)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.CorrectiveActions)</td>
-                                                                        
-                                            <td>@Html.DisplayFor(modelItem => item.Verification)</td>
-                                            <td>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                @*<td>ID</td>*@
+                                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Time)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Activity)</td>
+                                                @*<td>@Html.DisplayFor(modelItem => item.MonitoringParameter)</td>*@
+                                                <td>@Html.DisplayFor(modelItem => item.TranseferedTimeFromRQS)</td>
+                                                @*<td>@Html.DisplayFor(modelItem => item.MandatoryRange)</td>*@
+                                                <td>@Html.DisplayFor(modelItem => item.Frequency)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.WeightOfHoldingMaterial)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CorrectiveActions)</td>
 
-                                                <a href=@Url.Action("EditSILOCCP", "SILOCCP", new { Id = item.ID }) title="Edit SILO CCP">
-                                                    <i class="fa fa-edit text-primary"></i>
-                                                </a> &emsp;
-                                                <a href=@Url.Action("Delete", "SILOCCP", new { Id = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete SILO CCP">
-                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                                //SrNo++;
-                                            }
+                                                <td>@Html.DisplayFor(modelItem => item.Verification)</td>
+                                                <td>
+
+                                                    <a href=@Url.Action("EditSILOCCP", "SILOCCP", new { Id = item.ID }) title="Edit SILO CCP">
+                                                        <i class="fa fa-edit text-primary"></i>
+                                                    </a> &emsp;
+                                                    <a href=@Url.Action("Delete", "SILOCCP", new { Id = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete SILO CCP">
+                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            //SrNo++;
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -106,15 +109,15 @@
     <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
     @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.11/sorting/date-eu.js"></script>*@
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css" />
     @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
         <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
 
 
     <script type="text/javascript">
-    $(document).ready(function () {
-        $('#SILOCCPdt').dataTable().fnDestroy();
-        $('#SILOCCPdt').dataTable({
+        $(document).ready(function () {
+            $('#SILOCCPdt').dataTable().fnDestroy();
+            $('#SILOCCPdt').dataTable({
                 "iDisplayLength": 10,
                 //"columnDefs": [{ "targets": 3, "type": "date-eu" }],
                 //"order": [[3, 'desc']],

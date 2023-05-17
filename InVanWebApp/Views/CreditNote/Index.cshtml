@@ -3,6 +3,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -38,10 +41,10 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.Label("Credit Note Number")</th>
-                                            <th>@Html.Label("Credit Note Date")</th>
                                             <th>@Html.Label("PO Number")</th>
                                             <th>@Html.Label("Vendor")</th>
                                             <th>@Html.Label("Created By")</th>
+                                            <th>@Html.Label("Credit Note Date")</th>
                                             <th>@Html.Label("Actions")</th>
                                         </tr>
                                     </thead>
@@ -50,15 +53,15 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.CreditNoteNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.CreditNoteDate)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.PO_Number)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.VendorName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.CreditNoteDate)</td>
                                                 <td>
-                                                    <a href=@Url.Action("ViewCreditNote", "CreditNote", new { ID = item.ID }) title="View Credit Note">
+                                                    <a href=@Url.Action("ViewCreditNote", "CreditNote", new { ID = item.ID }) title="View Credit-Note">
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a>&emsp;
-                                                    <a href=@Url.Action("DeleteCreditNote", "CreditNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Credit Note">
+                                                    <a href=@Url.Action("DeleteCreditNote", "CreditNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Credit-Note">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>

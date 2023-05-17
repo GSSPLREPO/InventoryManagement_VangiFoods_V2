@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -40,31 +42,50 @@
                                         <tr>
                                             <th>@Html.DisplayName("Indent Number")</th>
                                             <th>@Html.DisplayName("Indent Date")</th>
+                                            @*<th>@Html.DisplayName("Remarks")</th>*@
                                             <th>@Html.DisplayName("Status")</th>
-                                            <th>@Html.DisplayName("Remarks")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                        <tr>
-                                            <td>@Html.DisplayFor(modelItem => item.IndentNo)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.IndentDate)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>
-                                            @*Rahul added 'class="text-wrap w-25"' 13-04-23.*@
-                                            <td class="text-wrap w-25">@Html.DisplayFor(modelItem => item.Description)</td>
-                                            <td>
-                                                @if (item.IndentCount == 0)
-                                                {
-                                        <a href=@Url.Action("EditIndent", "Indent", new { ID = item.ID }) title="Edit Indent">
-                                            <i class="fa fa-edit text-primary"></i>
-                                        </a> <span>&emsp;</span>
-                                                            <a href=@Url.Action("DeleteIndent", "Indent", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Indent">
-                                                                <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                            </a>}
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.IndentNo)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.IndentDate)</td>
+                                                <td>
+
+
+                                                    @if (item.IndentStatus == "Close")
+                                                    {
+                                                        <p style="color: #17d317;font-weight:bold" class="btn">
+                                                            @Html.DisplayFor(modelItem => item.IndentStatus, new { style = "color:green" })
+                                                        </p>
+                                                    }
+                                                    else if (item.IndentStatus == "Open")
+                                                    {
+                                                        <p style="color: darkorange; font-weight: bold" class="btn">
+                                                            @Html.DisplayFor(modelItem => item.IndentStatus, new { style = "color:#c900e1" })
+                                                        </p>
+                                                    }
+                                                </td>
+
+                                                @*<td class="text-wrap w-25">@Html.DisplayFor(modelItem => item.Description)</td>*@
+                                                <td>
+                                                    <a href=@Url.Action("ViewIndent", new { ID = item.ID }) title="View Indent">
+                                                        <i class="fa fa-eye text-primary"></i>
+                                                    </a><span>&emsp;</span>
+                                                    @if (item.IndentCount == 0)
+                                                    {
+                                                        <a href=@Url.Action("EditIndent", "Indent", new { ID = item.ID }) title="Edit Indent">
+                                                            <i class="fa fa-edit text-primary"></i>
+                                                        </a> <span>&emsp;</span>
+                                                        <a href=@Url.Action("DeleteIndent", "Indent", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Indent">
+                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                        </a>
+                                                    }
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>

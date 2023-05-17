@@ -114,12 +114,12 @@
 
 </script>
 <script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
-@*<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>*@
+<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
 <script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
 <script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
-@*<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
 <script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
-<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>*@
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
 <script type="text/javascript">
     function getRandomColor() {
         var Letters = '0123456789ABCDEF';
@@ -150,7 +150,7 @@
         }
 
         if (fromDate > toDate) {
-            alert('Invalid date!, To date is less than From date!');
+            alert('Invalid Date! To date is less than from date!');
             $('#fromDate').focus();
             return;
         }
@@ -249,17 +249,10 @@
                     xAxis: {
                         categories: xAxisData,
                         crosshair: true,
-                        title: {
-                            text: 'Workordernumber(Saleordernumber)',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Balck'
-                            }
-                        }
-                        //scrollbar: {
-                            //enabled: true
-                        //},
-                        //tickLength: 0,
+                        scrollbar: {
+                            enabled: true
+                        },
+                        tickLength: 0,
                     },
                     
                     yAxis: [{ // Primary yAxis

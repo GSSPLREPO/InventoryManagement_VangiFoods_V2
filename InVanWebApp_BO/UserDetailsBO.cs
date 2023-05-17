@@ -46,7 +46,7 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Enter email id!")]
         [DataType(DataType.EmailAddress)]
-        [RegularExpression("[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}", 
+        [RegularExpression("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-z]{2,4}",
             ErrorMessage = "Please enter correct email")]
         public string EmailId { get; set; }
         public string Designation{ get; set; }

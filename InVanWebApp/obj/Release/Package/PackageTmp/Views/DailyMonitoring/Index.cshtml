@@ -4,6 +4,8 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <!DOCTYPE html>
 
 <html>
@@ -49,13 +51,10 @@
                                 </div>
                                 <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
-                                    @*<a id="ExportPdf" style="float: right;" href="@Url.Action("ExportAsPDF", "DailyMonitoring")"><img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:5px" /></a>
-                                        <a id="ExportExcel" style="float:right;" href="@Url.Action("ExportAsExcel", "DailyMonitoring")"><img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:5px" /></a>*@
-                                    @*<a id="ExportPdf" href="@Url.Action("ExportAsPDF", "DailyMonitoring")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>*@
-                                    <a id="ExportExcel" style="float:right;" href="@Url.Action("ExportAsExcel", "DailyMonitoring")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    <a id="ExportExcel" style="margin-left:10%;" href="@Url.Action("ExportAsExcel", "DailyMonitoring")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:2px" /> </a>
                                 </div>
                                 <div class="col-md-2">
-                                    <a href="@Url.Action("AddDailyMonitoring","DailyMonitoring")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                    <a href="@Url.Action("AddDailyMonitoring","DailyMonitoring")" class="btn btn-sm btn-primary pull-right btn-addnew" style="float: right;margin-top:15%; background: linear-gradient(85deg, #392c70, #6a005b);">
                                         <span class="fa fa-plus"></span> Daily Monitoring
                                     </a>
                                 </div>
@@ -69,29 +68,30 @@
                             @*<div class="table-responsive" style="margin-top:25px;">*@
                             @*<table class="ui celled table table-striped table-bordered" id="tblDailyMonitoring" style="table-layout:fixed">*@
                             @*<table id="tblDailyMonitoring" class="table table-striped table-bordered hover table-sm table-responsive-md" width="100%" style="table-layout: fixed;">*@
-                            <table id="tblDailyMonitoring" class="table table-striped table-bordered hover table-sm table-responsive-md" width="100%" style="table-layout: fixed;">
-                                <thead class="text-center" style="text-align:center">
-                                    <tr>
-                                        @*<th>ID</th>*@
-                                        <th>Date</th>
-                                        <th>Personal Hygiene</th>
-                                        <th>Cleaning And Sanitation</th>
-                                        <th>Cleaning of Equipment</th>
-                                        <th>Water Potability</th>
-                                        <th>Verify By</th>
-                                        <th>Actions</th>
-                                        @*<th style="text-align:center">Delete</th>*@
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                            @*</div>*@
+                            <div class="table-responsive" style="padding-top:15px;">
+                                <table id="tblDailyMonitoring" class="table table-striped table-bordered hover table-sm">
+                                    <thead class="text-center" style="text-align:center">
+                                        <tr>
+                                            @*<th>ID</th>*@
+                                            <th>Date</th>
+                                            <th>Personal Hygiene</th>
+                                            <th>Cleaning And Sanitation</th>
+                                            <th>Cleaning of Equipment</th>
+                                            <th>Water Potability</th>
+                                            <th>Verify By</th>
+                                            <th>Actions</th>
+                                            @*<th style="text-align:center">Delete</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                @*</div>*@
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>
 </html>
 @Html.Raw(TempData["Success"])
@@ -184,8 +184,8 @@
                     //},
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Daily Monitoring"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title = "Delete Daily Monitoring"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btnEdit"  style="background:transparent !important;" title = "Edit Daily Monitoring"><i class="fa fa-edit text-primary"/></i></button> <button type="button" id="'
+                                + data + '" class = "btnDelete" style="background:transparent !important;" title = "Delete Daily Monitoring"><i class="fa fa-trash text-danger"/></i></button>'
                         }
                     }
                 ]
@@ -276,11 +276,12 @@
                     { "data": "VerifyByName", "autoWidth": true },
                     {
                         data: "Id", "render": function (data) {
-                            return '<button type="button" id="' + data + '" class = "btn text-primary btnEdit" title = "Edit Daily Monitoring"><i class="fa fa-edit"/></i></button> <button type="button" id="'
-                                + data + '" class = "btn text-danger btnDelete" title = "Delete Daily Monitoring"><i class="fa fa-trash"/></i></button>'
+                            return '<button type="button" id="' + data + '" class = "btnEdit"  style="background:transparent !important;" title = "Edit Daily Monitoring"><i class="fa fa-edit text-primary"/></i></button> <button type="button" id="'
+                                + data + '" class = "btnDelete" style="background:transparent !important;" title = "Delete Daily Monitoring"><i class="fa fa-trash text-danger"/></i></button>'
                         }
                     }
                 ]
+
             });
             //t.on('order.dt search.dt', function () {
             //    let i = 1;
@@ -289,17 +290,13 @@
             //        this.data(i++);
             //    });
             //}).draw();
+
         });
 
         $(document).on("click", ".btnEdit", function () {
                     var id = $(this).attr("id");
                     window.location.href = '@Url.Action("EditDailyMonitoring", "DailyMonitoring", new { Id = "Id"})'.replace("Id", parseInt(id));
-                });
-
-        @*$(document).on("click", ".btnDelete", function () {
-                    var id = $(this).attr("id");
-                    window.location.href = '@Url.Action("Delete", "DailyMonitoring", new { Id = "Id"})'.replace("Id", parseInt(id));
-                });*@
+        });
 
        $(document).on("click", ".btnDelete", function () {
                     var id = $(this).attr("id");

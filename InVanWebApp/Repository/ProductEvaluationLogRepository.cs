@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,7 +16,6 @@ namespace InVanWebApp.Repository
 {
     public class ProductEvaluationLogRepository : IProductEvaluationLogRepository
     {
-        //private readonly string conString = ConfigurationManager.ConnectionStrings["InVanContext"].ConnectionString;
         private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
         private static ILog log = LogManager.GetLogger(typeof(ProductEvaluationLogRepository));
 
@@ -175,7 +173,7 @@ namespace InVanWebApp.Repository
                                 ProductName = reader["ProductName"].ToString(),
                                 BatchCode = reader["BatchCode"].ToString(),
                                 // Ph = reader["Ph"].ToString(),
-                                Ph = Convert.ToDecimal(reader["Ph"]),
+                                Ph = reader["Ph"] is DBNull?0:Convert.ToDecimal(reader["Ph"]),
                                 TexColTaste = reader["TexColTaste"].ToString(),
                                 Acid = reader["Acid"].ToString(),
                                 Salt = reader["Salt"].ToString(),
@@ -196,14 +194,14 @@ namespace InVanWebApp.Repository
                                 ProductName = reader["ProductName"].ToString(),
                                 BatchCode = reader["BatchCode"].ToString(),
                                 //Ph = reader["Ph"].ToString(),
-                                Ph = Convert.ToDecimal(reader["Ph"]),
+                                Ph = reader["Ph"] is DBNull ? 0 : Convert.ToDecimal(reader["Ph"]),
                                 TexColTaste = reader["TexColTaste"].ToString(),
                                 Acid = reader["Acid"].ToString(),
                                 Salt = reader["Salt"].ToString(),
                                 Viscosity = reader["Viscosity"].ToString(),
                                 PELDateAfter7Days = Convert.ToDateTime(reader["PELDateAfter7Days"]),
                                 //PhAfter7Days = reader["PhAfter7Days"].ToString(),
-                                PhAfter7Days = Convert.ToDecimal(reader["PhAfter7Days"]),
+                                PhAfter7Days = reader["PhAfter7Days"] is DBNull ? 0 : Convert.ToDecimal(reader["PhAfter7Days"]),
                                 TexColTasteAfter7Days = reader["TexColTasteAfter7Days"].ToString(),
                                 AcidAfter7Days = reader["AcidAfter7Days"].ToString(),
                                 SaltAfter7Days = reader["SaltAfter7Days"].ToString(),

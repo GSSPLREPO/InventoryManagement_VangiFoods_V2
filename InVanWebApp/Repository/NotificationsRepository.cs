@@ -109,8 +109,9 @@ namespace InVanWebApp.Repository
                         var result = new POPaymentBO()
                         {
                             PurchaseOrderId = Convert.ToInt32(reader["PurchaseOrderId"]),
-                            POPaymentDueDate = Convert.ToDateTime(reader["POPaymentDueDate"]).ToString("dd-MM-yyyy")
-                            //PaymentDueDate = Convert.ToDateTime(reader["POPaymentDueDate"])
+                            POPaymentDueDate = Convert.ToDateTime(reader["POPaymentDueDate"]).ToString("dd-MM-yyyy"),
+                            //PaymentDueDate = Convert.ToDateTime(reader["POPaymentDueDate"]),
+                            PONumber = reader["PONumber"].ToString()
                         };
                         resultList.Add(result);
                     }
@@ -143,8 +144,9 @@ namespace InVanWebApp.Repository
                         var result = new SOPaymentBO()
                         {
                             SalesOrderId = Convert.ToInt32(reader["SalesOrderId"]),
-                            SOPaymentDueDate = Convert.ToDateTime(reader["SOPaymentDueDate"]).ToString("dd-MM-yyyy") 
-                            //PaymentDueDate = Convert.ToDateTime(reader["SOPaymentDueDate"]) 
+                            SOPaymentDueDate = Convert.ToDateTime(reader["SOPaymentDueDate"]).ToString("dd-MM-yyyy"), 
+                            //PaymentDueDate = Convert.ToDateTime(reader["SOPaymentDueDate"]),
+                            SONumber = reader["SONumber"].ToString()
                         };
                         resultList.Add(result);
                     }

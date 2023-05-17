@@ -442,7 +442,7 @@ namespace InVanWebApp.Controllers
             BindLocationName();
             //BindIndentDropDown("POAmendment");
 
-            PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID);
+            PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID,1);
             return View(model);
 
         }
@@ -505,7 +505,7 @@ namespace InVanWebApp.Controllers
         #region Bind dropdowns Company 
         public void BindCompany()
         {
-            var result = _purchaseOrderRepository.GetCompanyList();
+            var result = _purchaseOrderRepository.GetCompanyList(1);
             var resultList = new SelectList(result.ToList(), "VendorsID", "CompanyName");
             ViewData["CompanyName"] = resultList;
         }

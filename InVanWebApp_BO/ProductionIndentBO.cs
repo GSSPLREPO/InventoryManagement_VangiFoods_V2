@@ -24,7 +24,7 @@ namespace InVanWebApp_BO
         public int RecipeID { get; set; }
         public string RecipeName { get; set; }
 
-        //[Required(ErrorMessage = "Select the SO Number!")]
+        [Required(ErrorMessage = "Select the SO Number!")]
         public int SalesOrderId { get; set; }
         public string SONo { get; set; }
         public string WorkOrderNo { get; set; }
@@ -58,7 +58,7 @@ namespace InVanWebApp_BO
         public decimal AvailableStock { get; set; }
         public string CurrencyName { get; set; }
         public string ItemUnit { get; set; }
-        //[Required(ErrorMessage = "Select the SO Number!")] 
+        [Required(ErrorMessage = "Select the SO Number!")]
         public Nullable<int> SO_Id { get; set; }
     }
 

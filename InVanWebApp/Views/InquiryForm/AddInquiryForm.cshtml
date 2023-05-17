@@ -32,7 +32,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @*Rahul added @max for DateOfInquiry 10-02-2023.*@ 
+                    @*Rahul added @max for DateOfInquiry 10-02-2023.*@
                     @Html.TextBoxFor(model => model.DateOfInquiry, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
                     @Html.ValidationMessageFor(model => model.DateOfInquiry, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -107,7 +107,7 @@
                     @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Vendor Name")
+                    @Html.Label("Client Name")
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
@@ -125,13 +125,13 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title" style="color:darkcyan">
-                                Delivery Details
+                                Supplier Address
                                 <span style="color:red">*</span>
                             </h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm", placeholder = "Delivery address", style = "height:100px" })
-                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { id = "valMsgDeliveryAdd", @class = "error mt-2 text-danger" })
+                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm", placeholder = "Supplier address", style = "height:100px" })
+                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger", id = "valMsgDeliveryAdd" })
                             </div>
                         </div>
                     </div>
@@ -141,13 +141,13 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title" style="color:darkcyan">
-                                Supplier Details
+                                Customer Address
                                 <span style="color:red">*</span>
                             </h4>
                             <hr />
                             <div class="form-group">
-                                @Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control form-control-sm", placeholder = "Supplier address", style = "height:100px" })
-                                @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { id = "valMsgSupplierAdd", @class = "error mt-2 text-danger" })
+                                @Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control form-control-sm", placeholder = "Customer address", style = "height:100px" })
+                                @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "error mt-2 text-danger", id = "valMsgSupplierAdd" })
 
                             </div>
                         </div>
@@ -166,12 +166,12 @@
                                         <thead>
                                             <tr>
                                                 <th class="sortStyle">
-                                                    Item Code
+                                                    Item
                                                 </th>
                                                 <th class="sortStyle d-n d-none">
                                                     Selected Item Code
                                                 </th>
-                                                <th class="sortStyle">
+                                                <th class="sortStyle d-n d-none">
                                                     Item
                                                 </th>
                                                 <th class="sortStyle">
@@ -207,7 +207,6 @@
                                                 </th>
                                                 <th class="sortStyle">
                                                     Remarks
-                                                    <span style="color:red">*</span>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -219,7 +218,7 @@
                                                 <td class="col-md-4 d-none">
                                                     @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
                                                 </td>
-                                                <td>
+                                                <td class="d-n d-none">
                                                     @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
@@ -247,7 +246,7 @@
                                                     @Html.TextBox("ItemTaxValue", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
-                                                    @Html.TextBoxFor(model => model.TotalItemCost, "0", new { @class = "form-control form-control-sm text-right", value="0",id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                    @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control form-control-sm text-right", value = "0", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                 </td>
                                                 @*<td>
                                                         @Html.TextBoxFor(model => model.CloserPrice, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
@@ -371,19 +370,55 @@
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
     function SaveBtnClick() {
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 1;
+        var ItemQuantity = $('#ItemQuantity').val();
+        ItemQuantity = (ItemQuantity == '' || ItemQuantity == null) ? 0 : parseFloat(ItemQuantity);
+
+        if (ItemQuantity == 0) {
+            flag = 0;
+        }
+        else {
+            flag = 1;
+        }
+
+        if (tableLength > 1) {
+            while (i <= tableLength - 2) {
+                ItemQuantity = document.getElementById("itemQuantity_" + i).value;
+                ItemQuantity = (ItemQuantity == '' || ItemQuantity == null) ? 0 : ItemQuantity;
+                ItemQuantity = parseFloat(ItemQuantity);
+
+                if (ItemQuantity == 0) {
+                    alert("Ordering quantity cannot be zero/null! Cannot generate inquiry!");
+                    $('#btnSave').prop('disabled', true);
+                    event.preventDefault();
+                    return;
+                }
+                else {
+                    flag = 1;
+                }
+                i++;
+
+            }
+            if (flag != 1) {
+                alert("Ordering quantity cannot be zero/null! Cannot generate inquiry!");
+                $('#btnSave').prop('disabled', true);
+                event.preventDefault();
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
+
         createJson();
     };
     //==========end===============
 
     //===========OnChange of item if currency is not selected================
     $("#Item_ID").change(function () {
-        // //debugger
-        //getitemDetails();
-        debugger
         var CurrencyIDCheck = $('#CurrencyID').val();
         console.log(CurrencyIDCheck);
         if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
-            debugger
             alert("Select Currency!");
             $('#CurrencyID').focus();
             document.getElementById('Item_ID').selectedIndex = 0;
@@ -408,8 +443,7 @@
                 //as inputto json method GetitemDetails.
 
                 success: function (itemDescription) {
-                    debugger
-                    console.log("itemDescription: " + itemDescription);
+                    //console.log("itemDescription: " + itemDescription);
                     var description = JSON.stringify(itemDescription);
                     $("#ItemName").val(itemDescription.Item_Name);
                     $("#ItemUnit").val(itemDescription.UnitCode);
@@ -420,8 +454,8 @@
                     $("#CurrencyName").val(itemDescription.IndianCurrencyValue);
                     $("#ItemTaxValue").val(itemDescription.ItemTaxValue);
                     $("#ItemQuantity").val('0');
+                    $("#ItemTotalPrice").val('0');
 
-                    $("#ItemTotalPrice").val('');
                     $("#TotalBeforeTax").val('0');
                     $("#TotalTax").val('');
                     $("#TotalAfterTax").val('');
@@ -492,9 +526,6 @@
     }
 
     $("#AddItem").click(function () {
-        ////debugger
-        //'<select id="ItemID" class="form-control" name="ItemID[' + counter + ']" required="required" /><optio >--Select Item--</option></select>' +
-        //var nameItem = "Item_ID['" + counter + "']";
         var itemId = "ItemID_" + counter;
         var itemCode = "itemCode_" + counter;
         var itemDescription = "itemDescription_" + counter;
@@ -516,7 +547,7 @@
             '<td class="d-none">' +
             '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" />' +
             '</td>' +
-            '<td>' +
+            '<td class="d-n d-none">' +
             '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
@@ -567,6 +598,8 @@
     });
 
     function CalItemTotalPrice(value, id) {
+        $('#btnSave').prop('disabled', false);
+
         var temp_rowNo = id.split('_');
         var rowNo = temp_rowNo[1];
         if (value == '')
@@ -591,6 +624,9 @@
         $('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;
         length = parseFloat(length) - 2;
+
+        //var ItemTotalPrice = $("#ItemTotalPrice").val(totalPrice);
+
         var total = parseFloat(ItemTotalPrice.value);
         total = Math.round(total);
         var totalTax = (parseFloat(ItemTaxValue.value) / 100) * total;
@@ -627,13 +663,15 @@
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
-        console.log(res);
+        //console.log(res);
         var TxtItemDetails = JSON.stringify(res);
-        console.log(TxtItemDetails);
         $('#TxtItemDetails').val(TxtItemDetails);
     }
 
     $("#ItemQuantity").change(function () {
+
+        $('#btnSave').prop('disabled', false);
+
         var quantity = $("#ItemQuantity").val();
         var price = $("#ItemUnitPrice").val();
         var tempTax = $("#ItemTaxValue").val().split("%")
@@ -644,24 +682,23 @@
         totalPrice = Math.round(totalPrice);
         $("#ItemTotalPrice").val(totalPrice);
 
-        //Set values in Bill
-        var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
-        $("#TotalBeforeTax").val(totalPrice);
+        ////Set values in Bill
+        //var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
+        //$("#TotalBeforeTax").val(totalPrice);
 
-        var itemTaxVal = tax / 100 * totalPrice;
-        itemTaxVal = Math.round(itemTaxVal);
-        totalPriceAfterTax = Math.round(totalPriceAfterTax);
+        //var itemTaxVal = tax / 100 * totalPrice;
+        //itemTaxVal = Math.round(itemTaxVal);
+        //totalPriceAfterTax = Math.round(totalPriceAfterTax);
 
-        $("#TotalTax").val(itemTaxVal);
-        $("#TotalAfterTax").val(totalPriceAfterTax);
-        $("#GrandTotal").val(totalPriceAfterTax);
+        //$("#TotalTax").val(itemTaxVal);
+        //$("#TotalAfterTax").val(totalPriceAfterTax);
+        //$("#GrandTotal").val(totalPriceAfterTax);
+        CalculateTotalBeforeTax();
     });
 
-
     function SelectedIndexChangedLocation(id) {
-        ///alert(id);
-        ///debugger
         $('#valMsgDeliveryAdd').hide();
+
         var selectedOptionLocationName, locationName;
         selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
         locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
@@ -673,8 +710,6 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                ///debugger;
-                ///console.log(result);
                 var deliveryAdd = result[0].DeliveryAddress;
                 $("#DeliveryAddress").val(deliveryAdd);
             }
@@ -682,9 +717,8 @@
     }
 
     function SelectedIndexChanged(id) {
-        //alert(id);
-        ////debugger
         $('#valMsgSupplierAdd').hide();
+
         var selectedOption, companyName;
         selectedOption = document.getElementById("VendorsID").selectedIndex;
         companyName = document.getElementById("VendorsID").options[selectedOption].innerText;
@@ -705,19 +739,16 @@
     }
 
     function SelectedIndexChangedItemList(id) {
-        debugger
         var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
         itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
+        itemCode = itemCode.split(' (')[0];
         document.getElementById("ItemCode").value = itemCode;
     }
 
     /*Rahul : Add Javascript validation on 12 Oct 2022.*/
     function isNumberKey(evt) {
-        //var charCode = (evt.which) ? evt.which : evt.keyCode;
-        //if (charCode > 31 && (charCode < 48 || charCode > 57))
-        //    return false;
-        //return true;
+        $('#btnSave').prop('disabled', false);
         var keycode = (evt.which) ? evt.which : evt.keyCode;
         if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
             return false;

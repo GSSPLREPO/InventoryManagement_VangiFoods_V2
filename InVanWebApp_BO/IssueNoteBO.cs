@@ -13,6 +13,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Enter issue note no.!")]
         public string IssueNoteNo { get; set; }
         [Required(ErrorMessage = "Select date!")]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> IssueNoteDate { get; set; }
         
         [Required(ErrorMessage = "Select Purpose!")]

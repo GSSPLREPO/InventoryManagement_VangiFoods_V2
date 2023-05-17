@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/MainMaster.cshtml";
 }
 
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 <html>
 <head>
     <title>Stock Transfer</title>
@@ -73,38 +76,38 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Item_Code)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Item_Name)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.CreatedDate)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.InwardDateOfItem)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FromLocationName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FromLocation_BeforeTransferQty)
-                                                KG
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.TransferQuantity)
-                                                KG
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.ToLocationName)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.FinalQuantity)
-                                                KG
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Item_Code)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Item_Name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.InwardDateOfItem)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FromLocationName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FromLocation_BeforeTransferQty)
+                                                    KG
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.TransferQuantity)
+                                                    KG
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.ToLocationName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.FinalQuantity)
+                                                    KG
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>

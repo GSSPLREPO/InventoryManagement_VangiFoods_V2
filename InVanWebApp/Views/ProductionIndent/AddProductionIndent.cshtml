@@ -5,173 +5,153 @@
 @using (Html.BeginForm("AddProductionIndent", "ProductionIndent", FormMethod.Post))
 {
 @Html.AntiForgeryToken()
-                @Html.HiddenFor(model => model.ID)
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4>Add Production Indent</h4>
-                                        <hr />
-                                        @Html.ValidationSummary(true)
 
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                @Html.Label("Indent Number")
-                                                <span style="color:red">*</span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.TextBoxFor(model => model.ProductionIndentNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
-                                                @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })
-                                            </div>
-                                            <div class="col-md-2">
-                                                @Html.Label("Issue Date")
-                                                <span style="color:red">*</span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.TextBoxFor(model => model.IssueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @readonly = "readonly" })
-                                                @Html.ValidationMessageFor(model => model.IssueDate, "", new { @class = "error mt-2 text-danger" })
-                                            </div>
-                                        </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Add Production Indent</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
 
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                @Html.Label("Indent By")
-                                                <span style="color:red">*</span>
-                                            </div>
-                                            @if (@Session["UserId"] != null)
-                                            {
-                            <div class="col-md-4 d-none">
-                                @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control form-control-sm", Value = @Session["UserId"], @readonly = "readonly" })
-                            </div>}
-
-                                            @if (@Session["UserName"] != null)
-                                            {
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Indent Number")
+                                <span style="color:red">*</span>
+                            </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", Value = @Session["UserName"], @readonly = "readonly" })
-                            </div>}
-                                            <div class="col-md-2">
-                                                @Html.Label("Production Date")
-                                                <span style="color:red">*</span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.TextBoxFor(model => model.ProductionDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
-                                                @Html.ValidationMessageFor(model => model.ProductionDate, "", new { @class = "error mt-2 text-danger" })
-                                            </div>
-                                        </div>
+                                @Html.TextBoxFor(model => model.ProductionIndentNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Issue Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.IssueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.IssueDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
 
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                @Html.Label("SO Number")
-                                                <span style="color:red">*</span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                @*@Html.DropDownList("SalesOrderId", (IEnumerable<SelectListItem>)ViewData["SONumberAndId"], "--Select--",
-                                                                            new { @class = "form-control", onchange = "SelectedIndexChangedSO($(this).val(),id)" })
-                                                    @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger" })
-                                                    @Html.HiddenFor(model => model.SONo)*@
-                                                @Html.DropDownListFor(model => model.SO_Id, (IEnumerable<SelectListItem>)ViewData["SO_dd"], "--Select--",
-                                                                                     new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
-                                                @Html.ValidationMessageFor(model => model.SO_Id, "", new { @class = "error mt-2 text-danger" })
-                                                @Html.HiddenFor(model => model.SONo)
-                                            </div>
-                                            <div class="col-md-2">
-                                                @Html.Label("Work Order No")
-                                            </div>
-                                            <div class="col-md-4">
-                                                @*@Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
-                                                    new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })*@
-                                                @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                                                @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
-                                                @*@Html.HiddenFor(model => model.WorkOrderNo)*@
-                                            </div>
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Indent By")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @if (@Session["UserId"] != null)
+                                {
+                @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control form-control-sm", Value = @Session["UserId"], @readonly = "readonly" })}
+                            </div>
 
-                                        <div class="row">
-                                            @*<div class="col-md-2">
-                                                    @Html.Label("Product Name")
-                                                    <span style="color:red">*</span>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    @Html.DropDownListFor(model => model.RecipeID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val(),id)" })
-                                                    @Html.ValidationMessageFor(model => model.RecipeID, "", new { @class = "error mt-2 text-danger" })
-                                                    @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
-                                                </div>*@
+                            <div class="col-md-4">
+                                @if (@Session["UserName"] != null)
+                                {
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", Value = @Session["UserName"], @readonly = "readonly" })}
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Production Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.ProductionDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.ProductionDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
 
-                                            <div class="col-md-2">
-                                                @Html.Label("Product Name")
-                                                <span style="color:red">*</span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                @*<select id="RecipeID" name="RecipeID" class="form-control form-control-sm" onchange="SelectedIndexChangedProductNameList($(this).val())">
-                                                        <option value="">--Select--</option>
-                                                    </select>*@
-                                                @*//data-val="true" added 06-04-23.*@
-                                                <select id="RecipeID" name="RecipeID" class="form-control form-control-sm" onchange="SelectedIndexChangedProductNameList($(this).val())" data-val="true" data-val-number="The field RecipeID must be a number." data-val-required="Select the Product Name!">
-                                                    <option value="">--Select--</option>
-                                                </select>
-                                                @Html.ValidationMessageFor(model => model.RecipeID, "", new { @class = "error mt-2 text-danger" })
-                                                @Html.HiddenFor(model => model.RecipeName)
-                                            </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("SO Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.SO_Id, (IEnumerable<SelectListItem>)ViewData["SO_dd"], "--Select--",
+                                                                                new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                @Html.ValidationMessageFor(model => model.SO_Id, "", new { @class = "error mt-2 text-danger" })
+                                @Html.HiddenFor(model => model.SONo)
 
-                                            <div class="col-md-2">
-                                                @Html.Label("Total Batches")
-                                                <span style="color:red">*</span>
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.TextBoxFor(model => model.TotalBatches, new { @class = "form-control form-control-sm", maxlength = "8", })
-                                                @Html.ValidationMessageFor(model => model.TotalBatches, "", new { @class = "error mt-2 text-danger" })
-                                            </div>
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Work Order No")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
+                            </div>
+                        </div>
 
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Product Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="RecipeID" name="RecipeID" class="form-control form-control-sm" onchange="SelectedIndexChangedProductNameList($(this).val())" data-val="true" data-val-number="The field RecipeID must be a number." data-val-required="Select the Product Name!">
+                                    <option value="">--Select--</option>
+                                </select>
+                                @Html.ValidationMessageFor(model => model.RecipeID, "", new { @class = "error mt-2 text-danger" })
+                                @Html.HiddenFor(model => model.RecipeName)
+                            </div>
 
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                @Html.Label("Batch Number")
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                                                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })
-                                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Total Batches")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.TotalBatches, new { @class = "form-control form-control-sm", maxlength = "8", })
+                                @Html.ValidationMessageFor(model => model.TotalBatches, "", new { @class = "error mt-2 text-danger" })
+                            </div>
 
-                                            <div class="col-md-2">
-                                                @Html.Label("Remarks")
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95", onkeypress = "createJson();" })
-                                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <hr />
-                                        <div class="row">
-                                            <div class="col-md-4" style="color:darkcyan">
-                                                @Html.Label("Indent Ingredients detail")
-                                            </div>
-                                        </div>
-                                        <hr />
-                                        <div class="row">
-                                            <div class="col-md-12 table-responsive">
-                                                <table class="table table-hover" id="ItemTable">
-                                                    <tr>
-                                                        <th class="d-none">ItemID</th>
-                                                        <th>Item Code</th>
-                                                        <th>@*Ingredients*@ Item Name</th>
-                                                        <th>Percentage</th>
-                                                        <th>Batch Quantity</th>
-                                                        <th>Final Quantity</th>
-                                                        <th>Units</th>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
-                                        </div>
-                                        <br />
-                                        <a href="@Url.Action("Index", "ProductionIndent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                                            Back To List
-                                        </a>
-                                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
-                                    </div>
-                                </div>}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Batch Number")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+
+                            <div class="col-md-2">
+                                @Html.Label("Remarks")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95", onkeypress = "createJson();" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4" style="color:darkcyan">
+                                @Html.Label("Indent Ingredients detail")
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12 table-responsive">
+                                <table class="table table-hover" id="ItemTable">
+                                    <tr>
+                                        <th class="d-none">ItemID</th>
+                                        <th>Item Code</th>
+                                        <th>@*Ingredients*@ Item Name</th>
+                                        <th>Percentage</th>
+                                        <th>Batch Quantity</th>
+                                        <th>Final Quantity</th>
+                                        <th>Units</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                        </div>
+                        <br />
+                        <a href="@Url.Action("Index", "ProductionIndent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                    </div>
+                </div>}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -200,8 +180,6 @@
 
             for (var j = 0; j < count - 1; j++) {
                 var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
-                //var value = document.getElementById("ItemQty_" + j).innerHTML;
-                //alert(value);
                 $("#txtFinalQty_" + j).val(FinalQty.toFixed(4));
             }
 
@@ -213,6 +191,20 @@
             type: "POST",
             data: {},
             success: function (result) {
+                if (result.length < totalBatches) {
+                    alert('You are entering wrong no of batches!');
+                    $("#TotalBatches").val(result.length);
+
+                    totalBatches = parseFloat(result.length);
+                    var table = document.getElementById('ItemTable');
+                    var count = table.rows.length;
+
+                    for (var j = 0; j < count - 1; j++) {
+                        var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
+                        $("#txtFinalQty_" + j).val(FinalQty.toFixed(2));
+                    }
+                }
+
                 for (var j = 0; j < result.length; j++) {
                     batchNumber = batchNumber + result[j].BatchNumber;
                     if (j != result.length - 1)
@@ -224,13 +216,15 @@
                 alert('Not able to fetch Batch Number, do batch planning!');
                 $('#TotalBatches').val('');
                 $('#BatchNumber').val('');
-                $('#SO_Id').focus();    //added 06-04-23.
+                $('#SO_Id').focus();
             }
         });
+
     });
+
     // SO Number New Start
     function SelectedIndexChanged(id) {
-        $('#btnSave').prop('disabled', false);    //added 06-04-23.
+        $('#btnSave').prop('disabled', false);
 
         var selectedSONumber_No, SONumber_No;
         selectedSONumber_No = document.getElementById("SO_Id").selectedIndex;
@@ -257,21 +251,22 @@
                 alert('Not able to get the work order number!');
             }
         });
-        //Check whether the Total Batches is entered or not 06-04-23.
-        var TotalBatchesCheck = $('#TotalBatches').val();
-        if (TotalBatchesCheck == '' || TotalBatchesCheck == null) {
-            $('#TotalBatches').focus();
-            document.getElementById('RecipeID').selectedIndex = 0;
-            return;
-        }
-        else {
-            $("#TotalBatches-error").prop("disabled", "true");
-        }
+
+        ////Check whether the Total Batches is entered or not 06-04-23.
+        //var TotalBatchesCheck = $('#TotalBatches').val();
+        //if (TotalBatchesCheck == '' || TotalBatchesCheck == null) {
+        //    $('#TotalBatches').focus();
+        //    document.getElementById('RecipeID').selectedIndex = 0;
+        //    return;
+        //}
+        //else {
+        //    $("#TotalBatches-error").prop("disabled", "true");
+        //}
     }
     // So Number New End
 
     function SelectedIndexChangedProductNameList(id) {
-        $('#btnSave').prop('disabled', false);    //added 06-04-23.
+        $('#btnSave').prop('disabled', false);
 
         var selectedOptionRecipeName, RecipeName;
 
@@ -287,7 +282,6 @@
         }
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
-
         while (rowCount != '1') {
             var row = table.deleteRow(rowCount - 1);
             rowCount--;
@@ -302,8 +296,8 @@
             dataType: "json",
             success: function (result) {
                 var ColCount = result.length;
-                //added 06-04-23.
-                if (ColCount > 1) {
+
+                if (ColCount > 0) {
                     $('#btnSave').prop('disabled', false);
                 }
                 else {
@@ -311,7 +305,7 @@
                     $('#RecipeID').focus();
                     $('#btnSave').prop('disabled', true);
                 }
-                //console.log(result);
+
                 //===================Create dynamic table for binding Item details====================//
                 var table = document.getElementById('ItemTable');
                 for (var j = 0; j < result.length; j++) {
@@ -375,9 +369,11 @@
                             cell.innerHTML = result[j].UnitName;
                             cell.setAttribute("id", "ItemUnit_" + j);
                         }
+
+
                     }
                 }
-            },
+            }
         });
     }
 

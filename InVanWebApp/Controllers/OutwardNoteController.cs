@@ -321,7 +321,8 @@ namespace InVanWebApp.Controllers
         #region Bind dropdowns 
         public void BindUsers()
         {
-            var result = _userDetailsRepository.GetAll();
+            var UserId = Convert.ToInt32(Session[ApplicationSession.USERID]);
+            var result = _userDetailsRepository.GetAll(UserId);
             var resultList = new SelectList(result.ToList(), "EmployeeID", "EmployeeName");
             ViewData["EmployeeName"] = resultList;
         }
