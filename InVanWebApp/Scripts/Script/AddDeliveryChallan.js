@@ -431,7 +431,6 @@ function fileValidation() {
         }
     }
 }
-
 function minmax(value, min, max) {
 
     //value = Math.round((value + Number.EPSILON) * 100) / 100;

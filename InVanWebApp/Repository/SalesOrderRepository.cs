@@ -114,6 +114,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
+                    cmd.Parameters.AddWithValue("@DiscountPercentage", model.DiscountPercentage); //Rahul added for 'VAN-1203' 18-05-2023. 
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@ApprovedBy", model.CreatedById);
                     cmd.Parameters.AddWithValue("@ApprovedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -296,6 +297,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
+                    cmd.Parameters.AddWithValue("@DiscountPercentage", model.DiscountPercentage); //Rahul added for 'VAN-1203' 18-05-2023. 
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedById);

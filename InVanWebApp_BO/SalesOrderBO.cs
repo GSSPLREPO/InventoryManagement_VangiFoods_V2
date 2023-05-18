@@ -107,6 +107,8 @@ namespace InVanWebApp_BO
 
         //Added the below the field for Delivery Challan including the Finished goods quantity in it.
         public decimal FinishedGoodQuantity { get; set; }
+        public float DiscountPercentage { get; set; } //Rahul added for 'VAN-1203' 18-05-2023. 
+
     }
 
     public class SalesOrderItemsDetail
