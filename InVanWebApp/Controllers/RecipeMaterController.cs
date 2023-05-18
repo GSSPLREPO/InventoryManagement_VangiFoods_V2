@@ -316,5 +316,55 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
+        #region View Inquiry Form 
+        /// <summary>
+        /// Created By: Farheen
+        /// Created Date : 18-05-2023. 
+        /// Description: This method responsible for View of Recipe.
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        public ActionResult ViewRecipe(int Recipe_ID)
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            BindItemTypeCategory();
+            RecipeMasterBO model = _productionRecipeRepository.GetById(Recipe_ID);
+            model.recipe_Details = _productionRecipeRepository.GetItemDetailsByRecipeId(Recipe_ID);
+
+            //Binding item grid with Recipe. 
+            var recipeList = _productionRecipeRepository.GetItemDetailsForRecipe();
+            var dd = new SelectList(recipeList.ToList(), "ID", "Item_Code", "UOM_Id");
+
+            string Ingredients = "Ingredients";
+
+            if (model != null)
+            {
+                var ItemCount = model.recipe_Details.Count;
+                var i = 0;
+                while (i < ItemCount)
+                {
+                    Ingredients = "Ingredients";
+                    Ingredients = Ingredients + i;
+                    dd = new SelectList(recipeList.ToList(), "ID", "Item_Code", model.recipe_Details[i].ItemId);
+                    ViewData[Ingredients] = dd;
+                    i++;
+                }
+            }
+
+            ViewData[Ingredients] = dd;
+
+            return View(model);
+
+            ////Binding item grid with sell type item.
+            //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+            //ViewData["itemListForDD"] = dd;
+            //InquiryFormBO model = _inquiryFormRepository.GetInquiryFormById(InquiryID);
+            //return View(model);
+        }
+        #endregion
+
     }
 }

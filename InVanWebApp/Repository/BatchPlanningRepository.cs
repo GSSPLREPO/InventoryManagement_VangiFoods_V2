@@ -45,8 +45,10 @@ namespace InVanWebApp.Repository
                             WorkOrderNumber = reader["WorkOrderNumber"].ToString(),
                             SONumber = reader["SONumber"].ToString(),
                             ProductName = reader["ProductName"].ToString(),
-                            TotalBatchSize = Convert.ToDecimal(reader["TotalBatchSize"]),
-                            TotalNoBatches = Convert.ToDecimal(reader["TotalNoBatches"])
+                            TotalBatchSize = float.Parse(reader["TotalBatchSize"].ToString()),
+                            TotalNoBatches = float.Parse(reader["TotalNoBatches"].ToString())
+                            //TotalBatchSize = Convert.ToDecimal(reader["TotalBatchSize"]),
+                            //TotalNoBatches = Convert.ToDecimal(reader["TotalNoBatches"])
                         };
                         resultList.Add(result);
                     }
@@ -120,13 +122,13 @@ namespace InVanWebApp.Repository
                             objItemDetails.ItemCode = item.ElementAt(0).Value.ToString();
                             objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
                             objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                            objItemDetails.QuantityPercentage = Convert.ToDecimal(item.ElementAt(3).Value);
-                            objItemDetails.BatchSize = Convert.ToDecimal(item.ElementAt(4).Value);
-                            objItemDetails.TotalQuantityInBatch = Convert.ToDecimal(item.ElementAt(5).Value);
-                            objItemDetails.YieldPercentage = Convert.ToDecimal(item.ElementAt(6).Value);
-                            objItemDetails.ActualRequirement = Convert.ToDecimal(item.ElementAt(7).Value);
-                            objItemDetails.StockInHand = Convert.ToDecimal(item.ElementAt(8).Value);
-                            objItemDetails.ToBeProcured = Convert.ToDecimal(item.ElementAt(9).Value);
+                            objItemDetails.QuantityPercentage = float.Parse(item.ElementAt(3).Value);
+                            objItemDetails.BatchSize = float.Parse(item.ElementAt(4).Value);
+                            objItemDetails.TotalQuantityInBatch = float.Parse(item.ElementAt(5).Value);
+                            objItemDetails.YieldPercentage = float.Parse(item.ElementAt(6).Value);
+                            objItemDetails.ActualRequirement = float.Parse(item.ElementAt(7).Value);
+                            objItemDetails.StockInHand = float.Parse(item.ElementAt(8).Value);
+                            objItemDetails.ToBeProcured = float.Parse(item.ElementAt(9).Value);
 
                             itemDetails.Add(objItemDetails);
                         }

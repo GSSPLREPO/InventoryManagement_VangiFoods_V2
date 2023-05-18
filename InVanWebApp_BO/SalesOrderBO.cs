@@ -61,6 +61,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public Nullable<int> CheckedById { get; set; }
         public Nullable<System.DateTime> CheckedDate { get; set; }
+        public float? DiscountPercentage { get; set; }
         public string Remarks { get; set; }
         public string DispatchMode { get; set; }
         [Required(ErrorMessage = "Select inquiry number!")]

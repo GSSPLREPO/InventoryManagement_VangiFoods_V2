@@ -1,4 +1,4 @@
-﻿@model InVanWebApp_BO.RequestForQuotationBO 
+﻿@model InVanWebApp_BO.RequestForQuotationBO
 
 @{
     ViewBag.Title = "RFQSupplierDetails";
@@ -166,7 +166,6 @@
                                                 </th>
                                                 <th class="sortStyle">
                                                     Remarks
-                                                    <span style="color:red">*</span>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -228,7 +227,7 @@
                                                             @*@Html.TextBox("ItemTaxValue", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })*@
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost,"0" ,new { @class = "form-control form-control-sm text-right",style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "8" })
+                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost, "0", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "8" })
                                                             @*@Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })*@
                                                         </td>
                                                         <td>
@@ -330,7 +329,7 @@
 
                     <div class="col">
                         <a href="@Url.Action("Index", "RequestForQuotation")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                            Back 
+                            Back
                         </a>
                     </div>
                 </div>

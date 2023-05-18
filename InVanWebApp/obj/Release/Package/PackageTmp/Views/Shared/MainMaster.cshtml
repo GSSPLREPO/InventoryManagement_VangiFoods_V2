@@ -170,7 +170,7 @@
                 </nav>
                 <!-- Modal Start 26-04-23-->
                 <div class="modal fade" id="myModalNotification" role="dialog">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-scrollable">
                         Modal content
                         <div class="modal-content">
                             <div class="modal-header">
@@ -400,7 +400,7 @@
                                 <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
                                     Powered by @*<i class="far fa-heart text-danger"></i>*@
                                     <a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
-                                    &ensp;<b>Version : 2.2.0 </b>
+                                    &ensp;<b>Version : 2.2.1 </b>
                                 </span>
                             </div>
                         </footer>
@@ -533,10 +533,14 @@
                     var j = ""; var p = 0; var Q = "";
                     $.each(response, function (k, v) {
                         p++;
+                    //    if (p < 6) {
+                    //        j += "<li> <a> <strong>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
+                    //    }
+                    //    Q += "<a>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a>";
                         if (p < 6) {
-                            j += "<li> <a> <strong>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
+                            j += "<li> <a> <strong>  " + v.ItemName + " </strong> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Stock Quantity: " + v.StockQuantity + "</i> <i style='font-size:smaller'>, Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
                         }
-                        Q += "<a>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a>";
+                        Q += "<a>  " + v.ItemName + " </strong> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Stock Quantity: " + v.StockQuantity + "</i> <i style='font-size:smaller'>, Updated Min Stock : " + v.MinimumStock + "</i></div></a>";
                     });
                     $('#myNotifyList').html("");
                     j += "<li><a data-toggle='modal' data-target='#myModalNotification'><div style='text-align:center'><strong> Show more </strong></div></li>";

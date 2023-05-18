@@ -127,7 +127,7 @@ namespace InVanWebApp_BO
         public Nullable<double> CurrencyPrice { get; set; }
         public Nullable<double> IndianCurrencyValue { get; set; }
 
-        [Required(ErrorMessage = "Enter remakrs!")] ////added 
+        //[Required(ErrorMessage = "Enter remakrs!")] ////added 
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedByID { get; set; }

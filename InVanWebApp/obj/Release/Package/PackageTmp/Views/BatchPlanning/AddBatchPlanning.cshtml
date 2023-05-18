@@ -236,14 +236,14 @@
                 i++;
             }
             var totalBatchYield = ((totalRawYield * TotalBatchSize) / totalPercentage);
-            TotalBatchSize = Math.round(TotalBatchSize*100)/100;
+            TotalBatchSize = Math.round(TotalBatchSize* 10000)/10000;
             $('#TotalBatchSize').val(TotalBatchSize);
 
             var RequiredQuantityInKG = $('#RequiredQuantityInKG').val();
             RequiredQuantityInKG = parseFloat(RequiredQuantityInKG);
 
             var TotalNoOfBatch = (RequiredQuantityInKG / totalBatchYield);
-            TotalNoOfBatch = Math.round(TotalNoOfBatch * 1000) / 1000;
+            TotalNoOfBatch = Math.round(TotalNoOfBatch * 10000) / 10000;
             $('#TotalNoBatches').val(TotalNoOfBatch);
 
             i = 0;
@@ -251,7 +251,7 @@
                 var batchSize = document.getElementById('BatchSize_' + i).innerHTML;
                 batchSize = parseFloat(batchSize);
                 var totalBatchCol = (TotalNoOfBatch * batchSize);
-                totalBatchCol = Math.round(totalBatchCol * 1000) / 1000;
+                totalBatchCol = Math.round(totalBatchCol * 10000) / 10000;
                 document.getElementById('TotalBatches_' + i).value = totalBatchCol;
                 i++;
             }
@@ -282,7 +282,7 @@
             totalBatch = parseFloat(totalBatch);
 
             var RequiredQty = (totalBatch * 100) / value;
-            RequiredQty = Math.round(RequiredQty * 1000) / 1000;
+            RequiredQty = Math.round(RequiredQty * 10000) / 10000;
             document.getElementById('ActualRequirement_' + rowNo).value = RequiredQty;
 
             var StockInHand = (document.getElementById('StockInHand_' + rowNo).innerHTML).split(' ')[0];
@@ -293,7 +293,7 @@
             if (ToBeProcured < 0)
                 ToBeProcured = 0;
             else {
-                ToBeProcured = Math.round(ToBeProcured * 1000) / 1000;
+                ToBeProcured = Math.round(ToBeProcured * 10000) / 10000;
                 document.getElementById('ToBeProcured_' + rowNo).value = ToBeProcured;
             }
         }

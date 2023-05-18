@@ -123,6 +123,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.CreatedById);
+                    cmd.Parameters.AddWithValue("@DiscountPercentage", model.DiscountPercentage);
 
                     //con.Open();
 
@@ -235,10 +236,17 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public SalesOrderBO GetSalesOrderById(int Id)
+        public SalesOrderBO GetSalesOrderById(int Id, int flagView = 0)
         {
             string purchaseOrderQuery = "SELECT * FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
             string purchaseOrderItemQuery = "SELECT * FROM SalesOrderItemsDetails WHERE SalesOrderId = @Id AND IsDeleted = 0";
+
+            if (flagView == 1)
+            {
+                purchaseOrderItemQuery = "SELECT * FROM SalesOrderItemsDetails WHERE SalesOrderId = @Id AND IsDeleted = 0 AND ItemQuantity<>0";
+            }
+
+
             SalesOrderBO result = new SalesOrderBO();
             try
             {
@@ -299,6 +307,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedById);
+                    cmd.Parameters.AddWithValue("@DiscountPercentage", model.DiscountPercentage);
 
 
                     con.Open();

@@ -217,10 +217,10 @@
                                     <label id="lblTotalBeforeTax"><b>Total (before tax): </b></label>
                                     <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalBeforeTax" value="" readonly="readonly" />
                                 </div>
-                                <div class="row mb-2">
+                                @*<div class="row mb-2">
                                     <label id="lblTotalBeforeTax"><b>Discount (%): </b></label>
                                     <input class="form-control text-right form-control-sm" id="DiscountPercentage" name="DiscountPercentage" value="0" onkeypress="return isNumberKey(event,id)" onchange="CalculateTotalBeforeTax()" onkeyup="this.value = minmax(this.value, 0, 100)" maxlength="8"/>
-                                </div>
+                                </div>*@
                                 <div class="row mb-2">
                                     <label><b>Other Tax: </b></label>
                                     <input class="form-control text-right form-control-sm" id="OtherTax" maxlength="8" name="OtherTax" value="0" onkeypress="return isNumberKey(event,id)" onchange="CalculateTotalBeforeTax()" />
