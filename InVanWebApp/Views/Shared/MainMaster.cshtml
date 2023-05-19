@@ -169,31 +169,30 @@
                     </div>
                 </nav>
                 <!-- Modal Start 26-04-23-->
-            <div class="modal fade" id="myModalNotification" role="dialog">
-                @*Rahul added 'modal-dialog-scrollable' 17-05-2023.*@
-                <div class="modal-dialog modal-dialog-scrollable">
-                    Modal content
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">
-                                <img src="~/Theme/MainContent/images/nty.png" style="height: 50px; width: 50px">
-                                Notifications
-                            </h4>
-                            <button type="button" class="close" data-dismiss="modal">
-                                ×
-                            </button>
-                        </div>
-                        <h6 id="modalTitle" class="ps-5 mt-5"></h6>
-                        <div class="modal-body" id="myAllNotifications">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                Close
-                            </button>
+                <div class="modal fade" id="myModalNotification" role="dialog">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        Modal content
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
+                                    <img src="~/Theme/MainContent/images/nty.png" style="height: 50px; width: 50px">
+                                    Notifications
+                                </h4>
+                                <button type="button" class="close" data-dismiss="modal">
+                                    ×
+                                </button>
+                            </div>
+                            <h6 id="modalTitle" class="ps-5 mt-5"></h6>
+                            <div class="modal-body" id="myAllNotifications">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    Close
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
                 <!-- Modal End 26-04-23-->
                 <!-- partial -->
                 <div class="container-fluid page-body-wrapper">
@@ -401,7 +400,7 @@
                                 <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
                                     Powered by @*<i class="far fa-heart text-danger"></i>*@
                                     <a class="navbar-brand brand-logo-mini" href="https://garimasystem.com/"><img src="~/Theme/MainContent/Logo/GSSPL Rounded png.png" width="30" alt="logo" /></a>
-                                    &ensp;<b>Version : 2.2.0 </b>
+                                    &ensp;<b>Version : 2.2.1 </b>
                                 </span>
                             </div>
                         </footer>
@@ -535,9 +534,9 @@
                     $.each(response, function (k, v) {
                         p++;
                     //    if (p < 6) {
-                    //        j += "<li> <a> <strong>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Stock Quantity: " + v.StockQuantity + "</i></div> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
+                    //        j += "<li> <a> <strong>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
                     //    }
-                    //    Q += "<a>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Stock Quantity: " + v.StockQuantity + "</i></div> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a>";
+                    //    Q += "<a>  " + v.ItemName + " </strong> <br /> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Updated Min Stock : " + v.MinimumStock + "</i></div></a>";
                         if (p < 6) {
                             j += "<li> <a> <strong>  " + v.ItemName + " </strong> <div style='text-align:right;font-size:smaller;font-style:italic'> <i style='font-size:smaller'> Stock Quantity: " + v.StockQuantity + "</i> <i style='font-size:smaller'>, Updated Min Stock : " + v.MinimumStock + "</i></div></a></li>";
                         }

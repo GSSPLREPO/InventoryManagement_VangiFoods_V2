@@ -35,14 +35,14 @@
                                     <span style="color:red">*</span>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "40" })
+                                    @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "65" })
                                     @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
                                 </div>
                                 <div class="col-md-2">
                                     @Html.Label("Description")
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "40" })
+                                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Only 100 characters are allowed in the description!" })
                                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                                             <tr id="tablerow_@c">
                                                 <td>
                                                     @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[Ingredients], "--Select Item---",
-                                                                                                                               new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
+                                                                                                                                              new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
                                                 </td>
                                                 <td class="col-md-4 d-n d-none">
                                                     @Html.TextBox("Item_Code_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
@@ -124,9 +124,8 @@
                             {
         <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>}
                                                 </td>
-                                            </tr>
- { c++; }
-                                        } }
+                                            </tr> { c++; }
+                                                            } }
                                                     </tbody>
                                                 </table>
                                                 <br />
@@ -188,46 +187,46 @@
     }
 
     //Validation for special characters.
-    $('#RecipeName').on("keydown keyup change", function () {
-        var maxLength = 40;
-        var $th = $(this);
-        $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
-            function (str) {
-                $('#validationMsgName').text('Special caracters not allowed!');
-                $('#validationMsgName').show();
-                return '';
-            }));
+    //$('#RecipeName').on("keydown keyup change", function () {
+    //    var maxLength = 40;
+    //    var $th = $(this);
+    //    $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
+    //        function (str) {
+    //            $('#validationMsgName').text('Special caracters not allowed!');
+    //            $('#validationMsgName').show();
+    //            return '';
+    //        }));
 
-        if (($('#RecipeName').val().length) > maxLength) {
-            $('#validationMsgName').show();
-            $('#validationMsgName').text('Length is exceeding!');
-            //return false;
-        }
-        else
-            $('#validationMsgName').hide();
-    });
+    //    if (($('#RecipeName').val().length) > maxLength) {
+    //        $('#validationMsgName').show();
+    //        $('#validationMsgName').text('Length is exceeding!');
+    //        //return false;
+    //    }
+    //    else
+    //        $('#validationMsgName').hide();
+    //});
 
     //Validation for special characters.
-    $('#Description').on("keydown keyup change", function () {
-        var maxLength = 20;
-        var $th = $(this);
-        $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
-            function (str) {
-                $('#validationMsgCode').text('Special caracters not allowed!');
-                $('#validationMsgCode').show();
-                return '';
-            }));
+    //$('#Description').on("keydown keyup change", function () {
+    //    var maxLength = 20;
+    //    var $th = $(this);
+    //    $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
+    //        function (str) {
+    //            $('#validationMsgCode').text('Special caracters not allowed!');
+    //            $('#validationMsgCode').show();
+    //            return '';
+    //        }));
 
-        if (($('#Description').val().length) > maxLength) {
-            $('#validationMsgCode').show();
-            $('#validationMsgCode').text('Length is exceeding!');
-            //return false;
-        }
-        else
-            $('#validationMsgCode').hide();
-    });
+    //    if (($('#Description').val().length) > maxLength) {
+    //        $('#validationMsgCode').show();
+    //        $('#validationMsgCode').text('Length is exceeding!');
+    //        //return false;
+    //    }
+    //    else
+    //        $('#validationMsgCode').hide();
+    //});
 
-        function getitemDetailsJSTbl(count) {
+    function getitemDetailsJSTbl(count) {
         var itemId = "Item_ID_" + count;
         var selectedItemId = $("#" + itemId).val();
                     $.ajax({
@@ -256,10 +255,16 @@
             });
     }
 
-
+    $(document).ready(function () {
     ///Finding the length of existing table
-    var table = document.getElementById('submissionTable');
-    var counter = table.rows.length;
+        var table = document.getElementById('submissionTable');
+        var counter = table.rows.length;
+        console.log(counter);
+    });
+
+    table = document.getElementById('submissionTable');
+    counter = table.rows.length;
+        console.log(counter);
 
     $("#AddRecipeItem").click(function () {
         var itemId = "Item_ID_" + counter;
@@ -272,8 +277,8 @@
         var batchSize = "BatchSize_" + counter;
         var batchSizeErr = "batchSizeErr_" + counter;
         var dscription = "dscription_" + counter;
-        $('<tr id="tablerow' + counter + '">' + '<td>' +
-            '<select id="' + itemId + '" onchange="getRecipeItemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID_1').html() + '</select>' +
+        $('<tr id="tablerow_' + counter + '">' + '<td>' +
+            '<select id="' + itemId + '" onchange="getRecipeItemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;width:auto;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID_1').html() + '</select>' +
             '<span id="' + dynValMsgItemList + '">' +
             '</td>' +
             '<td class="d-n d-none">' +
@@ -302,9 +307,9 @@
             '</tr>').appendTo('#submissionTable');
         /////////////This is piece of code is for de-selecting the Item list in the dropdown of newly created/added row//////////////////////
         document.getElementById('Item_ID_' + counter).selectedIndex = 0;
-        /////////////////////end.../////////////////
         counter++;
         return false;
+        /////////////////////end.../////////////////
     });
 
     function getRecipeItemDetailsJSTbl(count) {
@@ -440,25 +445,25 @@
     //---OnChangeBatchSize end ------
 
     function removeTr(index) {
-    //    var length = document.getElementById("submissionTable").rows.length;
-    //    length = parseFloat(length) - 1;
-    //    if (counter > 1 & length == index) {
-    //        $('#tablerow' + index).remove();
-    //        counter--;
-    //    }
-    //    else {
-    //        $('#tablerow' + index).remove();
-    //    }
-    //    return false;
-        /////Finding the length of existing table 10-04-23.
-        var table = document.getElementById('submissionTable');
-        var tableRows = table.rows.length;
-        if (tableRows > 2) {
-            if (counter => index) {
-                $('#tablerow_' + index).remove();
-                counter--;
-            }
+        //var table = document.getElementById('submissionTable');
+        //var tableRows = table.rows.length;
+        //if (tableRows > 2) {
+        //    if (counter => index) {
+        //        $('#tablerow_' + index).remove();
+        //        counter--;
+        //    }
+        //}
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        //console.log("Length: " + length + counter);
+        if (counter > 1 & length == index) {
+            $('#tablerow_' + index).remove();
+            counter--;
         }
+        else {
+            $('#tablerow_' + index).remove();
+        }
+
         return false;
     }
 

@@ -184,10 +184,9 @@
             <div class="row">
                 <div class="col-md-2 mb-1">
                     @Html.Label("Remarks")
-                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", onchange = "createJson()" })
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength="100" })
                     @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

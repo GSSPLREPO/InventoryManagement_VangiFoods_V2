@@ -232,11 +232,11 @@
                                                 </td>
                                                 <td>
                                                     @*Rahul added style width:80px; 08-02-23.*@
-                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none; width:80px;line-height: 30px;", @readonly = "readonly" })
+                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none; width:90px;line-height: 30px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
                                                     @*@Html.DisplayFor(x => item.DeliveryDate)*@    @*Rahul added TextBoxFor x => item.DeliveryDate, "{0:yyyy-MM-dd}" 08-02-23.*@
-                                                    @Html.TextBoxFor(x => item.DeliveryDate, "{0:dd-MM-yyyy}", new { style = "border:none; color:black; font-size: 100%; width:140%; line-height: 30px;", @readonly = "readonly" })
+                                                    @Html.TextBoxFor(x => item.DeliveryDate, "{0:dd-MM-yyyy}", new { style = "border:none;background: none; color:black; font-size: 100%; width:140%; line-height: 30px;", @readonly = "readonly" })
                                                 </td>
                                                 <td>
                                                     @Html.DisplayFor(x => item.HSN_Code)

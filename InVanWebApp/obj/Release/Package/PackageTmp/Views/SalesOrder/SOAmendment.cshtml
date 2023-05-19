@@ -303,13 +303,18 @@
                                     <label id="lblTotalBeforeTax"><b>Total (before tax): </b></label>
                                     <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="" readonly="readonly" />
                                 </div>
+                                @*//Rahul added 'DiscountPercentage' for 'VAN-1203' 18-05-2023.*@
+                                <div class="row mb-2">
+                                    <label id="lblDiscountPercentage"><b>Discount (%): </b></label>
+                                    @Html.TextBoxFor(model => model.DiscountPercentage, new { @class = "form-control text-right form-control-sm", maxlength = "8", onkeypress = "return isNumberKey(event,id)", onchange = "CalculateTotalBeforeTax()", onkeyup = "this.value = minmax(this.value, 0, 100)" })
+                                </div>
                                 <div class="row mb-2">
                                     <label><b>Total tax (on items): </b></label>
                                     <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" readonly="readonly" />
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Other Tax: </b></label>
-                                    @Html.TextBoxFor(model => model.OtherTax, new { @class = "form-control text-right form-control-sm", maxlength = "8", onkeypress = "return isNumberKey(event)", onchange = "CalculateTotalBeforeTax()" })
+                                    @Html.TextBoxFor(model => model.OtherTax, new { @class = "form-control text-right form-control-sm", maxlength = "8", onkeypress = "return isNumberKey(event,id)", onchange = "CalculateTotalBeforeTax()" })  @*//Rahul added 'isNumberKey id' for 'DiscountVal' for 'VAN-1203' 18-05-2023.*@
                                     @*<input class="form-control text-right form-control-sm" id="OtherTax" maxlength="8" name="OtherTax" onkeypress="return isNumberKey(event)" onchange="CalculateTotalBeforeTax()" />*@
                                 </div>
                                 <div class="row mb-2">
@@ -322,7 +327,7 @@
                                 </div>
                                 <div class="row mb-2">
                                     <label><b>Advanced To Pay: </b></label>
-                                    <input class="form-control text-right form-control-sm" id="AdvancedPayment" maxlength="8" name="AdvancedPayment" value="0" onkeyup="ValidateAdvancePayment($(this).val(),id)" onkeypress="return isNumberKey(event)" />
+                                    <input class="form-control text-right form-control-sm" id="AdvancedPayment" maxlength="8" name="AdvancedPayment" value="0" onkeyup="ValidateAdvancePayment($(this).val(),id)" onkeypress="return isNumberKey(event,id)" />  @*//Rahul added 'isNumberKey id' for 'DiscountVal' for 'VAN-1203' 18-05-2023.*@
                                     <span id="ValMsgAdvancePayment" style="display:none; color:red"></span>
                                 </div>
                             </div>
@@ -479,6 +484,7 @@
     }
 
     function CalculateTotalBeforeTax() {
+        debugger
         $('#TotalBeforeTax').val('');
         $('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;
@@ -493,21 +499,47 @@
             OtherTax = 0;
 
         OtherTax = parseFloat(OtherTax);
+        //Rahul added 'DiscountVal' for 'VAN-1203' 18-05-2023.
+        var DiscountVal = document.getElementById("DiscountPercentage").value;
+
+        if (DiscountVal == '')
+            DiscountVal = 0;
+
+        DiscountVal = parseFloat(DiscountVal);
 
         var i = 0;
         while (i <= length) {
             var temp = document.getElementById("TotalItemCost_" + i).value;
+            //Rahul added 'temp' for 'VAN-1203' 18-05-2023.
+            if (temp == '' || temp == null) {
+                temp = 0;
+            }
+            else {
+                temp = parseFloat(temp);
+            }
+
             var tempTotalTax = ((document.getElementById("ItemTax_" + i)).value).split(" %")[0];
             total = parseFloat(temp) + total;
+            //Rahul added 'tempTotalTax' for 'VAN-1203' 18-05-2023.
+            if (tempTotalTax == '' || tempTotalTax == null) {
+                tempTotalTax = 0;
+            }
+            else {
+                tempTotalTax = parseFloat(tempTotalTax);
+            }
 
             tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
             totalTax = parseFloat(tempTotalTax) + totalTax;
 
             i++;
         }
+        //Rahul added 'DiscountVal' for 'VAN-1203' 18-05-2023.
+        var tempDiscountVal = total * (DiscountVal / 100);
 
         $('#TotalBeforeTax').val(total.toFixed(2));
         $('#TotalTax').val(totalTax.toFixed(2));
+        //Rahul added 'DiscountVal' for 'VAN-1203' 18-05-2023.
+        total = total - tempDiscountVal;
         var tempGrandTotal = total + totalTax + OtherTax;
         tempGrandTotal = Math.round(tempGrandTotal);
         //var tempGrandTotal = total + totalTax;
@@ -602,8 +634,8 @@
             }
         }
     }
-
-    function isNumberKey(evt) {
+    //Rahul added 'isNumberKey' for 'DiscountVal' for 'VAN-1203' 18-05-2023.
+    function isNumberKey(evt,id) {
         var keycode = (evt.which) ? evt.which : evt.keyCode;
         if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
             return false;
@@ -617,4 +649,18 @@
         }
         return true;
     }
+    //Rahul added 'minmax' for 'DiscountVal' for 'VAN-1203' 18-05-2023.
+    function minmax(value, min, max) {
+        //value = Math.round((value + Number.EPSILON) * 100) / 100;
+        min = parseFloat(min);
+        max = parseFloat(max);
+        if (parseFloat(value) < min || isNaN(parseFloat(value)))
+            return min;
+        else if (parseFloat(value) > max)
+            return min;
+        else {
+            return value;
+        }
+    }
+
 </script>

@@ -1,4 +1,4 @@
-﻿@model InVanWebApp_BO.RequestForQuotationBO 
+﻿@model InVanWebApp_BO.RequestForQuotationBO
 
 @{
     ViewBag.Title = "RFQSupplierDetails";
@@ -166,7 +166,6 @@
                                                 </th>
                                                 <th class="sortStyle">
                                                     Remarks
-                                                    <span style="color:red">*</span>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -228,7 +227,7 @@
                                                             @*@Html.TextBox("ItemTaxValue", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })*@
                                                         </td>
                                                         <td>
-                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost,"0" ,new { @class = "form-control form-control-sm text-right",style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "8" })
+                                                            @Html.TextBox("totalItemCost_" + c, item.TotalItemCost, "0", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "8" })
                                                             @*@Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })*@
                                                         </td>
                                                         <td>
@@ -248,7 +247,17 @@
                                                             @Html.TextBox("remarks_" + c, item.Remarks, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:80px;" })
                                                             @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
                                                         </td>
-
+                                                        @*//Rahul added 'function removeTr(index)' 19-05-2023.*@
+                                                        <td>                                                        
+                                                            @if (c == 1)
+                                                            {
+                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button> 
+                                                            }
+                                                            else
+                                                            {
+                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
+                                                            }
+                                                        </td>
                                                     </tr>
                                                     { c++; }
                                                 }
@@ -330,7 +339,7 @@
 
                     <div class="col">
                         <a href="@Url.Action("Index", "RequestForQuotation")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                            Back 
+                            Back
                         </a>
                     </div>
                 </div>
@@ -346,9 +355,43 @@
 <script type="text/javascript">
 
     //=======The below function is for fetching the files value in the textbox of file type============//
-    //$(document).ready(function () {
+    $(document).ready(function () {
     //    CalculateTotalBeforeTax();
-    //});
+        ///Finding the length of existing table   //Rahul added 'submissionTable' 19-05-2023.
+        var table = document.getElementById('submissionTable');
+        var counter = table.rows.length;
+        console.log(counter);
+    });
+     //Rahul added 'submissionTable' 19-05-2023.
+    table = document.getElementById('submissionTable');
+    counter = table.rows.length;
+    console.log(counter);
+     //Rahul added 'function removeTr(index)' 19-05-2023.
+    function removeTr(index) {
+        debugger
+        //var table = document.getElementById('submissionTable');
+        //var tableRows = table.rows.length;
+        //if (tableRows > 2) {
+        //    if (counter => index) {
+        //        $('#tablerow_' + index).remove();
+        //        counter--;
+        //    }
+        //}
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        //console.log("Length: " + length + counter);
+        if (counter > 1 & length == index) {
+            $('#tablerow_' + index).remove();
+            counter--;
+        }
+        else {
+            $('#tablerow_' + index).remove();
+        }
+
+        return false;
+        CalculateTotalBeforeTax(value, id);
+    }
+
     //===================end=======================//
 
     //=====================Onchange of Terms and Condition===========================

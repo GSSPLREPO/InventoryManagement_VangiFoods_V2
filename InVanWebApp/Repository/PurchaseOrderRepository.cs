@@ -54,7 +54,8 @@ namespace InVanWebApp.Repository
                             LastModifiedBy = Convert.ToInt32(reader["LastModifiedBy"]),
                             LastModifiedDate = Convert.ToDateTime(reader["LastModifiedDate"]),
                             DraftFlag = Convert.ToBoolean(reader["DraftFlag"]),
-                            InwardCount = Convert.ToInt32(reader["InwardCount"])
+                            InwardCount = Convert.ToInt32(reader["InwardCount"]),
+                            IndentNumber=reader["IndentNumber"].ToString()
                         };
                         purchaseOrderMastersList.Add(PurchaseOrderMasters);
                     }

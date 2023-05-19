@@ -61,6 +61,7 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public Nullable<int> CheckedById { get; set; }
         public Nullable<System.DateTime> CheckedDate { get; set; }
+        public float? DiscountPercentage { get; set; }
         public string Remarks { get; set; }
         public string DispatchMode { get; set; }
         [Required(ErrorMessage = "Select inquiry number!")]
@@ -107,8 +108,6 @@ namespace InVanWebApp_BO
 
         //Added the below the field for Delivery Challan including the Finished goods quantity in it.
         public decimal FinishedGoodQuantity { get; set; }
-        public float DiscountPercentage { get; set; } //Rahul added for 'VAN-1203' 18-05-2023. 
-
     }
 
     public class SalesOrderItemsDetail

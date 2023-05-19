@@ -114,7 +114,6 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
-                    cmd.Parameters.AddWithValue("@DiscountPercentage", model.DiscountPercentage); //Rahul added for 'VAN-1203' 18-05-2023. 
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@ApprovedBy", model.CreatedById);
                     cmd.Parameters.AddWithValue("@ApprovedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -124,6 +123,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.CreatedById);
+                    cmd.Parameters.AddWithValue("@DiscountPercentage", model.DiscountPercentage);
 
                     //con.Open();
 
@@ -236,10 +236,17 @@ namespace InVanWebApp.Repository
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public SalesOrderBO GetSalesOrderById(int Id)
+        public SalesOrderBO GetSalesOrderById(int Id, int flagView = 0)
         {
             string purchaseOrderQuery = "SELECT * FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
             string purchaseOrderItemQuery = "SELECT * FROM SalesOrderItemsDetails WHERE SalesOrderId = @Id AND IsDeleted = 0";
+
+            if (flagView == 1)
+            {
+                purchaseOrderItemQuery = "SELECT * FROM SalesOrderItemsDetails WHERE SalesOrderId = @Id AND IsDeleted = 0 AND ItemQuantity<>0";
+            }
+
+
             SalesOrderBO result = new SalesOrderBO();
             try
             {
@@ -297,10 +304,10 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@GrandTotal", model.GrandTotal);
                     cmd.Parameters.AddWithValue("@TotalAfterTax", model.TotalAfterTax);
                     cmd.Parameters.AddWithValue("@OtherTax", model.OtherTax);
-                    cmd.Parameters.AddWithValue("@DiscountPercentage", model.DiscountPercentage); //Rahul added for 'VAN-1203' 18-05-2023. 
                     cmd.Parameters.AddWithValue("@Signature", model.Signature);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedById);
+                    cmd.Parameters.AddWithValue("@DiscountPercentage", model.DiscountPercentage);
 
 
                     con.Open();

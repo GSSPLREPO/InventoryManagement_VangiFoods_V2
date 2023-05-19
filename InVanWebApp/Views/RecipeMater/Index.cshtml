@@ -64,6 +64,9 @@
                                                     @Html.DisplayFor(modelItem => item.CreatedDate)
                                                 </td>
                                                 <td>
+                                                    <a href=@Url.Action("ViewRecipe", "RecipeMater", new { Recipe_ID = item.RecipeID }) title="View Inquiry">
+                                                        <i class="fa fa-eye text-primary"></i>
+                                                    </a><span>&nbsp;&nbsp;</span>
                                                     <a href=@Url.Action("EditRecipeItem", "RecipeMater", new { Recipe_ID = item.RecipeID }) title="Edit Recipe">
                                                         <i class="fa fa-edit text-primary"></i>
                                                     </a> &emsp;

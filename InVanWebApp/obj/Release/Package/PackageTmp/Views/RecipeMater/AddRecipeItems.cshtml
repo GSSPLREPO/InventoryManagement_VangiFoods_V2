@@ -32,14 +32,14 @@
                         <span style="color:red">*</span>
                     </div>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "40" })
+                        @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "65" })
                         @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
                     </div>
                     <div class="col-md-2">
                         @Html.Label("Description")
                     </div>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "40" })
+                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Only 100 characters are allowed in the description!" })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
                     </div>
                 </div>
@@ -216,44 +216,44 @@
     }
 
     //Validation for special characters.
-    $('#RecipeName').on("keydown keyup change", function () {
-        var maxLength = 40;
-        var $th = $(this);
-        $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
-            function (str) {
-                $('#validationMsgName').text('Special caracters not allowed!');
-                $('#validationMsgName').show();
-                return '';
-            }));
+    //$('#RecipeName').on("keydown keyup change", function () {
+    //    var maxLength = 40;
+    //    var $th = $(this);
+    //    $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
+    //        function (str) {
+    //            $('#validationMsgName').text('Special caracters not allowed!');
+    //            $('#validationMsgName').show();
+    //            return '';
+    //        }));
 
-        if (($('#RecipeName').val().length) > maxLength) {
-            $('#validationMsgName').show();
-            $('#validationMsgName').text('Length is exceeding!');
-            //return false;
-        }
-        else
-            $('#validationMsgName').hide();
-    });
+    //    if (($('#RecipeName').val().length) > maxLength) {
+    //        $('#validationMsgName').show();
+    //        $('#validationMsgName').text('Length is exceeding!');
+    //        //return false;
+    //    }
+    //    else
+    //        $('#validationMsgName').hide();
+    //});
 
     //Validation for special characters.
-    $('#Description').on("keydown keyup change", function () {
-        var maxLength = 20;
-        var $th = $(this);
-        $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
-            function (str) {
-                $('#validationMsgCode').text('Special caracters not allowed!');
-                $('#validationMsgCode').show();
-                return '';
-            }));
+    //$('#Description').on("keydown keyup change", function () {
+    //    var maxLength = 20;
+    //    var $th = $(this);
+    //    $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
+    //        function (str) {
+    //            $('#validationMsgCode').text('Special caracters not allowed!');
+    //            $('#validationMsgCode').show();
+    //            return '';
+    //        }));
 
-        if (($('#Description').val().length) > maxLength) {
-            $('#validationMsgCode').show();
-            $('#validationMsgCode').text('Length is exceeding!');
-            //return false;
-        }
-        else
-            $('#validationMsgCode').hide();
-    });
+    //    if (($('#Description').val().length) > maxLength) {
+    //        $('#validationMsgCode').show();
+    //        $('#validationMsgCode').text('Length is exceeding!');
+    //        //return false;
+    //    }
+    //    else
+    //        $('#validationMsgCode').hide();
+    //});
 
     $("#Item_ID").change(function () {
         $("#ValMsgItemList").hide();

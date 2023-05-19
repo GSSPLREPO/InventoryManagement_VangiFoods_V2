@@ -205,7 +205,6 @@
     $(document).ready(function () {
         var id = $("#RequestForQuotationId").val();
         CompanyName(id);
-
     });
 
     function CompanyName(id) {
@@ -315,8 +314,6 @@
             });
     }
 
-    //==================/Function of RFQSupplierDetails modal/////////////=============================
-
     function isNumberKey(evt) {
         var keycode = (evt.which) ? evt.which : evt.keyCode;
         if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
@@ -367,43 +364,100 @@
         else
             $("#totalItemCost_" + rowNo).val(0);
 
-        CalculateTotalBeforeTax();
+        //CalculateTotalBeforeTax();
+        CalculateTotalBeforeTax(value, id);
     }
 
     //changeItemTax
     function changeItemTax(value, id) {
+        debugger
         //CalItemTotalPrice(value, id);
-        CalculateTotalBeforeTax();
+        //CalculateTotalBeforeTax();
+        CalculateTotalBeforeTax(value, id);
     }
 
-    function CalculateTotalBeforeTax() {
+    //function CalculateTotalBeforeTax() {
+    //    debugger
+    //    $('#TotalBeforeTax').val('');
+    //    $('#TotalTax').val('');
+    //    var length = document.getElementById("submissionTable").rows.length;
+    //    length = parseFloat(length) - 1;
+    //    var total = 0;
+    //    var totalTax = 0;
+
+    //    var i = 1;
+    //    while (i <= length) {
+    //        var temp = document.getElementById("totalItemCost_" + i).value;
+    //        var tempTotalTax = document.getElementById("itemTax_" + i).value;
+    //        if (temp == '')
+    //            temp = 0;
+    //        if (tempTotalTax == '')
+    //            tempTotalTax = 0;
+
+    //        total = parseFloat(temp) + total;
+
+    //        tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
+    //        totalTax = parseFloat(tempTotalTax) + totalTax;
+    //        i++;
+    //    }
+    //    total = Math.round(total);
+    //    totalTax = Math.round(totalTax);
+
+    //    $('#TotalBeforeTax').val(total);
+    //    $('#TotalTax').val(totalTax);
+    //    var tempGrandTotal = total + totalTax;
+    //    $('#TotalAfterTax').val(tempGrandTotal);
+    //    $('#GrandTotal').val(tempGrandTotal);
+
+    //    createJson();
+    //}
+
+    function CalculateTotalBeforeTax(value, id) {
+        debugger
+        var rowNo = id.split('_')[1];
+        if (value == '')
+            value = 0;
+
         $('#TotalBeforeTax').val('');
         $('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;
-        length = parseFloat(length) - 1;
+        length = parseFloat(length);
         var total = 0;
         var totalTax = 0;
-        var i = 1;
-        while (i <= length) {
-            var temp = document.getElementById("totalItemCost_" + i).value;
-            var tempTotalTax = document.getElementById("itemTax_" + i).value;
-            if (temp == '')
-                temp = 0;
-            if (tempTotalTax == '')
-                tempTotalTax = 0;
-
-            total = parseFloat(temp) + total;
-
-            tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
-            totalTax = parseFloat(tempTotalTax) + totalTax;
-            i++;
-        }
-        total = Math.round(total);
         totalTax = Math.round(totalTax);
 
-        $('#TotalBeforeTax').val(total);
-        $('#TotalTax').val(totalTax);
+        //var i = 1;
+        while (rowNo < length) {
+            var temp = document.getElementById("totalItemCost_" + rowNo).value;
+            //Rahul added 'temp' for 'VAN-1185' 19-05-2023.
+            if (temp == '' || temp == null) {
+                temp = 0;
+            }
+            else {
+                temp = parseFloat(temp);
+            }
+
+            var tempTotalTax = ((document.getElementById("itemTax_" + rowNo)).value).split(" %")[0];
+            total = parseFloat(temp) + total;
+            //Rahul added 'tempTotalTax' for 'VAN-1185' 19-05-2023.
+            if (tempTotalTax == '' || tempTotalTax == null) {
+                tempTotalTax = 0;
+            }
+            else {
+                tempTotalTax = parseFloat(tempTotalTax);
+            }
+
+            tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
+            totalTax = parseFloat(tempTotalTax) + totalTax;
+
+            //i++;
+            rowNo++;
+        }
+
+        $('#TotalBeforeTax').val(total.toFixed(2));
+        $('#TotalTax').val(totalTax.toFixed(2));
         var tempGrandTotal = total + totalTax;
+        tempGrandTotal = Math.round(tempGrandTotal);
         $('#TotalAfterTax').val(tempGrandTotal);
         $('#GrandTotal').val(tempGrandTotal);
 
@@ -414,9 +468,21 @@
     function SaveBtnClick() {
         var table = document.getElementById('submissionTable');
         var rowCount = table.rows.length;
-
+        //Rahul added 'if (rowCount == 1)' 19-05-2023 start.
+        if (rowCount == 1) {
+            debugger
+            $('#btnSave').prop('disabled', true);
+            alert("There is no Items available! So, You Cannot create RFQ Supplier Details!");
+            event.preventDefault();
+            return;
+        }
+        else {
+            $('#btnSave').prop('disabled', false);
+        }
+        //Rahul added 'if (rowCount == 1)' 19-05-2023 end.
         var i = 1, flag = 0;
         while (i < rowCount) {
+            debugger
             var itemUnitPrice = $('#ItemUnitPrice_' + i).val();
             if (itemUnitPrice == '' || itemUnitPrice == null) {
                 itemUnitPrice = 0;
@@ -431,7 +497,7 @@
             i++;
         }
 
-        if (flag == 1) {
+        if (flag == 1) {            
             alert("Item Unit Price is zero or null! Cannot create RFQ Supplier Details!");
             $('#btnSave').prop('disabled', true);
             event.preventDefault();

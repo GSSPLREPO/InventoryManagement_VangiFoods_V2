@@ -119,7 +119,6 @@ namespace InVanWebApp_BO
         public string RejectionNoteNo { get; set; }
         public string InwardNumber { get; set; }
         public string InwardQCNumber { get; set; }
-        public string ProductionQCNumber { get; set; }    ///added 17-05-23.
         public string ReasonForRR { get; set; }
 
         //Added the below feild for Debit note
@@ -133,7 +132,11 @@ namespace InVanWebApp_BO
         public string Terms { get; set; }
         public decimal OtherTax { get; set; }
         public Nullable<decimal> TotalItemCost { get; set; }
-        public Nullable<int> flag { get; set; }//Rahul added 21-04-23.  
+        public Nullable<int> flag { get; set; }//Rahul added 21-04-23.
+        //Added the below field for wastage report.
+        public string ProductionQCNumber { get; set; }    
+
+
     }
 
 }

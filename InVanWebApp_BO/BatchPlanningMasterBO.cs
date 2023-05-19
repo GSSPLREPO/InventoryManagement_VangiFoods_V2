@@ -32,8 +32,8 @@ namespace InVanWebApp_BO
         public string OrderQuantityUnit { get; set; }
         [Required(ErrorMessage ="Enter required quantity!")]
         public Nullable<decimal> RequiredQuantityInKG { get; set; }
-        public Nullable<decimal> TotalBatchSize { get; set; }
-        public Nullable<decimal> TotalNoBatches { get; set; }
+        public Nullable<float> TotalBatchSize { get; set; }
+        public Nullable<float> TotalNoBatches { get; set; }
         [Required(ErrorMessage ="Select location!")]
         public int? LocationId { get; set; }
         public string LocationName { get; set; }
@@ -60,13 +60,13 @@ namespace InVanWebApp_BO
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
         public string ItemUnit { get; set; }
-        public Nullable<decimal> QuantityPercentage { get; set; }
-        public Nullable<decimal> BatchSize { get; set; }
-        public Nullable<decimal> TotalQuantityInBatch { get; set; }
-        public Nullable<decimal> YieldPercentage { get; set; }
-        public Nullable<decimal> ActualRequirement { get; set; }
-        public Nullable<decimal> StockInHand { get; set; }
-        public Nullable<decimal> ToBeProcured { get; set; }
+        public Nullable<float> QuantityPercentage { get; set; }
+        public Nullable<float> BatchSize { get; set; }
+        public Nullable<float> TotalQuantityInBatch { get; set; }
+        public Nullable<float> YieldPercentage { get; set; }
+        public Nullable<float> ActualRequirement { get; set; }
+        public Nullable<float> StockInHand { get; set; }
+        public Nullable<float> ToBeProcured { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
