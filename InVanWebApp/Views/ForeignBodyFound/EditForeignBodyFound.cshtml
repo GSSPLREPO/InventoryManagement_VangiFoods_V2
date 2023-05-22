@@ -111,7 +111,6 @@
 
                 <div class="col-md-2 mb-1">
                     @Html.Label("Corrective Action")
-                    <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.CorrectiveAction, new { @class = "form-control form-control-sm", maxlength = "100", @onkeypress = "return IsAlphabate(event);" })

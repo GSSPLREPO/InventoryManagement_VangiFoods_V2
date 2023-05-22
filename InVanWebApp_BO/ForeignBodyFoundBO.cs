@@ -27,7 +27,7 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select post processing!")]
         public string PostProcessing { get; set; }
 
-        [Required(ErrorMessage = "Enter corrective action!")]
+        //[Required(ErrorMessage = "Enter corrective action!")]
         public string CorrectiveAction { get; set; }
         public string VerifyByName { get; set; }
         public string Remark { get; set; }
