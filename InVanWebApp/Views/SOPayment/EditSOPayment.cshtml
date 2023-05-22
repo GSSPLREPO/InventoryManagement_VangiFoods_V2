@@ -62,7 +62,9 @@
                                     <label>Payment Due Date <span style="color:red">*</span></label>
                                 </div>
                                 <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.PaymentDueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                                    @*@Html.TextBoxFor(model => model.PaymentDueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })*@
+                                    @*Rahul set 'PaymentDueDate' ', @max = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")' 21/05/2023.*@
+                                    @Html.TextBoxFor(model => model.PaymentDueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @max = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd") })
                                     @Html.ValidationMessageFor(model => model.PaymentDueDate, "", new { @class = "error mt-2 text-danger" })
                                 </div>
                                 <div class="col-md-2">

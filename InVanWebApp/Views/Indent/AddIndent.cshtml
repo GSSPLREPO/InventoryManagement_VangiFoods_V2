@@ -1,157 +1,162 @@
 ﻿@model InVanWebApp_BO.IndentBO
-@{
-    ViewBag.Title = "AddIndent";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "AddIndent";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 @using (Html.BeginForm("AddIndent", "Indent", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-    <div class="card">
-        <div class="card-body">
-            <h4>Add Indent</h4>
-            <hr />
-            @Html.ValidationSummary(true)
-
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Indent Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.IndentNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.IndentNo, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Indent Date")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.IndentDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.IndentDate, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Indent By")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.RaisedBy, (IEnumerable<SelectListItem>)ViewData["EmployeeName"], "---Select---", new { @class = "form-control", onchange = "SetUserName()" })
-                    @Html.ValidationMessageFor(model => model.RaisedBy, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Designation")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.DesignationId, (IEnumerable<SelectListItem>)ViewData["Designations"], "---Select---", new { @class = "form-control", onchange = "SetDesignationName()" })
-                    @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.DesignationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Location Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SetLocationName()" })
-                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Remarks")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95" })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-hover" id="submissionTable">
-                                        <thead>
-                                            <tr>
-                                                <th class="sortStyle">
-                                                    Item
-                                                </th>
-                                                <th class="sortStyle d-n d-none">
-                                                    Selected Item Code
-                                                </th>
-                                                <th class="sortStyle d-n d-none">
-                                                    Item
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Indent Quantity
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Units
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="myTableBody">
-                                            <tr id="tablerow">
-                                                <td>
-                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
-                                                </td>
-                                                <td class="col-md-4 d-none">
-                                                    @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                                </td>
-                                                <td class="d-n d-none">
-                                                    @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBoxFor(model => model.RequiredQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <br />
-                                    <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
-                                        + Add Item
-                                    </button>
+                        <h4>Add Indent</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Indent Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.IndentNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.IndentNo, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Indent Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.IndentDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.IndentDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Indent By")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @*@Html.DropDownListFor(model => model.RaisedBy, (IEnumerable<SelectListItem>)ViewData["EmployeeName"], "---Select---", new { @class = "form-control", onchange = "SetUserName()" })*@
+                                @*/*Rahul removed '"---Select---",' 22-05-2023.*/*@
+                                @Html.DropDownListFor(model => model.RaisedBy, (IEnumerable<SelectListItem>)ViewData["EmployeeName"], new { @class = "form-control", onchange = "SetUserName()" })
+                                @Html.ValidationMessageFor(model => model.RaisedBy, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Designation")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @*@Html.DropDownListFor(model => model.DesignationId, (IEnumerable<SelectListItem>)ViewData["Designations"], "---Select---", new { @class = "form-control", onchange = "SetDesignationName()" })*@
+                                @*/*Rahul removed '"---Select---",' 22-05-2023.*/*@
+                                @Html.DropDownListFor(model => model.DesignationId, (IEnumerable<SelectListItem>)ViewData["Designations"], new { @class = "form-control", onchange = "SetDesignationName()" })
+                                @Html.ValidationMessageFor(model => model.DesignationId, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.DesignationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Location Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @*@Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SetLocationName()" })*@
+                                @*/*Rahul removed '"---Select---",' 22-05-2023.*/*@
+                                @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], new { @class = "form-control", onchange = "SetLocationName()" })
+                                @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Remarks")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                <table class="table table-hover" id="submissionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">
+                                                                Item
+                                                            </th>
+                                                            <th class="sortStyle d-n d-none">
+                                                                Selected Item Code
+                                                            </th>
+                                                            <th class="sortStyle d-n d-none">
+                                                                Item
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Indent Quantity
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Units
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="myTableBody">
+                                                        <tr id="tablerow">
+                                                            <td>
+                                                                @*@Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })*@
+                                                                @*/*Rahul removed ' "--Select Item--",' 22-05-2023.*/*@
+                                                                @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                            </td>
+                                                            <td class="col-md-4 d-none">
+                                                                @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                            </td>
+                                                            <td class="d-n d-none">
+                                                                @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(model => model.RequiredQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <br />
+                                                <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
+                                                    + Add Item
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @*<input class="form-control text-right" id="TxtItemDetails" name="TxtItemDetails" value="" />*@
+                                        @Html.TextBoxFor(model => model.itemDetails, new { style = "display:none" })
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            @*<input class="form-control text-right" id="TxtItemDetails" name="TxtItemDetails" value="" />*@
-                            @Html.TextBoxFor(model => model.itemDetails, new { style = "display:none" })
-                        </div>
+                        <br />
+
+
+                        <a href="@Url.Action("Index", "Indent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
                     </div>
-                </div>
-            </div>
-            <br />
-
-
-            <a href="@Url.Action("Index", "Indent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                Back To List
-            </a>
-            <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
-        </div>
-    </div>
-}
+                </div>}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -162,7 +167,201 @@
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+    /*Rahul added 'function create_custom_dropdowns()' 22-05-2023. start*/
+    $(document).ready(function () {
+        create_custom_dropdowns_RaisedBy();
+        create_custom_dropdowns_DesignationId();
+        create_custom_dropdowns_LocationId();
+        create_custom_dropdowns_Item_ID();
+    });
 
+    function create_custom_dropdowns_RaisedBy() {
+        $('select#RaisedBy').each(function (i, select) {
+            debugger
+            if (!$(this).next().hasClass('dropdown-select')) {
+                debugger
+                    $('#RaisedBy').removeClass('form-control');
+                    $(this).after('<div id="divRaisedBy" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                    var dropdown = $(this).next();
+                    var options = $(select).find('option');
+                    var selected = $(this).find('option:selected');
+                    dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                    options.each(function (j, o) {
+                        var display = $(o).data('display-text') || '';
+                        dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                    });
+                }
+            });
+        //$('.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+        $('#divRaisedBy.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+    function create_custom_dropdowns_DesignationId() {
+        $('select#DesignationId').each(function (i, select) {
+            debugger
+            if (!$(this).next().hasClass('dropdown-select')) {
+                debugger
+                $('#DesignationId').removeClass('form-control');
+                $(this).after('<div id="divDesignationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+        $('#divDesignationId.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueDesignationId" autocomplete="off" onkeyup="filterDesignationId()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+    function create_custom_dropdowns_LocationId() {
+        $('select#LocationId').each(function (i, select) {
+            debugger
+            if (!$(this).next().hasClass('dropdown-select')) {
+                debugger
+                $('#LocationId').removeClass('form-control');
+                //$('#Item_ID').removeClass('form-control');
+                //$('#Item_ID').removeClass('form-control-sm');
+                $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+        $('#divLocationId.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueLocationId" autocomplete="off" onkeyup="filterLocationId()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+    function create_custom_dropdowns_Item_ID() {
+        $('select#Item_ID').each(function (i, select) {
+            debugger
+            if (!$(this).next().hasClass('dropdown-select')) {
+                debugger
+                $('#Item_ID').removeClass('form-control');
+                $('#Item_ID').removeClass('form-control-sm');
+                $(this).after('<div id="divItem_ID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+        $('#divItem_ID.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueItem_ID" autocomplete="off" onkeyup="filterItem_ID()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+
+    // Event listeners
+
+    // Open/close
+    $(document).on('click', '.dropdown-select', function (event) {
+        if ($(event.target).hasClass('dd-searchbox')) {
+            return;
+        }
+        $('.dropdown-select').not($(this)).removeClass('open');
+        $(this).toggleClass('open');
+        if ($(this).hasClass('open')) {
+            $(this).find('.option').attr('tabindex', 0);
+            $(this).find('.selected').focus();
+        } else {
+            $(this).find('.option').removeAttr('tabindex');
+            $(this).focus();
+        }
+    });
+
+    // Close when clicking outside
+    $(document).on('click', function (event) {
+        if ($(event.target).closest('.dropdown-select').length === 0) {
+            $('.dropdown-select').removeClass('open');
+            $('.dropdown-select .option').removeAttr('tabindex');
+        }
+        event.stopPropagation();
+    });
+    // Search
+    function filter() {        
+        var valThis = $('#txtSearchValue').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+    function filterDesignationId() {
+        debugger
+        var valThis = $('#txtSearchValueDesignationId').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+    function filterLocationId() {
+        debugger
+        var valThis = $('#txtSearchValueLocationId').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+    function filterItem_ID() {
+        debugger
+        var valThis = $('#txtSearchValueItem_ID').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+
+    // Option click
+    $(document).on('click', '.dropdown-select .option', function (event) {
+        $(this).closest('.list').find('.selected').removeClass('selected');
+        $(this).addClass('selected');
+        var text = $(this).data('display-text') || $(this).text();
+        $(this).closest('.dropdown-select').find('.current').text(text);
+        $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+    });
+
+    // Keyboard events
+    $(document).on('keydown', '.dropdown-select', function (event) {
+        var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+        // Space or Enter
+        //if (event.keyCode == 32 || event.keyCode == 13) {
+        if (event.keyCode == 13) {
+            if ($(this).hasClass('open')) {
+                focused_option.trigger('click');
+            } else {
+                $(this).trigger('click');
+            }
+            return false;
+            // Down
+        } else if (event.keyCode == 40) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                focused_option.next().focus();
+            }
+            return false;
+            // Up
+        } else if (event.keyCode == 38) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+                focused_option.prev().focus();
+            }
+            return false;
+            // Esc
+        } else if (event.keyCode == 27) {
+            if ($(this).hasClass('open')) {
+                $(this).trigger('click');
+            }
+            return false;
+        }
+    });
+    /*Rahul added 'function create_custom_dropdowns()' 22-05-2023. end*/
     function SetUserName() {
         var selectedOptionTerms = document.getElementById("RaisedBy").selectedIndex;
         var tempUserName = document.getElementById("RaisedBy").options[selectedOptionTerms].innerText;
@@ -384,3 +583,194 @@
     }
 
 </script>
+
+<style>
+    /*Rahul added 'style' for 'create_custom_dropdowns()' 22-05-2023. start*/
+    select {
+        display: none !important;
+    }
+
+    .dropdown-select {
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
+        background-repeat: repeat-x;
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40FFFFFF', endColorstr='#00FFFFFF', GradientType=0);
+        background-color: #fff;
+        border-radius: 6px;
+        border: solid 1px #eee;
+        box-shadow: 0px 2px 5px 0px rgba(155, 155, 155, 0.5);
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        float: left;
+        font-size: 14px;
+        font-weight: normal;
+        height: 42px;
+        line-height: 40px;
+        outline: none;
+        padding-left: 18px;
+        padding-right: 30px;
+        position: relative;
+        text-align: left !important;
+        transition: all 0.2s ease-in-out;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        white-space: nowrap;
+        width: auto;
+    }
+
+        .dropdown-select:focus {
+            background-color: #fff;
+        }
+
+        .dropdown-select:hover {
+            background-color: #fff;
+        }
+
+        .dropdown-select:active,
+        .dropdown-select.open {
+            background-color: #fff !important;
+            border-color: #bbb;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) inset;
+        }
+
+        .dropdown-select:after {
+            height: 0;
+            width: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 4px solid #777;
+            -webkit-transform: origin(50% 20%);
+            transform: origin(50% 20%);
+            transition: all 0.125s ease-in-out;
+            content: '';
+            display: block;
+            margin-top: -2px;
+            pointer-events: none;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+        }
+
+        .dropdown-select.open:after {
+            -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+        }
+
+        .dropdown-select.open .list {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .dropdown-select.open .option {
+            cursor: pointer;
+        }
+
+        .dropdown-select.wide {
+            width: 100%;
+        }
+
+            .dropdown-select.wide .list {
+                left: 0 !important;
+                right: 0 !important;
+            }
+
+        .dropdown-select .list {
+            box-sizing: border-box;
+            transition: all 0.15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity 0.1s linear;
+            -webkit-transform: scale(0.75);
+            transform: scale(0.75);
+            -webkit-transform-origin: 50% 0;
+            transform-origin: 50% 0;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.09);
+            background-color: #fff;
+            border-radius: 6px;
+            margin-top: 4px;
+            padding: 3px 0;
+            opacity: 0;
+            overflow: hidden;
+            pointer-events: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 999;
+            max-height: 250px;
+            overflow: auto;
+            border: 1px solid #ddd;
+        }
+
+            .dropdown-select .list:hover .option:not(:hover) {
+                background-color: transparent !important;
+            }
+
+        .dropdown-select .dd-search {
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /*margin: 0.5rem;*/
+        }
+
+        .dropdown-select .dd-searchbox {
+            width: 90%;
+            /*padding: 0.5rem;*/
+            border: 1px solid #999;
+            border-color: #999;
+            border-radius: 4px;
+            outline: none;
+        }
+
+            .dropdown-select .dd-searchbox:focus {
+                border-color: #12CBC4;
+            }
+
+        .dropdown-select .list ul {
+            padding: 0;
+        }
+
+        .dropdown-select .option {
+            cursor: default;
+            font-weight: 400;
+            /*line-height: 40px;*/
+            line-height: 24px;
+            outline: none;
+            padding-left: 18px;
+            padding-right: 29px;
+            text-align: left;
+            transition: all 0.2s;
+            list-style: none;
+        }
+
+            .dropdown-select .option:hover,
+            .dropdown-select .option:focus {
+                background-color: #f6f6f6 !important;
+            }
+
+            .dropdown-select .option.selected {
+                font-weight: 600;
+                color: #12cbc4;
+            }
+
+                .dropdown-select .option.selected:focus {
+                    background: #f6f6f6;
+                }
+
+        .dropdown-select a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.2s ease-in-out;
+        }
+
+            .dropdown-select a:hover {
+                color: #666;
+            }
+    
+    span#faSearch {
+        position: absolute;
+        margin-left: 400px;
+    }
+    /*Rahul added 'style' for 'create_custom_dropdowns()' 22-05-2023. end*/
+</style>

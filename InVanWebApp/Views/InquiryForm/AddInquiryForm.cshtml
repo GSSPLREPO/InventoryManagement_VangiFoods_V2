@@ -251,10 +251,12 @@
                                                 @*<td>
                                                         @Html.TextBoxFor(model => model.CloserPrice, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
                                                     </td>*@
-                                                <td>
-                                                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })
-                                                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
-                                                </td>
+                                            <td>
+                                                @*@Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })*@
+                                                @*Rahul set 'DeliveryDate' ', @max = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")' 21/05/2023.*@
+                                                @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @max = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd") })
+                                                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
+                                            </td>
                                                 <td>
                                                     @Html.TextBoxFor(model => model.HSN_Code, new { @class = "form-control form-control-sm", Value = "", style = "height:30px;width:200px;" })
                                                 </td>
