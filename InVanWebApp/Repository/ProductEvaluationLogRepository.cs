@@ -82,6 +82,7 @@ namespace InVanWebApp.Repository
             return productEvaluationLogList;
         }
         #endregion
+        
         #region Insert function
         /// <summary>
         /// Date: 14 March'23
@@ -313,7 +314,6 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
-
-       
+      
     }
 }
