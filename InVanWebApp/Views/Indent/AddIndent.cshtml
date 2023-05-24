@@ -172,14 +172,14 @@
         create_custom_dropdowns_RaisedBy();
         create_custom_dropdowns_DesignationId();
         create_custom_dropdowns_LocationId();
-        create_custom_dropdowns_Item_ID();
+        create_custom_dropdowns_Item_ID("Item_ID");
     });
 
     function create_custom_dropdowns_RaisedBy() {
         $('select#RaisedBy').each(function (i, select) {
-            debugger
+            
             if (!$(this).next().hasClass('dropdown-select')) {
-                debugger
+                
                     $('#RaisedBy').removeClass('form-control');
                     $(this).after('<div id="divRaisedBy" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                     var dropdown = $(this).next();
@@ -197,9 +197,9 @@
     }
     function create_custom_dropdowns_DesignationId() {
         $('select#DesignationId').each(function (i, select) {
-            debugger
+            
             if (!$(this).next().hasClass('dropdown-select')) {
-                debugger
+                
                 $('#DesignationId').removeClass('form-control');
                 $(this).after('<div id="divDesignationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
@@ -216,12 +216,10 @@
     }
     function create_custom_dropdowns_LocationId() {
         $('select#LocationId').each(function (i, select) {
-            debugger
+            
             if (!$(this).next().hasClass('dropdown-select')) {
-                debugger
+                
                 $('#LocationId').removeClass('form-control');
-                //$('#Item_ID').removeClass('form-control');
-                //$('#Item_ID').removeClass('form-control-sm');
                 $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
@@ -235,14 +233,12 @@
         });
         $('#divLocationId.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueLocationId" autocomplete="off" onkeyup="filterLocationId()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
     }
-    function create_custom_dropdowns_Item_ID() {
-        $('select#Item_ID').each(function (i, select) {
-            debugger
-            if (!$(this).next().hasClass('dropdown-select')) {
-                debugger
-                $('#Item_ID').removeClass('form-control');
-                $('#Item_ID').removeClass('form-control-sm');
-                $(this).after('<div id="divItem_ID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+    function create_custom_dropdowns_Item_ID(id) {        
+        $('select#' + id).each(function (i, select) {            
+            if (!$(this).next().hasClass('dropdown-select')) {                
+                $('#' + id).removeClass('form-control');
+                $('#' + id).removeClass('form-control-sm');
+                $(this).after('<div id="div'+id+'" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -253,7 +249,7 @@
                 });
             }
         });
-        $('#divItem_ID.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueItem_ID" autocomplete="off" onkeyup="filterItem_ID()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+        $('#div' + id + '.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue' + id +'" autocomplete="off" onkeyup="filterItem_ID(id)" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
     }
 
     // Event listeners
@@ -290,25 +286,23 @@
             (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
         });
     };
-    function filterDesignationId() {
-        debugger
+    function filterDesignationId() {        
         var valThis = $('#txtSearchValueDesignationId').val();
         $('.dropdown-select ul > li').each(function () {
             var text = $(this).text();
             (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
         });
     };
-    function filterLocationId() {
-        debugger
+    function filterLocationId() {        
         var valThis = $('#txtSearchValueLocationId').val();
         $('.dropdown-select ul > li').each(function () {
             var text = $(this).text();
             (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
         });
     };
-    function filterItem_ID() {
+    function filterItem_ID(id) {
         debugger
-        var valThis = $('#txtSearchValueItem_ID').val();
+        var valThis = $('#' + id +'').val();
         $('.dropdown-select ul > li').each(function () {
             var text = $(this).text();
             (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
@@ -363,9 +357,10 @@
     });
     /*Rahul added 'function create_custom_dropdowns()' 22-05-2023. end*/
     function SetUserName() {
+        debugger
         var selectedOptionTerms = document.getElementById("RaisedBy").selectedIndex;
         var tempUserName = document.getElementById("RaisedBy").options[selectedOptionTerms].innerText;
-        document.getElementById("UserName").value = tempUserName;
+        document.getElementById("UserName").value = tempUserName;        
     }
 
     function SetDesignationName() {
@@ -442,6 +437,7 @@
     //==========end===============
 
     $("#Item_ID").change(function () {
+        debugger
         $('#btnSave').prop('disabled', false);
         getitemDetails();
     });
@@ -511,6 +507,10 @@
     }
 
     function SelectedIndexChangedItemList(id) {
+
+        $('#btnSave').prop('disabled', false);
+        getitemDetails();
+
         var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
         itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;
@@ -520,12 +520,12 @@
 
     var counter = 1;
 
-    $("#AddItem").click(function () {
+    $("#AddItem").click(function () {        
         var itemId = "ItemID_" + counter;
         var itemCode = "itemCode_" + counter;
         var itemDescription = "itemDescription_" + counter;
         var itemQuantity = "requiredQuantity_" + counter;
-        var itemUnit = "itemUnit_" + counter;
+        var itemUnit = "itemUnit_" + counter;        
         $('<tr id="tablerow' + counter + '">' + '<td>' +
             //'<select id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" required="required" /></select>' +
             //'<input type="text" id="ItemID" class="form-control" style = "height:30px;width:100px;" name="ItemID[' + counter + ']" value="" required="required" />' +
@@ -546,10 +546,10 @@
             '<td>' +
             '<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
             '</td>' +
-            '</tr>').appendTo('#submissionTable');
-
+            '</tr>').appendTo('#submissionTable');        
+        create_custom_dropdowns_Item_ID(itemId);
         counter++;
-        return false;
+        return false;        
     });
 
     function removeTr(index) {
