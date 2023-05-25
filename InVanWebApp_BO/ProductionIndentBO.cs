@@ -62,7 +62,7 @@ namespace InVanWebApp_BO
         public Nullable<int> SO_Id { get; set; }
     }
 
-    //Rahul added 25-033-2023. 
+    //Rahul added 25-03-2023. 
     public class BatchNumberMasterBO
     {
         public int ID { get; set; }

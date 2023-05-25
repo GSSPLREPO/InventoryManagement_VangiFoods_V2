@@ -165,62 +165,63 @@
 
     var TxtItemDetails = "";
 
-    $("#TotalBatches").change(function () {
+    //$("#TotalBatches").change(function () {
 
-        var totalBatches = $("#TotalBatches").val();
-        var ID = $('#SO_Id').val();
+    //    var totalBatches = $("#TotalBatches").val();
+    //    var ID = $('#SO_Id').val();
 
-        if (totalBatches == 0 || totalBatches == null || totalBatches == '') {
-            totalBatches = 0;
-        }
-        else {
-            totalBatches = parseFloat(totalBatches);
-            var table = document.getElementById('ItemTable');
-            var count = table.rows.length;
+    //    if (totalBatches == 0 || totalBatches == null || totalBatches == '') {
+    //        totalBatches = 0;
+    //    }
+    //    else {
+    //        totalBatches = parseFloat(totalBatches);
+    //        var table = document.getElementById('ItemTable');
+    //        var count = table.rows.length;
 
-            for (var j = 0; j < count - 1; j++) {
-                var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
-                $("#txtFinalQty_" + j).val(FinalQty.toFixed(4));
-            }
+    //        for (var j = 0; j < count - 1; j++) {
+    //            var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
+    //            $("#txtFinalQty_" + j).val(FinalQty.toFixed(4));
+    //        }
 
-        }
+    //    }
 
-        var batchNumber = "";
-        $.ajax({
-            url: '/ProductionIndent/GetBatchNumber?id=' + ID + "&TotalBatches=" + totalBatches,
-            type: "POST",
-            data: {},
-            success: function (result) {
-                if (result.length < totalBatches) {
-                    alert('You are entering wrong no of batches!');
-                    $("#TotalBatches").val(result.length);
+    //    var batchNumber = "";
+    //    $.ajax({
+    //        url: '/ProductionIndent/GetBatchNumber?id=' + ID + "&TotalBatches=" + totalBatches,
+    //        type: "POST",
+    //        data: {},
+    //        success: function (result) {
+    //            if (result.length < totalBatches) {
+    //                alert('You are entering wrong no of batches!');
+    //                $("#TotalBatches").val(result.length);
 
-                    totalBatches = parseFloat(result.length);
-                    var table = document.getElementById('ItemTable');
-                    var count = table.rows.length;
+    //                totalBatches = parseFloat(result.length);
+    //                var table = document.getElementById('ItemTable');
+    //                var count = table.rows.length;
 
-                    for (var j = 0; j < count - 1; j++) {
-                        var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
-                        $("#txtFinalQty_" + j).val(FinalQty.toFixed(2));
-                    }
-                }
+    //                for (var j = 0; j < count - 1; j++) {
+    //                    var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
+    //                    $("#txtFinalQty_" + j).val(FinalQty.toFixed(2));
+    //                }
+    //            }
 
-                for (var j = 0; j < result.length; j++) {
-                    batchNumber = batchNumber + result[j].BatchNumber;
-                    if (j != result.length - 1)
-                        batchNumber = batchNumber + ",";
-                }
-                document.getElementById("BatchNumber").value = batchNumber;
-            },
-            error: function (err) {
-                alert('Not able to fetch Batch Number, do batch planning!');
-                $('#TotalBatches').val('');
-                $('#BatchNumber').val('');
-                $('#SO_Id').focus();
-            }
-        });
+    //            for (var j = 0; j < result.length; j++) {
+    //                batchNumber = batchNumber + result[j].BatchNumber;
+    //                if (j != result.length - 1)
+    //                    batchNumber = batchNumber + ",";
+    //            }
+    //            document.getElementById("BatchNumber").value = batchNumber;
+    //        },
+    //        error: function (err) {
+    //            alert('Not able to fetch Batch Number, do batch planning!');
+    //            $('#TotalBatches').val('');
+    //            $('#BatchNumber').val('');
+    //            $('#SO_Id').focus();
+    //        }
+    //    });
 
-    });
+    //});
+
 
     // SO Number New Start
     function SelectedIndexChanged(id) {
@@ -266,7 +267,28 @@
     // So Number New End
 
     function SelectedIndexChangedProductNameList(id) {
+        debugger
         $('#btnSave').prop('disabled', false);
+        //Rahul added 'ID' 25-05-2023 for 'BatchNumber' start.        
+        var ID = $('#RecipeID').val(); 
+        var batchNumber = "";
+        $.ajax({
+            url: '/ProductionIndent/GetBatchNumber?id=' + ID,
+            type: "POST",
+            data: {},
+            success: function (result) {
+                console.log(result)
+                result[0].BatchNumber
+                document.getElementById("BatchNumber").value = batchNumber;
+            },
+            error: function (err) {
+                alert('Not able to fetch Batch Number, do batch planning!');
+                $('#BatchNumber').val('');
+                $('#SO_Id').focus();
+            }
+        });
+
+        //Rahul added 'ID' 25-05-2023 for 'BatchNumber' end.
 
         var selectedOptionRecipeName, RecipeName;
 

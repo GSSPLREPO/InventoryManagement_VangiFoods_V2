@@ -13,8 +13,11 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<ProductionIndentBO> GetAll();
         //Get Recipe details by ID. 
         IEnumerable<Recipe_DetailsBO> GetRecipeDetailsById(int ProductId, int Recipe_Id);
-        //Bind all Batch Number details by SO_Id and Total_Batches 
-        IEnumerable<BatchNumberMasterBO> GetBatchNumberById(int SO_Id, int Total_Batches);
+        ////Bind all Batch Number details by SO_Id and Total_Batches   //Not in use 25-05-23.
+        //IEnumerable<BatchNumberMasterBO> GetBatchNumberById(int SO_Id, int Total_Batches);
+        //Bind all Batch Number details by Item_ID 
+        IEnumerable<ItemBO> GetBatchNumberById(int Item_ID);
+
         //Define function for inserting data into Production Indent 
         ResponseMessageBO Insert(ProductionIndentBO model);
         //Bind dropdown of Sales Order Number 

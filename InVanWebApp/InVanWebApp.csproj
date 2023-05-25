@@ -412,6 +412,12 @@
     <Compile Include="DAL\PestControlLog.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\PostProductionRejectionNote.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\PostProductionRejectionNote_Details.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\PreProduction_QC.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -529,9 +535,6 @@
     <Compile Include="DAL\StockTransfer.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\sysdiagram.cs">
-      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DAL\TaxMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -547,7 +550,679 @@
     <Compile Include="DAL\UserDetail.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\usp_dashb_BatchwiseProductionCost_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_FIFOWithExpiryHighlighting_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_RealTimeWarehouseWiseStock_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_ReorderPointOnAvailableStock_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_ReorderPoint_CalibrationLog_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_ReorderPoint_OnMinStock_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_ReorderPoint_PurchaseOrderPaymentDetails_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_ReorderPoint_SalesOrderPaymentDetails_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_TotalInventoryValueWarehouseWise_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_UtilityConsumptionbybatchDashboard_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dashb_Yeild_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_dash_Inventory_FIFO_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_BatchwiseProductionCost_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_Company_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_DBNoteReport_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_DeliveryChallanAgainstSO_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_FGLocationwise_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_FinishGoodDispatch_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GetRawMaterialReceived_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_GRN_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_Inventory_FIFO_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_IssueNote_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_Item_GetAll_For_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_PostProductionRejection_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_PreProduction_QC_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_PurchaseInvoice_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_PurchaseOrder_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_RawMaterialCostAnalysis_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_RejectionNote_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_Rejection_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_SalesInvoice_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_Sales_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_StockMovement_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_StockReconciliation_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_stock_report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_TotalInventoryCostWarehouseWiseStock_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_Wastage_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_rpt_Yeild_Report_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_BatchNumber_Get_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_BatchPlanning_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_BindPreProductionQCForRejectionNote_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_BindRejectionNoteDD_ForDebitNote_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CalibrationLog_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CalibrationLog_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CalibrationLog_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CertificateAnalysis_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CertificateAnalysis_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ChillerCCP_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ChillerCCP_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_City_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ClorinationLog_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ClorinationLog_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ClorinationLog_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CompanyDetails_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CompanyDetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CompanyList_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Country_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CreditNoteDetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CreditNote_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CreditNote_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CreditNote_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_CurrencyMaster_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Currency_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Currency_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_DailyMonitoring_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_DailyMonitoring_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_DailyMonitoring_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_DBBoteNumber_Get_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_DebitNote_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_DeliveryChallan_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Designation_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_FGLocationBatchNumber_Get_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_FinishGoodSeries_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_FinishGoodSeries_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ForeignBodyFound_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ForeignBodyFound_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ForeignBodyFound_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetInquiryListForSO_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetItemCodeListForStockTransfer_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetItemDetailsByIdForPOandOC_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetItemDetailsByIdForStockTransfer_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetItemListForIndent_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetItemListForPOandOC_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetItemListForRecipe_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetItemListForStockTransfer_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetSalesOrder_ForSOPayment_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetScreenNamesByRoleId_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GetScreensNotInRoleRightsById_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GRNItemDetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GRN_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_GRN_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_HotFillingPackingLineLogSheetCCP_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_HotFillingPackingLineLogSheetCCP_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_IndentItemDetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Indent_GetAllForIndent_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Indent_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Indent_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Indent_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InquiryForm_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InquiryForm_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InquiryItemDetailsForSO_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InvoiceNoteNumber_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardItemDetailsForGRN_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardItemDetailsForView_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardNoteForGRN_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardNote_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardNote_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardQCItemDetailsForView_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardQCItemDetailsFor_RN_ItemDetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardQCSorting_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardQCSorting_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwardQC_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwdDetailsForGRN_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_InwNoteForInwQC_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_IssueNote_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ItemCategory_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ItemCategory_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ItemType_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ItemType_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Item_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Item_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_LocationMaster_GetAll_DeliveryAddress_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_LocationMaster_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_LocationMaster_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_LocationName_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_LocationStockDetailsForStockAdjustment_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_LocationWiseStock_GetAll_Quantity_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_LoginAuthentication_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_MicroAnalysis_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_MicroAnalysis_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_MicroAnalysis_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_OilAnalysis_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_OilAnalysis_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_OilAnalysis_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_OrganisationGroups_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Organisation_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Organisation_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_OutwardNote_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PestControlLog_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PestControlLog_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PestControlLog_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PINDForRN_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PMNoteForPPQC_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PODetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_POItemsDetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_POPayment_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PostProdRN_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PostProRNSO_BindItemDetails_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PostProRNSO_DD_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PreProduction_QCItemDetailsFor_RN_ItemDetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PreProduction_QC_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PreProduction_QC_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PreQCItemDetailsForView_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PreQC_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PreStartupHygieneCheck_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PreStartupHygiene_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PreStartUpHygineCheck_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductEvaluationLog_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductEvaluationLog_GetAllBy_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductEvaluationLog_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductionIndent_GetAll_For_Material_Issue_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductionIndent_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductionIndent_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductionMaterialIssueNote_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductionMaterialIssueNote_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductMaster_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_ProductMaster_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PurchaseOrderPaymentDetails_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PurchaseOrderPaymentDetails_GetByPOId_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_PurchaseOrder_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RecipeDetailsForBatchPlanning_GetbyProductId_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RecipeIngredientsDetailsForView_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RecipeIngredientsDetail_GetBy_Id_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RecipeMaster_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RecipeMaster_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RejectionNoteDetailsFor_DN_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RejectionNoteDetailsFor_RN_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RejectionNote_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RequestForQuotation_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RequestForQuotation_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RNItemDetailsFor_DN_ItemDetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Role_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Role_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RQCCP_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_RQCCP_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SalesOrderPaymentDetails_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SalesOrderPaymentDetails_GetBySOId_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SalesOrder_For_Production_Indent_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SalesOrder_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SalesOrder_GetAll_WorkOrderNo_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SanitizationAndHygine_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SanitizationAndHygine_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SanitizationAndHygine_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Screens_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SILOCCP_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SILOCCP_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SODetails_GetByIDFor_CeditNote_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SODetails_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SOItemDetailsForCreditNote_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SONumber_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SONumber_Get_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_SOPayment_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_State_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_StockAdjustment_Insert_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_StockTransferFromLocationName_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_StockTransferToLocationName_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_StockTransfer_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_TaxMaster_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Tax_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_TermsAndCondition_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_TermsAndCondition_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Unit_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_Unit_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_UserDetails_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_VegWasherDosageLog_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_VegWasherDosageLog_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_VegWasherDosageLog_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_WaterAnalysis_GetAllByDate_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_WaterAnalysis_GetAll_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_WaterAnalysis_GetByID_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\usp_tbl_WorkOrderNumber_Get_Result.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\VegWasherDosageLog.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Vw_PurchaseOrder_PaymentDetails.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Vw_SalesOrder_PaymentDetails.cs">
+      <DependentUpon>InVanDBDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Vw_Sotck_Report.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\WaterAnalysi.cs">

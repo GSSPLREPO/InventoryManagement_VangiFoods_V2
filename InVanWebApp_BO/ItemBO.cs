@@ -63,6 +63,7 @@ namespace InVanWebApp_BO
 
         //Added for Dashboard dropdown
         public string ItemNameWithCode { get; set; }
-
+        //Added for Production Indent 'BatchNumber' dropdown 25-05-2023. 
+        public string BatchNumber { get; set; }
     }
 }

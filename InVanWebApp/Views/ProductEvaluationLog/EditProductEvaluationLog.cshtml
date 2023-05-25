@@ -80,6 +80,7 @@
                     @Html.ValidationMessageFor(model => model.TexColTaste, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Acid")
@@ -114,7 +115,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.WorkOrder, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return isNumberKey(event);" })
+                    @Html.TextBoxFor(model => model.WorkOrder, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsAlphaNumeric(event);" })
                     @Html.ValidationMessageFor(model => model.WorkOrder, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>

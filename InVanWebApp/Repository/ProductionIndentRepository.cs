@@ -150,26 +150,62 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-        #region Bind all Batch Number details by SO_Id and Total_Batches
-        public IEnumerable<BatchNumberMasterBO> GetBatchNumberById(int SO_Id, int Total_Batches) 
+        //#region Bind all Batch Number details by SO_Id and Total_Batches  //Not in use 25-05-23.
+        //public IEnumerable<BatchNumberMasterBO> GetBatchNumberById(int SO_Id, int Total_Batches) 
+        //{
+        //    List<BatchNumberMasterBO> resultList = new List<BatchNumberMasterBO>();
+        //    try
+        //    {
+        //        using (SqlConnection con = new SqlConnection(conString))
+        //        {
+        //            SqlCommand cmd = new SqlCommand("usp_tbl_BatchNumberMaster_ProductionIndent_GetbyId", con);
+        //            cmd.Parameters.AddWithValue("@SO_ID", SO_Id);
+        //            cmd.Parameters.AddWithValue("@Total_Batches", Total_Batches); 
+        //            cmd.CommandType = CommandType.StoredProcedure;
+        //            con.Open();
+        //            SqlDataReader dataReader = cmd.ExecuteReader();
+
+        //            while (dataReader.Read())
+        //            {
+        //                var result = new BatchNumberMasterBO() 
+        //                {
+        //                    ID = Convert.ToInt32(dataReader["ID"]),
+        //                    BatchNumber = dataReader["BatchNumber"].ToString(),
+        //                };
+        //                resultList.Add(result);
+        //            }
+        //            con.Close();
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        resultList = null;
+        //        log.Error(ex.Message, ex);
+        //    }
+        //    return resultList;
+        //}
+        //#endregion
+
+        #region Bind all Batch Number details by Item_ID  
+        public IEnumerable<ItemBO> GetBatchNumberById(int Item_ID)
         {
-            List<BatchNumberMasterBO> resultList = new List<BatchNumberMasterBO>();
+            List<ItemBO> resultList = new List<ItemBO>();
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_BatchNumberMaster_ProductionIndent_GetbyId", con);
-                    cmd.Parameters.AddWithValue("@SO_ID", SO_Id);
-                    cmd.Parameters.AddWithValue("@Total_Batches", Total_Batches); 
+                    SqlCommand cmd = new SqlCommand("usp_tbl_GenerateBatchNumberForProductionIndentByItemId", con);
+                    cmd.Parameters.AddWithValue("@ItemID", Item_ID);                    
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
 
                     while (dataReader.Read())
                     {
-                        var result = new BatchNumberMasterBO() 
+                        var result = new ItemBO()
                         {
-                            ID = Convert.ToInt32(dataReader["ID"]),
+                            //ID = Convert.ToInt32(dataReader["ID"]),
+                            //Item_Code = dataReader["Item_Code"].ToString(),
                             BatchNumber = dataReader["BatchNumber"].ToString(),
                         };
                         resultList.Add(result);
@@ -185,7 +221,6 @@ namespace InVanWebApp.Repository
             return resultList;
         }
         #endregion
-
 
         #region Insert function
         public ResponseMessageBO Insert(ProductionIndentBO model)

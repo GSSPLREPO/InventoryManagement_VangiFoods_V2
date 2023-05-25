@@ -106,7 +106,7 @@ namespace InVanWebApp.Controllers
 
                         response = _repository.Insert(model);
                         if (response.Status)
-                            TempData["Success"] = "<script>alert('Batch plane created successfully!');</script>";
+                            TempData["Success"] = "<script>alert('Batch plan created successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate batch document number or Planning of the selected product is done! Can not be inserted!');</script>";

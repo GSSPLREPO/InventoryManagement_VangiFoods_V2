@@ -5,116 +5,121 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d60547d933b048a293bc5b0107630461" Name="Diagram1" ZoomLevel="70">
-        <EntityTypeShape EntityType="InVanDBModels.BatchNumberMaster" Width="1.5" PointX="20.25" PointY="62.375" />
-        <EntityTypeShape EntityType="InVanDBModels.BatchPlanning_Details" Width="1.5" PointX="10.5" PointY="87.75" />
-        <EntityTypeShape EntityType="InVanDBModels.BatchPlanningMaster" Width="1.5" PointX="8.25" PointY="93.5" />
-        <EntityTypeShape EntityType="InVanDBModels.Branch" Width="1.5" PointX="1.5" PointY="75.5" />
+        <EntityTypeShape EntityType="InVanDBModels.BatchNumberMaster" Width="1.5" PointX="15" PointY="269.5" />
+        <EntityTypeShape EntityType="InVanDBModels.BatchPlanning_Details" Width="1.5" PointX="18.75" PointY="114.125" />
+        <EntityTypeShape EntityType="InVanDBModels.BatchPlanningMaster" Width="1.5" PointX="13.5" PointY="117.5" />
+        <EntityTypeShape EntityType="InVanDBModels.Branch" Width="1.5" PointX="3" PointY="250.25" />
         <EntityTypeShape EntityType="InVanDBModels.CalibrationLog" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="InVanDBModels.CertificateAnalysi" Width="1.5" PointX="5.75" PointY="6.75" />
         <EntityTypeShape EntityType="InVanDBModels.ChillerCCP" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InVanDBModels.CityMaster" Width="1.5" PointX="9.75" PointY="26.125" />
+        <EntityTypeShape EntityType="InVanDBModels.CityMaster" Width="1.5" PointX="15" PointY="69.75" />
         <EntityTypeShape EntityType="InVanDBModels.ClorinationLog" Width="1.5" PointX="7.75" PointY="5.75" />
-        <EntityTypeShape EntityType="InVanDBModels.COAMaster" Width="1.5" PointX="3" PointY="6.875" />
-        <EntityTypeShape EntityType="InVanDBModels.Company" Width="1.5" PointX="12" PointY="24" />
-        <EntityTypeShape EntityType="InVanDBModels.CountryMaster" Width="1.5" PointX="15" PointY="61.125" />
-        <EntityTypeShape EntityType="InVanDBModels.CreditNote" Width="1.5" PointX="17.25" PointY="110.375" />
-        <EntityTypeShape EntityType="InVanDBModels.CreditNoteDetail" Width="1.5" PointX="19.5" PointY="81.5" />
-        <EntityTypeShape EntityType="InVanDBModels.CurrencyMaster" Width="1.5" PointX="17.25" PointY="58.75" />
+        <EntityTypeShape EntityType="InVanDBModels.COAMaster" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="InVanDBModels.Company" Width="1.5" PointX="17.25" PointY="67.75" />
+        <EntityTypeShape EntityType="InVanDBModels.CountryMaster" Width="1.5" PointX="10.5" PointY="69.75" />
+        <EntityTypeShape EntityType="InVanDBModels.CreditNote" Width="1.5" PointX="5.25" PointY="92" />
+        <EntityTypeShape EntityType="InVanDBModels.CreditNoteDetail" Width="1.5" PointX="7.5" PointY="105.125" />
+        <EntityTypeShape EntityType="InVanDBModels.CurrencyMaster" Width="1.5" PointX="17.25" PointY="80.125" />
         <EntityTypeShape EntityType="InVanDBModels.DailyMonitoring" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InVanDBModels.DebitNote" Width="1.5" PointX="14.25" PointY="100.25" />
-        <EntityTypeShape EntityType="InVanDBModels.DebitNoteDetail" Width="1.5" PointX="16.5" PointY="94.5" />
-        <EntityTypeShape EntityType="InVanDBModels.DeliveryChallan" Width="1.5" PointX="14.25" PointY="33" />
-        <EntityTypeShape EntityType="InVanDBModels.DeliveryChallanItemDetail" Width="1.5" PointX="16.5" PointY="68.25" />
-        <EntityTypeShape EntityType="InVanDBModels.Department" Width="1.5" PointX="1.5" PointY="69.875" />
-        <EntityTypeShape EntityType="InVanDBModels.DesignationMaster" Width="1.5" PointX="9.75" PointY="46.125" />
-        <EntityTypeShape EntityType="InVanDBModels.FinishGoodSery" Width="1.5" PointX="18" PointY="45.5" />
+        <EntityTypeShape EntityType="InVanDBModels.DebitNote" Width="1.5" PointX="19.5" PointY="264.25" />
+        <EntityTypeShape EntityType="InVanDBModels.DebitNoteDetail" Width="1.5" PointX="19.5" PointY="100.125" />
+        <EntityTypeShape EntityType="InVanDBModels.DeliveryChallan" Width="1.5" PointX="17.25" PointY="128.625" />
+        <EntityTypeShape EntityType="InVanDBModels.DeliveryChallanItemDetail" Width="1.5" PointX="19.5" PointY="106.875" />
+        <EntityTypeShape EntityType="InVanDBModels.Department" Width="1.5" PointX="5.25" PointY="250.625" />
+        <EntityTypeShape EntityType="InVanDBModels.DesignationMaster" Width="1.5" PointX="10.5" PointY="257" />
+        <EntityTypeShape EntityType="InVanDBModels.FinishGoodSery" Width="1.5" PointX="16.5" PointY="96" />
         <EntityTypeShape EntityType="InVanDBModels.ForeignBodyFound" Width="1.5" PointX="9.75" PointY="7.75" />
-        <EntityTypeShape EntityType="InVanDBModels.GRN_Master" Width="1.5" PointX="11.25" PointY="108.25" />
-        <EntityTypeShape EntityType="InVanDBModels.GRNDetail" Width="1.5" PointX="13.5" PointY="68.625" />
+        <EntityTypeShape EntityType="InVanDBModels.GRN_Master" Width="1.5" PointX="17.25" PointY="246.5" />
+        <EntityTypeShape EntityType="InVanDBModels.GRNDetail" Width="1.5" PointX="22.5" PointY="111.25" />
         <EntityTypeShape EntityType="InVanDBModels.GSTMaster" Width="1.5" PointX="11.75" PointY="0.75" />
         <EntityTypeShape EntityType="InVanDBModels.HotFillingPackingLineLogSheetCCP" Width="1.5" PointX="11.75" PointY="4.75" />
-        <EntityTypeShape EntityType="InVanDBModels.Indent" Width="1.5" PointX="12" PointY="44.875" />
-        <EntityTypeShape EntityType="InVanDBModels.Indent_Details" Width="1.5" PointX="10.5" PointY="71.25" />
-        <EntityTypeShape EntityType="InVanDBModels.InquiryFormItemDetail" Width="1.5" PointX="22.5" PointY="94" />
-        <EntityTypeShape EntityType="InVanDBModels.InquiryMaster" Width="1.5" PointX="9.75" PointY="32.125" />
+        <EntityTypeShape EntityType="InVanDBModels.Indent" Width="1.5" PointX="12.75" PointY="255.75" />
+        <EntityTypeShape EntityType="InVanDBModels.Indent_Details" Width="1.5" PointX="10.5" PointY="122.875" />
+        <EntityTypeShape EntityType="InVanDBModels.InquiryFormItemDetail" Width="1.5" PointX="13.5" PointY="125" />
+        <EntityTypeShape EntityType="InVanDBModels.InquiryMaster" Width="1.5" PointX="17.25" PointY="59.625" />
         <EntityTypeShape EntityType="InVanDBModels.InvoiceMaster" Width="1.5" PointX="11.75" PointY="10.75" />
-        <EntityTypeShape EntityType="InVanDBModels.InwardNote" Width="1.5" PointX="9" PointY="104.875" />
-        <EntityTypeShape EntityType="InVanDBModels.InwardNoteDetail" Width="1.5" PointX="13.5" PointY="74.625" />
-        <EntityTypeShape EntityType="InVanDBModels.InwardQC" Width="1.5" PointX="9" PointY="100.25" />
-        <EntityTypeShape EntityType="InVanDBModels.InwardQCDetail" Width="1.5" PointX="22.5" PointY="68.125" />
-        <EntityTypeShape EntityType="InVanDBModels.IssueNote" Width="1.5" PointX="8.25" PointY="123.375" />
-        <EntityTypeShape EntityType="InVanDBModels.IssueNoteDetail" Width="1.5" PointX="10.5" PointY="93.5" />
-        <EntityTypeShape EntityType="InVanDBModels.Item" Width="1.5" PointX="8.25" PointY="79.625" />
-        <EntityTypeShape EntityType="InVanDBModels.ItemCategoryMaster" Width="1.5" PointX="3" PointY="82.375" />
-        <EntityTypeShape EntityType="InVanDBModels.ItemCostMaster" Width="1.5" PointX="10.5" PointY="226.75" />
-        <EntityTypeShape EntityType="InVanDBModels.ItemTaxMaster" Width="1.5" PointX="13.5" PointY="88.375" />
-        <EntityTypeShape EntityType="InVanDBModels.ItemType" Width="1.5" PointX="0.75" PointY="82.625" />
-        <EntityTypeShape EntityType="InVanDBModels.LabMaster" Width="1.5" PointX="20.25" PointY="52.875" />
-        <EntityTypeShape EntityType="InVanDBModels.LocationMaster" Width="1.5" PointX="15" PointY="51.375" />
-        <EntityTypeShape EntityType="InVanDBModels.LocationWiseStock" Width="1.5" PointX="22.5" PointY="82" />
+        <EntityTypeShape EntityType="InVanDBModels.InwardNote" Width="1.5" PointX="15" PointY="242.25" />
+        <EntityTypeShape EntityType="InVanDBModels.InwardNoteDetail" Width="1.5" PointX="22.5" PointY="105.25" />
+        <EntityTypeShape EntityType="InVanDBModels.InwardQC" Width="1.5" PointX="15" PointY="237.625" />
+        <EntityTypeShape EntityType="InVanDBModels.InwardQCDetail" Width="1.5" PointX="13.5" PointY="103.875" />
+        <EntityTypeShape EntityType="InVanDBModels.IssueNote" Width="1.5" PointX="14.25" PointY="83" />
+        <EntityTypeShape EntityType="InVanDBModels.IssueNoteDetail" Width="1.5" PointX="16.5" PointY="105.125" />
+        <EntityTypeShape EntityType="InVanDBModels.Item" Width="1.5" PointX="5.25" PointY="108.875" />
+        <EntityTypeShape EntityType="InVanDBModels.ItemCategoryMaster" Width="1.5" PointX="3" PointY="118" />
+        <EntityTypeShape EntityType="InVanDBModels.ItemCostMaster" Width="1.5" PointX="7.5" PointY="262" />
+        <EntityTypeShape EntityType="InVanDBModels.ItemTaxMaster" Width="1.5" PointX="7.5" PointY="100.125" />
+        <EntityTypeShape EntityType="InVanDBModels.ItemType" Width="1.5" PointX="0.75" PointY="106.125" />
+        <EntityTypeShape EntityType="InVanDBModels.LabMaster" Width="1.5" PointX="18.75" PointY="95.125" />
+        <EntityTypeShape EntityType="InVanDBModels.LocationMaster" Width="1.5" PointX="14.25" PointY="89.5" />
+        <EntityTypeShape EntityType="InVanDBModels.LocationWiseStock" Width="1.5" PointX="16.5" PointY="116.625" />
         <EntityTypeShape EntityType="InVanDBModels.Log" Width="1.5" PointX="7.75" PointY="12.75" />
         <EntityTypeShape EntityType="InVanDBModels.MicroAnalysi" Width="1.5" PointX="13.75" PointY="0.75" />
         <EntityTypeShape EntityType="InVanDBModels.OilAnalysi" Width="1.5" PointX="13.75" PointY="6.75" />
-        <EntityTypeShape EntityType="InVanDBModels.OrganisationGroup" Width="1.5" PointX="1.5" PointY="94" />
-        <EntityTypeShape EntityType="InVanDBModels.Organisation" Width="1.5" PointX="1.5" PointY="86.75" />
-        <EntityTypeShape EntityType="InVanDBModels.OutwardNote" Width="1.5" PointX="8.25" PointY="72.375" />
-        <EntityTypeShape EntityType="InVanDBModels.OutwardNoteDetail" Width="1.5" PointX="10.5" PointY="76.25" />
+        <EntityTypeShape EntityType="InVanDBModels.OrganisationGroup" Width="1.5" PointX="1.5" PointY="244.75" />
+        <EntityTypeShape EntityType="InVanDBModels.Organisation" Width="1.5" PointX="0.75" PointY="249.5" />
+        <EntityTypeShape EntityType="InVanDBModels.OutwardNote" Width="1.5" PointX="14.25" PointY="133" />
+        <EntityTypeShape EntityType="InVanDBModels.OutwardNoteDetail" Width="1.5" PointX="16.5" PointY="111.875" />
         <EntityTypeShape EntityType="InVanDBModels.PestControlLog" Width="1.5" PointX="13.75" PointY="12.75" />
-        <EntityTypeShape EntityType="InVanDBModels.PreProduction_QC" Width="1.5" PointX="8.25" PointY="61.125" />
-        <EntityTypeShape EntityType="InVanDBModels.PreProduction_QC_Details" Width="1.5" PointX="10.5" PointY="81.375" />
+        <EntityTypeShape EntityType="InVanDBModels.PostProductionRejectionNote" Width="1.5" PointX="21.75" PointY="97.25" />
+        <EntityTypeShape EntityType="InVanDBModels.PostProductionRejectionNote_Details" Width="1.5" PointX="24" PointY="97.25" />
+        <EntityTypeShape EntityType="InVanDBModels.PreProduction_QC" Width="1.5" PointX="12" PointY="269.375" />
+        <EntityTypeShape EntityType="InVanDBModels.PreProduction_QC_Details" Width="1.5" PointX="22.5" PointY="118" />
         <EntityTypeShape EntityType="InVanDBModels.PreStartUpHygineCheck" Width="1.5" PointX="0.75" PointY="14.75" />
         <EntityTypeShape EntityType="InVanDBModels.ProcessMaster" Width="1.5" PointX="2.75" PointY="14.75" />
         <EntityTypeShape EntityType="InVanDBModels.ProductEvaluationLog" Width="1.5" PointX="4.75" PointY="14.75" />
-        <EntityTypeShape EntityType="InVanDBModels.ProductionIndent" Width="1.5" PointX="6" PointY="55.125" />
-        <EntityTypeShape EntityType="InVanDBModels.ProductionIndentIngredientsDetail" Width="1.5" PointX="16.5" PointY="81.75" />
-        <EntityTypeShape EntityType="InVanDBModels.ProductionMaterialIssueNote" Width="1.5" PointX="6" PointY="63.125" />
-        <EntityTypeShape EntityType="InVanDBModels.ProductionMaterialIssueNoteDetail" Width="1.5" PointX="13.5" PointY="81.5" />
-        <EntityTypeShape EntityType="InVanDBModels.ProductMaster" Width="1.5" PointX="1.5" PointY="56.5" />
-        <EntityTypeShape EntityType="InVanDBModels.PurchaseOrder" Width="1.5" PointX="9" PointY="110.125" />
-        <EntityTypeShape EntityType="InVanDBModels.PurchaseOrderItemsDetail" Width="1.5" PointX="16.5" PointY="87.5" />
-        <EntityTypeShape EntityType="InVanDBModels.PurchaseOrderPaymentDetail" Width="1.5" PointX="11.25" PointY="115.25" />
-        <EntityTypeShape EntityType="InVanDBModels.QCProductionSpecificationMaster" Width="1.5" PointX="5.25" PointY="82.375" />
-        <EntityTypeShape EntityType="InVanDBModels.QCProductioObservationMaster" Width="1.5" PointX="7.5" PointY="89.875" />
+        <EntityTypeShape EntityType="InVanDBModels.ProductionIndent" Width="1.5" PointX="9.75" PointY="268.5" />
+        <EntityTypeShape EntityType="InVanDBModels.ProductionIndentIngredientsDetail" Width="1.5" PointX="10.5" PointY="100.25" />
+        <EntityTypeShape EntityType="InVanDBModels.ProductionMaterialIssueNote" Width="1.5" PointX="12" PointY="262.5" />
+        <EntityTypeShape EntityType="InVanDBModels.ProductionMaterialIssueNoteDetail" Width="1.5" PointX="16.5" PointY="122" />
+        <EntityTypeShape EntityType="InVanDBModels.ProductMaster" Width="1.5" PointX="7.5" PointY="265.875" />
+        <EntityTypeShape EntityType="InVanDBModels.PurchaseOrder" Width="1.5" PointX="15" PointY="248.5" />
+        <EntityTypeShape EntityType="InVanDBModels.PurchaseOrderItemsDetail" Width="1.5" PointX="13.5" PointY="111.125" />
+        <EntityTypeShape EntityType="InVanDBModels.PurchaseOrderPaymentDetail" Width="1.5" PointX="17.25" PointY="253.5" />
+        <EntityTypeShape EntityType="InVanDBModels.QCProductionSpecificationMaster" Width="1.5" PointX="8.25" PointY="112.125" />
+        <EntityTypeShape EntityType="InVanDBModels.QCProductioObservationMaster" Width="1.5" PointX="10.5" PointY="112.5" />
         <EntityTypeShape EntityType="InVanDBModels.RecipeIngredientsDetail" Width="1.5" PointX="15.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InVanDBModels.RecipeMaster" Width="1.5" PointX="3.75" PointY="56" />
-        <EntityTypeShape EntityType="InVanDBModels.RejectionNote" Width="1.5" PointX="17.25" PointY="119.375" />
-        <EntityTypeShape EntityType="InVanDBModels.RejectionNoteItemDetail" Width="1.5" PointX="19.5" PointY="88.25" />
-        <EntityTypeShape EntityType="InVanDBModels.RequestForQuotation" Width="1.5" PointX="6.75" PointY="112.375" />
-        <EntityTypeShape EntityType="InVanDBModels.RequestForQuotationItemDetail" Width="1.5" PointX="16.5" PointY="75.375" />
-        <EntityTypeShape EntityType="InVanDBModels.RFQ_Vendor_ItemDetails" Width="1.5" PointX="19.5" PointY="74.125" />
-        <EntityTypeShape EntityType="InVanDBModels.RFQ_VendorDetails" Width="1.5" PointX="17.25" PointY="101.375" />
-        <EntityTypeShape EntityType="InVanDBModels.RoleRight" Width="1.5" PointX="3.75" PointY="50.875" />
-        <EntityTypeShape EntityType="InVanDBModels.Role" Width="1.5" PointX="1.5" PointY="52.25" />
-        <EntityTypeShape EntityType="InVanDBModels.SalesOrder" Width="1.5" PointX="12" PointY="32" />
-        <EntityTypeShape EntityType="InVanDBModels.SalesOrderItemsDetail" Width="1.5" PointX="22.5" PointY="75.625" />
-        <EntityTypeShape EntityType="InVanDBModels.SalesOrderPaymentDetail" Width="1.5" PointX="14.25" PointY="42.875" />
+        <EntityTypeShape EntityType="InVanDBModels.RecipeMaster" Width="1.5" PointX="7.5" PointY="269.75" />
+        <EntityTypeShape EntityType="InVanDBModels.RejectionNote" Width="1.5" PointX="17.25" PointY="264.625" />
+        <EntityTypeShape EntityType="InVanDBModels.RejectionNoteItemDetail" Width="1.5" PointX="19.5" PointY="187.75" />
+        <EntityTypeShape EntityType="InVanDBModels.RequestForQuotation" Width="1.5" PointX="12.75" PointY="247.5" />
+        <EntityTypeShape EntityType="InVanDBModels.RequestForQuotationItemDetail" Width="1.5" PointX="10.5" PointY="116" />
+        <EntityTypeShape EntityType="InVanDBModels.RFQ_Vendor_ItemDetails" Width="1.5" PointX="19.5" PointY="119.875" />
+        <EntityTypeShape EntityType="InVanDBModels.RFQ_VendorDetails" Width="1.5" PointX="17.25" PointY="138" />
+        <EntityTypeShape EntityType="InVanDBModels.RoleRight" Width="1.5" PointX="9.75" PointY="243.25" />
+        <EntityTypeShape EntityType="InVanDBModels.Role" Width="1.5" PointX="7.5" PointY="245.75" />
+        <EntityTypeShape EntityType="InVanDBModels.SalesOrder" Width="1.5" PointX="19.5" PointY="67.5" />
+        <EntityTypeShape EntityType="InVanDBModels.SalesOrderItemsDetail" Width="1.5" PointX="13.5" PointY="97.25" />
+        <EntityTypeShape EntityType="InVanDBModels.SalesOrderPaymentDetail" Width="1.5" PointX="21.75" PointY="70.875" />
         <EntityTypeShape EntityType="InVanDBModels.SanitizationAndHygine" Width="1.5" PointX="15.75" PointY="5.75" />
-        <EntityTypeShape EntityType="InVanDBModels.ScreenName" Width="1.5" PointX="1.5" PointY="48.75" />
+        <EntityTypeShape EntityType="InVanDBModels.ScreenName" Width="1.5" PointX="7.5" PointY="242.25" />
         <EntityTypeShape EntityType="InVanDBModels.SILOCCP" Width="1.5" PointX="15.75" PointY="11.75" />
         <EntityTypeShape EntityType="InVanDBModels.SOItemSchedule" Width="1.5" PointX="6.75" PointY="16.75" />
-        <EntityTypeShape EntityType="InVanDBModels.StateMaster" Width="1.5" PointX="7.5" PointY="26" />
+        <EntityTypeShape EntityType="InVanDBModels.StateMaster" Width="1.5" PointX="12.75" PointY="69.625" />
         <EntityTypeShape EntityType="InVanDBModels.Status" Width="1.5" PointX="8.75" PointY="16.75" />
-        <EntityTypeShape EntityType="InVanDBModels.StockAdjustment" Width="1.5" PointX="17.25" PointY="52.75" />
-        <EntityTypeShape EntityType="InVanDBModels.StockAdjustmentDetail" Width="1.5" PointX="19.5" PointY="67.5" />
-        <EntityTypeShape EntityType="InVanDBModels.StockMaster" Width="1.5" PointX="22.5" PointY="87.125" />
-        <EntityTypeShape EntityType="InVanDBModels.StockTransfer" Width="1.5" PointX="13.5" PointY="93.625" />
-        <EntityTypeShape EntityType="InVanDBModels.sysdiagram" Width="1.5" PointX="10.75" PointY="16.75" />
-        <EntityTypeShape EntityType="InVanDBModels.TaxMaster" Width="1.5" PointX="11.25" PointY="99.75" />
-        <EntityTypeShape EntityType="InVanDBModels.TermsAndConditionMaster" Width="1.5" PointX="9.75" PointY="40.25" />
-        <EntityTypeShape EntityType="InVanDBModels.UnitMaster" Width="1.5" PointX="6" PointY="77.625" />
-        <EntityTypeShape EntityType="InVanDBModels.UserDetail" Width="1.5" PointX="1.5" PointY="61.875" />
-        <EntityTypeShape EntityType="InVanDBModels.User" Width="1.5" PointX="3.75" PointY="64.5" />
-        <EntityTypeShape EntityType="InVanDBModels.VegWasherDosageLog" Width="1.5" PointX="17.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InVanDBModels.WaterAnalysi" Width="1.5" PointX="17.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InVanDBModels.StockAdjustment" Width="1.5" PointX="8.25" PointY="95.125" />
+        <EntityTypeShape EntityType="InVanDBModels.StockAdjustmentDetail" Width="1.5" PointX="10.5" PointY="106.125" />
+        <EntityTypeShape EntityType="InVanDBModels.StockMaster" Width="1.5" PointX="7.5" PointY="116.875" />
+        <EntityTypeShape EntityType="InVanDBModels.StockTransfer" Width="1.5" PointX="7.5" PointY="124.25" />
+        <EntityTypeShape EntityType="InVanDBModels.TaxMaster" Width="1.5" PointX="5.25" PointY="100.375" />
+        <EntityTypeShape EntityType="InVanDBModels.TermsAndConditionMaster" Width="1.5" PointX="17.25" PointY="75.625" />
+        <EntityTypeShape EntityType="InVanDBModels.UnitMaster" Width="1.5" PointX="3" PointY="112.375" />
+        <EntityTypeShape EntityType="InVanDBModels.UserDetail" Width="1.5" PointX="7.5" PointY="249.625" />
+        <EntityTypeShape EntityType="InVanDBModels.User" Width="1.5" PointX="9.75" PointY="248.625" />
+        <EntityTypeShape EntityType="InVanDBModels.VegWasherDosageLog" Width="1.5" PointX="10.75" PointY="16.75" />
+        <EntityTypeShape EntityType="InVanDBModels.WaterAnalysi" Width="1.5" PointX="17.75" PointY="0.75" />
         <EntityTypeShape EntityType="InVanDBModels.WorkOrder" Width="1.5" PointX="0.75" PointY="4" />
-        <EntityTypeShape EntityType="InVanDBModels.WorkOrderDetail" Width="1.5" PointX="3" PointY="1.375" />
-        <EntityTypeShape EntityType="InVanDBModels.YearMaster" Width="1.5" PointX="17.75" PointY="12.75" />
-        <EntityTypeShape EntityType="InVanDBModels.RQCCP" Width="1.5" PointX="12.75" PointY="17.75" />
-        <AssociationConnector Association="InVanDBModels.FK_BatchNumberMaster_BatchPlanningMaster" />
+        <EntityTypeShape EntityType="InVanDBModels.WorkOrderDetail" Width="1.5" PointX="3" PointY="9" />
+        <EntityTypeShape EntityType="InVanDBModels.YearMaster" Width="1.5" PointX="17.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InVanDBModels.RQCCP" Width="1.5" PointX="17.75" PointY="9.75" />
+        <EntityTypeShape EntityType="InVanDBModels.Vw_PurchaseOrder_PaymentDetails" Width="1.5" PointX="12.75" PointY="17.75" />
+        <EntityTypeShape EntityType="InVanDBModels.Vw_SalesOrder_PaymentDetails" Width="1.5" PointX="14.75" PointY="17.75" />
+        <EntityTypeShape EntityType="InVanDBModels.Vw_Sotck_Report" Width="1.5" PointX="17.75" PointY="15.75" />
+        <AssociationConnector Association="InVanDBModels.FK_BatchNumberMaster_ProductionIndent" />
         <AssociationConnector Association="InVanDBModels.FK_BatchNumberMaster_SalesOrder" />
         <AssociationConnector Association="InVanDBModels.FK_BatchPlanning_Details_BatchPlanningMaster" />
         <AssociationConnector Association="InVanDBModels.FK_BatchPlanning_Details_Item" />
-        <AssociationConnector Association="InVanDBModels.FK_BatchPlanningMaster_ProductMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_BatchPlanningMaster_Item" />
+        <AssociationConnector Association="InVanDBModels.FK_BatchPlanningMaster_LocationMaster" />
         <AssociationConnector Association="InVanDBModels.FK_BatchPlanningMaster_SalesOrder" />
         <AssociationConnector Association="InVanDBModels.FK_Branch_ToOrganisations" />
         <AssociationConnector Association="InVanDBModels.FK_Department_ToBranch" />
@@ -168,6 +173,7 @@
         <AssociationConnector Association="InVanDBModels.FK_DebitNote_GRN_Master" />
         <AssociationConnector Association="InVanDBModels.FK_DebitNote_LocationMaster" />
         <AssociationConnector Association="InVanDBModels.FK_DebitNote_PurchaseOrder" />
+        <AssociationConnector Association="InVanDBModels.FK_DebitNote_RejectionNote" />
         <AssociationConnector Association="InVanDBModels.FK_DebitNote_TermsAndConditionMaster" />
         <AssociationConnector Association="InVanDBModels.FK_DebitNoteDetails_DebitNote" />
         <AssociationConnector Association="InVanDBModels.FK_DebitNoteDetails_Item" />
@@ -180,7 +186,10 @@
         <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_Department" />
         <AssociationConnector Association="InVanDBModels.FK_EmployeeMaster_EmployeeMaster" />
         <AssociationConnector Association="InVanDBModels.FK_Indent_DesignationMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_FinishGoodSeries_Item" />
+        <AssociationConnector Association="InVanDBModels.FK_FinishGoodSeries_LocationMaster" />
         <AssociationConnector Association="InVanDBModels.FK_LabMaster_ToFinishGoodSeries" />
+        <AssociationConnector Association="InVanDBModels.FK_PostProductionRejectionNote_FinishGoodSeries" />
         <AssociationConnector Association="InVanDBModels.FK_GRN_Master_InwardNote" />
         <AssociationConnector Association="InVanDBModels.FK_GRN_Master_InwardQC" />
         <AssociationConnector Association="InVanDBModels.FK_GRN_Master_LocationMaster" />
@@ -219,6 +228,8 @@
         <AssociationConnector Association="InVanDBModels.FK_PreProduction_QC_Details_Item" />
         <AssociationConnector Association="InVanDBModels.FK_ProductionIndentIngredientsDetails_Item" />
         <AssociationConnector Association="InVanDBModels.FK_ProductionMaterialIssueNoteDetails_Item" />
+        <AssociationConnector Association="InVanDBModels.FK_ProductMaster_Item" />
+        <AssociationConnector Association="InVanDBModels.FK_RecipeMaster_Item" />
         <AssociationConnector Association="InVanDBModels.FK_RejectionNoteItemDetails_Item" />
         <AssociationConnector Association="InVanDBModels.FK_RequestForQuotationDetails_Item" />
         <AssociationConnector Association="InVanDBModels.FK_RFQ_Vendor_ItemDetails_Item" />
@@ -243,17 +254,21 @@
         <AssociationConnector Association="InVanDBModels.FK_Organisations_ToOrganisationGroups" />
         <AssociationConnector Association="InVanDBModels.FK_UserDetails_Organisations" />
         <AssociationConnector Association="InVanDBModels.FK_OutwardNoteDetails_OutwardNote" />
+        <AssociationConnector Association="InVanDBModels.FK_PostProductionRejectionNote_Details_PostProductionRejectionNote" />
+        <AssociationConnector Association="InVanDBModels.FK_PostProductionRejectionNote_SalesOrder" />
         <AssociationConnector Association="InVanDBModels.FK_PreProduction_QC_Details_PreProduction_QC" />
         <AssociationConnector Association="InVanDBModels.FK_PreProduction_QC_ProductionIndent" />
         <AssociationConnector Association="InVanDBModels.FK_PreProduction_QC_ProductionMaterialIssueNote" />
+        <AssociationConnector Association="InVanDBModels.FK_RejectionNote_PreProduction_QC" />
         <AssociationConnector Association="InVanDBModels.FK_ProductionIndent_RecipeMaster" />
         <AssociationConnector Association="InVanDBModels.FK_ProductionIndent_SalesOrder" />
         <AssociationConnector Association="InVanDBModels.FK_ProductionIndentIngredientsDetails_ProductionIndent" />
         <AssociationConnector Association="InVanDBModels.FK_ProductionMaterialIssueNote_ProductionIndent" />
+        <AssociationConnector Association="InVanDBModels.FK_RejectionNote_ProductionIndent" />
         <AssociationConnector Association="InVanDBModels.FK_ProductionMaterialIssueNote_SalesOrder" />
         <AssociationConnector Association="InVanDBModels.FK_ProductionMaterialIssueNote_Users" />
         <AssociationConnector Association="InVanDBModels.FK_ProductionMaterialIssueNoteDetails_IssueNote" />
-        <AssociationConnector Association="InVanDBModels.FK_RecipeMaster_ProductMaster" />
+        <AssociationConnector Association="InVanDBModels.FK_RejectionNote_ProductionMaterialIssueNote" />
         <AssociationConnector Association="InVanDBModels.FK_OrderItemsDetails_PurchaseOrder" />
         <AssociationConnector Association="InVanDBModels.FK_OrderPaymentDetails_PurchaseOrder" />
         <AssociationConnector Association="InVanDBModels.FK_PurchaseOrder_RequestForQuotation" />
@@ -261,7 +276,6 @@
         <AssociationConnector Association="InVanDBModels.FK_RejectionNote_PurchaseOrder" />
         <AssociationConnector Association="InVanDBModels.FK_StockMaster_PurchaseOrder" />
         <AssociationConnector Association="InVanDBModels.FK_QCProductioObservationMaster_ToQCProductionSpecificationMaster" />
-        <AssociationConnector Association="InVanDBModels.FK_RecipeMaster_UnitMaster" />
         <AssociationConnector Association="InVanDBModels.FK_RejectionNoteItemDetails_RejectionNote" />
         <AssociationConnector Association="InVanDBModels.FK_RequestForQuotationItemDetails_RequestForQuotation" />
         <AssociationConnector Association="InVanDBModels.FK_RFQ_Vendor_ItemDetails_RequestForQuotation" />

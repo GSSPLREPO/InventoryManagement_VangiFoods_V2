@@ -123,35 +123,48 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
 
-        //public JsonResult BindRecipeDetails(string id, string RecipeID=null)
+        //public JsonResult BindRecipeDetails(string id, string RecipeID=null)  //Not in use 25-05-23.
         //{
         //    int ProductId = 0;  
         //    int RecipeId = 0;  
-            
+
         //    if (id != "" && id != null)
         //        ProductId = Convert.ToInt32(id);
 
         //    if (RecipeID != "" && RecipeID != null)
         //        RecipeId = Convert.ToInt32(RecipeID);
-            
+
         //    var result = _productionIndentRepository.GetRecipeDetailsById(ProductId,RecipeId);
         //    return Json(result);
         //}
         #endregion
 
+        //#region Bind all BindBatch Number details   //Not in use 25-05-23.
+        //public JsonResult BindBatchNumber(string id, string TotalBatches = null) 
+        //{
+        //    int SO_Id = 0;
+        //    int Total_Batches = 0;
+
+        //    if (id != "" && id != null)
+        //        SO_Id = Convert.ToInt32(id);
+
+        //    if (TotalBatches != "" && TotalBatches != null)
+        //        Total_Batches = Convert.ToInt32(TotalBatches);
+
+        //    var result = _productionIndentRepository.GetBatchNumberById(SO_Id, Total_Batches);
+        //    return Json(result, JsonRequestBehavior.AllowGet);
+        //}
+        //#endregion
+
         #region Bind all BindBatch Number details 
-        public JsonResult BindBatchNumber(string id, string TotalBatches = null) 
+        public JsonResult BindBatchNumber(string id)
         {
-            int SO_Id = 0;
-            int Total_Batches = 0;
+            int Item_ID = 0; 
 
             if (id != "" && id != null)
-                SO_Id = Convert.ToInt32(id);
+                Item_ID = Convert.ToInt32(id);
 
-            if (TotalBatches != "" && TotalBatches != null)
-                Total_Batches = Convert.ToInt32(TotalBatches);
-
-            var result = _productionIndentRepository.GetBatchNumberById(SO_Id, Total_Batches);
+            var result = _productionIndentRepository.GetBatchNumberById(Item_ID);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -426,12 +439,19 @@ namespace InVanWebApp.Controllers
 
         }
         #endregion
-        public JsonResult GetBatchNumber(string id, string TotalBatches)
+        //public JsonResult GetBatchNumber(string id, string TotalBatches)  //Not in use 25-05-23.
+        //{
+        //    var Id = Convert.ToInt32(id);
+        //    var totalBatches = Convert.ToInt32(TotalBatches);
+        //    var result = _productionIndentRepository.GetBatchNumberById(Id, totalBatches);
+        //    return Json(result);
+        //}
+        public JsonResult GetBatchNumber(string id)
         {
-            var Id = Convert.ToInt32(id);
-            var totalBatches = Convert.ToInt32(TotalBatches);
-            var result = _productionIndentRepository.GetBatchNumberById(Id, totalBatches);
+            var Id = Convert.ToInt32(id);            
+            var result = _productionIndentRepository.GetBatchNumberById(Id);
             return Json(result);
         }
+
     }
 }
