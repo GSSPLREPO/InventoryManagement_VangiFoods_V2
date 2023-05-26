@@ -108,10 +108,10 @@ namespace InVanWebApp.Repository
                         Indent_DetailsBO objItemDetails = new Indent_DetailsBO();
                         objItemDetails.IndentID = IndentID;
                         objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
-                        objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
-                        objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                        objItemDetails.RequiredQuantity = Convert.ToDouble(item.ElementAt(3).Value);
+                        objItemDetails.ItemCode = item.ElementAt(2).Value.ToString(); //ElementAt(1) 26-05-23.
+                        objItemDetails.ItemName = item.ElementAt(3).Value.ToString(); //ElementAt(2) 26-05-23.
+                        objItemDetails.RequiredQuantity = Convert.ToDouble(item.ElementAt(4).Value); //ElementAt(3) 26-05-23.
+                        objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString(); //ElementAt(4) 26-05-23.
 
                         itemDetails.Add(objItemDetails);
                     }

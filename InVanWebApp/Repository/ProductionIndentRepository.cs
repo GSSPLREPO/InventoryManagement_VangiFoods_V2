@@ -204,8 +204,8 @@ namespace InVanWebApp.Repository
                     {
                         var result = new ItemBO()
                         {
-                            //ID = Convert.ToInt32(dataReader["ID"]),
-                            //Item_Code = dataReader["Item_Code"].ToString(),
+                            //ID = Convert.ToInt32(dataReader["ID"]),   //removed 26-05-23.
+                            //Item_Code = dataReader["Item_Code"].ToString(),   //removed 26-05-23.
                             BatchNumber = dataReader["BatchNumber"].ToString(),
                         };
                         resultList.Add(result);
@@ -244,7 +244,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@ItemID", model.RecipeID);
                     cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
                     cmd.Parameters.AddWithValue("@TotalBatches", model.TotalBatches);
-                    cmd.Parameters.AddWithValue("@BatchNumber", model.BatchNumber); //Rahul added 25-033-2023.
+                    cmd.Parameters.AddWithValue("@BatchNumber", model.BatchNumber); //Rahul added 25-03-2023.
                     cmd.Parameters.AddWithValue("@Remarks", model.Description);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));

@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-md-4">
                                 @Html.DropDownListFor(model => model.SO_Id, (IEnumerable<SelectListItem>)ViewData["SO_dd"], "--Select--",
-                                                                                new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                                                                     new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                                 @Html.ValidationMessageFor(model => model.SO_Id, "", new { @class = "error mt-2 text-danger" })
                                 @Html.HiddenFor(model => model.SONo)
 
@@ -269,16 +269,21 @@
     function SelectedIndexChangedProductNameList(id) {
         debugger
         $('#btnSave').prop('disabled', false);
-        //Rahul added 'ID' 25-05-2023 for 'BatchNumber' start.        
-        var ID = $('#RecipeID').val(); 
+        //Rahul added 'ID' 25-05-2023 for 'BatchNumber' start.
+        var ID = $('#RecipeID').val();
         var batchNumber = "";
         $.ajax({
             url: '/ProductionIndent/GetBatchNumber?id=' + ID,
             type: "POST",
             data: {},
             success: function (result) {
-                console.log(result)
-                result[0].BatchNumber
+                console.log(result)        //Rahul added 'for loop'for 'BatchNumber' 26-05-2023 start.
+                for (var j = 0; j < result.length; j++) {
+                    batchNumber = batchNumber + result[j].BatchNumber;
+                    if (j != result.length - 1)
+                        batchNumber = batchNumber;
+                }
+                        //Rahul added 'for loop'for 'BatchNumber' 26-05-2023 start.
                 document.getElementById("BatchNumber").value = batchNumber;
             },
             error: function (err) {

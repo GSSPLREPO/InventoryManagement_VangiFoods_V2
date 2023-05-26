@@ -432,6 +432,7 @@
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
         var TxtItemDetails = JSON.stringify(res);
+        //console.log(TxtItemDetails);
         $('#itemDetails').val(TxtItemDetails);
     }
     //==========end===============
