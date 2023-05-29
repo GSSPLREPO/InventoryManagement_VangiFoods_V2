@@ -11,9 +11,10 @@ namespace InVanWebApp_BO
     {
         public int InquiryDetailsId { get; set; }  
         public int InquiryID { get; set; }
-        [Required(ErrorMessage = "Please select the Delivery Start date!")] 
+        [Required(ErrorMessage = "Please select the Delivery Start date!")]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
-        
+        //Rahul commented for bind Delivery date set from Inquiry 29-05-23.
+        public string DeliveryDates { get; set; }         
         public Nullable<decimal> ItemQuantity { get; set; }  
         [Required(ErrorMessage = "Enter remakrs!")] ////added 
         public string Remarks { get; set; }
@@ -40,6 +41,10 @@ namespace InVanWebApp_BO
         //Added the below fields for Sales Order
         public int VendorId { get; set; }
         public string SupplierAddress { get; set; }
+        //Added the below fields for Sales Order 29-05-2023.
+        //[Required(ErrorMessage = "Select the location name!")]
+        public Nullable<int> LocationId { get; set; }
+        public string DeliveryAddress { get; set; } 
 
 
     }

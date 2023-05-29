@@ -13,7 +13,7 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<RQCCPBO> GetAll();
 
         //Define function for fetching details of company master by ID.
-        RQCCPBO GetById(int RQCCPID);
+        RQCCPBO GetById(int Id);
 
         //Function define for: Insert record.
         ResponseMessageBO Insert(RQCCPBO model);
@@ -22,10 +22,7 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Update(RQCCPBO model);
 
         //Function define for: Delete record of company using it's ID
-        void Delete(int RQCCPID, int userId);
-
-        //Function define for: Uploading the bulk companies
-        List<ResponseMessageBO> SaveRQCCPData(List<RQCCPBO> model);
+        void Delete(int Id, int userId);
 
     }
 }

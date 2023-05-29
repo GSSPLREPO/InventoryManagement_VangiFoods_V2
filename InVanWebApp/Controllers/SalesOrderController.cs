@@ -80,7 +80,7 @@ namespace InVanWebApp.Controllers
 
                 SalesOrderBO model = new SalesOrderBO();
                 model.SODate = DateTime.Today;
-                model.DeliveryDate = DateTime.Today;
+                //model.DeliveryDate = DateTime.Today; //Rahul commented for bind Delivery date set from Inquiry 29-05-23.
 
                 return View(model);
             }

@@ -17,6 +17,7 @@ namespace InVanWebApp.Controllers
     public class RQCCPController : Controller
     {
         private IRQCCPRepository _RQCCPRepository;
+        private IPurchaseOrderRepository _purchaseOrderRepository;
         private static ILog log = LogManager.GetLogger(typeof(RQCCPController));
 
         #region Initializing constructor
@@ -27,6 +28,7 @@ namespace InVanWebApp.Controllers
         public RQCCPController()
         {
             _RQCCPRepository = new RQCCPRepository();
+            _purchaseOrderRepository = new PurchaseOrderRepository();
         }
 
         /// <summary>
@@ -73,9 +75,10 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
 
             {
+                BindItem();
                 RQCCPBO model = new RQCCPBO();
                 model.Date = DateTime.Today;
-                model.BatchReleaseTimeOfRQ = DateTime.Now.ToString("HH:mm:ss tt");
+                model.TansferTimeintoHoldingSilo = DateTime.Now.ToString("HH:mm");
                 return View(model);
             }
             else
@@ -103,8 +106,10 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('RQ CCP details Inserted Successfully!');</script>";
                         else
                         {
-                            if (response.ItemName != null || response.ItemName != "")
+                            if (response.ItemName != null || response.ItemName != "") {
+                                BindItem();
                                 TempData["Success"] = "<script>alert('Duplicate item details! Can not be inserted!');</script>";
+                            }
                             else
                                 TempData["Success"] = "<script>alert('Error while insertion!');</script>";
 
@@ -128,97 +133,6 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
 
-        /// <summary>
-        /// Date: 22 Aug 2022
-        /// Farheen: Upload multiple items.
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult UploadRQCCP()
-        {
-            try
-            {
-                List<ResponseMessageBO> responsesList = new List<ResponseMessageBO>();
-                HttpFileCollectionBase files = Request.Files;
-                HttpPostedFileBase materialExcelFile = files[0];
-                string materialExcelFilename;
-
-                // Checking for Internet Explorer  
-                if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
-                {
-                    string[] testfiles = materialExcelFile.FileName.Split(new char[] { '\\' });
-                    materialExcelFilename = testfiles[testfiles.Length - 1];
-                }
-                else
-                {
-                    materialExcelFilename = materialExcelFile.FileName;
-                }
-
-                // Get the complete folder path and store the file inside it.  
-                materialExcelFilename = Path.Combine(Server.MapPath("~/ExcelUploads/"), materialExcelFilename);
-                materialExcelFile.SaveAs(materialExcelFilename);
-
-                //------------------------ New Code Start----------------------------------
-                var listMaterialExcelEntity = new List<RQCCPBO>();
-                using (var package = new ExcelPackage(materialExcelFile.InputStream))
-                {
-                    // get the first worksheet in the workbook
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
-                    int col = 1;
-
-                    for (int row = 2; worksheet.Cells[row, col].Value != null; row++)
-                    {
-                        // do something with worksheet.Cells[row, col].Value 
-                        var productExcel = new RQCCPBO();
-
-                        productExcel.Activity = worksheet.Cells[row, col].Value != null ? worksheet.Cells[row, col].Value.ToString() : null;
-                        productExcel.ItemName = worksheet.Cells[row, col + 1].Value != null ? worksheet.Cells[row, col + 1].Value.ToString() : null;
-                        productExcel.NoBatches = worksheet.Cells[row, col + 2].Value != null ? worksheet.Cells[row, col + 2].Value.ToString() : null;
-                        productExcel.BatchWeight = worksheet.Cells[row, col + 3].Value != null ? worksheet.Cells[row, col + 3].Value.ToString() : null;
-                        productExcel.MonitoringParameter = worksheet.Cells[row, col + 4].Value != null ? worksheet.Cells[row, col + 4].Value.ToString() : null;
-                        productExcel.BatchReleaseTimeOfRQ = worksheet.Cells[row, col + 5].Value != null ? worksheet.Cells[row, col + 5].Value.ToString() : null;
-                        productExcel.MandatoryTemp = worksheet.Cells[row, col + 6].Value != null ? worksheet.Cells[row, col + 6].Value.ToString() : null;
-                        productExcel.Frequency = worksheet.Cells[row, col + 7].Value != null ? worksheet.Cells[row, col + 7].Value.ToString() : null;
-                        productExcel.Responsibility = worksheet.Cells[row, col + 8].Value != null ? worksheet.Cells[row, col + 8].Value.ToString() : null;
-                        productExcel.Remarks = worksheet.Cells[row, col + 9].Value != null ? worksheet.Cells[row, col + 9].Value.ToString() : null;
-                        productExcel.Verification = worksheet.Cells[row, col + 10].Value != null ? worksheet.Cells[row, col + 10].Value.ToString() : null;
-
-                        productExcel.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                        productExcel.CreatedDate = DateTime.UtcNow.AddHours(5.5);
-                        productExcel.IsDeleted = false;
-                        listMaterialExcelEntity.Add(productExcel);
-                    }
-                    responsesList = _RQCCPRepository.SaveRQCCPData(listMaterialExcelEntity);
-
-                }
-
-                int i = 0, flag = 0;
-                int count = responsesList.Count;
-                string ItemList = "";
-
-                while (i < count)
-                {
-                    if (responsesList[i].Status == false)
-                        ItemList = ItemList + responsesList[i].ItemName + ", ";
-                    else
-                        flag = 1;
-                    i++;
-                }
-                if (ItemList != "")
-                {
-                    if (flag == 1)
-                        return Json("Few RQ CCP are uploaded successfully! And following RQ CCP's are duplicate: " + ItemList, JsonRequestBehavior.AllowGet);
-                    else
-                        return Json("Insertion failed! Duplicate item name: " + ItemList, JsonRequestBehavior.AllowGet);
-                }
-                else
-                    return Json("All RQ CCP Uploaded Successfully!", JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(ex, JsonRequestBehavior.AllowGet);
-            }
-        }
-
         #endregion
 
         #region  Update function
@@ -228,11 +142,12 @@ namespace InVanWebApp.Controllers
         /// <param name="ID"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditRQCCP(int RQCCPID)
+        public ActionResult EditRQCCP(int Id)
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                RQCCPBO model = _RQCCPRepository.GetById(RQCCPID);
+                BindItem();
+                RQCCPBO model = _RQCCPRepository.GetById(Id);
                 return View(model);
             }
             else
@@ -261,6 +176,7 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate RQ CCP!');</script>";
+                            BindItem();
                             return View();
                         }
 
@@ -291,17 +207,29 @@ namespace InVanWebApp.Controllers
         /// <param name="ID">record Id</param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult DeleteRQCCP(int RQCCPID)
+        public ActionResult DeleteRQCCP(int Id)
         {
             if (Session[ApplicationSession.USERID] != null)
             {
                 var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                _RQCCPRepository.Delete(RQCCPID, userID);
+                _RQCCPRepository.Delete(Id, userID);
                 TempData["Success"] = "<script>alert('RQ CCP deleted successfully!');</script>";
                 return RedirectToAction("Index", "RQCCP");
             }
             else
                 return RedirectToAction("Index", "Login");
+        }
+
+        #endregion
+
+        #region Bind DropDown
+        public void BindItem() {
+
+            //Binding item grid with sell type item.
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+            ViewData["itemListForDD"] = dd;
+
         }
 
         #endregion

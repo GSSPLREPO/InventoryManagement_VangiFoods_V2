@@ -497,7 +497,10 @@ namespace InVanWebApp.Repository
                             ItemTaxValue = Convert.ToDecimal(reader["ItemTax"]),
                             TotalItemCost = Convert.ToDecimal(reader["TotalItemCost"]),
                             VendorId = Convert.ToInt32(reader["VendorsID"]),
-                            SupplierAddress = reader["SupplierAddress"].ToString()
+                            SupplierAddress = reader["SupplierAddress"].ToString(),
+                            LocationId = Convert.ToInt32(reader["LocationId"]), //Rahul added 'LocationId' added 29-06-23.
+                            DeliveryAddress = reader["DeliveryAddress"].ToString(),  //Rahul added 'DeliveryAddress' added 29-06-23.
+                            DeliveryDates = Convert.ToDateTime(reader["DeliveryDate"]).ToString("yyyy-MM-dd"),  //Rahul added 'DeliveryDate' added 29-06-23.
                             //BalanceQuantity = Convert.ToDouble(reader["BalanceQuantity"])
 
                         };

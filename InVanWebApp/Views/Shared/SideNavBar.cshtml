@@ -236,6 +236,12 @@
                             <a class="nav-link" href="@Url.Action("Index","CertificateOfAnalysis")">Certificate of Analysis</a>
                         </div>
                     </li>
+                    @*Rahul shifted "PostProductionRejectionNote" from 'Production' menu 29-05-2023.*@
+                    <li class="nav-item">
+                        <div id="PostProductionRejectionNote">
+                            <a class="nav-link text-wrap" href="@Url.Action("Index","PostProductionRejectionNote")">Post-Production Rejection Note</a>
+                        </div>
+                    </li>
 
                 </ul>
             </div>
@@ -347,24 +353,27 @@
                     </li>
                     <li class="nav-item">
                         <div id="PackingCCP">
-                            <a class="nav-link" href="@Url.Action("Index","HotFillingPackingLineLogSheetCCP")">Stage-3 Packing CCP</a>
+                            @*<a class="nav-link" href="@Url.Action("Index","HotFillingPackingLineLogSheetCCP")">Stage-3 Packing CCP</a>*@
+                            <a class="nav-link" href="@Url.Action("Index","Stage3")">Stage-3</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <div id="ChillerCCP">
-                            <a class="nav-link" href="@Url.Action("Index","ChillerCCP")">Stage-4 Chiller CCP</a>
-                        </div>
-                    </li>
+                    @*Rahul commented "ChillerCCP" not in use 29-05-2023.*@
+                    @*<li class="nav-item">
+                            <div id="ChillerCCP">
+                                <a class="nav-link" href="@Url.Action("Index","ChillerCCP")">Stage-4 Chiller CCP</a>
+                            </div>
+                        </li>*@
                     <li class="nav-item">
                         <div id="FinishedGoodSeriesQC">
                             <a class="nav-link" href="@Url.Action("Index","FinishedGoodSeries")">Finished Goods Series</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <div id="PostProductionRejectionNote">
-                            <a class="nav-link text-wrap" href="@Url.Action("Index","PostProductionRejectionNote")">Post-Production Rejection Note</a>
-                        </div>
-                    </li>
+                    @*Rahul commented "PostProductionRejectionNote" shifted in 'QC' menu 29-05-2023.*@
+                    @*<li class="nav-item">
+                            <div id="PostProductionRejectionNote">
+                                <a class="nav-link text-wrap" href="@Url.Action("Index","PostProductionRejectionNote")">Post-Production Rejection Note</a>
+                            </div>
+                        </li>*@
 
                 </ul>
             </div>
@@ -415,10 +424,10 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                        <div id="ProductMaster">
-                            <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
-                        </div>
-                    </li>*@
+                            <div id="ProductMaster">
+                                <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
+                            </div>
+                        </li>*@
                     <li class="nav-item">
                         <div id="RecipeMaster">
                             <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
@@ -551,10 +560,10 @@
                     </li>
 
                     @*<li class="nav-item">
-            <div id="RejectionNoteReport">
-                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
-            </div>
-        </li>*@
+                            <div id="RejectionNoteReport">
+                                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+                            </div>
+                        </li>*@
                     <li class="nav-item">
                         <div id="RejectionNoteReport">
                             <a class="nav-link text-wrap" href="~/Report/RejectionReport">Rejection Report</a>
@@ -592,10 +601,10 @@
                     </li>
 
                     @*<li class="nav-item">
-            <div id="InventoryControlReport">
-                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-            </div>
-        </li>*@
+                            <div id="InventoryControlReport">
+                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+                            </div>
+                        </li>*@
                 </ul>
             </div>
         </li>

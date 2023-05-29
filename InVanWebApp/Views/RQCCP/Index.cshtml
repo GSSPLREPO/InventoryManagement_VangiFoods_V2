@@ -41,12 +41,11 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.DisplayName("Date")</th>
-                                            <th>@Html.DisplayName("Activity")</th>
-                                            <th>@Html.DisplayName("Item Name")</th>
-                                            <th>@Html.DisplayName("No of Batches")</th>
-                                            <th>@Html.DisplayName("Batch Weight")</th>
-                                            <th>@Html.DisplayName("Batch Release Time Of RQ")</th>
-                                            <th>@Html.DisplayName("Verification")</th>
+                                            <th>@Html.DisplayName("Product Name")</th>
+                                            <th>@Html.DisplayName("Raw Batches No")</th>
+                                            <th>@Html.DisplayName("Weight of Raw Batches (KG)")</th>
+                                            <th>@Html.DisplayName("Tansfer Time into Holding Silo")</th>
+                                            <th>@Html.DisplayName("Weight (KG)")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
@@ -55,17 +54,16 @@
                                         {
                                             <tr>
                                                 <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Activity)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.NoBatches)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.BatchWeight)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.BatchReleaseTimeOfRQ)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Verification)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.RawBatchesNo)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.WeightofRawBatches)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.TansferTimeintoHoldingSilo)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Weight)</td>
                                                 <td>
-                                                    <a href=@Url.Action("EditRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID }) title="Edit RQ CCP">
+                                                    <a href=@Url.Action("EditRQCCP", "RQCCP", new { Id = item.Id }) title="Edit RQ CCP">
                                                         <i class="fa fa-edit text-primary"></i>
                                                     </a> &emsp;
-                                                    <a href=@Url.Action("DeleteRQCCP", "RQCCP", new { RQCCPID = item.RQCCPID }) onclick="return confirm('Are you sure want to delete?');" title="Delete RQ CCP">
+                                                    <a href=@Url.Action("DeleteRQCCP", "RQCCP", new { Id = item.Id }) onclick="return confirm('Are you sure want to delete?');" title="Delete RQ CCP">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                     </a>
                                                 </td>

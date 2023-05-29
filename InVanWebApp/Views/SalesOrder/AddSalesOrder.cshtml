@@ -388,7 +388,7 @@
 
     //=====================Onchange of Indent description===========================
     function SelectedIndexChangedInquiry(id) {
-
+        debugger
         //Check whether the currency dropdown is selected or not
 
         var CurrencyIDCheck = $('#CurrencyID').val();
@@ -425,12 +425,25 @@
                     var DeliveryAddress = result[0].SupplierAddress;
                     $('#ClientID').val(vendorId);
                     $('#DeliveryAddress').val(DeliveryAddress);
-
+                    console.log(result);
                     var selectedOption, companyName;
                     selectedOption = document.getElementById("ClientID").selectedIndex;
                     companyName = document.getElementById("ClientID").options[selectedOption].innerText;
                     document.getElementById("CompanyName").value = companyName;
+                    //Rahul added 'LocationId' and 'SupplierAddress' 29-05-23 start.
+                    var locationId = result[0].LocationId;
+                    var SupplierAddress = result[0].DeliveryAddress;
+                    $('#LocationId').val(locationId);
+                    $('#SupplierAddress').val(SupplierAddress);
 
+                    var selectedOptionLocation, locationName;
+                    selectedOptionLocation = document.getElementById("LocationId").selectedIndex;
+                    locationName = document.getElementById("LocationId").options[selectedOptionLocation].innerText;
+                    document.getElementById("LocationName").value = locationName;
+                    //debugger
+                    var DeliveryDates = result[0].DeliveryDates;
+                    $('#DeliveryDate').val(DeliveryDates);
+                    //Rahul added 'LocationId' and 'SupplierAddress', 'DeliveryDates' 29-05-23 end.
                 }
 
                 var table = document.getElementById('submissionTable');
@@ -586,7 +599,7 @@
     }
 
     function CalculateTotalBeforeTax() {
-        debugger
+        //debugger
         $('#TotalBeforeTax').val('');
         $('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;

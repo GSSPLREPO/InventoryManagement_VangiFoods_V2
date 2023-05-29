@@ -358,13 +358,19 @@
 
     //Custom validation for only HorizontalTab,Backspace,Numeric(0-9), Alphabets(A-z,a-z),Space( )
     function IsAlphaNumeric(e) {
+        debugger
         var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
-            return true;
+        //Rahul added 'unicode == 46' for 'parts value.split('.')' 29-05-2023 start. 
+        if (unicode == 8 || unicode == 9 || unicode == 46 || (unicode >= 48 && unicode <= 57) || unicode == 32 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            var parts = e.srcElement.value.split('.');
+            if (parts.length > 1 && unicode == 46)
+                return false;
+            else
+                return true;
         }
-        else {
+        else
             return false;
-        }
+        //Rahul added 'unicode == 46' for 'parts value.split('.')' 29-05-2023 end. 
     }
     //Custom validation for only HorizontalTab,Backspace,Numeric(0-9), Alphabets(A-z,a-z),Space( ),Underscore(_),Minus(-),Dot(.)
     function IsAlphaNumericSpecial(e) {

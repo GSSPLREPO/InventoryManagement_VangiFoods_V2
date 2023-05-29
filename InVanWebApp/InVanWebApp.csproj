@@ -213,6 +213,7 @@
     <Compile Include="Controllers\SanitizationAndHygineController.cs" />
     <Compile Include="Controllers\SILOCCPController.cs" />
     <Compile Include="Controllers\SOPaymentController .cs" />
+    <Compile Include="Controllers\Stage3Controller.cs" />
     <Compile Include="Controllers\StockAdjustmentController.cs" />
     <Compile Include="Controllers\StockMovementController.cs" />
     <Compile Include="Controllers\StockReportController.cs" />
@@ -1302,6 +1303,7 @@
     <Compile Include="Repository\Interface\ISanitizationAndHygineRepository.cs" />
     <Compile Include="Repository\Interface\ISILOCCPRepository.cs" />
     <Compile Include="Repository\Interface\ISOPaymentRepository.cs" />
+    <Compile Include="Repository\Interface\IStage-3Repository.cs" />
     <Compile Include="Repository\Interface\IStockAdjustmentRepository.cs" />
     <Compile Include="Repository\Interface\ITermsConditionRepository.cs" />
     <Compile Include="Repository\Interface\IOrganisationRepository.cs" />
@@ -1357,6 +1359,7 @@
     <Compile Include="Repository\SanitizationAndHygineRepository.cs" />
     <Compile Include="Repository\SILOCCPRepository.cs" />
     <Compile Include="Repository\SOPaymentRepository.cs" />
+    <Compile Include="Repository\Stage-3Repository.cs" />
     <Compile Include="Repository\StockAdjustmentRepository.cs" />
     <Compile Include="Repository\StockMasterRepository.cs" />
     <Compile Include="Repository\StockMovementRepository.cs" />
@@ -3893,6 +3896,10 @@
     <Content Include="Views\PostProductionRejectionNote\EditPostProdRN.cshtml" />
     <Content Include="Views\PostProductionRejectionNote\ViewPostProdRN.cshtml" />
     <Content Include="Views\RecipeMater\ViewRecipe.cshtml" />
+    <Content Include="Views\Stage3\AddStage3.cshtml" />
+    <Content Include="Views\Stage3\EditStage3.cshtml" />
+    <Content Include="Views\Stage3\Index - Copy.cshtml" />
+    <Content Include="Views\Stage3\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

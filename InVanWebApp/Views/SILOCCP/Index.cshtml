@@ -45,16 +45,11 @@
                                             @*<th>@Html.DisplayName("ID")</th>*@
                                             <th>@Html.DisplayName("Date")</th>
                                             <th>@Html.DisplayName("Time")</th>
-                                            <th>@Html.DisplayName("Item Name")</th>
-                                            <th>@Html.DisplayName("Activity")</th>
-                                            @*<th>@Html.DisplayName("Monitoring Parameter")</th>*@
-                                            <th>@Html.DisplayName("Transefered Time From RQS")</th>
-                                            @*<th>@Html.DisplayName("Mandatory Range")</th>*@
-                                            <th>@Html.DisplayName("Frequency")</th>
-                                            <th>@Html.DisplayName("Weight Of Holding Material(Kg)")</th>
-                                            <th>@Html.DisplayName("Corrective Actions")</th>
-                                            @*<th>@Html.DisplayName("Responsibility")</th>*@
-                                            <th>@Html.DisplayName("Verification")</th>
+                                            <th>@Html.DisplayName("Product Name")</th>
+                                            <th>@Html.DisplayName("Raw Batches No")</th>
+                                            <th>@Html.DisplayName("Weight (KG)")</th>
+                                            <th>@Html.DisplayName("Temperture (°C)")</th>
+                                            <th>@Html.DisplayName("Pressure (BAR)")</th>
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
@@ -67,16 +62,12 @@
                                                 @*<td>ID</td>*@
                                                 <td>@Html.DisplayFor(modelItem => item.Date)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Time)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ItemName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Activity)</td>
-                                                @*<td>@Html.DisplayFor(modelItem => item.MonitoringParameter)</td>*@
-                                                <td>@Html.DisplayFor(modelItem => item.TranseferedTimeFromRQS)</td>
-                                                @*<td>@Html.DisplayFor(modelItem => item.MandatoryRange)</td>*@
-                                                <td>@Html.DisplayFor(modelItem => item.Frequency)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.WeightOfHoldingMaterial)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.CorrectiveActions)</td>
-
-                                                <td>@Html.DisplayFor(modelItem => item.Verification)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.RawBatchesNo)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Weight)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Temperature)</td>
+                                                <td>@Html.DisplayFor(modelItem => item.Pressure)</td>
+                                               
                                                 <td>
 
                                                     <a href=@Url.Action("EditSILOCCP", "SILOCCP", new { Id = item.ID }) title="Edit SILO CCP">

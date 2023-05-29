@@ -17,6 +17,7 @@ namespace InVanWebApp.Controllers
     public class SILOCCPController : Controller
     {
         private ISILOCCPRepository _siloCCPRepository;
+        private IPurchaseOrderRepository _purchaseOrderRepository;
         private static ILog log = LogManager.GetLogger(typeof(SILOCCPController));
 
         #region Initializing constructor
@@ -27,6 +28,7 @@ namespace InVanWebApp.Controllers
         public SILOCCPController()
         {
             _siloCCPRepository = new SILOCCPRepository();
+            _purchaseOrderRepository = new PurchaseOrderRepository();
         }
 
         #endregion
@@ -62,11 +64,11 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
+                BindItem();
                 SILOCCPBO model = new SILOCCPBO();
                 //model.Verification = Session[ApplicationSession.USERNAME].ToString();
                 model.Date = DateTime.Now;
-                model.TranseferedTimeFromRQS = DateTime.Now.ToString("HH:mm:ss tt") ;
-                model.Time = DateTime.Now.ToString("HH:mm:ss tt");
+                model.Time = DateTime.Now.ToString("HH:mm");
                // model.Time= DateTime.MaxValue.AddSeconds.;
                 return View(model);
             }
@@ -90,13 +92,13 @@ namespace InVanWebApp.Controllers
                     if (ModelState.IsValid)
                     {
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                        model.Verification = Session[ApplicationSession.USERNAME].ToString();
                         response = _siloCCPRepository.Insert(model);
                         if (response.Status)
                             TempData["Success"] = "<script>alert('SILO CCP Details Inserted Successfully!');</script>";
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                            BindItem();
                             return View();
                         }
                         return RedirectToAction("Index", "SILOCCP");
@@ -126,6 +128,7 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
+                BindItem();
                 SILOCCPBO model = _siloCCPRepository.GetById(Id);
                 return View(model);
             }
@@ -156,7 +159,10 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Error while updating!');</script>";
-                            return View();
+                            BindItem();
+                            SILOCCPBO model1 = _siloCCPRepository.GetById(model.ID);
+                            return View(model1);
+                            
                         }
 
                         return RedirectToAction("Index", "SILOCCP");
@@ -197,6 +203,19 @@ namespace InVanWebApp.Controllers
             }
             else
                 return RedirectToAction("Index", "Login");
+        }
+
+        #endregion
+
+        #region Bind DropDown
+        public void BindItem()
+        {
+
+            //Binding item grid with sell type item.
+            var itemList = _purchaseOrderRepository.GetItemDetailsForDD(1);
+            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+            ViewData["itemListForDD"] = dd;
+
         }
 
         #endregion

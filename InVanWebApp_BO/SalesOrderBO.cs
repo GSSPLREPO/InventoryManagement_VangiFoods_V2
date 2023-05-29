@@ -17,8 +17,10 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select document date!")]
         public Nullable<System.DateTime> SODate { get; set; }
 
-        [Required(ErrorMessage = "Select delivery date!")]
-        public Nullable<System.DateTime> DeliveryDate { get; set; }
+        //[Required(ErrorMessage = "Select delivery date!")]
+       // public Nullable<System.DateTime> DeliveryDate { get; set; }
+        //Rahul commented for bind Delivery date set from Inquiry 29-05-23.
+        public string DeliveryDate { get; set; }
 
         [Required(ErrorMessage = "Select client name!")]
         public int ClientID { get; set; }

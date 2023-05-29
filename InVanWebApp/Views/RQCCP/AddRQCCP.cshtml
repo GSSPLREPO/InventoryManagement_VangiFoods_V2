@@ -13,102 +13,57 @@
             <h4>Add RQ CCP</h4>
             <hr />
             @Html.ValidationSummary(true)
+             
+            <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Date")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Product Name")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm" })
+                @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
 
+            </div>
+        </div>
+            <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Date")
-                    <span style="color:red">*</span>
+                    @Html.Label("Raw Batches No")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "5", @onkeypress = "return IsNum(event);" })
                 </div>
                 <div class="col-md-2">
-                    @Html.Label("Activity")
-                    <span style="color:red">*</span>
+                    @Html.Label("Weight of Raw Batches (KG)")
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Activity, new { @class = "form-control form-control-sm", maxlength = "95", @onkeypress = "return IsAlpha(event);" })
-                    @Html.ValidationMessageFor(model => model.Activity, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.WeightofRawBatches, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Item Name")
-                    <span style="color:red">*</span>
+                    @Html.Label("Tansfer Time into Holding Silo")
+                  
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ItemName, new { @class = "form-control form-control-sm", maxlength = "95", @onkeypress = "return IsAlpha(event);" })
-                    @Html.ValidationMessageFor(model => model.ItemName, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("No Of Batches")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.NoBatches, new { @class = "form-control form-control-sm", maxlength = "95", @onkeypress = "return IsNum(event);" })
-                    @Html.ValidationMessageFor(model => model.NoBatches, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Batch Weight (KG)")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BatchWeight, new { @class = "form-control form-control-sm", maxlength = "95", @onkeypress = "return IsNum(event);"})
-                    @Html.ValidationMessageFor(model => model.BatchWeight, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.TansferTimeintoHoldingSilo, new { @class = "form-control form-control-sm",type="time" })
                 </div>
 
                 <div class="col-md-2">
-                    @Html.Label("Monitoring Parameter")
-                    <span style="color:red">*</span>
+                    @Html.Label("Weight (KG)")
+                   
                 </div>
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.MonitoringParameter, new { @class = "form-control form-control-sm", maxlength = "95", @onkeypress = "return IsAlpha(event);" })
-                    @Html.ValidationMessageFor(model => model.MonitoringParameter, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Batch Release Time Of RQ")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.BatchReleaseTimeOfRQ, new { @class = "form-control form-control-sm", maxlength = "95", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.BatchReleaseTimeOfRQ, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.Label("Mandatory Temp")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.MandatoryTemp, new { @class = "form-control form-control-sm", maxlength = "95", @onkeypress = "return IsAlphaNumeric(event);" })
-                    @Html.ValidationMessageFor(model => model.MandatoryTemp, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Frequency")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Frequency, new { @class = "form-control form-control-sm", maxlength = "95", @onkeypress = "return IsAlpha(event);" })
-                    @Html.ValidationMessageFor(model => model.Frequency, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.Label("Responsibility")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Responsibility, new { @class = "form-control form-control-sm", maxlength = "95", @onkeypress = "return IsAlpha(event);" })
-                    @Html.ValidationMessageFor(model => model.Responsibility, "", new { @class = "error mt-2 text-danger" })
+                    @Html.TextBoxFor(model => model.Weight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                 </div>
             </div>
             <br />
@@ -119,26 +74,15 @@
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "95", Title = "Remarks Will be Allow 100 Charachter" })
-                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-                <div class="col-md-2">
-                    @Html.Label("Verification")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Verification, new { @class = "form-control form-control-sm", maxlength = "95", @onkeypress = "return IsAlpha(event);" })
-                    @Html.ValidationMessageFor(model => model.Verification, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
 
-            <br />
 
-
-            <a href="@Url.Action("Index", "RQCCP")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                Back To List
-            </a>
-            <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">Save</button>
+                <a href="@Url.Action("Index", "RQCCP")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                    Back To List
+                </a>
+                <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">Save</button>
+           
         </div>
     </div>
 }
@@ -151,40 +95,19 @@
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 <script type="text/javascript">
-    //Custom validation for only numeric, alphabets, underscore and NA/na character.
-    function IsAlphaNumeric(e) {
-        var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
-            || unicode == 95 || unicode == 32 || unicode == 45 || unicode == 46 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
-            return true;
-        }
-        else {
+    function IsNum(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
             return false;
         }
-    }
-
-    //Custom validation for only alphabets.
-    function IsAlpha(e) {
-        var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 
-            || unicode == 32 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
-            return true;
-        }
         else {
-            return false;
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
         }
-    }
-
-    //Custom validation for only numeric.
-    function IsNum(e) {
-        var unicode = e.charCode ? e.charCode : e.keyCode;
-        if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57)
-            || unicode == 32 ) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return true;
     }
 </script>
 

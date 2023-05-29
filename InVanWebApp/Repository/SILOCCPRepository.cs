@@ -40,17 +40,12 @@ namespace InVanWebApp.Repository
                         {
                             ID = Convert.ToInt32(reader["ID"]),
                             Date = Convert.ToDateTime(reader["Date"]),
-                            ItemName = (reader["ItemName"].ToString()),
-                            Activity = reader["Activity"].ToString(),
-                            MonitoringParameter = reader["MonitoringParameter"].ToString(),
-                            TranseferedTimeFromRQS = reader["TranseferedTimeFromRQS"].ToString(),
-                            MandatoryRange = reader["MandatoryRange"].ToString(),
-                            Frequency = reader["Frequency"].ToString(),
-                            WeightOfHoldingMaterial = reader["WeightOfHoldingMaterial"].ToString(),
                             Time = reader["Time"].ToString(),
-                            CorrectiveActions = reader["CorrectiveActions"].ToString(),
-                            Responsibility = reader["Responsibility"].ToString(),
-                            Verification = reader["Verification"].ToString(),
+                            ProductName = reader["ProductName"].ToString(),
+                            RawBatchesNo = reader["RawBatchesNo"].ToString(),
+                            Weight = reader["Weight"].ToString(),
+                            Temperature = reader["Temperature"].ToString(),
+                            Pressure = reader["Pressure"].ToString(),
                             Remarks = reader["Remarks"].ToString()
                             
                         };
@@ -86,17 +81,13 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     
                     cmd.Parameters.AddWithValue("@Date", model.Date);
+                    cmd.Parameters.AddWithValue("@ItemId", model.ItemId);
                     cmd.Parameters.AddWithValue("@Time", model.Time);
-                    cmd.Parameters.AddWithValue("@ItemName", model.ItemName);
-                    cmd.Parameters.AddWithValue("@Activity", model.Activity);
-                    cmd.Parameters.AddWithValue("@MonitoringParameter", model.MonitoringParameter);
-                    cmd.Parameters.AddWithValue("@TranseferedTimeFromRQS", model.TranseferedTimeFromRQS);
-                    cmd.Parameters.AddWithValue("@MandatoryRange", model.MandatoryRange);
-                    cmd.Parameters.AddWithValue("@Frequency", model.Frequency);
-                    cmd.Parameters.AddWithValue("@WeightOfHoldingMaterial", model.WeightOfHoldingMaterial);
-                    cmd.Parameters.AddWithValue("@CorrectiveActions", model.CorrectiveActions);
-                    cmd.Parameters.AddWithValue("@Responsibility", model.Responsibility);
-                    cmd.Parameters.AddWithValue("@Verification", model.Verification);
+                    cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
+                    cmd.Parameters.AddWithValue("@Weight", model.Weight);
+                    cmd.Parameters.AddWithValue("@Temperature", model.Temperature);
+                    cmd.Parameters.AddWithValue("@Pressure", model.Pressure);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -146,18 +137,14 @@ namespace InVanWebApp.Repository
                         SILOCCPBO = new SILOCCPBO()
                         {
                             ID = Convert.ToInt32(reader["ID"]),
+                            ItemId = Convert.ToInt32(reader["ItemId"]),
                             Date = Convert.ToDateTime(reader["Date"]),
-                            ItemName = (reader["ItemName"].ToString()),
-                            Activity = reader["Activity"].ToString(),
-                            MonitoringParameter = reader["MonitoringParameter"].ToString(),
-                            TranseferedTimeFromRQS = reader["TranseferedTimeFromRQS"].ToString(),
-                            MandatoryRange = reader["MandatoryRange"].ToString(),
-                            Frequency = reader["Frequency"].ToString(),
-                            WeightOfHoldingMaterial = reader["WeightOfHoldingMaterial"].ToString(),
                             Time = reader["Time"].ToString(),
-                            CorrectiveActions = reader["CorrectiveActions"].ToString(),
-                            Responsibility = reader["Responsibility"].ToString(),
-                            Verification = reader["Verification"].ToString(),
+                            ProductName = reader["ProductName"].ToString(),
+                            RawBatchesNo = reader["RawBatchesNo"].ToString(),
+                            Weight = reader["Weight"].ToString(),
+                            Temperature = reader["Temperature"].ToString(),
+                            Pressure = reader["Pressure"].ToString(),
                             Remarks = reader["Remarks"].ToString()
                         };
                     }
@@ -186,19 +173,15 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_SILOCCP_Update", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@ID", model.ID);
+                    cmd.Parameters.AddWithValue("@Id", model.ID);
+                    cmd.Parameters.AddWithValue("@ItemId", model.ItemId);
                     cmd.Parameters.AddWithValue("@Date", model.Date);
                     cmd.Parameters.AddWithValue("@Time", model.Time);
-                    cmd.Parameters.AddWithValue("@ItemName", model.ItemName);
-                    cmd.Parameters.AddWithValue("@Activity", model.Activity);
-                    cmd.Parameters.AddWithValue("@MonitoringParameter", model.MonitoringParameter);
-                    cmd.Parameters.AddWithValue("@TranseferedTimeFromRQS", model.TranseferedTimeFromRQS);
-                    cmd.Parameters.AddWithValue("@MandatoryRange", model.MandatoryRange);
-                    cmd.Parameters.AddWithValue("@Frequency", model.Frequency);
-                    cmd.Parameters.AddWithValue("@WeightOfHoldingMaterial", model.WeightOfHoldingMaterial);
-                    cmd.Parameters.AddWithValue("@CorrectiveActions", model.CorrectiveActions);
-                    cmd.Parameters.AddWithValue("@Responsibility", model.Responsibility);
-                    cmd.Parameters.AddWithValue("@Verification", model.Verification);
+                    cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
+                    cmd.Parameters.AddWithValue("@Weight", model.Weight);
+                    cmd.Parameters.AddWithValue("@Temperature", model.Temperature);
+                    cmd.Parameters.AddWithValue("@Pressure", model.Pressure);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
