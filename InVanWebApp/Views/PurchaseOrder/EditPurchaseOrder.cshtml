@@ -171,6 +171,8 @@
                                                 <th class="sortStyle">Tax</th>
                                                 <th class="sortStyle">Total before tax</th>
                                                 <th class="sortStyle d-none">Actual Balance Quantity</th>
+                                                <th class="sortStyle d-none"></th>
+                                                @*//Rahul added 'blank th' for 'Delete' 30-05-2023*@
                                             </tr>
                                         </thead>
                                         <tbody id="myTableBody">
@@ -243,6 +245,17 @@
                                                         </td>
                                                         <td>
                                                             @Html.TextBox("ActualBalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm d-none", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        </td>
+                                                        @*//Rahul added 'td' for 'Delete' 30-05-2023*@                                                            
+                                                        <td>                                                        
+                                                            @if (c == 1)
+                                                            {
+                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button> 
+                                                            }
+                                                            else
+                                                            {
+                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
+                                                            }
                                                         </td>
                                                     </tr>
                                                     { c++; }
@@ -423,7 +436,6 @@
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(myFile);
         fileInput.files = dataTransfer.files;
-
     });
     //===================end=======================//
 
@@ -524,9 +536,9 @@
         }
     }
 
-    function CalculateTotalBeforeTax() {
-        $('#TotalBeforeTax').val('');
-        $('#TotalTax').val('');
+    function CalculateTotalBeforeTax() {debugger
+        //$('#TotalBeforeTax').val('');
+        //$('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;
         length = parseFloat(length);
         var total = 0;
@@ -681,4 +693,26 @@
         }
         return true;
     }
+    /*Rahul : Add Javascript 'function removeTr(index)' start on 30-05-2023.*/
+    function removeTr(index) {
+        debugger
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        if (length == 1) {
+            CalculateTotalBeforeTax();
+            event.preventDefault();
+            return false;
+        }
+        else if (length >= index) {
+            $('#tablerow_' + index).remove();
+            CalculateTotalBeforeTax();
+        }
+        else {
+            CalculateTotalBeforeTax();
+        }
+        CalculateTotalBeforeTax();
+        return false;
+    }
+/*Rahul : Add Javascript 'function removeTr(index)' end on 30-05-2023.*/
+
 </script>

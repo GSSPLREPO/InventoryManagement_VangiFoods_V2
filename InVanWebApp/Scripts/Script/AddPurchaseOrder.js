@@ -26,7 +26,7 @@ function SelectedIndexChangedTerms(id) {
 
 //=====================Onchange of Indent description===========================
 function SelectedIndexChangedIndent(id) {
-
+    
     //Check whether the currency dropdown is selected or not
  
     var CurrencyIDCheck = $('#CurrencyID').val();
@@ -64,6 +64,8 @@ function SelectedIndexChangedIndent(id) {
                 var rowCount = table.rows.length;
                 var cellCount = table.rows[0].cells.length;
                 var row = table.insertRow(rowCount);
+                //Rahul added ' id="tablerow"' 30-05-2023. 
+                row.setAttribute("id", "tablerow" + j);
 
                 for (var i = 0; i < cellCount; i++) {
                     var cell = 'cell' + i;
@@ -155,8 +157,19 @@ function SelectedIndexChangedIndent(id) {
                         cell.setAttribute("class", "d-none");
                         cell.setAttribute("id", "ActualBalanceQuantity_" + j);
                     }
+                    /*Rahul : Add Javascript 'else if (i == 12)' for 'function removeTr(index)' start on 30-05-2023.*/
+                    else if (i == 12) { 
+                        var t4 = document.createElement("button");
+                        t4.id = "btnSave_" + j;
+                        t4.setAttribute("class", "btn btn-sm btn-primary");
+                        t4.setAttribute("style", "background: linear-gradient(85deg, #392c70, #6a005b);");
+                        t4.setAttribute("type", "submit");
+                        t4.innerHTML = "Delete";
+                        t4.setAttribute("onclick", "removeTr('"+j+"');");
+                        cell.appendChild(t4);
+                    }
+                    /*Rahul : Add Javascript 'else if (i == 12)' for 'function removeTr(index)' end on 30-05-2023.*/
                 }
-
             }
         },
         error: function (err) {
@@ -190,7 +203,8 @@ function OnChangeUnitPrice(value, id) {
         var totalPrice = quantity * UnitPrice;
         totalPrice = Math.round(totalPrice);
         $("#TotalItemCost_" + rowNo).val(totalPrice);
-        CalculateTotalBeforeTax();
+        //CalculateTotalBeforeTax();
+        CalculateTotalBeforeTax(value, id);
         document.getElementById(id).setAttribute("style", "none");
     }
 }
@@ -236,7 +250,14 @@ function SelectedIndexChangedLocation(id) {
     });
 }
 
-function CalculateTotalBeforeTax() {
+//function CalculateTotalBeforeTax() {
+function CalculateTotalBeforeTax(id) {
+    debugger
+    //var rowNo = id.split('_')[1];
+    var rowNo = id;
+    if (value == '')
+        value = 0;
+
     $('#TotalBeforeTax').val('');
     $('#TotalTax').val('');
     var length = document.getElementById("submissionTable").rows.length;
@@ -252,16 +273,41 @@ function CalculateTotalBeforeTax() {
 
     OtherTax = parseFloat(OtherTax);
 
-    var i = 0;
-    while (i <= length) {
-        var temp = document.getElementById("TotalItemCost_" + i).value;
-        var tempTotalTax = ((document.getElementById("ItemTax_" + i)).innerHTML).split(" %")[0];
+    //var i = 0;
+    //while (i <= length) {
+    //    var temp = document.getElementById("TotalItemCost_" + i).value;
+    //    var tempTotalTax = ((document.getElementById("ItemTax_" + i)).innerHTML).split(" %")[0];
+    //    total = parseFloat(temp) + total;
+
+    //    tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
+    //    totalTax = parseFloat(tempTotalTax) + totalTax;
+
+    //    i++;
+    //}
+    while (rowNo <= length) {debugger
+        var temp = document.getElementById("TotalItemCost_" + rowNo).value;
+        //Rahul added 'temp'  30-05-2023.
+        if (temp == '' || temp == null) {
+            temp = 0;
+        }
+        else {
+            temp = parseFloat(temp);
+        }
+
+        var tempTotalTax = ((document.getElementById("ItemTax_" + rowNo)).innerHTML).split(" %")[0];
         total = parseFloat(temp) + total;
+        //Rahul added 'tempTotalTax'30-05-2023.
+        if (tempTotalTax == '' || tempTotalTax == null) {
+            tempTotalTax = 0;
+        }
+        else {
+            tempTotalTax = parseFloat(tempTotalTax);
+        }
 
         tempTotalTax = (parseFloat(tempTotalTax) / 100) * parseFloat(temp);
         totalTax = parseFloat(tempTotalTax) + totalTax;
 
-        i++;
+        rowNo++;
     }
 
     $('#TotalBeforeTax').val(total.toFixed(2));
@@ -378,7 +424,8 @@ function OnChangeQty(value, id) {
         $("#TotalAfterTax").val(totalPriceAfterTax);
         $("#GrandTotal").val(totalPriceAfterTax);
 
-        CalculateTotalBeforeTax();
+        //CalculateTotalBeforeTax();
+        CalculateTotalBeforeTax(value, id);
         document.getElementById(id).setAttribute("style", "border-color:none;");
     }
 
@@ -512,3 +559,23 @@ function isNumberKey(evt) {
     }
     return true;
 }
+/*Rahul : Add Javascript 'function removeTr(index)' start on 30-05-2023.*/
+function removeTr(index) {  debugger
+    var length = document.getElementById("submissionTable").rows.length;
+    length = parseFloat(length) - 1;
+    id = index;
+    if (length == 1) {
+        CalculateTotalBeforeTax(id);
+        event.preventDefault();
+        return false;
+    }
+    else if (length >= index) {
+        $('#tablerow'+index).remove();
+    }
+    else {
+        CalculateTotalBeforeTax(id);
+    }
+    CalculateTotalBeforeTax(id);
+     return false;
+}
+/*Rahul : Add Javascript 'function removeTr(index)' end on 30-05-2023.*/
