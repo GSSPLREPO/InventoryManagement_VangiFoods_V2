@@ -1,395 +1,386 @@
 ﻿@model InVanWebApp_BO.PurchaseOrderBO
-@{
-    ViewBag.Title = "EditPurchaseOrder";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "EditPurchaseOrder";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 @using (Html.BeginForm("EditPurchaseOrder", "PurchaseOrder", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-    <div class="card">
-        <div class="card-body">
-            <h4>Edit Purchase Order</h4>
-            <hr />
-            @Html.ValidationSummary(true)
-            @Html.HiddenFor(model => model.PurchaseOrderId)
-
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Tittle")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", type = "text" })
-                    @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <br />
-                <div class="col-md-2">
-                    @Html.Label("PO Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("PO Document Date")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Delivery Date")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Currency")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", @readonly = "readonly" })
-                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-                <div class="col-md-2 mb-1">
-                    @Html.Label("Indent Number")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                    @Html.HiddenFor(model => model.IndentID)
-                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Location Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val())" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-                <br />
-                <div class="col-md-2">
-                    @Html.Label("Supplier Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.VendorsID, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.VendorsID, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", @readonly = "readonly" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Delivery Details</h4>
-                            <hr />
-                            <div class="form-group">
-                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px" })
-                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Supplier Details</h4>
-                            <hr />
-                            <div class="form-group">
-                                @Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
-                                @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "error mt-2 text-danger" })
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Amendment Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", Value = "0", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Remarks")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-            <br />
-
-            <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-hover" id="submissionTable">
-                                        <thead>
-                                            <tr>
-                                                <th class="sortStyle">Item Code</th>
-                                                <th class="sortStyle d-none">Item ID</th>
-                                                <th class="sortStyle">Item</th>
-                                                <th class="sortStyle">Required Quantity</th>
-                                                <th class="sortStyle">Order Quantity</th>
-                                                <th class="sortStyle">Balance Quantity</th>
-                                                <th class="sortStyle">Units</th>
-                                                <th class="sortStyle">Price (Per Unit)</th>
-                                                <th class="sortStyle">Currency</th>
-                                                <th class="sortStyle">Tax</th>
-                                                <th class="sortStyle">Total before tax</th>
-                                                <th class="sortStyle d-none">Actual Balance Quantity</th>
-                                                <th class="sortStyle d-none"></th>
-                                                @*//Rahul added 'blank th' for 'Delete' 30-05-2023*@
-                                            </tr>
-                                        </thead>
-                                        <tbody id="myTableBody">
-                                            @{ int c = 1;
-                                                foreach (var item in Model.itemDetails)
-                                                {
-                                                    //string itemListForDD = "itemListForDD";
-                                                    //itemListForDD = itemListForDD + (c - 1);
-                                                    <tr id="tablerow_@c">
-                                                        <td>
-                                                            @*@Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
-                                                                new { @class = "form-control", id = "Item_ID_" + c, style = "height:30px;width:130px;", onchange = "getitemDetailsJSTbl('" + c + "')" })*@
-                                                            @Html.TextBox("ItemCode_" + c, item.Item_Code, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
-                                                        </td>
-                                                        <td class="col-md-4 d-none">
-                                                            @Html.TextBox("ItemID_" + c, item.Item_ID, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("RequiredQuantity_" + c, item.RequiredQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @if (item.BalanceQuantity == 0 && item.TotalItemCost == 0)
-                                                            {
-                                                                @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
-                                                           {
-                                                               @class = "form-control form-control-sm",
-                                                               style = "height:30px;width:100px;",
-                                                               onkeypress = "return isNumberKey(event)",
-                                                               onchange = "OnChangeQty($(this).val(),id," + item.ItemQuantity + ")",
-                                                               @readonly = "readonly"
-                                                           })
-                                                            }
-                                                            else
-                                                            {
-                                                                @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
-                                                                {
-                                                                    @class = "form-control form-control-sm",
-                                                               style = "height:30px;width:100px;",
-                                                                    onkeypress = "return isNumberKey(event)",
-                                                               onchange = "OnChangeQty($(this).val(),id," + item.ItemQuantity + ")"
-                                                                })
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("BalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @if (item.BalanceQuantity == 0 && item.TotalItemCost == 0)
-                                                            {
-                                                                @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)", @readonly="readonly" })
-                                                            }
-                                                            else { 
-                                                                @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)" })
-                                                            }
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ItemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control form-control-sm", style = "height:30px;width:80px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("TotalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ActualBalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm d-none", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                        </td>
-                                                        @*//Rahul added 'td' for 'Delete' 30-05-2023*@                                                            
-                                                        <td>                                                        
-                                                            @if (c == 1)
-                                                            {
-                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button> 
-                                                            }
-                                                            else
-                                                            {
-                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
-                                                            }
-                                                        </td>
-                                                    </tr>
-                                                    { c++; }
-                                                }
-                                            }
-                                        </tbody>
-                                    </table>
-                                    <br />
-                                </div>
+                        <h4>Edit Purchase Order</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.PurchaseOrderId)
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Tittle")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", type = "text" })
+                                @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <br />
+                            <div class="col-md-2">
+                                @Html.Label("PO Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("PO Document Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Delivery Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <br />
-            <hr />
-            <br />
-            <div class="col-md-12 grid-margin stretch-card">
-                <div class="col-md-6 grid-margin stretch-card flex-wrap">
-                    <div class="card h-50 mb-2">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
-                            <hr />
-                            <div class="form-group">
-                                @Html.TextBoxFor(x => x.Signature, new { id = "file", type = "file", onchange = "return fileValidation()" })
-                                @*<input type="file" id="file" name="Signature"
-                                    onchange="return fileValidation()"/>*@
-                                <!-- Image preview -->
-                                <span style="color:green">@ViewBag.Message</span>
-                                <br />
-                                <br />
-                                <center>
-                                    <div id="imagePreview">
-                                        <img src="/Signatures/@Model.Signature" style="height:10%;width:20%" />
-                                        @Html.HiddenFor(x => x.Signature, new { id = "tempSign" })
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Currency")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", @readonly = "readonly" })
+                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-2 mb-1">
+                                @Html.Label("Indent Number")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.HiddenFor(model => model.IndentID)
+                                @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Location Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val())" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <br />
+                            <div class="col-md-2">
+                                @Html.Label("Supplier Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.VendorsID, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
+                                @Html.ValidationMessageFor(model => model.VendorsID, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">Delivery Details</h4>
+                                        <hr />
+                                        <div class="form-group">
+                                            @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px" })
+                                            @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
+                                        </div>
                                     </div>
-                                </center>
+                                </div>
+                            </div>
+                            <div class="col-md-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">Supplier Details</h4>
+                                        <hr />
+                                        <div class="form-group">
+                                            @Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
+                                            @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "error mt-2 text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <p style="padding-left: 5%; color:red;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
-                    </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Amendment Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", Value = "0", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Remarks")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
+                                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
 
-                    <div class="card h-50">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">Terms and Conditions<span style="color:red"> * </span></h4>
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-4">
-                                    @Html.Label("T & C")
-                                    <span style="color:red">*</span>
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                <table class="table table-hover" id="submissionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">Item Code</th>
+                                                            <th class="sortStyle d-none">Item ID</th>
+                                                            <th class="sortStyle">Item</th>
+                                                            <th class="sortStyle">Required Quantity</th>
+                                                            <th class="sortStyle">Order Quantity</th>
+                                                            <th class="sortStyle">Balance Quantity</th>
+                                                            <th class="sortStyle">Units</th>
+                                                            <th class="sortStyle">Price (Per Unit)</th>
+                                                            <th class="sortStyle">Currency</th>
+                                                            <th class="sortStyle">Tax</th>
+                                                            <th class="sortStyle">Total before tax</th>
+                                                            <th class="sortStyle d-none">Actual Balance Quantity</th>
+                                                            <th class="sortStyle d-none"></th>
+                                                            @*//Rahul added 'blank th' for 'Delete' 30-05-2023*@
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="myTableBody">
+                                                        @{ int c = 1;
+                                                            foreach (var item in Model.itemDetails)
+                                                            {
+                                                                //string itemListForDD = "itemListForDD";
+                                                                //itemListForDD = itemListForDD + (c - 1);
+                                            <tr id="tablerow_@c">
+                                                <td>
+                                                    @*@Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
+                                                        new { @class = "form-control", id = "Item_ID_" + c, style = "height:30px;width:130px;", onchange = "getitemDetailsJSTbl('" + c + "')" })*@
+                                                    @Html.TextBox("ItemCode_" + c, item.Item_Code, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
+                                                </td>
+                                                <td class="col-md-4 d-none">
+                                                    @Html.TextBox("ItemID_" + c, item.Item_ID, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("RequiredQuantity_" + c, item.RequiredQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @if (item.BalanceQuantity == 0 && item.TotalItemCost == 0)
+                                                    {
+                                @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
+                                {
+                                    @class = "form-control form-control-sm",
+                                    style = "height:30px;width:100px;",
+                                    onkeypress = "return isNumberKey(event)",
+                                    onchange = "OnChangeQty($(this).val(),id," + item.ItemQuantity + ")",
+                                    @readonly = "readonly"
+                                }) }
+                            else
+                            {
+        @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
+        {
+            @class = "form-control form-control-sm",
+            style = "height:30px;width:100px;",
+            onkeypress = "return isNumberKey(event)",
+            onchange = "OnChangeQty($(this).val(),id," + item.ItemQuantity + ")"
+        })}
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("BalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @if (item.BalanceQuantity == 0 && item.TotalItemCost == 0)
+                                                    {
+                                @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)", @readonly = "readonly" }) }
+                            else
+                            {
+        @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)" })}
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("ItemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control form-control-sm", style = "height:30px;width:80px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("TotalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBox("ActualBalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm d-none", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                </td>
+                                                @*//Rahul added 'td' for 'Delete' 30-05-2023*@
+                                                <td>
+                                                    @if (c == 1)
+                                                    {
+                                <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button> }
+                            else
+                            {
+        <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>}
+                                                </td>
+                                            </tr>
+ { c++; }
+                                        } }
+                                                    </tbody>
+                                                </table>
+                                                <br />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
-                                    @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["Terms"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
-                                    @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <hr />
+                        <br />
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                                <div class="card h-50 mb-2">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
+                                        <hr />
+                                        <div class="form-group">
+                                            @Html.TextBoxFor(x => x.Signature, new { id = "file", type = "file", onchange = "return fileValidation()" })
+                                            @*<input type="file" id="file" name="Signature"
+                                                onchange="return fileValidation()"/>*@
+                                            <!-- Image preview -->
+                                            <span style="color:green">@ViewBag.Message</span>
+                                            <br />
+                                            <br />
+                                            <center>
+                                                <div id="imagePreview">
+                                                    <img src="/Signatures/@Model.Signature" style="height:10%;width:20%" />
+                                                    @Html.HiddenFor(x => x.Signature, new { id = "tempSign" })
+                                                </div>
+                                            </center>
+                                        </div>
+                                    </div>
+                                    <p style="padding-left: 5%; color:red;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
+                                </div>
+
+                                <div class="card h-50">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">Terms and Conditions<span style="color:red"> * </span></h4>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.Label("T & C")
+                                                <span style="color:red">*</span>
+                                            </div>
+                                            <div class="col-md-8">
+                                                @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["Terms"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
+                                                @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        @*Rahul set ''T&C'' from top to here 02/12/2022.*@
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                @Html.Label("Terms Description")
+                                            </div>
+                                            <div class="col-md-8">
+                                                @Html.TextAreaFor(model => model.Terms, new { @class = "form-control", placeholder = "Term Description", style = "height:100px" })
+                                                @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <hr />
+                                        <div class="form-group">
+                                            <div class="row mb-2">
+                                                <label>Total (before tax): </label>
+                                                <input class="form-control form-control-sm text-right" id="TotalBeforeTax" name="TotalItemCost" readonly="readonly" />
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label>Total tax: </label>
+                                                <input class="form-control form-control-sm text-right" id="TotalTax" name="TotalTax" readonly="readonly" />
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label><b>Other Tax: </b></label>
+                                                @Html.TextBox("OtherTax", Model.OtherTax, new { @class = "form-control form-control-sm text-right", onkeypress = "return isNumberKey(event)", onchange = "CalculateTotalBeforeTax()", maxlength = "8" })
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label>Total (after tax):</label>
+                                                @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right", @readonly = "readonly" })
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label><b>Grand Total:</b></label>
+                                                @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control form-control-sm text-right", @readonly = "readonly" })
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label>Advanced To Pay:</label>
+                                                @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control  form-control-sm text-right", maxlength = "8", onkeyup = "ValidateAdvancePayment($(this).val(),id)", onkeypress = "return isNumberKey(event)" })
+                                                <span id="ValMsgAdvancePayment" style="display:none; color:red"></span>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
                                 </div>
                             </div>
                             <br />
-                            @*Rahul set ''T&C'' from top to here 02/12/2022.*@
+                        </div>
+
+                        <div class="col d-flex justify-content-end" style="margin-left: auto;">
                             <div class="row">
-                                <div class="col-md-4">
-                                    @Html.Label("Terms Description")
+                                <div class="col-3">
+                                    <button type="submit" id="btnSave" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
                                 </div>
-                                <div class="col-md-8">
-                                    @Html.TextAreaFor(model => model.Terms, new { @class = "form-control", placeholder = "Term Description", style = "height:100px" })
-                                    @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
+                                <div class="col-4">
+                                    <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
+                                </div>
+                                <div class="col-4">
+                                    <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                                        Back To List
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-
-                <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <hr />
-                            <div class="form-group">
-                                <div class="row mb-2">
-                                    <label>Total (before tax): </label>
-                                    <input class="form-control form-control-sm text-right" id="TotalBeforeTax" name="TotalItemCost" readonly="readonly" />
-                                </div>
-                                <div class="row mb-2">
-                                    <label>Total tax: </label>
-                                    <input class="form-control form-control-sm text-right" id="TotalTax" name="TotalTax" readonly="readonly" />
-                                </div>
-                                <div class="row mb-2">
-                                    <label><b>Other Tax: </b></label>
-                                    @Html.TextBox("OtherTax", Model.OtherTax, new { @class = "form-control form-control-sm text-right", onkeypress = "return isNumberKey(event)", onchange = "CalculateTotalBeforeTax()", maxlength = "8" })
-                                </div>
-                                <div class="row mb-2">
-                                    <label>Total (after tax):</label>
-                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control  form-control-sm text-right", @readonly = "readonly" })
-                                </div>
-                                <div class="row mb-2">
-                                    <label><b>Grand Total:</b></label>
-                                    @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control form-control-sm text-right", @readonly = "readonly" })
-                                </div>
-                                <div class="row mb-2">
-                                    <label>Advanced To Pay:</label>
-                                    @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control  form-control-sm text-right", maxlength = "8", onkeyup = "ValidateAdvancePayment($(this).val(),id)", onkeypress = "return isNumberKey(event)" })
-                                    <span id="ValMsgAdvancePayment" style="display:none; color:red"></span>
-                                </div>
-                            </div>
-                            <br />
-                        </div>
                     </div>
                 </div>
-                <br />
-            </div>
 
-            <div class="col d-flex justify-content-end" style="margin-left: auto;">
-                <div class="row">
-                    <div class="col-3">
-                        <button type="submit" id="btnSave" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
-                    </div>
-                    <div class="col-4">
-                        <button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2 btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
-                    </div>
-                    <div class="col-4">
-                        <a href="@Url.Action("Index", "PurchaseOrder")" class="btn btn-primary btn-sm" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                            Back To List
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    @Html.HiddenFor(model => model.DraftFlag, new { @Value = "false" })
-}
+                                @Html.HiddenFor(model => model.DraftFlag, new { @Value = "false" })}
 @Html.Raw(TempData["Success"])
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -536,13 +527,122 @@
         }
     }
 
-    function CalculateTotalBeforeTax() {debugger
-        //$('#TotalBeforeTax').val('');
-        //$('#TotalTax').val('');
+    function CalculateTotalBeforeTax() {
+
+        //let ids = [...document.getElementById("myTableBody").children].map(tr =>
+        //    Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
+        //        [el.id])));
+        //var idList = JSON.stringify(ids);
+        //console.log(idList);
+
+        //var rowNo = id.split('_')[1];
+
+        $('#TotalBeforeTax').val('');
+        $('#TotalTax').val('');
         var length = document.getElementById("submissionTable").rows.length;
         length = parseFloat(length);
+
+        //var idLen = ids.length;
+        //var id = "";
+        //if (idLen <= length) {
+        //    var id = 'TotalItemCost_'+idLen;
+        //    var rowNo = id.split('_')[1];
+        //    idLen--;
+        //}
+
+
         var total = 0;
         var totalTax = 0;
+        totalTax = Math.round(totalTax);
+
+        var OtherTax = document.getElementById("OtherTax").value;
+        if (OtherTax == '')
+            OtherTax = 0;
+        OtherTax = parseFloat(OtherTax);
+
+        //var i = 1;
+        //while (i < length) {
+        //    var temp = document.getElementById("TotalItemCost_" + i).value;
+        //    var tempTotalTax = document.getElementById("ItemTax_" + i).value;
+        //    total = parseFloat(temp) + total;
+
+        //    tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
+        //    totalTax = parseFloat(tempTotalTax) + totalTax;
+        //    i++;
+        //}
+
+        var rowNo = 1;
+        while (rowNo < length) {
+            //Rahul added 'tempRow' 31-05-2023.
+            var tempRow = document.getElementById("TotalItemCost_" + rowNo);
+            if (tempRow == null || tempRow == '' || tempRow == 'undefined') {
+                rowNo++;
+            }
+            var temp = document.getElementById("TotalItemCost_" + rowNo).value;
+            //Rahul added 'temp'  30-05-2023.
+            if (temp == '' || temp == null || temp == undefined) {
+                temp = 0;
+            }
+            else {
+                temp = parseFloat(temp);
+            }
+
+            var tempTotalTax = ((document.getElementById("ItemTax_" + rowNo)).innerHTML).split(" %")[0];
+            total = parseFloat(temp) + total;
+            //Rahul added 'tempTotalTax'30-05-2023.
+            if (tempTotalTax == '' || tempTotalTax == null || tempTotalTax == undefined) {
+                tempTotalTax = 0;
+            }
+            else {
+                tempTotalTax = parseFloat(tempTotalTax);
+            }
+
+            tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
+            totalTax = parseFloat(tempTotalTax) + totalTax;
+
+            rowNo++;
+            //rowNo--;
+        }
+
+        $('#TotalBeforeTax').val(total.toFixed(2));
+        $('#TotalTax').val(totalTax.toFixed(2));
+        var tempGrandTotal = total + totalTax + OtherTax;
+        tempGrandTotal = Math.round(tempGrandTotal);
+
+        $('#TotalAfterTax').val(tempGrandTotal);
+        $('#GrandTotal').val(tempGrandTotal);
+
+        createJson();
+    }
+    //Rahul added 'function CalculateTotalBeforeTaxs()' start 31-05-2023.
+    function CalculateTotalBeforeTaxs() {
+        debugger
+        //let ids = [...document.getElementById("myTableBody").children].map(tr =>
+        //    Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
+        //        [el.id])));
+        //var idList = JSON.stringify(ids);
+        //console.log(idList);
+
+        //var rowNo = id.split('_')[1];
+
+        $('#TotalBeforeTax').val('');
+        $('#TotalTax').val('');
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length);
+
+        //var idLen = ids.length;
+        //var id = "";
+        //if (idLen <= length) {
+        //    var id = 'TotalItemCost_'+idLen;
+        //    var rowNo = id.split('_')[1];
+        //    idLen--;
+        //}
+
+
+        var total = 0;
+        var totalTax = 0;
+        totalTax = Math.round(totalTax);
+
         var OtherTax = document.getElementById("OtherTax").value;
         if (OtherTax == '')
             OtherTax = 0;
@@ -559,6 +659,39 @@
             i++;
         }
 
+        //var rowNo = 1;
+        //while (rowNo <= length) {
+        //    debugger
+        //    var tempRow = document.getElementById("TotalItemCost_" + rowNo);
+        //    if (tempRow == null || tempRow == '' || tempRow == 'undefined') {
+        //        rowNo++;
+        //    }
+        //    var temp = document.getElementById("TotalItemCost_" + rowNo).value;
+        //    //Rahul added 'temp'  30-05-2023.
+        //    if (temp == '' || temp == null || temp == 'undefined') {
+        //        temp = 0;
+        //    }
+        //    else {
+        //        temp = parseFloat(temp);
+        //    }
+
+        //    var tempTotalTax = ((document.getElementById("ItemTax_" + rowNo)).innerHTML).split(" %")[0];
+        //    total = parseFloat(temp) + total;
+        //    //Rahul added 'tempTotalTax'30-05-2023.
+        //    if (tempTotalTax == '' || tempTotalTax == null || tempTotalTax == undefined) {
+        //        tempTotalTax = 0;
+        //    }
+        //    else {
+        //        tempTotalTax = parseFloat(tempTotalTax);
+        //    }
+
+        //    tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
+        //    totalTax = parseFloat(tempTotalTax) + totalTax;
+
+        //    rowNo++;
+        //    //rowNo--;
+        //}
+
         $('#TotalBeforeTax').val(total.toFixed(2));
         $('#TotalTax').val(totalTax.toFixed(2));
         var tempGrandTotal = total + totalTax + OtherTax;
@@ -569,7 +702,102 @@
 
         createJson();
     }
+    //Rahul added 'function CalculateTotalBeforeTaxs()' end 31-05-2023.
+    //Rahul added 'function CalculateTotalBeforeTaxsLast()' start 31-05-2023.
+    function CalculateTotalBeforeTaxsLast() {
+        debugger
+        //let ids = [...document.getElementById("myTableBody").children].map(tr =>
+        //    Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
+        //        [el.id])));
+        //var idList = JSON.stringify(ids);
+        //console.log(idList);
 
+        //var rowNo = id.split('_')[1];
+
+        $('#TotalBeforeTax').val('');
+        $('#TotalTax').val('');
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length);
+
+        //var idLen = ids.length;
+        //var id = "";
+        //if (idLen <= length) {
+        //    var id = 'TotalItemCost_'+idLen;
+        //    var rowNo = id.split('_')[1];
+        //    idLen--;
+        //}
+
+        var total = 0;
+        var totalTax = 0;
+        totalTax = Math.round(totalTax);
+
+        var OtherTax = document.getElementById("OtherTax").value;
+        if (OtherTax == '')
+            OtherTax = 0;
+        OtherTax = parseFloat(OtherTax);
+
+        var i = 1;        
+        while (i <= length) {
+                var tempRow = document.getElementById("TotalItemCost_" + i);
+                if (tempRow == null || tempRow == '' || tempRow == 'undefined') {
+                    i++;
+                }
+
+            if (i < length) {
+                var temp = document.getElementById("TotalItemCost_" + i).value;
+                var tempTotalTax = document.getElementById("ItemTax_" + i).value;
+                total = parseFloat(temp) + total;
+
+                tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
+                totalTax = parseFloat(tempTotalTax) + totalTax;
+            }
+                i++;
+            }
+        //var rowNo = 1;
+        //while (rowNo <= length) {
+        //    debugger
+        //    var tempRow = document.getElementById("TotalItemCost_" + rowNo);
+        //    if (tempRow == null || tempRow == '' || tempRow == 'undefined') {
+        //        rowNo++;
+        //    }
+        //    var tempCost = document.getElementById("TotalItemCost_" + rowNo).value;
+        //    //Rahul added 'temp'  30-05-2023.
+        //    if (tempCost == '' || tempCost == null || tempCost == 'undefined') {
+        //        tempCost = 0;
+        //    }
+        //    else {
+        //        tempCost = parseFloat(tempCost);
+        //    }
+
+        //    var tempTotalTax = ((document.getElementById("ItemTax_" + rowNo)).innerHTML).split(" %")[0];
+        //    total = parseFloat(tempCost) + total;
+        //    //Rahul added 'tempTotalTax'30-05-2023.
+        //    if (tempTotalTax == '' || tempTotalTax == null || tempTotalTax == undefined) {
+        //        tempTotalTax = 0;
+        //    }
+        //    else {
+        //        tempTotalTax = parseFloat(tempTotalTax);
+        //    }
+
+        //    tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(tempCost));
+        //    totalTax = parseFloat(tempTotalTax) + totalTax;
+
+        //    rowNo++;
+        //    //rowNo--;
+        //}
+
+
+        $('#TotalBeforeTax').val(total.toFixed(2));
+        $('#TotalTax').val(totalTax.toFixed(2));
+        var tempGrandTotal = total + totalTax + OtherTax;
+        tempGrandTotal = Math.round(tempGrandTotal);
+
+        $('#TotalAfterTax').val(tempGrandTotal);
+        $('#GrandTotal').val(tempGrandTotal);
+
+        createJson();
+    }
+    //Rahul added 'function CalculateTotalBeforeTaxsLast()' end 31-05-2023.
     function createJson() {
         let res = [...document.getElementById("myTableBody").children].map(tr =>
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
@@ -698,19 +926,20 @@
         debugger
         var length = document.getElementById("submissionTable").rows.length;
         length = parseFloat(length) - 1;
+        id = index;
         if (length == 1) {
-            CalculateTotalBeforeTax();
+            CalculateTotalBeforeTaxs(id);
             event.preventDefault();
             return false;
         }
         else if (length >= index) {
             $('#tablerow_' + index).remove();
-            CalculateTotalBeforeTax();
+            CalculateTotalBeforeTaxsLast(id); //Rahul added 'CalculateTotalBeforeTaxsLast()' 31-05-2023. 
         }
         else {
-            CalculateTotalBeforeTax();
+            CalculateTotalBeforeTaxs(id); //Rahul added 'CalculateTotalBeforeTaxs()' 31-05-2023.
         }
-        CalculateTotalBeforeTax();
+        CalculateTotalBeforeTaxsLast(id); //Rahul added 'CalculateTotalBeforeTaxsLast()' 31-05-2023.
         return false;
     }
 /*Rahul : Add Javascript 'function removeTr(index)' end on 30-05-2023.*/

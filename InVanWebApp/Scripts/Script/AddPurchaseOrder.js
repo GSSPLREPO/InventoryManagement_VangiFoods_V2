@@ -203,8 +203,7 @@ function OnChangeUnitPrice(value, id) {
         var totalPrice = quantity * UnitPrice;
         totalPrice = Math.round(totalPrice);
         $("#TotalItemCost_" + rowNo).val(totalPrice);
-        //CalculateTotalBeforeTax();
-        CalculateTotalBeforeTax(value, id);
+        CalculateTotalBeforeTax();
         document.getElementById(id).setAttribute("style", "none");
     }
 }
@@ -250,13 +249,12 @@ function SelectedIndexChangedLocation(id) {
     });
 }
 
-//function CalculateTotalBeforeTax() {
-function CalculateTotalBeforeTax(id) {
+function CalculateTotalBeforeTax() {
     debugger
-    //var rowNo = id.split('_')[1];
-    var rowNo = id;
-    if (value == '')
-        value = 0;
+    //var rowNo = id.split('_')[1]; //Rahul commented 'rowNo' 31-05-2023.
+    //var rowNo = id;
+    //if (value == '')
+    //    value = 0;
 
     $('#TotalBeforeTax').val('');
     $('#TotalTax').val('');
@@ -284,6 +282,7 @@ function CalculateTotalBeforeTax(id) {
 
     //    i++;
     //}
+    var rowNo = 0;  //Rahul added 'rowNo' 31-05-2023.
     while (rowNo <= length) {debugger
         var temp = document.getElementById("TotalItemCost_" + rowNo).value;
         //Rahul added 'temp'  30-05-2023.
@@ -424,8 +423,7 @@ function OnChangeQty(value, id) {
         $("#TotalAfterTax").val(totalPriceAfterTax);
         $("#GrandTotal").val(totalPriceAfterTax);
 
-        //CalculateTotalBeforeTax();
-        CalculateTotalBeforeTax(value, id);
+        CalculateTotalBeforeTax();
         document.getElementById(id).setAttribute("style", "border-color:none;");
     }
 
@@ -570,7 +568,8 @@ function removeTr(index) {  debugger
         return false;
     }
     else if (length >= index) {
-        $('#tablerow'+index).remove();
+        $('#tablerow' + index).remove();
+        CalculateTotalBeforeTax(id);
     }
     else {
         CalculateTotalBeforeTax(id);
