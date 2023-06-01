@@ -1,0 +1,626 @@
+﻿@model InVanWebApp_BO.PurchaseOrderBO
+@{
+    ViewBag.Title = "Purchase Order Amendment";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+@using (Html.BeginForm("POAmendment", "PurchaseOrder", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Purchase Order Amendment</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.PurchaseOrderId)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Tittle")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Tittle, new { @class = "form-control form-control-sm", type = "text", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.Tittle, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <br />
+                <div class="col-md-2">
+                    @Html.Label("PO Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PONumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("PO Document Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.PODate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.PODate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Delivery Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Currency")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Indent Number")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.HiddenFor(model => model.IndentID)
+                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Amendment Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Amendment, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.Amendment, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Location Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation($(this).val())" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+                <br />
+                <div class="col-md-2">
+                    @Html.Label("Supplier Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.VendorsID, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
+                    @Html.ValidationMessageFor(model => model.VendorsID, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Delivery Details</h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control", placeholder = "Delivery address", style = "height:100px" })
+                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Supplier Details</h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control", placeholder = "Supplier address", style = "height:100px" })
+                                @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <br />
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                    <table class="table table-hover" id="submissionTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="sortStyle">Item Code</th>
+                                                <th class="sortStyle d-none">Item ID</th>
+                                                <th class="sortStyle">Item</th>
+                                                <th class="sortStyle">Required Quantity</th>
+                                                <th class="sortStyle">Order Quantity</th>
+                                                <th class="sortStyle">Balance Quantity</th>
+                                                <th class="sortStyle">Units</th>
+                                                <th class="sortStyle">Price (Per Unit)</th>
+                                                <th class="sortStyle">Currency</th>
+                                                <th class="sortStyle">Tax</th>
+                                                <th class="sortStyle">Total before tax</th>
+                                                <th class="sortStyle d-none">Actual Balance Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myTableBody">
+                                            @{ int c = 1;
+                                                foreach (var item in Model.itemDetails)
+                                                {
+                                                    //Here all item grid fields must be disable, since if we edit then
+                                                    //there will be problem of mismatch quantity of indent.
+
+                                                    <tr id="tablerow_@c">
+                                                        <td>
+                                                            @Html.TextBox("ItemCode_" + c, item.Item_Code, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
+                                                        </td>
+                                                        <td class="col-md-4 d-none">
+                                                            @Html.TextBox("ItemID_" + c, item.Item_ID, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("RequiredQuantity_" + c, item.RequiredQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("txtItemQty_" + c, item.ItemQuantity, new
+                                                       {
+                                                           @class = "form-control",
+                                                           style = "height:30px;width:100px;",
+                                                           value = "0", @readonly="readonly",
+                                                           onkeypress = "return isNumberKey(event)",
+                                                           onchange = "OnChangeQty($(this).val(),id)"
+                                                       })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("BalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ItemUnitPrice_" + c, item.ItemUnitPrice, "", new { @class = "form-control", style = "height:30px;width:100px;", onchange = "OnChangeUnitPrice($(this).val(),id)", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("CurrencyName_", +c, item.CurrencyName, new { @class = "form-control text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ItemTax_" + c, item.ItemTaxValue, "", new { @class = "form-control", style = "height:30px;width:80px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("TotalItemCost_" + c, item.TotalItemCost, "", new { @class = "form-control", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ActualBalanceQuantity_" + c, item.BalanceQuantity, new { @class = "form-control form-control-sm d-none", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        </td>
+                                                    </tr>
+                                                    { c++; }
+                                                }
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                    <div class="card h-50 mb-2">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
+                            <hr />
+                            <div class="form-group">
+                                <input type="file" id="file" name="Signature"
+                                       onchange="return fileValidation()" />
+                                <!-- Image preview -->
+                                <span style="color:green">@ViewBag.Message</span>
+                                <br />
+                                <br />
+                                <center>
+                                    <div id="imagePreview">
+                                        <img src="/Signatures/@Model.Signature" style="height:10%;width:20%" />
+                                        @Html.HiddenFor(x => x.Signature, new { id = "tempSign" })
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                        <p style="padding-left: 5%; color: red;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
+                    </div>
+
+                    <div class="card h-50">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Terms and Conditions<span style="color:red"> * </span></h4>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("T & C")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["Terms"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
+                                    @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            @*Rahul set ''T&C'' from top to here 02/12/2022.*@
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @Html.Label("Terms Description")
+                                </div>
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(model => model.Terms, new { id = "TermDescription", @class = "form-control", placeholder = "Term Description", style = "height:100px" })
+                                    @Html.ValidationMessageFor(model => model.Terms, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <hr />
+                            <div class="form-group">
+                                <div class="row">
+                                    <label>Total (before tax): </label>
+                                    <input class="form-control form-control-sm text-right" id="TotalBeforeTax" name="TotalItemCost" readonly="readonly" />
+                                </div>
+                                <div class="row">
+                                    <label>Total tax: </label>
+                                    <input class="form-control form-control-sm text-right" id="TotalTax" name="TotalTax" readonly="readonly" />
+                                </div>
+                                <div class="row mb-2">
+                                    <label><b>Other Tax: </b></label>
+                                    @Html.TextBox("OtherTax", Model.OtherTax, new { @class = "form-control form-control-sm text-right", onkeypress = "return isNumberKey(event)", onchange = "CalculateTotalBeforeTax()", maxlength = "8" })
+                                </div>
+                                <div class="row">
+                                    <label>Total (after tax):</label>
+                                    @Html.TextBox("TotalAfterTax", Model.TotalAfterTax, new { @class = "form-control form-control-sm text-right", @readonly = "readonly" })
+                                </div>
+                                <div class="row">
+                                    <label><b>Grand Total:</b></label>
+                                    @Html.TextBox("GrandTotal", Model.GrandTotal, new { @class = "form-control form-control-sm text-right", @readonly = "readonly" })
+                                </div>
+                                <div class="row">
+                                    <label>Advanced To Pay:</label>
+                                    @Html.TextBox("AdvancedPayment", Model.AdvancedPayment, new { @class = "form-control  form-control-sm text-right", onkeyup = "ValidateAdvancePayment($(this).val(),id)", onkeypress = "return isNumberKey(event)" })
+                                    <span id="ValMsgAdvancePayment" style="display:none; color:red"></span>
+                                </div>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <br />
+            <a href="@Url.Action("Index","PurchaseOrder")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
+                Back To List
+            </a>
+            <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Submit</button>
+        </div>
+    </div>
+}
+@Html.Raw(TempData["Success"])
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        var CurrencyName = $("#CurrencyID option:selected").text();
+        $("#CurrencyName").val(CurrencyName);
+        createJson();
+    };
+    //==========end===============
+
+    //=======The below function is for fetching the files value in the textbox of file type============//
+    $(document).ready(function () {
+        CalculateTotalBeforeTax();
+
+        var fileName = $('#tempSign').val();
+
+        //Get a reference to our file input
+        const fileInput = document.querySelector('input[type="file"]');
+        var filePath = '/Signatures/' + fileName;
+
+        // Create a new File object
+        const myFile = new File([filePath], fileName, {
+            type: 'image/jpeg/jpg/png'
+        });
+
+        // Now let's create a DataTransfer to get a FileList
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(myFile);
+        fileInput.files = dataTransfer.files;
+    });
+    //===================end=======================//
+
+    //=====================Onchange of Terms and Condition===========================
+    function SelectedIndexChangedTerms(id) {
+        $.ajax({
+            url: '/PurchaseOrder/GetTermsDescription',
+            type: "POST",
+            data: { id: id },
+            success: function (result) {
+                console.log(result.TermDescription);
+                $('#TermDescription').val(result.TermDescription);
+            },
+            error: function (err) {
+                alert('Not able to get the selected terms and condition value!');
+
+            }
+        });
+    }
+
+    //=============End==============
+    function ValidateAdvancePayment(value, id) {
+        var GrandTotal = parseFloat($("#GrandTotal").val());
+        value = parseFloat(value);
+        if (value > GrandTotal) {
+            $("#ValMsgAdvancePayment").text("Advance payment cannot be greater than Grand total!");
+            $('#ValMsgAdvancePayment').show();
+            document.getElementById(id).focus();
+            return;
+        }
+        else
+            $('#ValMsgAdvancePayment').hide();
+
+    }
+
+    function SelectedIndexChanged(id) {
+        var selectedOption, companyName;
+        selectedOption = document.getElementById("VendorsID").selectedIndex;
+        companyName = document.getElementById("VendorsID").options[selectedOption].innerText;
+        document.getElementById("CompanyName").value = companyName;
+
+        $.ajax({
+            type: "POST",
+            url: `/PurchaseOrder/BindCompanyAddress?id=` + id,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //console.log(result);
+                var suplierAdd = result[0].SupplierAddress;
+                $("#SupplierAddress").val(suplierAdd);
+            }
+        });
+    }
+
+    function OnChangeUnitPrice(value, id) {
+        var rowNo = id.split('_')[1];
+        if (value == '')
+            value = 0;
+
+        var UnitPrice = parseFloat(value);
+        if (UnitPrice <= 0 || value == null || value == '') {
+            alert("Price cannot be negative, null or zero!");
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            return;
+        }
+        else {
+            //Set total price in item grid.
+            var quantity = $("#txtItemQty_" + rowNo).val();
+            var totalPrice = quantity * UnitPrice;
+            totalPrice = Math.round(totalPrice);
+            $("#TotalItemCost_" + rowNo).val(totalPrice);
+            CalculateTotalBeforeTax();
+            document.getElementById(id).setAttribute("style", "none");
+        }
+    }
+
+    function SelectedIndexChangedLocation(id) {
+
+        var selectedOptionLocationName, locationName;
+        selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
+        locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
+        document.getElementById("LocationName").value = locationName;
+
+        $.ajax({
+            type: "POST",
+            url: `/PurchaseOrder/BindLocationMaster?id=` + id,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                //console.log(result);
+                var deliveryAdd = result[0].DeliveryAddress;
+                $("#DeliveryAddress").val(deliveryAdd);
+            }
+        });
+    }
+
+    function CalculateTotalBeforeTax() {
+        $('#TotalBeforeTax').val('');
+        $('#TotalTax').val('');
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length);
+        var total = 0;
+        var totalTax = 0;
+        var OtherTax = document.getElementById("OtherTax").value;
+        if (OtherTax == '')
+            OtherTax = 0;
+        OtherTax = parseFloat(OtherTax);
+
+        var i = 1;
+        while (i<length) {
+            var temp = document.getElementById("TotalItemCost_" + i).value;
+            var tempTotalTax = document.getElementById("ItemTax_" + i).value;
+            total = parseFloat(temp) + total;
+
+            tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
+            totalTax = parseFloat(tempTotalTax) + totalTax;
+            i++;
+        }
+        total = Math.round(total);
+        totalTax = Math.round(totalTax);
+
+        $('#TotalBeforeTax').val(total);
+        $('#TotalTax').val(totalTax);
+        var tempGrandTotal = total + totalTax + OtherTax;
+        tempGrandTotal = Math.round(tempGrandTotal);
+
+        $('#TotalAfterTax').val(tempGrandTotal);
+        $('#GrandTotal').val(tempGrandTotal);
+
+        createJson();
+    }
+
+    function createJson() {
+        let res = [...document.getElementById("myTableBody").children].map(tr =>
+            Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
+                [el.name, el.value])));
+        var TxtItemDetails = JSON.stringify(res);
+        $('#TxtItemDetails').val(TxtItemDetails);
+    }
+
+    function OnChangeQty(value, id) {
+        var rowNo = id.split('_')[1];
+        var quantity = value;
+        if (quantity == '')
+            quantity = 0;
+
+        var BalanceQty = $("#BalanceQuantity_" + rowNo).val();
+        BalanceQty = parseFloat(BalanceQty);
+        quantity = parseFloat(quantity);
+        var RequiredQty = $("#RequiredQuantity_" + rowNo).val().split(" ")[0];
+        RequiredQty = parseFloat(RequiredQty);
+
+        if (quantity > BalanceQty) {
+            alert("Order quantity cannot be greater then indent balance quantity!");
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            return;
+        }
+        else {
+            var tempBalanceQty = BalanceQty - quantity;
+            if (quantity == 0) {
+                var ActualBalQty = $("#ActualBalanceQuantity_" + rowNo).val().split(" ")[0];
+                ActualBalQty = parseFloat(ActualBalQty);
+                $("#BalanceQuantity_" + rowNo).val(ActualBalQty);
+            }
+            else {
+                $("#BalanceQuantity_" + rowNo).val(tempBalanceQty);
+            }
+
+            var price = $("#ItemUnitPrice_" + rowNo).val();
+            var tempTax = $("#ItemTax_" + rowNo).val().split(" %");
+            var tax = tempTax[0];
+
+            //Set total price in item grid.
+            var totalPrice = quantity * price;
+            totalPrice = Math.round(totalPrice);
+            $("#TotalItemCost_" + rowNo).val(totalPrice);
+
+            var totalPriceAfterTax = (totalPrice) + ((totalPrice * tax) / 100);
+            $("#TotalBeforeTax").val(totalPrice);
+
+            var itemTaxVal = tax / 100 * totalPrice;
+            itemTaxVal = Math.round(itemTaxVal);
+            totalPriceAfterTax = Math.round(totalPriceAfterTax);
+
+            $("#TotalTax").val(itemTaxVal);
+            $("#TotalAfterTax").val(totalPriceAfterTax);
+            $("#GrandTotal").val(totalPriceAfterTax);
+
+            CalculateTotalBeforeTax();
+            document.getElementById(id).setAttribute("style", "border-color:none;");
+        }
+    };
+
+    function fileValidation() {
+        var fileInput =
+            document.getElementById('file');
+
+        var filePath = fileInput.value;
+
+        // Allowing file type
+        var allowedExtensions =
+            /(\.jpg|\.jpeg|\.png)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Invalid file type');
+            fileInput.value = '';
+            return false;
+        }
+        else {
+
+            // Image preview
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(
+                        'imagePreview').innerHTML =
+                        '<img src="' + e.target.result
+                        + '" style="height:10%;width:20%" />';
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    }
+
+    /*Rahul : Add Javascript validation on 12 Oct 2022.*/
+    function isNumberKey(evt) {
+            var keycode = (evt.which) ? evt.which : evt.keyCode;
+            if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+                return false;
+            }
+            else {
+                var parts = evt.srcElement.value.split('.');
+                if (parts.length > 1 && keycode == 46)
+                    return false;
+                else
+                    return true;
+            }
+            return true;
+        }
+
+</script>

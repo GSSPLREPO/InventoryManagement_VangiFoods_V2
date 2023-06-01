@@ -64,6 +64,10 @@
                     @*Rahul updated 'maxlength = "4"' to 'maxlength = "5"' 26-05-2023.*@
                     @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "5" })
                     @Html.ValidationMessageFor(model => model.PackingSize, "", new { @class = "error mt-2 text-danger" })
+                    <span style="color: red; display: block; ">
+                        Enter Packing Size and Order Quantity Unit according to 
+                        @Html.TextBoxFor(model => model.PackingSizeUnit, new { id = "UnitName", style = "border:none;background: none;line-height: 1.5rem;", @readonly = "readonly" })
+                    </span>                    
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Raw Material Yield")
@@ -377,17 +381,17 @@
 
         $('#valRequiredQtyMgs').hide();
 
-        //Checking the packing size value.
-        var PackingSize = $('#PackingSize').val();
-        if (PackingSize == null || PackingSize == '' || PackingSize == 0) {
-            $('#PackingSize').focus();
-            document.getElementById('ProductId').selectedIndex = 0;
-            return;
-        }
-        else {
-            parseFloat(PackingSize);
-            document.getElementById('PackingSize').setAttribute("readonly", "readonly");
-        }
+        ////Checking the packing size value.
+        //var PackingSize = $('#PackingSize').val();
+        //if (PackingSize == null || PackingSize == '' || PackingSize == 0) {
+        //    $('#PackingSize').focus();
+        //    document.getElementById('ProductId').selectedIndex = 0;
+        //    return;
+        //}
+        //else {
+        //    parseFloat(PackingSize);
+        //    document.getElementById('PackingSize').setAttribute("readonly", "readonly");
+        //}
 
         var totalRawYield = $('#TotalRawMaterialYeild').val();
         if (totalRawYield == null || totalRawYield == '' || totalRawYield == 0) {
@@ -440,8 +444,11 @@
             type: "POST",
             data: {},
             success: function (result) {
+                console.log(result);    
                 if (result.length != 0) {
                     $('#OrderQuantity').val(result[0].SalesOrderQty);
+                    //$('#UnitNameNote').val(result[0].UnitName);
+                    $('#UnitName').val(result[0].UnitName);
 
                     var table = document.getElementById('submissionTable');
                     for (var j = 0; j < result.length; j++) {
@@ -520,7 +527,7 @@
                     }
 
                     var value = $('#OrderQuantity').val();
-                    OnOrderQtyChange(value);
+                    //OnOrderQtyChange(value);
                 }
                 else
                     alert('No recipe is made for the selected product name! Create the recipe.')

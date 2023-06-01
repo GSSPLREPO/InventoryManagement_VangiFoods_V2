@@ -1,0 +1,433 @@
+﻿@model InVanWebApp_BO.InquiryFormBO
+
+@{
+    ViewBag.Title = "ViewInquiryForm";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Inquiry</title>
+    <style>
+        html2canvas-container {
+            width: 3000px !important;
+            height: 2000px !important;
+        }
+
+        #submissionTable tr td {
+            white-space: normal;
+            table-layout: auto;
+            border-color: darkgrey;
+            font-size: 110%;
+            width: -1%;
+            /*width: 100%;*/
+        }
+
+        #submissionTable label {
+            font-size: 120%;
+        }
+
+        #submissionTable th {
+            white-space: normal;
+            border-color: darkgrey;
+            font-size: 120%;
+        }
+
+        hr {
+            color: black;
+            height: -1%
+        }
+    </style>
+</head>
+<body>
+    @Html.HiddenFor(model => model.InquiryID)
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row" id="printV" width="1000px">
+            <div class="col-md-12  grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">@*height:150px;*@
+                            <h3 class="card-title font-weight-bold col-4 mb-0 align-self-center" style="font-size: 30pt;">Inquiry</h3>
+                            <div class="col">
+                                <div class="col-md-12">
+                                    <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" style="width:45px;height:45px" class=" float-right" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr />
+                       
+                        <div class="col-md-12">
+                            <div style="font-size:110%; color:black">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Inquiry Number</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.InquiryNumber)
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Inquiry Date</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @*@Html.TextBoxFor(model => model.DateOfInquiry, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })*@
+                                        @*Rahul updated TextBoxFor(model => model.DateOfInquiry, "{0:dd-MM-yyyy}" 07-02-23.*@
+                                        @Html.TextBoxFor(model => model.DateOfInquiry, "{0:dd-MM-yyyy}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Contact Person Name</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.ContactPersonName)
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Client Email</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.ClientEmail)
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Location Name</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.LocationName)
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Client Name</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.CompanyName)
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4 class="card-title" style="color:darkgreen;font-size:120%;">Supplier Address</h4>
+                                        <hr />
+                                        @Html.TextAreaFor(model => model.DeliveryAddress, new { style = "border:none; width:100%", @readonly = "readonly" })
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4 class="card-title" style="color:darkgreen;font-size:120%;">Client Address</h4>
+                                        <hr />
+                                        @Html.TextAreaFor(model => model.SupplierAddress, new { style = "border:none; width:100%", @readonly = "readonly" })
+                                    </div>
+                                </div>
+
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                @*Rahul updated class table-hover and added style in table tag 07-02-23.*@
+                                                <table class="table table-hover" id="submissionTable" style="table-layout: auto;width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">
+                                                                #
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Item Code
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Item
+                                                            </th>
+                                                            @*Rahul added style in Quantity (Kg) tag 07-02-23.*@
+                                                            <th class="sortStyle text-wrap">
+                                                                Quantity (Kg)
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Units
+                                                            </th>
+                                                            @*Rahul added class 07-02-23.*@
+                                                            <th class="sortStyle text-wrap">
+                                                                Price Per Unit (Rs)
+                                                            </th>
+                                                            @*Rahul added class 07-02-23.*@
+                                                            <th class="sortStyle text-wrap">
+                                                                Quoted Price (Per Unit)
+                                                            </th>
+                                                            @*Rahul added class 07-02-23.*@
+                                                            <th class="sortStyle text-wrap">
+                                                                Expected Price (Per Unit)
+                                                            </th>
+                                                            @*Rahul added class 07-02-23.*@
+                                                            <th class="sortStyle text-wrap">
+                                                                Closer Price (Per Unit)
+                                                            </th>
+                                                            <th>Currency</th>
+                                                            <th class="sortStyle">
+                                                                Tax (%)
+                                                            </th>
+                                                            @*Rahul added class 08-02-23.*@
+                                                            <th class="sortStyle text-wrap">
+                                                                Total Before Tax
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Delivery Date
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                HSN Code
+                                                            </th>
+                                                            <th class="sortStyle text-wrap">
+                                                                Remarks
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="myTableBody">
+                                                        @{ int c = 1;
+                                                            foreach (var item in Model.itemDetails)
+                                                            {
+                                            <tr id="tablerow_@c">
+                                                <td>
+                                                    <label>@c.</label>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.Item_Code)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemQuantity)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnit)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.QuotedPrice)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ExpectedPrice)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.CloserPrice)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.CurrencyName)
+                                                </td>
+                                                <td>
+                                                    @*Rahul added style width:80px; 08-02-23.*@
+                                                    @Html.TextBoxFor(x => item.ItemTaxValue, new { id = "itemTax_" + c, style = "border:none;background: none; width:80px;line-height: 30px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @*Rahul added style width:80px; 08-02-23.*@
+                                                    @Html.TextBoxFor(x => item.TotalItemCost, new { id = "totalItemCost_" + c, style = "border:none;background: none; width:90px;line-height: 30px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @*@Html.DisplayFor(x => item.DeliveryDate)*@    @*Rahul added TextBoxFor x => item.DeliveryDate, "{0:yyyy-MM-dd}" 08-02-23.*@
+                                                    @Html.TextBoxFor(x => item.DeliveryDate, "{0:dd-MM-yyyy}", new { style = "border:none;background: none; color:black; font-size: 100%; width:140%; line-height: 30px;", @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.HSN_Code)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.Remarks)
+                                                </td>
+                                            </tr> { c++; }
+                                                            } }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-7">
+                                        <hr />
+                                        <Center><h5 class="font-weight-bold">Payment Details</h5></Center>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5"></div>
+                                    <div class="col-md-7">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Total (before tax): </label>&emsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="text-right" id="TotalBeforeTax" name="TotalBeforeTax" style="border:none;" readonly="readonly" />
+                                                <input class="text-left font-weight-bold CurrencyType" id="CurrencyType" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
+                                                @*<div class="font-weight-bold" id="CurrencyType"></div>*@
+                                                @*<b>Rs.</b>*@
+                                                @Html.TextBoxFor(model => model.CurrencyName, new { @class = "font-weight-bold d-none" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Total tax: </label>&emsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="text-right" id="TotalTax" name="TotalTax" style="border:none;" readonly="readonly" />
+                                                <input class="text-left font-weight-bold CurrencyType" id="CurrencyType1" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Total (after tax):</label>&emsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.TextBoxFor(model => model.TotalAfterTax, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
+                                                <input class="text-left font-weight-bold CurrencyType" id="CurrencyType2" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Grand Total:</label>&emsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.TextBoxFor(model => model.GrandTotal, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
+                                                <input class="text-left font-weight-bold CurrencyType" id="CurrencyType3" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="font-weight-bold">Advanced To Pay:</label>&emsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                @Html.TextBoxFor(model => model.AdvancedPayment, new { @class = "text-right", style = "border:none", @readonly = "readonly" })
+                                                <input class="text-left font-weight-bold CurrencyType" id="CurrencyType4" name="TotalBeforeTax" style="border: none; width: 10%;" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <a href="@Url.Action("Index", "InquiryForm")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                    Back To List
+                                </a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+<script src="~/Theme/MainContent/js/jquery.min.js"></script>
+<script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/jspdf.min.js"></script>
+<script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/html2canvas.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        CalculateTotalBeforeTax();
+        var type = $('#CurrencyName').val();
+        if (type != null) {
+            $('.CurrencyType').val(type);
+        }
+        else
+            $('.CurrencyType').val('Rs.');
+
+    });
+
+    function CalculateTotalBeforeTax() {
+        //$('#TotalBeforeTax').val('');
+        //$('#TotalTax').val('');
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        var total = 0;
+        var totalTax = 0;
+        var i = 1;
+        while (i <= length) {
+            var temp = document.getElementById("totalItemCost_" + i).value;
+            var tempTotalTax = document.getElementById("itemTax_" + i).value;
+            total = parseFloat(temp) + total;
+
+            tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));
+            totalTax = parseFloat(tempTotalTax) + totalTax;
+            i++;
+        }
+        $('#TotalBeforeTax').val(total);
+        $('#TotalTax').val(totalTax);
+        //var tempGrandTotal = total + totalTax;
+        //$('#TotalAfterTax').val(tempGrandTotal);
+        //$('#GrandTotal').val(tempGrandTotal);
+
+        //createJson();
+    }
+
+    $('#btnExport').click(function () {
+        var printD = document.getElementById("printV");
+        $("#btnExport").hide();
+        $("#btnBack").hide();
+        // $("#btnPrint").hide();
+        html2canvas(printD).then(function (canvas) {
+
+            var img = canvas.toDataURL("image/png", 1.0);
+
+            var doc = new jsPDF('p', 'pt', 'a4');
+
+            var specialElementHandlers = {
+                '#editor': function (element, renderer) {
+                    return true;
+                }
+            };
+
+            doc.addImage(img, 'JPEG', 5, 5, 580, 480);
+            doc.fromHTML(printD, 15, 15, {
+                'width': 200,
+                // 'margin':[10,60,40,20],
+                'elementHandlers': specialElementHandlers
+            });
+            var currentDate = new Date();
+            //var time = getTime();
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            console.log(time);
+            var today = formatDate(currentDate);
+            doc.save('InquiryForm_' + today + '_' + time + '.pdf');
+            $("#btnExport").show();
+            $("#btnBack").show();
+            //$("#btnPrint").show();
+        });
+        //window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+
+    });
+
+    function formatDate(date) {
+        // alert(date);
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+        return [day, month, year].join('-');
+        //return [year, month, day].join('-');
+    }
+</script>
+

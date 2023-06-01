@@ -1,0 +1,584 @@
+﻿@model InVanWebApp_BO.OrderSummaryBO 
+@{ ViewBag.Title = "OrderSummaryDashboard";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+    //Layout = null; }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Sales Order Summary</title>
+    <style>
+        table {
+            border-spacing: 0px;
+            /*table-layout: fixed;*/
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td {
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Sales Order Summary</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Sales Order Summary</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>From Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <!--Rahul added fromDate 04-01-2023.-->
+                                    @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    <!--Rahul added fromDateValidate 06-01-2023.-->
+                                </div>
+                                <div class="col-md-2">
+                                    <label>To Date:</label>
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <!--Rahul added toDate 04-01-2023.-->
+                                    @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    <!--Rahul added toDateValidate 06-01-2023.-->
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Duration</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => model.Duration,
+                                             new List<SelectListItem>{
+                                   //new SelectListItem{ Text="Date Wise", Value = "1" },
+                                   new SelectListItem{ Text="Month Wise", Value = "2" },
+                                   new SelectListItem{ Text="Year Wise", Value = "3" }
+                                             }, new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
+                                </div>
+                            </div>
+
+                            <div class="row" id="div_individualDashboard">
+                                <div class="col-md-12">
+                                    <div id="mainWarehouse" style="width:100%;"></div>
+                                    <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
+                                </div>
+                            </div>
+                            <div id="AllDashboard" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse1" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="warehouse1"></div>
+                                            <div id="NoDataFound1" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse2" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="warehouse2"></div>
+                                            <div id="NoDataFound2" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse3" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="warehouse3"></div>
+                                            <div id="NoDataFound3" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse4" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="warehouse4"></div>
+                                            <div id="NoDataFound4" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse5" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="OrderSummary"></div>
+                                            <div id="NoDataFound5" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="container"></div>
+</body>
+</html>
+
+
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+<script type="text/javascript">
+
+    function OnChangedFromDate() {
+        $('#fromDateValidate').hide();
+    }
+
+    function OnChangedToDate() {
+        $('#toDateValidate').hide();
+    }
+
+    $("#btnGo").on('click', function () {
+        var flag = 0;
+
+        var fromDate = $("#fromDate").val();
+        var toDate = $("#toDate").val();
+
+        if (fromDate == null || fromDate == "") {
+            $('#fromDateValidate').text('Select from date!');
+
+            $('#fromDateValidate').show();
+            $("#fromDate").focus();
+            return;
+        }
+
+        if (toDate == null || toDate == "") {
+            $('#toDateValidate').text('Select to date!');
+            $('#toDateValidate').show();
+            $("#toDate").focus();
+            return;
+        }
+
+        if (fromDate > toDate) {
+            alert('Invalid Date! To date is less than from date!');
+            $('#fromDate').focus();
+            return;
+        }
+
+    });
+
+</script>
+
+<script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#toDateValidate').hide();
+        $('#fromDateValidate').hide();
+        //$('#Duration').show();
+        //$('#valMsgBatchNo').hide();
+
+        var Duration = document.getElementById('Duration').value = 2;
+
+        var date = new Date();
+
+        var day = date.getDate(),
+            month = date.getMonth() + 1,
+            year = date.getFullYear(),
+
+            month = (month < 10 ? "0" : "") + month;
+        day = (day < 10 ? "0" : "") + day;
+
+        var fromday = year + "-" + "01" + "-" + "01"
+        var today = year + "-" + month + "-" + day;
+
+        document.getElementById('toDate').value = today;
+        document.getElementById('fromDate').value = fromday;
+        $(".spinner-wrapper").fadeIn("slow");
+
+        
+        population = [];
+        xAxisData = [];
+        var coloR = [];
+
+        function convertDhms(h, m, s) {
+            h <= 0 ? h = 1 : h = h * 60 * 60 * 1000;
+            m <= 0 ? m = 1 : m = m * 60 * 1000;
+            s <= 0 ? s = 1 : s = s * 1000;
+            return h + m + s;
+        }
+        debugger
+        var request = $.ajax({
+            url: "/Dashb_RTWarehouseWiseStock/GetOrderSummaryDashboardData?fromDate=" + fromday + "&toDate=" + today + "&Duration=" + Duration,
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: "POST",
+            success: function (result) {
+                ond = result;
+                var parsed = $.parseJSON(result);
+                var dataLength = parsed.length;
+
+                var serial1 = {
+                    name: "Open",
+                    type: 'column',
+                    data: [],
+                    //color: [],
+                    color: '#F73D93',
+                    tooltip: {
+                        valueSuffix: ' Count'
+                    }
+
+                };
+
+                var serial2 = {
+                    name: "Close",
+                    type: 'column',
+                    data: [],
+                    //color: [],
+                    color:'#16003B',
+                    tooltip: {
+                        valueSuffix: ' Count'
+                    }
+
+                };
+                var chart = {
+                    zoomType: 'x',
+                    zoomType: 'y',
+
+                };
+
+                $.each(parsed, function (i, jsondata) {
+
+                    var dynamicColors = function () {
+                        var r = Math.floor(Math.random() * 255);
+                        var g = Math.floor(Math.random() * 255);
+                        var b = Math.floor(Math.random() * 255);
+                        return "rgb(" + r + "," + g + "," + b + ")";
+                    }
+
+                    var serial = new Array(i, parseFloat(jsondata[i]));
+                    if (jsondata.Open_GrandTotal != null) {
+                        serial1.data.push(parseFloat(jsondata.Open_GrandTotal));
+                        /*console.log(parseFloat(jsondata.Open_GrandTotal));*/
+                    } else {
+                        serial1.data.push(parseFloat(0));
+                    }
+                    
+
+                    var serial = new Array(i, parseFloat(jsondata[i]));
+                    if (jsondata.Closing_GrandTotal != null) {
+                        serial2.data.push(parseFloat(jsondata.Closing_GrandTotal));
+
+                    } else {
+                        serial2.data.push(parseFloat(0));
+                    }
+
+                    coloR.push(dynamicColors());
+                    //serial1.color = getRandomColor();
+                    //serial2.color = getRandomColor();
+                    
+                    xAxisData.push(jsondata.DateWise);
+
+                });
+                var finalSeries = [serial1, serial2]
+               
+                Highcharts.chart('mainWarehouse', {
+                    chart: {
+                        type: 'column',
+                        
+                        //scrollablePlotArea: {
+                        //    scrollPositionX: 1,
+                        //    maxWidth: 5000,
+                        //    minLength:10,
+                        //},
+                    },
+                    title: {
+                        text: 'Sales Order Summary'
+                    },
+                    subtitle: {
+                        //text: 'Location: ' + Location
+                    },
+                    xAxis: {
+                        categories: xAxisData,
+                        //Rahul added title 04-04-23.
+                        title: {
+                            text: 'Month-Year',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Black'
+                            }
+                        },
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            style: {
+                                fontWeight: 'bold'
+                            },
+                            text: 'Sales Order (Count)'
+                        },
+                        stackLabels: {
+                            enabled: false,  //true
+                            style: {
+                                fontWeight: 'bold',
+                                color: ( // theme
+                                    Highcharts.defaultOptions.title.style &&
+                                    Highcharts.defaultOptions.title.style.color
+                                ) || 'gray'
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        scrollbars:true,
+                        shared: true
+                    },
+                    
+                    plotOptions: {
+                        column: {
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: false
+                            }
+                        },
+                    },
+                    series: finalSeries
+
+                });
+
+                if (dataLength > 0) {
+                    $("#mainWarehouse").show();
+                    $("#NoDataFound").hide();
+                } else {
+                    $("#mainWarehouse").hide();
+                    $("#NoDataFound").show();
+
+                }
+
+            }
+
+        });
+        $(".spinner-wrapper").fadeOut("slow");
+    });
+
+    /*--------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    function getRandomColor() {
+        var Letters = '0123456789ABCDEF';
+        var Color = '#';
+        for (var i = 0; i < 6; i++) {
+            Color += Letters[Math.floor(Math.random() * 16)];
+        }
+        return Color;
+    }
+
+
+    $("#btnGo").on("click", function () {
+        var fromDate = $("#fromDate").val();
+        var toDate = $("#toDate").val();
+        var DateWise = [];
+       
+      
+        var Duration = $('#Duration').val();
+        if (Duration == '' || Duration == null)
+            Duration = 0;
+
+        $(".spinner-wrapper").fadeIn("slow");
+        population = [];
+        xAxisData = [];
+        var coloR = [];
+
+        function convertDhms(h, m, s) {
+            h <= 0 ? h = 1 : h = h * 60 * 60 * 1000;
+            m <= 0 ? m = 1 : m = m * 60 * 1000;
+            s <= 0 ? s = 1 : s = s * 1000;
+            return h + m + s;
+        }
+        
+        //-----------Bind data in the graph Start-----------------------------------------------------------
+        var request = $.ajax({
+            url: "/Dashb_RTWarehouseWiseStock/GetOrderSummaryDashboardData?fromDate=" + fromDate + "&toDate=" + toDate + "&Duration=" + Duration ,
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: "POST",
+            success: function (result) {
+                ond = result;
+                var parsed = $.parseJSON(result);
+                var dataLength = parsed.length;
+
+                var serial1 = {
+                    name: "Open",
+                    type: 'column',
+                    data: [],
+                    //color: [],
+                    color: '#F73D93',
+                    tooltip: {
+                        valueSuffix: ' Count'
+                    }
+
+                };
+
+                var serial2 = {
+                    name: "Close",
+                    type: 'column',
+                    data: [],
+                    //color: [],
+                    color: '#16003B',
+                    tooltip: {
+                        valueSuffix: ' Count'
+                    }
+
+                };
+
+                $.each(parsed, function (i, jsondata) {
+
+                    var dynamicColors = function () {
+                        var r = Math.floor(Math.random() * 255);
+                        var g = Math.floor(Math.random() * 255);
+                        var b = Math.floor(Math.random() * 255);
+                        return "rgb(" + r + "," + g + "," + b + ")";
+                    }
+
+                    var serial = new Array(i, parseFloat(jsondata[i])); 
+                    if (jsondata.Open_GrandTotal != null) {
+                        serial1.data.push(parseFloat(jsondata.Open_GrandTotal));
+                        /*console.log(parseFloat(jsondata.Open_GrandTotal));*/
+                    } else {
+                        serial1.data.push(parseFloat(0));
+                    }
+                    debugger
+
+                    var serial = new Array(i, parseFloat(jsondata[i])); 
+                    if (jsondata.Closing_GrandTotal != null) {
+                        serial2.data.push(parseFloat(jsondata.Closing_GrandTotal));
+
+                    } else {
+                        serial2.data.push(parseFloat(0));
+                    }
+
+                    coloR.push(dynamicColors());
+                    //serial1.color = getRandomColor();
+                    //serial2.color = getRandomColor();
+                    
+                    xAxisData.push(jsondata.DateWise);
+
+                });
+                var finalSeries = [serial1, serial2]
+                //population1.push(serial1)
+                Highcharts.chart('mainWarehouse', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Sales Order Summary'
+                    },
+                    subtitle: {
+                        //text: 'Location: ' + Location
+                    },
+                    xAxis: {
+                        categories: xAxisData
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            style: {
+                                fontWeight: 'bold'
+                            },
+                            text: 'Sales Order (Count)'
+                        },
+                        stackLabels: {
+                            enabled: false,  //true
+                            style: {
+                                fontWeight: 'bold',
+                                color: ( // theme
+                                    Highcharts.defaultOptions.title.style &&
+                                    Highcharts.defaultOptions.title.style.color
+                                ) || 'gray'
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: false
+                            }
+                        },
+                    },
+                    series: finalSeries
+                    //    [{
+                    //    name: 'Open',
+                    //    data: serial1
+
+                    //}, {
+                    //    name: 'Close',
+                    //    data: serial2
+                    //}]
+                });
+
+                if (dataLength > 0) {
+                    $("#mainWarehouse").show();
+                    $("#NoDataFound").hide();
+                } else {
+                    $("#mainWarehouse").hide();
+                    $("#NoDataFound").show();
+
+                }
+
+            }
+
+        });
+        //-----------Bind data in the graph End-------------------------------------------------------------
+
+        $(".spinner-wrapper").fadeOut("slow");
+
+    });
+
+</script>
+
+  

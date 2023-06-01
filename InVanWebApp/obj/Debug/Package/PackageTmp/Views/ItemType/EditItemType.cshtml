@@ -1,0 +1,49 @@
+﻿@model InVanWebApp_BO.ItemTypeBO
+@{
+    ViewBag.Title = "Edit Item Type";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Item Type</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Item Type")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.ItemType, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.ItemType, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Description")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "50" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <a href="@Url.Action("Index", "ItemType")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
+                Back To List
+            </a>
+            <button type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Update</button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

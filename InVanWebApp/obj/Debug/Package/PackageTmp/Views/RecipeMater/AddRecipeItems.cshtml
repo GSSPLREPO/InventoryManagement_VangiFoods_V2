@@ -1,0 +1,522 @@
+﻿@model InVanWebApp_BO.RecipeMasterBO
+@{
+    ViewBag.Title = "AddRecipeItems";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<div class="card">
+    <div class="card-body">
+        <h4>Add Recipe</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        @using (Html.BeginForm("AddRecipeItems", "RecipeMater", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div id="AddDiv">
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Product Name")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val())" })
+                        @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error mt-2 text-danger" })
+                        @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        @Html.Label("Recipe Name")
+                        <span style="color:red">*</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "65" })
+                        @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.Label("Description")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Only 100 characters are allowed in the description!" })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
+                    </div>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-4" style="color:darkcyan">
+                        @Html.Label("Recipe Ingredient Details")
+                    </div>
+                </div>
+                <hr />
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                        <table class="table table-hover" id="submissionTable">
+                                            <thead>
+                                                <tr>
+                                                    <th class="sortStyle">
+                                                       Ingredient
+                                                    </th>
+                                                    <th class="sortStyle d-n d-none">
+                                                        Selected Item Code
+                                                    </th>
+                                                    <th class="sortStyle d-n d-none">
+                                                        Item
+                                                    </th>
+                                                    <th class="sortStyle">
+                                                        Unit
+                                                    </th>
+                                                    <th class="sortStyle">
+                                                        Percentage (%)
+                                                    </th>
+                                                    <th class="sortStyle">
+                                                        Batch Size (KG)
+                                                    </th>
+                                                    <th class="sortStyle">
+                                                        Description
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="myTableBody">
+                                                <tr id="tablerow">
+                                                    <td>
+                                                        @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["Ingredients"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                        <span id="ValMsgItemList" style="display:none; color:red"></span>
+                                                    </td>
+                                                    <td class="col-md-4 d-none">
+                                                        @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                    </td>
+                                                    <td class="d-n d-none">
+                                                        @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBox("UnitName", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.Ratio, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeRatioForFirstRow($(this).val(),id)" })
+                                                        @Html.ValidationMessageFor(model => model.Ratio, "", new { id = "RatioErr", @class = "error mt-2 text-danger" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.BatchSize, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeBatchSizeForFirstRow($(this).val(),id)" })
+                                                        @Html.ValidationMessageFor(model => model.BatchSize, "", new { id = "batchSizeErr", @class = "error mt-2 text-danger" })
+                                                    </td>
+                                                    <td>
+                                                        @Html.TextBoxFor(model => model.Description, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;", onkeypress = "createJson();" })
+                                                        @*@Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })*@
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <br />
+                                        <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddRecipeItem">
+                                            + Add Recipe
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index", "RecipeMater")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
+                Back To List
+            </a>
+            <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" onclick="SaveBtnClick()">Save</button>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+
+    var TxtItemDetails = "";
+    $("#Ratio").val(0);
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 1;
+        var Ratio = $('#Ratio').val();
+        Ratio = (Ratio == '' || Ratio == null) ? 0 : parseFloat(Ratio);
+
+        var BatchSize = $('#BatchSize').val();
+        BatchSize = (BatchSize == '' || BatchSize == null) ? 0 : parseFloat(BatchSize);
+
+        if (Ratio == 0) {
+            flag = 0;
+        }
+        else {
+            if (BatchSize == 0)
+                flag = 0;
+            else
+                flag = 1;
+        }
+
+        if (tableLength > 1) {
+            while (i < tableLength - 2) {
+                Ratio = document.getElementById("Ratio_" + i).value;
+                BatchSize = document.getElementById("BatchSize_" + i).value;
+
+                if (Ratio == '' || Ratio == null || Ratio == 0) {
+                    alert("Percentage cannot be zero or null! Cannot create recipe!");
+                    $('#btnSave').prop('disabled', true);
+                    event.preventDefault();
+                    return;
+                }
+                else {
+                    if (BatchSize == '' || BatchSize == null || BatchSize == 0) {
+                        alert("Batch size cannot be zero or null! Cannot create recipe!");
+                        $('#btnSave').prop('disabled', true);
+                        event.preventDefault();
+                        return;
+                    }
+                }
+
+                i++;
+
+            }
+            if (flag != 1) {
+                alert("Batch size/Percentage cannot be zero or null! Cannot create recipe!");
+                $('#btnSave').prop('disabled', true);
+                event.preventDefault();
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
+
+        createJson();
+    };
+    //==========end===============
+
+    function SelectedIndexChangedProductNameList(id) {
+        var selectedOptionProductName, productName;
+        selectedOptionProductName = document.getElementById("ProductID").selectedIndex;
+        productName = document.getElementById("ProductID").options[selectedOptionProductName].innerText;
+        document.getElementById("ProductName").value = productName;
+    }
+
+    //Validation for special characters.
+    //$('#RecipeName').on("keydown keyup change", function () {
+    //    var maxLength = 40;
+    //    var $th = $(this);
+    //    $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
+    //        function (str) {
+    //            $('#validationMsgName').text('Special caracters not allowed!');
+    //            $('#validationMsgName').show();
+    //            return '';
+    //        }));
+
+    //    if (($('#RecipeName').val().length) > maxLength) {
+    //        $('#validationMsgName').show();
+    //        $('#validationMsgName').text('Length is exceeding!');
+    //        //return false;
+    //    }
+    //    else
+    //        $('#validationMsgName').hide();
+    //});
+
+    //Validation for special characters.
+    //$('#Description').on("keydown keyup change", function () {
+    //    var maxLength = 20;
+    //    var $th = $(this);
+    //    $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
+    //        function (str) {
+    //            $('#validationMsgCode').text('Special caracters not allowed!');
+    //            $('#validationMsgCode').show();
+    //            return '';
+    //        }));
+
+    //    if (($('#Description').val().length) > maxLength) {
+    //        $('#validationMsgCode').show();
+    //        $('#validationMsgCode').text('Length is exceeding!');
+    //        //return false;
+    //    }
+    //    else
+    //        $('#validationMsgCode').hide();
+    //});
+
+    $("#Item_ID").change(function () {
+        $("#ValMsgItemList").hide();
+        $('#btnSave').prop('disabled', false);
+        getRecipeItemDetails();
+    });
+
+    function getRecipeItemDetails() {
+            $("#f").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetRecipeitemDetails", "RecipeMater")', // we are calling json method
+
+                dataType: 'json',
+
+                data: { id: $("#Item_ID").val() },
+                // here we are get value of selected item and passing same value
+                //as inputto json method GetRecipeitemDetails.
+
+                success: function (recipeDescription) {
+
+                    var description = JSON.stringify(recipeDescription);
+                    //console.log(description);
+                    $("#ItemName").val(recipeDescription.Item_Name);
+                    $("#UnitName").val(recipeDescription.UnitCode);
+
+                },
+                failure: function () {
+                    alert('Failed to retrieved item detals!');
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Item description.' + ex);
+                }
+            });
+    }
+
+    function SelectedIndexChangedItemList(id) {
+        var selectedOptionItems, itemCode;
+        selectedOptionItems = document.getElementById("Item_ID").selectedIndex;
+        itemCode = document.getElementById("Item_ID").options[selectedOptionItems].innerText;
+        itemCode = itemCode.split(' (')[0];
+        document.getElementById("ItemCode").value = itemCode;
+        $("#ValMsgItemList").hide();
+    }
+
+    var counter = 1;
+    $("#AddRecipeItem").click(function () {
+        var itemId = "ItemID_" + counter;
+        var dynValMsgItemList = "DynValMsgItemList_" + counter;
+        var itemCode = "itemCode_" + counter;
+        var itemDescription = "itemDescription_" + counter;
+        var unitName = "UnitName_" + counter;
+        var ratio = "Ratio_" + counter;
+        var RatioErr = "RatioErr_" + counter;
+        var batchSize = "BatchSize_" + counter;
+        var batchSizeErr = "batchSizeErr_" + counter;
+        var dscription = "dscription_" + counter;
+        var DscriptionErr = "DscriptionErr_" + counter;
+        $('<tr id="tablerow' + counter + '">' + '<td>' +
+            '<select id="' + itemId + '" onchange="getRecipeItemDetailsJSTbl(' + counter + ')"; class="form-control form-control-sm" data-val="true" data-val-number="The field Item_ID must be a number." name="' + itemId + ' " style="height:30px;" aria-describedby="Item_ID-error" aria-invalid="false">' + $('#Item_ID').html() + '</select>' +
+            '<span id="' + dynValMsgItemList + '">' +
+            '</td>' +
+            '<td class="d-none">' +
+            '<input type="text" id="' + itemCode + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + itemCode + '" value="" required="required" readonly="readonly"/>' +
+            '</td>' +
+            '<td class="d-n d-none">' +
+            '<input type="text" id="' + itemDescription + '" class="form-control form-control-sm" style = "height:30px;" name="' + itemDescription + '"readonly = "readonly" value="" required="required" />' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" id="' + unitName + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + unitName + '"readonly = "readonly" value="" required="required" />' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" id="' + ratio + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + ratio + ' value="" maxlength="8", onkeypress = "return isNumberKey(event)", onchange="OnChangeRatio($(this).val(),id)", required="required" />' +
+            '<span id="' + RatioErr + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" id="' + batchSize + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + batchSize + ' value="" maxlength="8", onkeypress = "return isNumberKey(event)", onchange="OnChangeBatchSize($(this).val(),id)", required="required" />' +
+            '<span id="' + batchSizeErr + '">' +
+            '</td>' +
+            '<td>' +
+            '<input type="text" id="' + dscription + '" onchange="createJson()"; class="form-control form-control-sm  text-right" style = "height:30px;width:200px;" name="' + dscription + '"  />' +
+            '<span id="' + DscriptionErr + '">' +
+            '</td>' +
+            '<td>' +
+            '<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
+            '</td>' +
+            '</tr>').appendTo('#submissionTable');
+
+        counter++;
+        return false;
+    });
+
+    function getRecipeItemDetailsJSTbl(count) {
+        var recipeId = "ItemID_" + count;
+        var selectedItemId = $("#" + recipeId).val();
+                    $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetRecipeitemDetails", "RecipeMater")', // we are calling json method
+
+                dataType: 'json',
+                data: { id: selectedItemId },
+                // here we are get value of selected item and passing same value
+                //as inputto json method GetRecipeitemDetails.
+
+                        success: function (itemDescription) {
+                            var description = JSON.stringify(itemDescription);
+                            //console.log(description);
+                            $("#itemCode_" + count).val(itemDescription.Item_Code);
+                            $("#itemDescription_" + count).val(itemDescription.Item_Name);
+                            $("#UnitName_" + count).val(itemDescription.UnitCode);
+
+                },
+                failure: function () {
+                    alert('Failed to retrieved item detals!');
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve Item description.' + ex);
+                }
+            });
+    }
+
+    function removeTr(index) {
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        if (counter > 1 & length == index) {
+            $('#tablerow' + index).remove();
+            counter--;
+        }
+        else {
+            $('#tablerow' + index).remove();
+        }
+        return false;
+    }
+
+    function createJson() {
+        let res = [...document.getElementById("myTableBody").children].map(tr =>
+            Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
+                [el.name, el.value])));
+        var TxtItemDetails = JSON.stringify(res);
+        $('#TxtItemDetails').val(TxtItemDetails);
+    }
+
+    //---OnChangeRatio start rahul added on 04-02-23------
+    function OnChangeRatioForFirstRow(value, id) {
+        $('#btnSave').prop('disabled', false);
+
+        var itemId = $("#Item_ID").val();
+        if (itemId == '' || itemId == null) {
+            $("#Item_ID").focus();
+            $("#Ratio").val(0);
+            return;
+        }
+
+        var Ratio = parseFloat(value);
+        if (Ratio <= 0 || value == null || value == '') {
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            document.getElementById("RatioErr").setAttribute("style", "color:red;");
+            $("#RatioErr").text("Enter Percentage!");
+            return;
+        }
+        else {
+            //Set transfer Ratio in item grid.
+            $("#RatioErr").hide();
+            document.getElementById(id).setAttribute("style", "");
+        }
+    }
+
+    function OnChangeRatio(value, id) {
+        //debugger
+        var rowNo = id.split('_')[1];
+
+        var itemId = $("#ItemID_" + rowNo).val();
+        if (itemId == '' || itemId == null) {
+            $("#ItemID_" + rowNo).focus;
+            $("#Ratio_" + rowNo).val(0);
+            return;
+        }
+
+        var Ratio = parseFloat(value);
+        if (Ratio <= 0 || value == null || value == '') {
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            document.getElementById("RatioErr_" + rowNo).setAttribute("style", "color:red;");
+            $("#RatioErr_" + rowNo).text("Enter Percentage!");
+            return;
+        }
+        else {
+            //Set ratio in item grid.
+            $("#RatioErr_" + rowNo).hide();
+            document.getElementById(id).setAttribute("style", "");
+        }
+    }
+    //---OnChangeRatio end ------
+
+    //---OnChangeBatchSize start rahul added on 15-03-23------
+    function OnChangeBatchSizeForFirstRow(value, id) {
+        var itemId = $("#Item_ID").val();
+        if (itemId == '' || itemId == null) {
+            $("#Item_ID").focus();
+            $("#BatchSize").val(0);
+            return;
+        }
+
+        var BatchSize = parseFloat(value);
+        if (BatchSize <= 0 || value == null || value == '') {
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            document.getElementById("batchSizeErr").setAttribute("style", "color:red;");
+            $("#batchSizeErr").text("Enter Batch Size!");
+            return;
+        }
+        else {
+            //Set transfer batch Size in item grid.
+            $("#batchSizeErr").hide();
+            document.getElementById(id).setAttribute("style", "");
+        }
+    }
+
+    function OnChangeBatchSize(value, id) {
+        //debugger
+        var rowNo = id.split('_')[1];
+
+        var itemId = $("#ItemID_" + rowNo).val();
+        if (itemId == '' || itemId == null) {
+            $("#ItemID_" + rowNo).focus;
+            $("#BatchSize_" + rowNo).val(0);
+            return;
+        }
+
+        var BatchSize = parseFloat(value);
+        if (BatchSize <= 0 || value == null || value == '') {
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("style", "border-color:red;");
+            document.getElementById("batchSizeErr_" + rowNo).setAttribute("style", "color:red;");
+            $("#batchSizeErr_" + rowNo).text("Enter Batch Size!");
+            return;
+        }
+        else {
+            //Set Batch Size in item grid.
+            $("#batchSizeErr_" + rowNo).hide();
+            document.getElementById(id).setAttribute("style", "");
+        }
+    }
+    //---OnChangeBatchSize end ------
+
+
+    function isNumberKey(evt) {
+        $('#btnSave').prop('disabled', false);
+        //comparing pressed keycodes
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+</script>
+
+@Html.Raw(TempData["Success"])

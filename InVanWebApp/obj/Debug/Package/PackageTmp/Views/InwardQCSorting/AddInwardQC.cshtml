@@ -1,0 +1,568 @@
+﻿@model InVanWebApp_BO.InwardQCBO
+@{
+    ViewBag.Title = "AddInwardQC";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm("AddInwardQC", "InwardQCSorting"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Add Inward QC (Check-1)</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Inward QC Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.InwardQCNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.InwardQCNo, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Inward QC Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.InwardQCDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.InwardQCDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Inward Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("InwardNote_Id", (IEnumerable<SelectListItem>)ViewData["InwNumberAndId"], "--Select--",
+                   new { @class = "form-control", onchange = "SelectedIndexChanged($(this).val())" })
+                    @Html.ValidationMessageFor(model => model.InwardNote_Id, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Supplier Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.SupplierName, "", new { id = "ValMsgSupplierName", @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Item QC details")
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped table-responsive" id="ItemTable">
+                        <tr>
+                            <th>Item</th>
+                            <th>Code</th>
+                            <th>Unit Price</th>
+                            <th>Inward Quantity</th>
+                            <th>Quantity Sorted (Kg)</th>
+                            <th>Quantity taken for Sorting (Kg)</th>
+                            <th>Balance Quantity (Kg)</th>
+                            <th>Total Waste Quantity (Kg)</th>
+                            <th>Wastage (%) (Wastage Quantity/Sorting Quantity*100)</th>
+                            <th>Remarks</th>
+                            <th class="d-none">ItemID</th>
+                            <th class="d-none">ItemTaxValue</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <a href="@Url.Action("Index", "InwardQCSorting")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                Back To List
+            </a>
+            <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SetInwardQty()">Save</button>
+        </div>
+    </div>
+    @Html.TextBoxFor(model => model.QuantitiesForSorting, new { style = "display:none" })
+    @Html.TextBoxFor(model => model.BalanceQuantities, new { style = "display:none" })
+    @Html.TextBoxFor(model => model.RejectedQuantities, new { style = "display:none" })
+    @Html.TextBoxFor(model => model.WastageQuantities, new { style = "display:none" })
+    @Html.TextBoxFor(model => model.ReasonsForRejection, new { style = "display:none" })
+}
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+
+    var QuantitiesForSorting = "";
+    var BalanceQuantities = "";
+    var RejectedQuantities = "";
+    var WastagePercentages = "";
+    var Reasons = "";
+    var itemTableDetails = "";
+
+    //===========This function will create a json format of the item details
+    function createJson() {
+        var table = document.getElementById('ItemTable');
+        var rowCount = table.rows.length;
+        var i = 1;
+        itemTableDetails = "[";
+        for (i = 1; i < rowCount; i++) {
+            var cellData = document.getElementById("Item_Name" + i);
+            var ItemName = cellData.innerHTML;
+
+            cellData = document.getElementById("Item_Code" + i);
+            var ItemCode = cellData.innerHTML;
+
+            cellData = document.getElementById("ItemUnitPrice" + i);
+            var UnitPrice = cellData.innerHTML.split(' ');
+            var CurrencyName = UnitPrice[1];
+            UnitPrice = UnitPrice[0];
+
+            cellData = document.getElementById("DeliveredQty" + i);
+            var InwardQty = cellData.innerHTML.split(' ');
+            var Unit = InwardQty[1]; InwardQty = InwardQty[0];
+
+            var SortingQtyTook = $('#txtQCQty' + i).val();
+            if (SortingQtyTook == null || SortingQtyTook == '')
+                SortingQtyTook = 0;
+
+            var BalanceQty = $('#txtBalanceQty' + i).val();
+            if (BalanceQty == null || BalanceQty == '')
+                BalanceQty = 0;
+
+            var RejectedQty = $('#txtRejectedQty' + i).val();
+            if (RejectedQty == null || RejectedQty == '')
+                RejectedQty = 0;
+
+            var WastagePercentage = $('#txtWastagePer' + i).val();
+            if (WastagePercentage == null || WastagePercentage == '')
+                WastagePercentage = 0;
+
+            var Remarks = $('#txtRemarks_' + i).val();
+            if (Remarks == null || Remarks == '')
+                Remarks = " ";
+            var ItemID = $('#ItemID' + i).val();
+            var ItemTaxValue = $('#ItemTaxValue' + i).val();
+
+            itemTableDetails = itemTableDetails +
+                "{ \"ItemId\":" + ItemID + ", \"Item_Name\": \"" + ItemName + "\", \"Item_Code\": \"" + ItemCode + "\", \"ItemUnitPrice\": " + UnitPrice +
+                ", \"ItemUnit\": \"" + Unit + "\", \"InwardQuantity\": " + InwardQty + ",\"QuantityTookForSorting\": " + SortingQtyTook +
+                ", \"BalanceQuantity\": " + BalanceQty + ", \"WastageQuantityInPercentage\": " + WastagePercentage + ",\"Remarks\":\"" + Remarks +
+                "\", \"CurrencyName\": \"" + CurrencyName + "\",\"RejectedQuantity\":" + RejectedQty
+                + ",\"ItemTaxValue\":" + ItemTaxValue;
+
+            if (i == (rowCount - 1))
+                itemTableDetails = itemTableDetails + "}";
+            else
+                itemTableDetails = itemTableDetails + "},";
+        }
+        itemTableDetails = itemTableDetails + "]";
+
+        $('#QuantitiesForSorting').val(itemTableDetails);
+    }
+
+
+    function SelectedIndexChanged(id) {
+
+        $('#btnSave').prop('disabled', false);
+        //For deleting the rows of Item table if exist.
+
+        var table = document.getElementById('ItemTable');
+        var rowCount = table.rows.length;
+        while (rowCount != '1') {
+            var row = table.deleteRow(rowCount - 1);
+            rowCount--;
+        }
+
+        //Clearing the address textarea
+        $('#SupplierName').val(' ');
+        $("#ValMsgSupplierName").hide();
+
+        $.ajax({
+            type: "POST",
+            url: `/InwardQCSorting/BindInwDetails?id=` + id,
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //console.log(result);
+                //$('#PODate').val(result[0].PODate);
+                $('#SupplierName').val(result[0].SupplierDetails);
+                var ColCount = result.length
+                var flag = 0; //This flag is for checking whether the selected Inward QC is completed or not.
+
+                //===================Create dynamic table for binding Item details====================//
+                var table = document.getElementById('ItemTable');
+                for (var j = 1; j < result.length; j++) {
+                    var rowCount = table.rows.length;
+                    var cellCount = table.rows[0].cells.length;
+                    var row = table.insertRow(rowCount);
+                    for (var i = 0; i < cellCount; i++) {
+                        var cell = 'cell' + i;
+                        cell = row.insertCell(i);
+                        if (i == 0) {
+                            cell.innerHTML = result[j].Item_Name;
+                            cell.setAttribute("id", "Item_Name" + j);
+                        }
+                        else if (i == 1) {
+                            cell.innerHTML = result[j].Item_Code;
+                            cell.setAttribute("id", "Item_Code" + j);
+                        }
+                        else if (i == 2) {
+                            cell.innerHTML = result[j].ItemUnitPrice + " " + result[j].CurrencyName;
+                            cell.setAttribute("id", "ItemUnitPrice" + j);
+                        }
+                        else if (i == 3) {
+
+                            cell.innerHTML = result[j].InwardQuantity + " Kg";
+                            cell.setAttribute("id", "DeliveredQty" + j);
+                        }
+                        else if (i == 4) {
+
+                            cell.innerHTML = result[j].QuantityTookForSorting + " Kg";
+                            cell.setAttribute("id", "txtSortedQty" + j);
+                        }
+                        else if (i == 5) {
+
+                            var t6 = document.createElement("input");
+                            t6.id = "txtQCQty" + j;
+
+                            var cellData = document.getElementById("DeliveredQty" + j);
+                            var temp_itemQty = cellData.innerHTML.split(' ');
+                            var deliveredQty = parseFloat(temp_itemQty[0]);
+                            t6.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
+                            if (result[j].QuantityTookForSorting == deliveredQty) {
+                                t6.setAttribute("disabled", "true");
+                                //flag = 1;
+                            }
+                            else {
+                                t6.removeAttribute("disabled", "false");
+                                t6.removeAttribute("disabled", "true");
+                                t6.setAttribute("onchange", "OnChangeQCQty($(this).val(),id)");
+                                t6.setAttribute("maxlength", "8");
+                                t6.setAttribute("onkeypress", "return isNumberKey(event)");
+                                flag = 1;
+                            }
+                            //t6.setAttribute("type", "number");
+                            cell.appendChild(t6);
+                        }
+                        else if (i == 6) {
+                            var t7 = document.createElement("input");
+                            t7.id = "txtBalanceQty" + j;
+                            t7.setAttribute("disabled", "true");
+                            t7.setAttribute("value", result[j].BalanceQuantity != 0 ? result[j].BalanceQuantity : '0');
+                            t7.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
+                            cell.appendChild(t7);
+                        }
+                        else if (i == 7) {
+                            var t7 = document.createElement("input");
+                            t7.id = "txtRejectedQty" + j;
+                            t7.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
+                            if (result[j].QuantityTookForSorting == deliveredQty) {
+                                t7.setAttribute("value", result[j].RejectedQuantity != 0 ? result[j].RejectedQuantity : '0');
+                                t7.setAttribute("disabled", "true");
+                            }
+                            else {
+                                //var QtyTookForSorting = result[j].QuantityTookForSorting;
+                                t7.removeAttribute("disabled", "false");
+                                t7.removeAttribute("disabled", "true");
+                                t7.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
+                                t7.setAttribute("maxlength", "8");
+                                t7.setAttribute("onkeypress", "return isNumberKey(event)");
+                            }
+                            //t7.setAttribute("disabled", "true");
+                            //t7.setAttribute("value", result[j].RejectedQuantity != 0 ? result[j].RejectedQuantity : '0');
+                            //t7.setAttribute("type", "number");
+                            cell.appendChild(t7);
+                        }
+                        else if (i == 8) {
+                            var t7 = document.createElement("input");
+                            t7.id = "txtWastagePer" + j;
+                            t7.setAttribute("disabled", "true");
+                            if (result[j].QuantityTookForSorting == deliveredQty) {
+                                t7.setAttribute("value", result[j].WastageQuantityInPercentage != 0 ? result[j].WastageQuantityInPercentage : '0');
+                            }
+                            cell.appendChild(t7);
+                        }
+                        else if (i == 9) {
+                            var t7 = document.createElement("input");
+                            t7.id = "txtRemarks_" + j;
+                            t7.setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
+                            if (result[j].QuantityTookForSorting == deliveredQty) {
+                                t7.setAttribute("value", result[j].Remarks);
+                                t7.setAttribute("disabled", "true");
+                            }
+                            else {
+                                //t7.removeAttribute("disabled", "false");
+                                t7.removeAttribute("disabled", "true");
+                                //t7.setAttribute("onkeyup", "OnKeyRemark($(this).val(),id)");
+                                //t7.setAttribute("onchange", "OnChangeRemarkQty($(this).val(),id)");
+                            }
+                            cell.appendChild(t7);
+                        }
+                        else if (i == 10) {
+                            var t7 = document.createElement("input");
+                            t7.id = "ItemID" + j;
+                            t7.setAttribute("value", result[j].ItemId);
+                            t7.setAttribute("disabled", "true");
+                            t7.setAttribute("class", "d-none");
+                            cell.setAttribute("class", "d-none")
+                            cell.appendChild(t7);
+                        }
+                        else if (i == 11) {
+                            var t7 = document.createElement("input");
+                            t7.id = "ItemTaxValue" + j;
+                            t7.setAttribute("value", result[j].ItemTaxValue);
+                            t7.setAttribute("disabled", "true");
+                            t7.setAttribute("class", "d-none");
+                            cell.setAttribute("class", "d-none");
+                            cell.appendChild(t7);
+                        }
+
+                    }
+
+                }
+                if (flag == 0) {
+                    alert('QC is done for the selected Inward number!');
+                    $('#btnSave').prop('disabled', 'true');
+                }
+                else {
+                    $('#btnSave').prop('disabled', false);
+                }
+
+            }
+        });
+    }
+
+    function OnChangeRemarkQty(value, id) {
+        Reasons = Reasons + id + "*" + value + ",";
+    }
+
+    function OnKeyRemark(value, id) {
+
+        var RemarkLen = value.length;
+        var rowNo = id.split('_');
+        rowNo = rowNo[1];
+        //----Check if Remark with rejected quantity is empty or not.---------------//
+        //var table = document.getElementById('ItemTable');
+        //var rowCount = table.rows.length;
+
+        //var i = 1;
+        //while (i <= rowCount - 1) {
+        //    var RejQty = $("#txtRejectedQty" + i).val();
+        //    var remark = $("#txtRemarks_" + i).val().length;
+
+        //    if (RejQty != null && RejQty != 0 && RejQty != '') {
+        //        if (remark <= 0) {
+        //            alert("Remarks cannot be empty!");
+        //            var remId = "txtRemarks_" + i;
+        //            document.getElementById(remId).focus();
+        //            return false;
+        //        }
+        //    }
+        //    i = i + 1;
+        //}
+        $('#btnSave').prop("disabled", false);
+        var RejQty = $("#txtRejectedQty" + rowNo).val();
+        if (RejQty != null && RejQty != 0 && RejQty != '') {
+            if (RemarkLen <= 0) {
+                alert("Remarks cannot be empty!");
+                document.getElementById(id).focus();
+                $('#btnSave').prop("disabled", true);
+                //return false;
+            }
+
+        }
+        if (RemarkLen > 150)
+            alert("Exceeding the remark length!");
+    }
+
+    function OnChangeRejQty(value, id) {
+        $('#btnSave').prop("disabled", false);
+        //-------For finding the table row-----------//
+        var rowNo = id.split('y')[1];
+        var cell = document.getElementById("txtQCQty" + rowNo);
+        var sortingQty = cell.value;
+        //---Check the sorting textbox is empty or not---//
+        if (sortingQty == '' || sortingQty == null) {
+            alert("First enter the quantity for sorting!");
+            $('#txtRejectedQty' + rowNo).val('')
+            document.getElementById("txtQCQty" + rowNo).focus();
+        }
+
+        else {
+            sortingQty = parseFloat(sortingQty);
+            if (value == '' || value == null)
+                value = 0;
+            var rejectedQty = parseFloat(value);
+            //console.log(sortingQty+" "+rejectedQty);
+            if (rejectedQty > sortingQty) {
+                alert("Rejected quantity cannot be greater then sorting quantity!");
+                document.getElementById(id).focus();
+                document.getElementById(id).setAttribute("class", "border border-1 border-danger");
+                //document.getElementById(id).setAttribute("style", "border-color:red;");
+                $('#btnSave').prop("disabled", true);
+                return;
+            }
+            else {
+                $('#btnSave').prop("disabled", false);
+                document.getElementById(id).setAttribute("style", "border-color:none;");
+                document.getElementById(id).removeAttribute("class", "border border-1 border-danger");
+                RejectedQuantities = RejectedQuantities + "txtRejectedQty" + rowNo + "*" + rejectedQty + ",";
+                if (rejectedQty == 0 && sortingQty == 0) {
+                    document.getElementById("txtWastagePer" + rowNo).value = 0;
+                }
+                else {
+                    document.getElementById("txtWastagePer" + rowNo).value = ((rejectedQty / sortingQty) * 100).toFixed(2);
+                }
+
+
+                var wastageVal = $('#txtWastagePer' + rowNo).val();
+                WastagePercentages = WastagePercentages + "txtWastagePer" + rowNo + "*" + wastageVal + ",";
+                document.getElementById("txtRemarks_" + rowNo).focus();
+            }
+
+        }
+        document.getElementById(id).setAttribute("style", "background-color: #9999994d;border-radius: 5px;");
+    }
+
+    function OnChangeQCQty(value, id) {
+        $('#btnSave').prop("disabled", false);
+
+        var rowNo = id.split('y')[1];
+        var cell = document.getElementById("DeliveredQty" + rowNo);
+        var temp_itemQty = cell.innerHTML.split(' ');
+        var InwQty = parseFloat(temp_itemQty[0]);
+
+        if (value == '' || value == null) {
+            value = 0;
+        }
+        else {
+            value = parseFloat(value);
+        }
+
+        cell = document.getElementById("txtSortedQty" + rowNo);
+        var balQty = cell.innerHTML;
+        balQty = parseFloat(balQty);
+
+        if (value > (InwQty - balQty)) {
+            alert("QC quantity cannot be greater then Inward quantity!");
+            document.getElementById(id).focus();
+            document.getElementById(id).setAttribute("class", "border border-1 border-danger");
+            $('#btnSave').prop("disabled", true);
+            return;
+        }
+        else {
+            $('#btnSave').prop("disabled", false);
+
+            var tempInwQty = document.getElementById("txtQCQty" + rowNo).value;
+            if (tempInwQty == '' || tempInwQty == null) {
+                tempInwQty = 0;
+            }
+            else {
+                tempInwQty = parseFloat(tempInwQty);
+            }
+            document.getElementById("txtBalanceQty" + rowNo).value = ((parseFloat(temp_itemQty[0]) - (parseFloat(balQty))) - parseFloat(tempInwQty));
+            QuantitiesForSorting = QuantitiesForSorting + "txtQCQty" + rowNo + "*" + value + ",";
+
+            var BalQty = document.getElementById("txtBalanceQty" + rowNo).value;
+            BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" + BalQty + ",";
+            document.getElementById(id).removeAttribute("class", "border border-1 border-danger");
+
+        }
+        document.getElementById(id).setAttribute("style", "background-color:#9999994d;border-radius:5px;");
+    }
+
+    function SetInwardQty() {
+        var tableLength = document.getElementById('ItemTable').rows.length;
+        var flag = 1, i = 1;
+
+        if (tableLength > 1) {
+            while (i < tableLength) {
+                var QtySort = document.getElementById("txtQCQty" + i).value;
+                if (QtySort == '' || QtySort == null)
+                    QtySort = 0;
+                else
+                    QtySort = parseFloat(QtySort);
+
+                //if (QtySort == 0) {
+                //    alert("Quantity is zero or null or greater than Inward/balance quantity! Cannot create Inward QC!");
+                //    $('#btnSave').prop('disabled', true);
+                //    return;
+                //}
+
+                var InwQty = document.getElementById("DeliveredQty" + i).innerHTML;
+                InwQty = parseFloat(InwQty);
+
+                var BalQty = document.getElementById("txtBalanceQty" + i).value;
+                BalQty = parseFloat(BalQty);
+
+                //if (BalQty != 0) {
+                //    if (QtySort > (InwQty - BalQty)) {
+                //        flag = 1;
+                //        break;
+                //    }
+                //}
+                //else {
+                //    if (QtySort > InwQty) {
+                //        flag = 1;
+                //        break;
+                //    }
+                //}
+
+                if (QtySort != 0) {
+                    flag = 0;
+                    break;
+                }
+
+                i++;
+
+            }
+            if (flag == 1) {
+                alert("Quantity is zero or null or greater than Inward/balance quantity! Cannot create Inward QC!");
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else
+                $('#btnSave').prop('disabled', false);
+        }
+
+        createJson();
+    }
+
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+
+</script>

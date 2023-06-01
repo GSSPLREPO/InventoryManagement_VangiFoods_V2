@@ -1,0 +1,684 @@
+﻿@*<nav class="sidebar sidebar-offcanvas" id="sidebar">*@
+@*<ul class="nav" style=" overflow-x: auto; overflow-y: scroll; height: 452px; -webkit-overflow-scrolling: touch;">*@
+<html>
+<head>
+
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/Theme/MainContent/vendors/iconfonts/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="~/Theme/MainContent/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="~/Theme/MainContent/vendors/css/vendor.bundle.addons.css">
+
+
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/Theme/MainContent/css/style.css">
+    <!-- endinject -->
+
+</head>
+<body>
+    <ul class="nav">
+        @*<li class="nav-item nav-profile">
+                <div class="nav-link">
+                    <div class="profile-image">
+                        <img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image" />
+                        <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image" />
+                    </div>
+                    <div class="profile-name">
+                        <p class="name">
+                            Welcome VangiFood
+                        </p>
+                        <p class="designation">
+                            Super Admin
+                        </p>
+                    </div>
+                </div>
+            </li>*@
+        <br />
+        <li class="nav-item">
+            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">
+                <i class="fa fa-home menu-icon"></i>
+                <span class="menu-title">Home</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
+                <i class="fab fa-trello menu-icon"></i>
+                <span class="menu-title">Dashboard</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="page-layouts">
+                <ul class="nav flex-column sub-menu">
+                    @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
+                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="FIFOSystem">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/FIFOSystem">Material Dashboard (FIFO)</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="ProductionCostByBatchNumber">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ProductionCostByBatchNumber">Production Cost Batch Wise</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="Dashb_RTWarehouseWiseStock">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock">Real-time Warehouse Wise</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="ReorderPointOfStocks">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">Reorder-Point of Stocks</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="OrderSummaryDashboard">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/OrderSummaryDashboard">Sales Order Summary</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="TotalInventoryValueWarehouseWise">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/TotalInventoryValueWarehouseWise">Total Inventory Value</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="WorkOrderwiseProductionCostDashboard">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/WorkOrderwiseProductionCostDashboard">Total Production Cost</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="ProductionUtilityConsumptionByBatchDashboard">
+                            <a class="nav-link text-wrap" href="~/Dashb_RTWarehouseWiseStock/ProductionUtilityConsumptionByBatchDashboard">Raw Material Consumption By Batch</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="UtilityConsumptionProduction">
+                            <a class="nav-link text-wrap" href="~/Dashboard/UtilityConsumptionProduction">Raw Material Consumption Vs Production</a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <div id="YeildDashboard">
+                            <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/YeildDashboard">Yield</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item d-none d-lg-block">
+            <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false" aria-controls="sidebar-layouts">
+                <i class="fas fa-columns menu-icon"></i>
+                <span class="menu-title">Transactions</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="sidebar-layouts">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="InquiryForm">
+                            <a class="nav-link" href="~/InquiryForm">Inquiry Form</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SalesOrder">
+                            <a class="nav-link" href="~/SalesOrder">Sales Order</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SOPayment">
+                            <a class="nav-link" href="~/SOPayment">SO Payment Details</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="Indent">
+                            <a class="nav-link" href="@Url.Action("Index","Indent")">Indent</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RequestForQuotation">
+                            <a class="nav-link" href="~/RequestForQuotation">Request For Quotation</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PurchaseOrder">
+                            <a class="nav-link" href="~/PurchaseOrder">Purchase Order</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="InwardNote">
+                            <a class="nav-link" href="@Url.Action("Index","InwardNote")">Inward Note</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RejectionNote">
+                            <a class="nav-link" href="~/RejectionNote">Rejection Note</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="GRN">
+                            <a class="nav-link" href="~/GRN">GRN</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="POPayment">
+                            <a class="nav-link" href="~/POPayment">PO Payment Details</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="IssueNote">
+                            <a class="nav-link" href="@Url.Action("Index","IssueNote")">Material Issue Note</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="DebitNote">
+                            <a class="nav-link" href="@Url.Action("Index","DebitNote")">Debit Note</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="CreditNote">
+                            <a class="nav-link" href="~/CreditNote">Credit Note</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="DeliveryChallan">
+                            <a class="nav-link" href="@Url.Action("Index","DeliveryChallan")">Delivery Challan</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="OutwardNote">
+                            <a class="nav-link" href="@Url.Action("Index","OutwardNote")">Gate Pass</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <i class="far fa-compass menu-icon"></i>
+                <span class="menu-title">Inventory</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="StockTransfer">
+                            <a class="nav-link" href="@Url.Action("Index","StockTransfer")">Stock Transfer</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="StockAdjustment">
+                            <a class="nav-link" href="~/StockAdjustment">Stock Adjustment</a>
+                        </div>
+                    </li>
+                    @*<li class="nav-item"> <a class="nav-link" href="~/StockTransfer">Stock Transfer</a></li>*@
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
+                <i class="fas fa-clipboard-list menu-icon"></i>
+                <span class="menu-title">QC</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-advanced">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="InwardQC">
+                            <a class="nav-link" href="@Url.Action("Index","InwardQCSorting")">Inward QC (Check-1)</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PreProduction_QC">
+                            <a class="nav-link" href="@Url.Action("Index","PreProduction_QC")">Pre Production QC</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="CertificateOfAnalysisQC">
+                            <a class="nav-link" href="@Url.Action("Index","CertificateOfAnalysis")">Certificate of Analysis</a>
+                        </div>
+                    </li>
+                    @*Rahul shifted "PostProductionRejectionNote" from 'Production' menu 29-05-2023.*@
+                    <li class="nav-item">
+                        <div id="PostProductionRejectionNote">
+                            <a class="nav-link text-wrap" href="@Url.Action("Index","PostProductionRejectionNote")">Post-Production Rejection Note</a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
+                <i class="fab fa-wpforms menu-icon"></i>
+                <span class="menu-title">QC Daily Operation Log</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-elements">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="DailyMonitoring">
+                            <a class="nav-link" href="@Url.Action("Index","DailyMonitoring")">Daily Monitoring</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ClorinationLogLog">
+                            <a class="nav-link" href="@Url.Action("Index","ClorinationLog")">Chlorination Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="CalibrationLog">
+                            <a class="nav-link" href="@Url.Action("Index","CalibrationLog")">Calibration Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ForeignBodyFound">
+                            <a class="nav-link" href="@Url.Action("Index","ForeignBodyFound")">Foreign Body Found</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="MicroAnalysis">
+                            <a class="nav-link" href="@Url.Action("Index","MicroAnalysis")">Micro Analysis</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="OilAnalysis">
+                            <a class="nav-link" href="@Url.Action("Index","OilAnalysis")">Oil Analysis</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PestControlLog">
+                            <a class="nav-link" href="@Url.Action("Index","PestControlLog")">Pest Control Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PreStartupHygiene">
+                            <a class="nav-link" href="@Url.Action("Index","PreStartupHygiene")">Pre Startup Hygiene</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ProductEvaluationLog">
+                            <a class="nav-link" href="@Url.Action("Index","ProductEvaluationLog")">Product Evaluation Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SanitizationAndHygine">
+                            <a class="nav-link" href="@Url.Action("Index","SanitizationAndHygine")">Sanitization & Hygiene</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="VegWasherDosageLog">
+                            <a class="nav-link" href="@Url.Action("Index","VegWasherDosageLog")">Veg Washer Dosage Log</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="WaterAnalysis">
+                            <a class="nav-link" href="@Url.Action("Index","WaterAnalysis")">Water Analysis</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-production" aria-expanded="false" aria-controls="form-production">
+                <i class="fas fa-cogs menu-icon"></i>
+                <span class="menu-title">Production</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-production">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="BatchPlanning">
+                            <a class="nav-link" href="@Url.Action("Index","BatchPlanning")">Batch Planning</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ProductionIndent">
+                            <a class="nav-link" href="@Url.Action("Index","ProductionIndent")">Production Indent</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ProductionMaterialIssueNote">
+                            <a class="nav-link text-wrap" href="@Url.Action("Index","ProductionMaterialIssueNote")">Production Material Issue Note</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RQCCP">
+                            <a class="nav-link" href="@Url.Action("Index","RQCCP")">Stage-1 RQ CCP</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SILOCCP">
+                            <a class="nav-link" href="@Url.Action("Index","SILOCCP")">Stage-2 SILO CCP</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PackingCCP">
+                            @*<a class="nav-link" href="@Url.Action("Index","HotFillingPackingLineLogSheetCCP")">Stage-3 Packing CCP</a>*@
+                            <a class="nav-link" href="@Url.Action("Index","Stage3")">Stage-3</a>
+                        </div>
+                    </li>
+                    @*Rahul commented "ChillerCCP" not in use 29-05-2023.*@
+                    @*<li class="nav-item">
+                            <div id="ChillerCCP">
+                                <a class="nav-link" href="@Url.Action("Index","ChillerCCP")">Stage-4 Chiller CCP</a>
+                            </div>
+                        </li>*@
+                    <li class="nav-item">
+                        <div id="FinishedGoodSeriesQC">
+                            <a class="nav-link" href="@Url.Action("Index","FinishedGoodSeries")">Finished Goods Series</a>
+                        </div>
+                    </li>
+                    @*Rahul commented "PostProductionRejectionNote" shifted in 'QC' menu 29-05-2023.*@
+                    @*<li class="nav-item">
+                            <div id="PostProductionRejectionNote">
+                                <a class="nav-link text-wrap" href="@Url.Action("Index","PostProductionRejectionNote")">Post-Production Rejection Note</a>
+                            </div>
+                        </li>*@
+
+                </ul>
+            </div>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#editors" aria-expanded="false" aria-controls="editors">
+                <i class="fas fa-pen-square menu-icon"></i>
+                <span class="menu-title">Masters</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="editors">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="Company">
+                            <a class="nav-link" href="@Url.Action("Index","Company")">Company</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="Currency">
+                            <a class="nav-link" href="@Url.Action("Index","Currency")">Currency</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="Item">
+                            <a class="nav-link" href="@Url.Action("Index","Item")">Item</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ItemCategory">
+                            <a class="nav-link" href="@Url.Action("Index","ItemCategory")">Item Category</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="ItemType">
+                            <a class="nav-link" href="@Url.Action("Index","ItemType")">Item Type</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="Location">
+                            <a class="nav-link" href="@Url.Action("Index","Location")">Location</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="Organisation">
+                            <a class="nav-link" href="@Url.Action("Index","Organisation")">Organisation</a>
+                        </div>
+                    </li>
+                    @*<li class="nav-item">
+                            <div id="ProductMaster">
+                                <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
+                            </div>
+                        </li>*@
+                    <li class="nav-item">
+                        <div id="RecipeMaster">
+                            <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="TermsAndCondition">
+                            <a class="nav-link" href="@Url.Action("Index","TermsAndCondition")">Terms and Condition</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="Tax">
+                            <a class="nav-link" href="@Url.Action("Index","Tax")">Tax</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="Unit">
+                            <a class="nav-link" href="@Url.Action("Index","Unit")">Unit</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#tables" aria-expanded="false" aria-controls="tables">
+                <i class="fas fa-table menu-icon"></i>
+                <span class="menu-title">Reports</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="tables">
+                <ul class="nav flex-column sub-menu">
+                    @*<li class="nav-item"> <a class="nav-link" href="@Url.Action("Report_OC_Index","TransactionsPOandOC")">Sales Order Report</a></li>*@
+                    <li class="nav-item">
+                        <div id="CompanyReport">
+                            <a class="nav-link" href="~/Report/CompanyReport">Company</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="DebitNoteReport">
+                            <a class="nav-link" href="~/Report/DebitNoteReport">Debit Note</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="DeliveryChallanAgainstSOReport">
+                            <a class="nav-link text-wrap" href="~/Report/DeliveryChallanAgainstSOReport">Delivery Challan (Against SO)</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="BatchwiseProductionCostReport">
+                            <a class="nav-link text-wrap" href="~/Report/BatchwiseProductionCostReport">Batch-wise Production Cost</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="FGLocationWiseReport">
+                            <a class="nav-link text-wrap" href="~/Report/FGLocationWiseReport">FG Location wise</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="FinishedGoodsDispatchReport">
+                            <a class="nav-link text-wrap" href="~/Report/FinishedGoodsDispatchReport">Finished Goods Dispatch</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="GRNReport">
+                            <a class="nav-link text-wrap" href="~/Report/GRNReport">GRN Report</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="InventoryAnalysisReportFIFO">
+                            <a class="nav-link text-wrap" href="~/Report/InventoryAnalysisReportFIFO">Inventory Analysis (FIFO)</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="InventoryFIFOReport">
+                            <a class="nav-link text-wraps" href="~/Report/InventoryFIFOReport">Inventory FIFO</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="IssueNoteReport">
+                            <a class="nav-link text-wrap" href="~/Report/IssueNoteReport">Issue Note Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="PostProductionRejectionReport">
+                            <a class="nav-link" href="~/Report/PostProductionRejectionReport">Post-Production RN Report</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="PreProduction_QCReport">
+                            <a class="nav-link" href="~/Report/PreProduction_QCReport">Pre Production QC Report</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="PurchaseInvoiceReport">
+                            <a class="nav-link text-wrap" href="~/Report/PurchaseInvoiceReport">Purchase Invoice Report</a>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <div id="POReport">
+                            <a class="nav-link" href="~/Report">Purchase Order</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RawMaterialCostAnalysisReport">
+                            <a class="nav-link text-wrap" href="~/Report/RawMaterialCostAnalysisReport">Raw Material Cost Analysis</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RawMaterialReceivedReport">
+                            <a class="nav-link text-wrap" href="~/Report/RawMaterialIndex">Raw Material Received</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="SalesInvoiceReport">
+                            <a class="nav-link text-wrap" href="~/Report/SalesInvoiceReport">Sales Invoice</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <div id="SalesReport">
+                            <a class="nav-link" href="~/Report/SalesReport">Sales Report</a>
+                        </div>
+                    </li>
+
+                    @*<li class="nav-item">
+                            <div id="RejectionNoteReport">
+                                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+                            </div>
+                        </li>*@
+                    <li class="nav-item">
+                        <div id="RejectionNoteReport">
+                            <a class="nav-link text-wrap" href="~/Report/RejectionReport">Rejection Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="StockReconciliationReport">
+                            <a class="nav-link text-wrap" href="~/Report/StockReconciliationReport">Stock Reconciliation</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="StockReport">
+                            <a class="nav-link text-wrap" href="~/StockReport">Stock</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="StockMovementReport">
+                            <a class="nav-link" href="~/StockMovement">Stock Movement</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="TotalInventoryCostReport">
+                            <a class="nav-link" href="~/Report/TotalInventoryCostReport">Total Inventory Cost</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="WastageReport">
+                            <a class="nav-link" href="~/Report/WastageReport">Wastage Report</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="YeildReport">
+                            <a class="nav-link" href="~/Report/YeildReport">Yield Report</a>
+                        </div>
+                    </li>
+
+                    @*<li class="nav-item">
+                            <div id="InventoryControlReport">
+                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+                            </div>
+                        </li>*@
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#security" aria-expanded="false" aria-controls="editors">
+                <i class="fa fa-unlock-alt menu-icon"></i>
+                <span class="menu-title">Security</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="security">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="Roles">
+                            <a class="nav-link" id="RolesId" href="@Url.Action("Index","Role")">Roles</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="RoleRights">
+                            <a class="nav-link" id="RolesRightsId" href="@Url.Action("Index","RoleRights")">Role Rights</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div id="UserDetails">
+                            <a class="nav-link" href="@Url.Action("Index","UserDetails")">Users</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</body>
+</html>
+
+@*Implementing the script for hiding menu as per the role and rights*@
+
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jquery")
+
+<script src="~/Theme/MainContent/js/hoverable-collapse.js"></script>
+<script>
+    $(document).ready(function () {
+        HideShowMenu();
+    });
+
+    //$('a#RolesId').click(function () {
+    //    window.location('Role/Index');
+    //    $('a#RolesRightsId').removeClass("nav-link active");
+    //    $('a#RolesRightsId').addClass("nav-link");
+    //    event.preventDefault();
+    //    return;
+    //});
+
+    function HideShowMenu() {
+        //alert('hi');
+
+        $.ajax({
+            url: '/RoleRights/GetRoleRightList',
+            type: 'POST',
+            contentType: 'application/json;',
+            dataType: 'json',
+            success: function (result) {
+
+                if (result != null && result.length >= 0) {
+                    for (var bh = 0; bh < result.length; bh++) {
+                        var temp = result[bh][2];
+                        console.log(temp);
+                        //$('.' + temp + '').show();
+                        $("#" + temp + "").hide();
+
+                    }
+                }
+            }
+
+        });
+    }
+</script>

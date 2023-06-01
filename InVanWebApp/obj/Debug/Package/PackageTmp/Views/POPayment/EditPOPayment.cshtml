@@ -1,0 +1,550 @@
+﻿@model InVanWebApp_BO.POPaymentBO
+@{
+    ViewBag.Title = "Edit POPayment";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+
+@using (Html.BeginForm("EditPOPayment", "POPayment", FormMethod.Post, new { enctype = "multipart/form-data", Id = "frmPaymentDetails" }))
+{
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Purchase Order Payment</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ID)
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">INVOICE DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>PO Number <span style="color:red">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.PONumber, new { @class = "form-control form-control-sm", @placeholder = "Enter Supplier Name", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "error mt-2 text-danger" })
+                                    @Html.HiddenFor(x => x.PurchaseOrderId)
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.Label("Payment Date")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.PaymentDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.PaymentDate, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Invoice Number <span style="color:red">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.InvoiceNumber, new { @class = "form-control form-control-sm", @placeholder = "Enter Invoice Number", onkeypress = "return isAlphaNumericKey(event,2)", maxlength = "16" })
+                                    @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new { @class = "error mt-2 text-danger", id = "ValInvoiceNumber" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Invoice Amount (Rs)<span style="color:red">*</span></label>
+
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.PaymentAmount, new { @class = "form-control form-control-sm", @placeholder = "Enter Payment Amount", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.PaymentAmount, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label>Payment Due Date <span style="color:red">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.PaymentDueDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date" })
+                                    @Html.ValidationMessageFor(model => model.PaymentDueDate, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Supplier <span style="color:red">*</span></label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(x => x.VendorName, new { @class = "form-control form-control-sm", @placeholder = "Enter Vendor Name", @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.VendorName, "", new { @class = "error mt-2 text-danger" })
+                                    @Html.HiddenFor(x => x.VendorID)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">ITEM DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                <table class="table table-striped" id="submissionTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortStyle">
+                                                Item Name
+                                            </th>
+                                            <th class="sortStyle">
+                                                Item Code
+                                            </th>
+                                            <th class="sortStyle">
+                                                Quantity
+                                            </th>
+                                            <th class="sortStyle">
+                                                Units
+                                            </th>
+                                            <th class="sortStyle">
+                                                Unit Price
+                                            </th>
+                                            <th class="sortStyle">
+                                                Tax
+                                            </th>
+                                            <th class="sortStyle">
+                                                Total Payable (Before Tax)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.PurchaseOrderItems)
+                                        {
+                                            <tr id="tablerow">
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.Item_Code)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemQuantity)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnit)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemTaxValue)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.TotalItemCost)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">PAYMENT MODE</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    @Html.Label("Payment Mode")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-7">
+                                    @{
+                                        List<SelectListItem> listMode = new List<SelectListItem>();
+                                        listMode.Add(new SelectListItem { Text = "Cash", Value = "Cash" });
+                                        listMode.Add(new SelectListItem { Text = "Cheque", Value = "Cheque" });
+                                        listMode.Add(new SelectListItem { Text = "Online", Value = "Online" });
+                                        listMode.Add(new SelectListItem { Text = "RTGS/NEFT", Value = "RTGS/NEFT" });
+                                    }
+                                    @Html.DropDownListFor(model => model.PaymentMode, listMode, new { @class = "form-control", id = "PaymentMode" })
+                                    @Html.ValidationMessageFor(model => model.PaymentMode, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" id="dvBankName" style="display:none;">
+                                <div class="col-md-5">
+                                    @Html.Label("Bank Name")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.BankName, new { @class = "form-control form-control-sm", @placeholder = "Enter Bank Name", onkeypress = "return isAlphabetsKey(event,2)", maxlength = "150" })
+                                    <span id="validationBank" class="error mt-2 text-danger field-validation-error" style="display:none;">Only albhabets are allowed!</span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" id="dvBranchName" style="display:none;">
+                                <div class="col-md-5">
+                                    @Html.Label("Branch Name")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.BranchName, new { @class = "form-control form-control-sm", @placeholder = "Enter Branch Name", onkeypress = "return isAlphabetsKey(event,1)", maxlength = "150" })
+                                    <span id="validationBranch" class="error mt-2 text-danger field-validation-error" style="display:none;">Only albhabets are allowed!</span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" id="dvCheque" style="display:none;">
+                                <div class="col-md-5">
+                                    @Html.Label("Cheque Number")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.ChequeNumber, new { @class = "form-control form-control-sm", @placeholder = "Enter Cheque Number", onkeypress = "return isNumberKey(event,1)", maxlength = "6" })
+                                    <span id="validationChequeNo" class="error mt-2 text-danger field-validation-error" style="display:none;">Only numbers are allowed!</span>
+                                </div>
+                            </div>
+                            <div class="row" id="dvAccountNo" style="display:none;">
+                                <div class="col-md-5">
+                                    @Html.Label("Account Number")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.AccountNumber, new { @class = "form-control form-control-sm", @placeholder = "Enter Account Number", onkeypress = "return isNumberKey(event,2)", maxlength = "17" })
+                                    <span id="validationAccountNo" class="error mt-2 text-danger field-validation-error" style="display:none;">Only numbers are allowed!</span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" id="dvIFSC" style="display:none;">
+                                <div class="col-md-5">
+                                    @Html.Label("RTGS/NEFT IFSC code")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.IFSCCode, new { @class = "form-control form-control-sm", @placeholder = "Enter IFSC Code", onkeypress = "return isAlphaNumericKey(event,1)", maxlength = "11" })
+                                    <span id="validationIFSC" class="error mt-2 text-danger field-validation-error" style="display:none;">Only albhabets/numbers are allowed!</span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row" id="dvUTR" style="display:none;">
+                                <div class="col-md-5">
+                                    @Html.Label("UTR Number")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.UTRNo, new { @class = "form-control form-control-sm", @placeholder = "Enter UTR No", onkeypress = "return isAlphaNumericKey(event,3)", maxlength = "22" })
+                                    <span id="validationUTR" class="error mt-2 text-danger field-validation-error" style="display:none;">Only albhabets/numbers are allowed!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">PAYMENT DETAILS</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    @Html.Label("Total PO Amount (Rs)")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.TotalPOAmount, new { @class = "form-control form-control-sm", @placeholder = "Total PO Amount", @readonly = "readonly",style="text-align:right;" })
+                                    @Html.ValidationMessageFor(model => model.TotalPOAmount, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-5">
+                                    @Html.Label("Advance Payment (Rs)")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.AdvancedPayment, new { @class = "form-control form-control-sm", @placeholder = "Advance payment", @readonly = "readonly", style = "text-align:right;" })
+                                    @Html.ValidationMessageFor(model => model.AdvancedPayment, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-5">
+                                    @Html.Label("Paid Amount (Rs)")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.AmountPaid, new { @class = "form-control form-control-sm", @placeholder = "Paid payment", @readonly = "readonly", style = "text-align:right;" })
+                                    @Html.ValidationMessageFor(model => model.AmountPaid, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-5">
+                                    @Html.Label("Balance Amount (Rs)")
+                                </div>
+                                <div class="col-md-7">
+                                    @Html.TextBoxFor(x => x.BalanceAmount, new { @class = "form-control form-control-sm", @placeholder = "Enter Balance Amount", @readonly = "readonly", style = "text-align:right;" })
+                                    @Html.ValidationMessageFor(model => model.BalanceAmount, "", new { @class = "error mt-2 text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title"></h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @Html.Label("Paid/Un Paid")
+                                    <span style="color:red">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @{
+                                        List<SelectListItem> listStatus = new List<SelectListItem>();
+                                        listStatus.Add(new SelectListItem{Text = "Paid",Value = "Paid"});
+                                        listStatus.Add(new SelectListItem{Text = "Unpaid", Value = "UnPaid" });
+                                        listStatus.Add(new SelectListItem{Text = "Hold",Value = "Hold"});
+                                    }
+
+                                    @Html.DropDownListFor(model => model.IsPaid, listStatus, new { @class = "form-control", id = "IsPaid" })
+                                    @Html.ValidationMessageFor(model => model.IsPaid, "", new { @class = "error mt-2 text-danger" })
+
+                                </div>
+                                <div class="col-md-2">
+                                    @Html.Label("Remarks")
+                                    <span style="color:red; display:none" id="RemarkSpan">*</span>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model=>model.Remarks,"",new { @class="form-control form-control-sm",id= "Remarks", type="text" })
+                                    @*<input type="text" id="Remarks" name="Remarks" class="form-control form-control-sm" />*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="@Url.Action("Index", "POPayment")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                        Back To List
+                    </a>
+                    <button type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+/*const { Number } = require("../../DataTables-1.10.18/pdfmake-0.1.36/pdfmake");*/
+
+    $(document).ready(function () {
+        ModeChange();
+        PaymentStatusChanged();
+    });
+
+    function ModeChange() {
+        var mode = $('#PaymentMode option:selected').attr('value');
+        $('#dvCheque').hide();
+        $('#dvAccountNo').hide();
+        $('#dvCheque').hide();
+        $('#dvIFSC').hide();
+        $('#dvUTR').hide();
+
+        if (mode == 'Cheque') {
+            $('#dvBankName').show();
+            $('#dvCheque').show();
+            $('#dvBranchName').show();
+        }
+        else if (mode == 'Online') {
+            $('#dvBankName').show();
+            $('#dvBranchName').show();
+            $('#dvAccountNo').show();
+        }
+        else if (mode == 'RTGS/NEFT') {
+            $('#dvBankName').show();
+            $('#dvBranchName').show();
+            $('#dvAccountNo').show();
+            $('#dvIFSC').show();
+            $('#dvUTR').show();
+        }
+        else {
+            $('#dvBankName').hide();
+            $('#dvCheque').hide();
+            $('#dvAccountNo').hide();
+            $('#dvBranchName').hide();
+            $('#dvIFSC').hide();
+        }
+    }
+
+    function PaymentStatusChanged() {
+        var tempVariable = $('#IsPaid option:selected').attr('value');
+        if (tempVariable == 'Hold') {
+            $("#Remarks").attr("required", "true");
+            $("#RemarkSpan").css("display", "contents");
+            return false;
+        }
+        else {
+            $("#Remarks").removeAttr("required", "true");
+            $("#RemarkSpan").css("display", "none");
+            return true;
+        }
+    }
+
+    $('#PaymentMode').change(function () {
+        ModeChange();
+    });
+
+    $('#IsPaid').change(function () {
+        PaymentStatusChanged();
+    });
+
+    //================Validation for number, alphanumeric and price==================//
+    jQuery("#AccountNumber").blur(function () {
+        var length = $('#AccountNumber').val().length;
+        length = parseFloat(length);
+        if (length < 8) {
+            $('#validationAccountNo').text('Invalid Account Number!');
+            $('#validationAccountNo').css('display', 'contents');
+            return false;
+        }
+        $('#validationAccountNo').css('display', 'none');
+        return true;
+    });
+
+    jQuery("#IFSCCode").blur(function () {
+        var length = $('#IFSCCode').val().length;
+        length = parseFloat(length);
+        if (length < 11) {
+            $('#validationIFSC').text('Invalid IFSC code!');
+            $('#validationIFSC').css('display', 'contents');
+            return false;
+        }
+        $('#validationIFSC').css('display', 'none');
+        return true;
+    });
+
+    function isNumberKey(evt, id) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if ((keycode < 48 || keycode > 57)) {
+            if (id == '1')
+                $('#validationChequeNo').css('display', 'contents');
+            else if (id == '2') {
+                $('#validationAccountNo').text('Only numbers are allowed!');
+                $('#validationAccountNo').css('display', 'contents');
+            }
+
+            return false;
+        }
+        if (id == '1')
+            $('#validationChequeNo').css('display', 'none');
+        else if (id == '2')
+            $('#validationAccountNo').css('display', 'none');
+        return true;
+    }
+
+    function isAlphaNumericKey(evt, id) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (id == '1') {
+            if (!((keycode > 47 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123))) {
+                $('#validationIFSC').text('Only albhabets/numbers are allowed!');
+                $('#validationIFSC').css('display', 'contents');
+
+                return false;
+            }
+            else {
+                $('#validationIFSC').css('display', 'none');
+                return true;
+            }
+        }
+        else if (id == '3') {
+            if (!((keycode > 47 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123))) {
+
+                $('#validationUTR').text('Only albhabets/numbers are allowed!');
+                $('#validationUTR').css('display', 'contents');
+
+                return false;
+            }
+            else {
+                $('#validationUTR').css('display', 'none');
+                return true;
+            }
+        }
+        else if (id == '2') {
+            if (!((keycode > 46 && keycode < 58) || (keycode > 64 && keycode < 91) || (keycode > 96 && keycode < 123) || (keycode == 45))) {
+                $('#ValInvoiceNumber').text('Only \"/, -\" are allowed!');
+                $('#ValInvoiceNumber').css('display', 'contents');
+
+                return false;
+            }
+            else {
+                $('#ValInvoiceNumber').css('display', 'none');
+                return true;
+            }
+        }
+    }
+
+    function isAlphabetsKey(evt, id) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (id == '1') {
+            if (!((parseInt(keycode) >= 97 && parseInt(keycode) <= 122) || (parseInt(keycode) >= 65 && parseInt(keycode) <= 90) || parseInt(keycode) == 32)) {
+                $('#validationBranch').css('display', 'contents');
+
+                return false;
+            }
+            $('#validationBranch').css('display', 'none');
+
+            return true;
+        }
+        if (id == '2') {
+            if (!((parseInt(keycode) >= 97 && parseInt(keycode) <= 122) || (parseInt(keycode) >= 65 && parseInt(keycode) <= 90) || (parseInt(keycode) == 32) || (parseInt(keycode) == 46) || (parseInt(keycode) == 45))) {
+                $('#validationBank').css('display', 'contents');
+
+                return false;
+            }
+            $('#validationBank').css('display', 'none');
+
+            return true;
+        }
+
+
+    }
+
+    function isPriceKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+
+
+    //=================================End===============================
+    function calculateBalancePay() {
+        var totalPayment = $('#TotalPOAmount').val();
+        totalPayment = parseFloat(totalPayment);
+
+        var AdvancePayment = $('#AdvancedPayment').val();
+        AdvancePayment = parseFloat(AdvancePayment);
+
+        var paybleAmount = $('#TotalPaybleAmount').val();
+        paybleAmount = parseFloat(paybleAmount);
+
+        var paidAmount = $('#AmountPaid').val();
+        paidAmount = parseFloat(paidAmount);
+
+        var balanceAmt = (totalPayment - (AdvancePayment + paidAmount)) - paybleAmount;
+
+        if (paybleAmount > totalPayment || paybleAmount > (totalPayment - (AdvancePayment + paidAmount))) {
+            alert('Please enter valid payable amount!');
+
+            $('#TotalPaybleAmount').val('0');
+            $('#TotalPaybleAmount').focus();
+        }
+        else {
+            $('#BalanceAmount').val(balanceAmt);
+        }
+
+    }
+
+</script>

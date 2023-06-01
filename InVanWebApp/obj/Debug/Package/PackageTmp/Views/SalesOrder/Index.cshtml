@@ -1,0 +1,157 @@
+﻿@model IEnumerable<InVanWebApp_BO.SalesOrderBO>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<html>
+<head>
+    <title>Sales Order</title>
+</head>
+<body>
+
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Sales Order</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Transactions</a>
+                    </li>
+                    <li class="breadcrumb-item active">Sales Order</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="@Url.Action("AddSalesOrder","SalesOrder")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
+                                <span class="fa fa-plus"></span> Sales Order
+                            </a>
+                            <div class="table-responsive" style="padding-top:15px;">
+                                <table class="table table-striped table-bordered hover table-sm" id="tbl_PO">
+                                    <thead>
+                                        <tr>
+                                            <th>@Html.DisplayName("SO Number")</th>
+                                            <th>@Html.DisplayName("Client Name")</th>
+                                            <th>@Html.DisplayName("Last Modified Date")</th>
+                                            <th>@Html.DisplayName("SO Status")</th>
+                                            <th>@Html.DisplayName("Actions")</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(modelItem => item.SONo)</td>
+                                                <td class="text-wrap">
+                                                    @Html.DisplayFor(modelItem => item.CompanyName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.LastModifiedDate)
+                                                </td>
+                                                <td>
+                                                    @if (item.SalesOrderStatus == "Closed")
+                                                    {
+                                                        <p style="color: #17d317;font-weight:bold" class="btn">
+
+                                                            @Html.DisplayFor(modelItem => item.SalesOrderStatus, new { style = "color:green" })
+                                                        </p>
+                                                    }
+                                                    else if (item.SalesOrderStatus == "Open")
+                                                    {
+                                                        <p style="color: darkorange; font-weight: bold" class="btn">
+
+                                                            @Html.DisplayFor(modelItem => item.SalesOrderStatus, new { style = "color:#c900e1" })
+                                                        </p>
+                                                    }
+                                                    else if (item.SalesOrderStatus == "Cancelled")
+                                                    {
+                                                        <p style="color:red;font-weight:bold" class="btn">
+
+                                                            @Html.DisplayFor(modelItem => item.SalesOrderStatus, new { style = "color:red" })
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p style="color: #ffc800; font-weight: bold" class="btn">
+
+                                                            @Html.DisplayFor(modelItem => item.SalesOrderStatus, new { style = "color:#ffbc00" })
+                                                        </p>
+                                                    }
+                                                </td>
+                                                <td>
+
+                                                    @if (item.DraftFlag == true)
+                                                    {
+                                                        <a href=@Url.Action("EditSalesOrder", new { ID = item.SalesOrderId }) title="Edit SO">
+                                                            <i class="fa fa-edit text-primary"></i>
+                                                        </a>
+                                                        <span>&nbsp;&nbsp;</span>
+                                                        <a href=@Url.Action("DeleteSalesOrder", new { ID = item.SalesOrderId, }) onclick="return confirm('Are you sure want to delete the SO?');" title="Delete SO">
+                                                            @*<i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>*@
+                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                        </a><span>&nbsp;&nbsp;</span>
+                                                    }
+                                                    @if (item.OutwardCount <= 0 & item.DraftFlag == false)
+                                                    {
+                                                        if (item.Amendment != 2)
+                                                        {
+                                                            <a href=@Url.Action("SOAmendment", new { ID = item.SalesOrderId }) title="Amend SO">
+                                                                <i class="fa fa-file-alt text-primary"></i>
+                                                            </a><span>&nbsp;&nbsp;</span>
+                                                        }
+                                                        <a href=@Url.Action("DeleteSalesOrder", new { ID = item.SalesOrderId, }) onclick="return confirm('Are you sure want to delete the SO?');" title="Delete SO">
+                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                        </a><span>&nbsp;&nbsp;</span>
+                                                    }
+                                                    @if (item.DraftFlag == false)
+                                                    {
+                                                        <a href=@Url.Action("ViewSalesOrder", new { ID = item.SalesOrderId }) title="View SO">
+                                                            <i class="fa fa-eye text-primary"></i>
+                                                        </a><span>&nbsp;&nbsp;</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+@Html.Raw(TempData["Success"])
+
+
+@section scripts{
+
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#tbl_PO').dataTable().fnDestroy();
+            $('#tbl_PO').dataTable({
+                "iDisplayLength": 10
+            });
+        });
+
+        var table = $('#tbl_PO').dataTable({
+            "serverSide": false,
+            "filter": true,
+            "pageLength": 20
+        });
+    </script>
+}

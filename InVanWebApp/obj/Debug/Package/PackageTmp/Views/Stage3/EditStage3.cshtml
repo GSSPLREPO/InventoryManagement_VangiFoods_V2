@@ -1,0 +1,230 @@
+﻿@model InVanWebApp_BO.Stage3BO
+
+@{
+    ViewBag.Title = "EditStage3";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="card">
+    <div class="card-body">
+        <h4>Edit Stage-3</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @*@Html.HiddenFor(model => model.ID)*@
+
+        <div class="row">
+            @*Date should be auto*@
+            <div class="col-md-2">
+                @Html.Label("Date")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd") })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+            </div>
+
+            <div class="col-md-2">
+                @Html.Label("Product Name")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm" })
+                @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Raw Batches No")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Packing Unit")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.PackingUnit, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsAlphabets(event);" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Packing Hopper Temp (°C)")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.PackingHopperTemp, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Chiller Temp (°C)")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.ChillerTemp, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Consistancy in CM (°C)")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Consistency, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsNum(event);" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Packing Size")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("No Of Packets")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.NoOfPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Final Weight")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.FinalWeight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Final Packets")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.FinalPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+            </div>
+            <div class="col-md-2">
+                @Html.Label("Rejected Packets")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.RejectedPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Remarks")
+                <span style="color:red"></span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "100", @onkeypress = "return IsAlphaNumeric(event);" })
+                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+            </div>
+        </div>
+        <br />
+        <div class="col d-flex justify-content-end" style="margin-left: auto;">
+            <div class="row">
+                <div class="col">
+                    <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">Update</button>
+                </div>
+                <div class="col">
+                    <a href="@Url.Action("Index", "Stage3")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                        Back To List
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<script type="text/javascript">
+
+    //Custom validation for only numeric, -,
+    //function IsNumericDash(e) {
+    //    var unicode = e.charCode ? e.charCode : e.keyCode;
+    //    if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32
+    //        || unicode == 45) {
+    //        return true;
+    //    }
+    //    else {
+    //        return false;
+    //    }
+    //}
+
+    //Custom validation for only numeric, alphabets.
+    //function IsAlphaNumeric(e) {
+    //    var unicode = e.charCode ? e.charCode : e.keyCode;
+    //    if (unicode == 8 || unicode == 9 || (unicode >= 48 && unicode <= 57) || unicode == 32
+    //        || unicode == 45 || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+    //        return true;
+    //    }
+    //    else {
+    //        return false;
+    //    }
+    //}
+
+    //Custom validation for only alphabets.
+    //function IsAlphabets(e) {
+    //    var unicode = e.charCode ? e.charCode : e.keyCode;
+    //    if (unicode == 8 || unicode == 9 || unicode == 32
+    //        || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+    //        return true;
+    //    }
+    //    else {
+    //        return false;
+    //    }
+    //}
+
+    //Custom validation for only numeric, decimal.
+    //function isNumberKeyDecimal(evt) {
+    //    var keycode = (evt.which) ? evt.which : evt.keyCode;
+    //    if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+    //        return false;
+    //    }
+    //    else {
+    //        var parts = evt.srcElement.value.split('.');
+    //        if (parts.length > 1 && keycode == 46)
+    //            return false;
+    //        else
+    //            return true;
+    //    }
+    //    return true;
+    //}
+    //For Number
+    function IsNum(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+
+    function IsAlphabets(e) {
+        var unicode = e.charCode ? e.charCode : e.keyCode;
+        if (unicode == 8 || unicode == 9 || unicode == 32
+            || (unicode >= 65 && unicode <= 90) || (unicode >= 97 && unicode <= 122)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+</script>

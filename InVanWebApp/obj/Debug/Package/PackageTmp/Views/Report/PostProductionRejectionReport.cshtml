@@ -1,0 +1,292 @@
+﻿@model InVanWebApp_BO.ReportBO
+@{ ViewBag.Title = "PostProductionRejectionReport";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Post-Production RN Report</title>
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            @*Rahul updated heading tag text 'Received' to 'Dispatch' 16-02-23.*@
+            <h4 class="page-title">Post-Production RN Report</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Reports</a>
+                    </li>
+                    @*Rahul updated anchor tag text 'Received' to 'Dispatch' 16-02-23.*@
+                <li class="breadcrumb-item active">Post-Production RN Report</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="padding-top:15px;">
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>From Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TextBox("fromDate", "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessage("msgfromDate", "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>To Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TextBox("toDate", "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessage("toDate", "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col-md-2">
+                                        <label>Work Order No</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.DropDownListFor(model => model.WorkOrderNumber, (IEnumerable<SelectListItem>)ViewData["WorkOrderNumberdd"], "--All--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedWONumber($(this).val())" })
+                                        @Html.ValidationMessageFor(model => model.WorkOrderNumber, "", new { id = "WOValidate", @class = "error mt-2 text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        @Html.Label("Batch Number")
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+
+                                        <select id="BatchNumber" name="BatchNumber" class="form-control form-control-sm">
+                                            <option>--All--</option>
+                                        </select>
+                                        <span id="valMsgBatchNo" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Batch Number!</span>
+                                        @Html.ValidationMessageFor(model => model.BatchNumber, "", new { id = "valMsgBatchNo", @class = "error mt-2 text-danger" })
+                                    </div>
+     
+                                    <div class="col-md-2">
+                                        <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
+                                        <a id="ExportPdf" href="@Url.Action("ExprotAsPDFForPostProjectionRejection", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForPostProjectionRejection", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    </div>
+                                </div>
+                                <br />
+                                <div style="margin-top:25px;">
+
+                                    <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblPostProductionRejectionReport" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center">Sr.No.</th>
+                                                <th style="text-align:center">RN Date</th>
+                                                <th style="text-align:center">WO Number</th>
+                                                <th style="text-align:center">Batch Number</th>
+                                                <th style="text-align:center">Post-Production RN Number</th>
+                                                <th style="text-align:center">Stage</th>
+                                                <th style="text-align:center">Item Name</th>
+                                                <th style="text-align:center">Item Code</th>
+                                                <th style="text-align:center">Item Unit Price (Rs)</th>
+                                                <th style="text-align:center">Total Quantity (KG)</th>
+                                                <th style="text-align:center">Rejected Quantity (KG)</th>
+                                                <th style="text-align:center">Remarks</th>
+                                                <th style="text-align:center">Approved By</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+@Html.Raw(TempData["Success"])
+
+@section scripts{
+
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            setCurrentDate();
+            $('#ExportPdf').hide();
+            $('#ExportExcel').hide();
+            $('#tblPostProductionRejectionReport').hide();
+        });
+
+        function SelectedIndexChangedWONumber(id) {
+            $('#WOValidate').hide();
+            var WOId = $('#WorkOrderNumber').val();
+            if (WOId == '' || WOId == null) {
+                WOId = 0;
+            }
+
+            if (WOId != 0) {
+                $.ajax({
+                    url: '/Dashb_RTWarehouseWiseStock/BatchNumber?WOId=' + WOId,
+                    type: "POST",
+                    data: {},
+                    success: function (result) {
+                        var count = result.length;
+                        var i = 0;
+                        $("#BatchNumber option").remove();
+                        $("#BatchNumber").append($("<option></option>").val('').html('--All--'));
+                        while (i < count) {
+                            $("#BatchNumber").append($("<option></option>").val(result[i].BatchNumber).html(result[i].BatchNumber));
+                            i++;
+                        }
+                    },
+                    error: function (err) {
+                        alert('Not able to fetch batch number!');
+
+                    }
+                });
+            }
+            else {
+                $("#BatchNumber option").remove();
+                $("#BatchNumber").append($("<option></option>").val('').html('--All--'));
+            }
+
+        }
+
+        //function SelectedIndexChangedWearhouse() {
+        //    $('#WearhouseValidate').hide();
+        //}
+
+        function setCurrentDate() {
+            var now = new Date();
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            $('#fromDate').val(today);
+            $('#toDate').val(today);
+        }
+
+        function OnChangedFromDate() {
+            $('#fromDateValidate').hide();
+        }
+
+        function OnChangedToDate() {
+            $('#toDateValidate').hide();
+        }
+
+        $("#btnGo").on('click', function () {
+
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+
+            if (fromDate == null || fromDate == "") {
+                $('#fromDateValidate').text('Select from date!');
+                $('#fromDateValidate').show();
+                $("#fromDate").focus();
+                return;
+            }
+
+            if (toDate == null || toDate == "") {
+                $('#toDateValidate').text('Select to date!');
+                $('#toDateValidate').show();
+                $("#toDate").focus();
+                return;
+            }
+
+            if (fromDate > toDate) {
+                alert('Invalid date selection!');
+                $('#fromDate').focus();
+                return;
+            }
+
+
+            var CheckItem = $('#BatchNumberId').val();
+            if (CheckItem == '' || CheckItem == null) {
+                CheckItem = 0;
+            }
+
+            var name = Array();
+            var data = Array();
+            //var dataWO = Array();
+            var dataArrayFinal = Array();
+
+            var WorkOrderNumberId = $("#WorkOrderNumber option:selected").text();
+            if (WorkOrderNumberId == '' || WorkOrderNumberId == null || WorkOrderNumberId == '--All--')
+                WorkOrderNumberId = 0;
+
+            var BatchNumberId = $("#BatchNumber option:selected").text();
+            if (BatchNumberId == '' || BatchNumberId == null || BatchNumberId == '--All--')
+                BatchNumberId = 0;
+
+            $('#ExportPdf').show();
+            $('#ExportExcel').show();
+            $('#tblPostProductionRejectionReport').show();
+            var flag = 0;
+            $('#tblPostProductionRejectionReport').dataTable().fnDestroy();
+            var t = $('#tblPostProductionRejectionReport').DataTable({
+                //"processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "sAjaxSource": "/Report/GetPostProductionRejectionData?fromDate=" + fromDate + "&toDate=" + toDate + "&BatchNumber=" + BatchNumberId + "&WorkOrderNumber=" + WorkOrderNumberId,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "pageLength": 10,
+                "scrollX": true,
+                "columns": [
+                    { "data": "SrNo", "autoWidth": true },
+                    { "data": "RNDate", "autoWidth": true },
+                    { "data": "WorkOrderNumber", "autoWidth": true },
+                    { "data": "BatchNumber", "autoWidth": true },
+                    { "data": "PostProductionRejectionNoteNo", "autoWidth": true },
+                    { "data": "Stage", "autoWidth": true },
+                    { "data": "ItemName", "autoWidth": true },
+                    { "data": "ItemCode", "autoWidth": true },
+                    { "data": "ItemUnitPrice", "autoWidth": true },
+                    { "data": "TotalQty", "autoWidth": true },
+                    { "data": "RejectedQty", "autoWidth": true },
+                    { "data": "Remarks", "autoWidth": true },
+                    { "data": "ApprovedBy", "autoWidth": true }
+
+                ]
+            });
+            t.on('order.dt search.dt', function () {
+                let i = 1;
+
+                t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+
+        });
+
+    </script>
+
+}
+

@@ -1,0 +1,49 @@
+﻿@model InVanWebApp_BO.TermsAndConditionMasterBO
+@{
+    ViewBag.Title = "Edit Terms and Condition";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Terms and Condition</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.TermsConditionID)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Term Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TermName, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.TermName, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Description")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TermDescription, new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.TermDescription, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+            <br />
+            <a href="@Url.Action("Index", "TermsAndCondition")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                Back To List
+            </a>
+            <button type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">Update</button>
+
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@Html.Raw(TempData["Success"])

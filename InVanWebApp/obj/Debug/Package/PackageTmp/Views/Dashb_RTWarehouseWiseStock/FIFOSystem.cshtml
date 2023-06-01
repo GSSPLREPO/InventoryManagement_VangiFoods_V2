@@ -1,0 +1,937 @@
+﻿@model InVanWebApp_BO.DashboardBO
+@{ ViewBag.Title = "RawMaterialDashboard";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+    //Layout = null; }
+ }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Material Dashboard (FIFO)</title>
+    <style>
+        table {
+            border-spacing: 0px;
+            /*table-layout: fixed;*/
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        td {
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Material Dashboard (FIFO)</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Material Dashboard (FIFO)</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label>Location</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => model.LocationID, (IEnumerable<SelectListItem>)ViewData["LocationName"], "--All--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-1">
+                                    <label>Items</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => model.ItemName, (IEnumerable<SelectListItem>)ViewData["Item"], "--All--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
+                                </div>
+                            </div>
+
+                            <div class="row" id="div_individualDashboard">
+                                <div class="col-md-12">
+                                    <div id="mainWarehouse" style="width:100%;"></div>
+                                    <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
+                                </div>
+                            </div>
+                            <div id="AllDashboard" style="display:none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse1" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="warehouse1"></div>
+                                            <div id="NoDataFound1" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse2" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="warehouse2"></div>
+                                            <div id="NoDataFound2" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse3" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="warehouse3"></div>
+                                            <div id="NoDataFound3" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse4" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="warehouse4"></div>
+                                            <div id="NoDataFound4" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card">
+                                            <div class="col-md-12 text-center">
+                                                <label id="lblwarehouse5" class="font-weight-bold"></label>
+                                            </div>
+                                            <div id="warehouse5"></div>
+                                            <div id="NoDataFound5" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="container"></div>
+</body>
+</html>
+
+
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript">
+
+    function OnChangedFromDate() {
+        $('#fromDateValidate').hide();
+    }
+
+    function OnChangedToDate() {
+        $('#toDateValidate').hide();
+    }
+
+    $("#btnGo").on('click', function () {
+        var flag = 0;
+
+        var fromDate = $("#fromDate").val();
+        var toDate = $("#toDate").val();
+
+        if (fromDate == null || fromDate == "") {
+            $('#fromDateValidate').text('Select from date!');
+
+            $('#fromDateValidate').show();
+            $("#fromDate").focus();
+            return;
+        }
+
+        if (toDate == null || toDate == "") {
+            $('#toDateValidate').text('Select to date!');
+            $('#toDateValidate').show();
+            $("#toDate").focus();
+            return;
+        }
+
+        if (fromDate > toDate) {
+            alert('Invalid Date! To date is less than from date!');
+            $('#fromDate').focus();
+            return;
+        }
+
+    });
+
+</script>
+
+<script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
+@*<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>*@
+<script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+@*<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>*@
+
+
+
+<script type="text/javascript">
+
+    function getRandomColor() {
+        var Letters = '0123456789ABCDEF';
+        var Color = '#';
+        for (var i = 0; i < 6; i++) {
+            Color += Letters[Math.floor(Math.random() * 16)];
+        }
+        return Color;
+    }
+
+
+    $("#btnGo").on("click", function () {
+
+        $(".spinner-wrapper").fadeIn("slow");
+
+        ItemName = [];
+        GRNDate = []
+        xAxisData = [];
+        var coloR = [];
+
+        function convertDhms(h, m, s) {
+            h <= 0 ? h = 1 : h = h * 60 * 60 * 1000;
+            m <= 0 ? m = 1 : m = m * 60 * 1000;
+            s <= 0 ? s = 1 : s = s * 1000;
+            return h + m + s;
+        }
+        var LocationId = $('#LocationID').val();
+        var ItemId = $('#ItemName').val();
+        var fromDate = $('#fromDate').val();
+        var toDate = $('#toDate').val();
+        //var Date = GRNDate();
+
+        if (ItemId == '' || ItemId == null) {
+            ItemId = 0;
+        }
+
+        if (LocationId != null & LocationId != '') {
+            $('#AllDashboard').hide();
+            $('#div_individualDashboard').show();
+            $('#fromDate').show();
+            $('#toDate').show();
+            $('#div_individualDashboard').show();
+
+            var Location = $("#LocationID option:selected").text();
+            //-----------Bind individual warehouse data in the graph Start-----------------------------------------------------------
+            var request = $.ajax({
+                //url: "/Dashb_RTWarehouseWiseStock/GetFIFOSystem?id=" + LocationId + "&ItemId=" + ItemId + "&fromDate=" + fromDate + "&toDate=" + toDate,
+                url: "/Dashb_RTWarehouseWiseStock/GetFIFOSystem?id=" + LocationId + "&ItemId=" + ItemId,
+                contentType: 'application/json;',
+                dataType: 'json',
+                type: "POST",
+                success: function (result) {
+                    ond = result;
+                    var parsed = $.parseJSON(result);
+                    var dataLength = parsed.length;
+
+                    var serial2 =
+
+                    {
+                        name: "Quantity",
+                        type: 'bar',
+                        data: [],
+                        color: 'black',
+                        tooltip: {
+                            valueSuffix: 'KG'
+                        }
+
+                    };
+
+                    $.each(parsed, function (i, jsondata) {
+
+                        var dynamicColors = function () {
+                            var r = Math.floor(Math.random() * 255);
+                            var g = Math.floor(Math.random() * 255);
+                            var b = Math.floor(Math.random() * 255);
+                            return "rgb(" + r + "," + g + "," + b + ")";
+                        }
+
+                        var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
+                        if (jsondata.ReceivedQty != null) {
+                            serial2.data.push(parseFloat(jsondata.ReceivedQty));
+                        } else {
+                            serial2.data.push(parseFloat(0));
+                        }
+
+                        coloR.push(dynamicColors());
+                        serial2.color = getRandomColor();
+                        xAxisData.push(jsondata.GRNDate + ' (' + jsondata.ItemName + ' ' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');;
+
+                    });
+                    ItemName.push(serial2);
+
+                    Highcharts.chart('mainWarehouse', {
+                        chart: {
+                            type: 'bar'
+                        },
+                        title: {
+                            text: 'FIFO wise Stock'/* Main Titale*/
+                        },
+                        subtitle: {
+                            text: 'Location: ' + Location
+                        },
+                        xAxis: {
+
+                            categories: xAxisData,
+
+                        },
+                        yAxis: {
+                            min: 0,
+                            title: {
+                                style: {
+                                    fontWeight: 'bold',
+                                    fontSize: '12px',
+                                    color:'black'
+                                },
+                                text: 'Quantity (Kg)'
+                            },
+                            stackLabels: {
+                                enabled: false,  //true
+                                style: {
+                                    fontWeight: 'bold',
+                                    fontSize: '12px',
+                                    color: ( // theme
+                                        Highcharts.defaultOptions.title.style &&
+                                        Highcharts.defaultOptions.title.style.color
+                                    ) || 'black',
+                                     text: 'Quantity (Kg)'
+                                }
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+
+                        //legend: {
+                        //    layout: 'vertical',
+                        //    align: 'right',
+                        //    verticalAlign: 'top',
+                        //    x: -40,
+                        //    y: 80,
+                        //    floating: true,
+                        //    borderWidth: 1,
+                        //    backgroundColor:
+                        //        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                        //    shadow: true
+                        //},
+
+                        credits: {
+                            enabled: false
+                        },
+                        tooltip: {
+
+                            shared: true
+                        },
+                        plotOptions: {
+                            column: {
+                                stacking: 'normal',
+                                dataLabels: {
+                                    enabled: false
+                                }
+                            },
+                        },
+                        series: ItemName
+
+                    });
+
+                    if (dataLength > 0) {
+                        $("#mainWarehouse").show();
+                        $("#NoDataFound").hide();
+                    } else {
+                        $("#mainWarehouse").hide();
+                        $("#NoDataFound").show();
+
+                    }
+
+                }
+
+            });
+            //-----------Bind individual warehouse data in the graph End-------------------------------------------------------------
+
+        }
+
+        else {
+            //alert("Please select location!");
+            $('#AllDashboard').show();
+            $('#div_individualDashboard').hide();
+
+            var count = 1;
+            var length = $('#LocationID')[0].options.length;
+
+            var population1 = [];
+            var xAxisData1 = [];
+            var population2 = [];
+            var xAxisData2 = [];
+            var population3 = [];
+            var xAxisData3 = [];
+            var population4 = [];
+            var xAxisData4 = [];
+            var population5 = [];
+            var xAxisData5 = [];
+
+
+            while (count < length) {
+                var LocationId = ($('#LocationID')[0].options[count].value);
+                var Location = $('#LocationID')[0].options[count].text;
+                //-----------Bind all warehouse data in the graph Start-----------------------------------------------------------
+
+                if (count == 1) {
+
+                    var request = $.ajax({
+                        url: "/Dashb_RTWarehouseWiseStock/GetFIFOSystem?id=" + LocationId + "&ItemId=" + ItemId,
+                        contentType: 'application/json;',
+                        dataType: 'json',
+                        type: "POST",
+                        success: function (result) {
+                            Location = $('#LocationID')[0].options[1].text;
+                            $('#lblwarehouse1').text(Location);
+                            ond = result;
+                            var parsed = $.parseJSON(result);
+                            var dataLength = parsed.length;
+                            var serialFinal1 = {
+                                name: "Quantity",
+                                data: [],
+                                color: 'black',
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
+                            };
+                            $.each(parsed, function (i, jsondata) {
+
+                                var dynamicColors = function () {
+                                    var r = Math.floor(Math.random() * 255);
+                                    var g = Math.floor(Math.random() * 255);
+                                    var b = Math.floor(Math.random() * 255);
+                                    return "rgb(" + r + "," + g + "," + b + ")";
+                                }
+
+                                var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
+                                if (jsondata.ReceivedQty != null) {
+                                    serialFinal1.data.push(parseFloat(jsondata.ReceivedQty));
+                                } else {
+                                    serialFinal1.data.push(parseFloat(0));
+                                }
+
+                                coloR.push(dynamicColors());
+                                serialFinal1.color = getRandomColor();
+                                xAxisData1.push(jsondata.GRNDate + ' (' + jsondata.ItemName + ' ' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
+
+                            });
+                            population1.push(serialFinal1);
+                            Highcharts.chart('warehouse1', {
+                                chart: {
+                                    type: 'bar'
+                                },
+                                title: {
+                                    text: 'Location: ' + Location
+                                },
+                                xAxis: {
+                                    categories: xAxisData1
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        style: {
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
+                                        },
+                                        text: 'Quantity (Kg)'
+                                    },
+                                    stackLabels: {
+                                        enabled: false,  //true
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        }
+                                    },
+
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+                                credits: {
+                                    enabled: false
+                                },
+                                tooltip: {
+                                    shared: true
+                                },
+
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',  //'percent',
+                                        dataLabels: {
+                                            enabled: false
+                                        }
+                                    },
+                                },
+                                series: population1
+                            });
+
+                            if (dataLength > 0) {
+                                $("#warehouse1").show();
+                                $("#NoDataFound1").hide();
+                            } else {
+                                $("#warehouse1").hide();
+                                $("#NoDataFound1").show();
+
+                            }
+                        }
+
+                    });
+                }
+                else if (count == 2) {
+                    var request = $.ajax({
+                        url: "/Dashb_RTWarehouseWiseStock/GetFIFOSystem?id=" + LocationId + "&ItemId=" + ItemId,
+                        contentType: 'application/json;',
+                        dataType: 'json',
+                        type: "POST",
+                        success: function (result) {
+                            Location = $('#LocationID')[0].options[2].text;
+                            $('#lblwarehouse2').text(Location);
+                            ond = result;
+                            var parsed = $.parseJSON(result);
+                            var dataLength = parsed.length;
+
+                            var serialFinal2 = {
+                                name: "Quantity",
+                                data: [],
+                                color: 'black',
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
+                            };
+                            $.each(parsed, function (i, jsondata) {
+
+                                var dynamicColors = function () {
+                                    var r = Math.floor(Math.random() * 255);
+                                    var g = Math.floor(Math.random() * 255);
+                                    var b = Math.floor(Math.random() * 255);
+                                    return "rgb(" + r + "," + g + "," + b + ")";
+                                }
+
+                                var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
+                                if (jsondata.ReceivedQty != null) {
+                                    serialFinal2.data.push(parseFloat(jsondata.ReceivedQty));
+                                } else {
+                                    serialFinal2.data.push(parseFloat(0));
+                                }
+
+                                coloR.push(dynamicColors());
+                                serialFinal2.color = getRandomColor();
+                                xAxisData2.push(jsondata.GRNDate + ' (' + jsondata.ItemName + ' ' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
+
+                            });
+                            population2.push(serialFinal2);
+                            Highcharts.chart('warehouse2', {
+                                chart: {
+                                    type: 'bar'
+                                },
+                                title: {
+                                    text: 'Location: ' + Location
+                                },
+                                xAxis: {
+                                    categories: xAxisData2
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        style: {
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
+                                        },
+                                        text: 'Quantity (Kg)'
+                                    },
+                                    stackLabels: {
+                                        enabled: false,  //true
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        }
+                                    },
+
+                                },
+                                credits: {
+                                    enabled: false
+                                },
+                                tooltip: {
+                                    shared: true
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',  //'percent',
+                                        dataLabels: {
+                                            enabled: false
+                                        }
+                                    },
+                                },
+                                series: population2
+                            });
+
+                            if (dataLength > 0) {
+                                $("#warehouse2").show();
+                                $("#NoDataFound2").hide();
+                            } else {
+                                $("#warehouse2").hide();
+                                $("#NoDataFound2").show();
+
+                            }
+                        }
+                    });
+                }
+                else if (count == 3) {
+                    var request = $.ajax({
+                        url: "/Dashb_RTWarehouseWiseStock/GetFIFOSystem?id=" + LocationId + "&ItemId=" + ItemId,
+                        contentType: 'application/json;',
+                        dataType: 'json',
+                        type: "POST",
+                        success: function (result) {
+                            Location = $('#LocationID')[0].options[3].text;
+                            $('#lblwarehouse3').text(Location);
+                            ond = result;
+                            var parsed = $.parseJSON(result);
+                            var dataLength = parsed.length;
+                            var serialFinal3 = {
+                                name: "Quantity",
+                                data: [],
+                                color: 'black',
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
+                            };
+                            $.each(parsed, function (i, jsondata) {
+
+                                var dynamicColors = function () {
+                                    var r = Math.floor(Math.random() * 255);
+                                    var g = Math.floor(Math.random() * 255);
+                                    var b = Math.floor(Math.random() * 255);
+                                    return "rgb(" + r + "," + g + "," + b + ")";
+                                }
+
+                                var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
+                                if (jsondata.ReceivedQty != null) {
+                                    serialFinal3.data.push(parseFloat(jsondata.ReceivedQty));
+                                } else {
+                                    serialFinal3.data.push(parseFloat(0));
+                                }
+
+                                coloR.push(dynamicColors());
+                                serialFinal3.color = getRandomColor();
+                                xAxisData3.push(jsondata.GRNDate + ' (' + jsondata.ItemName + ' ' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
+
+                            });
+                            population3.push(serialFinal3);
+                            Highcharts.chart('warehouse3', {
+                                chart: {
+                                    type: 'bar'
+                                },
+                                title: {
+                                    text: 'Location: ' + Location
+                                },
+                                xAxis: {
+                                    categories: xAxisData3
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        style: {
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
+                                        },
+                                        text: 'Quantity (Kg)'
+                                    },
+                                    stackLabels: {
+                                        enabled: false,  //true
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        }
+                                    },
+
+                                },
+
+                                credits: {
+                                    enabled: false
+                                },
+
+                                tooltip: {
+                                    shared: true
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',  //'percent',
+                                        dataLabels: {
+                                            enabled: false
+                                        }
+                                    },
+                                },
+                                series: population3
+                            });
+                            if (dataLength > 0) {
+                                $("#warehouse3").show();
+                                $("#NoDataFound3").hide();
+                            } else {
+                                $("#warehouse3").hide();
+                                $("#NoDataFound3").show();
+
+                            }
+                        }
+                    });
+                }
+                else if (count == 4) {
+                    var request = $.ajax({
+                        url: "/Dashb_RTWarehouseWiseStock/GetFIFOSystem?id=" + LocationId + "&ItemId=" + ItemId,
+                        contentType: 'application/json;',
+                        dataType: 'json',
+                        type: "POST",
+                        success: function (result) {
+                            Location = $('#LocationID')[0].options[4].text;
+                            $('#lblwarehouse4').text(Location);
+                            ond = result;
+                            var parsed = $.parseJSON(result);
+                            var dataLength = parsed.length;
+
+                            var serialFinal4 = {
+                                name: "Quantity",
+                                data: [],
+                                color: 'black',
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
+                            };
+                            $.each(parsed, function (i, jsondata) {
+
+                                var dynamicColors = function () {
+                                    var r = Math.floor(Math.random() * 255);
+                                    var g = Math.floor(Math.random() * 255);
+                                    var b = Math.floor(Math.random() * 255);
+                                    return "rgb(" + r + "," + g + "," + b + ")";
+                                }
+
+                                var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
+                                if (jsondata.ReceivedQty != null) {
+                                    serialFinal4.data.push(parseFloat(jsondata.ReceivedQty));
+                                } else {
+                                    serialFinal4.data.push(parseFloat(0));
+                                }
+
+                                coloR.push(dynamicColors());
+                                serialFinal4.color = getRandomColor();
+                                xAxisData4.push(jsondata.GRNDate + ' (' + jsondata.ItemName + ' ' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
+
+                            });
+                            population4.push(serialFinal4);
+                            Highcharts.chart('warehouse4', {
+                                chart: {
+                                    type: 'bar'
+                                },
+                                title: {
+                                    text: 'Location: ' + Location
+                                },
+                                xAxis: {
+                                    categories: xAxisData4
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        style: {
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
+                                        },
+                                        text: 'Quantity (Kg)'
+                                    },
+                                    stackLabels: {
+                                        enabled: false,  //true
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        }
+                                    },
+
+                                },
+                                credits: {
+                                    enabled: false
+                                },
+                                tooltip: {
+                                    shared: true
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',  //'percent',
+                                        dataLabels: {
+                                            enabled: false
+                                        }
+                                    },
+                                },
+                                series: population4
+                            });
+
+                            if (dataLength > 0) {
+                                $("#warehouse4").show();
+                                $("#NoDataFound4").hide();
+                            } else {
+                                $("#warehouse4").hide();
+                                $("#NoDataFound4").show();
+
+                            }
+                        }
+                    });
+                }
+                else if (count == 5) {
+                    var request = $.ajax({
+                        url: "/Dashb_RTWarehouseWiseStock/GetFIFOSystem?id=" + LocationId + "&ItemId=" + ItemId,
+                        contentType: 'application/json;',
+                        dataType: 'json',
+                        type: "POST",
+                        success: function (result) {
+                            Location = $('#LocationID')[0].options[5].text;
+                            $('#lblwarehouse5').text(Location);
+                            ond = result;
+                            var parsed = $.parseJSON(result);
+                            var dataLength = parsed.length;
+
+                            var serialFinal5 = {
+                                name: "Quantity",
+                                data: [],
+                                color: 'black',
+                                tooltip: {
+                                    valueSuffix: ' KG'
+                                }
+                            };
+                            $.each(parsed, function (i, jsondata) {
+
+                                var dynamicColors = function () {
+                                    var r = Math.floor(Math.random() * 255);
+                                    var g = Math.floor(Math.random() * 255);
+                                    var b = Math.floor(Math.random() * 255);
+                                    return "rgb(" + r + "," + g + "," + b + ")";
+                                }
+
+                                var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
+                                if (jsondata.ReceivedQty != null) {
+                                    serialFinal5.data.push(parseFloat(jsondata.ReceivedQty));
+                                } else {
+                                    serialFinal5.data.push(parseFloat(0));
+                                }
+
+                                coloR.push(dynamicColors());
+                                serialFinal5.color = getRandomColor();
+                                xAxisData5.push(jsondata.GRNDate + ' (' + jsondata.ItemName + ' ' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
+
+                            });
+                            population5.push(serialFinal5);
+                            Highcharts.chart('warehouse5', {
+                                chart: {
+                                    type: 'bar',
+                                },
+                                title: {
+                                    text: 'Location: ' + Location /*Title*/
+                                },
+                                xAxis: {
+                                    categories: xAxisData5
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        style: {
+                                            fontWeight: 'bold',
+                                            fontSize: '12px',
+                                            color: 'black'
+                                        },
+
+                                        text: 'Quantity (Kg)'/*Title*/
+                                    },
+                                    stackLabels: {
+                                        enabled: false,  //true
+                                        style: {
+                                            fontWeight: 'bold',
+                                            color: ( // theme
+                                                Highcharts.defaultOptions.title.style &&
+                                                Highcharts.defaultOptions.title.style.color
+                                            ) || 'gray'
+                                        }
+                                    },
+
+                                },
+                                credits: {
+                                    enabled: false
+                                },
+                                tooltip: {
+                                    shared: true
+                                },
+                                legend: {
+                                    enabled: false
+                                },
+                                plotOptions: {
+                                    column: {
+                                        stacking: 'normal',  //'percent',
+                                        dataLabels: {
+                                            enabled: false
+                                        }
+                                    },
+                                },
+                                series: population5
+                            });
+                            if (dataLength > 0) {
+                                $("#warehouse5").show();
+                                $("#NoDataFound5").hide();
+                            } else {
+                                $("#warehouse5").hide();
+                                $("#NoDataFound5").show();
+
+                            }
+                        }
+                    });
+                }
+                //-----------Bind all warehouse data in the graph End-------------------------------------------------------------
+
+                count++;
+            }
+        }
+
+        $(".spinner-wrapper").fadeOut("slow");
+
+    });
+
+</script>

@@ -1,0 +1,225 @@
+﻿@model InVanWebApp_BO.GRN_BO
+@{
+    ViewBag.Title = "GRNReport";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*Rahul updated title tag text 'Received' to 'Dispatch' 16-02-23.*@
+    <title>GRN Report</title>
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            @*Rahul updated heading tag text 'Received' to 'Dispatch' 16-02-23.*@
+            <h4 class="page-title">GRN Report</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Reports</a>
+                    </li>
+                    @*Rahul updated anchor tag text 'Received' to 'Dispatch' 16-02-23.*@
+                    <li class="breadcrumb-item active">GRN Report</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="padding-top:15px;">
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>From Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!--Rahul added fromDate 04-01-2023.-->
+                                        @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                        <!--Rahul added fromDateValidate 06-01-2023.-->
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>To Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <!--Rahul added toDate 04-01-2023.-->
+                                        @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                        <!--Rahul added toDateValidate 06-01-2023.-->
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
+                                        <a id="ExportPdf" href="@Url.Action("ExprotAsPDFForGRNReport", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForGRNReport", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 ms-1">
+                                        <label>GRN Number:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.DropDownList("GRNCode", (IEnumerable<SelectListItem>)ViewData["GRNReportdd"], "--Select--", new { @class = "form-control", @id = "GRNCodeId", onchange = "SelectedIndexChangedItem()" })
+                                        @Html.ValidationMessage("GRNCode", "", new { id = "GRNCodeValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div style="margin-top:25px;">
+                                    <!--Rahul added class  display nowrap, style="width:100%" 05-01-2023.-->
+                                    <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblGRNReport" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align:center">Sr.No.</th>
+                                                <th style="text-align:center">Item Name</th>
+                                                <th style="text-align:center">Item Code</th>
+                                                <th style="text-align:center">GRN Date</th>
+                                                <th style="text-align:center">GRN Code</th>
+                                                <th style="text-align:center">Order Quantity</th>
+                                                <th style="text-align:center">Received Quantity</th>
+                                                <th style="text-align:center">Inward Quantity</th>
+                                                <th style="text-align:center">Inward Note Number</th>
+                                                <th style="text-align:center">Inward QC Number</th>
+                                                <th style="text-align:center">Delivery Address</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+@Html.Raw(TempData["Success"])
+
+@section scripts{
+
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#ExportPdf').hide();
+            $('#ExportExcel').hide();
+            $('#tblGRNReport').hide();
+        });
+
+        //function SelectedIndexChangedWearhouse() {
+        //    $('#WearhouseValidate').hide();
+        //}
+
+        function SelectedIndexChangedItem() {
+            $('#ItemValidate').hide();
+        }
+
+        function OnChangedFromDate() {
+            $('#fromDateValidate').hide();
+        }
+
+        function OnChangedToDate() {
+            $('#toDateValidate').hide();
+        }
+
+        $("#btnGo").on('click', function () {
+
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+
+            if (fromDate == null || fromDate == "") {
+                $('#fromDateValidate').text('Select from date!');
+                $('#fromDateValidate').show();
+                $("#fromDate").focus();
+                return;
+            }
+
+            if (toDate == null || toDate == "") {
+                $('#toDateValidate').text('Select to date!');
+                $('#toDateValidate').show();
+                $("#toDate").focus();
+                return;
+            }
+
+            if (fromDate > toDate) {
+                alert('Invalid Date! To date is less than from date!');
+                $('#fromDate').focus();
+                return;
+            }
+
+
+            var CheckItem = $('#GRNCodeId').val();
+            if (CheckItem == '' || CheckItem == null) {
+                CheckItem = 0;
+            }
+
+            $('#ExportPdf').show();
+            $('#ExportExcel').show();
+            $('#tblGRNReport').show();
+            var flag = 0;
+            $('#tblGRNReport').dataTable().fnDestroy();
+            var t = $('#tblGRNReport').DataTable({
+                //"processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "sAjaxSource": "/Report/GetGRNReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem,//+ "&LocationId=" + warehouse,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "pageLength": 10,
+                "scrollX": true,
+                "columns": [
+                    { "data": "SrNo", "autoWidth": true },
+                    { "data": "ItemName", "autoWidth": true },
+                    { "data": "ItemCode", "autoWidth": true },
+                    { "data": "GRN_Date", "autoWidth": true },
+                    { "data": "GRNCode", "autoWidth": true },
+                    { "data": "OrderQty", "autoWidth": true },
+                    { "data": "ReceivedQty", "autoWidth": true },
+                    { "data": "InwardQty", "autoWidth": true },
+                    { "data": "InwardNoteNumber", "autoWidth": true },
+                    { "data": "InwardQCNumber", "autoWidth": true },
+                    { "data": "DeliveryAddress", "autoWidth": true }
+
+                ]
+            });
+            t.on('order.dt search.dt', function () {
+                let i = 1;
+
+                t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+
+        });
+
+    </script>
+}

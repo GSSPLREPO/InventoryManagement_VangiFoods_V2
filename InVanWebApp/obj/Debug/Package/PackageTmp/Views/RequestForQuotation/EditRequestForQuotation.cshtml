@@ -1,0 +1,571 @@
+﻿@model InVanWebApp_BO.RequestForQuotationBO
+
+@{
+    ViewBag.Title = "EditRequestForQuotation";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+@using (Html.BeginForm("EditRequestForQuotation", "RequestForQuotation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Request For Quotation</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.RequestForQuotationId)
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("RFQ Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.RFQNO, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.RFQNO, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.Label("Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Currency")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", type = "text", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.CurrencyName, "", new { @class = "error mt-2 text-danger" })
+                    @Html.HiddenFor(model => model.CurrencyID)
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.CurrencyName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.Label("Delivery Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Bidding Start Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.BiddingStartDate, "{0:yyyy-MM-dd}", new { @id = "BiddingStartDate", @class = "form-control form-control-sm date1", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.BiddingStartDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.Label("Bidding End Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.BiddingEndDate, "{0:yyyy-MM-dd}", new { @id = "BiddingEndDate", @class = "form-control form-control-sm date1", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.BiddingEndDate, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Location Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control form-control-sm ", onchange = "SelectedIndexChangedLocation($(this).val())" })
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm ", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Delivery Details<span style="color:red">*</span></h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm ", placeholder = "Delivery address", style = "height:100px" })
+                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">@Html.Label("Supplier Name")<span style="color:red">*</span></h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.DropDownListFor(model => model.CompanyName, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm js-example-basic-multiple mult-sl", multiple = "multiple", onchange = "SelectedIndexChanged($(this).val())" })
+                                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "error mt-2 text-danger" })   @*Rahul added class mult-sl in CompanyName 13-02-23.*@
+                                @Html.TextBoxFor(model => model.VendorIDs, new { style = "display:none" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Indent Number")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.HiddenFor(model => model.IndentID)
+                    @Html.ValidationMessageFor(model => model.IndentNumber, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-4 d-none">
+                    @Html.TextBoxFor(model => model.IndentNumber, new { @class = "form-control", Value = "", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                    <table class="table table-hover" id="submissionTable">
+                                        <thead>
+                                            <tr>
+                                                <th class="sortStyle d-none">Item Id</th>
+                                                <th class="sortStyle">Item Code</th>
+                                                <th class="sortStyle">Item</th>
+                                                <th class="sortStyle">Quantity<span style="color:red">*</span></th>
+                                                <th class="sortStyle">Units</th>
+                                                <th class="sortStyle">Delivery Date<span style="color:red">*</span></th>
+                                                <th class="sortStyle">HSN Code</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myTableBody">
+                                            @{ int c = 1;
+                                                foreach (var item in Model.itemDetails)
+                                                {
+                                                    <tr id="tablerow_@c">
+                                                        <td class="col-md-4 d-none">
+                                                            @Html.TextBox("ItemID_" + c, item.Item_ID, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                        </td>
+                                                        <td class="col-md-4">
+                                                            @Html.TextBox("Item_Code_" + c, item.Item_Code, new { @class = "form-control form-control-sm ", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @*Rahul updated in TextBox "RequiredQuantity_", aded @readonly = "readonly" 17-02-23.*@
+                                                            @Html.TextBox("RequiredQuantity_" + c, item.ItemQuantity, new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", onchange = "OnChangeQuantity($(this).val(),id)", maxlength = "8", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("DeliveryDate_" + c, item.DeliveryDate, "{0:yyyy-MM-dd}", new
+                                                       {
+                                                           @id = "DeliveryDate_" + c,
+                                                           @class = "form-control form-control-sm date1",
+                                                           type = "date",
+                                                           style = "height:30px;width:130px;"
+                                                       })
+                                                            @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("HSN_Code_" + c, item.HSN_Code, "", new { @class = "form-control form-control-sm ", style = "height:30px;width:100px;", onkeypress = "return isNumberKey(event)", maxlength = "10" })
+                                                        </td>
+                                                    </tr>
+                                                    { c++; }
+                                                }
+
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Remarks")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "100" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                    <div class="card h-100 mb-2">
+                        <div class="card-body">
+                            <h4 class="card-title" style="color:darkcyan">Attach Signature</h4>
+                            <hr />
+                            <div class="form-group">
+                                @Html.TextBoxFor(x => x.Signature, new { id = "file", type = "file", onchange = "return fileValidation()" })
+                                @*<input type="file" id="file" name="Signature"
+                                    onchange="return fileValidation()"/>*@
+                                <!-- Image preview -->
+                                <span style="color:green">@ViewBag.Message</span>
+                                <br />
+                                <br />
+                                <center>
+                                    <div id="imagePreview">
+                                        <img src="/Signatures/@Model.Signature" style="height:10%;width:20%" />
+                                        @Html.HiddenFor(x => x.Signature, new { id = "tempSign" })
+                                    </div>
+
+                                </center>
+                            </div>
+                        </div>
+                        <p style="padding-left: 5%;color:red;">(Note: Only .png,.jpeg and jpg are allowed!)</p>
+                    </div>
+
+                </div>
+            </div>
+
+            <a href="@Url.Action("Index","RequestForQuotation")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;">
+                Back To List
+            </a>
+            @*<button type="submit" id="btn_SaveDraft" class="btn btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>*@
+            <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="UpdateBtnClick()">Update</button>
+        </div>
+    </div>
+
+}
+@Html.Raw(TempData["Success"])
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //=== Rahul added 'tempArr' for bind multiple 'CompanyName' by 'VendorIDs' 17-02-23 start.
+        var tempArr = [];
+        var selectedValues = $("#VendorIDs").val().split(',');
+        var len = selectedValues.length;
+        i = 0;
+        while (i < len) {
+            tempArr.push(selectedValues[i]);
+            i++;
+        }
+        $('.js-example-basic-multiple').val(tempArr).select2();
+        //=== Rahul added 'tempArr' for bind multiple 'CompanyName' by 'VendorIDs' 17-02-23 end.
+
+        $('.mult-sl').select2({
+            placeholder: 'Select'
+        })
+
+        $.validator.setDefaults({
+            ignore: []
+        });
+
+        $('#CompanyName').validate({
+            errorElement: 'span',
+            errorClass: 'error',
+            rules: {
+                singleselect: 'required',
+                multipleselect: 'required',
+                name: 'required'
+            },
+
+            highlight: function (element, errorClass, validClass) {
+
+                var elem = $(element);
+
+                if (elem.hasClass('s-select2')) {
+                    var isMulti = (!!elem.attr('multiple')) ? 's' : '';
+                    elem.siblings('.mult-sl').find('.select2-choice' + isMulti + '').addClass(errorClass);
+                } else {
+                    elem.addClass(errorClass);
+                }
+
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                var elem = $(element);
+
+                if (elem.hasClass('mult-sl')) {
+                    elem.siblings('.mult-sl').find('.select2-choice').removeClass(errorClass);
+                } else {
+                    elem.removeClass(errorClass);
+                }
+            }
+        });
+
+        $('select').on('change', function () {
+            $(this).valid();
+        });
+
+        //deliveryDate();
+        //biddingStartDate();
+        //biddingEndDate();
+
+        var fileName = $('#tempSign').val();
+
+        //Get a reference to our file input
+        const fileInput = document.querySelector('input[type="file"]');
+        var filePath = '/Signatures/' + fileName;
+
+        // Create a new File object
+        const myFile = new File([filePath], fileName, {
+            type: 'image/jpeg/jpg/png'
+        });
+
+        // Now let's create a DataTransfer to get a FileList
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(myFile);
+        fileInput.files = dataTransfer.files;
+    });
+
+    function SelectedIndexChanged(id) {
+        var selectedOption;
+        selectedOption = document.getElementById("CompanyName").selectedIndex;
+        document.getElementById("VendorIDs").value = id;
+        //console.log(id);
+    }
+
+    //---BiddingStartDate todaysDate start ------
+    function deliveryDate() {
+        const d = new Date();
+        d.setYear(d.getFullYear());
+        var id = "DeliveryDate";
+        var tempDate = d.toISOString().split("T")[0];
+        $("#" + id).val(tempDate);
+        document.getElementById(id).setAttribute("min", tempDate.toString());
+    }
+    //---DeliveryDate todaysDate end ------
+
+    //---BiddingStartDate todaysDate start ------
+    function biddingStartDate() {
+        //debugger
+        const d = new Date();
+        d.setYear(d.getFullYear());
+        var id = "BiddingStartDate";
+        var tempDate = d.toISOString().split("T")[0];
+        $("#" + id).val(tempDate);
+        document.getElementById(id).setAttribute("min", tempDate.toString());
+    }
+
+    //---rahul added ValidMsgBiddingStartDate 13-02-23.
+    function ValidMsgBiddingStartDate() {
+
+        $('#BiddingEndDate').focus();
+    }
+    //---BiddingStartDate todaysDate end ------
+
+    //---BiddingEndDate todaysDate start ------
+    function biddingEndDate() {
+        const d = new Date();
+        d.setYear(d.getFullYear());
+        var id = "BiddingEndDate";
+        var tempDate = d.toISOString().split("T")[0];
+        $("#" + id).val(tempDate);
+        document.getElementById(id).setAttribute("min", tempDate.toString());
+    }
+
+    //---rahul added ValidMsgBiddingEndDate 13-02-23.
+    function ValidMsgBiddingEndDate() {
+        debugger
+        var startDate = $("#BiddingStartDate").val();
+        var endDate = $("#BiddingEndDate").val();
+
+        if (startDate > endDate) {
+            alert('Bidding end date should not be greater than to start date!');
+            $('#BiddingEndDate').focus();
+            event.preventDefault();
+            return;
+        }
+    }
+    //---BiddingEndDate todaysDate end ------
+
+    //---DeliveryDate todaysDate start ------
+    function todaysDate(rowCount) {
+        const d = new Date();
+        d.setYear(d.getFullYear());
+        var i = 0;
+        while (i < rowCount) {
+            var id = "DeliveryDate_" + i;
+            var tempDate = d.toISOString().split("T")[0];
+            $("#" + id).val(tempDate);
+            document.getElementById(id).setAttribute("min", tempDate.toString());
+            i++;
+        }
+    }
+    //---DeliveryDate todaysDate end ------
+
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    var TxtItemDetails = "";
+
+    function UpdateBtnClick() {
+        var tableLength = document.getElementById('submissionTable').rows.length;
+        var flag = 0, i = 1, rowNo = 0;
+        if (tableLength > 1) {
+            while (i <= tableLength - 1) {
+                var PhyQty = document.getElementById("RequiredQuantity_" + i).value; //Change this with Requested qty
+                PhyQty = parseFloat(PhyQty);
+
+                if (PhyQty != 0) {
+                    flag = 1;
+                }
+
+                i++;
+            }
+
+            if (flag != 1) {
+                alert("Required quantity is zero for listed items, Cannot create RFQ!");
+                $("#RequiredQuantity_1").focus();
+                $('#btnSave').prop('disabled', true);
+                return;
+            }
+            else {
+                $('#btnSave').prop('disabled', false);
+               // todaysDate(tableLength);   //Rahul added 17-02-23.
+            }
+        }
+        ValidMsgBiddingEndDate();
+        createJson();
+    };
+    //==========end===============
+
+    function SelectedIndexChangedLocation(id) {
+        var selectedOptionLocationName, locationName;
+        selectedOptionLocationName = document.getElementById("LocationId").selectedIndex;
+        locationName = document.getElementById("LocationId").options[selectedOptionLocationName].innerText;
+        document.getElementById("LocationName").value = locationName;
+
+        $.ajax({
+            type: "POST",
+            url: `/RequestForQuotation/BindLocationMaster?id=` + id,
+            data: "{}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                debugger;
+                //console.log(result);
+                var deliveryAdd = result[0].DeliveryAddress;
+                $("#DeliveryAddress").val(deliveryAdd);
+            }
+        });
+    }
+
+    //---OnChangeQuantity start ------
+    function OnChangeQuantity(value, id) {
+        $('#btnSave').prop('disabled', false);
+    }
+    //---OnChangeQuantity end ------
+
+    function fileValidation() {
+        var fileInput =
+            document.getElementById('file');
+
+        var filePath = fileInput.value;
+
+        // Allowing file type
+        var allowedExtensions =
+            /(\.jpg|\.jpeg|\.png)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Invalid file type');
+            fileInput.value = '';
+            return false;
+        }
+        else {
+
+            // Image preview
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById(
+                        'imagePreview').innerHTML =
+                        '<img src="' + e.target.result
+                        + '" style="height:10%;width:20%" />';
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    }
+    //===================end=======================//
+
+    /*Rahul : Add Javascript validation on 12 Oct 2022.*/
+    function isNumberKey(evt) {
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+
+    //==================createJson Set value in txtItemDetails onCick of Save/Update button======--------
+    function createJson() {
+        var table = document.getElementById('submissionTable');
+        var rowCount = table.rows.length;
+        var i = 0;
+        TxtItemDetails = "[";
+        for (i = 1; i <= rowCount - 1; i++) {
+            var ItemID = (document.getElementById("ItemID_" + i)).value;
+            var ItemCode = (document.getElementById("Item_Code_" + i)).value;
+            var ItemName = (document.getElementById("ItemName_" + i)).value;
+            //var RequiredQty = (document.getElementById("RequiredQuantity_" + i)).innerHTML.split(" ")[0];
+            var RequiredQty = $("#RequiredQuantity_" + i).val();
+            RequiredQty = (RequiredQty == null || RequiredQty == '') ? 0 : RequiredQty;
+            var Unit = (document.getElementById("ItemUnit_" + i)).value;
+            var DeliveryDate = $("#DeliveryDate_" + i).val();
+            var HSNCode = $("#HSN_Code_" + i).val();
+
+            TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID + ", \"Item_Code\":\"" + ItemCode +
+                "\", \"ItemName\": \"" + ItemName + "\", \"RequiredQty\": " + RequiredQty +
+                ", \"ItemUnit\": \"" + Unit + "\", \"DeliveryDate\": \"" + DeliveryDate + "\", \"HSNCode\": \"" + HSNCode + "\"";
+
+            if (i == (rowCount - 1))
+                TxtItemDetails = TxtItemDetails + "}";
+            else
+                TxtItemDetails = TxtItemDetails + "},";
+        }
+        TxtItemDetails = TxtItemDetails + "]";
+        $('#TxtItemDetails').val(TxtItemDetails);
+    }
+    //==================createJson Set value in txtItemDetails onCick of Save/Update button end======--------
+</script>
+
+
+<style>
+    /*//--- '.js-example-basic-multiple .mult-sl' start rahul added 13-02-23.*/
+    textarea.select2-search__field {
+        position: absolute;
+    }
+</style>

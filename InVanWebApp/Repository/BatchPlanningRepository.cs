@@ -274,8 +274,8 @@ namespace InVanWebApp.Repository
                             ActualRequirement = Convert.ToDecimal(reader["ActualRequirement"]),
                             StockInHand = Convert.ToDecimal(reader["StockInHand"]),
                             ToBeProcured = Convert.ToDecimal(reader["ToBeProcured"]),
-                            SalesOrderQty = Convert.ToDecimal(reader["OrderedQty"])
-
+                            SalesOrderQty = Convert.ToDecimal(reader["OrderedQty"]),
+                            UnitName =Convert.ToString(reader["ItemUnit"])  //Rahul added 01-06-23.
                         };
                         resultList.Add(result);
                     }
