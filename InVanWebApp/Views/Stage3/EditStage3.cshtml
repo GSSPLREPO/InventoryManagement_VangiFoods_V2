@@ -44,11 +44,11 @@
             <div class="col-md-4">
                 @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 d-none">
                 @Html.Label("Packing Unit")
             </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.PackingUnit, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsAlphabets(event);" })
+            <div class="col-md-4 d-none">
+                @Html.TextBoxFor(model => model.PackingUnit, new { @class = "form-control form-control-sm d-none", maxlength = "8", @onkeypress = "return IsAlphabets(event);" })
             </div>
         </div>
 
@@ -69,16 +69,17 @@
 
         <div class="row">
             <div class="col-md-2">
-                @Html.Label("Consistancy in CM (°C)")
+                @Html.Label("Consistancy in CM ")
             </div>
             <div class="col-md-4">
                 @Html.TextBoxFor(model => model.Consistency, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsNum(event);" })
             </div>
             <div class="col-md-2">
-                @Html.Label("Packing Size")
+                @Html.Label("Packing Size (Kg)")
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                @*Rahul added onchange = "calculateFinalWeight();" 02-06-2023.*@
+                @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", onchange = "calculateFinalWeight();" })
             </div>
         </div>
 
@@ -87,7 +88,8 @@
                 @Html.Label("No Of Packets")
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.NoOfPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                @*Rahul added onchange = "calculateFinalWeight();" 02-06-2023.*@
+                @Html.TextBoxFor(model => model.NoOfPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", onchange = "calculateFinalWeight();" })
             </div>
             <div class="col-md-2">
                 @Html.Label("Final Weight")
@@ -98,17 +100,20 @@
         </div>
 
         <div class="row">
+            @*Rahul moved "Rejected Packets" one step up 02-06-2023.*@
+            <div class="col-md-2">
+                @Html.Label("Rejected Packets")
+            </div>
+            <div class="col-md-4">
+                @*Rahul moved "onchange = "calculateFinalPackets();"" one step up 02-06-2023.*@
+                @Html.TextBoxFor(model => model.RejectedPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", onchange = "calculateFinalPackets();" })
+            </div>
+            @*Rahul moved "Final Packets" one step down 02-06-2023.*@
             <div class="col-md-2">
                 @Html.Label("Final Packets")
             </div>
             <div class="col-md-4">
                 @Html.TextBoxFor(model => model.FinalPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Rejected Packets")
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.RejectedPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
             </div>
         </div>
 
@@ -227,4 +232,19 @@
             return false;
         }
     }
+    /* Rahul added onchange = "calculateFinalWeight();" 02-06-2023. */
+    function calculateFinalWeight() {
+        var PackingSize = $('#PackingSize').val();
+        var NoOfPackets = $('#NoOfPackets').val();
+        var FinalWeight = PackingSize * NoOfPackets;
+        $('#FinalWeight').val(FinalWeight);
+    }
+    /* Rahul added onchange = "calculateFinalPackets();" 02-06-2023. */
+    function calculateFinalPackets() {
+        var NoOfPackets = $('#NoOfPackets').val();
+        var RejectedPackets = $('#RejectedPackets').val();
+        var FinalPackets = NoOfPackets - RejectedPackets;
+        $('#FinalPackets').val(FinalPackets);
+    }
+
 </script>
