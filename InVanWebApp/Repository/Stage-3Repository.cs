@@ -42,6 +42,7 @@ namespace InVanWebApp.Repository
                             ItemId= Convert.ToInt32(reader["ItemId"]),
                             Date = Convert.ToDateTime(reader["Date"]),
                             ProductName = reader["ProductName"].ToString(),
+                            LotNumber = reader["LotNumber"].ToString(),  //Rahul added 'LotNumber' 05-06-2023.
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
                             PackingHopperTemp = reader["PackingHopperTemp"].ToString(),
                             ChillerTemp = reader["ChillerTemp"].ToString(),
@@ -88,6 +89,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Date", model.Date);
                     cmd.Parameters.AddWithValue("@ItemId", model.ItemId);
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@LotNumber", model.LotNumber); //Rahul added 'LotNumber' 05-06-2023.
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
                     cmd.Parameters.AddWithValue("@PackingHopperTemp", model.PackingHopperTemp);
                     cmd.Parameters.AddWithValue("@ChillerTemp", model.ChillerTemp);
@@ -149,6 +151,7 @@ namespace InVanWebApp.Repository
                             ItemId = Convert.ToInt32(reader["ItemId"]),
                             Date = Convert.ToDateTime(reader["Date"]),
                             ProductName = reader["ProductName"].ToString(),
+                            LotNumber = reader["LotNumber"].ToString(),     //Rahul added 'LotNumber' 05-06-2023.
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
                             PackingHopperTemp = reader["PackingHopperTemp"].ToString(),
                             ChillerTemp = reader["ChillerTemp"].ToString(),
@@ -191,6 +194,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Date", model.Date);
                     cmd.Parameters.AddWithValue("@ItemId", model.ItemId);
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@LotNumber", model.LotNumber); //Rahul added 'LotNumber' 05-06-2023.
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
                     cmd.Parameters.AddWithValue("@PackingHopperTemp", model.PackingHopperTemp);
                     cmd.Parameters.AddWithValue("@ChillerTemp", model.ChillerTemp);

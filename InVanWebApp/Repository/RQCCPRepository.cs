@@ -41,6 +41,7 @@ namespace InVanWebApp.Repository
                             Date = Convert.ToDateTime(reader["Date"]),
                             ItemId = Convert.ToInt32(reader["ItemId"]),
                             ProductName = reader["ProductName"].ToString(),
+                            LotNumber = reader["LotNumber"].ToString(),  //Rahul added 'LotNumber' 05-06-2023.
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
                             WeightofRawBatches = reader["WeightofRawBatches"].ToString(),
                             TansferTimeintoHoldingSilo = reader["TansferTimeintoHoldingSilo"].ToString(),
@@ -80,6 +81,7 @@ namespace InVanWebApp.Repository
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Date", model.Date);
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@LotNumber", model.LotNumber); //Rahul added 'LotNumber' 05-06-2023.
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
                     cmd.Parameters.AddWithValue("@WeightofRawBatches", model.WeightofRawBatches);
                     cmd.Parameters.AddWithValue("@TansferTimeintoHoldingSilo", model.TansferTimeintoHoldingSilo);
@@ -136,6 +138,7 @@ namespace InVanWebApp.Repository
                             Date = Convert.ToDateTime(reader["Date"]),
                             ItemId = Convert.ToInt32(reader["ItemId"]),
                             ProductName = reader["ProductName"].ToString(),
+                            LotNumber = reader["LotNumber"].ToString(),     //Rahul added 'LotNumber' 05-06-2023.
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
                             WeightofRawBatches = reader["WeightofRawBatches"].ToString(),
                             TansferTimeintoHoldingSilo = reader["TansferTimeintoHoldingSilo"].ToString(),
@@ -171,6 +174,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Id", model.Id);
                     cmd.Parameters.AddWithValue("@Date", model.Date);
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@LotNumber", model.LotNumber); //Rahul added 'LotNumber' 05-06-2023.
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
                     cmd.Parameters.AddWithValue("@WeightofRawBatches", model.WeightofRawBatches);
                     cmd.Parameters.AddWithValue("@TansferTimeintoHoldingSilo", model.TansferTimeintoHoldingSilo);

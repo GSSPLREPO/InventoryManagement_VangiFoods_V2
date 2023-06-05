@@ -18,6 +18,8 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Select The Product Name!")]
         public int ItemId { get; set; }
         public string ProductName { get; set; }
+        [Required(ErrorMessage = "Enter The Lot Number!")]
+        public string LotNumber { get; set; } //Rahul added 'LotNumber' 05-06-2023.
         public string RawBatchesNo { get; set; }
         public string PackingHopperTemp { get; set; }
         public string ChillerTemp { get; set; }

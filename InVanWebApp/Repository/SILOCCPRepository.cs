@@ -42,12 +42,12 @@ namespace InVanWebApp.Repository
                             Date = Convert.ToDateTime(reader["Date"]),
                             Time = reader["Time"].ToString(),
                             ProductName = reader["ProductName"].ToString(),
+                            LotNumber = reader["LotNumber"].ToString(),  //Rahul added 'LotNumber' 05-06-2023.
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
                             Weight = reader["Weight"].ToString(),
                             Temperature = reader["Temperature"].ToString(),
                             Pressure = reader["Pressure"].ToString(),
-                            Remarks = reader["Remarks"].ToString()
-                            
+                            Remarks = reader["Remarks"].ToString() 
                         };
                         SILOCCPList.Add(SILOCCP);
 
@@ -84,6 +84,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@ItemId", model.ItemId);
                     cmd.Parameters.AddWithValue("@Time", model.Time);
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@LotNumber", model.LotNumber); //Rahul added 'LotNumber' 05-06-2023.
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
                     cmd.Parameters.AddWithValue("@Weight", model.Weight);
                     cmd.Parameters.AddWithValue("@Temperature", model.Temperature);
@@ -141,11 +142,12 @@ namespace InVanWebApp.Repository
                             Date = Convert.ToDateTime(reader["Date"]),
                             Time = reader["Time"].ToString(),
                             ProductName = reader["ProductName"].ToString(),
+                            LotNumber = reader["LotNumber"].ToString(),     //Rahul added 'LotNumber' 05-06-2023.
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
                             Weight = reader["Weight"].ToString(),
                             Temperature = reader["Temperature"].ToString(),
                             Pressure = reader["Pressure"].ToString(),
-                            Remarks = reader["Remarks"].ToString()
+                            Remarks = reader["Remarks"].ToString()  
                         };
                     }
                     con.Close();
@@ -178,6 +180,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Date", model.Date);
                     cmd.Parameters.AddWithValue("@Time", model.Time);
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
+                    cmd.Parameters.AddWithValue("@LotNumber", model.LotNumber); //Rahul added 'LotNumber' 05-06-2023.
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
                     cmd.Parameters.AddWithValue("@Weight", model.Weight);
                     cmd.Parameters.AddWithValue("@Temperature", model.Temperature);

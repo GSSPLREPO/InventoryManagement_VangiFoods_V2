@@ -35,8 +35,15 @@
                     @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
-
+            @*//Rahul added 'LotNumber' 05-06-2023.*@
             <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Lot No")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.LotNumber, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                </div>
                 <div class="col-md-2">
                     @Html.Label("Raw Batches No")
                 </div>

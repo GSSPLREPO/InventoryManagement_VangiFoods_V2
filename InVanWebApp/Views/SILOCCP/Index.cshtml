@@ -46,6 +46,7 @@
                                             <th>@Html.DisplayName("Date")</th>
                                             <th>@Html.DisplayName("Time")</th>
                                             <th>@Html.DisplayName("Product Name")</th>
+                                            <th>@Html.DisplayName("Lot No")</th>    @*//Rahul added 'LotNumber' 05-06-2023.*@
                                             <th>@Html.DisplayName("Raw Batches No")</th>
                                             <th>@Html.DisplayName("Weight (KG)")</th>
                                             <th>@Html.DisplayName("Temperture (°C)")</th>
@@ -58,26 +59,27 @@
                                         @*@{int SrNo = 1;}*@
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                @*<td>ID</td>*@
-                                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Time)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.RawBatchesNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Weight)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Temperature)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Pressure)</td>
-                                               
-                                                <td>
+                                        <tr>
+                                            @*<td>ID</td>*@
+                                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Time)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.LotNumber)</td> @*//Rahul added 'LotNumber' 05-06-2023.*@
+                                            <td>@Html.DisplayFor(modelItem => item.RawBatchesNo)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Weight)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Temperature)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Pressure)</td>
 
-                                                    <a href=@Url.Action("EditSILOCCP", "SILOCCP", new { Id = item.ID }) title="Edit SILO CCP">
-                                                        <i class="fa fa-edit text-primary"></i>
-                                                    </a> &emsp;
-                                                    <a href=@Url.Action("Delete", "SILOCCP", new { Id = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete SILO CCP">
-                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            <td>
+
+                                                <a href=@Url.Action("EditSILOCCP", "SILOCCP", new { Id = item.ID }) title="Edit SILO CCP">
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("Delete", "SILOCCP", new { Id = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete SILO CCP">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                             //SrNo++;
                                         }
                                     </tbody>

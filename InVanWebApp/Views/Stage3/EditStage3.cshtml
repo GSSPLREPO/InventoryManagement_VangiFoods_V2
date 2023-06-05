@@ -1,149 +1,154 @@
 ﻿@model InVanWebApp_BO.Stage3BO
 
-@{
-    ViewBag.Title = "EditStage3";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "EditStage3";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-<div class="card">
-    <div class="card-body">
-        <h4>Edit Stage-3</h4>
-        <hr />
-        @Html.ValidationSummary(true)
-        @*@Html.HiddenFor(model => model.ID)*@
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Edit Stage-3</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
+                        @*@Html.HiddenFor(model => model.ID)*@
 
-        <div class="row">
-            @*Date should be auto*@
-            <div class="col-md-2">
-                @Html.Label("Date")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd") })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
-            </div>
+                        <div class="row">
+                            @*Date should be auto*@
+                            <div class="col-md-2">
+                                @Html.Label("Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                            </div>
 
-            <div class="col-md-2">
-                @Html.Label("Product Name")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm" })
-                @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
-            </div>
-        </div>
+                            <div class="col-md-2">
+                                @Html.Label("Product Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm" })
+                                @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        @*//Rahul added 'LotNumber' 05-06-2023.*@
+                        <div class="row">
+                            <div class="col-md-2 mb-1">
+                                @Html.Label("Lot No")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.LotNumber, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                            </div>
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Raw Batches No")
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
-            </div>
-            <div class="col-md-2 d-none">
-                @Html.Label("Packing Unit")
-            </div>
-            <div class="col-md-4 d-none">
-                @Html.TextBoxFor(model => model.PackingUnit, new { @class = "form-control form-control-sm d-none", maxlength = "8", @onkeypress = "return IsAlphabets(event);" })
-            </div>
-        </div>
+                            <div class="col-md-2">
+                                @Html.Label("Raw Batches No")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                            </div>
+                            <div class="col-md-2 d-none">
+                                @Html.Label("Packing Unit")
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.PackingUnit, new { @class = "form-control form-control-sm d-none", maxlength = "8", @onkeypress = "return IsAlphabets(event);" })
+                            </div>
+                        </div>
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Packing Hopper Temp (°C)")
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.PackingHopperTemp, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Chiller Temp (°C)")
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.ChillerTemp, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
-            </div>
-        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Packing Hopper Temp (°C)")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.PackingHopperTemp, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Chiller Temp (°C)")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.ChillerTemp, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                            </div>
+                        </div>
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Consistancy in CM ")
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.Consistency, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsNum(event);" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Packing Size (Kg)")
-            </div>
-            <div class="col-md-4">
-                @*Rahul added onchange = "calculateFinalWeight();" 02-06-2023.*@
-                @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", onchange = "calculateFinalWeight();" })
-            </div>
-        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Consistancy in CM ")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Consistency, new { @class = "form-control form-control-sm", maxlength = "20", @onkeypress = "return IsNum(event);" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Packing Size (Kg)")
+                            </div>
+                            <div class="col-md-4">
+                                @*Rahul added onchange = "calculateFinalWeight();" 02-06-2023.*@
+                                @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", onchange = "calculateFinalWeight();" })
+                            </div>
+                        </div>
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("No Of Packets")
-            </div>
-            <div class="col-md-4">
-                @*Rahul added onchange = "calculateFinalWeight();" 02-06-2023.*@
-                @Html.TextBoxFor(model => model.NoOfPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", onchange = "calculateFinalWeight();" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Final Weight")
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.FinalWeight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
-            </div>
-        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("No Of Packets")
+                            </div>
+                            <div class="col-md-4">
+                                @*Rahul added onchange = "calculateFinalWeight();" 02-06-2023.*@
+                                @Html.TextBoxFor(model => model.NoOfPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", onchange = "calculateFinalWeight();" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Final Weight")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.FinalWeight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                            </div>
+                        </div>
 
-        <div class="row">
-            @*Rahul moved "Rejected Packets" one step up 02-06-2023.*@
-            <div class="col-md-2">
-                @Html.Label("Rejected Packets")
-            </div>
-            <div class="col-md-4">
-                @*Rahul moved "onchange = "calculateFinalPackets();"" one step up 02-06-2023.*@
-                @Html.TextBoxFor(model => model.RejectedPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", onchange = "calculateFinalPackets();" })
-            </div>
-            @*Rahul moved "Final Packets" one step down 02-06-2023.*@
-            <div class="col-md-2">
-                @Html.Label("Final Packets")
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.FinalPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
-            </div>
-        </div>
+                        <div class="row">
+                            @*Rahul moved "Rejected Packets" one step up 02-06-2023.*@
+                            <div class="col-md-2">
+                                @Html.Label("Rejected Packets")
+                            </div>
+                            <div class="col-md-4">
+                                @*Rahul moved "onchange = "calculateFinalPackets();"" one step up 02-06-2023.*@
+                                @Html.TextBoxFor(model => model.RejectedPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", onchange = "calculateFinalPackets();" })
+                            </div>
+                            @*Rahul moved "Final Packets" one step down 02-06-2023.*@
+                            <div class="col-md-2">
+                                @Html.Label("Final Packets")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.FinalPackets, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                            </div>
+                        </div>
 
-        <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Remarks")
-                <span style="color:red"></span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "100", @onkeypress = "return IsAlphaNumeric(event);" })
-                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-            </div>
-        </div>
-        <br />
-        <div class="col d-flex justify-content-end" style="margin-left: auto;">
-            <div class="row">
-                <div class="col">
-                    <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">Update</button>
-                </div>
-                <div class="col">
-                    <a href="@Url.Action("Index", "Stage3")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                        Back To List
-                    </a>
-                </div>
-            </div>
-        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Remarks")
+                                <span style="color:red"></span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "100", @onkeypress = "return IsAlphaNumeric(event);" })
+                                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col d-flex justify-content-end" style="margin-left: auto;">
+                            <div class="row">
+                                <div class="col">
+                                    <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">Update</button>
+                                </div>
+                                <div class="col">
+                                    <a href="@Url.Action("Index", "Stage3")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                                        Back To List
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
 
-    </div>
-</div>
-}
+                    </div>
+                </div>}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
