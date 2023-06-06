@@ -30,6 +30,23 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        //This BO Fileds are used for Consolidated Production Stages 1to3 Report 06-06-23.   
+        [Required(ErrorMessage = "Please Select From Date!")]
+        public DateTime fromDate { get; set; }
+
+        [Required(ErrorMessage = "Please Select To Date!")]
+        public DateTime toDate { get; set; } 
+        public int SrNo { get; set; }
+        public string RCCPDate { get; set; }  
+        public string Time { get; set; }
+        public string Temperature { get; set; }
+        public string Pressure { get; set; }
+        public string PackingHopperTemp { get; set; }
+        public string ChillerTemp { get; set; }
+        public string Consistency { get; set; }
+        public string NoOfPackets { get; set; }
+        public string RejectedPackets { get; set; }
+        public string FinalPackets { get; set; } 
 
     }
 }

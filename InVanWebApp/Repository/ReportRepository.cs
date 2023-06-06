@@ -1363,7 +1363,6 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-
         #region Pre-Production_QC Report data 
         /// <summary>
         /// Rahul 11 Apr 2023
@@ -1476,5 +1475,67 @@ namespace InVanWebApp.Repository
         }
 
         #endregion
+
+        #region Consolidated Production Stages 1to3 Report 
+        /// <summary>
+        /// Rahul 05 June 2023
+        /// Binding the Consolidated Production Stages 1to3 Report data 
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
+        /// <param name="ItemId"></param>
+        /// <returns></returns>
+        public List<RQCCPBO> getConsolidatedStagesReportData(DateTime fromDate, DateTime toDate, int ItemId)  
+        {
+            List<RQCCPBO> resultList = new List<RQCCPBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_Consolidated_Production_Stages_1_2_3_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@ItemId", ItemId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new RQCCPBO() 
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            RCCPDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),
+                            ProductName = reader["ProductName"].ToString(),
+                            LotNumber = reader["LotNumber"].ToString(),
+                            RawBatchesNo = reader["RawBatchesNo"].ToString(),
+                            WeightofRawBatches = reader["WeightofRawBatches"].ToString(),
+                            TansferTimeintoHoldingSilo = reader["TansferTimeintoHoldingSilo"].ToString(),
+                            Weight = reader["Weight"].ToString(),
+                            Time = reader["Time"].ToString(),
+                            Temperature = reader["Temperature"].ToString(),
+                            Pressure = reader["Pressure"].ToString(),
+                            PackingHopperTemp = reader["PackingHopperTemp"].ToString(),
+                            ChillerTemp = reader["ChillerTemp"].ToString(),
+                            Consistency = reader["Consistency"].ToString(),
+                            NoOfPackets = reader["NoOfPackets"].ToString(),
+                            RejectedPackets = reader["RejectedPackets"].ToString(),
+                            FinalPackets = reader["FinalPackets"].ToString(),   
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+            }
+            return resultList;
+        }
+        #endregion
+
     }
 }

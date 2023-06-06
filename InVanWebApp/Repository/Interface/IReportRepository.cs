@@ -87,7 +87,8 @@ namespace InVanWebApp.Repository.Interface
 
         //Post Production Rejection Reprot
         List<ReportBO> getPostProductionRejectionReportData(DateTime fromDate, DateTime toDate, string BatchNumber, string WorkOrderNumber);
-
+        //Consolidated Production Stages 1to3 Report 06-06-2023.
+        List<RQCCPBO> getConsolidatedStagesReportData(DateTime fromDate, DateTime toDate, int ItemId); 
 
     }
 }

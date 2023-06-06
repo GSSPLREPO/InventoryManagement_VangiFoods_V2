@@ -1,0 +1,234 @@
+﻿@model InVanWebApp_BO.RQCCPBO  
+
+@{ ViewBag.Title = "ProductionStagesReport";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Production Stages Report</title>
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">
+            <h4 class="page-title">Production Stages Report</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Reports</a>
+                    </li>
+                    <li class="breadcrumb-item active">Production Stages Report</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="padding-top:15px;">
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>From Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>To Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
+                                        <a id="ExportPdf" href="@Url.Action("ExprotAsPDFForProductionStagesReport", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForExprotAsPDFForProductionStagesReport", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 ms-1">
+                                        <label>Product Name:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">                                       
+                                        @Html.DropDownList("Item_Code", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select All--", new { @class = "form-control", @id = "ID", onchange = "SelectedIndexChangedItem()" })
+                                        @Html.ValidationMessage("Item_Code", "", new { id = "ProductNameValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+                                </div>
+                                <br />
+                                <div style="margin-top:25px;">
+                                    <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblProductionStagesReport" style="width: 100%;" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="7" class="text-center">Stage 1</th>
+                                                <th colspan="4" class="text-center">Stage 3</th>
+                                                <th colspan="6" class="text-center">Stage 2</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="7" class="text-center"></th>
+                                                <th colspan="4" class="text-center">Sterilization Yield Loss</th>
+                                                <th colspan="6" class="text-center"></th>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center" class="text-wrap">Sr. No.</th>
+                                                <th style="text-align:center">Date</th>
+                                                <th style="text-align:center">Product Name</th>
+                                                <th style="text-align:center" class="text-wrap">Lot No</th> 
+                                                <th style="text-align:center" class="text-wrap">Raw Batches No</th>
+                                                <th style="text-align:center" class="text-wrap">Weight of Raw Batches (kg)</th>   
+                                                <th style="text-align:center" class="text-wrap">Tansfer Time Into Holding Silo</th>
+                                                <th style="text-align:center" class="text-wrap">Weight (KG)</th>
+                                                <th style="text-align:center" class="text-wrap">Time</th>
+                                                <th style="text-align:center" class="text-wrap">Temp.</th>
+                                                <th style="text-align:center" class="text-wrap">Pressure</th>
+                                                <th style="text-align:center" class="text-wrap">Packing Hopper Temp</th>
+                                                <th style="text-align:center" class="text-wrap">Chiller Temp</th>
+                                                <th style="text-align:center" class="text-wrap">Consistency</th>
+                                                <th style="text-align:center" class="text-wrap">No Of Packets</th>
+                                                <th style="text-align:center" class="text-wrap">Rejected Packets</th>                                                
+                                                <th style="text-align:center" class="text-wrap">Final Packets</th>                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+@Html.Raw(TempData["Success"])
+
+@section scripts{
+
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+    <script type="text/javascript">$(document).ready(function () {
+            $('#ExportPdf').hide();
+            $('#ExportExcel').hide();
+            $('#tblProductionStagesReport').hide();
+        });
+
+        function SelectedIndexChangedItem() {
+            $('#ProductNameValidate').hide();
+        }
+
+        function OnChangedFromDate() {
+            $('#fromDateValidate').hide();
+        }
+
+        function OnChangedToDate() {
+            $('#toDateValidate').hide();
+        }
+
+        $("#btnGo").on('click', function () {
+            
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+
+            if (fromDate == null || fromDate == "") {
+                $('#fromDateValidate').text('Select from date!');
+                $('#fromDateValidate').show();
+                $("#fromDate").focus();
+                return;
+            }
+
+            if (toDate == null || toDate == "") {
+                $('#toDateValidate').text('Select to date!');
+                $('#toDateValidate').show();
+                $("#toDate").focus();
+                return;
+            }
+
+            if (fromDate > toDate) {
+                alert('Invalid date!, To date is less than From date!');
+                $('#fromDate').focus();
+                return;
+            }
+
+
+            var CheckItem = $('#ID').val();
+            if (CheckItem == '' || CheckItem == null) {
+                CheckItem = 0;
+            }
+
+            $('#ExportPdf').show();
+            $('#ExportExcel').show();
+            $('#tblProductionStagesReport').show();
+            var flag = 0;
+            $('#tblProductionStagesReport').dataTable().fnDestroy();
+            var t = $('#tblProductionStagesReport').DataTable({
+                //"processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "sAjaxSource": "/Report/GetConsolidatedProductionStages1to3Report?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "pageLength": 10,
+                "scrollX": true,
+                "columns": [
+                    { "data": "SrNo", "autoWidth": true },
+                    { "data": "RCCPDate", "autoWidth": true }, 
+                    { "data": "ProductName", "autoWidth": true },
+                    { "data": "LotNumber", "autoWidth": true }, 
+                    { "data": "RawBatchesNo", "autoWidth": true },
+                    { "data": "WeightofRawBatches", "autoWidth": true },    
+                    { "data": "TansferTimeintoHoldingSilo", "autoWidth": true },
+                    { "data": "Weight", "autoWidth": true },
+                    { "data": "Time", "autoWidth": true },
+                    { "data": "Temperature", "autoWidth": true },
+                    { "data": "Pressure", "autoWidth": true },
+                    { "data": "PackingHopperTemp", "autoWidth": true },
+                    { "data": "ChillerTemp", "autoWidth": true },
+                    { "data": "Consistency", "autoWidth": true },
+                    { "data": "NoOfPackets", "autoWidth": true },
+                    { "data": "RejectedPackets", "autoWidth": true },                        
+                    { "data": "FinalPackets", "autoWidth": true },
+                ]
+            });
+            t.on('order.dt search.dt', function () {
+                let i = 1;
+
+                t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+
+        });</script>
+}
+
+<style>
+    td {
+        white-space: break-spaces !important;
+    }
+</style>
