@@ -15,68 +15,73 @@
             @Html.ValidationSummary(true)
              
             <div class="row">
-            <div class="col-md-2">
-                @Html.Label("Date")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd") })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
-            </div>
-            <div class="col-md-2">
-                @Html.Label("Product Name")
-                <span style="color:red">*</span>
-            </div>
-            <div class="col-md-4">
-                @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm" })
-                @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
+                <div class="col-md-2">
+                    @Html.Label("Date")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd") })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                </div>
+                <div class="col-md-2">
+                    @Html.Label("Product Name")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
 
+                </div>
             </div>
-        </div>
             <br />
             <div class="row">
+                <div class="col-md-2 mb-1">
+                    @Html.Label("Lot No")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.LotNumber, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                </div>
+
                 <div class="col-md-2">
                     @Html.Label("Raw Batches No")
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "5", @onkeypress = "return IsNum(event);" })
                 </div>
+            </div>
+            <br />
+            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Weight of Raw Batches (KG)")
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.WeightofRawBatches, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                 </div>
+
+                <div class="col-md-2">
+                    @Html.Label("Tansfer Time into Holding Silo")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.TansferTimeintoHoldingSilo, new { @class = "form-control form-control-sm", type = "time" })
+                </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Tansfer Time into Holding Silo")
-                  
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.TansferTimeintoHoldingSilo, new { @class = "form-control form-control-sm",type="time" })
-                </div>
-
-                <div class="col-md-2">
                     @Html.Label("Weight (KG)")
-                   
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Weight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                 </div>
-            </div>
-            <br />
-            <div class="row">
+
                 <div class="col-md-2">
                     @Html.Label("Remarks")
-
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "95", Title = "Remarks Will be Allow 100 Charachter" })
                 </div>
             </div>
-
 
                 <a href="@Url.Action("Index", "RQCCP")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                     Back To List

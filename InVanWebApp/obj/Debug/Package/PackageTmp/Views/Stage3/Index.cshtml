@@ -43,6 +43,7 @@
                                         <tr>
                                             <th>@Html.DisplayName("Date")</th>
                                             <th>@Html.DisplayName("Product Name")</th>
+                                            <th>@Html.DisplayName("Lot No")</th>    @*//Rahul added 'LotNumber' 05-06-2023.*@
                                             <th>@Html.DisplayName("Raw Batches No")</th>
                                             <th>@Html.DisplayName("Packing Hopper Temp(°C)")</th>
                                             <th>@Html.DisplayName("Chiller Temp(°C)")</th>
@@ -62,30 +63,31 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                @*<td>@Html.DisplayFor(modelItem => item.Date)</td>*@
-                                                <td>@Html.DisplayFor(modelItem => item.Date)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.RawBatchesNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.PackingHopperTemp)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.ChillerTemp)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Consistency)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.PackingSize)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.NoOfPackets)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.PackingUnit)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.FinalWeight)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.FinalPackets)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.RejectedPackets)</td>
-                                                @*<td>@Html.DisplayFor(modelItem => item.Remarks)</td>*@
-                                                <td>
-                                                    <a href=@Url.Action("EditStage3", "Stage3", new { ID = item.ID }) title="Edit Stage-3">
-                                                        <i class="fa fa-edit text-primary"></i>
-                                                    </a> &emsp;
-                                                    <a href=@Url.Action("Delete", "Stage3", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Stage-3">
-                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                        <tr>
+                                            @*<td>@Html.DisplayFor(modelItem => item.Date)</td>*@
+                                            <td>@Html.DisplayFor(modelItem => item.Date)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.LotNumber)</td> @*//Rahul added 'LotNumber' 05-06-2023.*@
+                                            <td>@Html.DisplayFor(modelItem => item.RawBatchesNo)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.PackingHopperTemp)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.ChillerTemp)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Consistency)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.PackingSize)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.NoOfPackets)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.PackingUnit)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.FinalWeight)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.FinalPackets)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.RejectedPackets)</td>
+                                            @*<td>@Html.DisplayFor(modelItem => item.Remarks)</td>*@
+                                            <td>
+                                                <a href=@Url.Action("EditStage3", "Stage3", new { ID = item.ID }) title="Edit Stage-3">
+                                                    <i class="fa fa-edit text-primary"></i>
+                                                </a> &emsp;
+                                                <a href=@Url.Action("Delete", "Stage3", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Stage-3">
+                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>

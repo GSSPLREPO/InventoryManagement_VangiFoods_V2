@@ -62,8 +62,12 @@
                 </div>
                 <div class="col-md-4">
                     @*Rahul updated 'maxlength = "4"' to 'maxlength = "5"' 26-05-2023.*@
-                    @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", maxlength = "5" })
+                    @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", onchange = "UnitNameMsg()", maxlength = "5" })
                     @Html.ValidationMessageFor(model => model.PackingSize, "", new { @class = "error mt-2 text-danger" })
+                    <span id="UnitNameMsg" style="color: red; display: none; ">                        
+                        Packing Size as per SO is 
+                        @Html.TextBoxFor(model => model.PackingSizeUnit, new { id = "UnitName", style = "color: red;border:none;background: none;line-height: 1.5rem;", @readonly = "readonly" })
+                    </span>                    
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Raw Material Yield")
@@ -210,22 +214,33 @@
 @Html.Raw(TempData["Success"])
 
 <script>
-
+    ///Rahul added '#UnitNameMsg' start 02-06-2023.
+    $(document).ready(function () {
+        $('#UnitNameMsg').hide();
+    });
+    ///Rahul added 'function UnitNameMsg()' start 02-06-2023.
+    function UnitNameMsg() {
+        $('#UnitNameMsg').hide();
+        var value = $('#OrderQuantity').val();
+        OnOrderQtyChange(value);
+    }
+    ///Rahul added 'function UnitNameMsg()' end 02-06-2023.
     function OnOrderQtyChange(value) {
+        debugger
         if (value == '' || value == null)
             value = 0;
         value = parseFloat(value);
 
         //Checking the packing size value.
         var PackingSize = $('#PackingSize').val();
-        PackingSize = parseFloat(PackingSize);
+        PackingSize = parseFloat(PackingSize).toFixed(4); //Rahul added '.toFixed(4)' 02-06-2023.
 
         //Checking the total raw material yield value.
         var totalRawYield = $('#TotalRawMaterialYeild').val();
         totalRawYield = parseFloat(totalRawYield);
 
         if (value != 0) {
-            $('#RequiredQuantityInKG').val(value * PackingSize);
+            $('#RequiredQuantityInKG').val((value * PackingSize).toFixed(4)); //Rahul added '.toFixed(4)' 02-06-2023.
             $('#valOrderQtyMsg').hide();
             var table = document.getElementById('submissionTable');
             var rowCount = table.rows.length;
@@ -375,19 +390,20 @@
     //=====================Onchange of Product Name description===========================
     function SelectedIndexChangedProductName(id) {
 
+        $('#UnitNameMsg').show(); ///Rahul added '#UnitNameMsg' 02-06-2023.
         $('#valRequiredQtyMgs').hide();
 
-        //Checking the packing size value.
-        var PackingSize = $('#PackingSize').val();
-        if (PackingSize == null || PackingSize == '' || PackingSize == 0) {
-            $('#PackingSize').focus();
-            document.getElementById('ProductId').selectedIndex = 0;
-            return;
-        }
-        else {
-            parseFloat(PackingSize);
-            document.getElementById('PackingSize').setAttribute("readonly", "readonly");
-        }
+        ////Checking the packing size value.
+        //var PackingSize = $('#PackingSize').val();
+        //if (PackingSize == null || PackingSize == '' || PackingSize == 0) {
+        //    $('#PackingSize').focus();
+        //    document.getElementById('ProductId').selectedIndex = 0;
+        //    return;
+        //}
+        //else {
+        //    parseFloat(PackingSize);
+        //    document.getElementById('PackingSize').setAttribute("readonly", "readonly");
+        //}
 
         var totalRawYield = $('#TotalRawMaterialYeild').val();
         if (totalRawYield == null || totalRawYield == '' || totalRawYield == 0) {
@@ -440,8 +456,10 @@
             type: "POST",
             data: {},
             success: function (result) {
+                console.log(result);    
                 if (result.length != 0) {
                     $('#OrderQuantity').val(result[0].SalesOrderQty);
+                    $('#UnitName').val(result[0].UnitName);///Rahul added '#UnitName' 01-06-2023.
 
                     var table = document.getElementById('submissionTable');
                     for (var j = 0; j < result.length; j++) {
@@ -520,7 +538,7 @@
                     }
 
                     var value = $('#OrderQuantity').val();
-                    OnOrderQtyChange(value);
+                    //OnOrderQtyChange(value);
                 }
                 else
                     alert('No recipe is made for the selected product name! Create the recipe.')

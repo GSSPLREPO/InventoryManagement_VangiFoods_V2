@@ -5908,11 +5908,14 @@ namespace InVanWebApp.Controllers
                "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
                "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + name + "</td></tr>" +
                "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
-               + "<tr><td colspan='8' style='text-align:left; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Fromdate + fromdate
-               + "</td><td colspan='9' style='text-align:right; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Todate + todate +
-                "<tr><td colspan='7' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 1</td>" +
-                "<td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 2</td>" +
-                "<td colspan='6' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 3</td></tr>" 
+               + "<tr><td colspan='8' style='text-align:left; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Fromdate + fromdate 
+               + "</td><td colspan='9' style='text-align:right; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Todate + todate + 
+                "<tr><td colspan='7' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 1</td>" + 
+                "<td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 2</td>" + 
+                "<td colspan='6' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 3</td></tr>" + 
+                "<tr><td colspan='7' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'></td>" +
+                "<td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Sterilization Yield Loss</td>" + 
+                "<td colspan='6' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'></td></tr>" 
                /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
 

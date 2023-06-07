@@ -104,13 +104,13 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <label class="font-weight-bold">Packing Size</label>
+                                                @*Rahul added unitcode '(Kg)' 02-06-2023.*@
+                                                <label class="font-weight-bold">Packing Size (Kg)</label>
                                             </div>
                                             <div class="col-md-4" style="color:black;">
                                                 @Html.DisplayFor(model => model.PackingSize)
                                             </div>
-                                        </div>
-                                        <br />
+                                        </div>                                        
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <label class="font-weight-bold">Raw Material Yield</label>
@@ -124,8 +124,7 @@
                                             <div class="col-md-4" style="color:black;">
                                                 @Html.DisplayFor(model => model.PackingType)
                                             </div>
-                                        </div>
-                                        <br />
+                                        </div>                                        
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <label class="font-weight-bold">Order Quantity</label>
@@ -200,13 +199,13 @@
                                     <br />
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <label class="font-weight-bold" style="color:black;">Total Batch Size</label>
+                                            <label class="font-weight-bold" style="color:black;">Total Batch Size (Kg)</label>
                                         </div>
                                         <div class="col-md-4" style="color:black;">
                                             @Html.DisplayFor(model => model.TotalBatchSize)
                                         </div>
                                         <div class="col-md-2" style="color:black;">
-                                            <label class="font-weight-bold">Total No Batches</label>
+                                            <label class="font-weight-bold">Total No Batches (Kg)</label>
                                         </div>
                                         <div class="col-md-4" style="color:black;">
                                             @Html.DisplayFor(model => model.TotalNoBatches)

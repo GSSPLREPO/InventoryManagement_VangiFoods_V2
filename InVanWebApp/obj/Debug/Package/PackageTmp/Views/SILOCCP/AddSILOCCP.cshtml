@@ -12,22 +12,22 @@
                         <hr />
                         @Html.ValidationSummary(true)
 
-                    <div class="row">
-                        <div class="col-md-2">
-                            @Html.Label("Date")
-                            <span style="color:red">*</span>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Time")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", type = "time" })
+                            </div>
                         </div>
-                        <div class="col-md-4">
-                            @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd") })
-                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
-                        </div>
-                        <div class="col-md-2">
-                            @Html.Label("Time")
-                        </div>
-                        <div class="col-md-4">
-                            @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", type = "time" })
-                        </div>
-                    </div>
 
                         <div class="row">
                             <div class="col-md-2">
@@ -38,30 +38,15 @@
                                 @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm" })
                                 @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
                             </div>
-                            <div class="col-md-2">
-                                @Html.Label("Weight (KG)")
-                            </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Weight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                @Html.Label("Temperture (°C)")
-                            </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Temperature, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
-                            </div>
-
                             <div class="col-md-2 mb-1">
-                                @Html.Label("Pressure (BAR)")
+                                @Html.Label("Lot No")
+                                <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Pressure, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                                @Html.TextBoxFor(model => model.LotNumber, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-2 mb-1">
                                 @Html.Label("Raw Batches No")
@@ -70,14 +55,34 @@
                                 @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                             </div>
                             <div class="col-md-2">
+                                @Html.Label("Weight (KG)")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Weight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Temperture (°C)")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Temperature, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                            </div>
+                            <div class="col-md-2 mb-1">
+                                @Html.Label("Pressure (BAR)")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Pressure, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
                                 @Html.Label("Remarks")
-
                             </div>
                             <div class="col-md-4">
                                 @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm", maxlength = "95", Title = "Remarks Will be Allow 100 Charachter" })
                             </div>
                         </div>
-
                         <br />
                         <div class="col d-flex justify-content-end" style="margin-left: auto;">
                             <div class="row">
@@ -93,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                </div>}
+                    </div>}
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
