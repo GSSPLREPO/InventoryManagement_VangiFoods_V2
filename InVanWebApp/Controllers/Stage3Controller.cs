@@ -98,11 +98,13 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Stage-3 Details Inserted Successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                            TempData["Success"] = "<script>alert('Error while insertion!, Stage-3 Entry Already Done!');</script>";
                             BindItem();
-                            return View();
+                            //return View();
+                            return RedirectToAction("Index", "Stage3");
                         }
-                        return RedirectToAction("Index", "Stage3");
+                        //return RedirectToAction("Index", "Stage3");
+                        return RedirectToAction("Index", "RQCCP");
                     }
                 }
                 catch (Exception ex)

@@ -31,7 +31,7 @@ namespace InVanWebApp_BO
         public string FinalPackets { get; set; }
         public string RejectedPackets{ get; set; }
 
-        /*Remarks*/
+        /*Remarks*/ 
         public string Remarks { get; set; }
 
         /*Common Five*/
@@ -40,6 +40,6 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-
+        public Nullable<int> RQCCP_Id { get; set; } //Rahul added 08-06-23.
     }
 }

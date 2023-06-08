@@ -42,18 +42,18 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.DisplayName("Date")</th>
-                                            <th>@Html.DisplayName("Product Name")</th>
-                                            <th>@Html.DisplayName("Lot No")</th>    @*//Rahul added 'LotNumber' 05-06-2023.*@
-                                            <th>@Html.DisplayName("Raw Batches No")</th>
-                                            <th>@Html.DisplayName("Packing Hopper Temp(°C)")</th>
-                                            <th>@Html.DisplayName("Chiller Temp(°C)")</th>
-                                            <th>@Html.DisplayName("Consistancy in CM")</th>
-                                            <th>@Html.DisplayName("Packing Size")</th>
-                                            <th>@Html.DisplayName("No Of Packets")</th>
-                                            <th>@Html.DisplayName("Packing Unit")</th>
-                                            <th>@Html.DisplayName("Final Weight")</th>
-                                            <th>@Html.DisplayName("Final Packets")</th>
-                                            <th>@Html.DisplayName("Rejected Packets")</th>
+                                            <th class="text-wrap">@Html.DisplayName("Product Name")</th>
+                                            <th class="text-wrap">@Html.DisplayName("Lot No")</th>    @*//Rahul added 'LotNumber' 05-06-2023.*@
+                                            <th class="text-wrap">@Html.DisplayName("Raw Batches No")</th>
+                                            <th class="text-wrap">@Html.DisplayName("Packing Hopper Temp(°C)")</th>
+                                            <th class="text-wrap">@Html.DisplayName("Chiller Temp(°C)")</th>
+                                            <th class="text-wrap">@Html.DisplayName("Consistancy in CM")</th>
+                                            @*<th>@Html.DisplayName("Packing Size")</th>*@
+                                            <th class="text-wrap">@Html.DisplayName("No Of Packets")</th>
+                                            @*<th>@Html.DisplayName("Packing Unit")</th>*@
+                                            <th class="text-wrap">@Html.DisplayName("Final Weight")</th>
+                                            <th class="text-wrap">@Html.DisplayName("Final Packets")</th>
+                                            <th class="text-wrap">@Html.DisplayName("Rejected Packets")</th>
                                             @*<th>@Html.DisplayName("Remarks")</th>*@
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
@@ -72,9 +72,9 @@
                                             <td>@Html.DisplayFor(modelItem => item.PackingHopperTemp)</td>
                                             <td>@Html.DisplayFor(modelItem => item.ChillerTemp)</td>
                                             <td>@Html.DisplayFor(modelItem => item.Consistency)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.PackingSize)</td>
+                                            @*<td>@Html.DisplayFor(modelItem => item.PackingSize)</td>*@
                                             <td>@Html.DisplayFor(modelItem => item.NoOfPackets)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.PackingUnit)</td>
+                                            @*<td>@Html.DisplayFor(modelItem => item.PackingUnit)</td>*@
                                             <td>@Html.DisplayFor(modelItem => item.FinalWeight)</td>
                                             <td>@Html.DisplayFor(modelItem => item.FinalPackets)</td>
                                             <td>@Html.DisplayFor(modelItem => item.RejectedPackets)</td>

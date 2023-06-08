@@ -29,6 +29,8 @@ namespace InVanWebApp_BO
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public Nullable<int> RQCCP_Id { get; set; } //Rahul added 08-06-23.
+
 
     }
 }

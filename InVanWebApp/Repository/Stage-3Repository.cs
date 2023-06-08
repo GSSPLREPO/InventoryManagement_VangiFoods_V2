@@ -101,6 +101,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@FinalPackets", model.FinalPackets);
                     cmd.Parameters.AddWithValue("@RejectedPackets", model.RejectedPackets);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@RQCCP_Id", model.RQCCP_Id); //Rahul added 'RQCCP_Id' 08-06-2023.
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();

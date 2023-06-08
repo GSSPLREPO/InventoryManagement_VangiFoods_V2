@@ -106,17 +106,18 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('RQ CCP details Inserted Successfully!');</script>";
                         else
                         {
-                            if (response.ItemName != null || response.ItemName != "") {
-                                BindItem();
-                                TempData["Success"] = "<script>alert('Duplicate item details! Can not be inserted!');</script>";
-                            }
-                            else
-                                TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-
-                            return View();
+                            //if (response.ItemName != null || response.ItemName != "") {
+                            BindItem();
+                            //TempData["Success"] = "<script>alert('Duplicate item details! Can not be inserted!');</script>";
+                            //}
+                            //else
+                            TempData["SILOCCP"] = "<script>alert('First complete Stage 2 entry!');</script>";
+                            //return View();
+                            return RedirectToAction("AddSILOCCP", "SILOCCP");
                         }
 
-                        return RedirectToAction("Index", "RQCCP");
+                        //return RedirectToAction("Index", "RQCCP");
+                        return RedirectToAction("Index", "SILOCCP");
 
                     }
 

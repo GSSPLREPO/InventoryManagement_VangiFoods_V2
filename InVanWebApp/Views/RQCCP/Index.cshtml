@@ -44,9 +44,9 @@
                                             <th>@Html.DisplayName("Product Name")</th>
                                             <th>@Html.DisplayName("Lot No")</th>    @*//Rahul added 'LotNumber' 05-06-2023.*@
                                             <th>@Html.DisplayName("Raw Batches No")</th>
-                                            <th>@Html.DisplayName("Weight of Raw Batches (KG)")</th>
+                                            @*<th>@Html.DisplayName("Weight of Raw Batches (KG)")</th>*@
                                             <th>@Html.DisplayName("Tansfer Time into Holding Silo")</th>
-                                            <th>@Html.DisplayName("Weight (KG)")</th>
+                                            @*<th>@Html.DisplayName("Weight (KG)")</th>*@
                                             <th>@Html.DisplayName("Actions")</th>
                                         </tr>
                                     </thead>
@@ -58,9 +58,9 @@
                                             <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
                                             <td>@Html.DisplayFor(modelItem => item.LotNumber)</td> @*//Rahul added 'LotNumber' 05-06-2023.*@
                                             <td>@Html.DisplayFor(modelItem => item.RawBatchesNo)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.WeightofRawBatches)</td>
+                                            @*<td>@Html.DisplayFor(modelItem => item.WeightofRawBatches)</td>*@
                                             <td>@Html.DisplayFor(modelItem => item.TansferTimeintoHoldingSilo)</td>
-                                            <td>@Html.DisplayFor(modelItem => item.Weight)</td>
+                                            @*<td>@Html.DisplayFor(modelItem => item.Weight)</td>*@
                                             <td>
                                                 <a href=@Url.Action("EditRQCCP", "RQCCP", new { Id = item.Id }) title="Edit RQ CCP">
                                                     <i class="fa fa-edit text-primary"></i>
