@@ -57,19 +57,6 @@
             <br />
             <div class="row">
                 <div class="col-md-2">
-                    @Html.Label("Packing Size (Kg)")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @*Rahul updated 'maxlength = "4"' to 'maxlength = "5"' 26-05-2023.*@
-                    @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", onchange = "UnitNameMsg()", maxlength = "5" })
-                    @Html.ValidationMessageFor(model => model.PackingSize, "", new { @class = "error mt-2 text-danger" })
-                    <span id="UnitNameMsg" style="color: red; display: none; ">                        
-                        Packing Size as per SO is 
-                        @Html.TextBoxFor(model => model.PackingSizeUnit, new { id = "UnitName", style = "color: red;border:none;background: none;line-height: 1.5rem;", @readonly = "readonly" })
-                    </span>                    
-                </div>
-                <div class="col-md-2">
                     @Html.Label("Raw Material Yield")
                     <span style="color:red">*</span>
                 </div>
@@ -77,9 +64,6 @@
                     @Html.TextBoxFor(model => model.TotalRawMaterialYeild, new { @class = "form-control form-control-sm" })
                     @Html.ValidationMessageFor(model => model.TotalRawMaterialYeild, "", new { @class = "error mt-2 text-danger" })
                 </div>
-            </div>
-            <br />
-            <div class="row">
                 <div class="col-md-2">
                     @Html.Label("Product Name")
                     <span style="color:red">*</span>
@@ -91,6 +75,22 @@
                     @*@Html.DropDownListFor(model => model.ProductId, (IEnumerable<SelectListItem>)ViewData["Product_dd"], "--Select--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductName($(this).val())" })*@
                     @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.ProductName)
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.Label("Packing Size (Kg)")
+                    <span style="color:red">*</span>
+                </div>
+                <div class="col-md-4">
+                    @*Rahul updated 'maxlength = "4"' to 'maxlength = "5"' 26-05-2023.*@
+                    @Html.TextBoxFor(model => model.PackingSize, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", onchange = "UnitNameMsg()", maxlength = "5" })
+                    @Html.ValidationMessageFor(model => model.PackingSize, "", new { @class = "error mt-2 text-danger" })
+                    <span id="UnitNameMsg" style="color: red; display: none; ">
+                        Packing Size as per SO is
+                        @Html.TextBoxFor(model => model.PackingSizeUnit, new { id = "UnitName", style = "color: red;border:none;background: none;line-height: 1.5rem;", @readonly = "readonly" })
+                    </span>
                 </div>
                 <div class="col-md-2">
                     @Html.Label("Packing Type")
@@ -389,7 +389,7 @@
 
     //=====================Onchange of Product Name description===========================
     function SelectedIndexChangedProductName(id) {
-
+        
         $('#UnitNameMsg').show(); ///Rahul added '#UnitNameMsg' 02-06-2023.
         $('#valRequiredQtyMgs').hide();
 
@@ -455,12 +455,14 @@
             url: '/BatchPlanning/GetRecipe?id=' + id + "&LocationId=" + LId + "&SId=" + SOId,
             type: "POST",
             data: {},
-            success: function (result) {
-                console.log(result);    
+            success: function (result) {   
                 if (result.length != 0) {
                     $('#OrderQuantity').val(result[0].SalesOrderQty);
-                    $('#UnitName').val(result[0].UnitName);///Rahul added '#UnitName' 01-06-2023.
-
+                    //$('#UnitName').val(result[0].UnitName);///Rahul added '#UnitName' 01-06-2023.
+                    var UnitName1 = result[0].UnitName;
+                    if (UnitName1 == 'kg' || UnitName1 == 'KG' || UnitName1 == 'Kg') {                        
+                        $('#UnitName').val('1 Kg');
+                    }
                     var table = document.getElementById('submissionTable');
                     for (var j = 0; j < result.length; j++) {
                         var rowCount = table.rows.length;

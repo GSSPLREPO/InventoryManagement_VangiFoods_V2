@@ -93,19 +93,21 @@ namespace InVanWebApp.Controllers
                     {
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
                         response = _siloCCPRepository.Insert(model);
-                        if (response.Status && response.Flag) 
+                        if (response.Status && response.Flag)
                             TempData["Success"] = "<script>alert('SILO CCP Details Inserted Successfully!');</script>";
-                        else if (response.Status == false && response.Flag == false)
-                            TempData["Stage3"] = "<script>alert('First complete Stage 3 entry!');</script>";
+                        else if (response.Status == false && response.Flag == false) { 
+                            TempData["Success"] = "<script>alert('First complete Stage 1 entry!');</script>";
+                            return RedirectToAction("Index", "RQCCP");
+                        }
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error while insertion!, Stage-2 Entry Already Done!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate insertion!, Stage-2 Entry Already Done!');</script>";
                             BindItem();
                             //return View();
                             return RedirectToAction("Index", "SILOCCP");
                         }
                         //return RedirectToAction("Index", "SILOCCP");
-                        return RedirectToAction("AddStage3", "Stage3");
+                        return RedirectToAction("Index", "Stage3");
                     }
                 }
                 catch (Exception ex)

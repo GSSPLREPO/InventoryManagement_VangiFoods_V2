@@ -94,17 +94,22 @@ namespace InVanWebApp.Controllers
                        //model.CreatedDate = Convert.ToDateTime
                         //model.VerifyByName = Session[ApplicationSession.USERNAME].ToString();
                         response = _Stage3Repository.Insert(model);
-                        if (response.Status)
+                        if (response.Status && response.Flag)
                             TempData["Success"] = "<script>alert('Stage-3 Details Inserted Successfully!');</script>";
+                            //Rahul added 'Flag' 09-06-23. 
+                        else if (response.Status == false && response.Flag == false)
+                        {
+                            TempData["Success"] = "<script>alert('First complete Stage 2 entry!');</script>";
+                            return RedirectToAction("Index", "SILOCCP");
+                        }
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error while insertion!, Stage-3 Entry Already Done!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate insertion!, Stage-3 Entry Already Done!');</script>";
                             BindItem();
                             //return View();
                             return RedirectToAction("Index", "Stage3");
                         }
-                        //return RedirectToAction("Index", "Stage3");
-                        return RedirectToAction("Index", "RQCCP");
+                        return RedirectToAction("Index", "Stage3");
                     }
                 }
                 catch (Exception ex)

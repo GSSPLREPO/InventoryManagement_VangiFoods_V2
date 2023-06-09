@@ -110,6 +110,7 @@ namespace InVanWebApp.Repository
                     while (dataReader.Read())
                     {
                         response.Status = Convert.ToBoolean(dataReader["Status"]);
+                        response.Flag = Convert.ToBoolean(dataReader["Flag"]); //Rahul added 'Flag' 09-06-23.
                     }
                     con.Close();
                 };

@@ -202,6 +202,8 @@
 @*<script src="~/Theme/MainContent/js/jquery.min.js"></script>*@
 
 <script type="text/javascript">
+    var tableLength = 0; //This is the global variable for storing original length of the item details table.
+
     $(document).ready(function () {
         var id = $("#RequestForQuotationId").val();
         CompanyName(id);
@@ -312,6 +314,7 @@
                 //modal.find('.modal-body input').val(recipient)
                 modal.find('#modelRFQ input').val(recipient)
             });
+        tableLength = document.getElementById("submissionTable").rows.length;
     }
 
     function isNumberKey(evt) {
@@ -455,13 +458,26 @@
         //}
 
         var i = 1;
-        while (i <= length) {
+        while (i <= tableLength) {  //Change the table length value for calculation.
             var temp = document.getElementById("totalItemCost_" + i);
             if (temp == null || temp == '' || temp == 'undefined')
                 i++;
             else {
                 var temp = document.getElementById("totalItemCost_" + i).value;
+                if (temp == '' || temp == null) {
+                    temp = 0;
+                }
+                else {
+                    temp = parseFloat(temp);
+                }
                 var tempTotalTax = document.getElementById("itemTax_" + i).value;
+                if (tempTotalTax == '' || tempTotalTax == null) {
+                    tempTotalTax = 0;
+                }
+                else {
+                    tempTotalTax = parseFloat(tempTotalTax);
+                }
+
                 total = parseFloat(temp) + total;
 
                 tempTotalTax = Math.round((parseFloat(tempTotalTax) / 100) * parseFloat(temp));

@@ -111,9 +111,10 @@ namespace InVanWebApp.Controllers
                             //TempData["Success"] = "<script>alert('Duplicate item details! Can not be inserted!');</script>";
                             //}
                             //else
-                            TempData["SILOCCP"] = "<script>alert('First complete Stage 2 entry!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate product insertion of the same Raw Batches Number!');</script>";
                             //return View();
-                            return RedirectToAction("AddSILOCCP", "SILOCCP");
+                            //return RedirectToAction("AddSILOCCP", "SILOCCP");
+                            return RedirectToAction("Index", "RQCCP");
                         }
 
                         //return RedirectToAction("Index", "RQCCP");
