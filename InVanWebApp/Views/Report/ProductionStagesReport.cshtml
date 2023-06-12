@@ -60,9 +60,10 @@
                                         <label>Product Name:</label>
                                         <span style="color:red">*</span>
                                     </div>
-                                    <div class="col-md-3">                                       
+                                    <div class="col-md-3">
                                         @Html.DropDownList("Item_Code", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select All--", new { @class = "form-control", @id = "ID", onchange = "SelectedIndexChangedItem()" })
                                         @Html.ValidationMessage("Item_Code", "", new { id = "ProductNameValidate", @class = "col-form-label error mt-2 text-danger" })
+                                        @Html.HiddenFor(model => model.ProductName)
                                     </div>
                                 </div>
                                 <br />
@@ -72,12 +73,12 @@
                                             <tr>
                                                 <th colspan="7" class="text-center">Stage 1</th>
                                                 <th colspan="4" class="text-center">Stage 2</th>
-                                                <th colspan="6" class="text-center">Stage 3</th>
+                                                <th colspan="5" class="text-center">Stage 3</th>
                                             </tr>
                                             <tr>
                                                 <th colspan="7" class="text-center"></th>
                                                 <th colspan="4" class="text-center">Sterilization Yield Loss</th>
-                                                <th colspan="6" class="text-center"></th>
+                                                <th colspan="5" class="text-center"></th>
                                             </tr>
                                             <tr>
                                                 <th style="text-align:center" class="text-wrap">Sr. No.</th>
@@ -94,9 +95,9 @@
                                                 <th style="text-align:center" class="text-wrap">Packing Hopper Temp</th>
                                                 <th style="text-align:center" class="text-wrap">Chiller Temp</th>
                                                 <th style="text-align:center" class="text-wrap">Consistency</th>
-                                                <th style="text-align:center" class="text-wrap">No Of Packets</th>
-                                                <th style="text-align:center" class="text-wrap">Rejected Packets</th>                                                
-                                                <th style="text-align:center" class="text-wrap">Final Packets</th>                                                
+                                                <th style="text-align:center" class="text-wrap">Total Header</th>
+                                                <th style="text-align:center" class="text-wrap">No Of Packets And Weight</th>                                                
+                                                @*<th style="text-align:center" class="text-wrap">Final Packets</th>*@                                                
                                             </tr>
                                         </thead>
                                         <tbody class="text-center"></tbody>
@@ -130,6 +131,10 @@
 
         function SelectedIndexChangedItem() {
             $('#ProductNameValidate').hide();
+            //var selectedOptionProductName, productName;
+            //selectedOptionProductName = document.getElementById("ID").selectedIndex;
+            //productName = document.getElementById("ID").options[selectedOptionProductName].innerText;
+            //document.getElementById("ProductName").value = productName;
         }
 
         function OnChangedFromDate() {
@@ -166,6 +171,7 @@
             }
 
 
+            //var CheckItem = document.getElementById("ProductName").value;
             var CheckItem = $('#ID').val();
             if (CheckItem == '' || CheckItem == null) {
                 CheckItem = 0;

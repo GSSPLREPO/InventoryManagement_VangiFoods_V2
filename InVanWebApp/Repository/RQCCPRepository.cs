@@ -188,8 +188,9 @@ namespace InVanWebApp.Repository
 
                     while (dataReader.Read())
                     {
-                        response.Status = Convert.ToBoolean(dataReader["status"]);
+                        response.Status = Convert.ToBoolean(dataReader["Status"]);
                     }
+
                     con.Close();
                 }
 

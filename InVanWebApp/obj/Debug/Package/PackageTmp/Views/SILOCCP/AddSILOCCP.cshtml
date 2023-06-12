@@ -1,7 +1,7 @@
 ﻿@model InVanWebApp_BO.SILOCCPBO
 
 @{ ViewBag.Title = "AddSILOCCP";
-                Layout = "~/Views/Shared/MainMaster.cshtml"; }
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 @using (Html.BeginForm("AddSILOCCP", "SILOCCP", FormMethod.Post))
 {
@@ -11,7 +11,7 @@
                         <h4>Add SILO CCP</h4>
                         <hr />
                         @Html.ValidationSummary(true)
-
+                        @Html.HiddenFor(model => model.RQCCP_Id)  @*//Rahul added 08-06-23.*@
                         <div class="row">
                             <div class="col-md-2">
                                 @Html.Label("Date")
@@ -22,15 +22,6 @@
                                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
-                                @Html.Label("Time")
-                            </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", type = "time" })
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
                                 @Html.Label("Product Name")
                                 <span style="color:red">*</span>
                             </div>
@@ -38,6 +29,9 @@
                                 @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm" })
                                 @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
                             </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-2 mb-1">
                                 @Html.Label("Lot No")
                                 <span style="color:red">*</span>
@@ -45,22 +39,29 @@
                             <div class="col-md-4">
                                 @Html.TextBoxFor(model => model.LotNumber, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                             </div>
-                        </div>
-
-                        <div class="row">
                             <div class="col-md-2 mb-1">
                                 @Html.Label("Raw Batches No")
                             </div>
                             <div class="col-md-4">
                                 @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                             </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-md-2">
                                 @Html.Label("Weight (KG)")
                             </div>
                             <div class="col-md-4">
                                 @Html.TextBoxFor(model => model.Weight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                             </div>
+                            <div class="col-md-2">
+                                @Html.Label("Time")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", type = "time" })
+                            </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-2">
                                 @Html.Label("Temperture (°C)")
@@ -98,7 +99,9 @@
                             </div>
                         </div>
                     </div>
-                    </div>}
+                </div>}
+@*Rahul added 'SILOCCP' 08-06-2023.*@
+@Html.Raw(TempData["SILOCCP"]) 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
