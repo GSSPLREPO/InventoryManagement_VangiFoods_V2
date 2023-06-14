@@ -5720,7 +5720,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th Colspan='7' style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Stage 1</th>");
             sb.Append("<th Colspan='4' style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Stage 2</th>");
-            sb.Append("<th Colspan='5' style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Stage 3</th>");
+            sb.Append("<th Colspan='6' style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Stage 3</th>");
             sb.Append("</tr>");
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th Rowspan='2' style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
@@ -5736,6 +5736,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<th Rowspan='2' style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Consistency</th>");
             sb.Append("<th Rowspan='2' style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>No Of Packets</th>");
             sb.Append("<th Rowspan='2' style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Rejected Packets</th>");            
+            sb.Append("<th Rowspan='2' style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Final Packets</th>");            
             sb.Append("</tr>");
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Weight (KG)</th>");
@@ -5766,6 +5767,7 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Consistency + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.NoOfPackets + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectedPackets + "</td>");                                               
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.FinalPackets + "</td>");                                               
                 sb.Append("</tr>");
             }
             sb.Append("</tbody>");
@@ -5852,6 +5854,7 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Consistency");
             dt.Columns.Add("No Of Packets");
             dt.Columns.Add("Rejected Packets");            
+            dt.Columns.Add("Final Packets");            
 
             foreach (RQCCPBO st in resultList)
             {
@@ -5872,6 +5875,7 @@ namespace InVanWebApp.Controllers
                 dr["Consistency"] = st.Consistency.ToString();
                 dr["No Of Packets"] = st.NoOfPackets.ToString();
                 dr["Rejected Packets"] = st.RejectedPackets.ToString();                
+                dr["Final Packets"] = st.FinalPackets.ToString();                
                 //dr["Reason For Wastage"] = (st.ReasonForRR == null) ? "" : st.ReasonForRR.ToString();
 
                 dt.Rows.Add(dr);
@@ -5900,22 +5904,24 @@ namespace InVanWebApp.Controllers
             string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
-            String content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
-               "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
+            String content1 = "<table id='tbl' style='border: 1px solid black;'>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+               "<tr><td colspan='14' style='text-align:center;'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
                "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + name + "</td></tr>" +
                "<tr><td colspan='14' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
                + "<tr><td colspan='8' style='text-align:left; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Fromdate + fromdate 
-               + "</td><td colspan='8' style='text-align:right; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Todate + todate + 
-                "<tr><td colspan='7' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 1</td>" + 
-                "<td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 2</td>" + 
-                "<td colspan='5' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 3</td></tr>" + 
-                "<tr><td colspan='7' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'></td>" +
-                "<td colspan='4' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Sterilization Yield Loss</td>" + 
-                "<td colspan='5' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'></td></tr>" 
+               + "</td><td colspan='8' style='text-align:right; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Todate + todate +
+                //"<tr><td colspan='7' style='text-align:center; border: 1px solid black;'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 1</td>" +
+                //"<td colspan='4' style='text-align:center; border: 1px solid black;'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 2</td>" +
+                //"<td colspan='6' style='text-align:center; border: 1px solid black;'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 3</td></tr>" +
+                "<tr><td colspan='7' style='text-align:center; border: 1px solid black;'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 1</td>" +
+                "<td colspan='4' style='text-align:center; border: 1px solid black;'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 2 (Sterilization Yield Loss)</td>" +
+                "<td colspan='6' style='text-align:center; border: 1px solid black;'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>Stage 3</td></tr>"
                /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
 
 
+
+            //string style = @"<style> table { border: 1px solid red; } td { border: 1px solid red; } </style> "; //Rahul added 14-06-23.
             string style = @"<!--mce:2-->";
             Response.Write(style);
             Response.Output.Write(content1);

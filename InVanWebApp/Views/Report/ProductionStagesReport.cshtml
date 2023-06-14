@@ -72,12 +72,12 @@
                                             <tr>
                                                 <th colspan="7" class="text-center">Stage 1</th>
                                                 <th colspan="4" class="text-center">Stage 2</th>
-                                                <th colspan="5" class="text-center">Stage 3</th>
+                                                <th colspan="6" class="text-center">Stage 3</th>
                                             </tr>
                                             <tr>
                                                 <th colspan="7" class="text-center"></th>
                                                 <th colspan="4" class="text-center">Sterilization Yield Loss</th>
-                                                <th colspan="5" class="text-center"></th>
+                                                <th colspan="6" class="text-center"></th>
                                             </tr>
                                             <tr>
                                                 <th style="text-align:center" class="text-wrap">Sr. No.</th>
@@ -94,9 +94,9 @@
                                                 <th style="text-align:center" class="text-wrap">Packing Hopper Temp</th>
                                                 <th style="text-align:center" class="text-wrap">Chiller Temp</th>
                                                 <th style="text-align:center" class="text-wrap">Consistency</th>
-                                                <th style="text-align:center" class="text-wrap">Total Header</th>
-                                                <th style="text-align:center" class="text-wrap">No Of Packets And Weight</th>                                                
-                                                @*<th style="text-align:center" class="text-wrap">Final Packets</th>*@                                                
+                                                <th style="text-align:center" class="text-wrap">NoOfPackets</th>
+                                                <th style="text-align:center" class="text-wrap">RejectedPackets</th>                                                
+                                                <th style="text-align:center" class="text-wrap">Final Packets</th>                                                
                                             </tr>
                                         </thead>
                                         <tbody class="text-center"></tbody>
@@ -217,7 +217,8 @@
                     { "data": "ChillerTemp", "autoWidth": true },
                     { "data": "Consistency", "autoWidth": true },
                     { "data": "NoOfPackets", "autoWidth": true },
-                    { "data": "RejectedPackets", "autoWidth": true },                                            
+                    { "data": "RejectedPackets", "autoWidth": true },
+                    { "data": "FinalPackets", "autoWidth": true },
                 ]
             });
             t.on('order.dt search.dt', function () {

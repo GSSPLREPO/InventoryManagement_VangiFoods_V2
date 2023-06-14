@@ -1518,8 +1518,9 @@ namespace InVanWebApp.Repository
                             PackingHopperTemp = reader["PackingHopperTemp"].ToString(),
                             ChillerTemp = reader["ChillerTemp"].ToString(),
                             Consistency = reader["Consistency"].ToString(),
-                            NoOfPackets = reader["TotalHeader"].ToString(),
-                            RejectedPackets = reader["NoOfPacketsAndWeight"].ToString(),
+                            NoOfPackets = reader["NoOfPackets"].ToString(),
+                            RejectedPackets = reader["RejectedPackets"].ToString(),
+                            FinalPackets = reader["FinalPackets"].ToString(),
                             
                         };
                         resultList.Add(result);
