@@ -241,6 +241,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@SalesOrderId", model.SO_Id);
                     cmd.Parameters.AddWithValue("@SONo", model.SONo);                    
                     cmd.Parameters.AddWithValue("@WorkOrderNo", model.WorkOrderNo);
+                    cmd.Parameters.AddWithValue("@BatchPlanningDocId", model.BatchPlanningDocId);    //Rahul added 'BatchPlanningDocId' 13-06-23. 
+                    cmd.Parameters.AddWithValue("@BatchPlanningDocumentNo", model.BatchPlanningDocumentNo);  //Rahul added 'BatchPlanningDocumentNo' 13-06-23.
                     cmd.Parameters.AddWithValue("@ItemID", model.RecipeID);
                     cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
                     cmd.Parameters.AddWithValue("@TotalBatches", model.TotalBatches);
@@ -350,6 +352,8 @@ namespace InVanWebApp.Repository
                             SO_Id = Convert.ToInt32(reader["SalesOrderId"]),
                             SONo = reader["SONo"].ToString(),
                             WorkOrderNo = reader["WorkOrderNo"].ToString(),
+                            BatchPlanningDocId = Convert.ToInt32(reader["BatchPlanningDocId"]), //Rahul added 'BatchPlanningDocId' 13-06-23. 
+                            BatchPlanningDocumentNo = reader["BatchPlanningDocumentNo"].ToString(), //Rahul added 'BatchPlanningDocumentNo' 13-06-23. 
                             TotalBatches = Convert.ToInt32(reader["TotalBatches"]),
                             BatchNumber = reader["BatchNumber"].ToString(), //Rahul added 25-033-2023.
                             Description = reader["Description"].ToString()                            
@@ -410,6 +414,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@SalesOrderId", model.SalesOrderId);
                     cmd.Parameters.AddWithValue("@SONo", model.SONo);
                     cmd.Parameters.AddWithValue("@WorkOrderNo", model.WorkOrderNo);
+                    cmd.Parameters.AddWithValue("@BatchPlanningDocId", model.BatchPlanningDocId);    //Rahul added 'BatchPlanningDocId' 13-06-23. 
+                    cmd.Parameters.AddWithValue("@BatchPlanningDocumentNo", model.BatchPlanningDocumentNo);  //Rahul added 'BatchPlanningDocumentNo' 13-06-23.
                     cmd.Parameters.AddWithValue("@RecipeID", model.RecipeID);
                     cmd.Parameters.AddWithValue("@RecipeName", model.RecipeName);
                     cmd.Parameters.AddWithValue("@TotalBatches", model.TotalBatches);
@@ -524,7 +530,8 @@ namespace InVanWebApp.Repository
         #region Bind Work order no
         public SalesOrderBO GetWorkOrderNumber(int id)
         {
-            string purchaseOrderQuery = "SELECT WorkOrderNo FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
+            //string purchaseOrderQuery = "SELECT WorkOrderNo FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
+            string purchaseOrderQuery = "Select SO.WorkOrderNo, (Select BPM.ID from BatchPlanningMaster BPM where BPM.SO_Id = @Id AND IsDeleted = 0) as BatchPlanningDocId, (Select BPM.BatchPlanningDocumentNo from BatchPlanningMaster BPM where BPM.SO_Id = @Id AND IsDeleted = 0) as BatchPlanningDocumentNo from SalesOrder SO where SO.SalesOrderId = @Id AND SO.IsDeleted = 0;";
             string itemDetails = "Select Item_ID,ItemName from SalesOrderItemsDetails where SalesOrderId=@Id and IsDeleted=0";
 
             SalesOrderBO result = new SalesOrderBO();

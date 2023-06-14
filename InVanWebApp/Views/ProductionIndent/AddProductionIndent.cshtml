@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-md-4">
                                 @Html.DropDownListFor(model => model.SO_Id, (IEnumerable<SelectListItem>)ViewData["SO_dd"], "--Select--",
-                                                                                     new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                                                                          new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                                 @Html.ValidationMessageFor(model => model.SO_Id, "", new { @class = "error mt-2 text-danger" })
                                 @Html.HiddenFor(model => model.SONo)
 
@@ -75,6 +75,15 @@
                             <div class="col-md-4">
                                 @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
+                            </div>
+                            @*//Rahul added 'BatchPlanningDocumentNo' 13-06-23.*@
+                            <div class="col-md-2">
+                                @Html.Label("Batch Planning Document No")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.BatchPlanningDocumentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.BatchPlanningDocumentNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
+                                @Html.HiddenFor(model => model.BatchPlanningDocId)
                             </div>
                         </div>
 
@@ -165,62 +174,62 @@
 
     var TxtItemDetails = "";
 
-    //$("#TotalBatches").change(function () {
+    $("#TotalBatches").change(function () {
 
-    //    var totalBatches = $("#TotalBatches").val();
-    //    var ID = $('#SO_Id').val();
+        var totalBatches = $("#TotalBatches").val();
+        var ID = $('#SO_Id').val();
 
-    //    if (totalBatches == 0 || totalBatches == null || totalBatches == '') {
-    //        totalBatches = 0;
-    //    }
-    //    else {
-    //        totalBatches = parseFloat(totalBatches);
-    //        var table = document.getElementById('ItemTable');
-    //        var count = table.rows.length;
+        if (totalBatches == 0 || totalBatches == null || totalBatches == '') {
+            totalBatches = 0;
+        }
+        else {
+            totalBatches = parseFloat(totalBatches);
+            var table = document.getElementById('ItemTable');
+            var count = table.rows.length;
 
-    //        for (var j = 0; j < count - 1; j++) {
-    //            var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
-    //            $("#txtFinalQty_" + j).val(FinalQty.toFixed(4));
-    //        }
+            for (var j = 0; j < count - 1; j++) {
+                var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
+                $("#txtFinalQty_" + j).val(FinalQty.toFixed(4));
+            }
 
-    //    }
+        }
 
-    //    var batchNumber = "";
-    //    $.ajax({
-    //        url: '/ProductionIndent/GetBatchNumber?id=' + ID + "&TotalBatches=" + totalBatches,
-    //        type: "POST",
-    //        data: {},
-    //        success: function (result) {
-    //            if (result.length < totalBatches) {
-    //                alert('You are entering wrong no of batches!');
-    //                $("#TotalBatches").val(result.length);
+        //var batchNumber = "";
+        //$.ajax({
+        //    url: '/ProductionIndent/GetBatchNumber?id=' + ID + "&TotalBatches=" + totalBatches,
+        //    type: "POST",
+        //    data: {},
+        //    success: function (result) {
+        //        if (result.length < totalBatches) {
+        //            alert('You are entering wrong no of batches!');
+        //            $("#TotalBatches").val(result.length);
 
-    //                totalBatches = parseFloat(result.length);
-    //                var table = document.getElementById('ItemTable');
-    //                var count = table.rows.length;
+        //            totalBatches = parseFloat(result.length);
+        //            var table = document.getElementById('ItemTable');
+        //            var count = table.rows.length;
 
-    //                for (var j = 0; j < count - 1; j++) {
-    //                    var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
-    //                    $("#txtFinalQty_" + j).val(FinalQty.toFixed(2));
-    //                }
-    //            }
+        //            for (var j = 0; j < count - 1; j++) {
+        //                var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
+        //                $("#txtFinalQty_" + j).val(FinalQty.toFixed(2));
+        //            }
+        //        }
 
-    //            for (var j = 0; j < result.length; j++) {
-    //                batchNumber = batchNumber + result[j].BatchNumber;
-    //                if (j != result.length - 1)
-    //                    batchNumber = batchNumber + ",";
-    //            }
-    //            document.getElementById("BatchNumber").value = batchNumber;
-    //        },
-    //        error: function (err) {
-    //            alert('Not able to fetch Batch Number, do batch planning!');
-    //            $('#TotalBatches').val('');
-    //            $('#BatchNumber').val('');
-    //            $('#SO_Id').focus();
-    //        }
-    //    });
+        //        for (var j = 0; j < result.length; j++) {
+        //            batchNumber = batchNumber + result[j].BatchNumber;
+        //            if (j != result.length - 1)
+        //                batchNumber = batchNumber + ",";
+        //        }
+        //        document.getElementById("BatchNumber").value = batchNumber;
+        //    },
+        //    error: function (err) {
+        //        alert('Not able to fetch Batch Number, do batch planning!');
+        //        $('#TotalBatches').val('');
+        //        $('#BatchNumber').val('');
+        //        $('#SO_Id').focus();
+        //    }
+        //});
 
-    //});
+    });
 
 
     // SO Number New Start
@@ -238,6 +247,8 @@
             data: { id },
             success: function (result) {
                 $('#WorkOrderNo').val(result.WorkOrderNo);
+                $('#BatchPlanningDocId').val(result.BatchPlanningDocId);   //Rahul added 'BatchPlanningDocId' 13-06-23. 
+                $('#BatchPlanningDocumentNo').val(result.BatchPlanningDocumentNo);  //Rahul added 'BatchPlanningDocumentNo' 13-06-23.
                 var count = result.salesOrderItemsDetails.length;
                 var i = 0;
                 $("#RecipeID option").remove();
@@ -267,7 +278,7 @@
     // So Number New End
 
     function SelectedIndexChangedProductNameList(id) {
-        debugger
+        
         $('#btnSave').prop('disabled', false);
         //Rahul added 'ID' 25-05-2023 for 'BatchNumber' start.
         var ID = $('#RecipeID').val();
@@ -277,7 +288,7 @@
             type: "POST",
             data: {},
             success: function (result) {
-                console.log(result)        //Rahul added 'for loop'for 'BatchNumber' 26-05-2023 start.
+                //console.log(result)        //Rahul added 'for loop'for 'BatchNumber' 26-05-2023 start.
                 for (var j = 0; j < result.length; j++) {
                     batchNumber = batchNumber + result[j].BatchNumber;
                     if (j != result.length - 1)

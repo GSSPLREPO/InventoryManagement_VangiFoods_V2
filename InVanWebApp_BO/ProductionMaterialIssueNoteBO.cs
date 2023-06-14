@@ -83,6 +83,8 @@ namespace InVanWebApp_BO
         //This field is used in Dashboard of Production QC.
         public string BatchNumber { get; set; }
         public Nullable<int> flag { get; set; }
+        public Nullable<int> BatchPlanningDocId { get; set; } //Rahul added 'BatchPlanningDocId' 13-06-23.  
+        public string BatchPlanningDocumentNo { get; set; } //Rahul added 'BatchPlanningDocumentNo' 13-06-23.   
     }
 
     public class ProductionMaterialIssueNoteDetailsBO

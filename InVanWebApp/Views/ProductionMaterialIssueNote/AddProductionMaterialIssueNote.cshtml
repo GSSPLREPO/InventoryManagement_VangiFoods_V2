@@ -85,6 +85,15 @@
             </div>
             <br />
             <div class="row">
+                @*//Rahul added 'BatchPlanningDocumentNo' 13-06-23.*@
+                <div class="col-md-2">
+                    @Html.Label("Batch Planning Document No")
+                </div>
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.BatchPlanningDocumentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.BatchPlanningDocumentNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
+                    @Html.HiddenFor(model => model.BatchPlanningDocId)
+                </div>
                 <div class="col-md-2 mb-1">
                     @Html.Label("Remarks")
                 </div>

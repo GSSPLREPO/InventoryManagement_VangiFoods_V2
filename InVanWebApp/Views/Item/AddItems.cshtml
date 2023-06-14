@@ -50,7 +50,8 @@
                         <span style="color:red">*</span>
                     </div>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.Item_Name, new { @class = "form-control form-control-sm", maxlength = "40" })
+                        @*//Rahul added 'maxlength = "40" to "70"' 13-06-23.*@
+                        @Html.TextBoxFor(model => model.Item_Name, new { @class = "form-control form-control-sm", maxlength = "70" })
                         @Html.ValidationMessageFor(model => model.Item_Name, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
                     </div>
                     <div class="col-md-2">
@@ -178,25 +179,25 @@
         }
     }); 
 
-    //Validation for special characters.
-    $('#Item_Name').on("keydown keyup change", function () {
-        var maxLength = 40;
-        var $th = $(this);
-        $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
-            function (str) {
-                $('#validationMsgName').text('Special caracters not allowed!');
-                $('#validationMsgName').show();
-                return '';
-            }));
+    //Validation for special characters. *//Rahul commented '$('#Item_Name'), function ()' 13-06-23.
+    //$('#Item_Name').on("keydown keyup change", function () {
+    //    var maxLength = 40;
+    //    var $th = $(this);
+    //    $th.val($th.val().replace(/[^a-zA-Z0-9\d\-_\s]/g,
+    //        function (str) {
+    //            $('#validationMsgName').text('Special caracters not allowed!');
+    //            $('#validationMsgName').show();
+    //            return '';
+    //        }));
 
-        if (($('#Item_Name').val().length) > maxLength) {
-            $('#validationMsgName').show();
-            $('#validationMsgName').text('Length is exceeding!');
-            //return false;
-        }
-        else
-            $('#validationMsgName').hide();
-    });
+    //    if (($('#Item_Name').val().length) > maxLength) {
+    //        $('#validationMsgName').show();
+    //        $('#validationMsgName').text('Length is exceeding!');
+    //        //return false;
+    //    }
+    //    else
+    //        $('#validationMsgName').hide();
+    //});
 
     //Validation for special characters.
     $('#Item_Code').on("keydown keyup change", function () {

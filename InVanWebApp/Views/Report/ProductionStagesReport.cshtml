@@ -62,8 +62,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         @Html.DropDownList("Item_Code", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select All--", new { @class = "form-control", @id = "ID", onchange = "SelectedIndexChangedItem()" })
-                                        @Html.ValidationMessage("Item_Code", "", new { id = "ProductNameValidate", @class = "col-form-label error mt-2 text-danger" })
-                                        @Html.HiddenFor(model => model.ProductName)
+                                        @Html.ValidationMessage("Item_Code", "", new { id = "ProductNameValidate", @class = "col-form-label error mt-2 text-danger" })                                        
                                     </div>
                                 </div>
                                 <br />
@@ -146,7 +145,7 @@
         }
 
         $("#btnGo").on('click', function () {
-            
+            debugger
             var fromDate = $("#fromDate").val();
             var toDate = $("#toDate").val();
 
@@ -218,8 +217,7 @@
                     { "data": "ChillerTemp", "autoWidth": true },
                     { "data": "Consistency", "autoWidth": true },
                     { "data": "NoOfPackets", "autoWidth": true },
-                    { "data": "RejectedPackets", "autoWidth": true },                        
-                    { "data": "FinalPackets", "autoWidth": true },
+                    { "data": "RejectedPackets", "autoWidth": true },                                            
                 ]
             });
             t.on('order.dt search.dt', function () {

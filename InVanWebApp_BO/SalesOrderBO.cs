@@ -110,6 +110,8 @@ namespace InVanWebApp_BO
 
         //Added the below the field for Delivery Challan including the Finished goods quantity in it.
         public decimal FinishedGoodQuantity { get; set; }
+        public Nullable<int> BatchPlanningDocId { get; set; } //Rahul added 'BatchPlanningDocId' 13-06-23. 
+        public string BatchPlanningDocumentNo { get; set; } //Rahul added 'BatchPlanningDocumentNo' 13-06-23.
     }
 
     public class SalesOrderItemsDetail

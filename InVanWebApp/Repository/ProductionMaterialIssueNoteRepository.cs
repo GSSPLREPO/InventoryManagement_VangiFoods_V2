@@ -112,7 +112,9 @@ namespace InVanWebApp.Repository
                             ItemUnitPrice = Convert.ToDecimal(dataReader2["ItemUnitPrice"]),
                             CurrencyName = dataReader2["CurrencyName"].ToString(),
                             FinalStock = Convert.ToDecimal(dataReader2["FinalStock"]),
-                            WorkOrderNo=dataReader2["WorkOrderNo"].ToString()
+                            WorkOrderNo=dataReader2["WorkOrderNo"].ToString(),
+                            BatchPlanningDocId = Convert.ToInt32(dataReader2["BatchPlanningDocId"]),  //Rahul added 'BatchPlanningDocId' 13-06-23.  
+                            BatchPlanningDocumentNo = dataReader2["BatchPlanningDocumentNo"].ToString() //Rahul added 'BatchPlanningDocumentNo' 13-06-23.   
                         };
                         resultList.Add(result);
                     }
@@ -151,6 +153,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@ProductionIndentID", model.ProductionIndentID);
                     cmd.Parameters.AddWithValue("@ProductionIndentNo", model.ProductionIndentNo);
                     cmd.Parameters.AddWithValue("@WorkOrderNumber", model.WorkOrderNumber);
+                    cmd.Parameters.AddWithValue("@BatchPlanningDocId", model.BatchPlanningDocId);    //Rahul added 'BatchPlanningDocId' 13-06-23. 
+                    cmd.Parameters.AddWithValue("@BatchPlanningDocumentNo", model.BatchPlanningDocumentNo);  //Rahul added 'BatchPlanningDocumentNo' 13-06-23.
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));

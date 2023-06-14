@@ -1507,8 +1507,8 @@ namespace InVanWebApp.Repository
                             SrNo = Convert.ToInt32(reader["SrNo"]),
                             RCCPDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),
                             ProductName = reader["ProductName"].ToString(),
-                            LotNumber = reader["LotNumber"].ToString(),
-                            RawBatchesNo = reader["RawBatchesNo"].ToString(),
+                            LotNumber = reader["LotNo"].ToString(),
+                            RawBatchesNo = reader["RawBatchNo"].ToString(),
                             WeightofRawBatches = reader["WeightofRawBatches"].ToString(),
                             TansferTimeintoHoldingSilo = reader["TansferTimeintoHoldingSilo"].ToString(),
                             Weight = reader["Weight"].ToString(),
@@ -1520,7 +1520,7 @@ namespace InVanWebApp.Repository
                             Consistency = reader["Consistency"].ToString(),
                             NoOfPackets = reader["TotalHeader"].ToString(),
                             RejectedPackets = reader["NoOfPacketsAndWeight"].ToString(),
-                            //FinalPackets = reader["FinalPackets"].ToString(),   
+                            
                         };
                         resultList.Add(result);
                     }

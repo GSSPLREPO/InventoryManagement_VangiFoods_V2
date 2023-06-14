@@ -50,6 +50,7 @@ namespace InVanWebApp_BO
         public int IndentCount { get; set; }
         public int ProductionIndentId { get; set; }
         public string BatchNumber { get; set; } //Rahul added 24-03-23.   
+        public Nullable<int> BatchPlanningDocId { get; set; } //Rahul added 'BatchPlanningDocId' 13-06-23.  
         public string BatchPlanningDocumentNo { get; set; } //Rahul added 02-06-23.   
         public List<ProductionIndent_DetailsBO> indent_Details { get; set; }
 

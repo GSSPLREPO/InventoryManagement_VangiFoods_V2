@@ -38,7 +38,8 @@ namespace InVanWebApp_BO
         public string CurrencyName { get; set; }
         public decimal? FinalStock { get; set; }
         public string WorkOrderNo { get; set; }
-
+        public Nullable<int> BatchPlanningDocId { get; set; } //Rahul added 'BatchPlanningDocId' 13-06-23.  
+        public string BatchPlanningDocumentNo { get; set; } //Rahul added 'BatchPlanningDocumentNo' 13-06-23.   
 
     }
 }
