@@ -37,15 +37,15 @@
             </div>
             @if (@Session["UserId"] != null)
             {
-<div class="col-md-4 d-none">
-    @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control", Value = @Session["UserId"], @readonly = "readonly" })
-</div>          }
+    <div class="col-md-4 d-none">
+        @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control", Value = @Session["UserId"], @readonly = "readonly" })
+    </div>      }
 
             @if (@Session["UserName"] != null)
             {
-<div class="col-md-4">
-    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", Value = @Session["UserName"], @readonly = "readonly" })
-</div>          }
+    <div class="col-md-4">
+        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", Value = @Session["UserName"], @readonly = "readonly" })
+    </div>      }
             <div class="col-md-2">
                 @Html.Label("Production Date")
                 <span style="color:red">*</span>
@@ -83,7 +83,7 @@
                 <span style="color:red">*</span>
             </div>
             <div class="col-md-4">
-                @Html.TextBoxFor(model=>model.SONo, new { @class = "form-control form-control-sm", @readonly="readonly" })
+                @Html.TextBoxFor(model => model.SONo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                 @Html.ValidationMessageFor(model => model.SONo, "", new { @class = "error mt-2 text-danger" })
                 @Html.HiddenFor(model => model.SalesOrderId)
                 @Html.HiddenFor(model => model.SO_Id)
@@ -93,13 +93,23 @@
             </div>
             <div class="col-md-4">
                 @*@Html.DropDownList("SOId", (IEnumerable<SelectListItem>)ViewData["WONumberAndId"], "--Select--",
-                    new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })
-                     @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })*@
+                new { @class = "form-control", onchange = "SelectedIndexChangedWO($(this).val(),id)", @disabled = "disabled" })
+                 @Html.ValidationMessageFor(model => model.SalesOrderId, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })*@
                 @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", maxlength = "50", @disabled = "disabled" })
                 @Html.HiddenFor(model => model.WorkOrderNo)
             </div>
         </div>
-
+        @*//Rahul added 'BatchPlanningDocumentNo' 13-06-23.*@
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Batch Planning Document No")
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.BatchPlanningDocumentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.BatchPlanningDocumentNo, "", new { @class = "error mt-2 text-danger" })
+                @Html.HiddenFor(model => model.BatchPlanningDocId)
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-2">
                 @Html.Label("Batch Number")
@@ -201,8 +211,9 @@
                                 </td>
 
 
-                            </tr> { c++; }
-                                            } }
+                            </tr>
+ { c++; }
+                        } }
                                     </tbody>
                                 </table>
                                 <br />
@@ -222,7 +233,7 @@
         </a>
         <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Update</button>
     </div>
-</div>}
+    </div>}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

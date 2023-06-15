@@ -423,7 +423,7 @@
 
 
                 var wastageVal = $('#txtWastagePer' + rowNo).val();
-                WastagePercentages = WastagePercentages + "txtWastagePer" + rowNo + "*" + wastageVal + ",";
+                var WastagePercentages = WastagePercentages + "txtWastagePer" + rowNo + "*" + wastageVal + ",";
                 document.getElementById("txtRemarks_" + rowNo).focus();
             }
 
@@ -459,7 +459,7 @@
            // QuantitiesForSorting = QuantitiesForSorting + "txtQCQty" + rowNo + "*" + value + ",";
 
             var BalQty = document.getElementById("txtBalanceQty" + rowNo).value;
-            BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" + BalQty + ",";
+            var BalanceQuantities = BalanceQuantities + "txtBalanceQty" + rowNo + "*" + BalQty + ",";
             document.getElementById(id).removeAttribute("class", "border border-1 border-danger");
             
         }

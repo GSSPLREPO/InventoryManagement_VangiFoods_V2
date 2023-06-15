@@ -289,8 +289,15 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     cmd.ExecuteNonQuery();
-                    responseMessage.Status = true;
-                    con.Close();
+                    //responseMessage.Status = true;
+                    //con.Close();
+                    SqlDataReader dataReaderNew = cmd.ExecuteReader();
+
+                    while (dataReaderNew.Read())
+                    {
+                        responseMessage.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                    }
+                    con.Close();                    
                 }
             }
             catch (Exception ex)

@@ -60,9 +60,9 @@
                                         <label>Product Name:</label>
                                         <span style="color:red">*</span>
                                     </div>
-                                    <div class="col-md-3">                                       
+                                    <div class="col-md-3">
                                         @Html.DropDownList("Item_Code", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select All--", new { @class = "form-control", @id = "ID", onchange = "SelectedIndexChangedItem()" })
-                                        @Html.ValidationMessage("Item_Code", "", new { id = "ProductNameValidate", @class = "col-form-label error mt-2 text-danger" })
+                                        @Html.ValidationMessage("Item_Code", "", new { id = "ProductNameValidate", @class = "col-form-label error mt-2 text-danger" })                                        
                                     </div>
                                 </div>
                                 <br />
@@ -94,8 +94,8 @@
                                                 <th style="text-align:center" class="text-wrap">Packing Hopper Temp</th>
                                                 <th style="text-align:center" class="text-wrap">Chiller Temp</th>
                                                 <th style="text-align:center" class="text-wrap">Consistency</th>
-                                                <th style="text-align:center" class="text-wrap">No Of Packets</th>
-                                                <th style="text-align:center" class="text-wrap">Rejected Packets</th>                                                
+                                                <th style="text-align:center" class="text-wrap">NoOfPackets</th>
+                                                <th style="text-align:center" class="text-wrap">RejectedPackets</th>                                                
                                                 <th style="text-align:center" class="text-wrap">Final Packets</th>                                                
                                             </tr>
                                         </thead>
@@ -130,6 +130,10 @@
 
         function SelectedIndexChangedItem() {
             $('#ProductNameValidate').hide();
+            //var selectedOptionProductName, productName;
+            //selectedOptionProductName = document.getElementById("ID").selectedIndex;
+            //productName = document.getElementById("ID").options[selectedOptionProductName].innerText;
+            //document.getElementById("ProductName").value = productName;
         }
 
         function OnChangedFromDate() {
@@ -141,7 +145,7 @@
         }
 
         $("#btnGo").on('click', function () {
-            
+            debugger
             var fromDate = $("#fromDate").val();
             var toDate = $("#toDate").val();
 
@@ -166,6 +170,7 @@
             }
 
 
+            //var CheckItem = document.getElementById("ProductName").value;
             var CheckItem = $('#ID').val();
             if (CheckItem == '' || CheckItem == null) {
                 CheckItem = 0;
@@ -212,7 +217,7 @@
                     { "data": "ChillerTemp", "autoWidth": true },
                     { "data": "Consistency", "autoWidth": true },
                     { "data": "NoOfPackets", "autoWidth": true },
-                    { "data": "RejectedPackets", "autoWidth": true },                        
+                    { "data": "RejectedPackets", "autoWidth": true },
                     { "data": "FinalPackets", "autoWidth": true },
                 ]
             });

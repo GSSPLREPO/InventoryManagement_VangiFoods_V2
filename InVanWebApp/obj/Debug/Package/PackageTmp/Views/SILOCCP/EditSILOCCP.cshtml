@@ -18,7 +18,8 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd") })
+                                @*//Rahul added '@readonly = "readonly"' 12-06-2023.*@
+                                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd"), @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
@@ -35,7 +36,8 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                @*//Rahul added '@readonly = "readonly"' 12-06-2023.*@
+                                @Html.DropDownListFor(model => model.ItemId, (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedItemList($(this).val())", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2 mb-1">
@@ -43,7 +45,8 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.LotNumber, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                                @*//Rahul added '@readonly = "readonly"' 12-06-2023.*@
+                                @Html.TextBoxFor(model => model.LotNumber, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", @readonly = "readonly" })
                             </div>
                         </div>
                         <div class="row">
@@ -51,7 +54,8 @@
                                 @Html.Label("Raw Batches No")
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
+                                @*//Rahul added '@readonly = "readonly"' 12-06-2023.*@
+                                @Html.TextBoxFor(model => model.RawBatchesNo, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);", @readonly = "readonly" })
                             </div>
                             <div class="col-md-2">
                                 @Html.Label("Weight (KG)")

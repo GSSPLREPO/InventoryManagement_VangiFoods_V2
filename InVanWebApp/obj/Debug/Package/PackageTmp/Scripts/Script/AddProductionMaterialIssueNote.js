@@ -97,9 +97,11 @@ function SelectedIndexChangedPI() {
         type: "POST",
         data: {},
         success: function (result) {
-
+            console.log(result);
             var table = document.getElementById('submissionTable');
             $('#WorkOrderNumber').val(result[0].WorkOrderNo);
+            $('#BatchPlanningDocId').val(result[0].BatchPlanningDocId);   //Rahul added 'BatchPlanningDocId' 13-06-23. 
+            $('#BatchPlanningDocumentNo').val(result[0].BatchPlanningDocumentNo);  //Rahul added 'BatchPlanningDocumentNo' 13-06-23.
 
             for (var j = 0; j < result.length; j++) {
                 var rowCount = table.rows.length;

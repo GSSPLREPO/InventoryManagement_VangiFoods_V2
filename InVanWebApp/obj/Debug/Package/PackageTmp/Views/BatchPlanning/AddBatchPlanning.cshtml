@@ -463,6 +463,9 @@
                     if (UnitName1 == 'kg' || UnitName1 == 'KG' || UnitName1 == 'Kg') {                        
                         $('#UnitName').val('1 Kg');
                     }
+                    else {
+                        $('#UnitName').val(UnitName1);  ///Rahul added '#UnitName' 13-06-2023.
+                    }
                     var table = document.getElementById('submissionTable');
                     for (var j = 0; j < result.length; j++) {
                         var rowCount = table.rows.length;

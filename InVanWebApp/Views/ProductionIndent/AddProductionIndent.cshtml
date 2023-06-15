@@ -246,6 +246,7 @@
             type: "POST",
             data: { id },
             success: function (result) {
+                console.log(result);
                 $('#WorkOrderNo').val(result.WorkOrderNo);
                 $('#BatchPlanningDocId').val(result.BatchPlanningDocId);   //Rahul added 'BatchPlanningDocId' 13-06-23. 
                 $('#BatchPlanningDocumentNo').val(result.BatchPlanningDocumentNo);  //Rahul added 'BatchPlanningDocumentNo' 13-06-23.

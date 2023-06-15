@@ -175,7 +175,8 @@ namespace InVanWebApp.Controllers
                 if (result.Status)
                     TempData["Success"] = "<script>alert('Production Material Issue note deleted successfully!');</script>";
                 else
-                    TempData["Success"] = "<script>alert('Error while deleting!');</script>";
+                    //TempData["Success"] = "<script>alert('Error while deleting!');</script>";
+                    TempData["Success"] = "<script>alert('Pre Production QC Already Done! Can not be deleted!');</script>";
 
                 return RedirectToAction("Index", "ProductionMaterialIssueNote");
             }

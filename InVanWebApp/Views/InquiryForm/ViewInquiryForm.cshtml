@@ -54,7 +54,8 @@
                             <h3 class="card-title font-weight-bold col-4 mb-0 align-self-center" style="font-size: 30pt;">Inquiry</h3>
                             <div class="col">
                                 <div class="col-md-12">
-                                    <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" style="width:45px;height:45px" class=" float-right" />
+                                    @*<img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" style="width:45px;height:45px" class=" float-right" />*@
+                                    <a id="ExportPdf" href="@Url.Action("ExportAsPDF", "InquiryForm")"> <img class="float-left" src="~/Theme/MainContent/images/ICON.png.png" style="width: 45px; height: 45px; padding-top: 1px; margin-top: 2%; margin-left: 500px" /> </a>
                                 </div>
                             </div>
 
