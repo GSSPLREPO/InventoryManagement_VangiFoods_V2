@@ -65,5 +65,7 @@ namespace InVanWebApp_BO
         public string ItemNameWithCode { get; set; }
         //Added for Production Indent 'BatchNumber' dropdown 25-05-2023. 
         public string BatchNumber { get; set; }
+        public Nullable<int> BatchPlanningDocId { get; set; } //Rahul added 'BatchPlanningDocId' 16-06-23.  
+        public string BatchPlanningDocumentNo { get; set; } //Rahul added 16-06-23.   
     }
 }

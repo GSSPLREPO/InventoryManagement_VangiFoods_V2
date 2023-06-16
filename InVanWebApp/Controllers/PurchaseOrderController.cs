@@ -770,19 +770,7 @@ namespace InVanWebApp.Controllers
                 generatedDateCell.Border = 0;
                 generatedDateTable.TotalWidth = 250;
                 generatedDateTable.AddCell(generatedDateCell);
-                generatedDateTable.WriteSelectedRows(0, 1, document.Left - 110, document.Bottom - 5, writer.DirectContent);
-                //-------------------------------------------For Generated Date-----------------------------------------------------
-
-                //--------------------------------------------For user Name-----------------------------------------------------
-                var UserName = "Generated: " + DateTime.Now;
-                var UserNameTable = new PdfPTable(1);
-                UserNameTable.DefaultCell.Border = 0;
-
-                var UserNameCell = new PdfPCell(new Phrase(UserName, plainFont)) { HorizontalAlignment = Element.ALIGN_RIGHT };
-                generatedDateCell.Border = 0;
-                generatedDateTable.TotalWidth = 250;
-                generatedDateTable.AddCell(UserNameCell);
-                generatedDateTable.WriteSelectedRows(0, 1, document.Left - 210, document.Bottom - 5, writer.DirectContent);
+                generatedDateTable.WriteSelectedRows(0, 1, document.Left - 135, document.Bottom - 5, writer.DirectContent);
                 //-------------------------------------------For Generated Date-----------------------------------------------------
 
                 //----------------------------------------For Page Number--------------------------------------------------

@@ -16,7 +16,7 @@ namespace InVanWebApp.Repository.Interface
         ////Bind all Batch Number details by SO_Id and Total_Batches   //Not in use 25-05-23.
         //IEnumerable<BatchNumberMasterBO> GetBatchNumberById(int SO_Id, int Total_Batches);
         //Bind all Batch Number details by Item_ID 
-        IEnumerable<ItemBO> GetBatchNumberById(int Item_ID);
+        IEnumerable<ItemBO> GetBatchNumberById(int Item_ID,int SO_ID); 
 
         //Define function for inserting data into Production Indent 
         ResponseMessageBO Insert(ProductionIndentBO model);

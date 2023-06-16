@@ -39,13 +39,13 @@
                             <div class="col-md-4 d-none">
                                 @if (@Session["UserId"] != null)
                                 {
-                @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control form-control-sm", Value = @Session["UserId"], @readonly = "readonly" })}
+                    @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control form-control-sm", Value = @Session["UserId"], @readonly = "readonly" })}
                             </div>
 
                             <div class="col-md-4">
                                 @if (@Session["UserName"] != null)
                                 {
-                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", Value = @Session["UserName"], @readonly = "readonly" })}
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", Value = @Session["UserName"], @readonly = "readonly" })}
                             </div>
                             <div class="col-md-2">
                                 @Html.Label("Production Date")
@@ -64,7 +64,7 @@
                             </div>
                             <div class="col-md-4">
                                 @Html.DropDownListFor(model => model.SO_Id, (IEnumerable<SelectListItem>)ViewData["SO_dd"], "--Select--",
-                                                                                          new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                                                                               new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                                 @Html.ValidationMessageFor(model => model.SO_Id, "", new { @class = "error mt-2 text-danger" })
                                 @Html.HiddenFor(model => model.SONo)
 
@@ -75,15 +75,6 @@
                             <div class="col-md-4">
                                 @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
-                            </div>
-                            @*//Rahul added 'BatchPlanningDocumentNo' 13-06-23.*@
-                            <div class="col-md-2">
-                                @Html.Label("Batch Planning Document No")
-                            </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.BatchPlanningDocumentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.BatchPlanningDocumentNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
-                                @Html.HiddenFor(model => model.BatchPlanningDocId)
                             </div>
                         </div>
 
@@ -119,7 +110,17 @@
                                 @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
                                 @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })
                             </div>
-
+                            @*//Rahul added 'BatchPlanningDocumentNo' 13-06-23.*@
+                            <div class="col-md-2">
+                                @Html.Label("Batch Planning Document No")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.BatchPlanningDocumentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.BatchPlanningDocumentNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
+                                @Html.HiddenFor(model => model.BatchPlanningDocId)
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-2">
                                 @Html.Label("Remarks")
                             </div>
@@ -160,7 +161,7 @@
                         </a>
                         <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
                     </div>
-                </div>}
+                    </div>}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -246,9 +247,10 @@
             type: "POST",
             data: { id },
             success: function (result) {
+                //console.log(result);
                 $('#WorkOrderNo').val(result.WorkOrderNo);
-                $('#BatchPlanningDocId').val(result.BatchPlanningDocId);   //Rahul added 'BatchPlanningDocId' 13-06-23. 
-                $('#BatchPlanningDocumentNo').val(result.BatchPlanningDocumentNo);  //Rahul added 'BatchPlanningDocumentNo' 13-06-23.
+                //$('#BatchPlanningDocId').val(result.BatchPlanningDocId);   //Rahul added 'BatchPlanningDocId' 13-06-23. 
+                //$('#BatchPlanningDocumentNo').val(result.BatchPlanningDocumentNo);  //Rahul added 'BatchPlanningDocumentNo' 13-06-23.
                 var count = result.salesOrderItemsDetails.length;
                 var i = 0;
                 $("#RecipeID option").remove();
@@ -282,20 +284,29 @@
         $('#btnSave').prop('disabled', false);
         //Rahul added 'ID' 25-05-2023 for 'BatchNumber' start.
         var ID = $('#RecipeID').val();
+        var SO_ID = $('#SO_Id').val();
         var batchNumber = "";
+        var batchPlanningDocId = "";
+        var batchPlanningDocumentNo = "";
         $.ajax({
-            url: '/ProductionIndent/GetBatchNumber?id=' + ID,
+            url: '/ProductionIndent/GetBatchNumber?id=' + ID + "&SO_Id=" + SO_ID,
             type: "POST",
             data: {},
             success: function (result) {
                 //console.log(result)        //Rahul added 'for loop'for 'BatchNumber' 26-05-2023 start.
                 for (var j = 0; j < result.length; j++) {
                     batchNumber = batchNumber + result[j].BatchNumber;
+                    batchPlanningDocId = batchPlanningDocId + result[j].BatchPlanningDocId;   //Rahul added 'for loop'for 'BatchPlanningDocId' 16-06-2023
+                    batchPlanningDocumentNo = batchPlanningDocumentNo + result[j].BatchPlanningDocumentNo;   //Rahul added 'for loop'for 'BatchPlanningDocumentNo' 16-06-2023
                     if (j != result.length - 1)
                         batchNumber = batchNumber;
+                        batchPlanningDocId = batchPlanningDocId;   //Rahul added 'for loop'for 'BatchPlanningDocId' 16-06-2023
+                        batchPlanningDocumentNo = batchPlanningDocumentNo;   //Rahul added 'for loop'for 'BatchPlanningDocumentNo' 16-06-2023
                 }
                         //Rahul added 'for loop'for 'BatchNumber' 26-05-2023 start.
                 document.getElementById("BatchNumber").value = batchNumber;
+                document.getElementById("BatchPlanningDocId").value = batchPlanningDocId;   //Rahul added 'for loop'for 'BatchPlanningDocId' 16-06-2023
+                document.getElementById("BatchPlanningDocumentNo").value = batchPlanningDocumentNo;   //Rahul added 'for loop'for 'BatchPlanningDocumentNo' 16-06-2023
             },
             error: function (err) {
                 alert('Not able to fetch Batch Number, do batch planning!');

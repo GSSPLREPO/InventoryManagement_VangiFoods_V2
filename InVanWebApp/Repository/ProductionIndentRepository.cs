@@ -187,7 +187,7 @@ namespace InVanWebApp.Repository
         //#endregion
 
         #region Bind all Batch Number details by Item_ID  
-        public IEnumerable<ItemBO> GetBatchNumberById(int Item_ID)
+        public IEnumerable<ItemBO> GetBatchNumberById(int Item_ID, int SO_ID) 
         {
             List<ItemBO> resultList = new List<ItemBO>();
             try
@@ -196,6 +196,7 @@ namespace InVanWebApp.Repository
                 {
                     SqlCommand cmd = new SqlCommand("usp_tbl_GenerateBatchNumberForProductionIndentByItemId", con);
                     cmd.Parameters.AddWithValue("@ItemID", Item_ID);                    
+                    cmd.Parameters.AddWithValue("@SalesOrderId", SO_ID);                    
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader dataReader = cmd.ExecuteReader();
@@ -206,7 +207,9 @@ namespace InVanWebApp.Repository
                         {
                             //ID = Convert.ToInt32(dataReader["ID"]),   //removed 26-05-23.
                             //Item_Code = dataReader["Item_Code"].ToString(),   //removed 26-05-23.
-                            BatchNumber = dataReader["BatchNumber"].ToString(),
+                            BatchNumber = dataReader["BatchNumber"].ToString(),                            
+                            BatchPlanningDocId = Convert.ToInt32(dataReader["BatchPlanningDocId"]), //Rahul added 'BatchPlanningDocId' 16-06-23. 
+                            BatchPlanningDocumentNo = dataReader["BatchPlanningDocumentNo"].ToString(), //Rahul added 'BatchPlanningDocumentNo' 16-06-23.
                         };
                         resultList.Add(result);
                     }
@@ -532,7 +535,8 @@ namespace InVanWebApp.Repository
         {
             //string purchaseOrderQuery = "SELECT WorkOrderNo FROM SalesOrder WHERE SalesOrderId = @Id AND IsDeleted = 0";
             //string purchaseOrderQuery = "Select SO.WorkOrderNo, (Select BPM.ID from BatchPlanningMaster BPM where BPM.SO_Id = @Id AND IsDeleted = 0) as BatchPlanningDocId, (Select BPM.BatchPlanningDocumentNo from BatchPlanningMaster BPM where BPM.SO_Id = @Id AND IsDeleted = 0) as BatchPlanningDocumentNo from SalesOrder SO where SO.SalesOrderId = @Id AND SO.IsDeleted = 0;";
-            string purchaseOrderQuery = "	Select  SO.WorkOrderNo,	BPM.ID,BPM.BatchPlanningDocumentNo from SalesOrder SO inner join BatchPlanningMaster BPM on BPM.SO_Id = SO.SalesOrderId where SO.SalesOrderId = @Id AND SO.IsDeleted = 0; ";
+            //string purchaseOrderQuery = "Select  SO.WorkOrderNo,	BPM.ID,BPM.BatchPlanningDocumentNo from SalesOrder SO inner join BatchPlanningMaster BPM on BPM.SO_Id = SO.SalesOrderId where SO.SalesOrderId = @Id AND SO.IsDeleted = 0";
+            string purchaseOrderQuery = "Select  SO.WorkOrderNo from SalesOrder SO inner join BatchPlanningMaster BPM on BPM.SO_Id = SO.SalesOrderId where SO.SalesOrderId = @Id AND SO.IsDeleted = 0";
             string itemDetails = "Select Item_ID,ItemName from SalesOrderItemsDetails where SalesOrderId=@Id and IsDeleted=0";
 
             SalesOrderBO result = new SalesOrderBO();

@@ -157,14 +157,17 @@ namespace InVanWebApp.Controllers
         //#endregion
 
         #region Bind all BindBatch Number details 
-        public JsonResult BindBatchNumber(string id)
+        public JsonResult BindBatchNumber(string id, string SO_Id)
         {
             int Item_ID = 0; 
+            int SO_ID = 0; 
 
             if (id != "" && id != null)
-                Item_ID = Convert.ToInt32(id);
+                Item_ID = Convert.ToInt32(id); 
+            if (SO_Id != "" && SO_Id != null)
+                SO_ID = Convert.ToInt32(SO_Id); 
 
-            var result = _productionIndentRepository.GetBatchNumberById(Item_ID);
+            var result = _productionIndentRepository.GetBatchNumberById(Item_ID, SO_ID); 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -223,7 +226,7 @@ namespace InVanWebApp.Controllers
                             TempData["Success"] = "<script>alert('Production Indent inserted successfully!');</script>";
                         else
                         {
-                            TempData["Success"] = "<script>alert('Error while insertion!');</script>";
+                            TempData["Success"] = "<script>alert('Duplicate Production Indent or insertion of the Indent is done! Can not be inserted!');</script>";
                             BindUsers();
                             BindItemTypeCategory();
                             GetDocumentNumber objDocNo = new GetDocumentNumber();
@@ -446,10 +449,11 @@ namespace InVanWebApp.Controllers
         //    var result = _productionIndentRepository.GetBatchNumberById(Id, totalBatches);
         //    return Json(result);
         //}
-        public JsonResult GetBatchNumber(string id)
+        public JsonResult GetBatchNumber(string id, string SO_Id)
         {
             var Id = Convert.ToInt32(id);            
-            var result = _productionIndentRepository.GetBatchNumberById(Id);
+            var SO_ID = Convert.ToInt32(SO_Id);             
+            var result = _productionIndentRepository.GetBatchNumberById(Id, SO_ID);
             return Json(result);
         }
 
