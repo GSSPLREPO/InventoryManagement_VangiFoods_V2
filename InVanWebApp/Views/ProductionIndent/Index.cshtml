@@ -42,7 +42,8 @@
                                     <thead>
                                         <tr>
                                             <th>@Html.DisplayName("Indent Number")</th>
-                                            <th>@Html.DisplayName("Issue Date")</th>
+                                            <th>@Html.DisplayName("Batch Number")</th> @*//Rahul added 'BatchNumber' 19-06-23.*@
+                                            <th>@Html.DisplayName("Indent Date")</th>
                                             <th>@Html.DisplayName("Production Date")</th>
                                             <th>@Html.DisplayName("Status")</th>
                                             <th>@Html.DisplayName("Remarks")</th>
@@ -54,6 +55,7 @@
                                         {
                             <tr>
                                 <td>@Html.DisplayFor(modelItem => item.ProductionIndentNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.BatchNumber)</td>    @*//Rahul added 'BatchNumber' 19-06-23.*@
                                 <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
                                 <td>@Html.DisplayFor(modelItem => item.ProductionDate)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>

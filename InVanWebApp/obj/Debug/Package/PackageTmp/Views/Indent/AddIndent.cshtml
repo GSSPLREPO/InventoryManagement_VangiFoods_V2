@@ -304,7 +304,7 @@
         });
     };
     function filterItem_ID(id) {
-        debugger
+        //debugger
         var valThis = $('#' + id +'').val();
         $('.dropdown-select ul > li').each(function () {
             var text = $(this).text();
@@ -360,7 +360,7 @@
     });
     /*Rahul added 'function create_custom_dropdowns()' 22-05-2023. end*/
     function SetUserName() {
-        debugger
+       // debugger
         var selectedOptionTerms = document.getElementById("RaisedBy").selectedIndex;
         var tempUserName = document.getElementById("RaisedBy").options[selectedOptionTerms].innerText;
         document.getElementById("UserName").value = tempUserName;        
@@ -381,7 +381,7 @@
     var TxtItemDetails = "";
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
-    function SaveBtnClick() {
+    function SaveBtnClick() {   debugger
         var tableLength = document.getElementById('submissionTable').rows.length;
         var flag = 0, i = 1;
 
@@ -398,26 +398,32 @@
         }
 
         if (tableLength > 1) {
-            while (i <= tableLength - 2) {
-                var PhyQty = document.getElementById("requiredQuantity_" + i).value;
-                PhyQty = (PhyQty == null || PhyQty == '') ? 0 : PhyQty;
-                PhyQty = parseFloat(PhyQty);
-
-                if (PhyQty == 0) {
-                    alert("Required quantity is zero or null! Cannot create indent!");
-                    $('#btnSave').prop('disabled', true);
-                    event.preventDefault();
-                    return;
+            /*//while (i <= tableLength - 2) { // Rahul commented 17-06-23*/
+            while (i <= tableLength - 1) {
+                var PhyQty = document.getElementById("requiredQuantity_" + i);  // Rahul added 'PhyQty', 'if (PhyQty == null || PhyQty == '') else' 17-06-23
+                if (PhyQty == null || PhyQty == '') {
+                    i++;
                 }
                 else {
-                    flag = 1;
-                }
+                    var PhyQty = document.getElementById("requiredQuantity_" + i).value;
+                    PhyQty = (PhyQty == null || PhyQty == '') ? 0 : PhyQty;
+                    PhyQty = parseFloat(PhyQty);
 
-                //if (PhyQty != 0) {
-                //    flag = 1;
-                //}
+                    if (PhyQty == 0) {
+                        alert("Required quantity is zero or null! Cannot create indent!");
+                        $('#btnSave').prop('disabled', true);
+                        event.preventDefault();
+                        return;
+                    }
+                    else {
+                        flag = 1;
+                    }
+
+                    //if (PhyQty != 0) {
+                    //    flag = 1;
+                    //}
                     i++;
-
+                }
             }
             if (flag != 1) {
                 alert("Required quantity is zero or null! Cannot create indent!");
@@ -435,13 +441,13 @@
             Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
                 [el.name, el.value])));
         var TxtItemDetails = JSON.stringify(res);
-        //console.log(TxtItemDetails);
+        console.log(TxtItemDetails);
         $('#itemDetails').val(TxtItemDetails);
     }
     //==========end===============
 
     $("#Item_ID").change(function () {
-        debugger
+       // debugger
         $('#btnSave').prop('disabled', false);
         getitemDetails();
     });
@@ -566,7 +572,7 @@
         else {
             $('#tablerow' + index).remove();
         }
-        CalculateTotalBeforeTax();
+        //CalculateTotalBeforeTax();
         return false;
     }
 

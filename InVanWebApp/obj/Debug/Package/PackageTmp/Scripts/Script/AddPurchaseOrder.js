@@ -321,7 +321,7 @@ function CalculateTotalBeforeTax() {
     createJson();
 }
 
-function createJson() {
+function createJson() { debugger
     //let res = [...document.getElementById("myTableBody").children].map(tr =>
     //    Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
     //        [el.name, el.value])));
@@ -332,9 +332,11 @@ function createJson() {
 
     var table = document.getElementById('submissionTable');
     var rowCount = table.rows.length;
+    //rowCount = parseFloat(length); //added 17-06-23
     var i = 0;
     TxtItemDetails = "[";
-    for (i = 0; i < rowCount - 1; i++) {
+    /*for (i = 0; i < rowCount-2; i++) {*/  //added 'while' 17-06-23
+    while (i <= rowCount-1) {
         var temp = document.getElementById("ItemCode_" + i);
         if (temp == null || temp == '' || temp == 'undefined')
             i++;
@@ -359,14 +361,17 @@ function createJson() {
                 + ", \"ItemUnit\": \"" + Unit + "\", \"ItemUnitPrice\": " + PricePerUnit + ", \"CurrencyName\": \"" + CurrencyName + "\",\"ItemTaxValue\": " + Tax +
                 ", \"TotalItemCost\": " + TotalItemCost;
 
-            if (i == (rowCount - 2))
-                TxtItemDetails = TxtItemDetails + "}";
+            //if (i == (rowCount - 1))
+            if (i == (rowCount-2))
+                TxtItemDetails = TxtItemDetails + "}";                 
             else
                 TxtItemDetails = TxtItemDetails + "},";
+            i++;  //added 17-06-23
         }
     }
     TxtItemDetails = TxtItemDetails + "]"
     $('#TxtItemDetails').val(TxtItemDetails);
+        console.log(TxtItemDetails);
 }
 
 //======Common function which get called on change of Item ordered quantity.==========================

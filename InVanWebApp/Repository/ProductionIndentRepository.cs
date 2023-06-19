@@ -41,6 +41,7 @@ namespace InVanWebApp.Repository
                         {
                             ID = Convert.ToInt32(reader["ID"]),
                             ProductionIndentNo = reader["ProductionIndentNo"].ToString(),
+                            BatchNumber = reader["BatchNumber"].ToString(), //Rahul added 'BatchNumber' 19-06-23.
                             IssueDate = Convert.ToDateTime(reader["IssueDate"]),
                             ProductionDate = Convert.ToDateTime(reader["ProductionDate"]),                            
                             IndentStatus = reader["IndentStatus"].ToString(),
