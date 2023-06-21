@@ -19,7 +19,7 @@ namespace InVanWebApp_BO
         public string RawBatchesNo { get; set; }
         [Required(ErrorMessage ="Select The Product Name!")]
         public int  ItemId { get; set; }
-        public string Time { get; set; }
+        public string HoldingSiloReceivingTime { get; set; } //Rahul updated 'Time' to 'HoldingSiloReceivingTime' 21-06-2023. 
         public string Weight { get; set; }
         public string Temperature { get; set;}
         public string Pressure { get; set; }

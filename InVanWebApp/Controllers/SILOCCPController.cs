@@ -68,7 +68,7 @@ namespace InVanWebApp.Controllers
                 SILOCCPBO model = new SILOCCPBO();
                 //model.Verification = Session[ApplicationSession.USERNAME].ToString();
                 model.Date = DateTime.Now;
-                model.Time = DateTime.Now.ToString("HH:mm");
+                model.HoldingSiloReceivingTime = DateTime.Now.ToString("HH:mm");    //Rahul updated 'Time' to 'HoldingSiloReceivingTime' 21-06-2023.
                // model.Time= DateTime.MaxValue.AddSeconds.;
                 return View(model);
             }

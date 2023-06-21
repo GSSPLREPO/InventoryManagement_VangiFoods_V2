@@ -5758,7 +5758,7 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RawBatchesNo + "</td>");  
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.WeightofRawBatches + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.TansferTimeintoHoldingSilo + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Weight + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Weight + "</td>");   //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Time + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Temperature + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Pressure + "</td>");
@@ -5866,7 +5866,7 @@ namespace InVanWebApp.Controllers
                 dr["Raw Batches No"] = st.RawBatchesNo.ToString();  
                 dr["Weight of Raw Batches (kg)"] = st.WeightofRawBatches.ToString();
                 dr["Tansfer Time Into Holding Silo"] = st.TansferTimeintoHoldingSilo.ToString();
-                dr["Weight (KG)"] = st.Weight.ToString();
+                //dr["Weight (KG)"] = st.Weight.ToString();  //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
                 dr["Time"] = st.Time.ToString();
                 dr["Temp."] = st.Temperature.ToString();
                 dr["Pressure"] = st.Pressure.ToString();

@@ -45,7 +45,7 @@ namespace InVanWebApp.Repository
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
                             WeightofRawBatches = reader["WeightofRawBatches"].ToString(),
                             TansferTimeintoHoldingSilo = reader["TansferTimeintoHoldingSilo"].ToString(),
-                            Weight = reader["Weight"].ToString(),
+                            //Weight = reader["Weight"].ToString(), //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
                             Remarks = reader["Remarks"].ToString()
                         };
                         RQCCPList.Add(RQCCP);
@@ -85,7 +85,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
                     cmd.Parameters.AddWithValue("@WeightofRawBatches", model.WeightofRawBatches);
                     cmd.Parameters.AddWithValue("@TansferTimeintoHoldingSilo", model.TansferTimeintoHoldingSilo);
-                    cmd.Parameters.AddWithValue("@Weight", model.Weight);
+                    //cmd.Parameters.AddWithValue("@Weight", model.Weight); //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
                     cmd.Parameters.AddWithValue("@ItemId", model.ItemId);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
@@ -142,7 +142,7 @@ namespace InVanWebApp.Repository
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
                             WeightofRawBatches = reader["WeightofRawBatches"].ToString(),
                             TansferTimeintoHoldingSilo = reader["TansferTimeintoHoldingSilo"].ToString(),
-                            Weight = reader["Weight"].ToString(),
+                            //Weight = reader["Weight"].ToString(), //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
                             Remarks = reader["Remarks"].ToString()
                         };
                     }
@@ -178,7 +178,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
                     cmd.Parameters.AddWithValue("@WeightofRawBatches", model.WeightofRawBatches);
                     cmd.Parameters.AddWithValue("@TansferTimeintoHoldingSilo", model.TansferTimeintoHoldingSilo);
-                    cmd.Parameters.AddWithValue("@Weight", model.Weight);
+                    //cmd.Parameters.AddWithValue("@Weight", model.Weight); //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
                     cmd.Parameters.AddWithValue("@ItemId", model.ItemId);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);

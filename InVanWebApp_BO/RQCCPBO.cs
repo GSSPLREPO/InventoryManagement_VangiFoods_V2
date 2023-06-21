@@ -23,7 +23,7 @@ namespace InVanWebApp_BO
         public string RawBatchesNo { get; set; }
         public string WeightofRawBatches { get; set; }
         public string TansferTimeintoHoldingSilo { get; set; }
-        public string Weight { get; set; }
+        //public string Weight { get; set; }  //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }

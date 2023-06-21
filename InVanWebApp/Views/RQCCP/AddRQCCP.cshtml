@@ -68,12 +68,13 @@
             </div>
             <br />
             <div class="row">
-                <div class="col-md-2">
+                @*Rahul commented 'Weight' not in use 21-06-23.*@
+                @*<div class="col-md-2">
                     @Html.Label("Weight (KG)")
                 </div>
                 <div class="col-md-4">
                     @Html.TextBoxFor(model => model.Weight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
-                </div>
+                </div>*@
 
                 <div class="col-md-2">
                     @Html.Label("Remarks")

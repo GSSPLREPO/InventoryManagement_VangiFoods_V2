@@ -40,7 +40,7 @@ namespace InVanWebApp.Repository
                         {
                             ID = Convert.ToInt32(reader["ID"]),
                             Date = Convert.ToDateTime(reader["Date"]),
-                            Time = reader["Time"].ToString(),
+                            HoldingSiloReceivingTime = reader["Time"].ToString(),    //Rahul updated 'Time' to 'HoldingSiloReceivingTime' 21-06-2023.
                             ProductName = reader["ProductName"].ToString(),
                             LotNumber = reader["LotNumber"].ToString(),  //Rahul added 'LotNumber' 05-06-2023.
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
@@ -82,7 +82,7 @@ namespace InVanWebApp.Repository
                     
                     cmd.Parameters.AddWithValue("@Date", model.Date);
                     cmd.Parameters.AddWithValue("@ItemId", model.ItemId);
-                    cmd.Parameters.AddWithValue("@Time", model.Time);
+                    cmd.Parameters.AddWithValue("@Time", model.HoldingSiloReceivingTime);    //Rahul updated 'Time' to 'HoldingSiloReceivingTime' 21-06-2023.
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
                     cmd.Parameters.AddWithValue("@LotNumber", model.LotNumber); //Rahul added 'LotNumber' 05-06-2023.
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
@@ -142,7 +142,7 @@ namespace InVanWebApp.Repository
                             ID = Convert.ToInt32(reader["ID"]),
                             ItemId = Convert.ToInt32(reader["ItemId"]),
                             Date = Convert.ToDateTime(reader["Date"]),
-                            Time = reader["Time"].ToString(),
+                            HoldingSiloReceivingTime = reader["HoldingSiloReceivingTime"].ToString(),    //Rahul updated 'Time' to 'HoldingSiloReceivingTime' 21-06-2023.
                             ProductName = reader["ProductName"].ToString(),
                             LotNumber = reader["LotNumber"].ToString(),     //Rahul added 'LotNumber' 05-06-2023.
                             RawBatchesNo = reader["RawBatchesNo"].ToString(),
@@ -180,7 +180,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@Id", model.ID);
                     cmd.Parameters.AddWithValue("@ItemId", model.ItemId);
                     cmd.Parameters.AddWithValue("@Date", model.Date);
-                    cmd.Parameters.AddWithValue("@Time", model.Time);
+                    cmd.Parameters.AddWithValue("@Time", model.HoldingSiloReceivingTime);    //Rahul updated 'Time' to 'HoldingSiloReceivingTime' 21-06-2023.
                     cmd.Parameters.AddWithValue("@ProductName", model.ProductName);
                     cmd.Parameters.AddWithValue("@LotNumber", model.LotNumber); //Rahul added 'LotNumber' 05-06-2023.
                     cmd.Parameters.AddWithValue("@RawBatchesNo", model.RawBatchesNo);
