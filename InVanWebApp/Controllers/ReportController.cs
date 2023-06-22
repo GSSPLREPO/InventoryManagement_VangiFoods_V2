@@ -5740,7 +5740,7 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Weight (KG)</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Time</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Holding Silo Receiving Time</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Temp.</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Pressure</th>");
             sb.Append("</tr>");
@@ -5758,8 +5758,8 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RawBatchesNo + "</td>");  
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.WeightofRawBatches + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.TansferTimeintoHoldingSilo + "</td>");
-                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Weight + "</td>");   //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Time + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Weight + "</td>");    
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.HoldingSiloReceivingTime + "</td>");  //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Temperature + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Pressure + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.PackingHopperTemp + "</td>");
@@ -5846,7 +5846,7 @@ namespace InVanWebApp.Controllers
             dt.Columns.Add("Weight of Raw Batches (kg)");
             dt.Columns.Add("Tansfer Time Into Holding Silo");
             dt.Columns.Add("Weight (KG)");
-            dt.Columns.Add("Time");
+            dt.Columns.Add("Holding Silo Receiving Time");
             dt.Columns.Add("Temp.");
             dt.Columns.Add("Pressure");
             dt.Columns.Add("Packing Hopper Temp");
@@ -5866,8 +5866,8 @@ namespace InVanWebApp.Controllers
                 dr["Raw Batches No"] = st.RawBatchesNo.ToString();  
                 dr["Weight of Raw Batches (kg)"] = st.WeightofRawBatches.ToString();
                 dr["Tansfer Time Into Holding Silo"] = st.TansferTimeintoHoldingSilo.ToString();
-                //dr["Weight (KG)"] = st.Weight.ToString();  //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
-                dr["Time"] = st.Time.ToString();
+                dr["Weight (KG)"] = st.Weight.ToString();  
+                dr["Holding Silo Receiving Time"] = st.HoldingSiloReceivingTime.ToString();  //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
                 dr["Temp."] = st.Temperature.ToString();
                 dr["Pressure"] = st.Pressure.ToString();
                 dr["Packing Hopper Temp"] = st.PackingHopperTemp.ToString();

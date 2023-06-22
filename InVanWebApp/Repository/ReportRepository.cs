@@ -1511,8 +1511,8 @@ namespace InVanWebApp.Repository
                             RawBatchesNo = reader["RawBatchNo"].ToString(),
                             WeightofRawBatches = reader["WeightofRawBatches"].ToString(),
                             TansferTimeintoHoldingSilo = reader["TansferTimeintoHoldingSilo"].ToString(),
-                            //Weight = reader["Weight"].ToString(),  //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
-                            Time = reader["Time"].ToString(),
+                            Weight = reader["Weight"].ToString(),  
+                            HoldingSiloReceivingTime = reader["HoldingSiloReceivingTime"].ToString(),
                             Temperature = reader["Temperature"].ToString(),
                             Pressure = reader["Pressure"].ToString(),
                             PackingHopperTemp = reader["PackingHopperTemp"].ToString(),

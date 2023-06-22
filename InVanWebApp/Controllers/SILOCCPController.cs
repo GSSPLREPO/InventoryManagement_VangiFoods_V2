@@ -204,8 +204,16 @@ namespace InVanWebApp.Controllers
             {
                 var userID = Convert.ToInt32(Session[ApplicationSession.USERID]);
                 _siloCCPRepository.Delete(Id, userID);
-                TempData["Success"] = "<script>alert('Record deleted successfully!');</script>";
-                return RedirectToAction("Index", "SILOCCP");
+                //ResponseMessageBO result = new ResponseMessageBO();
+                //result = _siloCCPRepository.Delete(Id, userID);
+
+                //if (result.Status)
+                    TempData["Success"] = "<script>alert('SILOCCP Stage-2 deleted successfully!');</script>";
+                //else
+                    ////TempData["Success"] = "<script>alert('Error while deleting!');</script>";
+                    //TempData["Success"] = "<script>alert('Stage-3 Already Done! you need to delete entry from Stage-2!');</script>";
+
+                return RedirectToAction("Index", "RQCCP");                
             }
             else
                 return RedirectToAction("Index", "Login");

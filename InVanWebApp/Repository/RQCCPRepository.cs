@@ -205,8 +205,10 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Delete function
-        public void Delete(int Id, int userId)
+        //public void Delete(int Id, int userId) //Rahul not in use 'public void Delete' 22-06-23.
+        public ResponseMessageBO Delete(int Id, int userId)
         {
+            ResponseMessageBO responseMessage = new ResponseMessageBO(); //Rahul added 'responseMessage' 22-06-23.
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
@@ -218,13 +220,22 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     cmd.ExecuteNonQuery();
+                    //Rahul added 'dataReaderNew' 22-06-23.
+                    SqlDataReader dataReaderNew = cmd.ExecuteReader();
+
+                    while (dataReaderNew.Read())
+                    {
+                        responseMessage.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                    }
                     con.Close();
                 };
             }
             catch (Exception ex)
             {
+                responseMessage.Status = false; //Rahul added 'responseMessage' 22-06-23.
                 log.Error(ex.Message, ex);
             }
+            return responseMessage; //Rahul added 'responseMessage' 22-06-23. 
         }
 
         #endregion

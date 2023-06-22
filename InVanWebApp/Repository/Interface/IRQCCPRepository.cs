@@ -22,7 +22,8 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Update(RQCCPBO model);
 
         //Function define for: Delete record of company using it's ID
-        void Delete(int Id, int userId);
+        //void Delete(int Id, int userId); //Rahul not in use 'public void Delete' 22-06-23.
+        ResponseMessageBO Delete(int Id, int userId); 
 
     }
 }

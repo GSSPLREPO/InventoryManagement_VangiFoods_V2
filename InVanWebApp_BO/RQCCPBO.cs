@@ -23,7 +23,6 @@ namespace InVanWebApp_BO
         public string RawBatchesNo { get; set; }
         public string WeightofRawBatches { get; set; }
         public string TansferTimeintoHoldingSilo { get; set; }
-        //public string Weight { get; set; }  //@*Rahul commented 'Weight' not in use 21-06-23.*@ 
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -37,8 +36,9 @@ namespace InVanWebApp_BO
         [Required(ErrorMessage = "Please Select To Date!")]
         public DateTime toDate { get; set; } 
         public int SrNo { get; set; }
-        public string RCCPDate { get; set; }  
-        public string Time { get; set; }
+        public string RCCPDate { get; set; }
+        public string Weight { get; set; }  
+        public string HoldingSiloReceivingTime { get; set; } //Rahul updated 'Time' to 'HoldingSiloReceivingTime' 21-06-2023. 
         public string Temperature { get; set; }
         public string Pressure { get; set; }
         public string PackingHopperTemp { get; set; }
