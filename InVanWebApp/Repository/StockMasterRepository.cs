@@ -15,12 +15,13 @@ namespace InVanWebApp.Repository
     {
         private string conStr = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanContext"].ToString());
 
-        public IEnumerable<StockReportBO> GetAllStock(int ItemId = 0)
+        public IEnumerable<StockReportBO> GetAllStock(int ItemId = 0,int ItemCategoryNameID=0) 
         {
             using (SqlConnection con = new SqlConnection(conStr))
             {
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@ItemId", ItemId);
+                parameters.Add("@ItemCategoryNameID", ItemCategoryNameID);
 
                 var stockList = con.Query<StockReportBO>("usp_rpt_stock_report",parameters, commandType: System.Data.CommandType.StoredProcedure).ToList();
 

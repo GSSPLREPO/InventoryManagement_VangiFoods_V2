@@ -52,7 +52,7 @@
                                 <td>@Html.DisplayFor(modelItem => item.ProductionIndentNo)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IssueByName)</td>
                                 <td>
-                                    <a href=@Url.Action("ViewProductionMaterialIssueNote", "ProductionMaterialIssueNote", new { ID = item.ID }) title="Edit Production Issue Note">
+                                    <a href=@Url.Action("ViewProductionMaterialIssueNote", "ProductionMaterialIssueNote", new { ID = item.ID }) title="Delete Production Issue Note">
                                         <i class="fa fa-eye text-primary"></i>
                                     </a>&emsp;
                                     <a href=@Url.Action("DeleteProductionMaterialIssueNote", "ProductionMaterialIssueNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Production Issue Note">

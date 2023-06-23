@@ -11,6 +11,6 @@ namespace InVanWebApp.Repository.Interface
     {
         //List<StockReportBO> GetAllStock();
 
-        IEnumerable<StockReportBO> GetAllStock(int ItemId=0);
+        IEnumerable<StockReportBO> GetAllStock(int ItemId=0, int ItemCategoryNameID=0);
     }
 }

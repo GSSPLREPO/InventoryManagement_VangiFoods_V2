@@ -31,11 +31,17 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     <label>Items</label>
                                 </div>
                                 <div class="col-md-3">
                                     @Html.DropDownListFor(model => model.ItemID, (IEnumerable<SelectListItem>)ViewData["Item"], "--All--", new { @class = "form-control" })
+                                </div>
+                                <div class="col-md-2">
+                                    <label>Item Category </label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.DropDownListFor(model => model.ItemCategoryNameID, (IEnumerable<SelectListItem>)ViewData["ItemCategoryName"], "--All--", new { @class = "form-control" })
                                 </div>
                                 <div class="col-md-2">
                                     <button id="btnGo" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);float:left;">Go</button>
@@ -123,12 +129,19 @@
             if (ItemId == '' || ItemId == null)
                 ItemId = 0;
 
+            //Added by Snehal on 23-06-2023 start
+            var ItemCategoryNameID = $('#ItemCategoryNameID').val();
+            if (ItemCategoryNameID == '' || ItemCategoryNameID == null)
+                ItemCategoryNameID = 0;
+            //Added by Snehal on 23-06-2023 end
+
             $('#tblStockReport').dataTable().fnDestroy();
             var t = $('#tblStockReport').DataTable({
                 "processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
-                "sAjaxSource": "/StockReport/GetStock?id=" + ItemId,
+                //"sAjaxSource": "/StockReport/GetStock?id=" + ItemId, 
+                "sAjaxSource": "/StockReport/GetStock?id=" + ItemId + "&itemCategoryNameID=" + ItemCategoryNameID,
                 "initComplete": function (settings, json) {
                     var result = JSON.stringify(json);
                     var flag = parseFloat(result.length);
@@ -144,8 +157,7 @@
                 },
                 "pageLength": 10,
                 "scrollX": true,
-                "columns": [
-                    /* { "data": "ID", "autoWidth": true },*/
+                "columns": [                    
                     { "data": "ID", "autoWidth": true },
                     { "data": "Item_Code", "autoWidth": true },
                     { "data": "ItemName", "autoWidth": true },

@@ -45,6 +45,7 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindItemDropDown();
+                BindItemCategoryNameDropDown(); 
                 return View();
             }
             else
@@ -55,19 +56,35 @@ namespace InVanWebApp.Controllers
         /// to get stock details
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetStock(string id = "")
+        //public JsonResult GetStock(string id = "")
+        //{
+        //    int ItemId = 0;
+        //    if (id != "")
+        //        ItemId = Convert.ToInt32(id);
+
+        //    Session["ItemId"] = ItemId;
+
+        //    var stockDetails = _StockMasterRepository.GetAllStock(ItemId);
+        //    TempData["StockDetailsTemp"] = stockDetails;
+        //    return Json(new { data = stockDetails }, JsonRequestBehavior.AllowGet);
+        //}
+        public JsonResult GetStock(string id = "", string itemCategoryNameID = "")
         {
             int ItemId = 0;
             if (id != "")
                 ItemId = Convert.ToInt32(id);
 
-            Session["ItemId"] = ItemId;
+            int ItemCategoryNameID = 0;
+            if (itemCategoryNameID != "")
+                ItemCategoryNameID = Convert.ToInt32(itemCategoryNameID);
 
-            var stockDetails = _StockMasterRepository.GetAllStock(ItemId);
+            Session["ItemId"] = ItemId;
+            Session["ItemCategoryNameID"] = ItemCategoryNameID;
+
+            var stockDetails = _StockMasterRepository.GetAllStock(ItemId, ItemCategoryNameID);
             TempData["StockDetailsTemp"] = stockDetails;
             return Json(new { data = stockDetails }, JsonRequestBehavior.AllowGet);
         }
-
         #endregion
 
         #region Bind Item dropdown
@@ -76,6 +93,15 @@ namespace InVanWebApp.Controllers
             var model = _itemRepository.GetAll();
             var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
             ViewData["Item"] = Item_dd;
+        }
+        #endregion
+
+        #region Bind Item Category Name
+        public void BindItemCategoryNameDropDown()
+        {
+            var itemCategory = _itemRepository.GetItemCategoryForDropDown();
+            var dd = new SelectList(itemCategory.ToList(), "ItemCategoryID", "ItemCategoryName");
+            ViewData["ItemCategoryName"] = dd;
         }
         #endregion
 
@@ -88,7 +114,9 @@ namespace InVanWebApp.Controllers
         public ActionResult ExprotAsPDF()
         {
             var itemId = Convert.ToInt32(Session["ItemId"]);
-            var stockDetails = _StockMasterRepository.GetAllStock(itemId);
+            var itemCategoryNameID = Convert.ToInt32(Session["ItemCategoryNameID"]);
+            //var stockDetails = _StockMasterRepository.GetAllStock(itemId);
+            var stockDetails = _StockMasterRepository.GetAllStock(itemId, itemCategoryNameID);
             TempData["StockDetailsTemp"] = stockDetails;
             if (TempData["StockDetailsTemp"] == null)
             {
@@ -216,8 +244,9 @@ namespace InVanWebApp.Controllers
         public void ExportAsExcel()
         {
             var itemId = Convert.ToInt32(Session["ItemId"]);
+            var itemCategoryNameID = Convert.ToInt32(Session["ItemCategoryNameID"]);
             GridView gv = new GridView();
-            IEnumerable<StockReportBO> stockReports = _StockMasterRepository.GetAllStock(itemId);
+            IEnumerable<StockReportBO> stockReports = _StockMasterRepository.GetAllStock(itemId,itemCategoryNameID);
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
             dt.Columns.Add("Item code");

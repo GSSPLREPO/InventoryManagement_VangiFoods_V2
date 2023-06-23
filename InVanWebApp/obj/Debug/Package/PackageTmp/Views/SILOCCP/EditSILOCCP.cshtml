@@ -12,23 +12,24 @@
                         <hr />
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(model => model.ID)
-                        <div class="row">
-                            <div class="col-md-2">
-                                @Html.Label("Date")
-                                <span style="color:red">*</span>
-                            </div>
-                            <div class="col-md-4">
-                                @*//Rahul added '@readonly = "readonly"' 12-06-2023.*@
-                                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd"), @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
-                            </div>
-                            <div class="col-md-2">
-                                @Html.Label("Time")
-                            </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", type = "time" })
-                            </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.Label("Date")
+                            <span style="color:red">*</span>
                         </div>
+                        <div class="col-md-4">
+                            @*//Rahul added '@readonly = "readonly"' 12-06-2023.*@
+                            @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.AddYears(-1).ToString("yyyy-MM-dd"), @max = DateTime.Today.ToString("yyyy-MM-dd"), @readonly = "readonly" })
+                            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "error mt-2 text-danger" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.Label("Time")
+                        </div>
+                        @*//Rahul updated 'Time' to 'HoldingSiloReceivingTime' 21-06-2023.*@ 
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.HoldingSiloReceivingTime, new { @class = "form-control form-control-sm", type = "time" })
+                        </div>
+                    </div>
 
                         <div class="row">
                             <div class="col-md-2">

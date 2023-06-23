@@ -16,7 +16,8 @@ namespace InVanWebApp.Repository.Interface
         ResponseMessageBO Insert(SILOCCPBO model);
 
         //Function define for: Delete record of SILOCCP using it's Id
-        void Delete(int Id, int userId);
+        //void Delete(int Id, int userId); 
+        ResponseMessageBO Delete(int Id, int userId); 
 
         //Define function for fetching details of SILOCCP by Id.
         SILOCCPBO GetById(int Id);

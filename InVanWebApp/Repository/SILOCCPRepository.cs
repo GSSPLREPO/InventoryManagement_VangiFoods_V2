@@ -219,26 +219,37 @@ namespace InVanWebApp.Repository
         /// /// <param name="Id"></param>
         /// /// <param name="userId"></param>
         /// <returns></returns>
-        public void Delete(int Id, int userId)
+        //public void Delete(int Id, int userId)
+        public ResponseMessageBO Delete(int Id, int userId)
         {
+            ResponseMessageBO responseMessage = new ResponseMessageBO(); //Rahul added 'responseMessage' 23-06-23.
             try
             {
                 using (SqlConnection con = new SqlConnection(conString))
                 {
                     SqlCommand cmd = new SqlCommand("[usp_tbl_SILOCCP_Delete]", con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@Id", Id);
+                    cmd.Parameters.AddWithValue("@ID", Id);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     con.Open();
                     cmd.ExecuteNonQuery();
+                    //Rahul added 'dataReaderNew' 23-06-23.
+                    SqlDataReader dataReaderNew = cmd.ExecuteReader();
+
+                    while (dataReaderNew.Read())
+                    {
+                        responseMessage.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+                    }
                     con.Close();
                 };
             }
             catch (Exception ex)
             {
+                responseMessage.Status = false; //Rahul added 'responseMessage' 23-06-23.
                 log.Error(ex.Message, ex);
             }
+            return responseMessage; //Rahul added 'responseMessage' 23-06-23.  
         }
 
         #endregion

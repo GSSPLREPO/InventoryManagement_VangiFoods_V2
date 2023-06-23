@@ -54,11 +54,12 @@
                             <div class="col-md-4">
                                 @Html.TextBoxFor(model => model.Weight, new { @class = "form-control form-control-sm", maxlength = "8", @onkeypress = "return IsNum(event);" })
                             </div>
+                            @*//Rahul updated 'Time' to 'HoldingSiloReceivingTime' 21-06-2023.*@
                             <div class="col-md-2">
-                                @Html.Label("Time")
+                                @Html.Label("HoldingSiloReceivingTime") 
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.Time, new { @class = "form-control form-control-sm", type = "time" })
+                                @Html.TextBoxFor(model => model.HoldingSiloReceivingTime, new { @class = "form-control form-control-sm", type = "time" })
                             </div>
                         </div>
 

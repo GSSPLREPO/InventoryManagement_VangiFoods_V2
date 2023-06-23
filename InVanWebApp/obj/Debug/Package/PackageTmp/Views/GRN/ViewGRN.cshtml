@@ -1,8 +1,6 @@
 ﻿@model InVanWebApp_BO.GRN_BO
-@{
-    ViewBag.Title = "ViewGRN";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "ViewGRN";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <html>
 <head>
@@ -13,6 +11,7 @@
             width: 3000px !important;
             height: 3000px !important;
         }
+
         #ItemTable tr td {
             white-space: normal;
             table-layout: auto;
@@ -44,156 +43,155 @@
         @*@Html.HiddenFor(model => model.PO_Id)*@
         @using (Html.BeginForm())
         {
-            @Html.AntiForgeryToken()
-            <div class="row" id="printV" width="1000px">
-                <div class="col-md-12  grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
-                                <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;">GRN Document</h3>
+@Html.AntiForgeryToken()
+                <div class="row" id="printV" width="1000px">
+                    <div class="col-md-12  grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
+                                    <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;">GRN Document</h3>
 
-                                <div class="col">
-                                    <div class="col-md-12">
-                                        <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" />
+                                    <div class="col">
+                                        <div class="col-md-12">
+                                            @*<img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" />*@
+                                            <a id="ExportPdf" href="@Url.Action("ExportAsPDF", "GRN")"> <img class="float-left" src="~/Theme/MainContent/images/ICON.png.png" style="width: 45px; height: 45px; padding-top: 1px; margin-top: 2%; margin-left: 500px" /> </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <hr />
-                            @*<div class="row">
-            <div class="col-md-12">
-                <Center><h5 class="font-weight-bold">GRN Details</h5></Center>
-                <hr />
-            </div>
-        </div>*@
-                            <div class="col-md-12">
-                                <div style="font-size:110%; color:black">
-                                    <div class="row">
-                                        <div class="col-lg-2">
-                                            <label class="font-weight-bold">GRN Number</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.TextBoxFor(model => model.GRNCode, new { style = "border:none; width:100%" })
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <label class="font-weight-bold">GRN Date</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.GRNDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-2">
-                                            <label class="font-weight-bold">Inward QC Number</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.InwardQCNumber)
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <label class="font-weight-bold">PO Number</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.PONumber, new { @class = "form-control form-control-sm", style = "border:none" })
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-2">
-                                            <label class="font-weight-bold">Inward Number</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.InwardNoteNumber)
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <label class="font-weight-bold">Remarks</label>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            @Html.DisplayFor(model => model.Remark)
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <hr />
-                                    <div class="col-md-12">
-                                        <Center><h5 class="font-weight-bold">Shipping Details</h5></Center>
-                                        <hr />
-                                    </div>
-                                    <div class="row">
+                                <hr />
+                                @*<div class="row">
                                         <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-lg-2">
-                                                    <label class="font-weight-bold">Location</label>
+                                            <Center><h5 class="font-weight-bold">GRN Details</h5></Center>
+                                            <hr />
+                                        </div>
+                                    </div>*@
+                                <div class="col-md-12">
+                                    <div style="font-size:110%; color:black">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label class="font-weight-bold">GRN Number</label>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                @Html.TextBoxFor(model => model.GRNCode, new { style = "border:none; width:100%" })
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <label class="font-weight-bold">GRN Date</label>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                @Html.DisplayFor(model => model.GRNDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", style = "border:none" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label class="font-weight-bold">Inward QC Number</label>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                @Html.DisplayFor(model => model.InwardQCNumber)
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <label class="font-weight-bold">PO Number</label>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                @Html.DisplayFor(model => model.PONumber, new { @class = "form-control form-control-sm", style = "border:none" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label class="font-weight-bold">Inward Number</label>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                @Html.DisplayFor(model => model.InwardNoteNumber)
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <label class="font-weight-bold">Remarks</label>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                @Html.DisplayFor(model => model.Remark)
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <hr />
+                                        <div class="col-md-12">
+                                            <Center><h5 class="font-weight-bold">Shipping Details</h5></Center>
+                                            <hr />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-lg-2">
+                                                        <label class="font-weight-bold">Location</label>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        @Html.DisplayFor(model => model.LocationName)
+                                                    </div>
                                                 </div>
-                                                <div class="col-lg-4">
-                                                    @Html.DisplayFor(model => model.LocationName)
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-lg-2">
+                                                        <label class="font-weight-bold">Shipping Details</label>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        @Html.DisplayFor(model => model.DeliveryAddress, new { @class = "form-control form-control-sm", style = "border:none" })
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <label class="font-weight-bold">Supplier Details</label>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        @Html.DisplayFor(model => model.SupplierAddress, new { @class = "form-control form-control-sm", style = "border:none" })
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="row">
-                                                <div class="col-lg-2">
-                                                    <label class="font-weight-bold">Shipping Details</label>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    @Html.DisplayFor(model => model.DeliveryAddress, new { @class = "form-control form-control-sm", style = "border:none" })
-                                                </div>
-                                                <div class="col-lg-2">
-                                                    <label class="font-weight-bold">Supplier Details</label>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    @Html.DisplayFor(model => model.SupplierAddress, new { @class = "form-control form-control-sm", style = "border:none" })
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
                                 </div>
-                                    <br />
+                                <br />
+                                <hr />
+                                <div class="col-md-12">
+                                    <Center><h5 class="font-weight-bold">Item Details</h5></Center>
                                     <hr />
-                                    <div class="col-md-12">
-                                        <Center><h5 class="font-weight-bold">Item Details</h5></Center>
-                                        <hr />
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <table class="table table-striped" id="ItemTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Item</th>
-                                                        <th>Code</th>
-                                                        <th>Unit</th>
-                                                        <th>Unit Price</th>
-                                                        <th>Ordered Quantity</th>
-                                                        <th>Inward Quantity</th>
-                                                        <th>Received Quantity</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-md-9"></div>
-                                        <div class="col-md-3">
-                                            @*@Html.DisplayFor(model => model.Signature)*@
-                                            <div id="imagePreview"></div>
-                                            @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
-                                            <p class="font-weight-bold"> Authorized Signature</p>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <a href="@Url.Action("Index", "GRN")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
-                                        Back To List
-                                    </a>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-striped" id="ItemTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item</th>
+                                                    <th>Code</th>
+                                                    <th>Unit</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Ordered Quantity</th>
+                                                    <th>Inward Quantity</th>
+                                                    <th>Received Quantity</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-9"></div>
+                                    <div class="col-md-3">
+                                        @*@Html.DisplayFor(model => model.Signature)*@
+                                        <div id="imagePreview"></div>
+                                        @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
+                                        <p class="font-weight-bold"> Authorized Signature</p>
+                                    </div>
+                                </div>
+                                <br />
+                                <a href="@Url.Action("Index", "GRN")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                    Back To List
+                                </a>
                             </div>
                         </div>
-            </div>
-
-        }
+                    </div>
+                </div>}
 
     </div>
 

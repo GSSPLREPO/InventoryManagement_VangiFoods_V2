@@ -30,7 +30,7 @@ namespace InVanWebApp_BO
         public Nullable<int> SO_Id { get; set; }
         public string CurrencyName { get; set; }
         public decimal ItemUnitPrice { get; set; }
-
+        public int ItemCategoryNameID { get; set; } //Use in Stock Report
         //Added for dashboard
         public float MinimumStock { get; set; }
 

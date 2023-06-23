@@ -224,7 +224,7 @@ namespace InVanWebApp.Controllers
                     //TempData["Success"] = "<script>alert('Error while deleting!');</script>";
                     TempData["Success"] = "<script>alert('Stage-2 Already Done! you need to delete entry from Stage-2!');</script>";
 
-                return RedirectToAction("Index", "RQCCP");
+                return RedirectToAction("Index", "SILOCCP");
 
             }
             else
