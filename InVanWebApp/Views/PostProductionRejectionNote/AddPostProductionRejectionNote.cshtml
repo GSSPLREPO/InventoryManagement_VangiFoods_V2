@@ -37,67 +37,79 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model=>model.PostProdRejectionType, new List<SelectListItem>{
+                                @Html.DropDownListFor(model => model.PostProdRejectionType, new List<SelectListItem>{
                                     new SelectListItem{ Text="--Select--",Value=""},
                                     new SelectListItem{ Text="FGS",Value="FGS"},
                                     new SelectListItem{ Text="COA", Value="COA"},
-                                    new SelectListItem{ Text="Product Evaluation Log", Value="ProductEvaluationLog"} }, new{ @class="form-control form-control-sm", id = "RejectionType" })
-                                
-                                @Html.HiddenFor(model=>model.PostProdRejectionType) 
+                                    new SelectListItem{ Text="Product Evaluation Log", Value="ProductEvaluationLog"} }, new { @class = "form-control form-control-sm", id = "RejectionType" })
 
-                                    @*<select class="form-control form-control-sm" id="RejectionType" name="PostProdRejectionType" data-val="true" data-val-required="Select the Rejection Type!">
-                                    <option value="">--Select--</option>
-                                    <option value="FGS">FGS</option>
-                                    <option value="COA">COA</option>
-                                    <option value="ProductEvaluationLog">Product Evaluation Log</option>
-                                </select>*@
+                                @Html.HiddenFor(model => model.PostProdRejectionType)
+
+                                @*<select class="form-control form-control-sm" id="RejectionType" name="PostProdRejectionType" data-val="true" data-val-required="Select the Rejection Type!">
+                    <option value="">--Select--</option>
+                    <option value="FGS">FGS</option>
+                    <option value="COA">COA</option>
+                    <option value="ProductEvaluationLog">Product Evaluation Log</option>
+                </select>*@
                                 @Html.ValidationMessageFor(model => model.PostProdRejectionType, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             @*<div id="StageDiv" style="display:none;">*@
-                                <div class="col-md-2 StageDiv" style="display:none;">
-                                    @Html.Label("Stages")
-                                    <span style="color:red">*</span>
-                                </div>
-                                <div class="col-md-4 StageDiv" style="display:none;">
-                                    <select class="form-control form-control-sm" id="Stage" name="Stage">
-                                        <option value="1">Stage-1</option>
-                                        <option value="2">Stage-2</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-2 StageDiv" style="display:none;">
+                                @Html.Label("Stages")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4 StageDiv" style="display:none;">
+                                <select class="form-control form-control-sm" id="Stage" name="Stage">
+                                    <option value="1">Stage-1</option>
+                                    <option value="2">Stage-2</option>
+                                </select>
+                            </div>
                             @*</div>*@
                             @*<div id="BatchRejectionDiv" style="display:none;">*@
-                                <div class="col-md-2 BatchRejectionDiv" style="display:none;">
-                                    @Html.Label("Batch Rejection")
-                                </div>
-                                <div class="col-md-4 BatchRejectionDiv" style="display:none;">
-                                    @Html.TextBoxFor(model => model.WholeBatchRejection, new { @class = "form-check-input form-control", type = "checkbox", value = "falses" })
-                                </div>
+                            <div class="col-md-2 BatchRejectionDiv" style="display:none;">
+                                @Html.Label("Batch Rejection")
+                            </div>
+                            <div class="col-md-4 BatchRejectionDiv" style="display:none;">
+                                @Html.TextBoxFor(model => model.WholeBatchRejection, new { @class = "form-check-input form-control", type = "checkbox", value = "falses" })
+                            </div>
                             @*</div>*@
                         </div>
                         <br />
                         <div class="row">
                             <div class="col-md-2">
-                                @Html.Label("Work Order Number")
+                                @Html.Label("Batch Number")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.FGS_ID, (IEnumerable<SelectListItem>)ViewData["WorkOrderDD"], "---Select---", new { @class = "form-control form-control-sm", onchange = "WorkOrderChange($(this).val())" })
-                                @Html.HiddenFor(model => model.WorkOrderNo)
+                                @*//Rahul commented 'WorkOrderDD' and added 'BatchNoDD' as per MOM 26-06-23.*@
+                                @*@Html.DropDownListFor(model => model.FGS_ID, (IEnumerable<SelectListItem>)ViewData["WorkOrderDD"], "---Select---", new { @class = "form-control form-control-sm", onchange = "WorkOrderChange($(this).val())" })*@
+                                @Html.DropDownListFor(model => model.FGS_ID, (IEnumerable<SelectListItem>)ViewData["BatchNoDD"], "---Select---", new { @class = "form-control form-control-sm", onchange = "BatchNoChange($(this).val())" })
+                                @Html.HiddenFor(model => model.BatchNumber)  @*//Rahul updated 'WorkOrderNo' to 'BatchNo' as per MOM 26-06-23.*@
                                 @Html.HiddenFor(model => model.SO_No)
                                 @Html.HiddenFor(model => model.SO_Id)
                                 @Html.ValidationMessageFor(model => model.FGS_ID, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
-                                @Html.Label("Batch Number")
+                                @Html.Label("Work Order Number")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger", id = "valMsgBN" })
+                                @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger", id = "valMsgWON" })
+                            </div>
+                        </div>
+                        <br />  @*//Rahul added 'PackageSize' from 'FGS' 26-06-2023.*@
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Package Size")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.PackageSize, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.PackageSize, "", new { @class = "error mt-2 text-danger", id = "valMsgPS" })
                             </div>
                         </div>
                         <br />
-
                         <div class="row" id="divLabel">
                             <div class="col-md-2">
                                 @Html.Label("Item QC Details")
@@ -138,10 +150,12 @@
                                 <div class="col-3">
                                     <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Save</button>
                                 </div>
-                                <div class="col-4">
+                                @*Rahul added class 'd-none' 26-06-23.*@
+                                <div class="col-4 d-none">
                                     <button type="submit" id="btn_SaveDraft" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
                                 </div>
-                                <div class="col-4">
+                                @*Rahul added class 'ml-4' 26-06-23.*@
+                                <div class="col-4 ml-4">
                                     <a href="@Url.Action("Index", "PostProductionRejectionNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                                         Back To List
                                     </a>
@@ -175,7 +189,9 @@
     };
     //==========end===============
 
-    function WorkOrderChange(id) {
+    @*//Rahul commented 'WorkOrderDD' and added 'BatchNoDD' as per MOM 26-06-23.*@ 
+    /*function WorkOrderChange(id) {*/
+    function BatchNoChange(id) { 
         //Rahul added 'rowCount' For deleting the rows of Item table if exist. 02-066-2023.
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
@@ -193,7 +209,8 @@
 
         $('#btnSave').prop('disabled', false);
         $('#btn_SaveDraft').prop('disabled', false);
-        $('#valMsgBN').hide();
+        $('#valMsgWON').hide();
+        $('#valMsgPS').hide();  //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
         $('#RejectionType').prop('disabled', true);
 
         var Stage = 0;
@@ -217,7 +234,9 @@
                         alert('There is no Stage-1 record for the selected Work Order!');
                         window.location.href = '/PostProductionRejectionNote';
                     }
-                    $('#BatchNumber').val(result.BatchNo);
+                    $('#BatchNumber').val(result.BatchNo);                    
+                    $('#WorkOrderNo').val(result.WorkOrderNo);  //Rahul added 'WorkOrderNo' from 'FGS' 26-06-2023. 
+                    $('#PackageSize').val(result.PackageSize);  //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
 
                     if (result.SalesOrderId != 0) {
                         $('#SO_No').val(result.SONo);

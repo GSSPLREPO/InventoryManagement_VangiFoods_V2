@@ -14,7 +14,7 @@
                         <hr />
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(model => model.ID)
-                        
+
                         <div class="row">
                             <div class="col-md-2">
                                 <label id="lblNoteDate">Rejection Note Date</label>
@@ -48,7 +48,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4 StageDiv" style="display:none;">
-                                @Html.TextBoxFor(model => model.Stage, new { @class = "form-control form-control-sm", id= "Stage", type = "text", @readonly = "readonly" })
+                                @Html.TextBoxFor(model => model.Stage, new { @class = "form-control form-control-sm", id = "Stage", type = "text", @readonly = "readonly" })
                             </div>
                             <div class="col-md-2 BatchRejectionDiv" style="display:none;">
                                 @Html.Label("Batch Rejection")
@@ -60,6 +60,14 @@
                         <br />
                         <div class="row">
                             <div class="col-md-2">
+                                @Html.Label("Batch Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger", id = "valMsgBN" })
+                            </div>
+                            <div class="col-md-2">
                                 @Html.Label("Work Order Number")
                                 <span style="color:red">*</span>
                             </div>
@@ -70,17 +78,19 @@
                                 @Html.HiddenFor(model => model.SO_Id)
                                 @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger" })
                             </div>
+                        </div>
+                        <br />  @*//Rahul added 'PackageSize' from 'FGS' 26-06-2023.*@
+                        <div class="row">
                             <div class="col-md-2">
-                                @Html.Label("Batch Number")
+                                @Html.Label("Package Size")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger", id = "valMsgBN" })
+                                @Html.TextBoxFor(model => model.PackageSize, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.PackageSize, "", new { @class = "error mt-2 text-danger", id = "valMsgPS" })
                             </div>
                         </div>
                         <br />
-
                         <div class="row" id="divLabel">
                             <div class="col-md-2">
                                 @Html.Label("Item QC Details")
@@ -105,33 +115,31 @@
                                         @{ int c = 0;
                                             foreach (var item in Model.note_DetailsBOs)
                                             {
-                                                <tr id="tablerow_@c">
-                                                    <td class="col-md-4 d-none">
-                                                        @Html.TextBox("ItemID_" + c, item.ItemId, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("ItemCode_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("OrderQty_" + c, item.OrderedQuantity, new{@class = "form-control form-control-sm",@readonly = "readonly"})
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("FGSQty_" + c, item.TotalQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("txRejectedQty_" +c, item.RejectedQuantity, new { @class = "form-control form-control-sm", onkeypress= "return isNumberKey(event)", onchange = "OnChangeRejQty($(this).val(),id)" })
-                                                        <span style="display:none;" id="spanRejQty_@c"></span>
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("txRemark_" + c, item.Remarks, new { @class = "form-control form-control-sm", onchange= "OnChangeRejQty($(this).val(),id)" })
-                                                    </td>
-                                                </tr>
-                                                { c++; }
-                                            }
-                                        }
+                            <tr id="tablerow_@c">
+                                <td class="col-md-4 d-none">
+                                    @Html.TextBox("ItemID_" + c, item.ItemId, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("ItemCode_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("OrderQty_" + c, item.OrderedQuantity, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("FGSQty_" + c, item.TotalQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("txRejectedQty_" + c, item.RejectedQuantity, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", onchange = "OnChangeRejQty($(this).val(),id)" })
+                                    <span style="display:none;" id="spanRejQty_@c"></span>
+                                </td>
+                                <td>
+                                    @Html.TextBox("txRemark_" + c, item.Remarks, new { @class = "form-control form-control-sm", onchange = "OnChangeRejQty($(this).val(),id)" })
+                                </td>
+                            </tr> { c++; }
+                                            } }
                                     </tbody>
                                 </table>
                             </div>
@@ -153,10 +161,12 @@
                                 <div class="col-3">
                                     <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
                                 </div>
-                                <div class="col-4">
+                                @*Rahul added class 'd-none' 26-06-23.*@
+                                <div class="col-4 d-none">
                                     <button type="submit" id="btn_SaveDraft" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
                                 </div>
-                                <div class="col-4">
+                                @*Rahul added class 'ml-4' 26-06-23.*@ 
+                                <div class="col-4 ml-4">
                                     <a href="@Url.Action("Index", "PostProductionRejectionNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                                         Back To List
                                     </a>

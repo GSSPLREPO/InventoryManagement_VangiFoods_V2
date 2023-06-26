@@ -61,7 +61,13 @@
                                                     <a href=@Url.Action("ViewPostProdRN", new { ID = item.ID }) title="View Post-Production RN">
                                                         <i class="fa fa-eye text-primary"></i>
                                                     </a><span>&nbsp;&nbsp;</span>
-                                                    @if (item.DraftFlag == true)
+                                                    @*@if (item.DraftFlag == true)
+                                                    {
+                                                        <a href=@Url.Action("EditPostProdRN", new { ID = item.ID }) title="Edit Post-Production RN">
+                                                            <i class="fa fa-edit text-primary"></i>
+                                                        </a><span>&nbsp;&nbsp;</span>
+                                                    }*@
+                                                    @if (item.DraftFlag == false) 
                                                     {
                                                         <a href=@Url.Action("EditPostProdRN", new { ID = item.ID }) title="Edit Post-Production RN">
                                                             <i class="fa fa-edit text-primary"></i>

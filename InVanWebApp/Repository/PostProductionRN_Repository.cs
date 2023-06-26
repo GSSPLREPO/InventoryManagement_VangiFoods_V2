@@ -91,6 +91,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@WholeBatchRejection", model.WholeBatchRejection);
                     cmd.Parameters.AddWithValue("@BatchNumber", model.BatchNumber);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@PackageSize", model.PackageSize); //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
                     cmd.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                     cmd.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
 
@@ -217,6 +218,7 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@WholeBatchRejection", model.WholeBatchRejection);
                     cmd.Parameters.AddWithValue("@BatchNumber", model.BatchNumber);
                     cmd.Parameters.AddWithValue("@Remarks", model.Remarks);
+                    cmd.Parameters.AddWithValue("@PackageSize", model.PackageSize); //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
                     cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
                     cmd.Parameters.AddWithValue("@LastModifiedBy", model.LastModifiedBy);
 
@@ -354,7 +356,9 @@ namespace InVanWebApp.Repository
                             ProductName = reader["ProductName"].ToString(),
                             Item_Code = reader["Item_Code"].ToString(),
                             OrderQty = reader["OrderQty"] is DBNull ? 0 : Convert.ToDecimal(reader["OrderQty"]),
-                            QuantityInKG = reader["QuantityInKG"] is DBNull ? 0 : Convert.ToDouble(reader["QuantityInKG"])
+                            QuantityInKG = reader["QuantityInKG"] is DBNull ? 0 : Convert.ToDouble(reader["QuantityInKG"]), 
+                            PackageSize = reader["PackageSize"].ToString(),  //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
+                            WorkOrderNo = reader["WorkOrderNo"].ToString(),  //Rahul added 'WorkOrderNo' from 'FGS' 26-06-2023.   
                         };
                     }
                     con.Close();
@@ -391,7 +395,7 @@ namespace InVanWebApp.Repository
                             SONo = reader["SONumber"].ToString(),
                             WorkOrderNo = reader["WorkOrderNo"].ToString(),
                             BatchNo = reader["BatchNo"].ToString(),
-                            WorkOrderAndBN = reader["WorkOrderNo"].ToString() + " (" + reader["BatchNo"].ToString() + ")",
+                            //WorkOrderAndBN = reader["WorkOrderNo"].ToString() + " (" + reader["BatchNo"].ToString() + ")", //Rahul commented 'WorkOrderAndBN' as per MOM 26-06-23. 
                         };
                         resultList.Add(result);
                     }

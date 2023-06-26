@@ -285,8 +285,10 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Work Order Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + postProdRNList.WorkOrderNo + "</td>");
+            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Package Size</th>");
+            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + postProdRNList.PackageSize + "</td>");
+            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Remarks</th>");
+            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + postProdRNList.Remarks + "</td>");
             sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'></th>");
             sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'></td>");
             sb.Append("</tr>");
@@ -516,8 +518,10 @@ namespace InVanWebApp.Controllers
         public void BindSONumber()
         {
             var result = _repository.BindWorkOrderDD();
-            var resultList = new SelectList(result.ToList(), "FGSID", "WorkOrderAndBN");
-            ViewData["WorkOrderDD"] = resultList;
+            //var resultList = new SelectList(result.ToList(), "FGSID", "WorkOrderAndBN");  //Rahul commented 'WorkOrderAndBN' as per MOM 26-06-23. 
+            //ViewData["WorkOrderDD"] = resultList;
+            var resultList = new SelectList(result.ToList(), "FGSID", "BatchNo");
+            ViewData["BatchNoDD"] = resultList;
         }
 
         public void BindDocumentNo()

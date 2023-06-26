@@ -30,6 +30,7 @@ namespace InVanWebApp_BO
 
         [Required(ErrorMessage = "Enter the batch number!")]
         public string BatchNumber { get; set; }
+        public string PackageSize { get; set; } //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
