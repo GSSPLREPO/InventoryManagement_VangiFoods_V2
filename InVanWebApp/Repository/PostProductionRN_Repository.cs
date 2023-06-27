@@ -120,8 +120,10 @@ namespace InVanWebApp.Repository
                             objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
                             objItemDetails.OrderedQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
                             objItemDetails.TotalQuantity = Convert.ToDecimal(item.ElementAt(4).Value);
-                            objItemDetails.RejectedQuantity = Convert.ToDecimal(item.ElementAt(5).Value);
-                            objItemDetails.Remarks = item.ElementAt(6).Value.ToString();
+                            objItemDetails.CurrentFGSQty = Convert.ToDecimal(item.ElementAt(5).Value); // Rahul added 'CurrentFGSQty' in 'TxtItemDetails' 27-06-23.   
+                            objItemDetails.RejectedQuantity = Convert.ToDecimal(item.ElementAt(6).Value); // Rahul updated 'ElementAt(5)' to 'ElementAt(6)' in 'TxtItemDetails' 27-06-23.  
+                            objItemDetails.CurrentRejectedQty = Convert.ToDecimal(item.ElementAt(7).Value); // Rahul added 'CurrentRejectedQty' in 'TxtItemDetails' 27-06-23.   
+                            objItemDetails.Remarks = item.ElementAt(8).Value.ToString(); // Rahul updated 'ElementAt(7)' to 'ElementAt(8)' in 'TxtItemDetails' 27-06-23.  
 
                             itemDetails.Add(objItemDetails);
                         }
@@ -138,7 +140,9 @@ namespace InVanWebApp.Repository
                             cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
                             cmdNew.Parameters.AddWithValue("@OrderedQuantity", item.OrderedQuantity);
                             cmdNew.Parameters.AddWithValue("@TotalQuantity", item.TotalQuantity);
+                            cmdNew.Parameters.AddWithValue("@CurrentFGSQty", item.CurrentFGSQty); // Rahul added 'CurrentFGSQty' in 'TxtItemDetails' 27-06-23.   
                             cmdNew.Parameters.AddWithValue("@RejectedQuantity", item.RejectedQuantity);
+                            cmdNew.Parameters.AddWithValue("@CurrentRejectedQty", item.CurrentRejectedQty); // Rahul added 'CurrentRejectedQty' in 'TxtItemDetails' 27-06-23.   
                             cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks);
                             cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
                             cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
@@ -358,7 +362,9 @@ namespace InVanWebApp.Repository
                             OrderQty = reader["OrderQty"] is DBNull ? 0 : Convert.ToDecimal(reader["OrderQty"]),
                             QuantityInKG = reader["QuantityInKG"] is DBNull ? 0 : Convert.ToDouble(reader["QuantityInKG"]), 
                             PackageSize = reader["PackageSize"].ToString(),  //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
-                            WorkOrderNo = reader["WorkOrderNo"].ToString(),  //Rahul added 'WorkOrderNo' from 'FGS' 26-06-2023.   
+                            WorkOrderNo = reader["WorkOrderNo"].ToString(),  //Rahul added 'WorkOrderNo' from 'FGS' 26-06-2023.
+                            CurrentFGSQty = reader["CurrentFGSQty"] is DBNull ? 0 : Convert.ToDouble(reader["CurrentFGSQty"]),
+                            CurrentRejectedQty = reader["CurrentRejectedQty"] is DBNull ? 0 : Convert.ToDouble(reader["CurrentRejectedQty"]),
                         };
                     }
                     con.Close();

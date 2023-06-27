@@ -126,7 +126,9 @@
                                             <th>Item</th>
                                             <th>Ordered Quantity (Packets)</th>
                                             <th>FGS Quantity (Packets)</th>
-                                            <th>Rejected Quantity (Packets)</th>
+                                            <th>Current FGS Quantity (Packets)</th>     @*Rahul added 'Current FGS Quantity (Packets)' 27-06-23.*@
+                                            <th>Total Rejected Quantity (Packets)</th>  @*Rahul updated 'Total Rejected Quantity (Packets)' 27-06-23.*@
+                                            <th>Current Rejected Quantity (Packets)</th>    @*Rahul added 'Current Rejected Quantity (Packets)' 27-06-23.*@     
                                             <th>Remarks</th>
                                         </tr>
                                     </thead>
@@ -237,6 +239,8 @@
                     $('#BatchNumber').val(result.BatchNo);                    
                     $('#WorkOrderNo').val(result.WorkOrderNo);  //Rahul added 'WorkOrderNo' from 'FGS' 26-06-2023. 
                     $('#PackageSize').val(result.PackageSize);  //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
+                    $('#CurrentFGSQty').val(result.CurrentFGSQty);  //Rahul added 'CurrentFGSQty' from 'PP_RN_D' 26-06-2023.
+                    $('#CurrentRejectedQty').val(result.CurrentRejectedQty);  //Rahul added 'CurrentRejectedQty' from 'PP_RN_D' 26-06-2023.
 
                     if (result.SalesOrderId != 0) {
                         $('#SO_No').val(result.SONo);
@@ -278,43 +282,75 @@
                                 cell.appendChild(t2);
                             }
                             else if (i == 3) {
-                                var t2 = document.createElement("input");
-                                t2.id = "OrderQty_" + j;
-                                t2.setAttribute("disabled", "true");
-                                t2.setAttribute("style", "background:transparent;border:none;");
-                                t2.setAttribute("value", result.OrderQty);
-                                cell.appendChild(t2);
+                                var t3 = document.createElement("input");
+                                t3.id = "OrderQty_" + j;
+                                t3.setAttribute("disabled", "true");
+                                t3.setAttribute("style", "background:transparent;border:none;");
+                                t3.setAttribute("value", result.OrderQty);
+                                cell.appendChild(t3);
                             }
                             else if (i == 4) {
-                                var t2 = document.createElement("input");
-                                t2.id = "FGSQty_" + j;
-                                t2.setAttribute("disabled", "true");
-                                t2.setAttribute("style", "background:transparent;border:none;");
-                                t2.setAttribute("value", result.QuantityInKG);
-                                cell.appendChild(t2);
-                            }
-                            else if (i == 5) {
                                 var t4 = document.createElement("input");
-                                t4.id = "txRejectedQty_" + j;
-                                t4.removeAttribute("disabled", "false");
-                                t4.removeAttribute("disabled", "true");
-                                t4.setAttribute("maxlength", "8");
-                                t4.setAttribute("onkeypress", "return isNumberKey(event)");
-                                t4.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
-                                t4.setAttribute("class", "form-control form-control-sm");
+                                t4.id = "FGSQty_" + j;
+                                t4.setAttribute("disabled", "true");
+                                t4.setAttribute("style", "background:transparent;border:none;");
+                                t4.setAttribute("value", result.QuantityInKG);
                                 cell.appendChild(t4);
-                                var t6 = document.createElement('span');
-                                t6.id = "spanRejQty_" + j;
+                            }   /// Rahul added 'CurrentFGSQty_' 27-06-23. 
+                            else if (i == 5) {
+                                var t5 = document.createElement("input");
+                                t5.id = "CurrentFGSQty_" + j;
+                                t5.setAttribute("disabled", "true");
+                                t5.setAttribute("style", "background:transparent;border:none;");
+                                t5.setAttribute("value", result.CurrentFGSQty);
+                                cell.appendChild(t5);
+                            }   /// Rahul added 'CurrentFGSQty_' 27-06-23. 
+                            else if (i == 6) {
+                                var t6 = document.createElement("input");
+                                t6.id = "txRejectedQty_" + j;
+                                t6.setAttribute("disabled", "true");
+                                t6.setAttribute("style", "background:transparent;border:none;");
+                                t6.setAttribute("value", result.CurrentRejectedQty); 
                                 cell.appendChild(t6);
                             }
-                            else if (i == 6) {
-                                var t4 = document.createElement("input");
-                                t4.id = "txRemark_" + j;
-                                t4.removeAttribute("disabled", "false");
-                                t4.removeAttribute("disabled", "true");
-                                t4.setAttribute("maxlength", "50");
-                                t4.setAttribute("class", "form-control form-control-sm");
-                                cell.appendChild(t4);
+                            //else if (i == 6) {
+                            //    var t4 = document.createElement("input");
+                            //    t4.id = "txRejectedQty_" + j;
+                            //    t4.removeAttribute("disabled", "false");
+                            //    t4.removeAttribute("disabled", "true");
+                            //    t4.setAttribute("maxlength", "8");
+                            //    t4.setAttribute("onkeypress", "return isNumberKey(event)");
+                            //    t4.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
+                            //    t4.setAttribute("class", "form-control form-control-sm");
+                            //    t4.setAttribute("value", 0);    /// Rahul added '"value", 0' 27-06-23.
+                            //    cell.appendChild(t4);
+                            //    var t6 = document.createElement('span');
+                            //    t6.id = "spanRejQty_" + j;
+                            //    cell.appendChild(t6);
+                            //}   /// Rahul added 'txCurrentRejectedQty_' 27-06-23.
+                            else if (i == 7) {
+                                var t7 = document.createElement("input");
+                                t7.id = "txCurrentRejectedQty_" + j;
+                                t7.removeAttribute("disabled", "false");
+                                t7.removeAttribute("disabled", "true");
+                                t7.setAttribute("maxlength", "8");
+                                t7.setAttribute("onkeypress", "return isNumberKey(event)");
+                                t7.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
+                                t7.setAttribute("class", "form-control form-control-sm");
+                                t7.setAttribute("value", 0); 
+                                cell.appendChild(t7);
+                                var t6 = document.createElement('span');
+                                t6.id = "spanCurrentRejQty_" + j;
+                                cell.appendChild(t6);
+                            }
+                            else if (i == 8) {
+                                var t8 = document.createElement("input");
+                                t8.id = "txRemark_" + j;
+                                t8.removeAttribute("disabled", "false");
+                                t8.removeAttribute("disabled", "true");
+                                t8.setAttribute("maxlength", "95");
+                                t8.setAttribute("class", "form-control form-control-sm");
+                                cell.appendChild(t8);
                             }
                         }
 
@@ -324,9 +360,9 @@
                             $('#txRejectedQty_0').val(FGSQty);
                             document.getElementById('txRejectedQty_0').setAttribute('disabled', 'disabled');
                         }
-                        else {
+                        else if (!WholeRejFlag && RejType != 'FGS') {                            
                             document.getElementById('txRejectedQty_0').removeAttribute('disabled', 'disabled');
-                        }
+                        } 
                         // }
                     }
                     else {
@@ -344,20 +380,39 @@
         });
     }
 
-    function OnChangeRejQty(value, id) {
+    function OnChangeRejQty(value, id) {            
         var rowNo = id.split('_')[1];
         if (value == '')
             value = 0;
-
+        debugger
         var RejQty = parseFloat(value);
         var FGSQty = $('#FGSQty_' + rowNo).val();
         FGSQty = parseFloat(FGSQty);
 
+        var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val();
+        CurrentFGSQty = parseFloat(CurrentFGSQty);
+
+        var TotRejectedQty = $('#txRejectedQty_' + rowNo).val();
+        TotRejectedQty = parseFloat(TotRejectedQty); 
+
+        var TempRejQty = TotRejectedQty + RejQty;
+        var tempCurrentFGSQty = FGSQty - TempRejQty;
+        var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val(tempCurrentFGSQty);
+        CurrentFGSQty = parseFloat(CurrentFGSQty); 
+
+
         if (FGSQty < RejQty) {
-            $('#spanRejQty_' + rowNo).text('Rejected quantity cannot be greater than FGS Quantity!');
-            $('#spanRejQty_' + rowNo).show();
-            document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
-            document.getElementById("txRejectedQty_" + rowNo).focus();
+            /// Rahul commented '#spanRejQty_' and "txRejectedQty_" 27-06-23. 
+            //$('#spanRejQty_' + rowNo).text('Rejected quantity cannot be greater than FGS Quantity!'); 
+            //$('#spanRejQty_' + rowNo).show(); 
+            //document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            //document.getElementById("txRejectedQty_" + rowNo).focus();
+            //document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            /// Rahul added '#spanCurrentRejQty_' and "txCurrentRejectedQty_" 27-06-23.
+            $('#spanCurrentRejQty_' + rowNo).text('Rejected quantity cannot be greater than FGS Quantity!');
+            $('#spanCurrentRejQty_' + rowNo).show();
+            document.getElementById('spanCurrentRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            document.getElementById("txCurrentRejectedQty_" + rowNo).focus();
             $('#btnSave').prop('disabled', true);
             $('#btn_SaveDraft').prop('disabled', true);
             return;
@@ -365,8 +420,10 @@
         else {
             $('#btnSave').prop('disabled', false);
             $('#btn_SaveDraft').prop('disabled', false);
-            $('#spanRejQty_' + rowNo).text('');
-            $('#spanRejQty_' + rowNo).hide();
+            //$('#spanRejQty_' + rowNo).text('');   /// Rahul commented '#spanRejQty_' 27-06-23. 
+            //$('#spanRejQty_' + rowNo).hide();   /// Rahul commented '#spanRejQty_' 27-06-23. 
+            $('#spanCurrentRejQty_' + rowNo).text('');   /// Rahul added '#spanCurrentRejQty_' 27-06-23.
+            $('#spanCurrentRejQty_' + rowNo).hide();    /// Rahul added '#spanCurrentRejQty_' 27-06-23. 
         }
     }
 
@@ -413,14 +470,18 @@
             var ItemName = (document.getElementById("ItemName_" + i)).value;
             var OrderQty = ((document.getElementById("OrderQty_" + i)).value);
             var FGSQty = ((document.getElementById("FGSQty_" + i)).value);
+            var CurrentFGSQty = ((document.getElementById("CurrentFGSQty_" + i)).value); ///  Rahul added 'CurrentFGSQty_' 27-06-23.
             var RejecQty = ((document.getElementById("txRejectedQty_" + i)).value);
-            RejecQty = (RejecQty == null || RejecQty == '') ? 0 : RejecQty;
+            //RejecQty = (RejecQty == null || RejecQty == '') ? 0 : RejecQty;  ///  Rahul commented 'RejecQty' 27-06-23.
+            var CurrentRejectedQty = ((document.getElementById("txCurrentRejectedQty_" + i)).value); /// Rahul added 'txCurrentRejectedQty_' 27-06-23.
+            CurrentRejectedQty = (CurrentRejectedQty == null || CurrentRejectedQty == '') ? 0 : CurrentRejectedQty; /// Rahul added 'CurrentRejectedQty' 27-06-23. 
 
-            var Remark = ((document.getElementById("txRemark_" + i)).value);
-           
+            var Remark = ((document.getElementById("txRemark_" + i)).value); 
+           ///  Rahul added 'CurrentFGSQty_', 'CurrentRejectedQty' in 'TxtItemDetails' 27-06-23. 
             TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
-                ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty
-                + ", \"FGSQty\": \"" + FGSQty + "\", \"RejecQty\": " + RejecQty + ",\"Remark\": \"" + Remark +
+                ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty + ", \"FGSQty\": " + FGSQty
+                + ", \"CurrentFGSQty\": " + CurrentFGSQty + ", \"RejecQty\": " + RejecQty 
+                + ", \"CurrentRejectedQty\": " + CurrentRejectedQty + ",\"Remark\": \"" + Remark +
                 "\"";
 
             if (i == (rowCount - 2))
@@ -430,8 +491,8 @@
         }
         TxtItemDetails = TxtItemDetails + "]";
         $('#txtItemDetails').val(TxtItemDetails);
-
-       /// console.log(TxtItemDetails);
+        debugger    
+        console.log(TxtItemDetails);
     }
 
 </script>

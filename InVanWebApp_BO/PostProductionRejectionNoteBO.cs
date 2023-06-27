@@ -56,7 +56,9 @@ namespace InVanWebApp_BO
         public string CurrencyName { get; set; }
         public decimal CurrencyPrice { get; set; }
         public decimal TotalQuantity { get; set; }
+        public decimal CurrentFGSQty { get; set; } // Rahul added 'CurrentFGSQty_' in 'TxtItemDetails' 27-06-23.  
         public decimal RejectedQuantity { get; set; }
+        public decimal CurrentRejectedQty { get; set; } // Rahul added 'CurrentRejectedQty' in 'TxtItemDetails' 27-06-23.  
         public decimal OrderedQuantity { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
