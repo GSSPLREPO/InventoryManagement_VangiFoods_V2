@@ -61,9 +61,9 @@ namespace InVanWebApp_BO
 
         //Added the below fields for Post-production rejection note
         public string WorkOrderAndBN { get; set; }
-        public Nullable<double> CurrentFGSQty { get; set; } 
-        public Nullable<double> CurrentRejectedQty { get; set; }  
-         
+        public Nullable<double> CurrentFGSQty { get; set; }
+        public Nullable<double> CurrentRejectedQty { get; set; }
+
         //Added the below field for report
         //[Required(ErrorMessage = "Please Select From Date!")]
         //public DateTime fromDate { get; set; }

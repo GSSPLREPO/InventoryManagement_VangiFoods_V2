@@ -186,7 +186,7 @@
     });
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
-    function SaveBtnClick() {
+    function SaveBtnClick() {   
         createJson();
     };
     //==========end===============
@@ -302,7 +302,15 @@
                                 t5.id = "CurrentFGSQty_" + j;
                                 t5.setAttribute("disabled", "true");
                                 t5.setAttribute("style", "background:transparent;border:none;");
-                                t5.setAttribute("value", result.CurrentFGSQty);
+                                if (result.CurrentFGSQty == 0) {    
+                                    result.CurrentFGSQty = result.QuantityInKG;
+                                    t5.setAttribute("value", result.CurrentFGSQty); 
+                                }
+                                else {                                     
+                                    var tempCurrentFGSQty = result.CurrentFGSQty - result.CurrentRejectedQty;
+                                    t5.setAttribute("value", tempCurrentFGSQty); 
+                                }
+                                //t5.setAttribute("value", result.CurrentFGSQty - result.CurrentRejectedQty); 
                                 cell.appendChild(t5);
                             }   /// Rahul added 'CurrentFGSQty_' 27-06-23. 
                             else if (i == 6) {
@@ -310,24 +318,13 @@
                                 t6.id = "txRejectedQty_" + j;
                                 t6.setAttribute("disabled", "true");
                                 t6.setAttribute("style", "background:transparent;border:none;");
-                                t6.setAttribute("value", result.CurrentRejectedQty); 
+                                //t6.setAttribute("value", result.CurrentRejectedQty);                                 
+                                var tempCurrentFGSQty = (result.QuantityInKG-(result.CurrentFGSQty - result.CurrentRejectedQty));
+
+                                t6.setAttribute("value", tempCurrentFGSQty);
                                 cell.appendChild(t6);
-                            }
-                            //else if (i == 6) {
-                            //    var t4 = document.createElement("input");
-                            //    t4.id = "txRejectedQty_" + j;
-                            //    t4.removeAttribute("disabled", "false");
-                            //    t4.removeAttribute("disabled", "true");
-                            //    t4.setAttribute("maxlength", "8");
-                            //    t4.setAttribute("onkeypress", "return isNumberKey(event)");
-                            //    t4.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
-                            //    t4.setAttribute("class", "form-control form-control-sm");
-                            //    t4.setAttribute("value", 0);    /// Rahul added '"value", 0' 27-06-23.
-                            //    cell.appendChild(t4);
-                            //    var t6 = document.createElement('span');
-                            //    t6.id = "spanRejQty_" + j;
-                            //    cell.appendChild(t6);
-                            //}   /// Rahul added 'txCurrentRejectedQty_' 27-06-23.
+                            }   
+                           /// Rahul added 'txCurrentRejectedQty_' 27-06-23.
                             else if (i == 7) {
                                 var t7 = document.createElement("input");
                                 t7.id = "txCurrentRejectedQty_" + j;
@@ -392,14 +389,19 @@
         var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val();
         CurrentFGSQty = parseFloat(CurrentFGSQty);
 
-        var TotRejectedQty = $('#txRejectedQty_' + rowNo).val();
-        TotRejectedQty = parseFloat(TotRejectedQty); 
+        if (CurrentFGSQty == 0) {
+            var tempCurrentFGSQty = FGSQty;
+        }
+        else {
+            var tempCurrentFGSQty = CurrentFGSQty; 
+        }
 
-        var TempRejQty = TotRejectedQty + RejQty;
-        var tempCurrentFGSQty = FGSQty - TempRejQty;
         var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val(tempCurrentFGSQty);
         CurrentFGSQty = parseFloat(CurrentFGSQty); 
 
+        var TotRejectedQty = $('#txRejectedQty_' + rowNo).val();
+        TotRejectedQty = parseFloat(TotRejectedQty);
+                
 
         if (FGSQty < RejQty) {
             /// Rahul commented '#spanRejQty_' and "txRejectedQty_" 27-06-23. 
@@ -409,7 +411,7 @@
             //document.getElementById("txRejectedQty_" + rowNo).focus();
             //document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
             /// Rahul added '#spanCurrentRejQty_' and "txCurrentRejectedQty_" 27-06-23.
-            $('#spanCurrentRejQty_' + rowNo).text('Rejected quantity cannot be greater than FGS Quantity!');
+            $('#spanCurrentRejQty_' + rowNo).text('Current Rejected quantity cannot be greater than FGS Quantity!');
             $('#spanCurrentRejQty_' + rowNo).show();
             document.getElementById('spanCurrentRejQty_' + rowNo).setAttribute('style', 'color:red;');
             document.getElementById("txCurrentRejectedQty_" + rowNo).focus();
@@ -424,6 +426,26 @@
             //$('#spanRejQty_' + rowNo).hide();   /// Rahul commented '#spanRejQty_' 27-06-23. 
             $('#spanCurrentRejQty_' + rowNo).text('');   /// Rahul added '#spanCurrentRejQty_' 27-06-23.
             $('#spanCurrentRejQty_' + rowNo).hide();    /// Rahul added '#spanCurrentRejQty_' 27-06-23. 
+        }
+
+        /// Rahul added 'if (CurrentFGSQty < RejQty)' 28-06-23.
+        var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val();
+        CurrentFGSQty = parseFloat(CurrentFGSQty);
+
+        if (CurrentFGSQty < RejQty) {   
+            $('#spanCurrentRejQty_' + rowNo).text('Current Rejected quantity cannot be greater than Current FGS Quantity!');
+            $('#spanCurrentRejQty_' + rowNo).show();
+            document.getElementById('spanCurrentRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            document.getElementById("txCurrentRejectedQty_" + rowNo).focus();
+            $('#btnSave').prop('disabled', true);
+            $('#btn_SaveDraft').prop('disabled', true);
+            return;
+        }
+        else {
+            $('#btnSave').prop('disabled', false);
+            $('#btn_SaveDraft').prop('disabled', false);
+            $('#spanCurrentRejQty_' + rowNo).text('');   
+            $('#spanCurrentRejQty_' + rowNo).hide();    
         }
     }
 
@@ -491,7 +513,7 @@
         }
         TxtItemDetails = TxtItemDetails + "]";
         $('#txtItemDetails').val(TxtItemDetails);
-        debugger    
+            
         console.log(TxtItemDetails);
     }
 

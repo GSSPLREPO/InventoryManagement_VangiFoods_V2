@@ -249,8 +249,10 @@ namespace InVanWebApp.Repository
                         objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
                         objItemDetails.OrderedQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
                         objItemDetails.TotalQuantity = Convert.ToDecimal(item.ElementAt(4).Value);
-                        objItemDetails.RejectedQuantity = Convert.ToDecimal(item.ElementAt(5).Value);
-                        objItemDetails.Remarks = item.ElementAt(6).Value.ToString();
+                        objItemDetails.CurrentFGSQty = Convert.ToDecimal(item.ElementAt(5).Value); // Rahul added 'CurrentFGSQty' in 'TxtItemDetails' 28-06-23.   
+                        objItemDetails.RejectedQuantity = Convert.ToDecimal(item.ElementAt(6).Value); // Rahul updated 'ElementAt(5)' to 'ElementAt(6)' in 'TxtItemDetails' 28-06-23.  
+                        objItemDetails.CurrentRejectedQty = Convert.ToDecimal(item.ElementAt(7).Value); // Rahul added 'CurrentRejectedQty' in 'TxtItemDetails' 28-06-23.   
+                        objItemDetails.Remarks = item.ElementAt(8).Value.ToString(); // Rahul updated 'ElementAt(7)' to 'ElementAt(8)' in 'TxtItemDetails' 28-06-23.  
                         objItemDetails.LastModifiedBy = model.LastModifiedBy;
 
                         itemDetails.Add(objItemDetails);
@@ -270,7 +272,9 @@ namespace InVanWebApp.Repository
                         cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
                         cmdNew.Parameters.AddWithValue("@OrderedQuantity", item.OrderedQuantity);
                         cmdNew.Parameters.AddWithValue("@TotalQuantity", item.TotalQuantity);
+                        cmdNew.Parameters.AddWithValue("@CurrentFGSQty", item.CurrentFGSQty); // Rahul added 'CurrentFGSQty' in 'TxtItemDetails' 28-06-23.   
                         cmdNew.Parameters.AddWithValue("@RejectedQuantity", item.RejectedQuantity);
+                        cmdNew.Parameters.AddWithValue("@CurrentRejectedQty", item.CurrentRejectedQty); // Rahul added 'CurrentRejectedQty' in 'TxtItemDetails' 28-06-23.   
                         cmdNew.Parameters.AddWithValue("@Remarks", item.Remarks);
                         cmdNew.Parameters.AddWithValue("@LastModifiedBy", item.LastModifiedBy);
                         cmdNew.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
