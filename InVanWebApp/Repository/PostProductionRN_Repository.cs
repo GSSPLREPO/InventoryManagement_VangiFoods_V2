@@ -46,7 +46,8 @@ namespace InVanWebApp.Repository
                             BatchNumber = reader["BatchNumber"].ToString(),
                             WorkOrderNo = reader["WorkOrderNo"].ToString(),
                             SO_No = reader["SO_No"].ToString(),
-                            DraftFlag=Convert.ToBoolean(reader["DraftFlag"])
+                            DraftFlag=Convert.ToBoolean(reader["DraftFlag"]),
+                            Stage = reader["Stage"].ToString()  ///added 29-06-23. 
                         };
                         resultList.Add(result);
                     }

@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<InVanWebApp_BO.PostProductionRejectionNoteBO>
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
@@ -50,35 +48,59 @@
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
-                                            <tr>
-                                                <td>@Html.DisplayFor(modelItem => item.PostProdRejectionNoteNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.PostProdRejectionNoteDate)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.PostProdRejectionType)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.BatchNumber)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.WorkOrderNo)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.SO_No)</td>
-                                                <td>
-                                                    <a href=@Url.Action("ViewPostProdRN", new { ID = item.ID }) title="View Post-Production RN">
-                                                        <i class="fa fa-eye text-primary"></i>
-                                                    </a><span>&nbsp;&nbsp;</span>
-                                                    @*@if (item.DraftFlag == true)
-                                                    {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.PostProdRejectionNoteNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.PostProdRejectionNoteDate)</td>
+                                @*Rahul added 'Stage' in 'if (item.PostProdRejectionType == "FGS")' 29-06-23.*@
+                                <td>
+                                    @if (item.PostProdRejectionType == "FGS")
+                                    {
+                    @Html.DisplayFor(modelItem => item.PostProdRejectionType)
+                                        @Html.DisplayName(" Stage-")
+                                                            @Html.DisplayFor(modelItem => item.Stage) }
+                                                        else
+                                                        {
+                                        @Html.DisplayFor(modelItem => item.PostProdRejectionType)}
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.BatchNumber)</td>
+                                <td>@Html.DisplayFor(modelItem => item.WorkOrderNo)</td>
+                                <td>@Html.DisplayFor(modelItem => item.SO_No)</td>
+                                <td>
+                                    <a href=@Url.Action("ViewPostProdRN", new { ID = item.ID }) title="View Post-Production RN">
+                                        <i class="fa fa-eye text-primary"></i>
+                                    </a><span>&nbsp;&nbsp;</span>
+                                    @if (item.DraftFlag == true)
+                                    {
+                                    <a href=@Url.Action("EditPostProdRN", new { ID = item.ID }) title="Edit Post-Production RN">
+                                        <i class="fa fa-edit text-primary"></i>
+                                    </a><span>&nbsp;&nbsp;</span> 
+                                    <a href=@Url.Action("DeletePostProdRN", new { ID = item.ID, }) onclick="return confirm('Are you sure, you want to delete?');" title="Delete Post-Production RN">
+                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                    </a>
+                                    }
+
+
+                                    @*@if (item.DraftFlag == false)
+                                    {
+                                        if (item.Stage == "1")
+                                        {
+                                <a href=@Url.Action("EditPostProdRN", new { ID = item.ID }) title="Edit Post-Production RN">
+                                    <i class="fa fa-edit text-primary"></i>
+                                </a><span>&nbsp;&nbsp;</span>
+                                                        <a href=@Url.Action("DeletePostProdRN", new { ID = item.ID, }) onclick="return confirm('Are you sure, you want to delete?');" title="Delete Post-Production RN">
+                                                            <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                        </a> }
+                                                                            else
+                                                                            {
                                                         <a href=@Url.Action("EditPostProdRN", new { ID = item.ID }) title="Edit Post-Production RN">
                                                             <i class="fa fa-edit text-primary"></i>
                                                         </a><span>&nbsp;&nbsp;</span>
-                                                    }*@
-                                                    @if (item.DraftFlag == false) 
-                                                    {
-                                                        <a href=@Url.Action("EditPostProdRN", new { ID = item.ID }) title="Edit Post-Production RN">
-                                                            <i class="fa fa-edit text-primary"></i>
-                                                        </a><span>&nbsp;&nbsp;</span>
-                                                    }
-                                                    <a href=@Url.Action("DeletePostProdRN", new { ID = item.ID, }) onclick="return confirm('Are you sure, you want to delete?');" title="Delete Post-Production RN">
-                                                        <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        }
+                                                                                <a href=@Url.Action("DeletePostProdRN", new { ID = item.ID, }) onclick="return confirm('Are you sure, you want to delete?');" title="Delete Post-Production RN">
+                                                                                    <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
+                                                                                </a>}
+                                                                                                }*@
+                                </td>
+                            </tr>}
                                     </tbody>
                                 </table>
                             </div>

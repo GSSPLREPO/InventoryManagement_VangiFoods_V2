@@ -137,11 +137,13 @@
                                     @Html.TextBox("CurrentFGSQty_" + c, item.CurrentFGSQty, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
                                 </td>
                                 <td>
-                                    @Html.TextBox("txRejectedQty_" + c, item.RejectedQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                    @*@Html.TextBox("txRejectedQty_" + c, item.RejectedQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })*@
+                                    @Html.TextBox("txRejectedQty_" + c, item.CurrentRejectedQty, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
                                     @*<span style="display:none;" id="spanRejQty_@c"></span>*@
                                 </td>
                                 <td>
-                                    @Html.TextBox("txCurrentRejectedQty_" + c, item.CurrentRejectedQty, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", onchange = "OnChangeRejQty($(this).val(),id)", value = "0" })
+                                    @*@Html.TextBox("txCurrentRejectedQty_" + c, item.CurrentRejectedQty, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", onchange = "OnChangeRejQty($(this).val(),id)", value = "0" })*@
+                                    @Html.TextBox("txCurrentRejectedQty_" + c, item.RejectedQuantity, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", onchange = "OnChangeRejQty($(this).val(),id)" })
                                     <span style="display:none;" id="spanCurrentRejQty_@c"></span>
                                 </td>
                                 <td>
@@ -201,7 +203,12 @@
 
     $(document).ready(function () {
 
-        document.getElementById("txCurrentRejectedQty_0").value = 0;
+        var tempCurrentFGSQty = document.getElementById("CurrentFGSQty_0").value;
+        var tempRejectedQty = document.getElementById("txRejectedQty_0").value;
+        var finalCurrentFGSQty = tempCurrentFGSQty - tempRejectedQty;
+        $('#CurrentFGSQty_0').val(finalCurrentFGSQty); 
+
+        document.getElementById("txCurrentRejectedQty_0").value = 0;        
 
         var QCType = $('#PostProdRejectionType').val();
         if (QCType == 'FGS') {
@@ -383,9 +390,9 @@
         var TotRejectedQty = $('#txRejectedQty_' + rowNo).val();
         TotRejectedQty = parseFloat(TotRejectedQty);
 
-        var tempTotRejectedQty = CurrentRejectedQty + TotRejectedQty;
-        var TotRejectedQty = $('#txRejectedQty_' + rowNo).val(tempTotRejectedQty);
-        TotRejectedQty = parseFloat(TotRejectedQty);
+        //var tempTotRejectedQty = CurrentRejectedQty + TotRejectedQty;
+        //var TotRejectedQty = $('#txRejectedQty_' + rowNo).val(tempTotRejectedQty);
+        //TotRejectedQty = parseFloat(TotRejectedQty);
 
         var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val();
         CurrentFGSQty = parseFloat(CurrentFGSQty);
@@ -417,7 +424,7 @@
             document.getElementById('spanCurrentRejQty_' + rowNo).setAttribute('style', 'color:red;');
             document.getElementById("txCurrentRejectedQty_" + rowNo).focus();
             $('#btnSave').prop('disabled', true);
-            $('#btn_SaveDraft').prop('disabled', true); debugger
+            $('#btn_SaveDraft').prop('disabled', true); 
             setInterval(function () {
                 location.reload(true);
             }, 7000);
@@ -442,7 +449,7 @@
             document.getElementById('spanCurrentRejQty_' + rowNo).setAttribute('style', 'color:red;');
             document.getElementById("txCurrentRejectedQty_" + rowNo).focus();
             $('#btnSave').prop('disabled', true);
-            $('#btn_SaveDraft').prop('disabled', true); debugger
+            $('#btn_SaveDraft').prop('disabled', true); 
             setInterval(function () {
                 location.reload(true);
             }, 7000);
@@ -509,7 +516,7 @@
         }
         TxtItemDetails = TxtItemDetails + "]";
         $('#txtItemDetails').val(TxtItemDetails);
-        debugger
+        
         console.log(TxtItemDetails);
     }
 
