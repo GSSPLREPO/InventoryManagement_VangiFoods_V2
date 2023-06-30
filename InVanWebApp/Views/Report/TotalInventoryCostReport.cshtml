@@ -60,16 +60,18 @@
                                     <div class="col-md-2 ms-1">
                                         <label>Item:</label>
                                     </div>
+                                    @*Vedant changed --Sellect- to --Select All-- in 'Item' 29-06-23.*@
                                     <div class="col-md-3">
-                                        @Html.DropDownList("Item", (IEnumerable<SelectListItem>)ViewData["Item"], "--Select--", new { @class = "form-control", @id = "ItemId", onchange = "SelectedIndexChangedItem()" })
+                                        @Html.DropDownList("Item", (IEnumerable<SelectListItem>)ViewData["Item"], "--Select All--", new { @class = "form-control", @id = "ItemId", onchange = "SelectedIndexChangedItem()" })
                                         @Html.ValidationMessage("Item", "", new { id = "ItemValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
 
                                     <div class="col-md-2">
                                         <label>Wearhouse Location:</label>
                                     </div>
+                                    @*Vedant changed --Sellect- to --Select All-- in 'Wearhouse' 29-06-23.*@
                                     <div class="col-md-3">
-                                        @Html.DropDownList("Wearhouse", (IEnumerable<SelectListItem>)ViewData["WearhouseLocation"], "--Select--", new { @class = "form-control", @id = "Wearhouse", onchange = "SelectedIndexChangedWearhouse()" })
+                                        @Html.DropDownList("Wearhouse", (IEnumerable<SelectListItem>)ViewData["WearhouseLocation"], "--Select All--", new { @class = "form-control", @id = "Wearhouse", onchange = "SelectedIndexChangedWearhouse()" })
                                         @Html.ValidationMessage("Wearhouse", "", new { id = "WearhouseValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
 

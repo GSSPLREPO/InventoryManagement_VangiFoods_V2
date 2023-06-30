@@ -299,7 +299,8 @@ namespace InVanWebApp.Repository
         /// <param name="LocationId"></param>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public List<LocationWiseStockBO> getTotalInventoryCostData(DateTime fromDate, DateTime toDate, int LocationId, int itemId)
+        //public List<LocationWiseStockBO> getTotalInventoryCostData(DateTime fromDate, DateTime toDate, int LocationId, int itemId)
+        public List<LocationWiseStockBO> getTotalInventoryCostData(DateTime fromDate, DateTime toDate, int LocationId, int ItemId) 
         {
             List<LocationWiseStockBO> resultList = new List<LocationWiseStockBO>();
             try
@@ -309,7 +310,8 @@ namespace InVanWebApp.Repository
                     SqlCommand cmd = new SqlCommand("usp_rpt_TotalInventoryCostWarehouseWiseStock", con);
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
-                    cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    //cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    cmd.Parameters.AddWithValue("@ItemID", ItemId); 
                     cmd.Parameters.AddWithValue("@LocationId", LocationId);
                     cmd.CommandType = CommandType.StoredProcedure;
 
