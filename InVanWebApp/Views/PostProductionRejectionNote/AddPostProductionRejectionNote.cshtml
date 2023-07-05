@@ -193,7 +193,7 @@
 
     @*//Rahul commented 'WorkOrderDD' and added 'BatchNoDD' as per MOM 26-06-23.*@ 
     /*function WorkOrderChange(id) {*/
-    function BatchNoChange(id) { 
+    function BatchNoChange(id) { debugger
         //Rahul added 'rowCount' For deleting the rows of Item table if exist. 02-066-2023.
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
@@ -354,11 +354,14 @@
                         var WholeRejFlag = $("#WholeBatchRejection").is(":checked");
                         if (WholeRejFlag) {
                             var FGSQty = $('#FGSQty_0').val();
-                            $('#txRejectedQty_0').val(FGSQty);
-                            document.getElementById('txRejectedQty_0').setAttribute('disabled', 'disabled');
+                            //$('#txRejectedQty_0').val(FGSQty);       /// Rahul commented 'txRejectedQty_0' 03-07-23.
+                            //document.getElementById('txRejectedQty_0').setAttribute('disabled', 'disabled');       /// Rahul commented 'txRejectedQty_0' 03-07-23.
+                            $('#txCurrentRejectedQty_0').val(FGSQty);       /// Rahul added 'txCurrentRejectedQty_0' 03-07-23.
+                            document.getElementById('txCurrentRejectedQty_0').setAttribute('disabled', 'disabled');       /// Rahul added 'txCurrentRejectedQty_0' 03-07-23.
                         }
                         else if (!WholeRejFlag && RejType != 'FGS') {                            
-                            document.getElementById('txRejectedQty_0').removeAttribute('disabled', 'disabled');
+                            //document.getElementById('txRejectedQty_0').removeAttribute('disabled', 'disabled');        /// Rahul commented 'txRejectedQty_0' 03-07-23.
+                            document.getElementById('txCurrentRejectedQty_0').removeAttribute('disabled', 'disabled');       /// Rahul added 'txCurrentRejectedQty_0' 03-07-23.
                         } 
                         // }
                     }
