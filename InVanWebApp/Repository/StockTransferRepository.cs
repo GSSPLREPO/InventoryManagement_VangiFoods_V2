@@ -273,22 +273,37 @@ namespace InVanWebApp.Repository
 
                     foreach (var item in data)
                     {
+                        //StockTransferBO stockTransfer = new StockTransferBO();
+                        //stockTransfer.FromLocationId = stockTransferMaster.FromLocationId;
+                        //stockTransfer.ToLocationId = stockTransferMaster.ToLocationId;
+                        //stockTransfer.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
+                        //stockTransfer.Item_Code = item.ElementAt(1).Value.ToString();
+                        //stockTransfer.InwardDateOfItem = Convert.ToDateTime(item.ElementAt(2).Value);
+                        //stockTransfer.Item_Name = item.ElementAt(3).Value.ToString();
+                        //stockTransfer.RequiredQuantity = Convert.ToDouble(item.ElementAt(4).Value);
+                        //stockTransfer.ItemUnit = item.ElementAt(5).Value.ToString();  //Rahul added on 06-02-23. 
+                        //stockTransfer.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(6).Value);  //Rahul added on 06-02-23.  
+                        //stockTransfer.TransferQuantity = Convert.ToDouble(item.ElementAt(7).Value);
+                        //stockTransfer.FinalQuantity = Convert.ToDouble(item.ElementAt(8).Value);
+                        //stockTransfer.Remarks = item.ElementAt(9).Value.ToString();
+
+                        //transfersDetails.Add(stockTransfer);
+
                         StockTransferBO stockTransfer = new StockTransferBO();
                         stockTransfer.FromLocationId = stockTransferMaster.FromLocationId;
                         stockTransfer.ToLocationId = stockTransferMaster.ToLocationId;
                         stockTransfer.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
-                        stockTransfer.Item_Code = item.ElementAt(1).Value.ToString();
-                        stockTransfer.InwardDateOfItem = Convert.ToDateTime(item.ElementAt(2).Value);
-                        stockTransfer.Item_Name = item.ElementAt(3).Value.ToString();
-                        stockTransfer.RequiredQuantity = Convert.ToDouble(item.ElementAt(4).Value);
-                        stockTransfer.ItemUnit = item.ElementAt(5).Value.ToString();  //Rahul added on 06-02-23. 
-                        stockTransfer.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(6).Value);  //Rahul added on 06-02-23.  
-                        stockTransfer.TransferQuantity = Convert.ToDouble(item.ElementAt(7).Value);
-                        stockTransfer.FinalQuantity = Convert.ToDouble(item.ElementAt(8).Value);
-                        stockTransfer.Remarks = item.ElementAt(9).Value.ToString();
+                        stockTransfer.Item_Code = item.ElementAt(2).Value.ToString(); //ElementAt(1)
+                        stockTransfer.InwardDateOfItem = Convert.ToDateTime(item.ElementAt(3).Value); //ElementAt(2)
+                        stockTransfer.Item_Name = item.ElementAt(4).Value.ToString(); //ElementAt(3)
+                        stockTransfer.RequiredQuantity = Convert.ToDouble(item.ElementAt(5).Value); //ElementAt(4)
+                        stockTransfer.ItemUnit = item.ElementAt(6).Value.ToString(); //ElementAt(5) //Rahul added on 06-02-23. 
+                        stockTransfer.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(7).Value); //ElementAt(6) //Rahul added on 06-02-23.  
+                        stockTransfer.TransferQuantity = Convert.ToDouble(item.ElementAt(8).Value); //ElementAt(7)
+                        stockTransfer.FinalQuantity = Convert.ToDouble(item.ElementAt(9).Value); //ElementAt(8)
+                        stockTransfer.Remarks = item.ElementAt(10).Value.ToString(); //ElementAT(9)
 
                         transfersDetails.Add(stockTransfer);
-
                     }
                     foreach (var item in transfersDetails)
                     {

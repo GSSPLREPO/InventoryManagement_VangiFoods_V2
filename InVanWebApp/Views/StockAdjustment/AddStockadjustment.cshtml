@@ -41,7 +41,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationList"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedLocation(id)" })
+                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationList"], "---Select---", new { @class = "form-control DropdownRegular", onchange = "SelectedIndexChangedLocation(id)" })
                     @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
                     @Html.HiddenFor(model => model.LocationName)
                 </div>
@@ -130,3 +130,5 @@
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script src="~/Scripts/Script/AddStockAdjustment.js"></script>
+<link href="~/Theme/MainContent/css/CustomDropdown.css" rel="stylesheet" />
+
