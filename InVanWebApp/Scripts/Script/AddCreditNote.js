@@ -1,4 +1,112 @@
-﻿//==================Set value in txtItemDetails onCick of Save/Update button======--------
+﻿
+        //Vedant added 'function createCustomDropdown()' 03/07/23. start
+    $(document).ready(function () {
+        createCustomDropdown_PO_ID();
+    });
+
+    function createCustomDropdown_PO_ID() {
+        $('select#PO_ID').each(function (i, select) {
+
+            if (!$(this).next().hasClass('dropdown-select')) {
+
+                $('#PO_ID').removeClass('form-control');
+                $(this).after('<div id="divPO_ID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+    $('#divPO_ID.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValuePO_ID" autocomplete="off" onkeyup="filterPO_ID()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+
+    }
+        function filterPO_ID() {
+        var valThis = $('#txtSearchValuePO_ID').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+
+        // Event listeners
+
+        // Open/close
+        $(document).on('click', '.dropdown-select', function (event) {
+        if ($(event.target).hasClass('dd-searchbox')) {
+            return;
+        }
+        $('.dropdown-select').not($(this)).removeClass('open');
+        $(this).toggleClass('open');
+        if ($(this).hasClass('open')) {
+            $(this).find('.option').attr('tabindex', 0);
+        $(this).find('.selected').focus();
+        } else {
+            $(this).find('.option').removeAttr('tabindex');
+        $(this).focus();
+        }
+    });
+        // Close when clicking outside
+        $(document).on('click', function (event) {
+        if ($(event.target).closest('.dropdown-select').length === 0) {
+            $('.dropdown-select').removeClass('open');
+        $('.dropdown-select .option').removeAttr('tabindex');
+        }
+        event.stopPropagation();
+    });
+        // Option click
+        $(document).on('click', '.dropdown-select .option', function (event) {
+            $(this).closest('.list').find('.selected').removeClass('selected');
+        $(this).addClass('selected');
+        var text = $(this).data('display-text') || $(this).text();
+        $(this).closest('.dropdown-select').find('.current').text(text);
+        $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+    });
+
+        // Keyboard events
+        $(document).on('keydown', '.dropdown-select', function (event) {
+        var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+        // Space or Enter
+        //if (event.keyCode == 32 || event.keyCode == 13) {
+        if (event.keyCode == 13) {
+            if ($(this).hasClass('open')) {
+            focused_option.trigger('click');
+            } else {
+            $(this).trigger('click');
+            }
+        return false;
+            // Down
+        } else if (event.keyCode == 40) {
+            if (!$(this).hasClass('open')) {
+            $(this).trigger('click');
+            } else {
+            focused_option.next().focus();
+            }
+        return false;
+            // Up
+        } else if (event.keyCode == 38) {
+            if (!$(this).hasClass('open')) {
+            $(this).trigger('click');
+            } else {
+                var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+        focused_option.prev().focus();
+            }
+        return false;
+            // Esc
+        } else if (event.keyCode == 27) {
+            if ($(this).hasClass('open')) {
+            $(this).trigger('click');
+            }
+        return false;
+        }
+    });
+
+            //Vedant added 'function createCustomDropdown()' 03/07/23. start
+
+//==================Set value in txtItemDetails onCick of Save/Update button======--------
 function SaveBtnClick() {
     var PONumber = $("#PO_ID option:selected").text();
     $("#PO_Number").val(PONumber);

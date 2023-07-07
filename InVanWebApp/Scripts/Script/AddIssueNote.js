@@ -1,4 +1,197 @@
-﻿//===============On change function for purpose of issuing the note=============//
+﻿//Vedant added 'function createCustomDropdown()' 30/06/23. start
+
+$(document).ready(function () {
+    createCustomDropdown_IssueBy();
+    createCustomDropdown_LocationId();
+    createCustomDropdown_Purpose();
+    //createCustomDropdown_ddlItem();
+})
+
+function createCustomDropdown_IssueBy() {
+    $('select#IssueBy').each(function (i, select) {
+
+        if (!$(this).next().hasClass('dropdown-select')) {
+
+            $('#IssueBy').removeClass('form-control');
+            $(this).after('<div id="divIssueBy" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            var dropdown = $(this).next();
+            var options = $(select).find('option');
+            var selected = $(this).find('option:selected');
+            dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            options.each(function (j, o) {
+                var display = $(o).data('display-text') || '';
+                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+            });
+        }
+    });
+    $('#divIssueBy.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueIssueBy" autocomplete="off" onkeyup="filterIssueBy()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+}
+function filterIssueBy() {
+    var valThis = $('#txtSearchValueIssueBy').val();
+    $('.dropdown-select ul > li').each(function () {
+        var text = $(this).text();
+        (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+    });
+};
+
+function createCustomDropdown_LocationId() {
+    $('select#LocationId').each(function (i, select) {
+
+        if (!$(this).next().hasClass('dropdown-select')) {
+
+            $('#LocationId').removeClass('form-control');
+            $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            var dropdown = $(this).next();
+            var options = $(select).find('option');
+            var selected = $(this).find('option:selected');
+            dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            options.each(function (j, o) {
+                var display = $(o).data('display-text') || '';
+                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+            });
+        }
+    });
+    $('#divLocationId.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueLocationId" autocomplete="off" onkeyup="filterLocationId()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+
+}
+function filterLocationId() {
+    var valThis = $('#txtSearchValueLocationId').val();
+    $('.dropdown-select ul > li').each(function () {
+        var text = $(this).text();
+        (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+    });
+};
+
+function createCustomDropdown_Purpose() {
+    $('select#Purpose').each(function (i, select) {
+
+        if (!$(this).next().hasClass('dropdown-select')) {
+
+            $('#Purpose').removeClass('form-control');
+            $(this).after('<div id="divPurpose" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            var dropdown = $(this).next();
+            var options = $(select).find('option');
+            var selected = $(this).find('option:selected');
+            dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            options.each(function (j, o) {
+                var display = $(o).data('display-text') || '';
+                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+            });
+        }
+    });
+    $('#divPurpose.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValuePurpose" autocomplete="off" onkeyup="filterPurpose()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+}
+function filterPurpose() {
+    var valThis = $('#txtSearchValuePurpose').val();
+    $('.dropdown-select ul > li').each(function () {
+        var text = $(this).text();
+        (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+    });
+};
+
+function createCustomDropdown_ddlItem() {
+    $('select#ddlItem').each(function (i, select) {
+
+        if (!$(this).next().hasClass('dropdown-select')) {
+
+            $('#ddlItem').removeClass('form-control');
+            $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            var dropdown = $(this).next();
+            var options = $(select).find('option');
+            var selected = $(this).find('option:selected');
+            dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            options.each(function (j, o) {
+                var display = $(o).data('display-text') || '';
+                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+            });
+        }
+    });
+    $('#divddlItem.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueddlItem" autocomplete="off" onkeyup="filterddlItem()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+
+}
+function filterddlItem() {
+    var valThis = $('#txtSearchValueddlItem').val();
+    $('.dropdown-select ul > li').each(function () {
+        var text = $(this).text();
+        (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+    });
+};
+
+// Event listeners
+
+// Open/close
+$(document).on('click', '.dropdown-select', function (event) {
+    if ($(event.target).hasClass('dd-searchbox')) {
+        return;
+    }
+    $('.dropdown-select').not($(this)).removeClass('open');
+    $(this).toggleClass('open');
+    if ($(this).hasClass('open')) {
+        $(this).find('.option').attr('tabindex', 0);
+        $(this).find('.selected').focus();
+    } else {
+        $(this).find('.option').removeAttr('tabindex');
+        $(this).focus();
+    }
+});
+// Close when clicking outside
+$(document).on('click', function (event) {
+    if ($(event.target).closest('.dropdown-select').length === 0) {
+        $('.dropdown-select').removeClass('open');
+        $('.dropdown-select .option').removeAttr('tabindex');
+    }
+    event.stopPropagation();
+});
+// Option click
+$(document).on('click', '.dropdown-select .option', function (event) {
+    $(this).closest('.list').find('.selected').removeClass('selected');
+    $(this).addClass('selected');
+    var text = $(this).data('display-text') || $(this).text();
+    $(this).closest('.dropdown-select').find('.current').text(text);
+    $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+});
+// Keyboard events
+$(document).on('keydown', '.dropdown-select', function (event) {
+    var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+    // Space or Enter
+    //if (event.keyCode == 32 || event.keyCode == 13) {
+    if (event.keyCode == 13) {
+        if ($(this).hasClass('open')) {
+            focused_option.trigger('click');
+        } else {
+            $(this).trigger('click');
+        }
+        return false;
+        // Down
+    } else if (event.keyCode == 40) {
+        if (!$(this).hasClass('open')) {
+            $(this).trigger('click');
+        } else {
+            focused_option.next().focus();
+        }
+        return false;
+        // Up
+    } else if (event.keyCode == 38) {
+        if (!$(this).hasClass('open')) {
+            $(this).trigger('click');
+        } else {
+            var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+            focused_option.prev().focus();
+        }
+        return false;
+        // Esc
+    } else if (event.keyCode == 27) {
+        if ($(this).hasClass('open')) {
+            $(this).trigger('click');
+        }
+        return false;
+    }
+});
+
+    //Vedant added 'function createCustomDropdown()' 30/06/23. end
+
+
+//===============On change function for purpose of issuing the note=============//
 function OnChangePurpose(id) {
     var purpose = $('#' + id).val();
     $('.dvProduction').hide();

@@ -125,23 +125,42 @@ namespace InVanWebApp.Repository
 
                     foreach (var item in data)
                     {
-                        InquiryFormItemDetailsBO objItemDetails = new InquiryFormItemDetailsBO(); 
+                        //InquiryFormItemDetailsBO objItemDetails = new InquiryFormItemDetailsBO(); 
+                        //objItemDetails.InquiryID = InquiryID;
+                        //objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
+                        //objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
+                        //objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                        //objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                        //objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
+                        //objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
+                        //objItemDetails.QuotedPrice = Convert.ToDouble(item.ElementAt(6).Value);
+                        //objItemDetails.ExpectedPrice = Convert.ToDouble(item.ElementAt(7).Value);
+                        //objItemDetails.CloserPrice = Convert.ToDouble(item.ElementAt(8).Value); 
+                        //objItemDetails.CurrencyName = item.ElementAt(9).Value.ToString();
+                        //objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(10).Value);
+                        //objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(11).Value);
+                        //objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(12).Value);
+                        //objItemDetails.HSN_Code = item.ElementAt(13).Value.ToString();
+                        //objItemDetails.Remarks = item.ElementAt(14).Value.ToString();
+
+                        // Vedant changed elementAt indexes 6/07/23 
+                        InquiryFormItemDetailsBO objItemDetails = new InquiryFormItemDetailsBO();
                         objItemDetails.InquiryID = InquiryID;
                         objItemDetails.Item_ID = Convert.ToInt32(item.ElementAt(0).Value);
-                        objItemDetails.Item_Code = item.ElementAt(1).Value.ToString();
-                        objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(5).Value);
-                        objItemDetails.QuotedPrice = Convert.ToDouble(item.ElementAt(6).Value);
-                        objItemDetails.ExpectedPrice = Convert.ToDouble(item.ElementAt(7).Value);
-                        objItemDetails.CloserPrice = Convert.ToDouble(item.ElementAt(8).Value); 
-                        objItemDetails.CurrencyName = item.ElementAt(9).Value.ToString();
-                        objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(10).Value);
-                        objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(11).Value);
-                        objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(12).Value);
-                        objItemDetails.HSN_Code = item.ElementAt(13).Value.ToString();
-                        objItemDetails.Remarks = item.ElementAt(14).Value.ToString();
+                        objItemDetails.Item_Code = item.ElementAt(2).Value.ToString(); //ElementAt(1)
+                        objItemDetails.ItemName = item.ElementAt(3).Value.ToString(); //ElementAt(2)
+                        objItemDetails.ItemQuantity = Convert.ToDecimal(item.ElementAt(4).Value); /*ElementAt(3)*/
+                        objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString(); //ElementAt(4)
+                        objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(6).Value); //ElementAt(5)
+                        objItemDetails.QuotedPrice = Convert.ToDouble(item.ElementAt(7).Value); //ElementAt(6)
+                        objItemDetails.ExpectedPrice = Convert.ToDouble(item.ElementAt(8).Value); //ElementAt(7)
+                        objItemDetails.CloserPrice = Convert.ToDouble(item.ElementAt(9).Value); //ElementAt(8)
+                        objItemDetails.CurrencyName = item.ElementAt(10).Value.ToString(); //ElementAt(9)
+                        objItemDetails.ItemTaxValue = Convert.ToDecimal(item.ElementAt(11).Value); //ElementAt(10)
+                        objItemDetails.TotalItemCost = Convert.ToDecimal(item.ElementAt(12).Value); //ElementAt(11)
+                        objItemDetails.DeliveryDate = Convert.ToDateTime(item.ElementAt(13).Value); //ElementAt(11)
+                        objItemDetails.HSN_Code = item.ElementAt(14).Value.ToString(); //ElementAt(13)
+                        objItemDetails.Remarks = item.ElementAt(15).Value.ToString(); //ElementAt(14)
 
                         itemDetails.Add(objItemDetails);
                     }

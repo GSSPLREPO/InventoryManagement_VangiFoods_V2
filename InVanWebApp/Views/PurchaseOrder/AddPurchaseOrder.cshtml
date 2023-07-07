@@ -60,7 +60,7 @@
                 </div>
                 <div class="col-md-4">
                     @*@Html.DropDownList("Currency", (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", id = "CurrencyID" })*@
-                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control", id = "CurrencyID" })
+                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyList"], "---Select---", new { @class = "form-control DropdownRegular", id = "CurrencyID" })
                     @Html.HiddenFor(model => model.CurrencyID, new { id = "tempCurrencyID" })
                     @Html.HiddenFor(model => model.CurrencyName)
                     @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
@@ -231,7 +231,7 @@
                                     <span style="color:red">*</span>
                                 </div>
                                 <div class="col-md-8">
-                                    @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control", onchange = "SelectedIndexChangedTerms($(this).val())" })
+                                    @Html.DropDownListFor(model => model.TermsAndConditionID, (IEnumerable<SelectListItem>)ViewData["TermsAndConditionID"], "---Select---", new { @class = "form-control  DropdownRegular", onchange = "SelectedIndexChangedTerms($(this).val())" })
                                     @Html.ValidationMessageFor(model => model.TermsAndConditionID, "", new { @class = "error mt-2 text-danger" })
                                 </div>
                                 @*<div class="col-md-4 d-none">
@@ -335,5 +335,6 @@
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script src="~/Scripts/Script/AddPurchaseOrder.js"></script>
+<link href="~/Theme/MainContent/css/CustomDropdown.css" rel="stylesheet" />
 
 @Html.Raw(TempData["Success"])

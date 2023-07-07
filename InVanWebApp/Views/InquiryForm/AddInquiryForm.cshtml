@@ -213,7 +213,8 @@
                                         <tbody id="myTableBody">
                                             <tr id="tablerow">
                                                 <td>
-                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:34px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                    @*@Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:34px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())" })*@
+                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], new { @class = "form-control form-control-sm", style = "height:34px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())" })
                                                 </td>
                                                 <td class="col-md-4 d-none">
                                                     @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
@@ -757,7 +758,7 @@
             '<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
             '</td>' +
             '</tr>').appendTo('#submissionTable');
-
+        create_custom_dropdowns_Item_ID(itemId); 
         counter++;
         return false;
     });
@@ -904,6 +905,9 @@
     }
 
     function SelectedIndexChangedItemList(id) {
+        $('#btnSave').prop('disabled', false);
+        getitemDetails();
+
         var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
         itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;

@@ -96,6 +96,26 @@ namespace InVanWebApp.Repository
 
                         List<OutwardNoteDetailsBO> itemDetails = new List<OutwardNoteDetailsBO>();
 
+                        //foreach (var item in data)
+                        //{
+                        //    OutwardNoteDetailsBO objItemDetails = new OutwardNoteDetailsBO();
+                        //    objItemDetails.OutwardNoteID = OutwardNote_Id;
+                        //    //objItemDetails.ItemCode = item.ElementAt(0).Value.ToString();
+                        //    //objItemDetails.ItemID = Convert.ToInt32(item.ElementAt(1).Value);
+                        //    //objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                        //    //objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                        //    //objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
+                        //    //objItemDetails.Remarks = item.ElementAt(5).Value.ToString();
+                        //    objItemDetails.ItemID = Convert.ToInt32(item.ElementAt(0).Value);
+                        //    objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
+                        //    objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+                        //    objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
+                        //    objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
+                        //    objItemDetails.Remarks = item.ElementAt(5).Value.ToString();
+                        //    objItemDetails.CreatedBy = model.CreatedBy;
+                        //    itemDetails.Add(objItemDetails);
+                        //}
+
                         foreach (var item in data)
                         {
                             OutwardNoteDetailsBO objItemDetails = new OutwardNoteDetailsBO();
@@ -107,11 +127,11 @@ namespace InVanWebApp.Repository
                             //objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
                             //objItemDetails.Remarks = item.ElementAt(5).Value.ToString();
                             objItemDetails.ItemID = Convert.ToInt32(item.ElementAt(0).Value);
-                            objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
-                            objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                            objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                            objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                            objItemDetails.Remarks = item.ElementAt(5).Value.ToString();
+                            objItemDetails.ItemCode = item.ElementAt(2).Value.ToString(); //ElementAt(1) 05/07/23
+                            objItemDetails.ItemName = item.ElementAt(3).Value.ToString(); //ElementAt(2) 05/07/23
+                            objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(4).Value); //ElementAt(3) 05/07/23
+                            objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString(); //ElementAt(4) 05/07/23
+                            objItemDetails.Remarks = item.ElementAt(6).Value.ToString(); //ElementAt(5) 05/07/23
                             objItemDetails.CreatedBy = model.CreatedBy;
                             itemDetails.Add(objItemDetails);
                         }
