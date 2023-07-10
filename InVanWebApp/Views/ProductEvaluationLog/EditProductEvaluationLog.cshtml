@@ -45,8 +45,10 @@
                     @Html.Label("Product Name")
                     <span style="color:red">*</span>
                 </div>
+                @*Vedant: maxlength to 100 in the ProductName Field on 03-07-23*@
                 <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm", maxlength = "30", @readonly = "readonly", @onkeypress = "return IsAlphabets(event);" })
+                    @*@Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm", maxlength = "30", @readonly = "readonly", @onkeypress = "return IsAlphabets(event);" })*@
+                    @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm", maxlength = "100", @readonly = "readonly", @onkeypress = "return IsAlphabets(event);" })
                     @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "error mt-2 text-danger" })
                 </div>
                 <div class="col-md-2">

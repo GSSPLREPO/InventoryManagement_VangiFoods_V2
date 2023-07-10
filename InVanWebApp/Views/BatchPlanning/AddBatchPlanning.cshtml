@@ -644,7 +644,9 @@
                             else if (i == 6) {
                                 var t4 = document.createElement("input");
                                 t4.id = "Yield_" + j;
-                                t4.setAttribute("value", result[j].Yield);
+                                //t4.setAttribute("value", result[j].Yield);    //Rahul commented '"value", result[j].Yield' 10-07-23.
+                                t4.setAttribute("value", 100);    //Rahul added '"value", 100' 10-07-23.
+                                t4.setAttribute("readonly", "readonly");    //Rahul added 'readonly' 10-07-23.
                                 t4.setAttribute("class", "form-control form-control-sm");
                                 t4.setAttribute("maxlength", "8");
                                 t4.setAttribute("onkeypress", "return isNumberKey(event)");
