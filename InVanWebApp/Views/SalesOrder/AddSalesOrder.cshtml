@@ -14,29 +14,31 @@
             <hr />
             @Html.ValidationSummary(true)
 
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Work Order Type")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.WorkOrderType, new List<SelectListItem> {
+        <div class="row">
+            <div class="col-md-2">
+                @Html.Label("Work Order Type")
+                <span style="color:red">*</span>
+            </div>
+            @*Rahul added ',new SelectListItem{ Text="Trial", Value="Trial"}' in 'WorkOrderType' on 12-07-2023.*@
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.WorkOrderType, new List<SelectListItem> {
                         new SelectListItem{ Value="", Text="--Select--"},
                         new SelectListItem{ Text="Domestic", Value="Domestic"},
                         new SelectListItem{ Text="Export", Value="Export"},
                         new SelectListItem{ Text="JobWork", Value="JobWork"}
+                        ,new SelectListItem{ Text="Trial", Value="Trial"}
                     }, new { @class = "form-control form-control-sm", type = "text", onchange = "OnChangeWorkType()" })
-                    @Html.ValidationMessageFor(model => model.WorkOrderType, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Sales Order Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.SONo, new { @class = "form-control form-control-sm", type = "text", Value = ViewData["DocumentNo"], @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.SONo, "", new { @class = "error mt-2 text-danger" })
-                </div>
+                @Html.ValidationMessageFor(model => model.WorkOrderType, "", new { @class = "error mt-2 text-danger" })
             </div>
+            <div class="col-md-2">
+                @Html.Label("Sales Order Number")
+                <span style="color:red">*</span>
+            </div>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.SONo, new { @class = "form-control form-control-sm", type = "text", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.SONo, "", new { @class = "error mt-2 text-danger" })
+            </div>
+        </div>
             <br />
             <div class="row">
                 <div class="col-md-2">
