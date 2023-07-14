@@ -530,7 +530,6 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-
         #region Bind Work order no
         public SalesOrderBO GetWorkOrderNumber(int id)
         {
@@ -561,6 +560,6 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
-  
+
     }
 }

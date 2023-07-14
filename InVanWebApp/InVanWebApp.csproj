@@ -233,6 +233,7 @@
     <Compile Include="Controllers\UnitController.cs" />
     <Compile Include="Controllers\VegWasherDosageLogController.cs" />
     <Compile Include="Controllers\WaterAnalysisController.cs" />
+    <Compile Include="Controllers\WeighmentProductionIndentController.cs" />
     <Compile Include="DAL\BatchNumberMaster.cs">
       <DependentUpon>InVanDBDataModel.tt</DependentUpon>
     </Compile>
@@ -1317,6 +1318,7 @@
     <Compile Include="Repository\Interface\IVegWasherDosageLogRepository.cs" />
     <Compile Include="Repository\Interface\IWaterAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\ISalesOrderRepository.cs" />
+    <Compile Include="Repository\Interface\IWeighmentProductionIndentRepository.cs" />
     <Compile Include="Repository\InventoryControlRepository.cs" />
     <Compile Include="Repository\InwardNoteRepository.cs" />
     <Compile Include="Repository\InwardQCSortingRepository.cs" />
@@ -1370,6 +1372,7 @@
     <Compile Include="Repository\UserDetailsRepository.cs" />
     <Compile Include="Repository\VegWasherDosageLogRepository.cs" />
     <Compile Include="Repository\WaterAnalysisRepository.cs" />
+    <Compile Include="Repository\WeighmentProductionIndentRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker.min.css" />
@@ -3902,6 +3905,10 @@
     <Content Include="Views\Stage3\Index - Copy.cshtml" />
     <Content Include="Views\Stage3\Index.cshtml" />
     <Content Include="Views\Report\ProductionStagesReport.cshtml" />
+    <Content Include="Views\WeighmentProductionIndent\Index.cshtml" />
+    <Content Include="Views\WeighmentProductionIndent\AddWeighmentProductionIndent.cshtml" />
+    <Content Include="Views\WeighmentProductionIndent\EditWeighmentProductionIndent.cshtml" />
+    <Content Include="Views\WeighmentProductionIndent\ViewWeighmentProductionIndent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

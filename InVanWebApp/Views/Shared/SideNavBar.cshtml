@@ -20,21 +20,21 @@
 <body>
     <ul class="nav">
         @*<li class="nav-item nav-profile">
-                <div class="nav-link">
-                    <div class="profile-image">
-                        <img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image" />
-                        <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image" />
-                    </div>
-                    <div class="profile-name">
-                        <p class="name">
-                            Welcome VangiFood
-                        </p>
-                        <p class="designation">
-                            Super Admin
-                        </p>
-                    </div>
+            <div class="nav-link">
+                <div class="profile-image">
+                    <img src="~/Theme/MainContent/images/faces/face5.jpg" alt="image" />
+                    <img src="~/Theme/MainContent/images/faces/Unknown.png" alt="image" />
                 </div>
-            </li>*@
+                <div class="profile-name">
+                    <p class="name">
+                        Welcome VangiFood
+                    </p>
+                    <p class="designation">
+                        Super Admin
+                    </p>
+                </div>
+            </div>
+        </li>*@
         <br />
         <li class="nav-item">
             <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/ReorderPointOfStocks">
@@ -51,7 +51,7 @@
             <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
                     @*<li class="nav-item d-none d-lg-block"> <a class="nav-link" href="~/Dashboard/Index">Live Stock</a></li>
-                        <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
+                    <li class="nav-item d-none d-lg-block"> <a class="nav-link" href="@Url.Action("SalesOrder","Dashboard")">Sales Order</a></li>*@
                     <li class="nav-item d-none d-lg-block">
                         <div id="FIFOSystem">
                             <a class="nav-link" href="~/Dashb_RTWarehouseWiseStock/FIFOSystem">Material Dashboard (FIFO)</a>
@@ -359,10 +359,10 @@
                     </li>
                     @*Rahul commented "ChillerCCP" not in use 29-05-2023.*@
                     @*<li class="nav-item">
-                            <div id="ChillerCCP">
-                                <a class="nav-link" href="@Url.Action("Index","ChillerCCP")">Stage-4 Chiller CCP</a>
-                            </div>
-                        </li>*@
+                        <div id="ChillerCCP">
+                            <a class="nav-link" href="@Url.Action("Index","ChillerCCP")">Stage-4 Chiller CCP</a>
+                        </div>
+                    </li>*@
                     <li class="nav-item">
                         <div id="FinishedGoodSeriesQC">
                             <a class="nav-link" href="@Url.Action("Index","FinishedGoodSeries")">Finished Goods Series</a>
@@ -370,11 +370,28 @@
                     </li>
                     @*Rahul commented "PostProductionRejectionNote" shifted in 'QC' menu 29-05-2023.*@
                     @*<li class="nav-item">
-                            <div id="PostProductionRejectionNote">
-                                <a class="nav-link text-wrap" href="@Url.Action("Index","PostProductionRejectionNote")">Post-Production Rejection Note</a>
-                            </div>
-                        </li>*@
+                        <div id="PostProductionRejectionNote">
+                            <a class="nav-link text-wrap" href="@Url.Action("Index","PostProductionRejectionNote")">Post-Production Rejection Note</a>
+                        </div>
+                    </li>*@
 
+                </ul>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#form-Weighbridge" aria-expanded="false" aria-controls="form-Weighbridge">
+                <i class="fas fa-link menu-icon"></i>
+                <span class="menu-title">Weighbridge</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="form-Weighbridge">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <div id="WeighmentProductionIndent">
+                            <a class="nav-link" href="@Url.Action("Index","WeighmentProductionIndent")">Weighment Production Indent</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -424,10 +441,10 @@
                         </div>
                     </li>
                     @*<li class="nav-item">
-                            <div id="ProductMaster">
-                                <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
-                            </div>
-                        </li>*@
+                        <div id="ProductMaster">
+                            <a class="nav-link" href="@Url.Action("Index","ProductMaster")">Product Master</a>
+                        </div>
+                    </li>*@
                     <li class="nav-item">
                         <div id="RecipeMaster">
                             <a class="nav-link" href="@Url.Action("Index","RecipeMater")">Recipe Master</a>
@@ -566,10 +583,10 @@
                     </li>
 
                     @*<li class="nav-item">
-                            <div id="RejectionNoteReport">
-                                <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
-                            </div>
-                        </li>*@
+                        <div id="RejectionNoteReport">
+                            <a class="nav-link" href="~/Report/RejectionNoteReport">Rejection Note</a>
+                        </div>
+                    </li>*@
                     <li class="nav-item">
                         <div id="RejectionNoteReport">
                             <a class="nav-link text-wrap" href="~/Report/RejectionReport">Rejection Report</a>
@@ -607,10 +624,10 @@
                     </li>
 
                     @*<li class="nav-item">
-                            <div id="InventoryControlReport">
-                                <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
-                            </div>
-                        </li>*@
+                        <div id="InventoryControlReport">
+                            <a class="nav-link" href="~/InventoryControl">Inventory Control Report</a>
+                        </div>
+                    </li>*@
                 </ul>
             </div>
         </li>
