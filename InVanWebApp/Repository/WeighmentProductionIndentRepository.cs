@@ -82,5 +82,98 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region MyRegion
+        /// <summary>
+        /// Date: 17 July'23 
+        /// Rahul  :Method used to insert the values Weighment data from weighing machine 
+        /// reading from device(Input HOLDING REGISTERS) into [Weighment_ProductionIndentIngredientsDetails] table for Weight   
+        /// </summary>
+
+        /// <param name="RecordId"></param>
+        /// <returns></returns>
+        public bool InsertValuesFromDevices(int[] TempValues, int RecordId, DateTime capturedDateTime)
+        {
+            //ResponseMessageBO result = new ResponseMessageBO();
+            //try
+            //{
+            //    using (SqlConnection con = new SqlConnection(conString))
+            //    {
+            //        //db_DeconEntities.usp_tbl_InsertValuesFromDevices_T
+            //        //(TempValues[0], TempValues[1], TempValues[2], TempValues[3],
+            //        //capturedDateTime, userId, DateTime.Now, userId, DateTime.Now, RecordId);
+            //        //db_DeconEntities.SaveChanges();
+
+            //        con.Open();
+
+            //        SqlDataReader dataReader = cmd.ExecuteReader();
+            //        var IndentID = 0;
+            //        while (dataReader.Read())
+            //        {
+            //            IndentID = Convert.ToInt32(dataReader["IndentID"]);
+            //            result.Status = Convert.ToBoolean(dataReader["Status"]);
+            //        }
+            //        con.Close();
+
+            //        var json = new JavaScriptSerializer();
+            //        var data = json.Deserialize<Dictionary<string, string>[]>(model.TxtItemDetails);
+
+            //        List<ProductionIndent_DetailsBO> itemDetails = new List<ProductionIndent_DetailsBO>();
+
+            //        foreach (var item in data)
+            //        {
+            //            ProductionIndent_DetailsBO objItemDetails = new ProductionIndent_DetailsBO();
+            //            objItemDetails.ProductionIndentID = IndentID;
+            //            objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
+            //            objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
+            //            objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
+            //            objItemDetails.BatchQuantity = Convert.ToDouble(item.ElementAt(3).Value);
+            //            objItemDetails.FinalQuantity = Convert.ToDouble(item.ElementAt(4).Value);
+            //            objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString();
+            //            objItemDetails.Percentage = Convert.ToDouble(item.ElementAt(6).Value);
+
+            //            itemDetails.Add(objItemDetails);
+            //        }
+
+            //        foreach (var item in itemDetails)
+            //        {
+            //            con.Open();
+            //            SqlCommand cmdNew = new SqlCommand("usp_tbl_ProductionIndentIngredientsDetails_Insert", con);
+            //            cmdNew.CommandType = CommandType.StoredProcedure;
+
+            //            cmdNew.Parameters.AddWithValue("@ProductionIndentID", item.ProductionIndentID);
+            //            cmdNew.Parameters.AddWithValue("@Item_ID", item.ItemId);
+            //            cmdNew.Parameters.AddWithValue("@Item_Code", item.ItemCode);
+            //            cmdNew.Parameters.AddWithValue("@ItemName", item.ItemName);
+            //            cmdNew.Parameters.AddWithValue("@ItemUnit", item.ItemUnit);
+            //            cmdNew.Parameters.AddWithValue("@BatchQuantity", item.BatchQuantity);
+            //            cmdNew.Parameters.AddWithValue("@FinalQuantity", item.FinalQuantity);
+            //            cmdNew.Parameters.AddWithValue("@Percentage", item.Percentage);
+            //            cmdNew.Parameters.AddWithValue("@ProductionCheck", model.UserName);
+            //            cmdNew.Parameters.AddWithValue("@CreatedBy", model.CreatedBy);
+            //            cmdNew.Parameters.AddWithValue("@CreatedDate", Convert.ToDateTime(System.DateTime.Now));
+
+            //            SqlDataReader dataReaderNew = cmdNew.ExecuteReader();
+
+            //            while (dataReaderNew.Read())
+            //            {
+            //                result.Status = Convert.ToBoolean(dataReaderNew["Status"]);
+            //            }
+            //            con.Close();
+            //        }
+
+            //    }
+            //    //return true;
+            //    return result;
+            //}
+            //catch (Exception)
+            //{
+            //    log.Error(ex.Message, ex);
+            //    result.Status = false;
+            //    //throw;
+            //}
+            ////return result;
+            return true;
+        }
+        #endregion
     }
 }

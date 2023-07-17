@@ -40,6 +40,7 @@ namespace InVanWebApp_BO
         public string WorkOrderNo { get; set; }
         public Nullable<int> BatchPlanningDocId { get; set; } //Rahul added 'BatchPlanningDocId' 13-06-23.  
         public string BatchPlanningDocumentNo { get; set; } //Rahul added 'BatchPlanningDocumentNo' 13-06-23.   
-
+        public decimal? Weight { get; set; }
+        public decimal? Difference { get; set; }
     }
 }

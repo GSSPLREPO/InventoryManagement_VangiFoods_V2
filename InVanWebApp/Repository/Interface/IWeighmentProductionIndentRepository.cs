@@ -13,6 +13,7 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<ProductionIndentBO> GetProductionIndentNumber();
         //Bind Get Production Indent Details
         ProductionIndentBO GetProductionIndentDetails(int id);
-
+        //Method used to insert the values Weighment data from weighing machine 
+        bool InsertValuesFromDevices(int[] TempValues, int RecordId, DateTime capturedDateTime);
     }
 }

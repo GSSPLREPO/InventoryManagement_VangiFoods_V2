@@ -1,4 +1,5 @@
-﻿using InVanWebApp.Common;
+﻿using EasyModbus;
+using InVanWebApp.Common;
 using InVanWebApp.Repository;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
@@ -6,8 +7,11 @@ using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services;
 
 namespace InVanWebApp.Controllers
 {
@@ -41,6 +45,41 @@ namespace InVanWebApp.Controllers
             _productMasterRepository = new ProductMasterRepository();
             _salesOrderRepository = new SalesOrderRepository();
             _batchPlanningRepository = new BatchPlanningRepository();
+
+            try
+            {
+                string serverIP = "192.168.29.33";
+                int serverPort = 1702;
+
+                // Create a TcpClient object and connect to the server
+                TcpClient client = new TcpClient();
+                client.Connect(serverIP, serverPort);
+
+                // Get the network stream from the TcpClient
+                NetworkStream stream = client.GetStream();
+
+                // Create a buffer to hold received data
+                byte[] buffer = new byte[512];
+
+                // Read the data from the network stream
+                int bytesRead = stream.Read(buffer, 0, buffer.Length);
+
+                // Convert the received data to a string
+                string receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+
+                // Display the received data
+                Console.WriteLine("Received data: " + receivedData);
+
+                // Close the network stream and TcpClient
+                stream.Close();
+                client.Close();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                throw;
+            }
+
         }
 
         /// <summary>
@@ -180,8 +219,8 @@ namespace InVanWebApp.Controllers
                 BindSONumber();
 
                 GetDocumentNumber objDocNo = new GetDocumentNumber();
-                //=========here document type=16 i.e. for generating the Production Indent Number(logic is in SP).====//
-                var DocumentNumber = objDocNo.GetDocumentNo(16);
+                //=========here document type=22 i.e. for generating the  Weighment Number (Production Indent) (logic is in SP).====//
+                var DocumentNumber = objDocNo.GetDocumentNo(22);
                 ViewData["DocumentNo"] = DocumentNumber;
 
                 //Binding item grid with sell type item.
@@ -189,9 +228,8 @@ namespace InVanWebApp.Controllers
                 var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
                 ViewData["itemListForDD"] = dd;
 
-                ProductionIndentBO model = new ProductionIndentBO();
-                model.IssueDate = DateTime.Today;
-                model.ProductionDate = DateTime.Today;
+                Weighment_ProductionIndentBO model = new Weighment_ProductionIndentBO();                
+                model.WeighmentDate = DateTime.Today; 
 
                 return View(model);
             }
@@ -200,5 +238,8 @@ namespace InVanWebApp.Controllers
         }
 
         #endregion
+
+
+
     }
 }
