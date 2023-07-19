@@ -166,6 +166,33 @@ $(document).on('keydown', '.dropdown-select', function (event) {
 
 //==================Set value in txtItemDetails onCick of Save/Update button======--------
 function SaveBtnClick() {
+    ////Rahul added 'if (quantity == 0)' start 19-07-23.
+    var tableLength = document.getElementById('submissionTable').rows.length;    
+    var i = 0;
+    while (i <= tableLength - 1) {
+        var temp = document.getElementById("txtItemQty_" + i);
+        var tempIdValue = $("#txtItemQty_" + i).val();
+        if (tempIdValue == null || tempIdValue == '' || tempIdValue == "" || tempIdValue == 'undefined') {
+            var tempId = temp.id;
+            alert("Order quantity is zero or null! Cannot create PO!");
+            $('#btnSave').prop('disabled', true);
+            $('#btn_SaveDraft').prop('disabled', true);
+            document.getElementById(tempId).focus();
+            document.getElementById(tempId).setAttribute("style", "border-color:red;");
+            event.preventDefault();
+
+            i++;
+        }
+        else {
+            var tempId = temp.id;
+            var temp = document.getElementById("txtItemQty_" + i).value;
+            $('#btnSave').prop('disabled', false);
+            $('#btn_SaveDraft').prop('disabled', false);
+            document.getElementById(tempId).setAttribute("style", "border-color:none;");
+            i++;
+        }
+    }
+    ////Rahul added 'if (quantity == 0)' start 19-07-23.
     var CurrencyName = $("#CurrencyID option:selected").text();
     $("#CurrencyName").val(CurrencyName);
     createJson();
@@ -487,7 +514,7 @@ function CalculateTotalBeforeTax() {
     createJson();
 }
 
-function createJson() { debugger
+function createJson() { 
     //let res = [...document.getElementById("myTableBody").children].map(tr =>
     //    Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
     //        [el.name, el.value])));
@@ -545,7 +572,7 @@ function createJson() { debugger
 function OnChangeQty(value, id) {
     $('#btnSave').prop('disabled', false);
     $('#btn_SaveDraft').prop('disabled', false);
-
+    debugger    
     var rowNo = id.split('_')[1];
     var quantity = value;
     var BalanceQty = $("#BalanceQuantity_" + rowNo).val();
@@ -553,8 +580,23 @@ function OnChangeQty(value, id) {
     var ActualBalQty = $('#ActualBalanceQuantity_' + rowNo).text();
     ActualBalQty = parseFloat(ActualBalQty);
 
-    if (quantity == '')
-        quantity = 0;
+    //if (quantity == '')
+        //quantity = 0;
+    ////Rahul added 'if (quantity == 0)' start 19-07-23.
+    if (quantity == '' || quantity == 0) {
+        alert("Order quantity cannot be null or zero(0)!");
+        document.getElementById(id).focus();
+        document.getElementById(id).setAttribute("style", "border-color:red;");
+        $('#btnSave').prop('disabled', true);
+        $('#btn_SaveDraft').prop('disabled', true);
+        return;
+    }
+    else {
+        $('#btnSave').prop('disabled', false);
+        $('#btn_SaveDraft').prop('disabled', false);
+        document.getElementById(id).setAttribute("style", "border-color:none;");
+    }
+    ////Rahul added 'if (quantity == 0)' start 19-07-23 end.
 
     quantity = parseFloat(quantity);
     var RequiredQty = (document.getElementById("RequiredQuantity_" + rowNo)).innerHTML.split(" ")[0];
@@ -735,7 +777,7 @@ function isNumberKey(evt) {
     return true;
 }
 /*Rahul : Add Javascript 'function removeTr(index)' start on 30-05-2023.*/
-function removeTr(index) {  debugger
+function removeTr(index) {  
     var length = document.getElementById("submissionTable").rows.length;
     length = parseFloat(length) - 1;
     id = index;
