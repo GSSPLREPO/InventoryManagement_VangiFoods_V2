@@ -175,5 +175,50 @@ namespace InVanWebApp.Repository
             return true;
         }
         #endregion
+
+        #region Convert Array To DataTable 
+        /// <summary>
+        /// Date: 20 Jul'23.
+        /// Rahul: Convert Array To DataTable 
+        /// </summary>
+        /// <param name="array"></param>
+        /// <returns></returns>
+        public DataTable ConvertArrayToDataTable(string[] array)
+        {
+            //DataTable dt = new DataTable();
+            //dt.Columns.Add("Column1", typeof(string)); // Change "string" to the actual datatype of Column1
+            //dt.Columns.Add("Column2", typeof(string)); // Change "string" to the actual datatype of Column2
+            //                                           // Add more columns as needed
+
+            //foreach (var item in array)
+            //{
+            //    DataRow row = dt.NewRow();
+            //    row["Column1"] = item; // Change "Column1" to the actual column name in your temporary table
+            //    row["Column2"] = item;                        // Set other columns as needed
+            //    dt.Rows.Add(row);
+            //}
+
+            //return dt;
+
+            DataTable dt = new DataTable();
+
+            // Create DataColumns with names "Column1", "Column2", etc.
+            for (int i = 0; i < array.Length; i++)
+            {
+                dt.Columns.Add($"Column{i + 1}", array[i].GetType());
+            }
+
+            // Add data to the DataTable
+            DataRow row = dt.NewRow();
+            for (int i = 0; i < array.Length; i++)
+            {
+                row[i] = array[i];
+            }
+            dt.Rows.Add(row);
+
+            return dt;
+        }
+        #endregion
+
     }
 }

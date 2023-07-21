@@ -50,12 +50,11 @@ namespace InVanWebApp_BO
         public string TxtItemDetails { get; set; }
         public int IndentCount { get; set; }
         public int ProductionIndentId { get; set; }
-        public string BatchNumber { get; set; } //Rahul added 24-03-23.   
-        public Nullable<int> BatchPlanningDocId { get; set; } //Rahul added 'BatchPlanningDocId' 13-06-23.  
-        public string BatchPlanningDocumentNo { get; set; } //Rahul added 02-06-23.   
+        public string BatchNumber { get; set; }
+        public Nullable<int> BatchPlanningDocId { get; set; }
+        public string BatchPlanningDocumentNo { get; set; }
         public List<Weighment_ProductionIndent_DetailsBO> indent_Details { get; set; }
-
-        //Rahul added 24-03-23. 
+        public int WeightDataLenth { get; set; } //// Rahul added 20-07-23.   
         public int ItemId { get; set; }
         public decimal ItemUnitPrice { get; set; }
         public decimal AvailableStock { get; set; }
@@ -65,7 +64,6 @@ namespace InVanWebApp_BO
         public Nullable<int> SO_Id { get; set; }
     }
 
-    //Rahul added 25-03-2023. 
     //public class BatchNumberMasterBO
     //{
     //    public int ID { get; set; }

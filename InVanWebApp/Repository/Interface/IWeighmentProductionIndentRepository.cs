@@ -1,6 +1,7 @@
 ﻿using InVanWebApp_BO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,5 +16,7 @@ namespace InVanWebApp.Repository.Interface
         ProductionIndentBO GetProductionIndentDetails(int id);
         //Method used to insert the values Weighment data from weighing machine 
         bool InsertValuesFromDevices(int[] TempValues, int RecordId, DateTime capturedDateTime);
+        //To Convert Array To DataTable 
+        DataTable ConvertArrayToDataTable(string[] array);
     }
 }
