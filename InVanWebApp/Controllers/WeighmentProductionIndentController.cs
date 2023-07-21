@@ -1,5 +1,4 @@
-﻿using EasyModbus;
-using InVanWebApp.Common;
+﻿using InVanWebApp.Common;
 using InVanWebApp.Repository;
 using InVanWebApp.Repository.Interface;
 using InVanWebApp_BO;
@@ -149,6 +148,13 @@ namespace InVanWebApp.Controllers
             var result = _weighmentProductionIndentRepository.GetProductionIndentDetails(Id);
             return Json(result);
         }
+
+        public JsonResult GetCapturedWeightIndentDetails() 
+        {            
+            var result = _weighmentProductionIndentRepository.GetCapturedWeightIndentDetails(); 
+            return Json(result);
+        }
+
         #endregion
 
         #region Bind all Recipe details 

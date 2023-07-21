@@ -18,5 +18,7 @@ namespace InVanWebApp.Repository.Interface
         bool InsertValuesFromDevices(int[] TempValues, int RecordId, DateTime capturedDateTime);
         //To Convert Array To DataTable 
         DataTable ConvertArrayToDataTable(string[] array);
+        //Bind Get Captured Weight Indent Details 
+        WeighmentReceivedDataBO GetCapturedWeightIndentDetails();
     }
 }

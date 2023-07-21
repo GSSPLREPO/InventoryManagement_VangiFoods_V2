@@ -82,6 +82,28 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Bind Get Captured Weight Indent Details 
+        public WeighmentReceivedDataBO GetCapturedWeightIndentDetails() 
+        {
+            string wighmentIndentQuery = "declare @ID int = null; set @ID = (Select  top 1(ID) from WeighmentReceivedData order by 1 desc); Select* from WeighmentReceivedData where ID = @ID; ";
+
+            WeighmentReceivedDataBO result = new WeighmentReceivedDataBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conString))
+                {
+                    result = con.Query<WeighmentReceivedDataBO>(wighmentIndentQuery, new { @Ids = result.ID,result.Column1 }).FirstOrDefault();                    
+                }
+            }
+            catch (Exception ex)
+            {
+                result = null;
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
+        #endregion
+
         #region MyRegion
         /// <summary>
         /// Date: 17 July'23 

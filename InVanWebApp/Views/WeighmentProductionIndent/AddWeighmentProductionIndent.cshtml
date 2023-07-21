@@ -1,4 +1,4 @@
-﻿@model InVanWebApp_BO.Weighment_ProductionIndentBO 
+﻿@model InVanWebApp_BO.Weighment_ProductionIndentBO
 @{ ViewBag.Title = "AddWeighmentProductionIndent";
     Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
@@ -19,10 +19,10 @@
                             </div>
                             <div class="col-md-4">
                                 @*@Html.TextBoxFor(model => model.ProductionIndentNo, new { @class = "form-control form-control-sm", Value = ViewData["PIND_dd"], @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })*@
+                                    @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })*@
 
                                 @Html.DropDownListFor(model => model.ProductionIndentID, (IEnumerable<SelectListItem>)ViewData["PIND_dd"], "--Select--",
-                                                                                                              new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                                                                                                        new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                                 @Html.ValidationMessageFor(model => model.ProductionIndentID, "", new { @class = "error mt-2 text-danger" })
                                 @Html.HiddenFor(model => model.ProductionIndentNo)
                                 @Html.HiddenFor(model => model.ProductionIndentID)
@@ -56,13 +56,13 @@
                             <div class="col-md-4 d-none">
                                 @if (@Session["UserId"] != null)
                                 {
-                    @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control form-control-sm", Value = @Session["UserId"], @readonly = "readonly" })}
+                @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control form-control-sm", Value = @Session["UserId"], @readonly = "readonly" })}
                             </div>
 
                             <div class="col-md-4">
                                 @if (@Session["UserName"] != null)
                                 {
-                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", Value = @Session["UserName"], @readonly = "readonly" })}
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", Value = @Session["UserName"], @readonly = "readonly" })}
                             </div>
                         </div>
 
@@ -156,6 +156,8 @@
                                         <th>Units</th>
                                         <th>Weight</th>
                                         <th>Difference</th>
+                                        <th>Capture Weight</th>
+                                        <th>Enable Next</th>
                                     </tr>
                                 </table>
                             </div>
@@ -169,7 +171,7 @@
                         </a>
                         <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
                     </div>
-                    </div>}
+                </div>}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -181,31 +183,12 @@
 <link href="~/Theme/MainContent/css/CustomDropdown.css" rel="stylesheet" />
 
 <script type="text/javascript">
-        
+
     $(document).ready(function () {
         createCustomDropdown_ProductionIndentID();
-        getRandom1();
     });
 
-    var rand1 = [];
-    function getRandom1() {
-
-        $.ajax({
-            type: "POST",
-            url: "../WeighmentProductionIndent/getValuesW",
-            data: "{}",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: true,
-            success: function (result) {
-                console.log(result);
-                rand1 = result;
-            }
-        });
-        return rand1;
-    }
-
-    //Rahul added 'function createCustomDropdown()' 14/07/23. start 
+    //Rahul added 'function createCustomDropdown()' 14/07/23. start
     function createCustomDropdown_ProductionIndentID() {
         $('select#ProductionIndentID').each(function (i, select) {
             if (!$(this).next().hasClass('dropdown-select')) {
@@ -249,7 +232,7 @@
             $(this).focus();
         }
     });
-    // Close when clicking outside 
+    // Close when clicking outside
     $(document).on('click', function (event) {
         if ($(event.target).closest('.dropdown-select').length === 0) {
             $('.dropdown-select').removeClass('open');
@@ -303,7 +286,7 @@
             return false;
         }
     });
-    //Rahul added 'function createCustomDropdown()' 14/07/23. end   
+    //Rahul added 'function createCustomDropdown()' 14/07/23. end
 
     var TxtItemDetails = "";
 
@@ -344,7 +327,7 @@
             data: { id },
             success: function (result) {
                 console.log(result);
-                $('#ProductionIndentID').val(result.ID); 
+                $('#ProductionIndentID').val(result.ID);
                 $('#RaisedBy').val(result.RaisedBy);
                 $('#UserName').val(result.UserName);
                 $('#SO_Id').val(result.SalesOrderId);
@@ -355,7 +338,7 @@
                 $('#BatchNumber').val(result.BatchNumber);
                 $('#WorkOrderNo').val(result.WorkOrderNo);
                 $('#BatchPlanningDocId').val(result.BatchPlanningDocId);
-                $('#BatchPlanningDocumentNo').val(result.BatchPlanningDocumentNo);  
+                $('#BatchPlanningDocumentNo').val(result.BatchPlanningDocumentNo);
             },
             error: function (err) {
                 alert('Not able to get the work order number!');
@@ -367,7 +350,7 @@
 
     //$("#ProductionIndentID").change(function () {
     function SelectedProductionIndentIDChange(id) {
-        //alert('ProductionIndentID: '+ id);                 
+        //alert('ProductionIndentID: '+ id);
         //For deleting the rows of Item table if exist.
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
@@ -377,7 +360,7 @@
         }
 
         $.ajax({
-            type: "POST",            
+            type: "POST",
             url: '/WeighmentProductionIndent/GetProductionIndentDetails?id=' + id,
             data: "{ }",
             contentType: "application/json; charset=utf-8",
@@ -396,7 +379,7 @@
 
                 //===================Create dynamic table for binding Item details====================//
                 var table = document.getElementById('ItemTable');
-                for (var j = 0; j < result.indent_Details.length; j++) {                    
+                for (var j = 0; j < result.indent_Details.length; j++) {
                     var rowCount = table.rows.length;
                     var cellCount = table.rows[0].cells.length;
                     var row = table.insertRow(rowCount);
@@ -429,28 +412,29 @@
                             cell.appendChild(t2);
                         }
                         else if (i == 3) {
-                            var t6 = document.createElement("input");
-                            t6.id = "Percentage_" + j;
-                            t6.setAttribute("disabled", "true");
-                            t6.setAttribute("style", "background:transparent;border:none;");                            
-                            t6.setAttribute("value", result.indent_Details[j].Percentage.toFixed(4));
-                            cell.appendChild(t6);
+                            var t3 = document.createElement("input");
+                            t3.id = "Percentage_" + j;
+                            t3.setAttribute("disabled", "true");
+                            t3.setAttribute("style", "background:transparent;border:none;");
+                            t3.setAttribute("value", result.indent_Details[j].Percentage.toFixed(4));
+                            cell.appendChild(t3);
                         }
                         else if (i == 4) {
                             cell.innerHTML = result.indent_Details[j].BatchQuantity.toFixed(4);
                             cell.setAttribute("id", "ItemQty_" + j);
                         }
                         else if (i == 5) {
-                            var t4 = document.createElement("input");
-                            t4.id = "txtFinalQty_" + j;
-                            t4.removeAttribute("disabled", "false");
-                            t4.removeAttribute("disabled", "true");
-                            t4.setAttribute("maxlength", "8");
-                            t4.setAttribute("onkeypress", "return isNumberKey(event)");
-                            t4.setAttribute("value", result.indent_Details[j].FinalQuantity.toFixed(4));
-                            // t4.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-                            t4.setAttribute("class", "form-control form-control-sm");
-                            cell.appendChild(t4);
+                            var t5 = document.createElement("input");
+                            t5.id = "txtFinalQty_" + j;
+                            //t5.removeAttribute("disabled", "false");
+                            t5.removeAttribute("disabled", "true");
+                            t5.setAttribute("maxlength", "8");
+                            t5.setAttribute("onkeypress", "return isNumberKey(event)");
+                            t5.setAttribute("style", "background:transparent;border:none;");
+                            t5.setAttribute("value", result.indent_Details[j].FinalQuantity.toFixed(4));
+                            // t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                            //t5.setAttribute("class", "form-control form-control-sm");
+                            cell.appendChild(t5);
                         }
                         else if (i == 6) {
                             cell.innerHTML = result.indent_Details[j].ItemUnit;
@@ -465,29 +449,66 @@
                             t7.setAttribute("maxlength", "10");
                             t7.setAttribute("onkeypress", "return isNumberKey(event)");
                             //t7.setAttribute("value", Weight.toFixed(4));
+                            //t7.setAttribute("value", Column1);
                             t7.setAttribute("value", "0");
-                             t4.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                            t7.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                             t7.setAttribute("class", "form-control form-control-sm");
                             cell.appendChild(t7);
                         }
-                        else if (i == 8) {    
+                        else if (i == 8) {
                             var FinalQty = "txtFinalQty_" + j;
-                            FinalQty= document.getElementById(FinalQty).value;
+                            FinalQty = document.getElementById(FinalQty).value;
                             var Weight = "txtWeight_" + j;
-                            Weight= document.getElementById(Weight).value;
-                            var Difference = FinalQty - Weight;
+                            Weight = document.getElementById(Weight).value;
+                            //var Difference = FinalQty - Weight;
+                            var Difference = Weight - FinalQty; 
                             cell.innerHTML = Difference;
                             cell.setAttribute("id", "Difference_" + j);
 
                             //var twoPerAllow = document.getElementById('Difference_0').innerText;
                             //if (twoPerAllow > twoPerAllow + 2) {
-                                //alert('+2%(age) allowed!');
+                            //alert('+2%(age) allowed!');
                             //}
                             //else if (twoPerAllow <= twoPerAllow - 2) {
-                                //alert('-2%(age) allowed!');
+                            //alert('-2%(age) allowed!');
                             //}
                         }
-
+                        /*Rahul : Add Javascript 'else if (i == 9)' for 'function captureWeightTr(index)' start on 21-08-2023.*/
+                        else if (i == 9) {
+                            var t9 = document.createElement("button");
+                            t9.id = "btnCaptureWeightTr_" + j;
+                            t9.setAttribute("disabled", "true");
+                            t9.setAttribute("readonly", "readonly");
+                            t9.setAttribute("class", "text-wrap btn btn-sm btn-link btn-pq text-white");
+                            t9.setAttribute("style", "background-color:transparent; font-weight:bold;");
+                            t9.setAttribute("type", "button");
+                            t9.innerHTML = "Capture";
+                            t9.setAttribute("onclick", "capturedWeightTr('" + j + "');");
+                            cell.appendChild(t9);
+                        }
+                        /*Rahul : Add Javascript 'else if (i == 9)' for 'function captureWeightTr(index)' end on 21-08-2023.*/
+                        /*Rahul : Add Javascript 'else if (i == 10)' for 'function nextTr(index)' start on 21-08-2023.*/
+                        else if (i == 10) {
+                            var t10 = document.createElement("button");
+                            t10.id = "btnNextTr_" + j;
+                            t10.setAttribute("disabled", "true");
+                            t10.setAttribute("readonly", "readonly");
+                            t10.setAttribute("class", "btn btn-sm btn-primary text-wrap");
+                            t10.setAttribute("style", "background: linear-gradient(85deg, #392c70, #6a005b);");
+                            t10.setAttribute("type", "button");
+                            t10.innerHTML = "Next";
+                            t10.setAttribute("onclick", "nextTr('" + j + "');");
+                            cell.appendChild(t10);
+                        }
+                        /*Rahul : Add Javascript 'else if (i == 10)' for 'function nextTr(index)' start on 21-08-2023.*/
+                        //$("tr:not(:first)").each(function () {
+                        //    $(this).next().find("#btnCaptureWeightTr_0,#btnNextTr_0").prop('disabled', false);
+                        //});
+                        /*Rahul : Add Javascript '$("tr:not(:first)").each(function ()' for 'find("#btnCaptureWeightTr_0") and enable 1st Tr button' start on 21-08-2023.*/
+                        $("tr:not(:first)").each(function () {
+                            $(this).find("#btnCaptureWeightTr_0").prop('disabled', false);
+                        });
+                        /*Rahul : Add Javascript '$("tr:not(:first)").each(function ()' for 'find("#btnCaptureWeightTr_0") and enable 1st Tr button' end on 21-08-2023.*/
                     }
                 }
             }
@@ -495,13 +516,14 @@
 
     };
 
-    function OnChangeQty(value, id) {debugger
+    function OnChangeQty(value, id) {
+        debugger
         //var totalBatches = $("#TotalBatches").val();
         var rowNo = id.split('_')[1];
         var finalQty = $("#txtFinalQty_" + rowNo).val();
         var weight = $("#txtWeight_" + rowNo).val();
         var diff = finalQty - weight;
-        $("#Difference_" + rowNo).val(diff); 
+        $("#Difference_" + rowNo).val(diff);
         var Difference = (document.getElementById("Difference_" + rowNo)).innerHTML = diff;
 
         //var percentage = $("#Percentage_" + rowNo).val();
@@ -569,6 +591,36 @@
         return true;
     }
 
+    function capturedWeightTr(evt) {debugger
+        //alert('Click on Capture Weight: ' + evt);
+        $.ajax({
+            url: '/WeighmentProductionIndent/GetCapturedWeightIndentDetails',
+            type: "POST",
+            //data: { id },
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                //$('#ProductionIndentID').val(result.ID);
+                $('#txtWeight_0').val(result.Column1.toFixed(4));
+                //$('#UserName').val(result.Column2);
+                //$('#SO_Id').val(result.Column3);
+            },
+            error: function (err) {
+                alert('Not able to get the captured weight!');
+            }
+        });
+
+    }
+
 </script>
 
+@*///Rahul added 'style: button.btn-pq' on 21-07-23.*@
+<style>
+    button.btn-pq {
+        background-color: #ff9800 !important;
+        border-color: #ff9800 !important;
+    }
+</style>
 
