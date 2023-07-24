@@ -36,21 +36,22 @@
                                 @Html.Label("Type")
                                 <span style="color:red">*</span>
                             </div>
+                            @*///Rahul added class 'DropdownRegular' in 'Type' 24-07-23.*@
                             <div class="col-md-4">
                                 @Html.DropDownListFor(model => model.PostProdRejectionType, new List<SelectListItem>{
                                     new SelectListItem{ Text="--Select--",Value=""},
                                     new SelectListItem{ Text="FGS",Value="FGS"},
                                     new SelectListItem{ Text="COA", Value="COA"},
-                                    new SelectListItem{ Text="Product Evaluation Log", Value="ProductEvaluationLog"} }, new { @class = "form-control form-control-sm", id = "RejectionType" })
+                                    new SelectListItem{ Text="Product Evaluation Log", Value="ProductEvaluationLog"} }, new { @class = "form-control form-control-sm DropdownRegular", id = "RejectionType" })
 
                                 @Html.HiddenFor(model => model.PostProdRejectionType)
 
                                 @*<select class="form-control form-control-sm" id="RejectionType" name="PostProdRejectionType" data-val="true" data-val-required="Select the Rejection Type!">
-                    <option value="">--Select--</option>
-                    <option value="FGS">FGS</option>
-                    <option value="COA">COA</option>
-                    <option value="ProductEvaluationLog">Product Evaluation Log</option>
-                </select>*@
+                <option value="">--Select--</option>
+                <option value="FGS">FGS</option>
+                <option value="COA">COA</option>
+                <option value="ProductEvaluationLog">Product Evaluation Log</option>
+            </select>*@
                                 @Html.ValidationMessageFor(model => model.PostProdRejectionType, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             @*<div id="StageDiv" style="display:none;">*@
@@ -58,8 +59,9 @@
                                 @Html.Label("Stages")
                                 <span style="color:red">*</span>
                             </div>
+                            @*///Rahul added class 'Dropdow nRegular' in 'Stages' 24-07-23.*@
                             <div class="col-md-4 StageDiv" style="display:none;">
-                                <select class="form-control form-control-sm" id="Stage" name="Stage">
+                                <select class="form-control form-control-sm DropdownRegular" id="Stage" name="Stage">
                                     <option value="1">Stage-1</option>
                                     <option value="2">Stage-2</option>
                                 </select>

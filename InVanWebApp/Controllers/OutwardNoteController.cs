@@ -648,7 +648,8 @@ namespace InVanWebApp.Controllers
                     XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
                     pdfDoc.Close();
                     byte[] bytes = memoryStream.ToArray();
-                    string filename = "Purchase_Order_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    ///Rahul updated 'filename' = 'Purchase_Order_' to 'Gate_Pass_' 24-07-23. 
+                    string filename = "Gate_Pass_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
                     TempData["ReportName"] = ReportName.ToString();
                     return File(memoryStream.ToArray(), "application/pdf", filename);
                 }

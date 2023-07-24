@@ -249,7 +249,7 @@ namespace InVanWebApp.Controllers
                         string connectionString = conString; // Replace with your actual connection string
                                                              //Rahul added 'string param1Value' start 20-07-23. 
                         string param1Value = values[0]; // Replace with your actual parameter values
-                        string param2Value = 'k' + values[1];
+                        string param2Value = values[1];
                         //Rahul added 'string param1Value' end 20-07-23.  
                         using (SqlConnection connection = new SqlConnection(connectionString))
                         {
@@ -263,7 +263,7 @@ namespace InVanWebApp.Controllers
                             //Rahul added 'SqlCommand command' start 20-07-2023. 
                             //using (SqlCommand command = new SqlCommand("INSERT INTO #TempTable (Column1, Column2) VALUES (@Param1, @Param2)", connection))
                             
-                            using (SqlCommand command = new SqlCommand("InsertDataIntoTempTable", connection))                                
+                            using (SqlCommand command = new SqlCommand("usp_tbl_WeighmentReceivedData_Insert", connection))                                
                             {
                                 command.CommandType = CommandType.StoredProcedure; ///Rahul added 'command.CommandType' 20-07-23. 
                                 command.Parameters.AddWithValue("@Param1", param1Value);
@@ -306,7 +306,29 @@ namespace InVanWebApp.Controllers
                     //throw;
                 }
                 // Create a TcpClient object and connect to the server code end 
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(conString))
+                    {
+                        connection.Open();
 
+                        using (SqlCommand command = new SqlCommand("usp_tbl_WeighmentReceivedData_Insert", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure; ///Rahul added 'command.CommandType' 20-07-23. 
+                            command.Parameters.AddWithValue("@Param1", param1Value);
+                            command.ExecuteNonQuery();
+                        }
+                        //connection.Close(); 
+                        //Rahul added 'SqlCommand command' end 20-072023. 
+
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
                 return View(model);
             }
             else

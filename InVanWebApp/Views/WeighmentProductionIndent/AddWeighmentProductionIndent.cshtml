@@ -22,7 +22,7 @@
                                     @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })*@
 
                                 @Html.DropDownListFor(model => model.ProductionIndentID, (IEnumerable<SelectListItem>)ViewData["PIND_dd"], "--Select--",
-                                                                                                                        new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                                                                                                                  new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                                 @Html.ValidationMessageFor(model => model.ProductionIndentID, "", new { @class = "error mt-2 text-danger" })
                                 @Html.HiddenFor(model => model.ProductionIndentNo)
                                 @Html.HiddenFor(model => model.ProductionIndentID)
@@ -452,18 +452,27 @@
                             //t7.setAttribute("value", Column1);
                             t7.setAttribute("value", "0");
                             t7.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-                            t7.setAttribute("class", "form-control form-control-sm");
+                            t7.setAttribute("class", "form-control form-control-sm text-right text-danger font-weight-bold");
                             cell.appendChild(t7);
                         }
                         else if (i == 8) {
-                            var FinalQty = "txtFinalQty_" + j;
-                            FinalQty = document.getElementById(FinalQty).value;
-                            var Weight = "txtWeight_" + j;
-                            Weight = document.getElementById(Weight).value;
-                            //var Difference = FinalQty - Weight;
-                            var Difference = Weight - FinalQty; 
-                            cell.innerHTML = Difference;
-                            cell.setAttribute("id", "Difference_" + j);
+                            //var FinalQty = "txtFinalQty_" + j;
+                            //FinalQty = document.getElementById(FinalQty).value;
+                            //var Weight = "txtWeight_" + j;
+                            //Weight = document.getElementById(Weight).value;
+                            ////var Difference = FinalQty - Weight;
+                            //var Difference = Weight - FinalQty;
+                            //cell.innerHTML = Difference;
+                            //cell.setAttribute("id", "Difference_" + j);
+                            var t8 = document.createElement("input");
+                            t8.id = "Difference_" + j;
+                            //t8.removeAttribute("disabled", "false");
+                            //t8.removeAttribute("disabled", "true");
+                            t8.setAttribute("readonly", "readonly");
+                            t8.setAttribute("maxlength", "10");
+                            t8.setAttribute("value", "0");
+                            t8.setAttribute("class", "form-control form-control-sm text-right text-danger");
+                            cell.appendChild(t8);
 
                             //var twoPerAllow = document.getElementById('Difference_0').innerText;
                             //if (twoPerAllow > twoPerAllow + 2) {
@@ -501,12 +510,16 @@
                             cell.appendChild(t10);
                         }
                         /*Rahul : Add Javascript 'else if (i == 10)' for 'function nextTr(index)' start on 21-08-2023.*/
-                        //$("tr:not(:first)").each(function () {
-                        //    $(this).next().find("#btnCaptureWeightTr_0,#btnNextTr_0").prop('disabled', false);
-                        //});
                         /*Rahul : Add Javascript '$("tr:not(:first)").each(function ()' for 'find("#btnCaptureWeightTr_0") and enable 1st Tr button' start on 21-08-2023.*/
+                        if (j == 0) {
+                            $("tr:not(:first)").each(function () {
+                                $(this).find("#btnCaptureWeightTr_" + j).prop('disabled', false);
+                                $(this).find("#btnNextTr_" + j).prop('disabled', false);
+                            });
+                        }
                         $("tr:not(:first)").each(function () {
-                            $(this).find("#btnCaptureWeightTr_0").prop('disabled', false);
+                            $(this).next().find("#btnCaptureWeightTr_" + j).prop('disabled', true);
+                            $(this).next().find("#btnNextTr_" + j).prop('disabled', true);
                         });
                         /*Rahul : Add Javascript '$("tr:not(:first)").each(function ()' for 'find("#btnCaptureWeightTr_0") and enable 1st Tr button' end on 21-08-2023.*/
                     }
@@ -517,7 +530,7 @@
     };
 
     function OnChangeQty(value, id) {
-        debugger
+        
         //var totalBatches = $("#TotalBatches").val();
         var rowNo = id.split('_')[1];
         var finalQty = $("#txtFinalQty_" + rowNo).val();
@@ -591,29 +604,77 @@
         return true;
     }
 
-    function capturedWeightTr(evt) {debugger
+    function capturedWeightTr(evt) {
         //alert('Click on Capture Weight: ' + evt);
+        $('#txtWeight_' + evt).val('');
+        $('#Difference_' + evt).val('');
+
         $.ajax({
             url: '/WeighmentProductionIndent/GetCapturedWeightIndentDetails',
             type: "POST",
-            //data: { id },
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                console.log(result);                
+                var Weight = $('#txtWeight_' + evt).val(result.Column1.toFixed(4));
+                var FinalQty = "txtFinalQty_" + evt;
+                FinalQty = document.getElementById(FinalQty).value;
+                Weight = Weight[0].value;
+                if (Weight > 0) {
+                    var element = document.getElementById('txtWeight_' + evt);
+                    element.classList.replace('text-danger','text-success');
+                }    debugger
+                var DifferenceWeightFinalQty = (Weight - FinalQty).toFixed(4);
+                //var DifferenceWeightFinalQty = Math.round(DifferenceWeightFinalQty);
+                $('#Difference_' + evt).val(DifferenceWeightFinalQty);
+
+                var PercentageRange = 2; // 2% difference range
+                var lowerLimit = FinalQty * (1 - PercentageRange / 100);
+                var upperLimit = FinalQty * (1 + PercentageRange / 100);
+                if (DifferenceWeightFinalQty >= lowerLimit && DifferenceWeightFinalQty <= upperLimit) {
+                    alert("Within the 2% difference range!");
+                    var element = document.getElementById('Difference_' + evt);
+                    element.classList.replace('text-danger', 'text-success');
+                } else {
+                    alert("Outside the 2% difference range!"); 
+                }
+            },
+            error: function (err) {
+                alert('Not able to get the captured weight!');
+            }
+        });
+    }
+
+    function nextTr(evt) {
+        debugger
+        $.ajax({
+            url: '/WeighmentProductionIndent/ClearCapturedWeightDataFromIndentDetails',
+            type: "POST",
             data: "{ }",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
                 console.log(result);
-                //$('#ProductionIndentID').val(result.ID);
-                $('#txtWeight_0').val(result.Column1.toFixed(4));
-                //$('#UserName').val(result.Column2);
-                //$('#SO_Id').val(result.Column3);
             },
             error: function (err) {
                 alert('Not able to get the captured weight!');
             }
         });
 
+        var elementWeight = document.getElementById('txtWeight_' + evt).value; 
+        var elementDifference = document.getElementById('Difference_' + evt).value; 
+        if (elementWeight > 0 || elementWeight > '0' && elementDifference == 0 || elementDifference == '0') {
+            $("tr:not(:first)").each(function () {
+                $(this).find("#btnCaptureWeightTr_" + evt).prop('disabled', true); 
+                $(this).find("#btnNextTr_" + evt).prop('disabled', true);
+            });
+        }
+        else {            
+            $(this).find("#btnCaptureWeightTr_" + evt).prop('disabled', false);
+            $(this).find("#btnNextTr_" + evt).prop('disabled', false);
+        }
     }
-
 </script>
 
 @*///Rahul added 'style: button.btn-pq' on 21-07-23.*@
