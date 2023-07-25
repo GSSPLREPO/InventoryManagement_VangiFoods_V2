@@ -14,11 +14,14 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<ProductionIndentBO> GetProductionIndentNumber();
         //Bind Get Production Indent Details
         ProductionIndentBO GetProductionIndentDetails(int id);
-        //Method used to insert the values Weighment data from weighing machine 
-        bool InsertValuesFromDevices(int[] TempValues, int RecordId, DateTime capturedDateTime);
         //To Convert Array To DataTable 
         DataTable ConvertArrayToDataTable(string[] array);
         //Bind Get Captured Weight Indent Details 
         WeighmentReceivedDataBO GetCapturedWeightIndentDetails();
+        ////This function is for delete all the temp records of Clear Captured Weight temp Data    
+        void ClearCapturedWeightDataDelete();
+        //Define function for inserting data into Weighment Production Indent 
+        ResponseMessageBO Insert(Weighment_ProductionIndentBO model);
+
     }
 }

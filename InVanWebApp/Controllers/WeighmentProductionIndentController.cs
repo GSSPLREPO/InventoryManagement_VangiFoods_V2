@@ -155,6 +155,89 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
 
+        public JsonResult InsertCapturedWeightIndentDetails() 
+        {
+            // Create a TcpClient object and connect to the server code start
+            try
+            {
+                //string serverIP = "192.168.29.33";  //Rahul-PC IP 
+                //string serverIP = "192.168.29.103";  //Harshita-PC IP 
+                string serverIP = "192.168.29.153";  //Maharshi-PC IP 
+
+                //string serverIP = "192.168.0.2"; //Vangi weighment system ip2
+                //string serverIP = "192.168.0.1"; //Vangi weighment system ip1
+                int serverPort = 1702; //Vangi weighment system port
+
+                // Create a TcpClient object and connect to the server
+                TcpClient client = new TcpClient();
+                client.ReceiveTimeout = 15000; // Set the timeout to 15 seconds (15000 milliseconds) 
+                client.Connect(serverIP, serverPort);
+
+                // Get the network stream from the TcpClient
+                NetworkStream stream = client.GetStream();
+
+                StreamReader reader = new StreamReader(stream, Encoding.ASCII);
+                // Create a buffer to hold received data
+                byte[] buffer = new byte[16];
+
+                while (true)
+                {
+                    // Read the data from the network stream
+                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
+
+                    // Process the received data // Convert the received data to a string
+                    string receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                    Console.WriteLine("Received data: " + receivedData);  // Display the received data
+
+                    //Rahul added 'string[] values' start 20-07-23. 
+                    string[] values = receivedData.Split('k');
+                    DataTable tempDataTable = _weighmentProductionIndentRepository.ConvertArrayToDataTable(values);
+
+                    string connectionString = conString; // Replace with your actual connection string
+                                                         //Rahul added 'string param1Value' start 20-07-23. 
+                    string param1Value = values[0]; // Replace with your actual parameter values
+                    string param2Value = values[1];
+                    //Rahul added 'string param1Value' end 20-07-23.  
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        using (SqlCommand command = new SqlCommand("usp_tbl_WeighmentReceivedData_Insert", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure; ///Rahul added 'command.CommandType' 20-07-23. 
+                            command.Parameters.AddWithValue("@Param1", param1Value);
+                            command.Parameters.AddWithValue("@Param2", param2Value);
+
+                            command.ExecuteNonQuery();
+                        }
+                        //Rahul added 'SqlCommand command' end 20-07-2023. 
+                    }
+                    //Rahul added 'string[] values' end 20-07-23. 
+
+                    // Check if the stream has ended
+                    if (bytesRead == 0)
+                        break;
+
+                    return Json(tempDataTable);
+                }
+                // Close the network stream and TcpClient
+                stream.Close();
+                client.Close();
+            }
+            catch (SocketException ex)
+            {
+                Console.WriteLine("SocketException: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred while connecting to the server: " + ex.Message);
+                log.Error(ex.Message, ex);
+                //throw;
+            }
+            // Create a TcpClient object and connect to the server code end 
+            return Json(true);
+        }
+
         #endregion
 
         #region Bind all Recipe details 
@@ -207,136 +290,121 @@ namespace InVanWebApp.Controllers
 
                 Weighment_ProductionIndentBO model = new Weighment_ProductionIndentBO();
                 model.WeighmentDate = DateTime.Today;
-                // Create a TcpClient object and connect to the server code start
-                try
-                {
-                    //string serverIP = "192.168.29.33";  //Rahul-PC IP 
-                    //string serverIP = "192.168.29.103";  //Harshita-PC IP 
-                    string serverIP = "192.168.29.153";  //Maharshi-PC IP 
 
-                    //string serverIP = "192.168.0.2"; //Vangi weighment system ip2
-                    //string serverIP = "192.168.0.1"; //Vangi weighment system ip1
-                    int serverPort = 1702; //Vangi weighment system port
-
-                    // Create a TcpClient object and connect to the server
-                    TcpClient client = new TcpClient();
-                    client.ReceiveTimeout = 15000; // Set the timeout to 15 seconds (15000 milliseconds) 
-                    client.Connect(serverIP, serverPort);
-
-                    // Get the network stream from the TcpClient
-                    NetworkStream stream = client.GetStream();
-
-                    StreamReader reader = new StreamReader(stream, Encoding.ASCII);
-                    // Create a buffer to hold received data
-                    byte[] buffer = new byte[16];
-
-                    // Read the data from the network stream
-                    //int bytesRead = stream.Read(buffer, 0, buffer.Length);
-
-                    while (true)
-                    {
-                        int bytesRead = stream.Read(buffer, 0, buffer.Length);
-
-                        // Process the received data
-                        string receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                        Console.WriteLine("Received data: " + receivedData);
-
-                        //Rahul added 'string[] values' start 20-07-23. 
-                        //string[] values = receivedData.Split('\\');
-                        string[] values = receivedData.Split('k');
-                        DataTable tempDataTable = _weighmentProductionIndentRepository.ConvertArrayToDataTable(values);
-
-                        string connectionString = conString; // Replace with your actual connection string
-                                                             //Rahul added 'string param1Value' start 20-07-23. 
-                        string param1Value = values[0]; // Replace with your actual parameter values
-                        string param2Value = values[1];
-                        //Rahul added 'string param1Value' end 20-07-23.  
-                        using (SqlConnection connection = new SqlConnection(connectionString))
-                        {
-                            connection.Open();
-
-                            //using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection))
-                            //{
-                            //    bulkCopy.DestinationTableName = "#TempTable"; // Temporary table name with a hash (#) prefix
-                            //    bulkCopy.WriteToServer(tempDataTable);
-                            //}
-                            //Rahul added 'SqlCommand command' start 20-07-2023. 
-                            //using (SqlCommand command = new SqlCommand("INSERT INTO #TempTable (Column1, Column2) VALUES (@Param1, @Param2)", connection))
-                            
-                            using (SqlCommand command = new SqlCommand("usp_tbl_WeighmentReceivedData_Insert", connection))                                
-                            {
-                                command.CommandType = CommandType.StoredProcedure; ///Rahul added 'command.CommandType' 20-07-23. 
-                                command.Parameters.AddWithValue("@Param1", param1Value);
-                                command.Parameters.AddWithValue("@Param2", param2Value);
-
-                                command.ExecuteNonQuery();
-                            }
-                            //connection.Close(); 
-                            //Rahul added 'SqlCommand command' end 20-072023. 
-
-                        }
-
-                        //model.WeightDataLenth = values.Length;
-                        //Rahul added 'string[] values' end 20-07-23. 
-
-                        // Check if the stream has ended
-                        if (bytesRead == 0)
-                            break;
-                    }
-
-
-                    // Convert the received data to a string
-                    //string receivedData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-
-                    // Display the received data
-                    //Console.WriteLine("Received data: " + receivedData);
-
-                    // Close the network stream and TcpClient
-                    stream.Close();
-                    client.Close(); 
-                }
-                catch (SocketException ex)
-                {
-                    Console.WriteLine("SocketException: " + ex.Message);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("An error occurred while connecting to the server: " + ex.Message);
-                    log.Error(ex.Message, ex);
-                    //throw;
-                }
-                // Create a TcpClient object and connect to the server code end 
-                try
-                {
-                    using (SqlConnection connection = new SqlConnection(conString))
-                    {
-                        connection.Open();
-
-                        using (SqlCommand command = new SqlCommand("usp_tbl_WeighmentReceivedData_Insert", connection))
-                        {
-                            command.CommandType = CommandType.StoredProcedure; ///Rahul added 'command.CommandType' 20-07-23. 
-                            command.Parameters.AddWithValue("@Param1", param1Value);
-                            command.ExecuteNonQuery();
-                        }
-                        //connection.Close(); 
-                        //Rahul added 'SqlCommand command' end 20-072023. 
-
-                    }
-
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
                 return View(model);
             }
             else
                 return RedirectToAction("Index", "Login");
         }
 
+        /// <summary>
+        /// Create By:Rahul 
+        /// Dscription: Pass the data to the repository for insertion from it's view. 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddWeighmentProductionIndent(Weighment_ProductionIndentBO model) 
+        {
+            try
+            {
+                if (Session[ApplicationSession.USERID] != null)
+                {
+                    ResponseMessageBO response = new ResponseMessageBO();
+
+                    if (ModelState.IsValid)
+                    {
+                        model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
+                        response = _weighmentProductionIndentRepository.Insert(model);
+                        if (response.Status)
+                            TempData["Success"] = "<script>alert('Weighment Production Indent inserted successfully!');</script>";
+                        else
+                        {
+                            TempData["Success"] = "<script>alert('Duplicate Weighment Production Indent or insertion of the Indent is done! Can not be inserted!');</script>";
+                            BindUsers();
+                            BindItemTypeCategory();
+                            GetDocumentNumber objDocNo = new GetDocumentNumber();
+                            //=========here document type=22 i.e. for generating the  Weighment Number (Production Indent) (logic is in SP).====//
+                            var DocumentNumber = objDocNo.GetDocumentNo(22);
+                            ViewData["DocumentNo"] = DocumentNumber;
+
+                            //Binding item grid with sell type item.
+                            var itemList = _repository.GetItemDetailsForDD();
+                            var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                            ViewData["itemListForDD"] = dd;
+
+                            model.WeighmentDate = DateTime.Today;
+
+                            return View(model);
+                        }
+
+                        return RedirectToAction("Index", "ProductionIndent");
+
+                    }
+                    else
+                    {
+                        TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+                        BindUsers();
+                        BindItemTypeCategory();
+                        var itemList = _repository.GetItemDetailsForDD();
+                        var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                        ViewData["itemListForDD"] = dd;
+                        GetDocumentNumber objDocNo = new GetDocumentNumber();
+                        //=========here document type=22 i.e. for generating the  Weighment Number (Production Indent) (logic is in SP).====//
+                        var DocumentNumber = objDocNo.GetDocumentNo(22);
+                        ViewData["DocumentNo"] = DocumentNumber;
+
+                        model.WeighmentDate = DateTime.Today;
+
+                        return View(model);
+                    }
+                }
+                else
+                    return RedirectToAction("Index", "Login");
+
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error", ex);
+                TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
+
+                BindUsers();
+                BindItemTypeCategory();
+                var itemList = _repository.GetItemDetailsForDD();
+                var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
+                ViewData["itemListForDD"] = dd;
+                GetDocumentNumber objDocNo = new GetDocumentNumber();
+                //=========here document type=22 i.e. for generating the  Weighment Number (Production Indent) (logic is in SP).====//
+                var DocumentNumber = objDocNo.GetDocumentNo(22);
+                ViewData["DocumentNo"] = DocumentNumber;
+
+                model.WeighmentDate = DateTime.Today;
+
+                return View(model);
+            }
+        }
         #endregion
 
+        #region Delete function
+        /// <summary>
+        /// Date: 25 Jul'23
+        /// Rahul: //This function is for delete all the temp records of Clear Captured Weight temp Data    
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost] 
+        public ActionResult ClearCapturedWeightDataDelete() 
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {               
+                _weighmentProductionIndentRepository.ClearCapturedWeightDataDelete(); 
+                //TempData["Success"] = "<script>alert('Record deleted successfully!');</script>";
+                return RedirectToAction("Index", "WeighmentProductionIndent");
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+        #endregion
 
 
     }
