@@ -8,7 +8,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h4>Add Weighment Production Indent</h4>
+                        <h4>Add Weighment Production</h4>
                         <hr />
                         @Html.ValidationSummary(true)
 
@@ -564,7 +564,7 @@
                 console.log(result);
             },
             error: function (err) {
-                alert('Not able to delete the captured weight data!');
+                alert('No data found to delete the captured weight data!');
             }
         });
 
@@ -661,7 +661,7 @@
             //    }
             },
             error: function (err) {
-                alert('Not able to get the captured weight!');
+                //alert('Not able to get the captured weight!');
             }
         });
 

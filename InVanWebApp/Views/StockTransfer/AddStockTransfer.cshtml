@@ -77,11 +77,16 @@
                                         <tbody id="myTableBody">
                                             <tr id="tablerow">
                                                 <td>
-                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new
-                                                    {
-                                                        @class = "form-control form-control-sm",
-                                                        style = "height:30px;width:270px;",
-                                                        onchange = "SelectedIndexChangedItemList($(this).val())"@*onmouseleave = "ValMsgItemList($(this).val(),id)"*@})
+                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"],
+                                                   //"--Select Item--", 
+                                                   new
+                                                   {
+                                                       @class = "form-control form-control-sm",
+                                                       //style = "height:30px;width:270px;",
+                                                       style = "height:34px;width:auto;",
+                                                       onchange = "SelectedIndexChangedItemList($(this).val())"
+                                                       @*onmouseleave = "ValMsgItemList($(this).val(),id)"*@
+                                                   })
                                                     <span id="ValMsgItemList" style="display:none; color:red"></span>
                                                     @*@Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" }) Rahul removed ValidationMessageFor ItemId and added ValMsgItemList in span tag onchange SelectedIndexChangedItemList 09-02-23. *@
                                                 </td>
@@ -171,10 +176,10 @@
 
     //Vedant added 'function createCustomDropdown()' 04-07-2023. start
     $(document).ready(function () {
-        createCustomDropdown_Item_ID("Item_ID");
+        create_custom_dropdowns_Item_ID("Item_ID");
     });
 
-    function createCustomDropdown_Item_ID(id) {
+    function create_custom_dropdowns_Item_ID(id) {
         $('select#' + id).each(function (i, select) {
             if (!$(this).next().hasClass('dropdown-select')) {
                 $('#' + id).removeClass('form-control');
@@ -192,6 +197,7 @@
         });
         $('#div' + id + '.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue' + id + '" autocomplete="off" onkeyup="filterItem_ID(id)" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
     }
+
     function filterItem_ID(id) {
         //debugger
         var valThis = $('#' + id + '').val();
@@ -218,6 +224,7 @@
             $(this).focus();
         }
     });
+
     // Close when clicking outside
     $(document).on('click', function (event) {
         if ($(event.target).closest('.dropdown-select').length === 0) {
@@ -272,6 +279,7 @@
             return false;
         }
     });
+
             //Vedant added 'function createCustomDropdown()' 04-07-2023. end
 
 
@@ -537,7 +545,7 @@
     function SelectedIndexChangedItemList(id) {
         $("#ValMsgItemList").hide();
 
-        //debugger
+        debugger
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
 
@@ -584,7 +592,7 @@
 
     $("#Item_ID").change(function () {
         $("#ValMsgItemList").hide();
-        //debugger
+        debugger
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
 
@@ -608,7 +616,7 @@
     //Dropdownlist Selectedchange event
     function getitemDetails() {
         $("#f").empty();
-
+        debugger
         var selectedOptionItem_Id, item_Code;
         selectedOptionItem_Id = document.getElementById("Item_ID").selectedIndex;
         item_Code = document.getElementById("Item_ID").options[selectedOptionItem_Id].innerText;

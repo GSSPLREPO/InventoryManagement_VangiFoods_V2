@@ -1,12 +1,12 @@
-﻿@model InVanWebApp_BO.ProductionIndentBO
+﻿@model InVanWebApp_BO.Weighment_ProductionIndentBO 
 
-@{ ViewBag.Title = "ViewProductionIndent";
+@{ ViewBag.Title = "ViewWeighmentProductionIndent";
                 Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title> Production Indent</title>
+    <title>Weighment Production</title>
     <style>
         html2canvas-container {
             width: 3000px !important;
@@ -38,7 +38,7 @@
     </style>
 </head>
 <body>
-    @Html.HiddenFor(model => model.ProductionIndentId)
+    @Html.HiddenFor(model => model.ID)
     @using (Html.BeginForm())
     {
 @Html.AntiForgeryToken()
@@ -48,13 +48,11 @@
                             <div class="card-body">
                                 <div class="row">
                                     <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
-                                    <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;"> Production Indent</h3>
+                                    <h3 class="card-title font-weight-bold align-self-center col-4 mb-0" style="font-size: 30pt;">Weighment Production</h3>
 
                                     <div class="col">
                                         <div class="col-md-12">
-                                            @*<img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" />*@
-                                            @*//Vedant added "ExportPdf" 13-07-23.*@  
-                                            <a id="ExportPdf" href="@Url.Action("ExportAsPDF", "ProductionIndent")"> <img class="float-left" src="~/Theme/MainContent/images/ICON.png.png" style="width: 45px; height: 45px; padding-top: 1px; margin-top: 2%; margin-left: 500px" /> </a>
+                                            <a id="ExportPdf" href="@Url.Action("ExportAsPDF", "WeighmentProductionIndent")"> <img class="float-left" src="~/Theme/MainContent/images/ICON.png.png" style="width: 45px; height: 45px; padding-top: 1px; margin-top: 2%; margin-left: 500px" /> </a>
                                         </div>
                                     </div>
                                 </div>
@@ -64,18 +62,26 @@
                                     <div style="font-size:110%; color:black;">
                                         <div class="row">
                                             <div class="col-md-2">
+                                                <label class="font-weight-bold">Weighment Number</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DisplayFor(model => model.WeighmentNo)
+                                            </div>
+                                            <br />
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Weighment Date</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.TextBoxFor(model => model.WeighmentDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
                                                 <label class="font-weight-bold">Indent Number</label>
                                             </div>
                                             <div class="col-md-4">
                                                 @Html.DisplayFor(model => model.ProductionIndentNo)
-                                            </div>
-                                            <br />
-                                            <div class="col-md-2">
-                                                <label class="font-weight-bold">Issue Date</label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.TextBoxFor(model => model.IssueDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
-                                            </div>
+                                            </div>                                         
                                         </div>
                                         <div class="row">
                                             <div class="col-md-2">
@@ -83,13 +89,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 @Html.DisplayFor(model => model.UserName)
-                                            </div>
-                                            <div class="col-md-2">
-                                                <label class="font-weight-bold">Production Date</label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.TextBoxFor(model => model.ProductionDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
-                                            </div>
+                                            </div>                                           
                                         </div>
                                         <div class="row">
                                             <div class="col-md-2">
@@ -177,6 +177,9 @@
                                                                     <th class="sortStyle">
                                                                         Final Quantity (Kg)
                                                                     </th>
+                                                                    <th class="sortStyle">Units</th>
+                                                                    <th class="sortStyle">Weight</th>
+                                                                    <th class="sortStyle">Difference</th>
 
                                                                 </tr>
                                                             </thead>
@@ -202,6 +205,15 @@
                                                         </td>
                                                         <td>
                                                             @Html.DisplayFor(x => item.FinalQuantity)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(x => item.ItemUnit)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(x => item.Weight)
+                                                        </td>
+                                                        <td>
+                                                            @Html.DisplayFor(x => item.Difference)
                                                         </td>
                                                     </tr>
  { c++; }
@@ -233,7 +245,7 @@
                                             </div>
                                         </div>
                                         <br />
-                                        <a href="@Url.Action("Index", "ProductionIndent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                        <a href="@Url.Action("Index", "WeighmentProductionIndent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
                                             Back To List
                                         </a>
                                     </div>

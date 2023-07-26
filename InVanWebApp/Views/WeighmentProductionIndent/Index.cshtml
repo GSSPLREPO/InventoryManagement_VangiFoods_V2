@@ -1,7 +1,6 @@
-﻿@model IEnumerable<InVanWebApp_BO.ProductionIndentBO>
+﻿@model IEnumerable<InVanWebApp_BO.Weighment_ProductionIndentBO>
 @{ ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/MainMaster.cshtml"; 
-}
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -9,20 +8,19 @@
 
 <html>
 <head>
-    <title>Weighment Production Indent</title>
+    <title>Weighment Production</title>
 </head>
 <body>
 
     <div class="content-wrapper" runat="server" id="divPanel1">
         <div class="page-header" style="height:5px;">
-            <h4 class="page-title">Weighment Production Indent</h4>
+            <h4 class="page-title">Weighment Production</h4>
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        @*Rahul updated anchor tag text 'Master' to 'Transactions' 16-02-23.*@
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Production</a>
                     </li>
-                    <li class="breadcrumb-item active">Weighment Production Indent</li>
+                    <li class="breadcrumb-item active">Weighment Production</li>
                 </ol>
             </nav>
         </div>
@@ -33,16 +31,16 @@
                     <div class="card">
                         <div class="card-body">
                             <a href="@Url.Action("AddWeighmentProductionIndent","WeighmentProductionIndent")" class="btn btn-sm btn-primary" style="float: right; background: linear-gradient(85deg, #392c70, #6a005b);">
-                                <span class="fa fa-plus"></span> Weighment Production Indent
+                                <span class="fa fa-plus"></span> Weighment Production
                             </a>
                             <div class="table-responsive" style="padding-top:15px;">
                                 <table class="table table-striped table-bordered hover table-sm" id="tblItem">
                                     <thead>
                                         <tr>
+                                            <th>@Html.DisplayName("Weighment Number")</th>
                                             <th>@Html.DisplayName("Indent Number")</th>
-                                            <th>@Html.DisplayName("Batch Number")</th> @*//Rahul added 'BatchNumber' 19-06-23.*@
-                                            <th>@Html.DisplayName("Indent Date")</th>
-                                            <th>@Html.DisplayName("Production Date")</th>
+                                            <th>@Html.DisplayName("Batch Number")</th>
+                                            <th>@Html.DisplayName("Weighment Date")</th>
                                             <th>@Html.DisplayName("Status")</th>
                                             <th>@Html.DisplayName("Remarks")</th>
                                             <th>@Html.DisplayName("Actions")</th>
@@ -52,22 +50,22 @@
                                         @foreach (var item in Model)
                                         {
                             <tr>
+                                <td>@Html.DisplayFor(modelItem => item.WeighmentNo)</td>
                                 <td>@Html.DisplayFor(modelItem => item.ProductionIndentNo)</td>
-                                <td>@Html.DisplayFor(modelItem => item.BatchNumber)</td>    @*//Rahul added 'BatchNumber' 19-06-23.*@
-                                <td>@Html.DisplayFor(modelItem => item.IssueDate)</td>
-                                <td>@Html.DisplayFor(modelItem => item.ProductionDate)</td>
+                                <td>@Html.DisplayFor(modelItem => item.BatchNumber)</td>
+                                <td>@Html.DisplayFor(modelItem => item.WeighmentDate)</td>
                                 <td>@Html.DisplayFor(modelItem => item.IndentStatus)</td>
                                 <td class="text-wrap">@Html.DisplayFor(modelItem => item.Description)</td>
                                 <td>
                                     @if (item.IndentCount == 0)
                                     {
-                    <a href=@Url.Action("ViewWeighmentProductionIndent", "WeighmentProductionIndent", new { ID = item.ID }) title="View Weighment Production Indent">
+                    <a href=@Url.Action("ViewWeighmentProductionIndent", "WeighmentProductionIndent", new { ID = item.ID }) title="View Weighment Production">
                         <i class="fa fa-eye text-primary"></i>
                     </a><span>&emsp;</span>
-                                        <a href=@Url.Action("EditWeighmentProductionIndent", "WeighmentProductionIndent", new { ID = item.ID }) title="Edit Weighment Production Indent">
+                                        @*<a href=@Url.Action("EditWeighmentProductionIndent", "WeighmentProductionIndent", new { ID = item.ID }) title="Edit Weighment Production">
                                             <i class="fa fa-edit text-primary"></i>
-                                        </a> <span>&emsp;</span>
-                                                            <a href=@Url.Action("DeleteWeighmentProductionIndent", "WeighmentProductionIndent", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Weighment Production Indent">
+                                        </a> <span>&emsp;</span>*@
+                                                            <a href=@Url.Action("DeleteWeighmentProduction", "WeighmentProductionIndent", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Weighment Production">
                                                                 <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
                                                             </a>}
                                 </td>

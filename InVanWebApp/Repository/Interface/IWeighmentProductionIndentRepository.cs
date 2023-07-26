@@ -22,6 +22,14 @@ namespace InVanWebApp.Repository.Interface
         void ClearCapturedWeightDataDelete();
         //Define function for inserting data into Weighment Production Indent 
         ResponseMessageBO Insert(Weighment_ProductionIndentBO model);
+        ///This function is for fecthing list of Weighment Production Indents. 
+        IEnumerable<Weighment_ProductionIndentBO> GetAll();
+        ///Fetch Weighment Production by it's ID    
+        Weighment_ProductionIndentBO GetById(int id);
+        ///This function is used to get the list of Items againts Weighment ID  
+        List<Weighment_ProductionIndent_DetailsBO> GetItemDetailsByProductionWeighmentID(int WeighmentID);
+        ///Delete function Weighment Production and Ingredients details by using Weighment ID.  
+        void Delete(int ID, int userId);
 
     }
 }

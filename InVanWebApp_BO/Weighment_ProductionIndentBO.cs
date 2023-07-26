@@ -22,11 +22,11 @@ namespace InVanWebApp_BO
         public string Description { get; set; }
         public Nullable<int> Status { get; set; }
         [Required(ErrorMessage = "Select the Product Name!")]
-        public int RecipeID { get; set; }
+        public Nullable<int> RecipeID { get; set; } 
         public string RecipeName { get; set; }
 
         [Required(ErrorMessage = "Select the SO Number!")]
-        public int SalesOrderId { get; set; }
+        public Nullable<int> SalesOrderId { get; set; }
         public string SONo { get; set; }
         public string WorkOrderNo { get; set; }
         [Required(ErrorMessage = "Enter Total Batches!")]
@@ -48,8 +48,7 @@ namespace InVanWebApp_BO
         public string UnitName { get; set; }
         public float Ratio { get; set; }
         public string TxtItemDetails { get; set; }
-        public int IndentCount { get; set; }
-        public int ProductionIndentId { get; set; }
+        public int IndentCount { get; set; }        
         public string BatchNumber { get; set; }
         public Nullable<int> BatchPlanningDocId { get; set; }
         public string BatchPlanningDocumentNo { get; set; }
