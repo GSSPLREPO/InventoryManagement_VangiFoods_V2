@@ -22,7 +22,7 @@
                                     @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })*@
 
                                 @Html.DropDownListFor(model => model.ProductionIndentID, (IEnumerable<SelectListItem>)ViewData["PIND_dd"], "--Select--",
-                                                                                                                                       new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                                                                                                                            new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
                                 @Html.ValidationMessageFor(model => model.ProductionIndentID, "", new { @class = "error mt-2 text-danger" })
                                 @Html.HiddenFor(model => model.ProductionIndentNo)
                                 @Html.HiddenFor(model => model.ProductionIndentID)
@@ -172,6 +172,7 @@
                         <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
                     </div>
                 </div>}
+@Html.Raw(TempData["Success"])
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -311,7 +312,6 @@
         }
     });
 
-
     // SO Number New Start
     function SelectedIndexChanged(id) {
         $('#btnSave').prop('disabled', false);
@@ -426,7 +426,6 @@
                         else if (i == 5) {
                             var t5 = document.createElement("input");
                             t5.id = "txtFinalQty_" + j;
-                            //t5.removeAttribute("disabled", "false");
                             t5.removeAttribute("disabled", "true");
                             t5.setAttribute("maxlength", "8");
                             t5.setAttribute("onkeypress", "return isNumberKey(event)");
@@ -448,39 +447,19 @@
                             t7.setAttribute("readonly", "readonly");
                             t7.setAttribute("maxlength", "10");
                             t7.setAttribute("onkeypress", "return isNumberKey(event)");
-                            //t7.setAttribute("value", Weight.toFixed(4));
-                            //t7.setAttribute("value", Column1);
                             t7.setAttribute("value", "0");
                             t7.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
                             t7.setAttribute("class", "form-control form-control-sm text-right text-danger font-weight-bold");
                             cell.appendChild(t7);
                         }
                         else if (i == 8) {
-                            //var FinalQty = "txtFinalQty_" + j;
-                            //FinalQty = document.getElementById(FinalQty).value;
-                            //var Weight = "txtWeight_" + j;
-                            //Weight = document.getElementById(Weight).value;
-                            ////var Difference = FinalQty - Weight;
-                            //var Difference = Weight - FinalQty;
-                            //cell.innerHTML = Difference;
-                            //cell.setAttribute("id", "Difference_" + j);
                             var t8 = document.createElement("input");
                             t8.id = "Difference_" + j;
-                            //t8.removeAttribute("disabled", "false");
-                            //t8.removeAttribute("disabled", "true");
                             t8.setAttribute("readonly", "readonly");
                             t8.setAttribute("maxlength", "10");
                             t8.setAttribute("value", "0");
                             t8.setAttribute("class", "form-control form-control-sm text-right text-danger");
                             cell.appendChild(t8);
-
-                            //var twoPerAllow = document.getElementById('Difference_0').innerText;
-                            //if (twoPerAllow > twoPerAllow + 2) {
-                            //alert('+2%(age) allowed!');
-                            //}
-                            //else if (twoPerAllow <= twoPerAllow - 2) {
-                            //alert('-2%(age) allowed!');
-                            //}
                         }
                         /*Rahul : Add Javascript 'else if (i == 9)' for 'function captureWeightTr(index)' start on 21-08-2023.*/
                         else if (i == 9) {
@@ -530,7 +509,6 @@
     };
 
     function OnChangeQty(value, id) {
-
         //var totalBatches = $("#TotalBatches").val();
         var rowNo = id.split('_')[1];
         var finalQty = $("#txtFinalQty_" + rowNo).val();
@@ -589,8 +567,8 @@
             var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
             var Percentage = $("#Percentage_" + i).val();
             var Weight = $("#txtWeight_" + i).val();
-            var Difference = $("#Difference_" + i).val(); 
-             
+            var Difference = $("#Difference_" + i).val();
+
 
             TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID +
                 ", \"Item_Code\":\"" + ItemCode + "\", \"ItemName\": \"" + ItemName + "\", \"ItemQty\": " + ItemQty +
@@ -635,33 +613,11 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (result) {
-                console.log(result);
-                alert('result: ' + result); 
-                //var Weight = $('#txtWeight_' + evt).val(result.Column1.toFixed(4));
-            //    var FinalQty = "txtFinalQty_" + evt;
-            //    FinalQty = document.getElementById(FinalQty).value;
-            //    Weight = Weight[0].value;
-            //    if (Weight > 0) {
-            //        var element = document.getElementById('txtWeight_' + evt);
-            //        element.classList.replace('text-danger', 'text-success');
-            //    } debugger
-            //    var DifferenceWeightFinalQty = (Weight - FinalQty).toFixed(4);
-            //    //var DifferenceWeightFinalQty = Math.round(DifferenceWeightFinalQty);
-            //    $('#Difference_' + evt).val(DifferenceWeightFinalQty);
-
-            //    var PercentageRange = 2; // 2% difference range
-            //    var lowerLimit = FinalQty * (1 - PercentageRange / 100);
-            //    var upperLimit = FinalQty * (1 + PercentageRange / 100);
-            //    if (DifferenceWeightFinalQty >= lowerLimit && DifferenceWeightFinalQty <= upperLimit) {
-            //        alert("Within the 2% difference range!");
-            //        var element = document.getElementById('Difference_' + evt);
-            //        element.classList.replace('text-danger', 'text-success');
-            //    } else {
-            //        alert("Outside the 2% difference range!");
-            //    }
+                //console.log(result);
+                //alert('result: ' + result);
             },
-            error: function (err) {
-                //alert('Not able to get the captured weight!');
+            error: function (xhr, status, err) {
+                alert('Not able to get the captured weight!');                
             }
         });
 
@@ -710,7 +666,7 @@
 
         // Disable all the "Next" buttons except the first one
         nextButtons.prop("disabled", true);
-        nextButtons.first().prop("disabled", false);        
+        nextButtons.first().prop("disabled", false);
 
         // Handle "Next" button click event
         $(".next").on("click", function () {
@@ -726,28 +682,6 @@
             nextButtons.eq(currentIndex + 1).prop("disabled", false);
             nextButtons.first().prop("disabled", true);
         });
-
-    //    var elementWeight = document.getElementById('txtWeight_' + evt).value;
-    //    var elementDifference = document.getElementById('Difference_' + evt).value;
-    //    if (elementWeight > 0 || elementWeight > '0' && elementDifference == 0 || elementDifference == '0'
-    //        || elementWeight > 0 || elementWeight > "0" && elementDifference == 0.0000 || elementDifference == "0.0000") {
-    //    //    $("tr:not(:first)").each(function () {
-    //    //        var table = document.getElementById('ItemTable');
-    //    //        var rowCount = table.rows.length;
-    //    //        var evt = 0;
-    //    //        var j = evt;
-    //    //        for (evt = 0; evt < rowCount - 1; evt++) {                    
-    //    //            $(this).next().find("#btnCaptureWeightTr_" + evt).prop('disabled', false);
-    //    //            $(this).next().find("#btnNextTr_" + evt).prop('disabled', false);
-    //    //            j++;
-    //    //            break;
-    //    //        }
-    //    //    });
-    //    }
-    //    else {
-    //    //    $(this).find("#btnCaptureWeightTr_" + evt).prop('disabled', true);
-    //    //    $(this).find("#btnNextTr_" + evt).prop('disabled', true);
-    //    }
     }
 </script>
 

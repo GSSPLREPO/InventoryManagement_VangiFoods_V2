@@ -10,9 +10,9 @@ namespace InVanWebApp_BO
     public class Weighment_ProductionIndentBO
     {
         public int ID { get; set; }
-        [Required(ErrorMessage = "Enter production indent no.!")]
+        //[Required(ErrorMessage = "Enter weighment no.!")]
         public string WeighmentNo { get; set; } 
-        [Required(ErrorMessage = "Enter production indent no.!")]
+        [Required(ErrorMessage = "Select the production indent no.!")]
         public Nullable<int> ProductionIndentID { get; set; } 
         public string ProductionIndentNo { get; set; }
         [Required(ErrorMessage = "Select the weighment date!")] 
@@ -21,11 +21,11 @@ namespace InVanWebApp_BO
         public Nullable<int> RaisedBy { get; set; }
         public string Description { get; set; }
         public Nullable<int> Status { get; set; }
-        [Required(ErrorMessage = "Select the Product Name!")]
+        //[Required(ErrorMessage = "Select the Product Name!")]
         public Nullable<int> RecipeID { get; set; } 
         public string RecipeName { get; set; }
 
-        [Required(ErrorMessage = "Select the SO Number!")]
+        //[Required(ErrorMessage = "Select the SO Number!")]
         public Nullable<int> SalesOrderId { get; set; }
         public string SONo { get; set; }
         public string WorkOrderNo { get; set; }
@@ -59,7 +59,7 @@ namespace InVanWebApp_BO
         public decimal AvailableStock { get; set; }
         public string CurrencyName { get; set; }
         public string ItemUnit { get; set; }
-        [Required(ErrorMessage = "Select the SO Number!")]
+        //[Required(ErrorMessage = "Select the SO Number!")]
         public Nullable<int> SO_Id { get; set; }
     }
 

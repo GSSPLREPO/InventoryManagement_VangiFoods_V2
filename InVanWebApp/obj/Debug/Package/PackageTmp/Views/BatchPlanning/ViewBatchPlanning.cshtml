@@ -52,7 +52,9 @@
 
                                     <div class="col">
                                         <div class="col-md-12">
-                                            <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" />
+                                            @*<img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" class="float-right" style="width:45px;height:45px" />*@
+                                            @*//Vedant added "ExportPdf" 13-07-23.*@ 
+                                            <a id="ExportPdf" href="@Url.Action("ExportAsPDF", "BatchPlanning")"> <img class="float-left" src="~/Theme/MainContent/images/ICON.png.png" style="width: 45px; height: 45px; padding-top: 1px; margin-top: 2%; margin-left: 500px" /> </a>
                                         </div>
                                     </div>
                                 </div>

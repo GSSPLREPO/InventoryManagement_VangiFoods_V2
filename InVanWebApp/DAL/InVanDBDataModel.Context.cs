@@ -19,15 +19,19 @@ using System.Data.Entity.Infrastructure;
 
 using System.Data.Entity.Core.Objects;
 using System.Linq;
+    using InVanWebApp.Common;
+    using System.Configuration;
 
-
-public partial class InVanDBContext : DbContext
+    public partial class InVanDBContext : DbContext
 {
-    public InVanDBContext()
-        : base("name=InVanDBContext")
-    {
+        private readonly string conString = Encryption.Decrypt_Static(ConfigurationManager.ConnectionStrings["InVanDBContext"].ToString());
+        /*<!--Rahul added 'string conString' 'VAN-1225' 28-07-23.-->*/
+        public InVanDBContext()
+        : base("name=conString")    /*<!--Rahul updated ': base("name=conString")' 'VAN-1225' 28-07-23.-->*/
+        //: base("name=InVanDBContext") /*<!--Rahul removed ': base("name=InVanDBContext")' 'VAN-1225' 28-07-23.-->*/    
+        {
 
-    }
+        }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {

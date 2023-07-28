@@ -185,12 +185,12 @@ namespace InVanWebApp.Repository
                             Recipe_DetailsBO objItemDetails = new Recipe_DetailsBO();
                             objItemDetails.RecipeID = RecipeID;
                             objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
-                            objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
-                            objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                            objItemDetails.UnitName = item.ElementAt(3).Value.ToString();
-                            objItemDetails.Ratio = float.Parse(item.ElementAt(4).Value);
-                            objItemDetails.BatchSize = float.Parse(item.ElementAt(5).Value);
-                            objItemDetails.Description = item.ElementAt(6).Value.ToString();
+                            objItemDetails.ItemCode = item.ElementAt(2).Value.ToString(); //Rahul updaded index 'ElementAt(1)' 28-07-23.
+                            objItemDetails.ItemName = item.ElementAt(3).Value.ToString(); //Rahul updaded index 'ElementAt(2)' 28-07-23.
+                            objItemDetails.UnitName = item.ElementAt(4).Value.ToString(); //Rahul updaded index 'ElementAt(3)' 28-07-23.
+                            objItemDetails.Ratio = float.Parse(item.ElementAt(5).Value); //Rahul updaded index 'ElementAt(4)' 28-07-23.
+                            objItemDetails.BatchSize = float.Parse(item.ElementAt(6).Value); //Rahul updaded index 'ElementAt(5)' 28-07-23.
+                            objItemDetails.Description = item.ElementAt(7).Value.ToString(); //Rahul updaded index 'ElementAt(6)' 28-07-23.
 
                             itemDetails.Add(objItemDetails);
                         }

@@ -37,7 +37,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationDD"], "---Select---", new { @class = "form-control form-control-sm" })
+                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationDD"], "---Select---", new { @class = "form-control form-control-sm DropdownRegular" })
                     @Html.HiddenFor(model => model.LocationName)
                     @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -49,7 +49,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    <select id="ProductId" name="ProductId" class="form-control form-control-sm" onchange="SelectedIndexChangedProductName($(this).val())">
+                    <select id="ProductId" name="ProductId" class="form-control form-control-sm DropdownRegular" onchange="SelectedIndexChangedProductName($(this).val())">
                         <option value="">--Select--</option>
                     </select>
                     <span id="valMsgProd" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Product Name!</span>
@@ -101,7 +101,7 @@
                     <span style="color:red">*</span>
                 </div>
                 <div class="col-md-4">
-                    <select id="BatchNo" name="BatchNo" class="form-control form-control-sm">
+                    <select id="BatchNo" name="BatchNo" class="form-control form-control-sm DropdownRegular">
                         onchange="SelectedBatchNo()
                         <option>--Select--</option>
                     </select>
@@ -120,7 +120,7 @@
                     @Html.DropDownListFor(model => model.Packaging, new List<SelectListItem>{
                         new SelectListItem{ Text="Ok", Value = "Ok" },
                         new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                        }, "---Select---", new { @class = "form-control" })
+                        }, "---Select---", new { @class = "form-control DropdownRegular" })
 
                     @Html.ValidationMessageFor(model => model.Packaging, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -132,7 +132,7 @@
                     @Html.DropDownListFor(model => model.Sealing, new List<SelectListItem>{
                         new SelectListItem{ Text="Ok", Value = "Ok" },
                         new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                        }, "---Select---", new { @class = "form-control" })
+                        }, "---Select---", new { @class = "form-control DropdownRegular" })
                     @Html.ValidationMessageFor(model => model.Sealing, "", new { @class = "error mt-2 text-danger" })
                 </div>
             </div>
@@ -146,7 +146,7 @@
                     @Html.DropDownListFor(model => model.Labelling, new List<SelectListItem>{
                         new SelectListItem{ Text="Ok", Value = "Ok" },
                         new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                        }, "---Select---", new { @class = "form-control" })
+                        }, "---Select---", new { @class = "form-control DropdownRegular" })
 
                     @Html.ValidationMessageFor(model => model.Labelling, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -158,7 +158,7 @@
                     @Html.DropDownListFor(model => model.QCCheck, new List<SelectListItem>{
                         new SelectListItem{ Text="Ok", Value = "Ok" },
                         new SelectListItem{ Text="Not Ok", Value = "Not Ok" }
-                        }, "---Select---", new { @class = "form-control" })
+                        }, "---Select---", new { @class = "form-control DropdownRegular" })
 
                     @Html.ValidationMessageFor(model => model.QCCheck, "", new { @class = "error mt-2 text-danger" })
                 </div>
@@ -240,8 +240,142 @@
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<link href="~/Theme/MainContent/css/CustomDropdown.css" rel="stylesheet" />
 
 <script type="text/javascript">
+
+
+    //Vedant added 'function createCustomDropdown()' 04-07-2023. start
+    $(document).ready(function () {
+        createCustomDropdown_SalesOrderId();
+        //createCustomDropdown_ProductId();
+        //createCustomDropdown_LocationId();
+    });
+
+
+    function createCustomDropdown_SalesOrderId() {
+        $('select#SalesOrderId').each(function (i, select) {
+            if (!$(this).next().hasClass('dropdown-select')) {
+                $('#SalesOrderId').removeClass('form-control');
+                $(this).after('<div id="divSalesOrderId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+        $('#divSalesOrderId.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueSalesOrderId" autocomplete="off" onkeyup="filterSalesOrderId()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+    function filterSalesOrderId() {
+        var valThis = $('#txtSearchValueSalesOrderId').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+
+    function createCustomDropdown_ProductId() {
+        $('select#ProductId').each(function (i, select) {
+            if (!$(this).next().hasClass('dropdown-select')) {
+                $('#ProductId').removeClass('form-control');
+                $(this).after('<div id="divProductId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+        $('#divProductId.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueProductId" autocomplete="off" onkeyup="filterProductId()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+    function filterProductId() {
+        var valThis = $('#txtSearchValueProductId').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+
+    // Event listeners
+
+    // Open/close
+    $(document).on('click', '.dropdown-select', function (event) {
+        if ($(event.target).hasClass('dd-searchbox')) {
+            return;
+        }
+        $('.dropdown-select').not($(this)).removeClass('open');
+        $(this).toggleClass('open');
+        if ($(this).hasClass('open')) {
+            $(this).find('.option').attr('tabindex', 0);
+            $(this).find('.selected').focus();
+        } else {
+            $(this).find('.option').removeAttr('tabindex');
+            $(this).focus();
+        }
+    });
+    // Close when clicking outside
+    $(document).on('click', function (event) {
+        if ($(event.target).closest('.dropdown-select').length === 0) {
+            $('.dropdown-select').removeClass('open');
+            $('.dropdown-select .option').removeAttr('tabindex');
+        }
+        event.stopPropagation();
+    });
+    // Option click
+    $(document).on('click', '.dropdown-select .option', function (event) {
+        $(this).closest('.list').find('.selected').removeClass('selected');
+        $(this).addClass('selected');
+        var text = $(this).data('display-text') || $(this).text();
+        $(this).closest('.dropdown-select').find('.current').text(text);
+        $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+    });
+
+    // Keyboard events
+    $(document).on('keydown', '.dropdown-select', function (event) {
+        var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+        // Space or Enter
+        //if (event.keyCode == 32 || event.keyCode == 13) {
+        if (event.keyCode == 13) {
+            if ($(this).hasClass('open')) {
+                focused_option.trigger('click');
+            } else {
+                $(this).trigger('click');
+            }
+            return false;
+            // Down
+        } else if (event.keyCode == 40) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                focused_option.next().focus();
+            }
+            return false;
+            // Up
+        } else if (event.keyCode == 38) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+                focused_option.prev().focus();
+            }
+            return false;
+            // Esc
+        } else if (event.keyCode == 27) {
+            if ($(this).hasClass('open')) {
+                $(this).trigger('click');
+            }
+            return false;
+        }
+    });
+    //Vedant added 'function createCustomDropdown()' 04-07-2023. end
+
 
     $("#btnSave").on("click", function () {
 

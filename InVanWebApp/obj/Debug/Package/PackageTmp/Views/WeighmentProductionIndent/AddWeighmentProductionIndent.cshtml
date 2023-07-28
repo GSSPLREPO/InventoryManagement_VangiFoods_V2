@@ -1,0 +1,695 @@
+﻿@model InVanWebApp_BO.Weighment_ProductionIndentBO
+@{ ViewBag.Title = "AddWeighmentProductionIndent";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
+
+@using (Html.BeginForm("AddWeighmentProductionIndent", "WeighmentProductionIndent", FormMethod.Post))
+{
+@Html.AntiForgeryToken()
+
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Add Weighment Production</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Indent Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @*@Html.TextBoxFor(model => model.ProductionIndentNo, new { @class = "form-control form-control-sm", Value = ViewData["PIND_dd"], @readonly = "readonly" })
+                                    @Html.ValidationMessageFor(model => model.ProductionIndentNo, "", new { @class = "error mt-2 text-danger" })*@
+
+                                @Html.DropDownListFor(model => model.ProductionIndentID, (IEnumerable<SelectListItem>)ViewData["PIND_dd"], "--Select--",
+                                                                                                                                            new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                @Html.ValidationMessageFor(model => model.ProductionIndentID, "", new { @class = "error mt-2 text-danger" })
+                                @Html.HiddenFor(model => model.ProductionIndentNo)
+                                @Html.HiddenFor(model => model.ProductionIndentID)
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Weighment Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.WeighmentNo, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.WeighmentNo, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Weighment Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.WeighmentDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.WeighmentDate, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Weighment By")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @if (@Session["UserId"] != null)
+                                {
+                @Html.TextBoxFor(model => model.RaisedBy, new { @class = "form-control form-control-sm", Value = @Session["UserId"], @readonly = "readonly" })}
+                            </div>
+
+                            <div class="col-md-4">
+                                @if (@Session["UserName"] != null)
+                                {
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-sm", Value = @Session["UserName"], @readonly = "readonly" })}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("SO Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.SONo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.SONo, "", new { @class = "error mt-2 text-danger" })
+                                @Html.HiddenFor(model => model.SalesOrderId)
+                                @Html.HiddenFor(model => model.SO_Id)
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Work Order No")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Product Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.HiddenFor(model => model.RecipeID)
+                                @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+
+                            <div class="col-md-2">
+                                @Html.Label("Total Batches")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.TotalBatches, new { @class = "form-control form-control-sm", maxlength = "8" })
+                                @Html.ValidationMessageFor(model => model.TotalBatches, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Batch Number")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            @*//Rahul added 'BatchPlanningDocumentNo' 13-06-23.*@
+                            <div class="col-md-2">
+                                @Html.Label("Batch Planning Document No")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.BatchPlanningDocumentNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.BatchPlanningDocumentNo, "", new { @class = "error mt-2 text-danger", id = "ValChallanNo" })
+                                @Html.HiddenFor(model => model.BatchPlanningDocId)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Remarks")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "95", onkeypress = "createJson();" })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4" style="color:darkcyan">
+                                @Html.Label("Indent Ingredients detail")
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12 table-responsive">
+                                <table class="table table-hover" id="ItemTable">
+                                    <tr>
+                                        <th class="d-none">ItemID</th>
+                                        <th>Item Code</th>
+                                        <th>Item Name</th>
+                                        <th>Percentage</th>
+                                        <th>Batch Quantity</th>
+                                        <th>Final Quantity</th>
+                                        <th>Units</th>
+                                        <th>Weight</th>
+                                        <th>Difference</th>
+                                        <th>Capture Weight</th>
+                                        <th>Enable Next</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                        </div>
+                        <br />
+                        <a href="@Url.Action("Index", "WeighmentProductionIndent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                            Back To List
+                        </a>
+                        <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button>
+                    </div>
+                </div>}
+@Html.Raw(TempData["Success"])
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+<link href="~/Theme/MainContent/css/CustomDropdown.css" rel="stylesheet" />
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        createCustomDropdown_ProductionIndentID();
+    });
+
+    //Rahul added 'function createCustomDropdown()' 14/07/23. start
+    function createCustomDropdown_ProductionIndentID() {
+        $('select#ProductionIndentID').each(function (i, select) {
+            if (!$(this).next().hasClass('dropdown-select')) {
+                $('#ProductionIndentID').removeClass('form-control');
+                $(this).after('<div id="divID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+        $('#divID.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueID" autocomplete="off" onkeyup="filterID()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+
+    function filterID() {
+        var valThis = $('#txtSearchValueID').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+
+    // Event listeners
+
+    // Open/close
+    $(document).on('click', '.dropdown-select', function (event) {
+        if ($(event.target).hasClass('dd-searchbox')) {
+            return;
+        }
+        $('.dropdown-select').not($(this)).removeClass('open');
+        $(this).toggleClass('open');
+        if ($(this).hasClass('open')) {
+            $(this).find('.option').attr('tabindex', 0);
+            $(this).find('.selected').focus();
+        } else {
+            $(this).find('.option').removeAttr('tabindex');
+            $(this).focus();
+        }
+    });
+    // Close when clicking outside
+    $(document).on('click', function (event) {
+        if ($(event.target).closest('.dropdown-select').length === 0) {
+            $('.dropdown-select').removeClass('open');
+            $('.dropdown-select .option').removeAttr('tabindex');
+        }
+        event.stopPropagation();
+    });
+    // Option click
+    $(document).on('click', '.dropdown-select .option', function (event) {
+        $(this).closest('.list').find('.selected').removeClass('selected');
+        $(this).addClass('selected');
+        var text = $(this).data('display-text') || $(this).text();
+        $(this).closest('.dropdown-select').find('.current').text(text);
+        $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+    });
+
+    // Keyboard events
+    $(document).on('keydown', '.dropdown-select', function (event) {
+        var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+        // Space or Enter
+        //if (event.keyCode == 32 || event.keyCode == 13) {
+        if (event.keyCode == 13) {
+            if ($(this).hasClass('open')) {
+                focused_option.trigger('click');
+            } else {
+                $(this).trigger('click');
+            }
+            return false;
+            // Down
+        } else if (event.keyCode == 40) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                focused_option.next().focus();
+            }
+            return false;
+            // Up
+        } else if (event.keyCode == 38) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+                focused_option.prev().focus();
+            }
+            return false;
+            // Esc
+        } else if (event.keyCode == 27) {
+            if ($(this).hasClass('open')) {
+                $(this).trigger('click');
+            }
+            return false;
+        }
+    });
+    //Rahul added 'function createCustomDropdown()' 14/07/23. end
+
+    var TxtItemDetails = "";
+
+    $("#TotalBatches").change(function () {
+
+        var totalBatches = $("#TotalBatches").val();
+        //var ID = $('#SO_Id').val();
+
+        if (totalBatches == 0 || totalBatches == null || totalBatches == '') {
+            totalBatches = 0;
+        }
+        else {
+            totalBatches = parseFloat(totalBatches);
+            var table = document.getElementById('ItemTable');
+            var count = table.rows.length;
+
+            for (var j = 0; j < count - 1; j++) {
+                var FinalQty = parseFloat((document.getElementById("ItemQty_" + j)).innerHTML) * totalBatches;
+                $("#txtFinalQty_" + j).val(FinalQty.toFixed(4));
+            }
+
+        }
+    });
+
+    // SO Number New Start
+    function SelectedIndexChanged(id) {
+        $('#btnSave').prop('disabled', false);
+
+        var selectedPRINDNumber_No, PRINDNumber_No;
+        selectedPRINDNumber_No = document.getElementById("ProductionIndentID").selectedIndex;
+        PRINDNumber_No = document.getElementById("ProductionIndentID").options[selectedPRINDNumber_No].innerText;
+        document.getElementById("ProductionIndentNo").value = PRINDNumber_No;
+
+        $.ajax({
+            url: '/WeighmentProductionIndent/GetProductionIndentDetails',
+            type: "POST",
+            data: { id },
+            success: function (result) {
+                console.log(result);
+                $('#ProductionIndentID').val(result.ID);
+                $('#RaisedBy').val(result.RaisedBy);
+                $('#UserName').val(result.UserName);
+                $('#SO_Id').val(result.SalesOrderId);
+                $('#SONo').val(result.SONo);
+                $('#RecipeID').val(result.RecipeID);
+                $('#RecipeName').val(result.RecipeName);
+                $('#TotalBatches').val(result.TotalBatches);
+                $('#BatchNumber').val(result.BatchNumber);
+                $('#WorkOrderNo').val(result.WorkOrderNo);
+                $('#BatchPlanningDocId').val(result.BatchPlanningDocId);
+                $('#BatchPlanningDocumentNo').val(result.BatchPlanningDocumentNo);
+            },
+            error: function (err) {
+                alert('Not able to get the work order number!');
+            }
+        });
+        SelectedProductionIndentIDChange(id);
+    }
+    // So Number New End
+
+    //$("#ProductionIndentID").change(function () {
+    function SelectedProductionIndentIDChange(id) {
+        //alert('ProductionIndentID: '+ id);
+        //For deleting the rows of Item table if exist.
+        var table = document.getElementById('ItemTable');
+        var rowCount = table.rows.length;
+        while (rowCount != '1') {
+            var row = table.deleteRow(rowCount - 1);
+            rowCount--;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: '/WeighmentProductionIndent/GetProductionIndentDetails?id=' + id,
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                var ColCount = result.indent_Details.length;
+                //console.log(ColCount);
+                if (ColCount > 0) {
+                    $('#btnSave').prop('disabled', false);
+                }
+                else {
+                    alert('There is no recipe for the selected product name!');
+                    $('#RecipeID').focus();
+                    $('#btnSave').prop('disabled', true);
+                }
+
+                //===================Create dynamic table for binding Item details====================//
+                var table = document.getElementById('ItemTable');
+                for (var j = 0; j < result.indent_Details.length; j++) {
+                    var rowCount = table.rows.length;
+                    var cellCount = table.rows[0].cells.length;
+                    var row = table.insertRow(rowCount);
+                    for (var i = 0; i < cellCount; i++) {
+                        var cell = 'cell' + i;
+                        cell = row.insertCell(i);
+                        if (i == 0) {
+                            var t0 = document.createElement("input");
+                            t0.id = "ItemID_" + j;
+                            t0.setAttribute("disabled", "true");
+                            t0.setAttribute("class", "d-none");
+                            t0.setAttribute("value", result.indent_Details[j].ItemId);
+                            cell.setAttribute("class", "d-none");
+                            cell.appendChild(t0);
+                        }
+                        else if (i == 1) {
+                            var t1 = document.createElement("input");
+                            t1.id = "ItemCode_" + j;
+                            t1.setAttribute("disabled", "true");
+                            t1.setAttribute("style", "background:transparent;border:none;");
+                            t1.setAttribute("value", result.indent_Details[j].ItemCode);
+                            cell.appendChild(t1);
+                        }
+                        else if (i == 2) {
+                            var t2 = document.createElement("input");
+                            t2.id = "ItemName_" + j;
+                            t2.setAttribute("disabled", "true");
+                            t2.setAttribute("style", "background:transparent;border:none;");
+                            t2.setAttribute("value", result.indent_Details[j].ItemName);
+                            cell.appendChild(t2);
+                        }
+                        else if (i == 3) {
+                            var t3 = document.createElement("input");
+                            t3.id = "Percentage_" + j;
+                            t3.setAttribute("disabled", "true");
+                            t3.setAttribute("style", "background:transparent;border:none;");
+                            t3.setAttribute("value", result.indent_Details[j].Percentage.toFixed(4));
+                            cell.appendChild(t3);
+                        }
+                        else if (i == 4) {
+                            cell.innerHTML = result.indent_Details[j].BatchQuantity.toFixed(4);
+                            cell.setAttribute("id", "ItemQty_" + j);
+                        }
+                        else if (i == 5) {
+                            var t5 = document.createElement("input");
+                            t5.id = "txtFinalQty_" + j;
+                            t5.removeAttribute("disabled", "true");
+                            t5.setAttribute("maxlength", "8");
+                            t5.setAttribute("onkeypress", "return isNumberKey(event)");
+                            t5.setAttribute("style", "background:transparent;border:none;");
+                            t5.setAttribute("value", result.indent_Details[j].FinalQuantity.toFixed(4));
+                            // t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                            //t5.setAttribute("class", "form-control form-control-sm");
+                            cell.appendChild(t5);
+                        }
+                        else if (i == 6) {
+                            cell.innerHTML = result.indent_Details[j].ItemUnit;
+                            cell.setAttribute("id", "ItemUnit_" + j);
+                        }
+                        else if (i == 7) {
+                            var t7 = document.createElement("input");
+                            t7.id = "txtWeight_" + j;
+                            t7.removeAttribute("disabled", "false");
+                            t7.removeAttribute("disabled", "true");
+                            t7.setAttribute("readonly", "readonly");
+                            t7.setAttribute("maxlength", "10");
+                            t7.setAttribute("onkeypress", "return isNumberKey(event)");
+                            t7.setAttribute("value", "0");
+                            t7.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                            t7.setAttribute("class", "form-control form-control-sm text-right text-danger font-weight-bold");
+                            cell.appendChild(t7);
+                        }
+                        else if (i == 8) {
+                            var t8 = document.createElement("input");
+                            t8.id = "Difference_" + j;
+                            t8.setAttribute("readonly", "readonly");
+                            t8.setAttribute("maxlength", "10");
+                            t8.setAttribute("value", "0");
+                            t8.setAttribute("class", "form-control form-control-sm text-right text-danger");
+                            cell.appendChild(t8);
+                        }
+                        /*Rahul : Add Javascript 'else if (i == 9)' for 'function captureWeightTr(index)' start on 21-08-2023.*/
+                        else if (i == 9) {
+                            var t9 = document.createElement("button");
+                            t9.id = "btnCaptureWeightTr_" + j;
+                            t9.setAttribute("disabled", "true");
+                            t9.setAttribute("readonly", "readonly");
+                            t9.setAttribute("class", "text-wrap btn btn-sm btn-link btn-pq text-white capture");
+                            t9.setAttribute("style", "background-color:transparent; font-weight:bold;");
+                            t9.setAttribute("type", "button");
+                            t9.innerHTML = "Capture";
+                            t9.setAttribute("onclick", "capturedWeightTr('" + j + "');");
+                            cell.appendChild(t9);
+                        }
+                        /*Rahul : Add Javascript 'else if (i == 9)' for 'function captureWeightTr(index)' end on 21-08-2023.*/
+                        /*Rahul : Add Javascript 'else if (i == 10)' for 'function nextTr(index)' start on 21-08-2023.*/
+                        else if (i == 10) {
+                            var t10 = document.createElement("button");
+                            t10.id = "btnNextTr_" + j;
+                            t10.setAttribute("disabled", "true");
+                            t10.setAttribute("readonly", "readonly");
+                            t10.setAttribute("class", "btn btn-sm btn-primary text-wrap next");
+                            t10.setAttribute("style", "background: linear-gradient(85deg, #392c70, #6a005b);");
+                            t10.setAttribute("type", "button");
+                            t10.innerHTML = "Next";
+                            t10.setAttribute("onclick", "nextTr('" + j + "');");
+                            cell.appendChild(t10);
+                        }
+                        /*Rahul : Add Javascript 'else if (i == 10)' for 'function nextTr(index)' start on 21-08-2023.*/
+                        /*Rahul : Add Javascript '$("tr:not(:first)").each(function ()' for 'find("#btnCaptureWeightTr_0") and enable 1st Tr button' start on 21-08-2023.*/
+                        if (j == 0) {
+                            $("tr:not(:first)").each(function () {
+                                $(this).find("#btnCaptureWeightTr_" + j).prop('disabled', false);
+                                $(this).find("#btnNextTr_" + j).prop('disabled', false);
+                            });
+                        }
+                        $("tr:not(:first)").each(function () {
+                            $(this).next().find("#btnCaptureWeightTr_" + j).prop('disabled', true);
+                            $(this).next().find("#btnNextTr_" + j).prop('disabled', true);
+                        });
+                        /*Rahul : Add Javascript '$("tr:not(:first)").each(function ()' for 'find("#btnCaptureWeightTr_0") and enable 1st Tr button' end on 21-08-2023.*/
+                    }
+                }
+            }
+        });
+
+    };
+
+    function OnChangeQty(value, id) {
+        //var totalBatches = $("#TotalBatches").val();
+        var rowNo = id.split('_')[1];
+        var finalQty = $("#txtFinalQty_" + rowNo).val();
+        var weight = $("#txtWeight_" + rowNo).val();
+        var diff = finalQty - weight;
+        $("#Difference_" + rowNo).val(diff);
+        var Difference = (document.getElementById("Difference_" + rowNo)).innerHTML = diff;
+
+        //var percentage = $("#Percentage_" + rowNo).val();
+        //var finalQuantity = totalBatches * percentage * finalQty;
+        //$("#txtFinalQty_" + rowNo).val(finalQuantity.toFixed(4));
+        //$("#ItemQty_" + rowNo).val(finalQuantity.toFixed(4));
+    }
+
+    function SetUserName() {
+        var selectedOptionTerms = document.getElementById("RaisedBy").selectedIndex;
+        var tempUserName = document.getElementById("RaisedBy").options[selectedOptionTerms].innerText;
+        document.getElementById("UserName").value = tempUserName;
+    }
+
+    //==================Set value in txtItemDetails onCick of Save/Update button======--------
+    function SaveBtnClick() {
+        debugger
+        $.ajax({
+            url: '/WeighmentProductionIndent/ClearCapturedWeightDataDelete',
+            type: "POST",
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+            },
+            error: function (err) {
+                alert('No data found to delete the captured weight data!');
+            }
+        });
+
+
+        createJson();
+    };
+
+    function createJson() {
+        var table = document.getElementById('ItemTable');
+        var rowCount = table.rows.length;
+        var i = 0;
+        TxtItemDetails = "[";
+        for (i = 0; i < rowCount - 1; i++) {
+            var ItemID = $("#ItemID_" + i).val();
+            var ItemCode = $("#ItemCode_" + i).val();
+            var ItemName = $("#ItemName_" + i).val();
+            var ItemQty = (document.getElementById("ItemQty_" + i)).innerHTML.split(" ")[0];
+            var ItemQty = $("#txtFinalQty_" + i).val();
+            ItemQty = (ItemQty == null || ItemQty == '') ? 0 : ItemQty;
+            var FinalQty = $("#txtFinalQty_" + i).val();
+            FinalQty = (FinalQty == null || FinalQty == '') ? 0 : FinalQty;
+            var Unit = (document.getElementById("ItemUnit_" + i)).innerHTML;
+            var Percentage = $("#Percentage_" + i).val();
+            var Weight = $("#txtWeight_" + i).val();
+            var Difference = $("#Difference_" + i).val();
+
+
+            TxtItemDetails = TxtItemDetails + "{\"ItemId\":" + ItemID +
+                ", \"Item_Code\":\"" + ItemCode + "\", \"ItemName\": \"" + ItemName + "\", \"ItemQty\": " + ItemQty +
+                ", \"FinalQty\": " + FinalQty + ", \"ItemUnit\": \"" + Unit + "\", \"Percentage\": " + Percentage +
+                ", \"Weight\": \"" + Weight + "\", \"Difference\": " + Difference;
+
+            if (i == (rowCount - 2))
+                TxtItemDetails = TxtItemDetails + "}";
+            else
+                TxtItemDetails = TxtItemDetails + "},";
+        }
+        TxtItemDetails = TxtItemDetails + "]"
+        $('#TxtItemDetails').val(TxtItemDetails);
+    }
+    //==========end===============
+
+    function isNumberKey(evt) {
+        $('#btnSave').prop('disabled', false);
+        var keycode = (evt.which) ? evt.which : evt.keyCode;
+        if (!(keycode == 8 || keycode == 46) && (keycode < 48 || keycode > 57)) {
+            return false;
+        }
+        else {
+            var parts = evt.srcElement.value.split('.');
+            if (parts.length > 1 && keycode == 46)
+                return false;
+            else
+                return true;
+        }
+        return true;
+    }
+
+    function capturedWeightTr(evt) {
+        //alert('Click on Capture Weight: ' + evt);
+        $('#txtWeight_' + evt).val('');
+        $('#Difference_' + evt).val('');
+        debugger
+        $.ajax({
+            url: '/WeighmentProductionIndent/InsertCapturedWeightIndentDetails',
+            type: "POST",
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                //console.log(result);
+                //alert('result: ' + result);
+            },
+            error: function (xhr, status, err) {
+                alert('Not able to get the captured weight!');                
+            }
+        });
+
+        $.ajax({
+            url: '/WeighmentProductionIndent/GetCapturedWeightIndentDetails',
+            type: "POST",
+            data: "{ }",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                var Weight = $('#txtWeight_' + evt).val(result.Column1.toFixed(4));
+                var FinalQty = "txtFinalQty_" + evt;
+                FinalQty = document.getElementById(FinalQty).value;
+                Weight = Weight[0].value;
+                if (Weight > 0) {
+                    var element = document.getElementById('txtWeight_' + evt);
+                    element.classList.replace('text-danger', 'text-success');
+                } debugger
+                var DifferenceWeightFinalQty = (Weight - FinalQty).toFixed(4);
+                //var DifferenceWeightFinalQty = Math.round(DifferenceWeightFinalQty);
+                $('#Difference_' + evt).val(DifferenceWeightFinalQty);
+
+                var PercentageRange = 2; // 2% difference range
+                var lowerLimit = FinalQty * (1 - PercentageRange / 100);
+                var upperLimit = FinalQty * (1 + PercentageRange / 100);
+                if (DifferenceWeightFinalQty >= lowerLimit && DifferenceWeightFinalQty <= upperLimit) {
+                    alert("Within the 2% difference range!");
+                    var element = document.getElementById('Difference_' + evt);
+                    element.classList.replace('text-danger', 'text-success');
+                } else {
+                    alert("Outside the 2% difference range!");
+                }
+            },
+            error: function (err) {
+                alert('Not able to get the captured weight!');
+            }
+        });
+    }
+
+    function nextTr(evt) {
+        debugger
+        var rows = $("#ItemTable tr");
+        var captureButtons = $(".capture");
+        var nextButtons = $(".next");
+
+        // Disable all the "Next" buttons except the first one
+        nextButtons.prop("disabled", true);
+        nextButtons.first().prop("disabled", false);
+
+        // Handle "Next" button click event
+        $(".next").on("click", function () {
+            // Find the index of the current row
+            var currentIndex = nextButtons.index(this);
+
+            // Disable the current row's "Capture" and "Next" buttons
+            captureButtons.eq(currentIndex).prop("disabled", true);
+            nextButtons.eq(currentIndex).prop("disabled", true);
+
+            // Enable the next row's "Capture" and "Next" buttons
+            captureButtons.eq(currentIndex + 1).prop("disabled", false);
+            nextButtons.eq(currentIndex + 1).prop("disabled", false);
+            nextButtons.first().prop("disabled", true);
+        });
+    }
+</script>
+
+@*///Rahul added 'style: button.btn-pq' on 21-07-23.*@
+<style>
+    button.btn-pq {
+        background-color: #ff9800 !important;
+        border-color: #ff9800 !important;
+    }
+</style>
+

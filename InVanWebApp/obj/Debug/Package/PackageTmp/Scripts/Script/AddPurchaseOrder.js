@@ -1,5 +1,198 @@
-﻿//==================Set value in txtItemDetails onCick of Save/Update button======--------
+﻿/*Shweta added 'function create_custom_dropdowns()' 22-06-2023. start*/
+
+$(document).ready(function () {
+    create_custom_dropdowns_IndentID();
+    create_custom_dropdowns_LocationId();
+    create_custom_dropdowns_VendorsID();
+});
+
+
+function create_custom_dropdowns_IndentID() {
+    $('select#IndentID').each(function (i, select) {
+
+        if (!$(this).next().hasClass('dropdown-select')) {
+
+            $('#IndentID').removeClass('form-control');
+            $(this).after('<div id="divIndentID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            var dropdown = $(this).next();
+            var options = $(select).find('option');
+            var selected = $(this).find('option:selected');
+            dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            options.each(function (j, o) {
+                var display = $(o).data('display-text') || '';
+                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+            });
+        }
+    });
+    $('#divIndentID.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueIndentID" autocomplete="off" onkeyup="filterIndentID()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+}
+function filterIndentID() {
+    var valThis = $('#txtSearchValueIndentID').val();
+    $('.dropdown-select ul > li').each(function () {
+        var text = $(this).text();
+        (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+    });
+};
+
+function create_custom_dropdowns_LocationId() {
+    $('select#LocationId').each(function (i, select) {
+
+        if (!$(this).next().hasClass('dropdown-select')) {
+
+            $('#LocationId').removeClass('form-control');
+            $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            var dropdown = $(this).next();
+            var options = $(select).find('option');
+            var selected = $(this).find('option:selected');
+            dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            options.each(function (j, o) {
+                var display = $(o).data('display-text') || '';
+                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+            });
+        }
+    });
+    $('#divLocationId.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueLocationId" autocomplete="off" onkeyup="filterLocationId()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+}
+function filterLocationId() {
+    var valThis = $('#txtSearchValueLocationId').val();
+    $('.dropdown-select ul > li').each(function () {
+        var text = $(this).text();
+        (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+    });
+};
+
+function create_custom_dropdowns_VendorsID() {
+    $('select#VendorsID').each(function (i, select) {
+
+        if (!$(this).next().hasClass('dropdown-select')) {
+
+            $('#VendorsID').removeClass('form-control');
+            $(this).after('<div id="divVendorsID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            var dropdown = $(this).next();
+            var options = $(select).find('option');
+            var selected = $(this).find('option:selected');
+            dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            options.each(function (j, o) {
+                var display = $(o).data('display-text') || '';
+                dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+            });
+        }
+    });
+    $('#divVendorsID.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueVendorsID" autocomplete="off" onkeyup="filterVendorsID()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+}
+function filterVendorsID() {
+    var valThis = $('#txtSearchValueVendorsID').val();
+    $('.dropdown-select ul > li').each(function () {
+        var text = $(this).text();
+        (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+    });
+};
+
+
+// Event listeners
+
+// Open/close
+$(document).on('click', '.dropdown-select', function (event) {
+    if ($(event.target).hasClass('dd-searchbox')) {
+        return;
+    }
+    $('.dropdown-select').not($(this)).removeClass('open');
+    $(this).toggleClass('open');
+    if ($(this).hasClass('open')) {
+        $(this).find('.option').attr('tabindex', 0);
+        $(this).find('.selected').focus();
+    } else {
+        $(this).find('.option').removeAttr('tabindex');
+        $(this).focus();
+    }
+});
+
+// Close when clicking outside
+$(document).on('click', function (event) {
+    if ($(event.target).closest('.dropdown-select').length === 0) {
+        $('.dropdown-select').removeClass('open');
+        $('.dropdown-select .option').removeAttr('tabindex');
+    }
+    event.stopPropagation();
+});
+// Option click
+$(document).on('click', '.dropdown-select .option', function (event) {
+    $(this).closest('.list').find('.selected').removeClass('selected');
+    $(this).addClass('selected');
+    var text = $(this).data('display-text') || $(this).text();
+    $(this).closest('.dropdown-select').find('.current').text(text);
+    $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+});
+
+// Keyboard events
+$(document).on('keydown', '.dropdown-select', function (event) {
+    var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+    // Space or Enter
+    //if (event.keyCode == 32 || event.keyCode == 13) {
+    if (event.keyCode == 13) {
+        if ($(this).hasClass('open')) {
+            focused_option.trigger('click');
+        } else {
+            $(this).trigger('click');
+        }
+        return false;
+        // Down
+    } else if (event.keyCode == 40) {
+        if (!$(this).hasClass('open')) {
+            $(this).trigger('click');
+        } else {
+            focused_option.next().focus();
+        }
+        return false;
+        // Up
+    } else if (event.keyCode == 38) {
+        if (!$(this).hasClass('open')) {
+            $(this).trigger('click');
+        } else {
+            var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+            focused_option.prev().focus();
+        }
+        return false;
+        // Esc
+    } else if (event.keyCode == 27) {
+        if ($(this).hasClass('open')) {
+            $(this).trigger('click');
+        }
+        return false;
+    }
+});
+
+/*Shweta added 'function create_custom_dropdowns()' 22-06-2023. end*/
+
+//==================Set value in txtItemDetails onCick of Save/Update button======--------
 function SaveBtnClick() {
+    ////Rahul added 'if (quantity == 0)' start 19-07-23.
+    var tableLength = document.getElementById('submissionTable').rows.length;    
+    var i = 0;
+    while (i <= tableLength - 1) {
+        var temp = document.getElementById("txtItemQty_" + i);
+        var tempIdValue = $("#txtItemQty_" + i).val();
+        if (tempIdValue == null || tempIdValue == '' || tempIdValue == "" || tempIdValue == 'undefined') {
+            var tempId = temp.id;
+            alert("Order quantity is zero or null! Cannot create PO!");
+            $('#btnSave').prop('disabled', true);
+            $('#btn_SaveDraft').prop('disabled', true);
+            document.getElementById(tempId).focus();
+            document.getElementById(tempId).setAttribute("style", "border-color:red;");
+            event.preventDefault();
+
+            i++;
+        }
+        else {
+            var tempId = temp.id;
+            var temp = document.getElementById("txtItemQty_" + i).value;
+            $('#btnSave').prop('disabled', false);
+            $('#btn_SaveDraft').prop('disabled', false);
+            document.getElementById(tempId).setAttribute("style", "border-color:none;");
+            i++;
+        }
+    }
+    ////Rahul added 'if (quantity == 0)' start 19-07-23.
     var CurrencyName = $("#CurrencyID option:selected").text();
     $("#CurrencyName").val(CurrencyName);
     createJson();
@@ -321,7 +514,7 @@ function CalculateTotalBeforeTax() {
     createJson();
 }
 
-function createJson() { debugger
+function createJson() { 
     //let res = [...document.getElementById("myTableBody").children].map(tr =>
     //    Object.fromEntries([...tr.querySelectorAll("input,select")].map(el =>
     //        [el.name, el.value])));
@@ -379,7 +572,7 @@ function createJson() { debugger
 function OnChangeQty(value, id) {
     $('#btnSave').prop('disabled', false);
     $('#btn_SaveDraft').prop('disabled', false);
-
+    debugger    
     var rowNo = id.split('_')[1];
     var quantity = value;
     var BalanceQty = $("#BalanceQuantity_" + rowNo).val();
@@ -387,8 +580,23 @@ function OnChangeQty(value, id) {
     var ActualBalQty = $('#ActualBalanceQuantity_' + rowNo).text();
     ActualBalQty = parseFloat(ActualBalQty);
 
-    if (quantity == '')
-        quantity = 0;
+    //if (quantity == '')
+        //quantity = 0;
+    ////Rahul added 'if (quantity == 0)' start 19-07-23.
+    if (quantity == '' || quantity == 0) {
+        alert("Order quantity cannot be null or zero(0)!");
+        document.getElementById(id).focus();
+        document.getElementById(id).setAttribute("style", "border-color:red;");
+        $('#btnSave').prop('disabled', true);
+        $('#btn_SaveDraft').prop('disabled', true);
+        return;
+    }
+    else {
+        $('#btnSave').prop('disabled', false);
+        $('#btn_SaveDraft').prop('disabled', false);
+        document.getElementById(id).setAttribute("style", "border-color:none;");
+    }
+    ////Rahul added 'if (quantity == 0)' start 19-07-23 end.
 
     quantity = parseFloat(quantity);
     var RequiredQty = (document.getElementById("RequiredQuantity_" + rowNo)).innerHTML.split(" ")[0];
@@ -569,7 +777,7 @@ function isNumberKey(evt) {
     return true;
 }
 /*Rahul : Add Javascript 'function removeTr(index)' start on 30-05-2023.*/
-function removeTr(index) {  debugger
+function removeTr(index) {  
     var length = document.getElementById("submissionTable").rows.length;
     length = parseFloat(length) - 1;
     id = index;

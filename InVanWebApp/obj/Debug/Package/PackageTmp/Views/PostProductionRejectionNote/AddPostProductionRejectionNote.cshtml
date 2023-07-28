@@ -36,68 +36,82 @@
                                 @Html.Label("Type")
                                 <span style="color:red">*</span>
                             </div>
+                            @*///Rahul added class 'DropdownRegular' in 'Type' 24-07-23.*@
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model=>model.PostProdRejectionType, new List<SelectListItem>{
+                                @Html.DropDownListFor(model => model.PostProdRejectionType, new List<SelectListItem>{
                                     new SelectListItem{ Text="--Select--",Value=""},
                                     new SelectListItem{ Text="FGS",Value="FGS"},
                                     new SelectListItem{ Text="COA", Value="COA"},
-                                    new SelectListItem{ Text="Product Evaluation Log", Value="ProductEvaluationLog"} }, new{ @class="form-control form-control-sm", id = "RejectionType" })
-                                
-                                @Html.HiddenFor(model=>model.PostProdRejectionType) 
+                                    new SelectListItem{ Text="Product Evaluation Log", Value="ProductEvaluationLog"} }, new { @class = "form-control form-control-sm DropdownRegular", id = "RejectionType" })
 
-                                    @*<select class="form-control form-control-sm" id="RejectionType" name="PostProdRejectionType" data-val="true" data-val-required="Select the Rejection Type!">
-                                    <option value="">--Select--</option>
-                                    <option value="FGS">FGS</option>
-                                    <option value="COA">COA</option>
-                                    <option value="ProductEvaluationLog">Product Evaluation Log</option>
-                                </select>*@
+                                @Html.HiddenFor(model => model.PostProdRejectionType)
+
+                                @*<select class="form-control form-control-sm" id="RejectionType" name="PostProdRejectionType" data-val="true" data-val-required="Select the Rejection Type!">
+                <option value="">--Select--</option>
+                <option value="FGS">FGS</option>
+                <option value="COA">COA</option>
+                <option value="ProductEvaluationLog">Product Evaluation Log</option>
+            </select>*@
                                 @Html.ValidationMessageFor(model => model.PostProdRejectionType, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             @*<div id="StageDiv" style="display:none;">*@
-                                <div class="col-md-2 StageDiv" style="display:none;">
-                                    @Html.Label("Stages")
-                                    <span style="color:red">*</span>
-                                </div>
-                                <div class="col-md-4 StageDiv" style="display:none;">
-                                    <select class="form-control form-control-sm" id="Stage" name="Stage">
-                                        <option value="1">Stage-1</option>
-                                        <option value="2">Stage-2</option>
-                                    </select>
-                                </div>
+                            <div class="col-md-2 StageDiv" style="display:none;">
+                                @Html.Label("Stages")
+                                <span style="color:red">*</span>
+                            </div>
+                            @*///Rahul added class 'Dropdow nRegular' in 'Stages' 24-07-23.*@
+                            <div class="col-md-4 StageDiv" style="display:none;">
+                                <select class="form-control form-control-sm DropdownRegular" id="Stage" name="Stage">
+                                    <option value="1">Stage-1</option>
+                                    <option value="2">Stage-2</option>
+                                </select>
+                            </div>
                             @*</div>*@
                             @*<div id="BatchRejectionDiv" style="display:none;">*@
-                                <div class="col-md-2 BatchRejectionDiv" style="display:none;">
-                                    @Html.Label("Batch Rejection")
-                                </div>
-                                <div class="col-md-4 BatchRejectionDiv" style="display:none;">
-                                    @Html.TextBoxFor(model => model.WholeBatchRejection, new { @class = "form-check-input form-control", type = "checkbox", value = "falses" })
-                                </div>
+                            <div class="col-md-2 BatchRejectionDiv" style="display:none;">
+                                @Html.Label("Batch Rejection")
+                            </div>
+                            <div class="col-md-4 BatchRejectionDiv" style="display:none;">
+                                @Html.TextBoxFor(model => model.WholeBatchRejection, new { @class = "form-check-input form-control", type = "checkbox", value = "falses" })
+                            </div>
                             @*</div>*@
                         </div>
                         <br />
                         <div class="row">
                             <div class="col-md-2">
-                                @Html.Label("Work Order Number")
+                                @Html.Label("Batch Number")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.DropDownListFor(model => model.FGS_ID, (IEnumerable<SelectListItem>)ViewData["WorkOrderDD"], "---Select---", new { @class = "form-control form-control-sm", onchange = "WorkOrderChange($(this).val())" })
-                                @Html.HiddenFor(model => model.WorkOrderNo)
+                                @*//Rahul commented 'WorkOrderDD' and added 'BatchNoDD' as per MOM 26-06-23.*@
+                                @*@Html.DropDownListFor(model => model.FGS_ID, (IEnumerable<SelectListItem>)ViewData["WorkOrderDD"], "---Select---", new { @class = "form-control form-control-sm", onchange = "WorkOrderChange($(this).val())" })*@
+                                @Html.DropDownListFor(model => model.FGS_ID, (IEnumerable<SelectListItem>)ViewData["BatchNoDD"], "---Select---", new { @class = "form-control form-control-sm", onchange = "BatchNoChange($(this).val())" })
+                                @Html.HiddenFor(model => model.BatchNumber)  @*//Rahul updated 'WorkOrderNo' to 'BatchNo' as per MOM 26-06-23.*@
                                 @Html.HiddenFor(model => model.SO_No)
                                 @Html.HiddenFor(model => model.SO_Id)
                                 @Html.ValidationMessageFor(model => model.FGS_ID, "", new { @class = "error mt-2 text-danger" })
                             </div>
                             <div class="col-md-2">
-                                @Html.Label("Batch Number")
+                                @Html.Label("Work Order Number")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger", id = "valMsgBN" })
+                                @Html.TextBoxFor(model => model.WorkOrderNo, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger", id = "valMsgWON" })
+                            </div>
+                        </div>
+                        <br />  @*//Rahul added 'PackageSize' from 'FGS' 26-06-2023.*@
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Package Size")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.PackageSize, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.PackageSize, "", new { @class = "error mt-2 text-danger", id = "valMsgPS" })
                             </div>
                         </div>
                         <br />
-
                         <div class="row" id="divLabel">
                             <div class="col-md-2">
                                 @Html.Label("Item QC Details")
@@ -114,7 +128,9 @@
                                             <th>Item</th>
                                             <th>Ordered Quantity (Packets)</th>
                                             <th>FGS Quantity (Packets)</th>
-                                            <th>Rejected Quantity (Packets)</th>
+                                            <th>Current FGS Quantity (Packets)</th>     @*Rahul added 'Current FGS Quantity (Packets)' 27-06-23.*@
+                                            <th>Total Rejected Quantity (Packets)</th>  @*Rahul updated 'Total Rejected Quantity (Packets)' 27-06-23.*@
+                                            <th>Current Rejected Quantity (Packets)</th>    @*Rahul added 'Current Rejected Quantity (Packets)' 27-06-23.*@     
                                             <th>Remarks</th>
                                         </tr>
                                     </thead>
@@ -138,10 +154,12 @@
                                 <div class="col-3">
                                     <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Save</button>
                                 </div>
-                                <div class="col-4">
+                                @*Rahul added class 'd-none' 26-06-23.*@
+                                <div class="col-4 d-none">
                                     <button type="submit" id="btn_SaveDraft" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
                                 </div>
-                                <div class="col-4">
+                                @*Rahul added class 'ml-4' 26-06-23.*@
+                                <div class="col-4 ml-4">
                                     <a href="@Url.Action("Index", "PostProductionRejectionNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                                         Back To List
                                     </a>
@@ -160,9 +178,112 @@
 }
 <script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
-
+<link href="~/Theme/MainContent/css/CustomDropdown.css" rel="stylesheet" />
 
 <script type="text/javascript">
+
+    //Vedant added 'function createCustomDropdown()' 04-07-2023. start
+    $(document).ready(function () {
+        createCustomDropdown_FGS_ID();
+    });
+
+    function createCustomDropdown_FGS_ID() {
+        $('select#FGS_ID').each(function (i, select) {
+            if (!$(this).next().hasClass('dropdown-select')) {
+                $('#FGS_ID').removeClass('form-control');
+                $(this).after('<div id="divFGS_ID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+        $('#divFGS_ID.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueFGS_ID" autocomplete="off" onkeyup="filterFGS_ID()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+    function filterFGS_ID() {
+        var valThis = $('#txtSearchValueFGS_ID').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+    // Event listeners
+
+    // Open/close
+    $(document).on('click', '.dropdown-select', function (event) {
+        if ($(event.target).hasClass('dd-searchbox')) {
+            return;
+        }
+        $('.dropdown-select').not($(this)).removeClass('open');
+        $(this).toggleClass('open');
+        if ($(this).hasClass('open')) {
+            $(this).find('.option').attr('tabindex', 0);
+            $(this).find('.selected').focus();
+        } else {
+            $(this).find('.option').removeAttr('tabindex');
+            $(this).focus();
+        }
+    });
+    // Close when clicking outside
+    $(document).on('click', function (event) {
+        if ($(event.target).closest('.dropdown-select').length === 0) {
+            $('.dropdown-select').removeClass('open');
+            $('.dropdown-select .option').removeAttr('tabindex');
+        }
+        event.stopPropagation();
+    });
+    // Option click
+    $(document).on('click', '.dropdown-select .option', function (event) {
+        $(this).closest('.list').find('.selected').removeClass('selected');
+        $(this).addClass('selected');
+        var text = $(this).data('display-text') || $(this).text();
+        $(this).closest('.dropdown-select').find('.current').text(text);
+        $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+    });
+
+    // Keyboard events
+    $(document).on('keydown', '.dropdown-select', function (event) {
+        var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+        // Space or Enter
+        //if (event.keyCode == 32 || event.keyCode == 13) {
+        if (event.keyCode == 13) {
+            if ($(this).hasClass('open')) {
+                focused_option.trigger('click');
+            } else {
+                $(this).trigger('click');
+            }
+            return false;
+            // Down
+        } else if (event.keyCode == 40) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                focused_option.next().focus();
+            }
+            return false;
+            // Up
+        } else if (event.keyCode == 38) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+                focused_option.prev().focus();
+            }
+            return false;
+            // Esc
+        } else if (event.keyCode == 27) {
+            if ($(this).hasClass('open')) {
+                $(this).trigger('click');
+            }
+            return false;
+        }
+    });
+    //Vedant added 'function createCustomDropdown()' 04-07-2023. end
+
 
     $("#btn_SaveDraft").click(function () {
         $("#DraftFlag").val('true');
@@ -170,12 +291,14 @@
     });
 
     //==================Set value in txtItemDetails onCick of Save/Update button======--------
-    function SaveBtnClick() {
+    function SaveBtnClick() {   
         createJson();
     };
     //==========end===============
 
-    function WorkOrderChange(id) {
+    @*//Rahul commented 'WorkOrderDD' and added 'BatchNoDD' as per MOM 26-06-23.*@ 
+    /*function WorkOrderChange(id) {*/
+    function BatchNoChange(id) { debugger
         //Rahul added 'rowCount' For deleting the rows of Item table if exist. 02-066-2023.
         var table = document.getElementById('ItemTable');
         var rowCount = table.rows.length;
@@ -193,7 +316,8 @@
 
         $('#btnSave').prop('disabled', false);
         $('#btn_SaveDraft').prop('disabled', false);
-        $('#valMsgBN').hide();
+        $('#valMsgWON').hide();
+        $('#valMsgPS').hide();  //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
         $('#RejectionType').prop('disabled', true);
 
         var Stage = 0;
@@ -217,7 +341,11 @@
                         alert('There is no Stage-1 record for the selected Work Order!');
                         window.location.href = '/PostProductionRejectionNote';
                     }
-                    $('#BatchNumber').val(result.BatchNo);
+                    $('#BatchNumber').val(result.BatchNo);                    
+                    $('#WorkOrderNo').val(result.WorkOrderNo);  //Rahul added 'WorkOrderNo' from 'FGS' 26-06-2023. 
+                    $('#PackageSize').val(result.PackageSize);  //Rahul added 'PackageSize' from 'FGS' 26-06-2023.  
+                    $('#CurrentFGSQty').val(result.CurrentFGSQty);  //Rahul added 'CurrentFGSQty' from 'PP_RN_D' 26-06-2023.
+                    $('#CurrentRejectedQty').val(result.CurrentRejectedQty);  //Rahul added 'CurrentRejectedQty' from 'PP_RN_D' 26-06-2023.
 
                     if (result.SalesOrderId != 0) {
                         $('#SO_No').val(result.SONo);
@@ -259,55 +387,87 @@
                                 cell.appendChild(t2);
                             }
                             else if (i == 3) {
-                                var t2 = document.createElement("input");
-                                t2.id = "OrderQty_" + j;
-                                t2.setAttribute("disabled", "true");
-                                t2.setAttribute("style", "background:transparent;border:none;");
-                                t2.setAttribute("value", result.OrderQty);
-                                cell.appendChild(t2);
+                                var t3 = document.createElement("input");
+                                t3.id = "OrderQty_" + j;
+                                t3.setAttribute("disabled", "true");
+                                t3.setAttribute("style", "background:transparent;border:none;");
+                                t3.setAttribute("value", result.OrderQty);
+                                cell.appendChild(t3);
                             }
                             else if (i == 4) {
-                                var t2 = document.createElement("input");
-                                t2.id = "FGSQty_" + j;
-                                t2.setAttribute("disabled", "true");
-                                t2.setAttribute("style", "background:transparent;border:none;");
-                                t2.setAttribute("value", result.QuantityInKG);
-                                cell.appendChild(t2);
-                            }
-                            else if (i == 5) {
                                 var t4 = document.createElement("input");
-                                t4.id = "txRejectedQty_" + j;
-                                t4.removeAttribute("disabled", "false");
-                                t4.removeAttribute("disabled", "true");
-                                t4.setAttribute("maxlength", "8");
-                                t4.setAttribute("onkeypress", "return isNumberKey(event)");
-                                t4.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
-                                t4.setAttribute("class", "form-control form-control-sm");
+                                t4.id = "FGSQty_" + j;
+                                t4.setAttribute("disabled", "true");
+                                t4.setAttribute("style", "background:transparent;border:none;");
+                                t4.setAttribute("value", result.QuantityInKG);
                                 cell.appendChild(t4);
+                            }   /// Rahul added 'CurrentFGSQty_' 27-06-23. 
+                            else if (i == 5) {
+                                var t5 = document.createElement("input");
+                                t5.id = "CurrentFGSQty_" + j;
+                                t5.setAttribute("disabled", "true");
+                                t5.setAttribute("style", "background:transparent;border:none;");
+                                if (result.CurrentFGSQty == 0) {    
+                                    result.CurrentFGSQty = result.QuantityInKG;
+                                    t5.setAttribute("value", result.CurrentFGSQty); 
+                                }
+                                else {                                     
+                                    var tempCurrentFGSQty = result.CurrentFGSQty - result.CurrentRejectedQty;
+                                    t5.setAttribute("value", tempCurrentFGSQty); 
+                                }
+                                //t5.setAttribute("value", result.CurrentFGSQty - result.CurrentRejectedQty); 
+                                cell.appendChild(t5);
+                            }   /// Rahul added 'CurrentFGSQty_' 27-06-23. 
+                            else if (i == 6) {
+                                var t6 = document.createElement("input");
+                                t6.id = "txRejectedQty_" + j;
+                                t6.setAttribute("disabled", "true");
+                                t6.setAttribute("style", "background:transparent;border:none;");
+                                //t6.setAttribute("value", result.CurrentRejectedQty);                                 
+                                var tempCurrentFGSQty = (result.QuantityInKG-(result.CurrentFGSQty - result.CurrentRejectedQty));
+
+                                t6.setAttribute("value", tempCurrentFGSQty);
+                                cell.appendChild(t6);
+                            }   
+                           /// Rahul added 'txCurrentRejectedQty_' 27-06-23.
+                            else if (i == 7) {
+                                var t7 = document.createElement("input");
+                                t7.id = "txCurrentRejectedQty_" + j;
+                                t7.removeAttribute("disabled", "false");
+                                t7.removeAttribute("disabled", "true");
+                                t7.setAttribute("maxlength", "8");
+                                t7.setAttribute("onkeypress", "return isNumberKey(event)");
+                                t7.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
+                                t7.setAttribute("class", "form-control form-control-sm");
+                                t7.setAttribute("value", 0); 
+                                cell.appendChild(t7);
                                 var t6 = document.createElement('span');
-                                t6.id = "spanRejQty_" + j;
+                                t6.id = "spanCurrentRejQty_" + j;
                                 cell.appendChild(t6);
                             }
-                            else if (i == 6) {
-                                var t4 = document.createElement("input");
-                                t4.id = "txRemark_" + j;
-                                t4.removeAttribute("disabled", "false");
-                                t4.removeAttribute("disabled", "true");
-                                t4.setAttribute("maxlength", "50");
-                                t4.setAttribute("class", "form-control form-control-sm");
-                                cell.appendChild(t4);
+                            else if (i == 8) {
+                                var t8 = document.createElement("input");
+                                t8.id = "txRemark_" + j;
+                                t8.removeAttribute("disabled", "false");
+                                t8.removeAttribute("disabled", "true");
+                                t8.setAttribute("maxlength", "95");
+                                t8.setAttribute("class", "form-control form-control-sm");
+                                cell.appendChild(t8);
                             }
                         }
 
                         var WholeRejFlag = $("#WholeBatchRejection").is(":checked");
                         if (WholeRejFlag) {
                             var FGSQty = $('#FGSQty_0').val();
-                            $('#txRejectedQty_0').val(FGSQty);
-                            document.getElementById('txRejectedQty_0').setAttribute('disabled', 'disabled');
+                            //$('#txRejectedQty_0').val(FGSQty);       /// Rahul commented 'txRejectedQty_0' 03-07-23.
+                            //document.getElementById('txRejectedQty_0').setAttribute('disabled', 'disabled');       /// Rahul commented 'txRejectedQty_0' 03-07-23.
+                            $('#txCurrentRejectedQty_0').val(FGSQty);       /// Rahul added 'txCurrentRejectedQty_0' 03-07-23.
+                            document.getElementById('txCurrentRejectedQty_0').setAttribute('disabled', 'disabled');       /// Rahul added 'txCurrentRejectedQty_0' 03-07-23.
                         }
-                        else {
-                            document.getElementById('txRejectedQty_0').removeAttribute('disabled', 'disabled');
-                        }
+                        else if (!WholeRejFlag && RejType != 'FGS') {                            
+                            //document.getElementById('txRejectedQty_0').removeAttribute('disabled', 'disabled');        /// Rahul commented 'txRejectedQty_0' 03-07-23.
+                            document.getElementById('txCurrentRejectedQty_0').removeAttribute('disabled', 'disabled');       /// Rahul added 'txCurrentRejectedQty_0' 03-07-23.
+                        } 
                         // }
                     }
                     else {
@@ -325,20 +485,44 @@
         });
     }
 
-    function OnChangeRejQty(value, id) {
+    function OnChangeRejQty(value, id) {            
         var rowNo = id.split('_')[1];
         if (value == '')
             value = 0;
-
+        
         var RejQty = parseFloat(value);
         var FGSQty = $('#FGSQty_' + rowNo).val();
         FGSQty = parseFloat(FGSQty);
 
+        var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val();
+        CurrentFGSQty = parseFloat(CurrentFGSQty);
+
+        if (CurrentFGSQty == 0) {
+            var tempCurrentFGSQty = FGSQty;
+        }
+        else {
+            var tempCurrentFGSQty = CurrentFGSQty; 
+        }
+
+        var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val(tempCurrentFGSQty);
+        CurrentFGSQty = parseFloat(CurrentFGSQty); 
+
+        var TotRejectedQty = $('#txRejectedQty_' + rowNo).val();
+        TotRejectedQty = parseFloat(TotRejectedQty);
+                
+
         if (FGSQty < RejQty) {
-            $('#spanRejQty_' + rowNo).text('Rejected quantity cannot be greater than FGS Quantity!');
-            $('#spanRejQty_' + rowNo).show();
-            document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
-            document.getElementById("txRejectedQty_" + rowNo).focus();
+            /// Rahul commented '#spanRejQty_' and "txRejectedQty_" 27-06-23. 
+            //$('#spanRejQty_' + rowNo).text('Rejected quantity cannot be greater than FGS Quantity!'); 
+            //$('#spanRejQty_' + rowNo).show(); 
+            //document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            //document.getElementById("txRejectedQty_" + rowNo).focus();
+            //document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            /// Rahul added '#spanCurrentRejQty_' and "txCurrentRejectedQty_" 27-06-23.
+            $('#spanCurrentRejQty_' + rowNo).text('Current Rejected quantity cannot be greater than FGS Quantity!');
+            $('#spanCurrentRejQty_' + rowNo).show();
+            document.getElementById('spanCurrentRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            document.getElementById("txCurrentRejectedQty_" + rowNo).focus();
             $('#btnSave').prop('disabled', true);
             $('#btn_SaveDraft').prop('disabled', true);
             return;
@@ -346,8 +530,30 @@
         else {
             $('#btnSave').prop('disabled', false);
             $('#btn_SaveDraft').prop('disabled', false);
-            $('#spanRejQty_' + rowNo).text('');
-            $('#spanRejQty_' + rowNo).hide();
+            //$('#spanRejQty_' + rowNo).text('');   /// Rahul commented '#spanRejQty_' 27-06-23. 
+            //$('#spanRejQty_' + rowNo).hide();   /// Rahul commented '#spanRejQty_' 27-06-23. 
+            $('#spanCurrentRejQty_' + rowNo).text('');   /// Rahul added '#spanCurrentRejQty_' 27-06-23.
+            $('#spanCurrentRejQty_' + rowNo).hide();    /// Rahul added '#spanCurrentRejQty_' 27-06-23. 
+        }
+
+        /// Rahul added 'if (CurrentFGSQty < RejQty)' 28-06-23.
+        var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val();
+        CurrentFGSQty = parseFloat(CurrentFGSQty);
+
+        if (CurrentFGSQty < RejQty) {   
+            $('#spanCurrentRejQty_' + rowNo).text('Current Rejected quantity cannot be greater than Current FGS Quantity!');
+            $('#spanCurrentRejQty_' + rowNo).show();
+            document.getElementById('spanCurrentRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            document.getElementById("txCurrentRejectedQty_" + rowNo).focus();
+            $('#btnSave').prop('disabled', true);
+            $('#btn_SaveDraft').prop('disabled', true);
+            return;
+        }
+        else {
+            $('#btnSave').prop('disabled', false);
+            $('#btn_SaveDraft').prop('disabled', false);
+            $('#spanCurrentRejQty_' + rowNo).text('');   
+            $('#spanCurrentRejQty_' + rowNo).hide();    
         }
     }
 
@@ -394,14 +600,18 @@
             var ItemName = (document.getElementById("ItemName_" + i)).value;
             var OrderQty = ((document.getElementById("OrderQty_" + i)).value);
             var FGSQty = ((document.getElementById("FGSQty_" + i)).value);
+            var CurrentFGSQty = ((document.getElementById("CurrentFGSQty_" + i)).value); ///  Rahul added 'CurrentFGSQty_' 27-06-23.
             var RejecQty = ((document.getElementById("txRejectedQty_" + i)).value);
-            RejecQty = (RejecQty == null || RejecQty == '') ? 0 : RejecQty;
+            //RejecQty = (RejecQty == null || RejecQty == '') ? 0 : RejecQty;  ///  Rahul commented 'RejecQty' 27-06-23.
+            var CurrentRejectedQty = ((document.getElementById("txCurrentRejectedQty_" + i)).value); /// Rahul added 'txCurrentRejectedQty_' 27-06-23.
+            CurrentRejectedQty = (CurrentRejectedQty == null || CurrentRejectedQty == '') ? 0 : CurrentRejectedQty; /// Rahul added 'CurrentRejectedQty' 27-06-23. 
 
-            var Remark = ((document.getElementById("txRemark_" + i)).value);
-           
+            var Remark = ((document.getElementById("txRemark_" + i)).value); 
+           ///  Rahul added 'CurrentFGSQty_', 'CurrentRejectedQty' in 'TxtItemDetails' 27-06-23. 
             TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
-                ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty
-                + ", \"FGSQty\": \"" + FGSQty + "\", \"RejecQty\": " + RejecQty + ",\"Remark\": \"" + Remark +
+                ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty + ", \"FGSQty\": " + FGSQty
+                + ", \"CurrentFGSQty\": " + CurrentFGSQty + ", \"RejecQty\": " + RejecQty 
+                + ", \"CurrentRejectedQty\": " + CurrentRejectedQty + ",\"Remark\": \"" + Remark +
                 "\"";
 
             if (i == (rowCount - 2))
@@ -411,8 +621,8 @@
         }
         TxtItemDetails = TxtItemDetails + "]";
         $('#txtItemDetails').val(TxtItemDetails);
-
-       /// console.log(TxtItemDetails);
+            
+        console.log(TxtItemDetails);
     }
 
 </script>

@@ -14,7 +14,7 @@
                         <hr />
                         @Html.ValidationSummary(true)
                         @Html.HiddenFor(model => model.ID)
-                        
+
                         <div class="row">
                             <div class="col-md-2">
                                 <label id="lblNoteDate">Rejection Note Date</label>
@@ -48,7 +48,7 @@
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4 StageDiv" style="display:none;">
-                                @Html.TextBoxFor(model => model.Stage, new { @class = "form-control form-control-sm", id= "Stage", type = "text", @readonly = "readonly" })
+                                @Html.TextBoxFor(model => model.Stage, new { @class = "form-control form-control-sm", id = "Stage", type = "text", @readonly = "readonly" })
                             </div>
                             <div class="col-md-2 BatchRejectionDiv" style="display:none;">
                                 @Html.Label("Batch Rejection")
@@ -60,6 +60,14 @@
                         <br />
                         <div class="row">
                             <div class="col-md-2">
+                                @Html.Label("Batch Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger", id = "valMsgBN" })
+                            </div>
+                            <div class="col-md-2">
                                 @Html.Label("Work Order Number")
                                 <span style="color:red">*</span>
                             </div>
@@ -70,17 +78,19 @@
                                 @Html.HiddenFor(model => model.SO_Id)
                                 @Html.ValidationMessageFor(model => model.WorkOrderNo, "", new { @class = "error mt-2 text-danger" })
                             </div>
+                        </div>
+                        <br />  @*//Rahul added 'PackageSize' from 'FGS' 26-06-2023.*@
+                        <div class="row">
                             <div class="col-md-2">
-                                @Html.Label("Batch Number")
+                                @Html.Label("Package Size")
                                 <span style="color:red">*</span>
                             </div>
                             <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.BatchNumber, new { @class = "form-control form-control-sm", @readonly = "readonly" })
-                                @Html.ValidationMessageFor(model => model.BatchNumber, "", new { @class = "error mt-2 text-danger", id = "valMsgBN" })
+                                @Html.TextBoxFor(model => model.PackageSize, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.PackageSize, "", new { @class = "error mt-2 text-danger", id = "valMsgPS" })
                             </div>
                         </div>
                         <br />
-
                         <div class="row" id="divLabel">
                             <div class="col-md-2">
                                 @Html.Label("Item QC Details")
@@ -97,7 +107,9 @@
                                             <th>Item</th>
                                             <th>Ordered Quantity (Packets)</th>
                                             <th>FGS Quantity (Packets)</th>
-                                            <th>Rejected Quantity (Packets)</th>
+                                            <th>Current FGS Quantity (Packets)</th>     @*Rahul added 'Current FGS Quantity (Packets)' 27-06-23.*@
+                                            <th>Total Rejected Quantity (Packets)</th>  @*Rahul updated 'Total Rejected Quantity (Packets)' 27-06-23.*@
+                                            <th>Current Rejected Quantity (Packets)</th>    @*Rahul added 'Current Rejected Quantity (Packets)' 27-06-23.*@
                                             <th>Remarks</th>
                                         </tr>
                                     </thead>
@@ -105,33 +117,41 @@
                                         @{ int c = 0;
                                             foreach (var item in Model.note_DetailsBOs)
                                             {
-                                                <tr id="tablerow_@c">
-                                                    <td class="col-md-4 d-none">
-                                                        @Html.TextBox("ItemID_" + c, item.ItemId, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("ItemCode_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("OrderQty_" + c, item.OrderedQuantity, new{@class = "form-control form-control-sm",@readonly = "readonly"})
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("FGSQty_" + c, item.TotalQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("txRejectedQty_" +c, item.RejectedQuantity, new { @class = "form-control form-control-sm", onkeypress= "return isNumberKey(event)", onchange = "OnChangeRejQty($(this).val(),id)" })
-                                                        <span style="display:none;" id="spanRejQty_@c"></span>
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("txRemark_" + c, item.Remarks, new { @class = "form-control form-control-sm", onchange= "OnChangeRejQty($(this).val(),id)" })
-                                                    </td>
-                                                </tr>
-                                                { c++; }
-                                            }
-                                        }
+                            <tr id="tablerow_@c">
+                                <td class="col-md-4 d-none">
+                                    @Html.TextBox("ItemID_" + c, item.ItemId, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("ItemCode_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readOnly = "readOnly", style = "height:30px;width:110px;" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("ItemName_" + c, item.ItemName, new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("OrderQty_" + c, item.OrderedQuantity, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("FGSQty_" + c, item.TotalQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @Html.TextBox("CurrentFGSQty_" + c, item.CurrentFGSQty, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                </td>
+                                <td>
+                                    @*@Html.TextBox("txRejectedQty_" + c, item.RejectedQuantity, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })*@
+                                    @Html.TextBox("txRejectedQty_" + c, item.CurrentRejectedQty, new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                    @*<span style="display:none;" id="spanRejQty_@c"></span>*@
+                                </td>
+                                <td>
+                                    @*@Html.TextBox("txCurrentRejectedQty_" + c, item.CurrentRejectedQty, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", onchange = "OnChangeRejQty($(this).val(),id)", value = "0" })*@
+                                    @Html.TextBox("txCurrentRejectedQty_" + c, item.RejectedQuantity, new { @class = "form-control form-control-sm", onkeypress = "return isNumberKey(event)", onchange = "OnChangeRejQty($(this).val(),id)" })
+                                    <span style="display:none;" id="spanCurrentRejQty_@c"></span>
+                                </td>
+                                <td>
+                                    @*///Rahul removed ', onchange = "OnChangeRejQty($(this).val(),id)" ' from 'txRemark_' 28-06-23.*@  
+                                    @Html.TextBox("txRemark_" + c, item.Remarks, new { @class = "form-control form-control-sm" })
+                                </td>
+                            </tr> { c++; }
+                                            } }
                                     </tbody>
                                 </table>
                             </div>
@@ -153,10 +173,12 @@
                                 <div class="col-3">
                                     <button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right;" onclick="SaveBtnClick()">Update</button>
                                 </div>
-                                <div class="col-4">
+                                @*Rahul added class 'd-none' 26-06-23.*@
+                                <div class="col-4 d-none">
                                     <button type="submit" id="btn_SaveDraft" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b);float:right">Save Draft</button>
                                 </div>
-                                <div class="col-4">
+                                @*Rahul added class 'ml-4' 26-06-23.*@ 
+                                <div class="col-4 ml-4">
                                     <a href="@Url.Action("Index", "PostProductionRejectionNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
                                         Back To List
                                     </a>
@@ -180,6 +202,14 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+        var tempCurrentFGSQty = document.getElementById("CurrentFGSQty_0").value;
+        var tempRejectedQty = document.getElementById("txRejectedQty_0").value;
+        var finalCurrentFGSQty = tempCurrentFGSQty - tempRejectedQty;
+        $('#CurrentFGSQty_0').val(finalCurrentFGSQty); 
+
+        document.getElementById("txCurrentRejectedQty_0").value = 0;        
+
         var QCType = $('#PostProdRejectionType').val();
         if (QCType == 'FGS') {
             $(".StageDiv").show();
@@ -280,43 +310,43 @@
                                 cell.appendChild(t2);
                             }
                             else if (i == 3) {
-                                var t2 = document.createElement("input");
-                                t2.id = "OrderQty_" + j;
-                                t2.setAttribute("disabled", "true");
-                                t2.setAttribute("style", "background:transparent;border:none;");
-                                t2.setAttribute("value", result.OrderQty);
-                                cell.appendChild(t2);
+                                var t3 = document.createElement("input");
+                                t3.id = "OrderQty_" + j;
+                                t3.setAttribute("disabled", "true");
+                                t3.setAttribute("style", "background:transparent;border:none;");
+                                t3.setAttribute("value", result.OrderQty);
+                                cell.appendChild(t3);
                             }
                             else if (i == 4) {
-                                var t2 = document.createElement("input");
-                                t2.id = "FGSQty_" + j;
-                                t2.setAttribute("disabled", "true");
-                                t2.setAttribute("style", "background:transparent;border:none;");
-                                t2.setAttribute("value", result.QuantityInKG);
-                                cell.appendChild(t2);
+                                var t4 = document.createElement("input");
+                                t4.id = "FGSQty_" + j;
+                                t4.setAttribute("disabled", "true");
+                                t4.setAttribute("style", "background:transparent;border:none;");
+                                t4.setAttribute("value", result.QuantityInKG);
+                                cell.appendChild(t4);
                             }
                             else if (i == 5) {
-                                var t4 = document.createElement("input");
-                                t4.id = "txRejectedQty_" + j;
-                                t4.removeAttribute("disabled", "false");
-                                t4.removeAttribute("disabled", "true");
-                                t4.setAttribute("maxlength", "8");
-                                t4.setAttribute("onkeypress", "return isNumberKey(event)");
-                                t4.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
-                                t4.setAttribute("class", "form-control form-control-sm");
-                                cell.appendChild(t4);
-                                var t6 = document.createElement('span');
-                                t6.id = "spanRejQty_" + j;
-                                cell.appendChild(t6);
+                                var t5 = document.createElement("input");
+                                t5.id = "txRejectedQty_" + j;
+                                t5.removeAttribute("disabled", "false");
+                                t5.removeAttribute("disabled", "true");
+                                t5.setAttribute("maxlength", "8");
+                                t5.setAttribute("onkeypress", "return isNumberKey(event)");
+                                t5.setAttribute("onchange", "OnChangeRejQty($(this).val(),id)");
+                                t5.setAttribute("class", "form-control form-control-sm");
+                                cell.appendChild(t5);
+                                var t5 = document.createElement('span');
+                                t5.id = "spanRejQty_" + j;
+                                cell.appendChild(t5);
                             }
                             else if (i == 6) {
-                                var t4 = document.createElement("input");
-                                t4.id = "txRemark_" + j;
-                                t4.removeAttribute("disabled", "false");
-                                t4.removeAttribute("disabled", "true");
-                                t4.setAttribute("maxlength", "50");
-                                t4.setAttribute("class", "form-control form-control-sm");
-                                cell.appendChild(t4);
+                                var t6 = document.createElement("input");
+                                t6.id = "txRemark_" + j;
+                                t6.removeAttribute("disabled", "false");
+                                t6.removeAttribute("disabled", "true");
+                                t6.setAttribute("maxlength", "50");
+                                t6.setAttribute("class", "form-control form-control-sm");
+                                cell.appendChild(t6);
                             }
                         }
                         var WholeRejFlag = $('#WholeBatchRejection').val();
@@ -353,21 +383,83 @@
         var RejQty = parseFloat(value);
         var FGSQty = $('#FGSQty_' + rowNo).val();
         FGSQty = parseFloat(FGSQty);
+           /// Rahul added '#CurrentFGSQty' 27-06-23 start.
+        var CurrentRejectedQty = $('#txCurrentRejectedQty_' + rowNo).val();
+        CurrentRejectedQty = parseFloat(CurrentRejectedQty);
+
+        var TotRejectedQty = $('#txRejectedQty_' + rowNo).val();
+        TotRejectedQty = parseFloat(TotRejectedQty);
+
+        //var tempTotRejectedQty = CurrentRejectedQty + TotRejectedQty;
+        //var TotRejectedQty = $('#txRejectedQty_' + rowNo).val(tempTotRejectedQty);
+        //TotRejectedQty = parseFloat(TotRejectedQty);
+
+        var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val();
+        CurrentFGSQty = parseFloat(CurrentFGSQty);
+
+        if (CurrentFGSQty == 0) {
+            var tempCurrentFGSQty = FGSQty;
+        }
+        else {
+            var TotRejectedQty = $('#txRejectedQty_' + rowNo).val();
+            TotRejectedQty = parseFloat(TotRejectedQty); 
+            var tempCurrentFGSQty = FGSQty - TotRejectedQty; 
+        }
+
+        var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val(tempCurrentFGSQty);
+        CurrentFGSQty = parseFloat(CurrentFGSQty);
+            /// Rahul added '#CurrentFGSQty' 27-06-23 end.  
+
 
         if (FGSQty < RejQty) {
-            $('#spanRejQty_' + rowNo).text('Rejected quantity cannot be greater than FGS Quantity!');
-            $('#spanRejQty_' + rowNo).show();
-            document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
-            document.getElementById("txRejectedQty_" + rowNo).focus();
+            /// Rahul commented '#spanRejQty_' and "txRejectedQty_" 27-06-23. 
+            //$('#spanRejQty_' + rowNo).text('Rejected quantity cannot be greater than FGS Quantity!'); 
+            //$('#spanRejQty_' + rowNo).show(); 
+            //document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            //document.getElementById("txRejectedQty_" + rowNo).focus();
+            //document.getElementById('spanRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            /// Rahul added '#spanCurrentRejQty_' and "txCurrentRejectedQty_" 27-06-23.
+            $('#spanCurrentRejQty_' + rowNo).text('Current Rejected quantity cannot be greater than FGS Quantity!');
+            $('#spanCurrentRejQty_' + rowNo).show();
+            document.getElementById('spanCurrentRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            document.getElementById("txCurrentRejectedQty_" + rowNo).focus();
             $('#btnSave').prop('disabled', true);
-            $('#btn_SaveDraft').prop('disabled', true);
+            $('#btn_SaveDraft').prop('disabled', true); 
+            setInterval(function () {
+                location.reload(true);
+            }, 7000);
             return;
         }
         else {
             $('#btnSave').prop('disabled', false);
             $('#btn_SaveDraft').prop('disabled', false);
-            $('#spanRejQty_' + rowNo).text('');
-            $('#spanRejQty_' + rowNo).hide();
+            //$('#spanRejQty_' + rowNo).text('');   /// Rahul commented '#spanRejQty_' 27-06-23. 
+            //$('#spanRejQty_' + rowNo).hide();   /// Rahul commented '#spanRejQty_' 27-06-23. 
+            $('#spanCurrentRejQty_' + rowNo).text('');   /// Rahul added '#spanCurrentRejQty_' 27-06-23.
+            $('#spanCurrentRejQty_' + rowNo).hide();    /// Rahul added '#spanCurrentRejQty_' 27-06-23. 
+        }
+
+        /// Rahul added 'if (CurrentFGSQty < RejQty)' 28-06-23.
+        var CurrentFGSQty = $('#CurrentFGSQty_' + rowNo).val();
+        CurrentFGSQty = parseFloat(CurrentFGSQty);
+
+        if (CurrentFGSQty < RejQty) {
+            $('#spanCurrentRejQty_' + rowNo).text('Current Rejected quantity cannot be greater than Current FGS Quantity!');
+            $('#spanCurrentRejQty_' + rowNo).show();
+            document.getElementById('spanCurrentRejQty_' + rowNo).setAttribute('style', 'color:red;');
+            document.getElementById("txCurrentRejectedQty_" + rowNo).focus();
+            $('#btnSave').prop('disabled', true);
+            $('#btn_SaveDraft').prop('disabled', true); 
+            setInterval(function () {
+                location.reload(true);
+            }, 7000);
+            return;
+        }
+        else {
+            $('#btnSave').prop('disabled', false);
+            $('#btn_SaveDraft').prop('disabled', false);
+            $('#spanCurrentRejQty_' + rowNo).text('');
+            $('#spanCurrentRejQty_' + rowNo).hide();
         }
     }
 
@@ -397,15 +489,25 @@
             var ItemName = (document.getElementById("ItemName_" + i)).value;
             var OrderQty = ((document.getElementById("OrderQty_" + i)).value);
             var FGSQty = ((document.getElementById("FGSQty_" + i)).value);
+            var CurrentFGSQty = ((document.getElementById("CurrentFGSQty_" + i)).value); ///  Rahul added 'CurrentFGSQty_' 28-06-23.
             var RejecQty = ((document.getElementById("txRejectedQty_" + i)).value);
-            RejecQty = (RejecQty == null || RejecQty == '') ? 0 : RejecQty;
+            //RejecQty = (RejecQty == null || RejecQty == '') ? 0 : RejecQty;
+            var CurrentRejectedQty = ((document.getElementById("txCurrentRejectedQty_" + i)).value); /// Rahul added 'txCurrentRejectedQty_' 28-06-23.
+            CurrentRejectedQty = (CurrentRejectedQty == null || CurrentRejectedQty == '') ? 0 : CurrentRejectedQty; /// Rahul added 'CurrentRejectedQty' 28-06-23. 
 
             var Remark = ((document.getElementById("txRemark_" + i)).value);
 
+            //TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
+            //    ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty
+            //    + ", \"FGSQty\": \"" + FGSQty + "\", \"RejecQty\": " + RejecQty + ",\"Remark\": \"" + Remark +
+            //    "\"";
+            ///  Rahul added 'CurrentFGSQty_', 'CurrentRejectedQty' in 'TxtItemDetails' 27-06-23. 
             TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
-                ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty
-                + ", \"FGSQty\": \"" + FGSQty + "\", \"RejecQty\": " + RejecQty + ",\"Remark\": \"" + Remark +
+                ", \"ItemName\": \"" + ItemName + "\", \"OrderQty\": " + OrderQty + ", \"FGSQty\": " + FGSQty
+                + ", \"CurrentFGSQty\": " + CurrentFGSQty + ", \"RejecQty\": " + RejecQty
+                + ", \"CurrentRejectedQty\": " + CurrentRejectedQty + ",\"Remark\": \"" + Remark +
                 "\"";
+
 
             if (i == (rowCount - 2))
                 TxtItemDetails = TxtItemDetails + "}";
@@ -414,7 +516,7 @@
         }
         TxtItemDetails = TxtItemDetails + "]";
         $('#txtItemDetails').val(TxtItemDetails);
-
+        
         console.log(TxtItemDetails);
     }
 

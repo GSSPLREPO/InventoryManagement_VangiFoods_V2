@@ -159,7 +159,43 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
 
-        public JsonResult InsertCapturedWeightIndentDetails() 
+        #endregion
+
+        #region Bind all Recipe details 
+        public JsonResult GetRecipe(string id, string RecipeID = null)
+        {
+            int ProductId = Convert.ToInt32(id);
+            int recipeID = Convert.ToInt32(RecipeID);
+
+            var result = _productionIndentRepository.GetRecipeDetailsById(ProductId, recipeID);
+            return Json(result);
+        }
+        #endregion
+
+        #region Bind all BindBatch Number details 
+        public JsonResult BindBatchNumber(string id, string SO_Id)
+        {
+            int Item_ID = 0;
+            int SO_ID = 0;
+
+            if (id != "" && id != null)
+                Item_ID = Convert.ToInt32(id);
+            if (SO_Id != "" && SO_Id != null)
+                SO_ID = Convert.ToInt32(SO_Id);
+
+            var result = _productionIndentRepository.GetBatchNumberById(Item_ID, SO_ID);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Insert Captured Weight Indent Details 
+        /// <summary>
+        /// Rahul
+        /// Insert Captured Weight Indent Details  
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult InsertCapturedWeightIndentDetails()
         {
             // Create a TcpClient object and connect to the server code start
             try
@@ -241,34 +277,6 @@ namespace InVanWebApp.Controllers
             // Create a TcpClient object and connect to the server code end 
             return Json(true);
         }
-
-        #endregion
-
-        #region Bind all Recipe details 
-        public JsonResult GetRecipe(string id, string RecipeID = null)
-        {
-            int ProductId = Convert.ToInt32(id);
-            int recipeID = Convert.ToInt32(RecipeID);
-
-            var result = _productionIndentRepository.GetRecipeDetailsById(ProductId, recipeID);
-            return Json(result);
-        }
-        #endregion
-
-        #region Bind all BindBatch Number details 
-        public JsonResult BindBatchNumber(string id, string SO_Id)
-        {
-            int Item_ID = 0;
-            int SO_ID = 0;
-
-            if (id != "" && id != null)
-                Item_ID = Convert.ToInt32(id);
-            if (SO_Id != "" && SO_Id != null)
-                SO_ID = Convert.ToInt32(SO_Id);
-
-            var result = _productionIndentRepository.GetBatchNumberById(Item_ID, SO_ID);
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
         #endregion
 
         #region Insert funcationality for Weighment Production Indent
@@ -342,7 +350,7 @@ namespace InVanWebApp.Controllers
                             return View(model);
                         }
 
-                        return RedirectToAction("Index", "ProductionIndent");
+                        return RedirectToAction("Index", "WeighmentProductionIndent");
 
                     }
                     else
