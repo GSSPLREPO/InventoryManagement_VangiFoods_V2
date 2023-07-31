@@ -49,7 +49,9 @@
                     @Html.Label("Item")
                 </div>
                 <div class="col-md-4">
-                    <select id="ddlItem" class="form-control" onchange="SelectedIndexChangedItem(id)"><option value="0">--Select--</option></select>
+                    @*<select id="ddlItem" class="form-control" onchange="SelectedIndexChangedItem(id)"><option value="0">--Select--</option></select>*@
+                    @*Rahul added 'option value="0" selected' 31-07-23.*@
+                    <select id="ddlItem" class="form-control" onchange="SelectedIndexChangedItem(id)"><option value="0" selected>--Select--</option></select>
                 </div>
             </div>
             <br />
@@ -68,7 +70,8 @@
                                     <table class="table table-striped" id="submissionTable">
                                         <thead>
                                             <tr style="background-color:rgba(0, 0, 0, 0.05);">
-                                                @*<th class="sortStyle">Sr. No.</th>*@
+                                                @*///Rahul added '<th class="sortStyle text-wrap">Select</th>' 31-0723.*@
+                                                <th class="sortStyle text-wrap">Select</th>
                                                 <th class="sortStyle">Item Code</th>
                                                 <th class="sortStyle d-n d-none">Item Id</th>
                                                 <th class="sortStyle">Item Name</th>
@@ -81,8 +84,8 @@
                                                 <th class="sortStyle">Price (Adjusted Difference)</th>
                                                 <th class="sortStyle">Comments<span style="color:red;">*</span></th>
                                             </tr>
-                                        </thead>
-                                    </table>
+                                        </thead>                                        
+                                    </table>                                    
                                 </div>
                             </div>
                         </div>

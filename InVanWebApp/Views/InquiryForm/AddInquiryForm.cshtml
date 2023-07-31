@@ -585,7 +585,7 @@
     //==========end===============
 
     //===========OnChange of item if currency is not selected================
-    $("#Item_ID").change(function () {
+    $("#Item_ID").change(function () {debugger
         var CurrencyIDCheck = $('#CurrencyID').val();
         console.log(CurrencyIDCheck);
         if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
@@ -600,7 +600,7 @@
     //==================end======================
 
     //Dropdownlist Selectedchange event
-    function getitemDetails() {
+    function getitemDetails() {debugger 
                     $("#f").empty();
             $.ajax({
                 type: 'POST',
@@ -910,8 +910,17 @@
 
     function SelectedIndexChangedItemList(id) {
         $('#btnSave').prop('disabled', false);
-        getitemDetails();
-
+        //getitemDetails(); ///Rahul shifted in else part '//getitemDetails();' 31-07-23.
+        var CurrencyIDCheck = $('#CurrencyID').val(); //Rahul added 'CurrencyIDCheck' start 31-07-23.
+        console.log(CurrencyIDCheck);
+        if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
+            alert("Select Currency!");
+            $('#CurrencyID').focus();
+            document.getElementById('Item_ID').selectedIndex = 0;
+            return;
+        }
+        else { getitemDetails(); }
+         //Rahul added 'CurrencyIDCheck' end 31-07-23. 
         var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
         itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;

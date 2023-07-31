@@ -68,7 +68,7 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindLocationName();
-                GenerateDocumentNo();
+                GenerateDocumentNo();                
                 StockAdjustmentBO model = new StockAdjustmentBO();
                 model.DocumentDate = DateTime.Today;
                 return View(model);
