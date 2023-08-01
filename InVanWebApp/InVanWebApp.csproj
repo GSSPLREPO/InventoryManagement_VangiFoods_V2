@@ -183,6 +183,7 @@
     <Compile Include="Controllers\HotFillingPackingLineLogSheetCCPController.cs" />
     <Compile Include="Controllers\IndentController.cs" />
     <Compile Include="Controllers\InquiryFormController.cs" />
+    <Compile Include="Controllers\IntermediateRejectionNoteController.cs" />
     <Compile Include="Controllers\InventoryControlController.cs" />
     <Compile Include="Controllers\InwardNoteController.cs" />
     <Compile Include="Controllers\InwardQCSortingController.cs" />
@@ -1278,6 +1279,7 @@
     <Compile Include="Repository\Interface\IHotFillingPackingLineLogSheetCCPRepository.cs" />
     <Compile Include="Repository\Interface\IIndentRepository.cs" />
     <Compile Include="Repository\Interface\IInquiryFormRepository.cs" />
+    <Compile Include="Repository\Interface\IIntermediateRejectionNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInventoryControlRepository.cs" />
     <Compile Include="Repository\Interface\IInwardNoteRepository.cs" />
     <Compile Include="Repository\Interface\IInwardQCSortingRepository.cs" />
@@ -1319,6 +1321,7 @@
     <Compile Include="Repository\Interface\IWaterAnalysisRepository.cs" />
     <Compile Include="Repository\Interface\ISalesOrderRepository.cs" />
     <Compile Include="Repository\Interface\IWeighmentProductionIndentRepository.cs" />
+    <Compile Include="Repository\IntermediateRejectionNoteRepository.cs" />
     <Compile Include="Repository\InventoryControlRepository.cs" />
     <Compile Include="Repository\InwardNoteRepository.cs" />
     <Compile Include="Repository\InwardQCSortingRepository.cs" />
@@ -2714,6 +2717,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\Script\AddDeliveryChallan.js" />
+    <Content Include="Scripts\Script\AddIntermediateRejectionNote.js" />
     <Content Include="Scripts\Script\AddIssueNote.js" />
     <Content Include="Scripts\Script\AddOutwardNote.js" />
     <Content Include="Scripts\Script\AddProductionMaterialIssueNote.js" />
@@ -3909,6 +3913,8 @@
     <Content Include="Views\WeighmentProductionIndent\AddWeighmentProductionIndent.cshtml" />
     <Content Include="Views\WeighmentProductionIndent\EditWeighmentProductionIndent.cshtml" />
     <Content Include="Views\WeighmentProductionIndent\ViewWeighmentProductionIndent.cshtml" />
+    <Content Include="Views\IntermediateRejectionNote\AddIntermediateRejectionNote.cshtml" />
+    <Content Include="Views\IntermediateRejectionNote\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
