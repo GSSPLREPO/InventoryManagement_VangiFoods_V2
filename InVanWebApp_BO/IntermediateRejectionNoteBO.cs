@@ -10,7 +10,7 @@ namespace InVanWebApp_BO
     public class IntermediateRejectionNoteBO
     {
         public int ID { get; set; }
-        [Required(ErrorMessage = "Enter issue note no.!")]
+        [Required(ErrorMessage = "Enter Intermediate rej note no!")]
         public string Intermediate_Rej_NoteNo { get; set; } 
         [Required(ErrorMessage = "Select date!")]
         [DataType(DataType.Date)]

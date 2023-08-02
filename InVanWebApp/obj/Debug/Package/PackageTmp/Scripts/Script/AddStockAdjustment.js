@@ -147,7 +147,7 @@ function SaveBtnClick() {
 //==========end===============
 
 //=====================Onchange of Location===========================
-function SelectedIndexChangedLocation(id) {
+function SelectedIndexChangedLocation(id) { 
     $('#ddlItem').val(0);
     $("#ddlItem option").remove();
     $('#btnSave').prop('disabled', false);
@@ -163,19 +163,42 @@ function SelectedIndexChangedLocation(id) {
 
     var Location_ID = $("#LocationId").val();
 
-    ///This call is for binding the item list on that location.
-
+    ///This call is for binding the item list on that location.     
     $.ajax({
         url: '/StockAdjustment/GetItemList',
         type: "POST",
         data: { id: Location_ID },
         success: function (result) {
-            var i = 1;
-            $("#ddlItem").append($("<option></option>").val(result[0].ID).html("--Select--"));
-            while (i < result.length) {
-                $("#ddlItem").append($("<option></option>").val(result[i].ID).html(result[i].Item_Name));
-                i++;
+            ///Rahul commented extrea code from 'function SelectedIndexChangedLocation(id)' 'while (i < result.length)' start 31-07-23.
+            // Display the result array as a JSON string
+        //    alert('result: ' + JSON.stringify(result));
+        //    console.log(result)
+        //    alert('result :' + result);
+        //    var i = 1;
+        //    $("#ddlItem").append($("<option></option>").val(result[0].ID).html("--Select--"));
+        //    while (i < result.length) {
+        //        $("#ddlItem").append($("<option></option>").val(result[i].ID).html(result[i].Item_Name));
+        //        i++;
+        //    }
+            ///Rahul commented extrea code from 'function SelectedIndexChangedLocation(id)' 'while (i < result.length)' end 31-07-23.
+            /*///Rahul added code in 'function SelectedIndexChangedLocation(id)' ' $("#ddlItem").empty();' start 31-07-23.*/
+            // Clear existing options from the dropdown list
+            $("#ddlItem").empty();
+
+            // Add a default option "--Select--"
+            $("#ddlItem").append($("<option></option>").val("0").html("--Select--"));
+
+            // Loop through the result array and add each item to the dropdown list
+            for (var i = 0; i < result.length; i++) { 
+                //$('#divddlItem.dropdown-select ul').append($("<li></li>").val(result[i].ID).html(result[i].Item_Name));
+                var display = result[i].Item_Name;
+                var option = $('<li class="option ' + (i === 0 ? 'selected' : '') +
+                    '" data-value="' + result[i].ID +
+                    '" data-display-text="' + display + '">' +
+                    result[i].Item_Name + '</li>');
+                $('#divddlItem.dropdown-select ul').append(option);
             }
+            /*///Rahul  added code in 'function SelectedIndexChangedLocation(id)' ' $("#ddlItem").empty();' end 31-07-23.*/
         },
         error: function (err) {
             alert('Not able to fetch item list of that warehouse!');
@@ -183,13 +206,14 @@ function SelectedIndexChangedLocation(id) {
         }
     });
 
-    ///This call is for binding item details of that location
-    $.ajax({
+        ///This call is for binding item details of that location
+        $.ajax({
         url: '/StockAdjustment/GetLocationStocksDetails',
         type: "POST",
-        data: { id: Location_ID },
+        data: { id: Location_ID},
         success: function (result) {
-
+            alert('result: ' + JSON.stringify(result));
+            debugger
             var table = document.getElementById('submissionTable');
             for (var j = 0; j < result.length; j++) {
                 var rowCount = table.rows.length;
@@ -202,77 +226,86 @@ function SelectedIndexChangedLocation(id) {
                 for (var i = 0; i < cellCount; i++) {
                     var cell = 'cell' + i;
                     cell = row.insertCell(i);
-
+                    /// @*///Rahul added 'if (i == 0)' in 'function SelectedIndexChangedLocation(id)' start 31-0723.*@
                     if (i == 0) {
+                        var t0 = document.createElement("input");
+                        t0.type = "checkbox";
+                        t0.id = "SelectedItem_" + j;
+                        t0.name = "ItemSelected";
+                        t0.setAttribute("value", true);
+                        t0.setAttribute("class", "form-control-sm");
+                        cell.appendChild(t0);
+                    }   /// @*///Rahul added 'if (i == 0)' in 'function SelectedIndexChangedLocation(id)' end 31-0723.*@
+                    else if (i == 1) {
                         cell.innerHTML = result[j].Item_Code;
                         cell.setAttribute("id", "ItemCode_" + j);
                     }
-                    else if (i == 1) {
+                    else if (i == 2) {
                         cell.innerHTML = result[j].ItemId;
                         cell.setAttribute("class", "d-none");
                         cell.setAttribute("id", "ItemID_" + j);
                     }
-                    else if (i == 2) {
+                    else if (i == 3) {
                         cell.innerHTML = result[j].Item_Name;
                         cell.setAttribute("id", "ItemName_" + j);
 
                     }
-                    else if (i == 3) {
+                    else if (i == 4) {
                         cell.innerHTML = result[j].ItemUnitPrice;
                         cell.setAttribute("id", "ItemUnitPrice_" + j);
                     }
-                    else if (i == 4) {
+                    else if (i == 5) {
                         cell.innerHTML = result[j].CurrencyName;
                         cell.setAttribute("id", "CurrencyName_" + j);
                     }
-                    else if (i == 5) {
+                    else if (i == 6) {
                         cell.innerHTML = result[j].AvailableStock;
                         cell.setAttribute("id", "AvailableStock_" + j);
                     }
-                    else if (i == 6) {
+                    else if (i == 7) {
 
                         cell.innerHTML = result[j].ItemUnit;
                         cell.setAttribute("id", "ItemUnit_" + j);
                     }
-                    else if (i == 7) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtPhysicalStock_" + j;
-                        t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-                        t5.setAttribute("value", "0");
-                        //t5.setAttribute("type", "number");
-                        t5.setAttribute("onkeypress", "return isNumberKey(event)");
-                        t5.setAttribute("maxlength", "8");
-                        t5.setAttribute("class", "form-control form-control-sm");
-                        cell.appendChild(t5);
-                    }
                     else if (i == 8) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtDifference_" + j;
-                        t5.setAttribute("readonly", "readonly");
-                        t5.setAttribute("value", "0");
-                        t5.setAttribute("class", "form-control form-control-sm");
-                        cell.appendChild(t5);
+                        var t8 = document.createElement("input");
+                        t8.id = "txtPhysicalStock_" + j;
+                        t8.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                        t8.setAttribute("value", "0");
+                        //t8.setAttribute("type", "number");
+                        t8.setAttribute("onkeypress", "return isNumberKey(event)");
+                        t8.setAttribute("maxlength", "8");
+                        t8.setAttribute("class", "form-control form-control-sm");
+                        cell.appendChild(t8);
                     }
                     else if (i == 9) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtTransferPrice_" + j;
-                        t5.setAttribute("readonly", "readonly");
-                        t5.setAttribute("value", "0");
-                        //t5.setAttribute("type", "number");
-                        t5.setAttribute("class", "form-control form-control-sm");
-                        cell.appendChild(t5);
+                        var t9 = document.createElement("input");
+                        t9.id = "txtDifference_" + j;
+                        t9.setAttribute("readonly", "readonly");
+                        t9.setAttribute("value", "0");
+                        t9.setAttribute("class", "form-control form-control-sm");
+                        cell.appendChild(t9);
                     }
                     else if (i == 10) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtRemarks_" + j;
-                        t5.setAttribute("maxlength", "90");
-                        t5.setAttribute("style", "width:auto;");
-                        t5.setAttribute("class", "form-control form-control-sm");
-                        t5.setAttribute("onkeyup", "OnChangeComment($(this).val(),id)");
-                        cell.appendChild(t5);
-                        var t6 = document.createElement('span');
-                        t6.id = "spanRemark_" + j;
-                        cell.appendChild(t6);
+                        var t10 = document.createElement("input");
+                        t10.id = "txtTransferPrice_" + j;
+                        t10.setAttribute("readonly", "readonly");
+                        t10.setAttribute("value", "0");
+                        //t10.setAttribute("type", "number");
+                        t10.setAttribute("class", "form-control form-control-sm");
+                        cell.appendChild(t10);
+                    }
+                    else if (i == 11) {
+                        var t11 = document.createElement("input");
+                        t11.id = "txtRemarks_" + j;
+                        t11.setAttribute("maxlength", "90");
+                        t11.setAttribute("style", "width:auto;");
+                        t11.setAttribute("class", "form-control form-control-sm");
+                        t11.setAttribute("onkeyup", "OnChangeComment($(this).val(),id)");
+                        cell.appendChild(t11);
+                        var t11 = document.createElement('span');
+                        t11.id = "spanRemark_" + j;
+                        cell.appendChild(t11);
                     }
                 }
 
@@ -280,17 +313,14 @@ function SelectedIndexChangedLocation(id) {
         },
         error: function (err) {
             alert('Not able to fetch item details!');
-
         }
-
     });
-
 }
 //=============End==============
 
 //=====================Onchange of Item===========================
 function SelectedIndexChangedItem(id) {
-
+    debugger
     $('#btnSave').prop('disabled', false);
 
     //For deleting the rows of Item table if exist.
@@ -304,6 +334,27 @@ function SelectedIndexChangedItem(id) {
 
     var Location_ID = $("#LocationId").val();
     var Item_ID = $('#' + id).val();
+    /*///Rahul added code in 'function SelectedIndexChangedItem(id)' 'if (Item_ID == '' || Item_ID == undefined || Item_ID == null)' start 31-07-23.*/
+    if (Item_ID == '' || Item_ID == undefined || Item_ID == null) {
+
+    // Get the selected option element with class "option"
+    var selectedOption = $('#divddlItem.dropdown-select ul li.option.selected');
+
+    // Get the data-value and data-display-text attributes of the selected option
+    var dataValue = selectedOption.data('value');
+    var Item_ID = dataValue;
+
+    var dataDisplayText = selectedOption.data('display-text');
+
+    // Get the text content of the selected option
+    var textContent = selectedOption.text();
+
+    // Output the values
+    console.log('data-value:', dataValue);
+    console.log('data-display-text:', dataDisplayText);
+    console.log('text content:', textContent);
+    }
+    /*///Rahul added code in 'function SelectedIndexChangedItem(id)' 'if (Item_ID == '' || Item_ID == undefined || Item_ID == null)' end 31-07-23.*/
     ///This call is for binding item details of that location
     $.ajax({
         url: '/StockAdjustment/GetLocationStocksDetails',
@@ -324,75 +375,83 @@ function SelectedIndexChangedItem(id) {
                     cell = row.insertCell(i);
 
                     if (i == 0) {
+                        var t0 = document.createElement("input");
+                        t0.type = "checkbox";
+                        t0.id = "SelectedItem_" + j;
+                        t0.name = "ItemSelected";
+                        t0.setAttribute("value", true);
+                        t0.setAttribute("class", "form-control-sm");
+                        cell.appendChild(t0);
+                    }
+                    else if (i == 1) {
                         cell.innerHTML = result[j].Item_Code;
                         cell.setAttribute("id", "ItemCode_" + j);
                     }
-                    else if (i == 1) {
+                    else if (i == 2) {
                         cell.innerHTML = result[j].ItemId;
                         cell.setAttribute("class", "d-none");
                         cell.setAttribute("id", "ItemID_" + j);
                     }
-                    else if (i == 2) {
+                    else if (i == 3) {
                         cell.innerHTML = result[j].Item_Name;
                         cell.setAttribute("id", "ItemName_" + j);
 
                     }
-                    else if (i == 3) {
+                    else if (i == 4) {
                         cell.innerHTML = result[j].ItemUnitPrice;
                         cell.setAttribute("id", "ItemUnitPrice_" + j);
                     }
-                    else if (i == 4) {
+                    else if (i == 5) {
                         cell.innerHTML = result[j].CurrencyName;
                         cell.setAttribute("id", "CurrencyName_" + j);
                     }
-                    else if (i == 5) {
+                    else if (i == 6) {
                         cell.innerHTML = result[j].AvailableStock;
                         cell.setAttribute("id", "AvailableStock_" + j);
                     }
-                    else if (i == 6) {
-
+                    else if (i == 7) {
                         cell.innerHTML = result[j].ItemUnit;
                         cell.setAttribute("id", "ItemUnit_" + j);
                     }
-                    else if (i == 7) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtPhysicalStock_" + j;
-                        t5.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
-                        t5.setAttribute("value", "0");
-                        //t5.setAttribute("type", "number");
-                        t5.setAttribute("onkeypress", "return isNumberKey(event)");
-                        t5.setAttribute("maxlength", "8");
-                        t5.setAttribute("class", "form-control form-control-sm");
-                        cell.appendChild(t5);
-                    }
                     else if (i == 8) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtDifference_" + j;
-                        t5.setAttribute("readonly", "readonly");
-                        t5.setAttribute("value", "0");
-                        t5.setAttribute("class", "form-control form-control-sm");
-                        cell.appendChild(t5);
+                        var t8 = document.createElement("input");
+                        t8.id = "txtPhysicalStock_" + j;
+                        t8.setAttribute("onchange", "OnChangeQty($(this).val(),id)");
+                        t8.setAttribute("value", "0");
+                        //t8.setAttribute("type", "number");
+                        t8.setAttribute("onkeypress", "return isNumberKey(event)");
+                        t8.setAttribute("maxlength", "8");
+                        t8.setAttribute("class", "form-control form-control-sm");
+                        cell.appendChild(t8);
                     }
                     else if (i == 9) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtTransferPrice_" + j;
-                        t5.setAttribute("readonly", "readonly");
-                        t5.setAttribute("value", "0");
-                        t5.setAttribute("type", "number");
-                        t5.setAttribute("class", "form-control form-control-sm");
-                        cell.appendChild(t5);
+                        var t9 = document.createElement("input");
+                        t9.id = "txtDifference_" + j;
+                        t9.setAttribute("readonly", "readonly");
+                        t9.setAttribute("value", "0");
+                        t9.setAttribute("class", "form-control form-control-sm");
+                        cell.appendChild(t9);
                     }
                     else if (i == 10) {
-                        var t5 = document.createElement("input");
-                        t5.id = "txtRemarks_" + j;
-                        t5.setAttribute("maxlength", "90");
-                        t5.setAttribute("style", "width:auto;");
-                        t5.setAttribute("class", "form-control form-control-sm");
-                        t5.setAttribute("onkeyup", "OnChangeComment($(this).val(),id)");
-                        cell.appendChild(t5);
-                        var t6 = document.createElement('span');
-                        t6.id = "spanRemark_" + j;
-                        cell.appendChild(t6);
+                        var t10 = document.createElement("input");
+                        t10.id = "txtTransferPrice_" + j;
+                        t10.setAttribute("readonly", "readonly");
+                        t10.setAttribute("value", "0");
+                        t10.setAttribute("type", "number");
+                        t10.setAttribute("class", "form-control form-control-sm");
+                        cell.appendChild(t10);
+                    }
+                    else if (i == 11) {
+                        var t11 = document.createElement("input");
+                        t11.id = "txtRemarks_" + j;
+                        t11.setAttribute("maxlength", "90");
+                        t11.setAttribute("style", "width:auto;");
+                        t11.setAttribute("class", "form-control form-control-sm");
+                        t11.setAttribute("onkeyup", "OnChangeComment($(this).val(),id)");
+                        cell.appendChild(t11);
+                        var t11 = document.createElement('span');
+                        t11.id = "spanRemark_" + j;
+                        cell.appendChild(t11);
                     }
                 }
 
@@ -465,6 +524,12 @@ function createJson() {
     var i = 0, flag = 0;
     TxtItemDetails = "[";
     while (i < rowCount - 1) {
+        ///Rahul added 'var ItemSelected' start 31-07-23.
+        var ItemSelected = false;
+        if ($('#SelectedItem_' + i).is(":checked")) {
+            ItemSelected = true;
+        }
+        ///Rahul added 'var ItemSelected' end 31-07-23.
         var ItemCode = (document.getElementById("ItemCode_" + i)).innerHTML;
         var ItemID = (document.getElementById("ItemID_" + i)).innerHTML;
         var ItemName = (document.getElementById("ItemName_" + i)).innerHTML;
@@ -483,13 +548,19 @@ function createJson() {
             i++;
             continue;
         }
-
+        ///Rahul added 'var ItemSelected' start 31-07-23.
+        if (ItemSelected == false) {
+            i++;
+            continue;
+        }
+        ///Rahul added 'var ItemSelected' end 31-07-23.
+        ///Rahul added 'var ItemSelected' in 'TxtItemDetails' start 31-07-23.
         TxtItemDetails = TxtItemDetails + "{\"Item_Code\":\"" + ItemCode + "\", \"ItemId\":" + ItemID +
             ", \"ItemName\": \"" + ItemName + "\", \"ItemUnitPrice\": " + PricePerUnit +
             ", \"CurrencyName\": \"" + CurrencyName + "\", \"AvlStock\": " + AvailableStock + ", \"ItemUnit\": \"" + Unit +
             "\", \"PhyQty\": " + PhyQty + ",\"DiffQty\": " + DiffQty +
-            ", \"TransPrice\": " + TransPrice + ",\"Remarks\": \"" + Remarks + "\"";
-
+            ", \"TransPrice\": " + TransPrice + ",\"Remarks\": \"" + Remarks + "\", \"ItemSelected\":" + ItemSelected;
+        ///Rahul added 'var ItemSelected' in 'TxtItemDetails' end 31-07-23.
         if (i == (rowCount - 1)) {
             TxtItemDetails = TxtItemDetails + "}";
             flag = 1;

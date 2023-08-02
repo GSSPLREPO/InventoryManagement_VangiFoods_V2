@@ -1,8 +1,6 @@
 ﻿@model InVanWebApp_BO.RecipeMasterBO
-@{
-    ViewBag.Title = "AddRecipeItems";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "AddRecipeItems";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <div class="card">
     <div class="card-body">
@@ -12,130 +10,129 @@
 
         @using (Html.BeginForm("AddRecipeItems", "RecipeMater", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
-            @Html.AntiForgeryToken()
-            <div id="AddDiv">
-                <div class="row">
-                    <div class="col-md-2">
-                        @Html.Label("Product Name")
-                        <span style="color:red">*</span>
+@Html.AntiForgeryToken()
+                <div id="AddDiv">
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.Label("Product Name")
+                            <span style="color:red">*</span>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val())" })
+                            @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error mt-2 text-danger" })
+                            @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductID, (IEnumerable<SelectListItem>)ViewData["ProductName"], "---Select Product---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProductNameList($(this).val())" })
-                        @Html.ValidationMessageFor(model => model.ProductID, "", new { @class = "error mt-2 text-danger" })
-                        @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control form-control-sm d-none", @readonly = "readonly" })
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-2">
-                        @Html.Label("Recipe Name")
-                        <span style="color:red">*</span>
+                    <div class="row">
+                        <div class="col-md-2">
+                            @Html.Label("Recipe Name")
+                            <span style="color:red">*</span>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "65" })
+                            @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
+                        </div>
+                        <div class="col-md-2">
+                            @Html.Label("Description")
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Only 100 characters are allowed in the description!" })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.RecipeName, new { @class = "form-control form-control-sm", maxlength = "65" })
-                        @Html.ValidationMessageFor(model => model.RecipeName, "", new { @class = "error mt-2 text-danger", id = "validationMsgName" })
-                    </div>
-                    <div class="col-md-2">
-                        @Html.Label("Description")
-                    </div>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(model => model.Description, new { @class = "form-control form-control-sm", maxlength = "100", Title = "Only 100 characters are allowed in the description!" })
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger", id = "validationMsgCode" })
-                    </div>
-                </div>
 
-                <br />
-                <div class="row">
-                    <div class="col-md-4" style="color:darkcyan">
-                        @Html.Label("Recipe Ingredient Details")
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4" style="color:darkcyan">
+                            @Html.Label("Recipe Ingredient Details")
+                        </div>
                     </div>
-                </div>
-                <hr />
-                <div class="col-md-12 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                        <table class="table table-hover" id="submissionTable">
-                                            <thead>
-                                                <tr>
-                                                    <th class="sortStyle">
-                                                        Ingredient
-                                                    </th>
-                                                    <th class="sortStyle d-n d-none">
-                                                        Selected Item Code
-                                                    </th>
-                                                    <th class="sortStyle d-n d-none">
-                                                        Item
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Unit
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Percentage (%)
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Batch Size (KG)
-                                                    </th>
-                                                    <th class="sortStyle">
-                                                        Description
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="myTableBody">
-                                                <tr id="tablerow">
-                                                    <td>
-                                                        @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["Ingredients"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
-                                                        <span id="ValMsgItemList" style="display:none; color:red"></span>
-                                                    </td>
-                                                    <td class="col-md-4 d-none">
-                                                        @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                                    </td>
-                                                    <td class="d-n d-none">
-                                                        @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBox("UnitName", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.Ratio, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeRatioForFirstRow($(this).val(),id)" })
-                                                        @Html.ValidationMessageFor(model => model.Ratio, "", new { id = "RatioErr", @class = "error mt-2 text-danger" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.BatchSize, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeBatchSizeForFirstRow($(this).val(),id)" })
-                                                        @Html.ValidationMessageFor(model => model.BatchSize, "", new { id = "batchSizeErr", @class = "error mt-2 text-danger" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.TextBoxFor(model => model.Description, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;", onkeypress = "createJson();" })
-                                                        @*@Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })*@
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <br />  @*Vedant changed '+ Add Recipe' to '+ Add Item/Ingredient'*@ 
-                                        <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddRecipeItem">
-                                            +  Add Item/Ingredient
-                                        </button>
+                    <hr />
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                            <table class="table table-hover" id="submissionTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sortStyle">
+                                                            Ingredient
+                                                        </th>
+                                                        <th class="sortStyle d-n d-none">
+                                                            Selected Item Code
+                                                        </th>
+                                                        <th class="sortStyle d-n d-none">
+                                                            Item
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            Unit
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            Percentage (%)
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            Batch Size (KG)
+                                                        </th>
+                                                        <th class="sortStyle">
+                                                            Description
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="myTableBody">
+                                                    <tr id="tablerow">
+                                                        <td>
+                                                            @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["Ingredients"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                            <span id="ValMsgItemList" style="display:none; color:red"></span>
+                                                        </td>
+                                                        <td class="col-md-4 d-none">
+                                                            @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                        </td>
+                                                        <td class="d-n d-none">
+                                                            @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBox("UnitName", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBoxFor(model => model.Ratio, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeRatioForFirstRow($(this).val(),id)" })
+                                                            @Html.ValidationMessageFor(model => model.Ratio, "", new { id = "RatioErr", @class = "error mt-2 text-danger" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBoxFor(model => model.BatchSize, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8", onchange = "OnChangeBatchSizeForFirstRow($(this).val(),id)" })
+                                                            @Html.ValidationMessageFor(model => model.BatchSize, "", new { id = "batchSizeErr", @class = "error mt-2 text-danger" })
+                                                        </td>
+                                                        <td>
+                                                            @Html.TextBoxFor(model => model.Description, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;", onkeypress = "createJson();" })
+                                                            @*@Html.ValidationMessageFor(model => model.Description, "", new { @class = "error mt-2 text-danger" })*@
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <br />  @*Vedant changed '+ Add Recipe' to '+ Add Item/Ingredient'*@
+                                            <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddRecipeItem">
+                                                +  Add Item/Ingredient
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <a href="@Url.Action("Index", "RecipeMater")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
-                Back To List
-            </a>
-            <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" onclick="SaveBtnClick()">Save</button>
-        }
+                                <a href="@Url.Action("Index", "RecipeMater")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;">
+                                    Back To List
+                                </a>
+                                                <button id="btnSave" type="submit" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" onclick="SaveBtnClick()">Save</button>}
     </div>
 </div>
 
@@ -146,8 +143,146 @@
 <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<link href="~/Theme/MainContent/css/CustomDropdown.css" rel="stylesheet" />
 
 <script type="text/javascript">
+    /*Rahul added 'function create_custom_dropdowns()' 28-08-2023. start*/
+    $(document).ready(function () {
+        create_custom_dropdowns_ProductID("ProductID");
+        create_custom_dropdowns_Item_ID("Item_ID");
+    });
+
+    function create_custom_dropdowns_ProductID(id) {
+        $('select#' + id).each(function (i, select) {
+            if (!$(this).next().hasClass('dropdown-select')) {
+                $('#' + id).removeClass('form-control');
+                $('#' + id).removeClass('form-control-sm');
+                $(this).after('<div id="divProductID' + id + '" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+        $('#divProductID' + id + '.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue' + id + '" autocomplete="off" onkeyup="filterProductID(id)" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+
+
+    function create_custom_dropdowns_Item_ID(id) {
+        $('select#' + id).each(function (i, select) {
+            if (!$(this).next().hasClass('dropdown-select')) {
+                $('#' + id).removeClass('form-control');
+                $('#' + id).removeClass('form-control-sm');
+                $(this).after('<div id="div' + id + '" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                var dropdown = $(this).next();
+                var options = $(select).find('option');
+                var selected = $(this).find('option:selected');
+                dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                options.each(function (j, o) {
+                    var display = $(o).data('display-text') || '';
+                    dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                });
+            }
+        });
+        $('#div' + id + '.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue' + id + '" autocomplete="off" onkeyup="filterItem_ID(id)" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+    }
+
+    // Event listeners
+
+    // Open/close
+    $(document).on('click', '.dropdown-select', function (event) {
+        if ($(event.target).hasClass('dd-searchbox')) {
+            return;
+        }
+        $('.dropdown-select').not($(this)).removeClass('open');
+        $(this).toggleClass('open');
+        if ($(this).hasClass('open')) {
+            $(this).find('.option').attr('tabindex', 0);
+            $(this).find('.selected').focus();
+        } else {
+            $(this).find('.option').removeAttr('tabindex');
+            $(this).focus();
+        }
+    });
+
+    // Close when clicking outside
+    $(document).on('click', function (event) {
+        if ($(event.target).closest('.dropdown-select').length === 0) {
+            $('.dropdown-select').removeClass('open');
+            $('.dropdown-select .option').removeAttr('tabindex');
+        }
+        event.stopPropagation();
+    });
+    // Search
+    function filterItem_ID(id) {
+        //debugger
+        var valThis = $('#' + id + '').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+    function filterProductID(id) {
+        //debugger
+        var valThis = $('#' + id + '').val();
+        $('.dropdown-select ul > li').each(function () {
+            var text = $(this).text();
+            (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+        });
+    };
+
+    // Option click
+    $(document).on('click', '.dropdown-select .option', function (event) {
+        $(this).closest('.list').find('.selected').removeClass('selected');
+        $(this).addClass('selected');
+        var text = $(this).data('display-text') || $(this).text();
+        $(this).closest('.dropdown-select').find('.current').text(text);
+        $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+    });
+
+    // Keyboard events
+    $(document).on('keydown', '.dropdown-select', function (event) {
+        var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+        // Space or Enter
+        //if (event.keyCode == 32 || event.keyCode == 13) {
+        if (event.keyCode == 13) {
+            if ($(this).hasClass('open')) {
+                focused_option.trigger('click');
+            } else {
+                $(this).trigger('click');
+            }
+            return false;
+            // Down
+        } else if (event.keyCode == 40) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                focused_option.next().focus();
+            }
+            return false;
+            // Up
+        } else if (event.keyCode == 38) {
+            if (!$(this).hasClass('open')) {
+                $(this).trigger('click');
+            } else {
+                var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+                focused_option.prev().focus();
+            }
+            return false;
+            // Esc
+        } else if (event.keyCode == 27) {
+            if ($(this).hasClass('open')) {
+                $(this).trigger('click');
+            }
+            return false;
+        }
+    });
+    /*Rahul added 'function create_custom_dropdowns()' 28-07-2023. end*/
+
 
     var TxtItemDetails = "";
     $("#Ratio").val(0);
@@ -297,6 +432,7 @@
         itemCode = itemCode.split(' (')[0];
         document.getElementById("ItemCode").value = itemCode;
         $("#ValMsgItemList").hide();
+        getRecipeItemDetails();   ///Rahul added getitemDetails(); in 'function SelectedIndexChangedItemList(id)' 28-07-23.
     }
 
     var counter = 1;
@@ -326,7 +462,7 @@
             '<input type="text" id="' + unitName + '" class="form-control form-control-sm" style = "height:30px;width:200px;" name="' + unitName + '"readonly = "readonly" value="" required="required" />' +
             '</td>' +
             '<td>' +
-            '<input type="text" id="' + ratio + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + ratio + ' value="" maxlength="8", onkeypress = "return isNumberKey(event)", onchange="OnChangeRatio($(this).val(),id)", required="required" />' +
+            '<input type="text" id="' + ratio + '" class="form-control form-control-sm text-right" style = "height:30px;width:100px;" name="' + ratio + ' value="0" maxlength="8", onkeypress = "return isNumberKey(event)", onchange="OnChangeRatio($(this).val(),id)", required="required" />' +
             '<span id="' + RatioErr + '">' +
             '</td>' +
             '<td>' +
@@ -341,6 +477,8 @@
             '<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
             '</td>' +
             '</tr>').appendTo('#submissionTable');
+        ///Rahul added 'create_custom_dropdowns_Item_ID(itemId);' in ' $("#AddItem").click(function ()' 28-07-23.
+        create_custom_dropdowns_Item_ID(itemId);
 
         counter++;
         return false;

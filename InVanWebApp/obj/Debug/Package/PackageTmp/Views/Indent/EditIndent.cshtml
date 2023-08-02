@@ -110,9 +110,9 @@
                                                     string itemListForDD = "itemListForDD";
                                                     itemListForDD = itemListForDD + (c - 1);
                                                     <tr id="tablerow_@c">
-                                                        <td>
+                                                        <td>                                                            
                                                             @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
-                                                                     new { @class = "form-control form-control-sm DropdownRegular", id = "Item_ID_" + c, style = "height:30px;", onchange = "getitemDetailsJSTbl('" + c + "')" })
+                                                                                              new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;", onchange = "getitemDetailsJSTbl('" + c + "')" })
                                                             @*Rahul added class 'DropdownRegular' 10-07-2023.*@
                                                             @*@Html.TextBoxFor(x => item.Item_ID, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })*@
                                                         </td>
@@ -185,10 +185,24 @@
         create_custom_dropdowns_RaisedBy();
         create_custom_dropdowns_DesignationId();
         create_custom_dropdowns_LocationId();
-        create_custom_dropdowns_Item_ID("Item_ID");
+        //create_custom_dropdowns_Item_ID("Item_ID");
         SetUserName();
         SetDesignationName();
         SetLocationName();
+        /*Shweta added 'for (var i = 0; i < counter; i++)' in ' $(document).ready(function ()' start 01-08-2023.*/
+        ///Finding the length of existing table
+        var table = document.getElementById('submissionTable');
+        var counter = table.rows.length;
+        console.log(counter);
+        create_custom_dropdowns_Item_ID("Item_ID");
+
+        for (var i = 0; i < counter; i++) {
+            var itemId = "Item_ID_" + i;
+            create_custom_dropdowns_Item_ID(itemId);
+        }
+        counter++;
+        return false;
+        /*Shweta added 'for (var i = 0; i < counter; i++)' in ' $(document).ready(function ()' end 01-08-2023.*/
     });
 
     function create_custom_dropdowns_RaisedBy() {
@@ -250,13 +264,12 @@
         $('#divLocationId.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValueLocationId" autocomplete="off" onkeyup="filterLocationId()" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
     }
     function create_custom_dropdowns_Item_ID(id) {
-
         $('select#' + id).each(function (i, select) {
-            alert()
             if (!$(this).next().hasClass('dropdown-select')) {
                 $('#' + id).removeClass('form-control');
                 $('#' + id).removeClass('form-control-sm');
-                $(this).after('<div id="div' + id + '" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                /*Shweta updated 'id="div' to 'id="divItem_ID' in 'function create_custom_dropdowns()' 28-08-2023*/
+                $(this).after('<div id="divItem_ID' + id + '" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -267,7 +280,8 @@
                 });
             }
         });
-        $('#div' + id + '.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue' + id + '" autocomplete="off" onkeyup="filterItem_ID(id)" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
+        /*Shweta updated 'id="div' to 'id="divItem_ID' in 'function create_custom_dropdowns()' 28-08-2023*/
+        $('#divItem_ID' + id + '.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue' + id + '" autocomplete="off" onkeyup="filterItem_ID(id)" class="dd-searchbox" type="text" placeholder="Search for list" ><br />&nbsp;<span id="faSearch"><i class="fas fa-search"></i></span></div>');
     }
 
     // Event listeners
@@ -513,6 +527,7 @@
         /////////////This is piece of code is for de-selecting the Item list in the dropdown of newly created/added row//////////////////////
         document.getElementById('Item_ID_' + counter).selectedIndex = 0;
         /////////////////////end.../////////////////
+        create_custom_dropdowns_Item_ID(itemId);
         counter++;
         return false;
     });

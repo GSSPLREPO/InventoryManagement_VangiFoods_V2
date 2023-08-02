@@ -1,0 +1,194 @@
+﻿@model InVanWebApp_BO.IntermediateRejectionNoteBO 
+@{
+    ViewBag.Title = "ViewIntermediateRejectionNote";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Intermediate Rejection Note</title>
+    <style>
+        html2canvas-container {
+            width: 3000px !important;
+            height: 2000px !important;
+        }
+        #submissionTable tr td {
+            white-space: normal;
+            table-layout: auto;
+            border-color: darkgrey;
+            font-size: 110%;
+            width: -1%;
+            /*width: 100%;*/
+        }
+
+        #submissionTable label {
+            font-size: 120%;
+        }
+
+        #submissionTable th {
+            white-space: normal;
+            border-color: darkgrey;
+            font-size: 120%;
+        }
+
+        hr {
+            color: black;
+            height: -1%
+        }
+    </style>
+</head>
+<body>
+    @Html.HiddenFor(model => model.ID)
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row" id="printV" width="1000px">
+            <div class="col-md-12  grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">
+                            <h3 class="card-title font-weight-bold align-self-center col-5 mb-0" style="font-size: 30pt;">Intermediate Rejection Note</h3>
+
+                            <div class="col">
+                                <div class="col-md-12">
+                                    <a id="ExportPdf" href="@Url.Action("ExportAsPDF", "IntermediateRejectionNote")"> <img class="float-left" src="~/Theme/MainContent/images/ICON.png.png" style="width: 45px; height: 45px; padding-top: 1px; margin-top: 2%; margin-left: 500px" /> </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr />
+                        <div class="col-md-12">
+                            <div style="font-size:110%; color:black;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Intermediate Rejection Note Number</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.Intermediate_Rej_NoteNo, new { style = "color:black;" })
+                                    </div>
+                                    <br />
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Intermediate Rejection Note Date</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.Intermediate_Rej_NoteDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Issue By</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.IssueByName, new { style = "color:black;" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Location Name</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.LocationName, new { style = "color:black;" })
+                                    </div>
+                                    <br />
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Remarks</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.Remarks, new { style = "color:black;" })
+                                    </div>
+                                </div>
+                                </div>
+                                <br />
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                        <hr />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                <table class="table table-hover" id="submissionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">Sr. No.</th>
+                                                            <th class="sortStyle d-n d-none">Item Code</th>
+                                                            <th class="sortStyle">Item Name</th>
+                                                            <th class="sortStyle">Price (Per Unit)</th>
+                                                            <th class="sortStyle">Available Quantity</th>
+                                                            <th class="sortStyle">Rejected Quantity</th>                                                            
+                                                            <th class="sortStyle">Balance Quantity</th>
+                                                            <th class="sortStyle">Unit</th>
+                                                            <th class="sortStyle">Comments</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="myTableBody">
+                                                        @{ int c = 1;
+                                                            foreach (var item in Model.IntermediateRej_NoteDetails)
+                                                            {
+                                            <tr id="tablerow_@c">
+                                                <td>
+                                                    <label>@c.</label>
+                                                </td>
+                                                <td class=" d-n d-none">
+                                                    @Html.DisplayFor(x => item.Item_Code)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.Item_Name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnitPrice)
+                                                    @Html.DisplayFor(x => item.CurrencyName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.AvailableStockQuantity)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.RejectedQuantity)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(x => item.BalanceQuantity)
+                                                </td>                                               
+                                                <td>
+                                                    @Html.DisplayFor(x => item.ItemUnit)
+                                                </td>
+                                                <td style="width:auto;">
+                                                    <label style="border:none;background:none;height:auto;width:210px" class="text-wrap">@item.Description</label>
+                                                </td>
+                                            </tr> { c++; }
+                                                            } }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <br />
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <a href="@Url.Action("Index", "IntermediateRejectionNote")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                    Back To List
+                                </a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
+
+<script src="~/Scripts/jquery-3.4.1.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+@*These below scripts are used for expoting this page in pdf format.*@
+<script src="~/Theme/MainContent/js/jquery.min.js"></script>
+<script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/jspdf.min.js"></script>
+<script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/html2canvas.js"></script>
+
+<script src="~/Scripts/Script/CommonScripts.js"></script>

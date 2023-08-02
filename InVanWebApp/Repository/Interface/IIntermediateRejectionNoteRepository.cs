@@ -13,6 +13,10 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<IntermediateRejectionNoteBO> GetAll();
         /// Insert record Intermediate Rejection Note and Intermediate Rejection Note Details. 
         ResponseMessageBO Insert(IntermediateRejectionNoteBO model);
+        //// This function is for fetch data for editing Intermediate Rejection Note by ID and for downloading pdf
+        IntermediateRejectionNoteBO GetById(int ID);
+        /// Delete record by ID 
+        ResponseMessageBO Delete(int Id, int userId);
 
     }
 }

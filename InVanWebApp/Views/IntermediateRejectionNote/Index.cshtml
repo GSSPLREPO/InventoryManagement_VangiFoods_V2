@@ -54,12 +54,12 @@
                                                 <td>@Html.DisplayFor(modelItem => item.LocationName)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Intermediate_Rej_NoteDate)</td>
                                                 <td>
-                                                    @*<a href=@Url.Action("ViewIssueNote", "IntermediateRejectionNote", new { ID = item.ID }) title="View Issue-Note">
+                                                    <a href=@Url.Action("ViewIntermediateRejectionNote", "IntermediateRejectionNote", new { ID = item.ID }) title="View Intermediate-Rej-Note">
                                                         <i class="fa fa-eye text-primary"></i>
-                                                    </a>*@&emsp;
-                                                    @*<a href=@Url.Action("DeleteIssueNote", "IntermediateRejectionNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Issue-Note">
+                                                    </a>&emsp;
+                                                    <a href=@Url.Action("DeleteIntermediateRejectionNote", "IntermediateRejectionNote", new { ID = item.ID }) onclick="return confirm('Are you sure want to delete?');" title="Delete Intermediate-Rej-Note">
                                                         <i class="fa fa-trash" aria-hidden="true" style="color:tomato"></i>
-                                                    </a>*@
+                                                    </a>
                                                 </td>
                                             </tr>
                                         }

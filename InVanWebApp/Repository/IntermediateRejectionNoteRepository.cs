@@ -92,13 +92,13 @@ namespace InVanWebApp.Repository
                         {
                             IntermediateRejectionNoteDetailsBO objItemDetails = new IntermediateRejectionNoteDetailsBO();
                             objItemDetails.Intermediate_Rej_NoteId = Intermediate_Rej_NoteId;
-                            objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
                             objItemDetails.Item_Code = item.ElementAt(0).Value.ToString();
+                            objItemDetails.ItemId = Convert.ToInt32(item.ElementAt(1).Value);
                             objItemDetails.Item_Name = item.ElementAt(2).Value.ToString();
                             objItemDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(3).Value);
-                            objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString();
                             objItemDetails.CurrencyName = item.ElementAt(4).Value.ToString();
-                            objItemDetails.AvailableStockQuantity = Convert.ToDouble(item.ElementAt(6).Value);                            
+                            objItemDetails.AvailableStockQuantity = Convert.ToDouble(item.ElementAt(5).Value);                            
+                            objItemDetails.ItemUnit = item.ElementAt(6).Value.ToString();
                             objItemDetails.RejectedQuantity = Convert.ToDouble(item.ElementAt(7).Value);
                             objItemDetails.BalanceQuantity = Convert.ToDouble(item.ElementAt(8).Value);
                             objItemDetails.Description = item.ElementAt(9).Value.ToString();
@@ -148,6 +148,68 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region This function is for Intermediate Rejection Note pdf export/view
+        /// <summary>
+        /// Rahul: This function is for fetch data for editing Intermediate Rejection Note by ID and for downloading pdf
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+
+        public IntermediateRejectionNoteBO GetById(int ID)
+        {
+            IntermediateRejectionNoteBO result = new IntermediateRejectionNoteBO();
+            try
+            {
+                string stringQuery = "Select * from IntermediateRejectionNote where IsDeleted=0 and ID=@ID";
+                string stringItemQuery = "Select * from IntermediateRejectionNoteDetails where IsDeleted=0 and Intermediate_Rej_NoteId=@ID";
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    result = con.Query<IntermediateRejectionNoteBO>(stringQuery, new { @ID = ID }).FirstOrDefault();
+                    var ItemList = con.Query<IntermediateRejectionNoteDetailsBO>(stringItemQuery, new { @ID = ID }).ToList();
+                    result.IntermediateRej_NoteDetails = ItemList; 
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
+
+        #endregion
+
+        #region Delete function
+
+        /// <summary>
+        /// Delete Intermediate Rejection Note record by ID
+        /// </summary>
+        /// <param name="ID"></param>
+        public ResponseMessageBO Delete(int Id, int userId)
+        {
+            ResponseMessageBO responseMessage = new ResponseMessageBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {                    
+                    SqlCommand cmd = new SqlCommand("usp_tbl_IntermediateRejectionNote_Delete", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", Id);
+                    cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
+                    cmd.Parameters.AddWithValue("@LastModifiedDate", Convert.ToDateTime(System.DateTime.Now));
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    responseMessage.Status = true;
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                responseMessage.Status = false;
+                log.Error(ex.Message, ex);
+            }
+            return responseMessage;
+        }
+        #endregion
 
     }
 }

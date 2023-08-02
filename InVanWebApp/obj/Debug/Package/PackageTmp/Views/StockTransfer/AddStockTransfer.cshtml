@@ -77,16 +77,9 @@
                                         <tbody id="myTableBody">
                                             <tr id="tablerow">
                                                 <td>
-                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"],
-                                                   //"--Select Item--", 
-                                                   new
-                                                   {
-                                                       @class = "form-control form-control-sm",
-                                                       //style = "height:30px;width:270px;",
-                                                       style = "height:34px;width:auto;",
-                                                       onchange = "SelectedIndexChangedItemList($(this).val())"
-                                                       @*onmouseleave = "ValMsgItemList($(this).val(),id)"*@
-                                                   })
+                                                    @*//"--Select Item--",*/ //style = "height:30px;width:270px;", *@
+                                                    @*@Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], new { @class = "form-control form-control-sm", style = "height:34px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())"@*onmouseleave = "ValMsgItemList($(this).val(),id)"*@ @*})*@
+                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())" })
                                                     <span id="ValMsgItemList" style="display:none; color:red"></span>
                                                     @*@Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" }) Rahul removed ValidationMessageFor ItemId and added ValMsgItemList in span tag onchange SelectedIndexChangedItemList 09-02-23. *@
                                                 </td>
@@ -588,11 +581,11 @@
             document.getElementById("Item_Code").value = itemCode;
             flag = 0;
         }
+        getitemDetails();   ///Rahul added getitemDetails(); in 'function SelectedIndexChangedItemList(id)' 28-07-23.
     }
 
-    $("#Item_ID").change(function () {
+    $("#Item_ID").change(function() {        
         $("#ValMsgItemList").hide();
-        debugger
         var FromLocationCheck = $('#FromLocationId').val();
         var ToLocationCheck = $('#ToLocationId').val();
 
@@ -820,6 +813,8 @@
             '</tr>').appendTo('#submissionTable');
         var id = $('#FromLocationId').val();
        // SelectedIndexChangedFromLocation(id);
+      ///Rahul added 'create_custom_dropdowns_Item_ID(itemId);' in ' $("#AddItem").click(function ()' 28-07-23.
+        create_custom_dropdowns_Item_ID(itemId);
         counter++;
         return false;
     });

@@ -46,9 +46,12 @@ namespace InVanWebApp.Repository
                             ToLocationName = reader["ToLocationName"].ToString(),
                             Item_Code = reader["Item_Code"].ToString(),
                             Item_Name = reader["Item_Name"].ToString(),
-                            FromLocation_BeforeTransferQty = Convert.ToInt32(reader["FromLocation_BeforeTransferQty"]),
-                            TransferQuantity = Convert.ToInt32(reader["TransferQuantity"]),
-                            FinalQuantity = Convert.ToInt32(reader["BalanceQty_FromLocation"]),
+                            //FromLocation_BeforeTransferQty = Convert.ToInt32(reader["FromLocation_BeforeTransferQty"]), //updated 'ToInt32' to 'ToDouble' 02-0823.
+                            FromLocation_BeforeTransferQty = Convert.ToDouble(reader["FromLocation_BeforeTransferQty"]),
+                            //TransferQuantity = Convert.ToInt32(reader["TransferQuantity"]), //updated 'ToInt32' to 'ToDouble' 02-0823.
+                            TransferQuantity = Convert.ToDouble(reader["TransferQuantity"]),
+                            //FinalQuantity = Convert.ToInt32(reader["BalanceQty_FromLocation"]), //updated 'ToInt32' to 'ToDouble' 02-0823.
+                            FinalQuantity = Convert.ToDouble(reader["BalanceQty_FromLocation"]),
                             InwardDateOfItem = Convert.ToDateTime(reader["InwardDateOfItem"]),
                             CreatedDate = Convert.ToDateTime(reader["Date"])
 
@@ -344,10 +347,10 @@ namespace InVanWebApp.Repository
                         //objItemDetails.PO_Id = PO_Id;
                         objLocationWiseStockDetails.LocationID = Convert.ToInt32(stockTransferMaster.FromLocationId);
                         objLocationWiseStockDetails.ItemId = Convert.ToInt32(item.ElementAt(0).Value);
-                        objLocationWiseStockDetails.ItemUnit = item.ElementAt(5).Value.ToString();  //Rahul added on 06-02-23.  
-                        objLocationWiseStockDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(6).Value);  //Rahul added on 06-02-23.  
-                        objLocationWiseStockDetails.Trans_Quantity = Convert.ToDouble(item.ElementAt(7).Value);
-                        objLocationWiseStockDetails.Quantity = Convert.ToDouble(item.ElementAt(8).Value);
+                        objLocationWiseStockDetails.ItemUnit = item.ElementAt(6).Value.ToString();  //Rahul added on 06-02-23.  
+                        objLocationWiseStockDetails.ItemUnitPrice = Convert.ToDecimal(item.ElementAt(7).Value);  //Rahul added on 06-02-23.  
+                        objLocationWiseStockDetails.Trans_Quantity = Convert.ToDouble(item.ElementAt(8).Value);
+                        objLocationWiseStockDetails.Quantity = Convert.ToDouble(item.ElementAt(9).Value);
                         locationwsieStockDetails.Add(objLocationWiseStockDetails);
                     }
                     //Location Wise Stock 

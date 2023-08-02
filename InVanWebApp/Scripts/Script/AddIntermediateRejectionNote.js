@@ -188,7 +188,7 @@ $(document).on('keydown', '.dropdown-select', function (event) {
     //Rahul added 'function createCustomDropdown()' end
 
 //=====================Onchange of Issue By===========================
-function SelectedIndexChangedIssueBy(id) {debugger  
+function SelectedIndexChangedIssueBy(id) {  
     var SelectedIssueByNameVal = $("#divIssueBy .option.selected").attr('data-value');
     if (SelectedIssueByNameVal != '' || SelectedIssueByNameVal != "") {
         $('#IssueByErrMsg').text('');
@@ -199,7 +199,7 @@ function SelectedIndexChangedIssueBy(id) {debugger
 }
 //==================Set value in txtItemDetails onCick of Save/Update button======--------
 function SaveBtnClick() {
-    debugger
+    //debugger
     var IssueByName = $("#divIssueBy .selected").text();
     if (IssueByName == '---Select---') {
         $('#IssueByErrMsg').text('Select issue by!');
@@ -283,11 +283,12 @@ function SaveBtnClick() {
                 var RejectQty = document.getElementById("txtRejectedQty_" + i).value;
                 RejectQty = parseFloat(RejectQty);
 
-                $('#spanRemark_' + rowNo).text('');
+                $('#spanRemark_' + i).text('');
                 if (Comments == '' || Comments == null) {
                     $('#spanRemark_' + i).text('Comment is mandatory!');
                     document.getElementById('spanRemark_' + i).setAttribute('style', 'color:red;');
                     document.getElementById("txtRemarks_" + i).focus();
+                    $('#btnSave').prop('disabled', true);
                     event.preventDefault();
                     return;
                 }
@@ -295,6 +296,7 @@ function SaveBtnClick() {
                     document.getElementById("txtRejectedQty_" + i).value = 0;
                     $('#spanRejectedQty_' + i).text('');
                     document.getElementById("txtRejectedQty_" + i).focus();
+                    $('#btnSave').prop('disabled', true);
                     event.preventDefault();
                     return;
                 }
@@ -320,7 +322,8 @@ function SaveBtnClick() {
 //==========end===============
 
 //=====================Onchange of Location===========================
-function SelectedIndexChangedLocation(id) {debugger
+function SelectedIndexChangedLocation(id) {
+
     var SelectedLocationNameVal = $("#divLocationId .option.selected").attr('data-value');
     if (SelectedLocationNameVal != '' || SelectedLocationNameVal != "") {
         $('#LocationIdErrMsg').text('');
@@ -406,7 +409,7 @@ function SelectedIndexChangedLocation(id) {debugger
                         t0.type = "checkbox";
                         t0.id = "SelectedItem_" + j;
                         t0.name = "ItemSelected";
-                        t0.setAttribute("value", true);
+                        t0.setAttribute("value", false);
                         t0.setAttribute("class", "form-control-sm");
                         cell.appendChild(t0);
                     }   
@@ -551,7 +554,7 @@ function SelectedIndexChangedItem(id) {
                         t0.type = "checkbox";
                         t0.id = "SelectedItem_" + j;
                         t0.name = "ItemSelected";
-                        t0.setAttribute("value", true);
+                        t0.setAttribute("value", false);
                         t0.setAttribute("class", "form-control-sm");
                         cell.appendChild(t0);
                     }
@@ -637,9 +640,11 @@ function SelectedIndexChangedItem(id) {
 function OnChangeComment(value, id) {
     var rowNo = id.split('_')[1];
     $('#spanRemark_' + rowNo).text('');
+    $('#btnSave').prop('disabled', false);
 }
 
-function OnChangeQty(value, id) {debugger
+function OnChangeQty(value, id) {
+
     $('#btnSave').prop('disabled', false);
     var rowNo = id.split('_')[1];
     $('#spanRejectedQty_' + rowNo).text('');
@@ -693,6 +698,7 @@ function OnChangeQty(value, id) {debugger
 var TxtItemDetails = "";
 
 function createJson() {
+    debugger
     var table = document.getElementById('submissionTable');
     var rowCount = table.rows.length;
     var i = 0, flag = 0;
@@ -700,7 +706,7 @@ function createJson() {
     while (i < rowCount - 1) {
 
         var ItemSelected = false;
-        if ($('#SelectedItem_' + i).is(":checked")) {
+        if ($('#SelectedItem_' + i).is(":checked")) {debugger
             ItemSelected = true;
         }
 
@@ -717,7 +723,7 @@ function createJson() {
 
         var Remarks = (document.getElementById("txtRemarks_" + i)).value;
 
-        if (ItemSelected == false) {
+        if (ItemSelected == false) {debugger
             i++;
             continue;
         }
@@ -725,7 +731,7 @@ function createJson() {
             ", \"ItemName\": \"" + ItemName + "\", \"ItemUnitPrice\": " + PricePerUnit +
             ", \"CurrencyName\": \"" + CurrencyName + "\", \"AvlStock\": " + AvailableStock + ", \"ItemUnit\": \"" + Unit +
             "\", \"RejectedQty\": " + RejectedQty + ",\"FinalQty\": " + DiffQty + 
-            ",\"Remarks\": \"" + Remarks + "\", \"ItemSelected\": \"" + ItemSelected;
+            ",\"Remarks\": \"" + Remarks + "\", \"ItemSelected\": \"" + ItemSelected + "\"";
 
         if (i == (rowCount - 1)) {
             TxtItemDetails = TxtItemDetails + "}";
