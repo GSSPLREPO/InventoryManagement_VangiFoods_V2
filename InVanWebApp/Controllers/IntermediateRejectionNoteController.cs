@@ -23,7 +23,7 @@ namespace InVanWebApp.Controllers
         private IIssueNoteRepository _repository;
         private IPurchaseOrderRepository _purchaseOrderRepository;
         private IStockAdjustmentRepository _stockAdjustmentRepository;
-        private static ILog log = LogManager.GetLogger(typeof(StockAdjustmentController));
+        private static ILog log = LogManager.GetLogger(typeof(IntermediateRejectionNoteController));
 
         #region Initializing Constructor
         /// <summary>
@@ -252,7 +252,7 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Issue By</th>");
+            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Rejection By</th>");
             sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + intermediate_Rej_NoteList.IssueByName + "</td>");
             sb.Append("</tr>");
 
