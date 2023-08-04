@@ -13,6 +13,8 @@ namespace InVanWebApp.Repository.Interface
         IEnumerable<MaterialReturnNoteBO> GetAll();
         /// Insert record Material Return Note and Material Return Note Details. 
         ResponseMessageBO Insert(MaterialReturnNoteBO model);
+        ///This function is for Material Return Note pdf export/view   
+        MaterialReturnNoteBO GetById(int ID);
         /// Delete Material Return Note record by ID
         ResponseMessageBO Delete(int Id, int userId);
 

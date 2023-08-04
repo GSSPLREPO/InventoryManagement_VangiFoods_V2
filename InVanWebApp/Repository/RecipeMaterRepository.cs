@@ -325,14 +325,14 @@ namespace InVanWebApp.Repository
                         {
                             Recipe_DetailsBO objItemDetails = new Recipe_DetailsBO();
                             objItemDetails.RecipeID = item.RecipeID;
-                            objItemDetails.RecipeName = items.ElementAt(0).Value.ToString();
+                            //objItemDetails.RecipeName = items.ElementAt(0).Value.ToString(); ///Rahul: Not in use 'objItemDetails.RecipeName' 04-0823.
                             objItemDetails.ItemId = Convert.ToInt32(items.ElementAt(0).Value);
-                            objItemDetails.ItemCode = items.ElementAt(1).Value.ToString();
-                            objItemDetails.ItemName = items.ElementAt(2).Value.ToString();
-                            objItemDetails.Ratio = float.Parse(items.ElementAt(4).Value);
-                            objItemDetails.BatchSize = float.Parse(items.ElementAt(5).Value);
-                            objItemDetails.UnitName = items.ElementAt(3).Value.ToString();
-                            objItemDetails.Description = items.ElementAt(6).Value.ToString();
+                            objItemDetails.ItemCode = items.ElementAt(2).Value.ToString(); ///Rahul: updated 'ElementAt(1)' to 'ElementAt(2)' 04-0823.
+                            objItemDetails.ItemName = items.ElementAt(3).Value.ToString(); ///Rahul: updated 'ElementAt(2)' to 'ElementAt(3)' 04-0823.
+                            objItemDetails.UnitName = items.ElementAt(4).Value.ToString(); ///Rahul: updated 'ElementAt(3)' to 'ElementAt(4)' 04-0823.
+                            objItemDetails.Ratio = float.Parse(items.ElementAt(5).Value); ///Rahul: updated 'ElementAt(4)' to 'ElementAt(5)' 04-0823.
+                            objItemDetails.BatchSize = float.Parse(items.ElementAt(6).Value); ///Rahul: updated 'ElementAt(5)' to 'ElementAt(6)' 04-0823.
+                            objItemDetails.Description = items.ElementAt(7).Value.ToString(); ///Rahul: updated 'ElementAt(6)' to 'ElementAt(7)' 04-0823. 
 
                             itemDetails.Add(objItemDetails);
                         }

@@ -39,16 +39,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/18/2023 06:44:46</publishTime>
     </File>
     <File Include="bin/InVanWebApp.dll">
-      <publishTime>08/02/2023 16:06:55</publishTime>
+      <publishTime>08/04/2023 15:18:04</publishTime>
     </File>
     <File Include="bin/InVanWebApp.pdb">
-      <publishTime>08/02/2023 16:06:55</publishTime>
+      <publishTime>08/04/2023 15:18:04</publishTime>
     </File>
     <File Include="bin/InVanWebApp_BO.dll">
-      <publishTime>08/02/2023 14:52:01</publishTime>
+      <publishTime>08/04/2023 15:19:06</publishTime>
     </File>
     <File Include="bin/InVanWebApp_BO.pdb">
-      <publishTime>08/02/2023 14:52:01</publishTime>
+      <publishTime>08/04/2023 15:19:06</publishTime>
     </File>
     <File Include="bin/itextsharp.dll">
       <publishTime>05/18/2023 06:44:46</publishTime>
@@ -4300,6 +4300,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Scripts/Script/AddIssueNote.js">
       <publishTime>07/07/2023 12:28:43</publishTime>
+    </File>
+    <File Include="Scripts/Script/AddMaterialReturnNote.js">
+      <publishTime>08/04/2023 11:21:13</publishTime>
     </File>
     <File Include="Scripts/Script/AddOutwardNote.js">
       <publishTime>05/18/2023 06:44:46</publishTime>
@@ -10017,13 +10020,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/15/2023 16:31:39</publishTime>
     </File>
     <File Include="Views/IntermediateRejectionNote/AddIntermediateRejectionNote.cshtml">
-      <publishTime>08/01/2023 16:37:42</publishTime>
+      <publishTime>08/03/2023 14:24:20</publishTime>
     </File>
     <File Include="Views/IntermediateRejectionNote/Index.cshtml">
-      <publishTime>08/02/2023 14:21:15</publishTime>
+      <publishTime>08/03/2023 14:25:20</publishTime>
     </File>
     <File Include="Views/IntermediateRejectionNote/ViewIntermediateRejectionNote.cshtml">
-      <publishTime>08/02/2023 13:54:46</publishTime>
+      <publishTime>08/03/2023 14:27:27</publishTime>
     </File>
     <File Include="Views/InventoryControl/Index.cshtml">
       <publishTime>05/18/2023 06:44:46</publishTime>
@@ -10111,6 +10114,15 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Views/Login/Index.cshtml">
       <publishTime>06/21/2023 17:49:45</publishTime>
+    </File>
+    <File Include="Views/MaterialReturnNote/AddMaterialReturnNote.cshtml">
+      <publishTime>08/04/2023 09:46:17</publishTime>
+    </File>
+    <File Include="Views/MaterialReturnNote/Index.cshtml">
+      <publishTime>08/04/2023 09:46:21</publishTime>
+    </File>
+    <File Include="Views/MaterialReturnNote/ViewMaterialReturnNote.cshtml">
+      <publishTime>08/04/2023 13:24:16</publishTime>
     </File>
     <File Include="Views/MicroAnalysis/AddMicroAnalysis.cshtml">
       <publishTime>05/18/2023 06:44:46</publishTime>
@@ -10446,7 +10458,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/21/2023 17:50:03</publishTime>
     </File>
     <File Include="Views/Shared/SideNavBar.cshtml">
-      <publishTime>08/01/2023 12:01:59</publishTime>
+      <publishTime>08/03/2023 14:30:47</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>05/18/2023 06:44:46</publishTime>
@@ -10605,7 +10617,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/18/2023 06:44:46</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/02/2023 16:06:56</publishTime>
+      <publishTime>08/04/2023 15:19:09</publishTime>
     </File>
   </ItemGroup>
 </Project>

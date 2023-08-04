@@ -236,7 +236,7 @@ function SaveBtnClick() {
         while (i < tableLength - 1) {
             var AvlQty = document.getElementById("CurrentStockQuantity_" + i).innerHTML;
             AvlQty = parseFloat(AvlQty);
-            var ReturnQty = document.getElementById("txtReturnQuantity_" + i).value; //Change this with Rejected qty 
+            var ReturnQty = document.getElementById("txtReturnQuantity_" + i).value; //Change this with Return qty
             ReturnQty = parseFloat(ReturnQty);
 
             $('#spanReturnQty_' + i).text('');
@@ -269,14 +269,18 @@ function SaveBtnClick() {
                     event.preventDefault();
                     return;
                 }
-                else if (RejectQty > AvlQty) {
-                    document.getElementById("txtReturnQuantity_" + i).value = 0;
-                    $('#spanReturnQty_' + i).text('');
-                    document.getElementById("txtReturnQuantity_" + i).focus();
-                    $('#btnSave').prop('disabled', true);
-                    event.preventDefault();
-                    return;
+                else {
+                    $('#spanRemark_' + i).text('');
+                    $('#btnSave').prop('disabled', false);
                 }
+                //else if (RejectQty > AvlQty) { ///Rahul commented code not in use 'else if (RejectQty > AvlQty)' start.
+                //    document.getElementById("txtReturnQuantity_" + i).value = 0;
+                //    $('#spanReturnQty_' + i).text('');
+                //    document.getElementById("txtReturnQuantity_" + i).focus();
+                //    $('#btnSave').prop('disabled', true);
+                //    event.preventDefault();
+                //    return;
+                //} ///Rahul commented code not in use 'else if (RejectQty > AvlQty)' end. 
                 document.getElementById("txtRemarks_" + i).setAttribute("required", "required");
             }
             $('#spanRemark_' + i).text('');
@@ -639,24 +643,30 @@ function OnChangeQty(value, id) {
     var ReturnQty = parseFloat(value);
     ReturnQty = parseFloat(ReturnQty);
 
+    //var FinalQty = 0; ///Rahul commented code not in use 'if (ReturnQty > CurrentQty)' start.
+    //if (ReturnQty > CurrentQty) {
+    //    $('#spanReturnQty_' + rowNo).text('You can not return more than current stock quantity!');
+    //    document.getElementById('spanReturnQty_' + rowNo).setAttribute('style', 'color:red;');
+    //    document.getElementById(id).focus();
+    //    $('#btnSave').prop('disabled', true);
+    //    event.preventDefault();
+    //    return;
+    //}
+    //else {
+    //    $('#spanReturnQty_' + rowNo).text('');
+    //    FinalQty = CurrentQty + ReturnQty; 
+    //    FinalQty = parseFloat(FinalQty);
+    //    document.getElementById("txtFinalQuantity_" + rowNo).value = FinalQty;
+    //}
+    //document.getElementById("txtRemarks_" + rowNo).focus(); ///Rahul commented code not in use 'if (ReturnQty > CurrentQty)' end.
+     ///Rahul added  'FinalQty' start.
     var FinalQty = 0;
-
-    if (ReturnQty > CurrentQty) {
-        $('#spanReturnQty_' + rowNo).text('You can not issue more than current stock quantity!');
-        document.getElementById('spanReturnQty_' + rowNo).setAttribute('style', 'color:red;');
-        document.getElementById(id).focus();
-        $('#btnSave').prop('disabled', true);
-        event.preventDefault();
-        return;
-    }
-    else {
-        $('#spanReturnQty_' + rowNo).text('');
-        FinalQty = CurrentQty + ReturnQty; 
-        FinalQty = parseFloat(FinalQty);
-        document.getElementById("txtFinalQuantity_" + rowNo).value = FinalQty;
-    }
+    $('#spanReturnQty_' + rowNo).text('');
+    FinalQty = CurrentQty + ReturnQty;
+    FinalQty = parseFloat(FinalQty);
+    document.getElementById("txtFinalQuantity_" + rowNo).value = FinalQty;
     document.getElementById("txtRemarks_" + rowNo).focus();
-
+    ///Rahul added  'FinalQty' end.
     $('#spanRemark_' + rowNo).text('');
     var remarks = $('#txtRemarks_' + rowNo).val();
     if (remarks == '' && remarks == null) {

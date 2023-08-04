@@ -54,8 +54,7 @@ namespace InVanWebApp.Repository
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
-                {
-                    //SqlCommand cmd = new SqlCommand("usp_tbl_IntermediateRejectionNote_Insert", con);
+                {                    
                     SqlCommand cmd = new SqlCommand("usp_tbl_MaterialReturnNote_Insert", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@MaterialReturnNoteNo", model.MaterialReturnNoteNo); 
@@ -109,8 +108,7 @@ namespace InVanWebApp.Repository
 
                         foreach (var item in itemDetails)
                         {
-                            con.Open();
-                            //SqlCommand cmdNew = new SqlCommand("usp_tbl_IntermediateRejectionNoteDetails_Insert", con);
+                            con.Open();                            
                             SqlCommand cmdNew = new SqlCommand("usp_tbl_MaterialReturnNoteDetails_Insert", con);
                             cmdNew.CommandType = CommandType.StoredProcedure;
 
@@ -150,6 +148,36 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region This function is for Material Return Note pdf export/view 
+        /// <summary>
+        /// Rahul: This function is for fetch data for editing Material Return Note by ID and for downloading pdf
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+
+        public MaterialReturnNoteBO GetById(int ID)
+        {
+            MaterialReturnNoteBO result = new MaterialReturnNoteBO();
+            try
+            {
+                string stringQuery = "Select * from MaterialReturnNote where IsDeleted=0 and ID=@ID";
+                string stringItemQuery = "Select * from MaterialReturnNoteDetails where IsDeleted=0 and MaterialReturnNoteId=@ID";
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    result = con.Query<MaterialReturnNoteBO>(stringQuery, new { @ID = ID }).FirstOrDefault();
+                    var ItemList = con.Query<MaterialReturnNoteDetailsBO>(stringItemQuery, new { @ID = ID }).ToList();
+                    result.Material_ReturnNote_Details = ItemList;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return result;
+        }
+        #endregion
+
+
         #region Delete function
 
         /// <summary>
@@ -162,9 +190,8 @@ namespace InVanWebApp.Repository
             try
             {
                 using (SqlConnection con = new SqlConnection(connString))
-                {
-                    SqlCommand cmd = new SqlCommand("usp_tbl_IntermediateRejectionNote_Delete", con);
-                    SqlCommand cmd = new SqlCommand("usp_tbl_IntermediateRejectionNote_Delete", con);
+                {                    
+                    SqlCommand cmd = new SqlCommand("usp_tbl_MaterialReturnNote_Delete", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@ID", Id);
                     cmd.Parameters.AddWithValue("@LastModifiedBy", userId);
