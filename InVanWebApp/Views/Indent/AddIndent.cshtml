@@ -245,8 +245,7 @@
                 });
 
                 // Hook the keyboard and we're done 
-                //_opts($t).textField.keyup(function (event) {
-                _opts($t).textField.mouseenter(function (event) {
+                _opts($t).textField.keyup(function (event) {                    
                      // Space or Enter
                     if (event.keyCode == 32 || event.keyCode == 13) {
                         $(this).val($t.find(":selected").text());
@@ -255,7 +254,6 @@
                     }
                     setTimeout(_findElementsInListBox($t, $(this)), 50);
                 })
-
             })
 
 

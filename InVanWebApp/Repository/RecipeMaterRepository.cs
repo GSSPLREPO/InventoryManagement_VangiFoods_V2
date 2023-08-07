@@ -188,8 +188,10 @@ namespace InVanWebApp.Repository
                             objItemDetails.ItemCode = item.ElementAt(2).Value.ToString(); //Rahul updaded index 'ElementAt(1)' 28-07-23.
                             objItemDetails.ItemName = item.ElementAt(3).Value.ToString(); //Rahul updaded index 'ElementAt(2)' 28-07-23.
                             objItemDetails.UnitName = item.ElementAt(4).Value.ToString(); //Rahul updaded index 'ElementAt(3)' 28-07-23.
-                            objItemDetails.Ratio = float.Parse(item.ElementAt(5).Value); //Rahul updaded index 'ElementAt(4)' 28-07-23.
-                            objItemDetails.BatchSize = float.Parse(item.ElementAt(6).Value); //Rahul updaded index 'ElementAt(5)' 28-07-23.
+                            //objItemDetails.Ratio = float.Parse(items.ElementAt(5).Value); ///Rahul: commented 'Ratio=float.Pars', 'ElementAt(4)' to 'ElementAt(5)' 07-08-23.                            
+                            //objItemDetails.BatchSize = float.Parse(items.ElementAt(6).Value); ///Rahul: commented 'BatchSize=float.Pars', 'ElementAt(5)' to 'ElementAt(6)' 07-08-23.
+                            objItemDetails.Ratio = Convert.ToDouble(item.ElementAt(5).Value); ///Rahul: updated 'Ratio = Convert.ToDouble', 'ElementAt(4)' to 'ElementAt(5)' 07-08-23.                            
+                            objItemDetails.BatchSize = Convert.ToDouble(item.ElementAt(6).Value); ///Rahul: updated'BatchSize = Convert.ToDouble', 'ElementAt(5)' to 'ElementAt(6)' 07-08-23.
                             objItemDetails.Description = item.ElementAt(7).Value.ToString(); //Rahul updaded index 'ElementAt(6)' 28-07-23.
 
                             itemDetails.Add(objItemDetails);
@@ -327,12 +329,14 @@ namespace InVanWebApp.Repository
                             objItemDetails.RecipeID = item.RecipeID;
                             //objItemDetails.RecipeName = items.ElementAt(0).Value.ToString(); ///Rahul: Not in use 'objItemDetails.RecipeName' 04-0823.
                             objItemDetails.ItemId = Convert.ToInt32(items.ElementAt(0).Value);
-                            objItemDetails.ItemCode = items.ElementAt(2).Value.ToString(); ///Rahul: updated 'ElementAt(1)' to 'ElementAt(2)' 04-0823.
-                            objItemDetails.ItemName = items.ElementAt(3).Value.ToString(); ///Rahul: updated 'ElementAt(2)' to 'ElementAt(3)' 04-0823.
-                            objItemDetails.UnitName = items.ElementAt(4).Value.ToString(); ///Rahul: updated 'ElementAt(3)' to 'ElementAt(4)' 04-0823.
-                            objItemDetails.Ratio = float.Parse(items.ElementAt(5).Value); ///Rahul: updated 'ElementAt(4)' to 'ElementAt(5)' 04-0823.
-                            objItemDetails.BatchSize = float.Parse(items.ElementAt(6).Value); ///Rahul: updated 'ElementAt(5)' to 'ElementAt(6)' 04-0823.
-                            objItemDetails.Description = items.ElementAt(7).Value.ToString(); ///Rahul: updated 'ElementAt(6)' to 'ElementAt(7)' 04-0823. 
+                            objItemDetails.ItemCode = items.ElementAt(2).Value.ToString(); ///Rahul: updated 'ElementAt(1)' to 'ElementAt(2)' 04-08-23.
+                            objItemDetails.ItemName = items.ElementAt(3).Value.ToString(); ///Rahul: updated 'ElementAt(2)' to 'ElementAt(3)' 04-08-23.
+                            objItemDetails.UnitName = items.ElementAt(4).Value.ToString(); ///Rahul: updated 'ElementAt(3)' to 'ElementAt(4)' 04-08-23.
+                            //objItemDetails.Ratio = float.Parse(items.ElementAt(5).Value); ///Rahul: commented 'Ratio=float.Pars', 'ElementAt(4)' to 'ElementAt(5)' 07-08-23.                            
+                            //objItemDetails.BatchSize = float.Parse(items.ElementAt(6).Value); ///Rahul: commented 'BatchSize=float.Pars', 'ElementAt(5)' to 'ElementAt(6)' 07-08-23.
+                            objItemDetails.Ratio = Convert.ToDouble(items.ElementAt(5).Value); ///Rahul: updated 'Ratio = Convert.ToDouble', 'ElementAt(4)' to 'ElementAt(5)' 07-08-23.                            
+                            objItemDetails.BatchSize = Convert.ToDouble(items.ElementAt(6).Value); ///Rahul: updated'BatchSize = Convert.ToDouble', 'ElementAt(5)' to 'ElementAt(6)' 07-08-23.
+                            objItemDetails.Description = items.ElementAt(7).Value.ToString(); ///Rahul: updated 'ElementAt(6)' to 'ElementAt(7)' 04-08-23. 
 
                             itemDetails.Add(objItemDetails);
                         }

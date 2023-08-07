@@ -585,7 +585,7 @@
     //==========end===============
 
     //===========OnChange of item if currency is not selected================
-    $("#Item_ID").change(function () {debugger
+    $("#Item_ID").change(function () {
         var CurrencyIDCheck = $('#CurrencyID').val();
         console.log(CurrencyIDCheck);
         if (CurrencyIDCheck == '' || CurrencyIDCheck == null) {
@@ -600,7 +600,7 @@
     //==================end======================
 
     //Dropdownlist Selectedchange event
-    function getitemDetails() {debugger 
+    function getitemDetails() { 
                     $("#f").empty();
             $.ajax({
                 type: 'POST',

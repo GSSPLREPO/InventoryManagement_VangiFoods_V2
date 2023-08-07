@@ -202,6 +202,8 @@
                                                 <th class="sortStyle">Currency</th>
                                                 <th class="sortStyle">Tax</th>
                                                 <th class="sortStyle">Total before tax</th>
+                                                <th class="sortStyle d-none"></th>
+                                                @*//Rahul added 'blank th' for 'Delete' 07-08-2023*@
                                             </tr>
                                         </thead>
                                     </table>
@@ -694,6 +696,18 @@
                             t4.setAttribute("readonly", "readonly");
                             cell.appendChild(t4);
                         }
+                        /*Rahul : Add Javascript 'else if (i == 8)' for 'function removeTr(index)' start on 07-08-2023.*/
+                        else if (i == 8) {
+                            var t8 = document.createElement("button");
+                            t8.id = "btnDelete_" + j;
+                            t8.setAttribute("class", "btn btn-sm btn-primary");
+                            t8.setAttribute("style", "background: linear-gradient(85deg, #392c70, #6a005b);");
+                            t8.setAttribute("type", "submit");
+                            t8.innerHTML = "Delete";
+                            t8.setAttribute("onclick", "removeTr('" + j + "');");
+                            cell.appendChild(t8);
+                        }
+                    /*Rahul : Add Javascript 'else if (i == 12)' for 'function removeTr(index)' end on 07-08-2023.*/
                         //else if (i == 8) {
                         //    cell.innerHTML = result[j].BalanceQuantity;
                         //    cell.setAttribute("class", "d-none");
@@ -971,4 +985,26 @@
             return value;
         }
     }
+
+    /*Rahul : Add Javascript 'function removeTr(index)' start on 07-08-2023.*/
+    function removeTr(index) {debugger
+        var length = document.getElementById("submissionTable").rows.length;
+        length = parseFloat(length) - 1;
+        id = index;
+        if (length == 1) {
+            CalculateTotalBeforeTax();
+            event.preventDefault();
+            return false;
+        }
+        else if (length >= index) {
+            $('#tablerow' + index).remove();
+            //CalculateTotalBeforeTax();
+        }
+        //else {
+        //    CalculateTotalBeforeTax();
+        //}
+        CalculateTotalBeforeTax();
+        return false;
+    }
+/*Rahul : Add Javascript 'function removeTr(index)' end on 07-08-2023.*/
 </script>

@@ -50,8 +50,10 @@ namespace InVanWebApp_BO
         public decimal ItemQuantity { get; set; }
         public decimal FinalQuantity { get; set; } 
         public string UnitName { get; set; }
-        public float Ratio { get; set; }
-        public float BatchSize { get; set; } //Rahul added 15-03-2023. 
+        //public float Ratio { get; set; } //Rahul 'float Ratio' commented 07-08-2023. 
+        //public float BatchSize { get; set; } //Rahul 'float BatchSize' commented 07-08-2023. 
+        public double Ratio { get; set; } //Rahul updated 'double Ratio' commented 07-08-2023.  
+        public double BatchSize { get; set; }  //Rahul updated 'double BatchSize' commented 07-08-2023. 
         public string Description { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
