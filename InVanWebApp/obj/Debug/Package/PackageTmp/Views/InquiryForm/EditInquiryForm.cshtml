@@ -1,6 +1,6 @@
 ﻿@model InVanWebApp_BO.InquiryFormBO
 @{ ViewBag.Title = "EditInquiryForm";
-                Layout = "~/Views/Shared/MainMaster.cshtml"; }
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 @using (Html.BeginForm("EditInquiryForm", "InquiryForm", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -212,11 +212,13 @@
                                                                 string itemListForDD = "itemListForDD";
                                                                 itemListForDD = itemListForDD + (c - 1);
                                             <tr id="tablerow_@c">
-                                                <td>                                                    
-                                                    @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
-                                                                   new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
-                                                    @*Rahul added class 'DropdownRegular' 10-07-2023.*@
-                                                    @*@Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:34px;width:100px;", onchange = "SelectedIndexChangedItemList($(this).val())" })*@
+                                                <td>
+                                                    @*Rahul updated 'DropDownList Item_ID' '---------- Select Item ----------' 08-08-23.*@
+                                                    @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "---------- Select Item ----------",
+                                                                                       new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })
+                                                    @*@Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
+                                                        new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;width:auto;", onchange = "getitemDetailsJSTbl('" + c + "')" })*@
+
                                                 </td>
                                                 <td class="col-md-4 d-none">
                                                     @Html.TextBox("Item_Code_" + c, item.Item_Code, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;width:200px;" })
@@ -266,7 +268,7 @@
                                                     @Html.TextBox("DeliveryDate", item.DeliveryDate, "{0:yyyy-MM-dd}", new { id = "DeliveryDate", @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @max = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd") })
                                                     @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
                                                     @*@Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })
-                                                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })*@
+                                                        @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })*@
                                                 </td>
                                                 <td>
                                                     @Html.TextBox("HSN_Code_" + c, item.HSN_Code, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly", MaxLength = "10" })
@@ -280,9 +282,9 @@
                                                     @if (c == 1)
                                                     {
                                 <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);" disabled>Delete</button> }
-                                                    else
-                                                    {
-                                <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>}
+                            else
+                            {
+        <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>}
                                                 </td>
                                             </tr> { c++; }
                                                             } }
@@ -410,7 +412,8 @@
             if (!$(this).next().hasClass('dropdown-select')) {
                 $('#' + id).removeClass('form-control');
                 $('#' + id).removeClass('form-control-sm');
-                $(this).after('<div id="div' + id + '" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                /*Rahul added in 'function create_custom_dropdowns_Item_ID(id)' id="div" class='d-flex align-items-center' 08-08-23.*/
+                $(this).after('<div id="div' + id + '" class="dropdown-select wide d-flex align-items-center ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -438,7 +441,8 @@
             if (!$(this).next().hasClass('dropdown-select')) {
 
                 $('#VendorsID').removeClass('form-control');
-                $(this).after('<div id="divVendorsID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                /*Rahul added in 'function create_custom_dropdowns_VendorsID()' id="divVendorsID" class='d-flex align-items-center' 08-08-23.*/
+                $(this).after('<div id="divVendorsID" class="dropdown-select wide d-flex align-items-center ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -465,7 +469,8 @@
             if (!$(this).next().hasClass('dropdown-select')) {
 
                 $('#LocationId').removeClass('form-control');
-                $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                /*Rahul added in 'function create_custom_dropdowns_LocationId()' id="divLocationId" class='d-flex align-items-center' 08-08-23.*/
+                $(this).after('<div id="divLocationId" class="dropdown-select wide d-flex align-items-center ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');

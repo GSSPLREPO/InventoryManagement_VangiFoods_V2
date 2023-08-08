@@ -1,367 +1,360 @@
 ﻿@model InVanWebApp_BO.InquiryFormBO
 
-@{
-    ViewBag.Title = "AddInquiryForm";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "AddInquiryForm";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 @using (Html.BeginForm("AddInquiryForm", "InquiryForm", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+@Html.AntiForgeryToken()
 
-    <div class="card">
-        <div class="card-body">
-            <h4>Add Inquiry Form</h4>
-            <hr />
-            @Html.ValidationSummary(true)
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Add Inquiry Form</h4>
+                        <hr />
+                        @Html.ValidationSummary(true)
 
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Inquiry Number")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.InquiryNumber, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.InquiryNumber, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.InquiryNumber, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Inquiry Date")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @*Rahul added @max for DateOfInquiry 10-02-2023.*@
-                    @Html.TextBoxFor(model => model.DateOfInquiry, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.DateOfInquiry, "", new { @class = "error mt-2 text-danger" })
-                </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Inquiry Number")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.InquiryNumber, new { @class = "form-control form-control-sm", Value = ViewData["DocumentNo"], @readonly = "readonly" })
+                                @Html.ValidationMessageFor(model => model.InquiryNumber, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.InquiryNumber, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Inquiry Date")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @*Rahul added @max for DateOfInquiry 10-02-2023.*@
+                                @Html.TextBoxFor(model => model.DateOfInquiry, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @readonly = "readonly", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.DateOfInquiry, "", new { @class = "error mt-2 text-danger" })
+                            </div>
 
-            </div>
+                        </div>
 
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Currency")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control form-control-sm DropdownRegular" })
-                    @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-1 d-none">
-                    @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Inquiry Status")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownList("InquiryStatusID", new List<SelectListItem>{
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Currency")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.CurrencyID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control form-control-sm DropdownRegular" })
+                                @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-1 d-none">
+                                @Html.TextBoxFor(model => model.CurrencyPrice, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Inquiry Status")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownList("InquiryStatusID", new List<SelectListItem>{
                             new SelectListItem{ Text="Open", Value = "0" },
                             //new SelectListItem{ Text="Close", Value = "1" },
                             }, new { @class = "form-control form-control-sm DropdownRegular" })
-                    @*@Html.DropDownListFor(model => model.InquiryStatusID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control form-control-sm" })*@
-                    @*@Html.ValidationMessageFor(model => model.InquiryStatusID, "", new { @class = "error mt-2 text-danger" })*@
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Contact Person Name")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ContactPersonName, new { @class = "form-control form-control-sm", type = "text", placeholder = "Contact Person Name" })
-                    @Html.ValidationMessageFor(model => model.ContactPersonName, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Email ID")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ClientEmail, new { @class = "form-control form-control-sm", type = "text", placeholder = "Client Email Id" })
-                    @Html.ValidationMessageFor(model => model.ClientEmail, "", new { @class = "error mt-2 text-danger" })
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Contact Number")
-                    @*<span style="color:red">*</span>*@
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-2">
-                    @Html.Label("Location Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedLocation($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
-                </div>
-                <div class="col-md-2">
-                    @Html.Label("Client Name")
-                    <span style="color:red">*</span>
-                </div>
-                <div class="col-md-4">
-                    @Html.DropDownListFor(model => model.VendorsID, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
-                    @Html.ValidationMessageFor(model => model.VendorsID, "", new { @class = "error mt-2 text-danger" })
-                </div>
-                <div class="col-md-4 d-none">
-                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-6 grid-margin stretch-card flex-wrap">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">
-                                Supplier Address
-                                <span style="color:red">*</span>
-                            </h4>
-                            <hr />
-                            <div class="form-group">
-                                @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm", placeholder = "Supplier address", style = "height:100px" })
-                                @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger", id = "valMsgDeliveryAdd" })
+                                @*@Html.DropDownListFor(model => model.InquiryStatusID, (IEnumerable<SelectListItem>)ViewData["CurrencyName"], "---Select---", new { @class = "form-control form-control-sm" })*@
+                                @*@Html.ValidationMessageFor(model => model.InquiryStatusID, "", new { @class = "error mt-2 text-danger" })*@
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="col-md-6 grid-margin stretch-card flex-wrap">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title" style="color:darkcyan">
-                                Customer Address
-                                <span style="color:red">*</span>
-                            </h4>
-                            <hr />
-                            <div class="form-group">
-                                @Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control form-control-sm", placeholder = "Customer address", style = "height:100px" })
-                                @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "error mt-2 text-danger", id = "valMsgSupplierAdd" })
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Contact Person Name")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.ContactPersonName, new { @class = "form-control form-control-sm", type = "text", placeholder = "Contact Person Name" })
+                                @Html.ValidationMessageFor(model => model.ContactPersonName, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Email ID")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.ClientEmail, new { @class = "form-control form-control-sm", type = "text", placeholder = "Client Email Id" })
+                                @Html.ValidationMessageFor(model => model.ClientEmail, "", new { @class = "error mt-2 text-danger" })
+                            </div>
 
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Contact Number")
+                                @*<span style="color:red">*</span>*@
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control form-control-sm" })
+                                @Html.ValidationMessageFor(model => model.ContactNo, "", new { @class = "error mt-2 text-danger" })
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                @Html.Label("Location Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.LocationId, (IEnumerable<SelectListItem>)ViewData["LocationName"], "---Select---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedLocation($(this).val())" })
+                                @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.LocationName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.Label("Client Name")
+                                <span style="color:red">*</span>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.DropDownListFor(model => model.VendorsID, (IEnumerable<SelectListItem>)ViewData["CompanyName"], "---Select---", new { @class = "form-control form-control-sm", onchange = "SelectedIndexChanged($(this).val())" })
+                                @Html.ValidationMessageFor(model => model.VendorsID, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                            <div class="col-md-4 d-none">
+                                @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                            </div>
+                        </div>
 
 
-            <div class="col-md-12 stretch-card flex-wrap">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">
+                                            Supplier Address
+                                            <span style="color:red">*</span>
+                                        </h4>
+                                        <hr />
+                                        <div class="form-group">
+                                            @Html.TextAreaFor(model => model.DeliveryAddress, new { id = "DeliveryAddress", @class = "form-control form-control-sm", placeholder = "Supplier address", style = "height:100px" })
+                                            @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "error mt-2 text-danger", id = "valMsgDeliveryAdd" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title" style="color:darkcyan">
+                                            Customer Address
+                                            <span style="color:red">*</span>
+                                        </h4>
+                                        <hr />
+                                        <div class="form-group">
+                                            @Html.TextAreaFor(model => model.SupplierAddress, new { id = "SupplierAddress", @class = "form-control form-control-sm", placeholder = "Customer address", style = "height:100px" })
+                                            @Html.ValidationMessageFor(model => model.SupplierAddress, "", new { @class = "error mt-2 text-danger", id = "valMsgSupplierAdd" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 stretch-card flex-wrap">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                <table class="table table-striped" id="submissionTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="sortStyle">
+                                                                Item
+                                                            </th>
+                                                            <th class="sortStyle d-n d-none">
+                                                                Selected Item Code
+                                                            </th>
+                                                            <th class="sortStyle d-n d-none">
+                                                                Item
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Quantity
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Units
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Price (Per Unit)
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Quoted Price (Per Unit)
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Expected Price (Per Unit)
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Closer Price (Per Unit)
+                                                            </th>
+                                                            <th class="sortStyle">Currency</th>
+                                                            <th class="sortStyle">
+                                                                Tax
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Total before tax
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Delivery Date
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                HSN Code
+                                                            </th>
+                                                            <th class="sortStyle">
+                                                                Remarks
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="myTableBody">
+                                                        <tr id="tablerow">
+                                                            <td>
+                                                                @*Rahul updated 'DropDownList Item_ID' '---------- Select Item ----------' 08-08-23.*@
+                                                                @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "-------------------- Select Item --------------------", new { @class = "form-control form-control-sm", style = "height:34px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                                @* Rahul commented not in use 'DropDownList Item_ID' 08-08-23.*@
+                                                                @*@Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], new{ @class = "form-control form-control-sm", style = "height:34px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())" })*@
+                                                            </td>
+                                                            <td class="col-md-4 d-none">
+                                                                @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
+                                                            </td>
+                                                            <td class="d-n d-none">
+                                                                @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", @readonly = "readonly" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("ItemUnitPrice", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("QuotedPrice", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(model => model.ExpectedPrice, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("CloserPrice", "", new { Value = "0", @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("CurrencyName", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBox("ItemTaxValue", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control form-control-sm text-right", value = "0", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                            </td>
+                                                            @*<td>
+                                                                    @Html.TextBoxFor(model => model.CloserPrice, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
+                                                                </td>*@
+                                                            <td>
+                                                                @*@Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })*@
+                                                                @*Rahul set 'DeliveryDate' ', @max = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")' 21/05/2023.*@
+                                                                @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @max = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd") })
+                                                                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(model => model.HSN_Code, new { @class = "form-control form-control-sm", Value = "", style = "height:30px;width:200px;" })
+                                                            </td>
+                                                            <td>
+                                                                @Html.TextBoxFor(model => model.Remarks, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;", onkeypress = "createJson();" })
+                                                                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <button type="button" class="btn btn-sm btn-primary shadow mt-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
+                                                    + Add Item
+                                                </button>
+
+                                                @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 grid-margin stretch-card flex-wrap">
+                            <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                                @*keep for ui*@
+                            </div>
+
+                            <div class="col-md-6 grid-margin stretch-card flex-wrap">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <hr />
+                                        <div class="form-group">
+                                            <div class="row mb-2">
+                                                <label id="lblTotalBeforeTax"><b>Total (before tax): </b></label>
+                                                <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="0" readonly="readonly" />
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label><b>Total tax: </b></label>
+                                                <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" readonly="readonly" />
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label><b>Total (after tax): </b></label>
+                                                <input class="form-control text-right form-control-sm" id="TotalAfterTax" name="TotalAfterTax" readonly="readonly" />
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label><b>Grand Total: </b></label>
+                                                <input class="form-control text-right form-control-sm" id="GrandTotal" name="GrandTotal" readonly="readonly" />
+                                            </div>
+                                            <div class="row mb-2">
+                                                <label><b>Advanced To Pay: </b></label>
+                                                <input class="form-control text-right form-control-sm" id="AdvancedPayment" maxlength="8" name="AdvancedPayment" value="0" onkeypress="return isNumberKey(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-md-2 mb-1">
+                                @*keep for ui*@
+                            </div>
+                            <div class="col-md-4">
+                                @*keep for ui*@
+                            </div>
+                            <div class="col-md-2 mb-1">
+                                @Html.Label("Remarks")
+                            </div>
+                            <div class="col-md-4">
+                                @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
+                                @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
+                            </div>
+                        </div>
+
+
+                        <div class="col d-flex justify-content-end" style="margin-left: auto;">
                             <div class="row">
-                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                    <table class="table table-striped" id="submissionTable">
-                                        <thead>
-                                            <tr>
-                                                <th class="sortStyle">
-                                                    Item
-                                                </th>
-                                                <th class="sortStyle d-n d-none">
-                                                    Selected Item Code
-                                                </th>
-                                                <th class="sortStyle d-n d-none">
-                                                    Item
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Quantity
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Units
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Price (Per Unit)
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Quoted Price (Per Unit)
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Expected Price (Per Unit)
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Closer Price (Per Unit)
-                                                </th>
-                                                <th class="sortStyle">Currency</th>
-                                                <th class="sortStyle">
-                                                    Tax
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Total before tax
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Delivery Date
-                                                </th>
-                                                <th class="sortStyle">
-                                                    HSN Code
-                                                </th>
-                                                <th class="sortStyle">
-                                                    Remarks
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="myTableBody">
-                                            <tr id="tablerow">
-                                                <td>
-                                                    @*@Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:34px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())" })*@
-                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], new 
-                                               { 
-                                                   @class = "form-control form-control-sm", 
-                                                   style = "height:34px;width:auto;", 
-                                                   onchange = "SelectedIndexChangedItemList($(this).val())" })
-                                                </td>
-                                                <td class="col-md-4 d-none">
-                                                    @Html.TextBoxFor(model => model.ItemCode, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly", style = "height:30px;width:200px;" })
-                                                </td>
-                                                <td class="d-n d-none">
-                                                    @Html.TextBox("ItemName", "", new { @class = "form-control form-control-sm", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBoxFor(model => model.ItemQuantity, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBox("ItemUnit", "", new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBox("ItemUnitPrice", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBox("QuotedPrice", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBoxFor(model => model.ExpectedPrice, new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", value = "0", onkeypress = "return isNumberKey(event)", MaxLength = "8" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBox("CloserPrice", "", new { Value = "0", @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBox("CurrencyName", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBox("ItemTaxValue", "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:80px;", @readonly = "readonly" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBoxFor(model => model.TotalItemCost, "", new { @class = "form-control form-control-sm text-right", value = "0", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                </td>
-                                                @*<td>
-                                                        @Html.TextBoxFor(model => model.CloserPrice, "", new { @class = "form-control form-control-sm text-right", id = "ItemTotalPrice", style = "height:30px;width:200px;", @readonly = "readonly" })
-                                                    </td>*@
-                                            <td>
-                                                @*@Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @id = "DeliveryDate", @class = "form-control form-control-sm date1", type = "date" })*@
-                                                @*Rahul set 'DeliveryDate' ', @max = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")' 21/05/2023.*@
-                                                @Html.TextBoxFor(model => model.DeliveryDate, "{0:yyyy-MM-dd}", new { @class = "form-control form-control-sm", type = "date", @min = DateTime.Now.ToString("yyyy-MM-dd"), @max = DateTime.Now.AddYears(1).ToString("yyyy-MM-dd") })
-                                                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "error mt-2 text-danger" })
-                                            </td>
-                                                <td>
-                                                    @Html.TextBoxFor(model => model.HSN_Code, new { @class = "form-control form-control-sm", Value = "", style = "height:30px;width:200px;" })
-                                                </td>
-                                                <td>
-                                                    @Html.TextBoxFor(model => model.Remarks, "", new { @class = "form-control form-control-sm text-right", style = "height:30px;width:200px;", onkeypress = "createJson();" })
-                                                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" enable="true" disabled>Delete</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="col"><button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button></div>
 
-                                    <button type="button" class="btn btn-sm btn-primary shadow mt-2" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
-                                        + Add Item
-                                    </button>
-
-                                    @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                <div class="col">
+                                    <a href="@Url.Action("Index", "InquiryForm")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
+                                        Back To List
+                                    </a>
                                 </div>
                             </div>
+
                         </div>
 
                     </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-12 grid-margin stretch-card flex-wrap">
-                <div class="col-md-6 grid-margin stretch-card flex-wrap">
-                    @*keep for ui*@
-                </div>
-
-                <div class="col-md-6 grid-margin stretch-card flex-wrap">
-                    <div class="card">
-                        <div class="card-body">
-                            <hr />
-                            <div class="form-group">
-                                <div class="row mb-2">
-                                    <label id="lblTotalBeforeTax"><b>Total (before tax): </b></label>
-                                    <input class="form-control text-right form-control-sm" id="TotalBeforeTax" name="TotalItemCost" value="0" readonly="readonly" />
-                                </div>
-                                <div class="row mb-2">
-                                    <label><b>Total tax: </b></label>
-                                    <input class="form-control text-right form-control-sm" id="TotalTax" name="TotalTax" readonly="readonly" />
-                                </div>
-                                <div class="row mb-2">
-                                    <label><b>Total (after tax): </b></label>
-                                    <input class="form-control text-right form-control-sm" id="TotalAfterTax" name="TotalAfterTax" readonly="readonly" />
-                                </div>
-                                <div class="row mb-2">
-                                    <label><b>Grand Total: </b></label>
-                                    <input class="form-control text-right form-control-sm" id="GrandTotal" name="GrandTotal" readonly="readonly" />
-                                </div>
-                                <div class="row mb-2">
-                                    <label><b>Advanced To Pay: </b></label>
-                                    <input class="form-control text-right form-control-sm" id="AdvancedPayment" maxlength="8" name="AdvancedPayment" value="0" onkeypress="return isNumberKey(event)" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row mb-2">
-                <div class="col-md-2 mb-1">
-                    @*keep for ui*@
-                </div>
-                <div class="col-md-4">
-                    @*keep for ui*@
-                </div>
-                <div class="col-md-2 mb-1">
-                    @Html.Label("Remarks")
-                </div>
-                <div class="col-md-4">
-                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control form-control-sm" })
-                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "error mt-2 text-danger" })
-                </div>
-            </div>
-
-
-            <div class="col d-flex justify-content-end" style="margin-left: auto;">
-                <div class="row">
-                    <div class="col"><button type="submit" id="btnSave" class="btn btn-sm btn-primary mr-2" style="background: linear-gradient(85deg, #392c70, #6a005b); float:right;" onclick="SaveBtnClick()">Save</button></div>
-
-                    <div class="col">
-                        <a href="@Url.Action("Index", "InquiryForm")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;">
-                            Back To List
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-
-
-}
+                </div>}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -385,7 +378,8 @@
             if (!$(this).next().hasClass('dropdown-select')) {
                 $('#' + id).removeClass('form-control');
                 $('#' + id).removeClass('form-control-sm');
-                $(this).after('<div id="div' + id + '" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                /*Rahul added in 'function create_custom_dropdowns_Item_ID(id)' id="div" class='d-flex align-items-center' 08-08-23.*/
+                $(this).after('<div id="div' + id + '" class="dropdown-select wide d-flex align-items-center ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -413,7 +407,8 @@
             if (!$(this).next().hasClass('dropdown-select')) {
 
                 $('#VendorsID').removeClass('form-control');
-                $(this).after('<div id="divVendorsID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                /*Rahul added in 'function create_custom_dropdowns_VendorsID()' id="divVendorsID" class='d-flex align-items-center' 08-08-23.*/
+                $(this).after('<div id="divVendorsID" class="dropdown-select wide d-flex align-items-center ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -440,7 +435,8 @@
             if (!$(this).next().hasClass('dropdown-select')) {
 
                 $('#LocationId').removeClass('form-control');
-                $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                /*Rahul added in 'function create_custom_dropdowns_LocationId()' id="divLocationId" class='d-flex align-items-center' 08-08-23.*/
+                $(this).after('<div id="divLocationId" class="dropdown-select wide d-flex align-items-center ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -600,7 +596,7 @@
     //==================end======================
 
     //Dropdownlist Selectedchange event
-    function getitemDetails() { 
+    function getitemDetails() {
                     $("#f").empty();
             $.ajax({
                 type: 'POST',
@@ -762,7 +758,7 @@
             '<button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(' + counter + ');">Delete</button>' +
             '</td>' +
             '</tr>').appendTo('#submissionTable');
-        create_custom_dropdowns_Item_ID(itemId); 
+        create_custom_dropdowns_Item_ID(itemId);
         counter++;
         return false;
     });
@@ -920,7 +916,7 @@
             return;
         }
         else { getitemDetails(); }
-         //Rahul added 'CurrencyIDCheck' end 31-07-23. 
+         //Rahul added 'CurrencyIDCheck' end 31-07-23.
         var selectedOptionTerms, itemCode;
         selectedOptionTerms = document.getElementById("Item_ID").selectedIndex;
         itemCode = document.getElementById("Item_ID").options[selectedOptionTerms].innerText;

@@ -307,7 +307,7 @@ function SelectedIndexChanged(id) {
     });
 }
 
-function OnChangeIWQty(value, id) {
+function OnChangeIWQty(value, id) {debugger 
     $('#btnSave').prop("disabled", false);
     var rowNo = id.split('y')[1];
     var cell = document.getElementById("ItemQty" + rowNo);
@@ -322,13 +322,22 @@ function OnChangeIWQty(value, id) {
         document.getElementById(id).focus();
         document.getElementById(id).setAttribute("class", "border border-1 border-danger");
         $('#btnSave').prop("disabled", true);
+        event.preventDefault();
         return;
     }
     else {
         $('#btnSave').prop("disabled", false);
         var tempInwQty = document.getElementById("txtInwardQty" + rowNo).value;
-        if (tempInwQty == '' || tempInwQty == null)
-            tempInwQty = 0;
+        if (tempInwQty == '' || tempInwQty == null) {
+            //tempInwQty = 0; //Rahul commented 'tempInwQty = 0;' 08-08-23.
+            alert("Delivered quantity is zero or null! Cannot create inward note as!");
+            $('#btnSave').prop('disabled', true);
+            event.preventDefault();
+            return;
+        }
+        else {
+            $('#btnSave').prop('disabled', false);
+        }
 
         document.getElementById("txtBalanceQty" + rowNo).value = parseFloat(temp_itemQty[0]) - (parseFloat(deliveredQty) + parseFloat(tempInwQty));
         InwardQuantities = InwardQuantities + "txtInwardQty" + rowNo + "*" + value + ",";
@@ -368,7 +377,22 @@ function SetInwardQty() {
         while (i < tableLength) {
             var PhyQty = document.getElementById("txtInwardQty" + i).value;
             var DelvQty = document.getElementById("DeliveredQty" + i).innerHTML;
-            var POQty = document.getElementById("ItemQty" + i).innerHTML;
+            var POQty = document.getElementById("ItemQty" + i).innerHTML; debugger
+            var BalQty = document.getElementById("txtBalanceQty" + i).value; ///Rahul added 'txtBalanceQty' 08-08-23 start.
+            var PhyQtyId = $("#txtInwardQty" + i);
+            if (BalQty != 0) {
+                alert("Delivered quantity cannot be greater then balanced quantity!");
+                document.getElementById(PhyQtyId[0].id).focus();
+                document.getElementById(PhyQtyId[0].id).setAttribute("class", "border border-1 border-danger");
+                $('#btnSave').prop("disabled", true);
+                event.preventDefault();
+                i++;
+                flag = 0;
+                //continue;
+                //return;
+            }            
+            
+            ///Rahul added 'txtBalanceQty' 08-08-23 start.
             DelvQty = DelvQty.split(' ')[0];
             DelvQty = parseFloat(DelvQty);
 
