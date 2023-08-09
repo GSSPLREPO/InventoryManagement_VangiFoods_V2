@@ -1,0 +1,302 @@
+﻿@model InVanWebApp_BO.RejectionNoteBO
+@{ ViewBag.Title = "RejectionTypeWiseReport";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <title>Rejection Type Wise Report</title>
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" type="text/css" />
+</head>
+<body>
+    <div class="content-wrapper" runat="server" id="divPanel1">
+        <div class="page-header" style="height:5px;">            
+            <h4 class="page-title">Rejection Type Wise Report</h4>
+            <nav aria-label="breadcrum">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Reports</a>
+                    </li>                    
+                    <li class="breadcrumb-item active">Rejection Type Wise Report</li>
+                </ol>
+            </nav>
+        </div>
+        <hr />
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div style="padding-top:15px;">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>From Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TextBoxFor(model => model.fromDate, "{0:yyyy-MM-dd}", new { @id = "fromDate", @class = "datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedFromDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessageFor(model => model.fromDate, "", new { id = "fromDateValidate", @class = "col-form-label error mt-2 text-danger pb-0" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>To Date:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.TextBoxFor(model => model.toDate, "{0:yyyy-MM-dd}", new { @id = "toDate", @class = " datepicker form-control form-control-sm", @type = "date", onchange = "OnChangedToDate()", @max = DateTime.Now.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessageFor(model => model.toDate, "", new { id = "toDateValidate", @class = "col-form-label error mt-2 text-danger pb-0" })
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
+                                        <a id="ExportPdf" href="@Url.Action("ExprotAsPDFForRejectionReport", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForRejectionReport", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                    </div>
+                                </div>
+                                <div class="d-inline-row">
+                                    <div class="col">
+                                        <div class="col-md-2">
+                                            <label>Rejection Type: </label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select class="form-control form-control-sm DropdownRegular" id="RejectionType" name="RejectionType">
+                                                <option value="0">--All--</option>
+                                                <option value="1">Inward QC</option>
+                                                <option value="2">Pre Production QC</option>
+                                                <option value="3">Post-Production RN</option>
+                                                <option value="4">Intermediate Rejection Note</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div id="divInwardQC" style="display:none;">
+                                            <div class="col-md-2">
+                                                <label>Rejection Note Number:</label>
+                                                <span style="color:red">*</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.DropDownList("RejectionNumber", (IEnumerable<SelectListItem>)ViewData["RejectionNumberdd"], "--Select--", new { @class = "form-control", @id = "RejectionNumberId", onchange = "SelectedIndexChangedItem()" })
+                                                @Html.ValidationMessage("RejectionNumber", "", new { id = "RejectionNumberValidate", @class = "col-form-label error mt-2 text-danger" })
+                                            </div>
+                                        </div>
+                                        <div id="divProductionQC" style="display:none;">
+                                            <div class="col-md-2">
+                                                @Html.Label("Pre-Production QC Number")
+                                                <span style="color:red">*</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                @Html.DropDownListFor(model => model.PreProductionQCId, (IEnumerable<SelectListItem>)ViewData["PreProductionQCAndId"], "--Select--",
+                                                                                             new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProduction($(this).val())" })
+                                                @Html.ValidationMessageFor(model => model.PreProductionQCId, "", new { id = "ValMsgProductionQCNumber", @class = "error mt-2 text-danger" })
+                                                <span id="ValMsgProductionQCNumber" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Production QC!</span>
+                                                @Html.HiddenFor(model => model.PreProductionQCNumber)
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                    <br />
+                                    <div style="margin-top:25px;">
+                                        <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblRejectionReport" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align:center">Sr.No.</th>
+                                                    <th style="text-align:center">Date</th>
+                                                    <th style="text-align:center">Rejection Number</th>
+                                                    <th style="text-align:center">Dcoument Number</th>
+                                                    <th style="text-align:center">Item Code</th>
+                                                    <th style="text-align:center">Item Name</th>
+                                                    <th style="text-align:center">Item Unit Price (Rs)</th>
+                                                    <th style="text-align:center">Total Quantity (KG)</th>
+                                                    <th style="text-align:center">Rejected Quantity (KG)</th>
+                                                    <th style="text-align:center">Approved By</th>
+                                                    <th style="text-align:center">Reason For Rejection</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+@Html.Raw(TempData["Success"])
+
+@section scripts{
+
+    @*<script src="~/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+        <link href="~/DataTables-1.10.18/css/jquery.dataTables.min.css" rel="stylesheet" />*@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#divInwardQC").hide();
+            $("#divProductionQC").hide();
+            document.getElementById('RejectionNumberId').selectedIndex = 0;
+            document.getElementById('PreProductionQCId').selectedIndex = 0;
+            $('#ExportPdf').hide();
+            $('#ExportExcel').hide();
+            $('#tblRejectionReport').hide();
+        });
+
+        $('#RejectionType').change(function () {
+            var RejectionType = $('#RejectionType option:selected').attr('value');
+            //'InwardQC'='1'
+            if (RejectionType == '1') {
+                $("#divInwardQC").show();
+                $("#divProductionQC").hide();                
+                document.getElementById('PreProductionQCId').selectedIndex = 0;
+                $("#TotalQtyTextChange").text("Total Quantity");
+                $("#InwardQtyTextChange").text("Inward Quantity");
+                //For deleting the rows of Item table if exist.       
+                var table = document.getElementById('ItemTable');
+                var rowCount = table.rows.length;
+                while (rowCount != '1') {
+                    var row = table.deleteRow(rowCount - 1);
+                    rowCount--;
+                }
+                document.getElementById('InwardQCId').selectedIndex = 0;
+                $("#PONumber").val("");
+                $("#SupplierName").val("");
+                $('#ValMsgInwardQCNumber').hide();  
+                $('#ValMgssuppliername').hide();
+                $('#ValMsgPONumber').hide();
+                $('#btnSave').prop('disabled', false); 
+            }
+            else if (RejectionType == '2'){
+                $("#divInwardQC").hide();
+                document.getElementById('RejectionNumberId').selectedIndex = 0;
+                $("#divProductionQC").show();   //'PreProductionQC'='2' 
+                $("#TotalQtyTextChange").text("Production Indent Quantity");
+                $("#InwardQtyTextChange").text("Material Issue Quantity");
+                //For deleting the rows of Item table if exist.       
+                var table = document.getElementById('ItemTable');
+                var rowCount = table.rows.length;
+                while (rowCount != '1') {
+                    var row = table.deleteRow(rowCount - 1);
+                    rowCount--;
+                }
+                document.getElementById('PreProductionQCId').selectedIndex = 0;
+                $("#ProductionIndentNo").val("");
+                $('#ValMsgProductionQCNumber').hide(); 
+                $('#ValMsgProductionIndentNumber').hide(); 
+                $('#btnSave').prop('disabled', false); 
+            }
+            else {
+                $("#divInwardQC").hide();
+                $("#divProductionQC").hide();   
+            }
+        });
+
+
+        function SelectedIndexChangedItem() {
+            $('#ItemValidate').hide();
+        }
+
+        function OnChangedFromDate() {
+            $('#fromDateValidate').hide();
+        }
+
+        function OnChangedToDate() {
+            $('#toDateValidate').hide();
+        }
+
+        $("#btnGo").on('click', function () {
+
+            var fromDate = $("#fromDate").val();
+            var toDate = $("#toDate").val();
+
+            if (fromDate == null || fromDate == "") {
+                $('#fromDateValidate').text('Select from date!');
+                $('#fromDateValidate').show();
+                $("#fromDate").focus();
+                return;
+            }
+
+            if (toDate == null || toDate == "") {
+                $('#toDateValidate').text('Select to date!');
+                $('#toDateValidate').show();
+                $("#toDate").focus();
+                return;
+            }
+
+            if (fromDate > toDate) {
+                alert('Invalid date!, To date is less than From date!');
+                $('#fromDate').focus();
+                return;
+            }
+
+            var CheckRejectionType = $('#RejectionType').val();
+            if (CheckRejectionType == '' || CheckRejectionType == null) {
+                CheckRejectionType = 0;
+            }
+
+            var CheckItem = $('#RejectionNumberId').val();
+            if (CheckItem == '' || CheckItem == null) {
+                CheckItem = 0;
+            }
+
+            var CheckPreProductionQCId = $('#PreProductionQCId').val();
+            if (CheckPreProductionQCId == '' || CheckPreProductionQCId == null) {
+                CheckPreProductionQCId = 0;
+            }
+
+            $('#ExportPdf').show();
+            $('#ExportExcel').show();
+            $('#tblRejectionReport').show();
+            var flag = 0;
+            $('#tblRejectionReport').dataTable().fnDestroy();
+            var t = $('#tblRejectionReport').DataTable({
+                //"processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "sAjaxSource": "/Report/GetRejectionTypeWiseReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem + "&RejectionType=" + CheckRejectionType + "&PreProductionQCId=" + CheckPreProductionQCId,
+                "initComplete": function (settings, json) {
+                    var result = JSON.stringify(json);
+                    flag = parseFloat(result.length);
+
+                    if (flag > 11) {
+                        $('#ExportPdf').show();
+                        $('#ExportExcel').show();
+                    }
+                    else {
+                        $('#ExportPdf').hide();
+                        $('#ExportExcel').hide();
+                    }
+                },
+                "pageLength": 10,
+                "scrollX": true,
+                "columns": [
+                    { "data": "SrNo", "autoWidth": true },
+                    { "data": "RejectionNoteDate", "autoWidth": true },
+                    { "data": "RejectionNoteNo", "autoWidth": true },
+                    { "data": "InwardNumber", "autoWidth": true },
+                    { "data": "Item_Code", "autoWidth": true },
+                    { "data": "Item_Name", "autoWidth": true },
+                    { "data": "ItemUnitPrice", "autoWidth": true },
+                    { "data": "TotalRecevingQuantiy", "autoWidth": true },
+                    { "data": "RejectedQuantity", "autoWidth": true },
+                    { "data": "ApprovedBy", "autoWidth": true }, 
+                    { "data": "ReasonForRR", "autoWidth": true },
+                ]
+            });
+            t.on('order.dt search.dt', function () {
+                let i = 1;
+
+                t.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+                    this.data(i++);
+                });
+            }).draw();
+
+        });
+
+    </script>
+}

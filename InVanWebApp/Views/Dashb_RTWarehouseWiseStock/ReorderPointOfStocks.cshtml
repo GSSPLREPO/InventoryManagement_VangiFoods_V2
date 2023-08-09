@@ -1,8 +1,6 @@
 ﻿@model InVanWebApp_BO.StockMasterBO
-@{
-    ViewBag.Title = "ReorderPointOfStocks";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "ReorderPointOfStocks";
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <!DOCTYPE html>
 
@@ -28,7 +26,7 @@
             <nav aria-label="breadcrum">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        @*Rahul updated anchor tag text 'Dashboard' to 'Home' 16-02-23.*@ 
+                        @*Rahul updated anchor tag text 'Dashboard' to 'Home' 16-02-23.*@
                         <i class="fa fa-home"></i>&nbsp;<a href="@Url.Action("ReorderPointOfStocks","Dashb_RTWarehouseWiseStock")">Home</a>
                     </li>
                     <li class="breadcrumb-item active">Reorder Point of Stocks</li>
@@ -75,6 +73,7 @@
 <script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
 <script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
 <script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/mouse-wheel-zoom.js"></script>
 <link href="~/Theme/MainContent/css/CustomDropdown.css" rel="stylesheet" />
 
 <script type="text/javascript">
@@ -182,18 +181,8 @@
     });
     //Vedant added 'function createCustomDropdown()' 05-07-2023. end
 
-
-    function getRandomColor() {
-        var Letters = '0123456789ABCDEF';
-        var Color = '#';
-        for (var i = 0; i < 6; i++) {
-            Color += Letters[Math.floor(Math.random() * 16)];
-        }
-        return Color;
-    }
-
-
     $(document).ready(function () {
+
         $(".spinner-wrapper").fadeIn("slow");
 
         population = [];
@@ -218,21 +207,24 @@
                 var dataLength = parsed.length;
 
                 var serial2 = {
-                    name: "Stock",
+                    name: "Available Stock (KG)",
                     type: 'column',
-                    yAxis: 1,
+                    color: 'rgba(248,161,63,1)',
                     data: [],
-                    color: [],
+                    pointPadding: 0.3,
+                    pointPlacement: 0.2,
                     tooltip: {
                         valueSuffix: ' KG'
                     }
 
                 };
                 var serialForMinStock = {
-                    name: "Minimum Stock",
-                    type: 'spline',
+                    name: "Minimum Stock (KG)",
+                    type: 'column',
+                    color: 'rgba(255 , 0, 0, 1)',
                     data: [],
-                    color: 'black',
+                    pointPadding: 0.4,
+                    pointPlacement: 0.2,
                     tooltip: {
                         valueSuffix: ' KG'
                     }
@@ -262,62 +254,55 @@
                     }
 
                     coloR.push(dynamicColors());
-                    serial2.color = getRandomColor();
+                    //serial2.color = getRandomColorgetRandomColor(); //Shweta remove random color option 04/08/2023
                     xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
 
                 });
 
                 var finalSeries = [serial2, serialForMinStock];
 
+                //Shweta changes both graphs to bar of highcharts 04/08/2023 start
                 Highcharts.chart('mainWarehouse', {
                     chart: {
-                        zoomType: 'xy'
+                        type: 'column',
+                        zoomType: 'x'
                     },
                     title: {
                         text: 'Reorder Point of Stocks'
                     },
                     xAxis: {
                         categories: xAxisData,
-                        crosshair: true 
+                        crosshair: true
                     },
-                    yAxis: [{ // Primary yAxis
-                        labels: {
-                            format: '{value} KG',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Balck'
-                            }
-                        },
+                    yAxis: {
+                        min: 0,
+                        opposite: false,
                         title: {
-                            text: 'Minimum Stock Value (KG)',
+                            text: 'Stock Value (KG)',
                             style: {
                                 fontWeight: 'bold',
-                                color: 'Balck'
+                                color: 'Balck',
                             }
                         }
-                    }, { // Secondary yAxis
-                        title: {
-                            text: 'Quantity (KG)',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Black'
-                            }
-                        },
-                        labels: {
-                            format: '{value} KG',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Balck'
-                            }
-                        },
-                        opposite: true
-                    }],
+
+                    },
+                    legend: {
+                        shadow: false
+                    },
                     tooltip: {
                         shared: true
                     },
+                    plotOptions: {
+                        column: {
+                            grouping: false,
+                            shadow: false,
+                            borderWidth: 0
+                        }
+                    },
                     series: finalSeries
-                });
 
+                });
+                //Shweta changes both graphs to bar of highcharts 04/08/2023 end
                 if (dataLength > 0) {
                     $("#mainWarehouse").show();
                     $("#NoDataFound").hide();
@@ -330,7 +315,7 @@
             }
 
         });
-       
+
 
         $(".spinner-wrapper").fadeOut("slow");
 
@@ -364,21 +349,24 @@
                 var dataLength = parsed.length;
 
                 var serial2 = {
-                    name: "Stock",
+                    name: "Available Stock (KG)",
                     type: 'column',
-                    yAxis: 1,
                     data: [],
-                    color: [],
+                    color: 'rgba(248,161,63,1)',
+                    pointPadding: 0.3,
+                    pointPlacement: 0,
                     tooltip: {
                         valueSuffix: ' KG'
                     }
 
                 };
                 var serialForMinStock = {
-                    name: "Minimum Stock",
-                    type: 'spline',
+                    name: "Minimum Stock (KG)",
+                    type: 'column',
                     data: [],
-                    color: 'black',
+                    color: 'rgba(255 , 0, 0, 1)',
+                    pointPadding: 0.4,
+                    pointPlacement: 0,
                     tooltip: {
                         valueSuffix: ' KG'
                     }
@@ -408,16 +396,16 @@
                     }
 
                     coloR.push(dynamicColors());
-                    serial2.color = getRandomColor();
+                    //serial2.color = getRandomColor();//Shweta remove random color option 04/08/2023
                     xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
 
                 });
 
                 var finalSeries = [serial2, serialForMinStock];
-
+                //Shweta changes both graphs to bar of highcharts 04/08/2023 start
                 Highcharts.chart('mainWarehouse', {
                     chart: {
-                        zoomType: 'xy'
+                        type: 'column'
                     },
                     title: {
                         text: 'Reorder Point of Stocks'
@@ -426,44 +414,35 @@
                         categories: xAxisData,
                         crosshair: true
                     },
-                    yAxis: [{ // Primary yAxis
-                        labels: {
-                            format: '{value} KG',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Balck'
-                            }
-                        },
+                    yAxis: [{
+                        min: 0,
+                        position: 'left',
                         title: {
-                            text: 'Minimum Stock Value (KG)',
+                            text: 'Stock Value (KG)',
                             style: {
+
                                 fontWeight: 'bold',
                                 color: 'Balck'
                             }
                         }
-                    }, { // Secondary yAxis
-                        title: {
-                            text: 'Quantity (KG)',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Black'
-                            }
-                        },
-                        labels: {
-                            format: '{value} KG',
-                            style: {
-                                fontWeight: 'bold',
-                                color: 'Balck'
-                            }
-                        },
-                        opposite: true
                     }],
+                    legend: {
+                        shadow: false
+                    },
                     tooltip: {
                         shared: true
                     },
+                    plotOptions: {
+                        column: {
+                            grouping: false,
+                            shadow: false,
+                            borderWidth: 0
+                        }
+                    },
                     series: finalSeries
-                });
 
+                });
+                 //Shweta changes both graphs to bar of highcharts 04/08/2023 end
                 if (dataLength > 0) {
                     $("#mainWarehouse").show();
                     $("#NoDataFound").hide();

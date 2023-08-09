@@ -1540,5 +1540,58 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        #region Rejection Type wise Report data 
+        public List<RejectionNoteItemDetailsBO> getRejectionTypeWiseReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int RejectionType = 0, int PreProductionQCId=0)  
+        {
+            List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {                    
+                    SqlCommand cmd = new SqlCommand("usp_rpt_RejectionTypeWise_Report", con);
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@RejectionType", RejectionType);
+                    cmd.Parameters.AddWithValue("@rejectionNumber", rejectionNumber);
+                    cmd.Parameters.AddWithValue("@PreProductionQCId", PreProductionQCId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new RejectionNoteItemDetailsBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),
+                            RejectionNoteNo = reader["RejectionNumber"].ToString(),
+                            InwardNumber = reader["DcoumentNumber"].ToString(),
+                            Item_Code = reader["ItemCode"].ToString(),
+                            Item_Name = reader["ItemName"].ToString(),
+                            ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),
+                            TotalRecevingQuantiy = Convert.ToDouble(reader["TotalQuantity"]),
+                            RejectedQuantity = Convert.ToDouble(reader["RejectedQuantity"]),
+                            ApprovedBy = reader["ApprovedBy"].ToString(),
+                            ReasonForRR = reader["ReasonForRejection"].ToString(),
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+
+            }
+            return resultList;
+        }
+
+        #endregion
+
+
     }
 }

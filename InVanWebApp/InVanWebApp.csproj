@@ -2230,6 +2230,7 @@
     <Content Include="Highcharts-10.3.1\code\modules\lollipop.src.js" />
     <Content Include="Highcharts-10.3.1\code\modules\marker-clusters.js" />
     <Content Include="Highcharts-10.3.1\code\modules\marker-clusters.src.js" />
+    <Content Include="Highcharts-10.3.1\code\modules\mouse-wheel-zoom.js" />
     <Content Include="Highcharts-10.3.1\code\modules\networkgraph.js" />
     <Content Include="Highcharts-10.3.1\code\modules\networkgraph.src.js" />
     <Content Include="Highcharts-10.3.1\code\modules\no-data-to-display.js" />
@@ -3923,6 +3924,7 @@
     <Content Include="Views\MaterialReturnNote\Index.cshtml" />
     <Content Include="Views\MaterialReturnNote\AddMaterialReturnNote.cshtml" />
     <Content Include="Views\MaterialReturnNote\ViewMaterialReturnNote.cshtml" />
+    <Content Include="Views\Report\RejectionTypeWiseReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

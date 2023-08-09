@@ -5988,6 +5988,18 @@ namespace InVanWebApp.Controllers
             var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
             ViewData["itemListForDD"] = dd;
         }
+
+        /// <summary>
+        /// Rahul: Bind dropdown of PreProduction QC Number
+        /// 09 Aug 2023. 
+        /// </summary>
+        public void BindPreProductionQCNumber()
+        {
+            var result = _rejectionNoteRepository.GetPreProductionQCNumberForDropdown(); 
+            var resultList = new SelectList(result.ToList(), "ID", "QCNumber");
+            ViewData["PreProductionQCAndId"] = resultList;
+        }
+
         #endregion
 
         #region Set Border
@@ -6015,5 +6027,48 @@ namespace InVanWebApp.Controllers
         }
 
         #endregion
+
+        #region  Rejection Type wise Report
+
+        #region Binding the Rejection Type wise Report data 
+
+        public ActionResult RejectionTypeWiseReport() 
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                RejectionNoteBO model = new RejectionNoteBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                BindRejectionDropDown();
+                BindPreProductionQCNumber();
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+
+        /// <summary>
+        /// Rahul: 09 Aug 2023
+        /// Calling method for Rejection Type wise Report Data 
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetRejectionTypeWiseReportData(DateTime fromDate, DateTime toDate, int ItemId, int RejectionType = 0, int PreProductionQCId=0) 
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            Session["RejectionType"] = RejectionType;  
+            Session["ItemId"] = ItemId;
+            Session["PreProductionQCId"] = PreProductionQCId; 
+
+            var rejectionNoteReport = _repository.getRejectionTypeWiseReportData(fromDate, toDate, ItemId, RejectionType, PreProductionQCId); 
+
+            return Json(new { data = rejectionNoteReport }, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #endregion
+
     }
 }
