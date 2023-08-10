@@ -49,11 +49,11 @@
                                     </div>
                                     <div class="col-md-2">
                                         <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
-                                        <a id="ExportPdf" href="@Url.Action("ExprotAsPDFForRejectionReport", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
-                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForRejectionReport", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportPdf" href="@Url.Action("ExprotAsPDFforRejectionTypeWiseReport", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
+                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForRejectionTypeWiseReport", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                     </div>
                                 </div>
-                                <div class="d-inline-row">
+                                <div class="d-inline-row" style="margin-left: -14px;">
                                     <div class="col">
                                         <div class="col-md-2">
                                             <label>Rejection Type: </label>
@@ -62,10 +62,11 @@
                                             <select class="form-control form-control-sm DropdownRegular" id="RejectionType" name="RejectionType">
                                                 <option value="0">--All--</option>
                                                 <option value="1">Inward QC</option>
-                                                <option value="2">Pre Production QC</option>
+                                                <option value="2">Pre-Production QC</option>
                                                 <option value="3">Post-Production RN</option>
                                                 <option value="4">Intermediate Rejection Note</option>
                                             </select>
+                                            @Html.HiddenFor(model => model.RejectionTypeName)  
                                         </div>
                                     </div>
                                     <div class="col">
@@ -86,10 +87,30 @@
                                             </div>
                                             <div class="col-md-3">
                                                 @Html.DropDownListFor(model => model.PreProductionQCId, (IEnumerable<SelectListItem>)ViewData["PreProductionQCAndId"], "--Select--",
-                                                                                             new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProduction($(this).val())" })
+                                                                                                       new { @class = "form-control form-control-sm", onchange = "SelectedIndexChangedProduction($(this).val())" })
                                                 @Html.ValidationMessageFor(model => model.PreProductionQCId, "", new { id = "ValMsgProductionQCNumber", @class = "error mt-2 text-danger" })
                                                 <span id="ValMsgProductionQCNumber" style="display:none;" class="error mt-2 text-danger field-validation-error">Select Production QC!</span>
                                                 @Html.HiddenFor(model => model.PreProductionQCNumber)
+                                            </div>
+                                        </div>
+                                        <div id="divPostProductionRN" style="display:none;">
+                                            <div class="col-md-2 ps-5">
+                                                <label>Post Production Note Number:</label>
+                                                <span style="color:red">*</span>
+                                            </div>
+                                            <div class="col-md-3 ps-5">
+                                                @Html.DropDownList("PostProductionRN", (IEnumerable<SelectListItem>)ViewData["PostProductionRNdd"], "--Select--", new { @class = "form-control", @id = "PostProductionRNId", onchange = "SelectedIndexChangedPostProductionRN()" })
+                                                @Html.ValidationMessage("PostProductionRN", "", new { id = "PostProductionRNValidate", @class = "col-form-label error mt-2 text-danger" })
+                                            </div>
+                                        </div>
+                                        <div id="divIntermediateRN" style="display:none;">
+                                            <div class="col-md-2 ps-5">
+                                                <label>Intermediate Note Number:</label>
+                                                <span style="color:red">*</span>
+                                            </div>
+                                            <div class="col-md-3 ps-5">
+                                                @Html.DropDownList("IntermediateRN", (IEnumerable<SelectListItem>)ViewData["IntermediateRNdd"], "--Select--", new { @class = "form-control", @id = "IntermediateRNId", onchange = "SelectedIndexChangedIntermediateRN()" })
+                                                @Html.ValidationMessage("IntermediateRN", "", new { id = "IntermediateRNValidate", @class = "col-form-label error mt-2 text-danger" })
                                             </div>
                                         </div>
                                     </div>                                    
@@ -139,31 +160,36 @@
 
         $(document).ready(function () {
             $("#divInwardQC").hide();
-            $("#divProductionQC").hide();
             document.getElementById('RejectionNumberId').selectedIndex = 0;
+            $("#divProductionQC").hide();
             document.getElementById('PreProductionQCId').selectedIndex = 0;
+            $("#divPostProductionRN").hide();
+            document.getElementById('PostProductionRNId').selectedIndex = 0;
+
             $('#ExportPdf').hide();
             $('#ExportExcel').hide();
             $('#tblRejectionReport').hide();
         });
 
-        $('#RejectionType').change(function () {
+        $('#RejectionType').change(function () {debugger
             var RejectionType = $('#RejectionType option:selected').attr('value');
+            var RejectionTypetext = $('#RejectionType option:selected').text();
+            document.getElementById("RejectionTypeName").value = RejectionTypetext; 
             //'InwardQC'='1'
             if (RejectionType == '1') {
-                $("#divInwardQC").show();
-                $("#divProductionQC").hide();                
+                $("#divInwardQC").show();                
+                $("#divProductionQC").hide();
                 document.getElementById('PreProductionQCId').selectedIndex = 0;
-                $("#TotalQtyTextChange").text("Total Quantity");
-                $("#InwardQtyTextChange").text("Inward Quantity");
-                //For deleting the rows of Item table if exist.       
-                var table = document.getElementById('ItemTable');
-                var rowCount = table.rows.length;
-                while (rowCount != '1') {
-                    var row = table.deleteRow(rowCount - 1);
-                    rowCount--;
-                }
-                document.getElementById('InwardQCId').selectedIndex = 0;
+                $("#divPostProductionRN").hide();   //'divPostProductionRN'='2' 
+                document.getElementById('PostProductionRNId').selectedIndex = 0;
+                ////For deleting the rows of Item table if exist.       
+                //var table = document.getElementById('ItemTable');
+                //var rowCount = table.rows.length;
+                //while (rowCount != '1') {
+                //    var row = table.deleteRow(rowCount - 1);
+                //    rowCount--;
+                //}
+                //document.getElementById('RejectionNumberId').selectedIndex = 0;
                 $("#PONumber").val("");
                 $("#SupplierName").val("");
                 $('#ValMsgInwardQCNumber').hide();  
@@ -172,34 +198,49 @@
                 $('#btnSave').prop('disabled', false); 
             }
             else if (RejectionType == '2'){
+                $("#divProductionQC").show();   //'PreProductionQC'='2' 
                 $("#divInwardQC").hide();
                 document.getElementById('RejectionNumberId').selectedIndex = 0;
-                $("#divProductionQC").show();   //'PreProductionQC'='2' 
-                $("#TotalQtyTextChange").text("Production Indent Quantity");
-                $("#InwardQtyTextChange").text("Material Issue Quantity");
-                //For deleting the rows of Item table if exist.       
-                var table = document.getElementById('ItemTable');
-                var rowCount = table.rows.length;
-                while (rowCount != '1') {
-                    var row = table.deleteRow(rowCount - 1);
-                    rowCount--;
-                }
-                document.getElementById('PreProductionQCId').selectedIndex = 0;
+                $("#divPostProductionRN").hide();
+                document.getElementById('PostProductionRNId').selectedIndex = 0;
+
                 $("#ProductionIndentNo").val("");
                 $('#ValMsgProductionQCNumber').hide(); 
                 $('#ValMsgProductionIndentNumber').hide(); 
                 $('#btnSave').prop('disabled', false); 
             }
+            else if (RejectionType == '3') {                
+                $("#divInwardQC").hide();   //'divInwardQC'='1'
+                document.getElementById('RejectionNumberId').selectedIndex = 0;
+                $("#divProductionQC").hide();   //'divProductionQC'='2'
+                document.getElementById('PreProductionQCId').selectedIndex = 0;
+                $("#divPostProductionRN").show();   //'divPostProductionRN'='2' 
+
+                $("#ProductionIndentNo").val("");
+                $('#ValMsgProductionQCNumber').hide();
+                $('#ValMsgProductionIndentNumber').hide();
+                $('#btnSave').prop('disabled', false);
+            }
+            else if (RejectionType == '4') {
+                $("#divInwardQC").hide();   //'divInwardQC'='1'
+                document.getElementById('RejectionNumberId').selectedIndex = 0;
+                $("#divProductionQC").hide();   //'divProductionQC'='2'
+                document.getElementById('PreProductionQCId').selectedIndex = 0;
+                $("#divPostProductionRN").hide();   //'divPostProductionRN'='3' 
+                document.getElementById('PostProductionRNId').selectedIndex = 0;
+                $("#divIntermediateRN").show();   //'divIntermediateRN'='4'
+
+                $("#ProductionIndentNo").val("");
+                $('#ValMsgProductionQCNumber').hide();
+                $('#ValMsgProductionIndentNumber').hide();
+                $('#btnSave').prop('disabled', false);
+            }
             else {
                 $("#divInwardQC").hide();
-                $("#divProductionQC").hide();   
+                $("#divProductionQC").hide();
+                $("#divPostProductionRN").hide();   //'divPostProductionRN'='2' 
             }
         });
-
-
-        function SelectedIndexChangedItem() {
-            $('#ItemValidate').hide();
-        }
 
         function OnChangedFromDate() {
             $('#fromDateValidate').hide();
@@ -207,6 +248,29 @@
 
         function OnChangedToDate() {
             $('#toDateValidate').hide();
+        }
+
+        function SelectedIndexChangedItem() {
+            $('#ItemValidate').hide();
+        }
+
+        function SelectedIndexChangedProduction(id) {debugger   
+            $('#ValMsgProductionQCNumber').hide(); 
+            $('#ValMsgProductionIndentNumber').hide(); 
+            var PreProductionQCNumber = $("#PreProductionQCId option:selected").text();
+
+            var PreProductionQcNumSplit = PreProductionQCNumber.split(' (');
+            document.getElementById("PreProductionQCNumber").value = PreProductionQcNumSplit[0];
+            var tempPreProductionQcNumSplit = PreProductionQcNumSplit[1].split(')');
+            document.getElementById("ProductionMaterialIssueNoteNo").value = tempPreProductionQcNumSplit[0];
+        }
+
+        function SelectedIndexChangedPostProductionRN() {
+            $('#PostProductionRNValidate').hide();
+        }
+
+        function SelectedIndexChangedIntermediateRN() {
+            $('#IntermediateRNValidate').hide(); 
         }
 
         $("#btnGo").on('click', function () {
@@ -249,6 +313,16 @@
                 CheckPreProductionQCId = 0;
             }
 
+            var CheckPostProductionRNId = $('#PostProductionRNId').val();
+            if (CheckPostProductionRNId == '' || CheckPostProductionRNId == null) {
+                CheckPostProductionRNId = 0;
+            }
+
+            var CheckIntermediateRNId = $('#IntermediateRNId').val();
+            if (CheckIntermediateRNId == '' || CheckIntermediateRNId == null) {
+                CheckIntermediateRNId = 0;
+            }
+
             $('#ExportPdf').show();
             $('#ExportExcel').show();
             $('#tblRejectionReport').show();
@@ -258,7 +332,7 @@
                 //"processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
-                "sAjaxSource": "/Report/GetRejectionTypeWiseReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem + "&RejectionType=" + CheckRejectionType + "&PreProductionQCId=" + CheckPreProductionQCId,
+                "sAjaxSource": "/Report/GetRejectionTypeWiseReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + CheckItem + "&RejectionType=" + CheckRejectionType + "&PreProductionQCId=" + CheckPreProductionQCId + "&PostProductionRNId=" + CheckPostProductionRNId + "&IntermediateRNId=" + CheckIntermediateRNId,
                 "initComplete": function (settings, json) {
                     var result = JSON.stringify(json);
                     flag = parseFloat(result.length);

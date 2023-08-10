@@ -37,6 +37,8 @@ namespace InVanWebApp.Controllers
         private IRQCCPRepository _RQCCPRepository;
         private ISILOCCPRepository _siloCCPRepository;        
         private IStage3Repository _Stage3Repository;
+        private IPostProductionRN_Repository _postProductionRN_Repository; //Rahul added 'IPostProductionRN_Repository' 10-08-23.
+        private IIntermediateRejectionNoteRepository _intermediateRejectionNoteRepository; //Rahul added 'IIntermediateRejectionNoteRepository' 10-08-23.
 
         private static ILog log = LogManager.GetLogger(typeof(ReportController));
 
@@ -56,6 +58,8 @@ namespace InVanWebApp.Controllers
             _RQCCPRepository = new RQCCPRepository();
             _siloCCPRepository = new SILOCCPRepository();            
             _Stage3Repository = new Stage3Repository();
+            _postProductionRN_Repository = new PostProductionRN_Repository(); //Rahul added 'IPostProductionRN_Repository' 10-08-23.
+            _intermediateRejectionNoteRepository = new IntermediateRejectionNoteRepository(); //Rahul added 'IIntermediateRejectionNoteRepository' 10-08-23.
         }
 
         public ReportController(IReportRepository reportRepository)
@@ -3463,7 +3467,8 @@ namespace InVanWebApp.Controllers
         public void BindBatchNumberDropDown()
         {
             var model = _repository.GetAll();
-            var BatchNumberdd = new SelectList(model.ToList(), "BatchNumber", "BatchNumber");
+            //var BatchNumberdd = new SelectList(model.ToList(), "BatchNumber", "BatchNumber"); //Rahul commented 'BatchNumberdd' ("BatchNumber", "BatchNumber") not in use 10-08-23.
+            var BatchNumberdd = new SelectList(model.ToList(), "ID", "BatchNumber"); //Rahul updated 'BatchNumberdd' ("BatchNumber", "BatchNumber") to ("ID", "BatchNumber") 10-08-23.
             ViewData["BatchNumberdd"] = BatchNumberdd;
         }
 
@@ -3474,6 +3479,28 @@ namespace InVanWebApp.Controllers
             ViewData["BatchNumberdd"] = BatchNumberdd;
         }
 
+        /// <summary>
+        /// Rahul: Bind Post-Production Rejection Note Number DropDown
+        /// Date: 10-08-23.  
+        /// </summary>
+        /// <returns></returns>
+        public void BindPostProductionRNDropDown()
+        {
+            var model = _postProductionRN_Repository.GetAll();
+            var PostProductionRN_dd = new SelectList(model.ToList(), "ID", "PostProdRejectionNoteNo");
+            ViewData["PostProductionRNdd"] = PostProductionRN_dd; 
+        }
+        /// <summary>
+        /// Rahul: Bind Intermediate Rejection Note Number DropDown 
+        /// Date: 10-08-23.  
+        /// </summary>
+        /// <returns></returns>
+        public void BindIntermediateRejectionNoteDropDown() 
+        {
+            var model = _intermediateRejectionNoteRepository.GetAll();
+            var PostProductionRN_dd = new SelectList(model.ToList(), "ID", "Intermediate_Rej_NoteNo");
+            ViewData["IntermediateRNdd"] = PostProductionRN_dd;
+        }
         #endregion
 
         #region  Raw Material Cost analysis 
@@ -6041,31 +6068,281 @@ namespace InVanWebApp.Controllers
                 model.toDate = DateTime.Today;
                 BindRejectionDropDown();
                 BindPreProductionQCNumber();
+                BindPostProductionRNDropDown();
+                BindIntermediateRejectionNoteDropDown();
                 return View(model);
             }
             else
                 return RedirectToAction("Index", "Login");
         }
 
-
         /// <summary>
         /// Rahul: 09 Aug 2023
         /// Calling method for Rejection Type wise Report Data 
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetRejectionTypeWiseReportData(DateTime fromDate, DateTime toDate, int ItemId, int RejectionType = 0, int PreProductionQCId=0) 
+        public JsonResult GetRejectionTypeWiseReportData(DateTime fromDate, DateTime toDate, int ItemId, int RejectionType = 0, int PreProductionQCId=0, int PostProductionRNId = 0, int IntermediateRNId=0) 
         {
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
             Session["RejectionType"] = RejectionType;  
             Session["ItemId"] = ItemId;
             Session["PreProductionQCId"] = PreProductionQCId; 
+            Session["IntermediateRNId"] = IntermediateRNId;   
 
-            var rejectionNoteReport = _repository.getRejectionTypeWiseReportData(fromDate, toDate, ItemId, RejectionType, PreProductionQCId); 
+            var rejectionTypeWiseReReport = _repository.getRejectionTypeWiseReportData(fromDate, toDate, ItemId, RejectionType, PreProductionQCId, PostProductionRNId, IntermediateRNId); 
 
-            return Json(new { data = rejectionNoteReport }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = rejectionTypeWiseReReport }, JsonRequestBehavior.AllowGet); 
         }
 
+        #endregion
+
+        #region Export PDF Rejection Type wise Report 
+        /// <summary>
+        /// Create by Rahul on 10 Aug 2023 
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete]
+        public ActionResult ExprotAsPDFforRejectionTypeWiseReport()  
+        {
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            var RejectionType = Convert.ToInt32(Session["RejectionType"]);
+            var ItemId = Convert.ToInt32(Session["ItemId"]);
+            var PreProductionQCId = Convert.ToInt32(Session["PreProductionQCId"]);
+            var PostProductionRNId = Convert.ToInt32(Session["PostProductionRNId"]); 
+             var IntermediateRNId = Convert.ToInt32(Session["IntermediateRNId"]);
+
+            var RejectionTypeWiseReportDetails = _repository.getRejectionTypeWiseReportData(fromDate, toDate, ItemId, RejectionType, PreProductionQCId, PostProductionRNId, IntermediateRNId);
+            TempData["RejectionTypeWiseReportDataTemp"] = RejectionTypeWiseReportDetails;
+            if (TempData["RejectionTypeWiseReportDataTemp"] == null)
+            {
+                return RedirectToAction("RejectionTypeWiseReport", "Report");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<RejectionNoteItemDetailsBO> resultList = TempData["RejectionTypeWiseReportDataTemp"] as List<RejectionNoteItemDetailsBO>;
+
+            if (resultList.Count < 0)
+                return RedirectToAction("RejectionTypeWiseReport", "Report");            
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
+            string AddRejectionType = "";
+            if (RejectionType == 0)
+            {
+                AddRejectionType = "All";                             
+                                            
+            }
+            else if (RejectionType == 1)
+            {
+                AddRejectionType = "Inward QC";
+            }
+            else if (RejectionType == 2)
+            {
+                AddRejectionType = "Pre-Production QC";
+            }
+            else if (RejectionType == 3)
+            {
+                AddRejectionType = "Post-Production";
+            }
+            else if (RejectionType == 4)
+            {
+                AddRejectionType = "Intermediate"; 
+            }
+            string ReportName = "Rejection Type Wise " + AddRejectionType +" Report"; 
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<thead>");
+            sb.Append("<tr >");
+            sb.Append("<th  style='text-align:right;padding-right:-80px;padding-bottom:-290px;font-size:11px;font-family:Times New Roman;'>" + "From Date :" + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr > <th></th>");
+            sb.Append("<th colspan=9 style='text-align:right;padding-right:-60px;padding-bottom:-290px;font-size:11px;font-family:Times New Roman;'>" + "To Date :" + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center;' Colspan='1'>" +
+                "<img height='150' width='150' src='" + strPath + "'/></th>");
+            sb.Append("<th Colspan='10' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:40px'>");
+            //sb.Append("<br/>");
+            sb.Append("<label style='font-size:22px; text-color:red bottom:20px;font-family:Times New Roman;font-weight:bold;color:Red;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
+            //sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
+
+            sb.Append("</th></tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:12%;font-size:12px;border: 0.05px  #e2e9f3;width:50px;'>Sr. No.</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:16%;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejection Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Dcoument Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Code</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Name</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Item Unit Price(Rs)</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Total Quantity (KG)</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Rejected Quantity (KG)</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Approved By</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:15%;font-size:13px;border: 0.05px  #e2e9f3;'>Reason For Rejection</ th>");
+
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            resultList.Count();
+            //RejectionTypeWise_Report 
+            foreach (var item in resultList)
+            {
+                sb.Append("<tr style='text-align:center;padding: 10px;'>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectionNoteDate + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectionNoteNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.InwardNumber + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Code + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.Item_Name + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ItemUnitPrice + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.TotalRecevingQuantiy + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.RejectedQuantity + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ApprovedBy + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;'>" + item.ReasonForRejection + "</td>");
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+
+            using (var sr = new StringReader(sb.ToString()))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+
+                    writer.PageEvent = new PageHeaderFooter();
+                    pdfDoc.Open();
+                    //pdfDoc.NewPage();
+
+                    setBorder(writer, pdfDoc);
+
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                    pdfDoc.Close();
+                    byte[] bytes = memoryStream.ToArray();
+                    string filename = "Rpt_RejectionTypeWise_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    return File(memoryStream.ToArray(), "application/pdf", filename);
+                }
+            }
+        }
+        #endregion
+
+        #region Excel Rejection Type wise Report 
+        public void ExportAsExcelForRejectionTypeWiseReport() 
+        {
+            GridView gv = new GridView();            
+            var RejectionType = Convert.ToInt32(Session["RejectionType"]);
+            var ItemId = Convert.ToInt32(Session["ItemId"]);
+            var PreProductionQCId = Convert.ToInt32(Session["PreProductionQCId"]);
+            var PostProductionRNId = Convert.ToInt32(Session["PostProductionRNId"]);
+            var IntermediateRNId = Convert.ToInt32(Session["IntermediateRNId"]);
+
+            List<RejectionNoteItemDetailsBO> resultList = _repository.getRejectionTypeWiseReportData(Convert.ToDateTime(Session["FromDate"]), Convert.ToDateTime(Session["ToDate"]), ItemId, RejectionType, PreProductionQCId, PostProductionRNId, IntermediateRNId); 
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Date");
+            dt.Columns.Add("Rejection Number");
+            dt.Columns.Add("Dcoument Number");
+            dt.Columns.Add("Item Code");
+            dt.Columns.Add("Item Name");
+            dt.Columns.Add("Item Unit Price (Rs)");
+            dt.Columns.Add("Total Quantity (KG)");
+            dt.Columns.Add("Rejected Quantity (KG)");
+            dt.Columns.Add("Approved By");
+            dt.Columns.Add("Reason For Rejection");
+
+            foreach (RejectionNoteItemDetailsBO st in resultList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["Date"] = st.RejectionNoteDate.ToString();
+                dr["Rejection Number"] = st.RejectionNoteNo.ToString();
+                dr["Dcoument Number"] = (st.InwardNumber == null) ? "" : st.InwardNumber.ToString(); 
+                dr["Item Code"] = st.Item_Code.ToString();
+                dr["Item Name"] = st.Item_Name.ToString();
+                dr["Item Unit Price (Rs)"] = st.ItemUnitPrice.ToString();
+                dr["Total Quantity (KG)"] = st.TotalRecevingQuantiy.ToString();
+                dr["Rejected Quantity (KG)"] = st.RejectedQuantity.ToString();
+                dr["Approved By"] = st.ApprovedBy.ToString();
+                dr["Reason For Rejection"] = (st.ReasonForRR == null) ? "" : st.ReasonForRR.ToString();
+
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_RejectionTypeWise_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            
+            string AddRejectionType = ""; 
+            if (RejectionType == 0)
+            {
+                AddRejectionType = "All";
+
+            }
+            else if (RejectionType == 1)
+            {
+                AddRejectionType = "Inward QC";
+            }
+            else if (RejectionType == 2)
+            {
+                AddRejectionType = "Pre-Production QC";
+            }
+            else if (RejectionType == 3)
+            {
+                AddRejectionType = "Post-Production";
+            }
+            else if (RejectionType == 4)
+            {
+                AddRejectionType = "Intermediate";
+            }
+            string ReportName = "Rejection Type Wise " + AddRejectionType + " Report";/* The Rejection Type Wise Report name are given here  */
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date:";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+               "<tr><td colspan='8' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;color:Red;font-family:Times New Roman;'>" + ReportName + "</span></td></tr>" +
+               "<tr><td colspan='8' style='text-align:center'><span align='center' style='font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + name + "</td></tr>" +
+               "<tr><td colspan='8' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
+               + "<tr><td colspan='6' style='text-align:left; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Fromdate + fromdate
+               + "</td><td colspan='5' style='text-align:right; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Todate + todate
+               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
         #endregion
 
         #endregion

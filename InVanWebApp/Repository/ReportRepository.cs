@@ -1541,7 +1541,7 @@ namespace InVanWebApp.Repository
         #endregion
 
         #region Rejection Type wise Report data 
-        public List<RejectionNoteItemDetailsBO> getRejectionTypeWiseReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int RejectionType = 0, int PreProductionQCId=0)  
+        public List<RejectionNoteItemDetailsBO> getRejectionTypeWiseReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int RejectionType = 0, int PreProductionQCId=0, int PostProductionRNId=0, int IntermediateRNId = 0)  
         {
             List<RejectionNoteItemDetailsBO> resultList = new List<RejectionNoteItemDetailsBO>();
             try
@@ -1554,6 +1554,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@RejectionType", RejectionType);
                     cmd.Parameters.AddWithValue("@rejectionNumber", rejectionNumber);
                     cmd.Parameters.AddWithValue("@PreProductionQCId", PreProductionQCId);
+                    cmd.Parameters.AddWithValue("@PostProductionRNId", PostProductionRNId); 
+                    cmd.Parameters.AddWithValue("@IntermediateRNId", IntermediateRNId);  
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     con.Open();

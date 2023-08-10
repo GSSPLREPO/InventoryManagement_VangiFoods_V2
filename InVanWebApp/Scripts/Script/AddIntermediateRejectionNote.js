@@ -1,4 +1,4 @@
-﻿//Rahul added 'function createCustomDropdown()'  start 
+﻿//Rahul added 'function createCustomDropdown()'  start
 
 $(document).ready(function () {
     createCustomDropdown_IssueBy();
@@ -252,7 +252,7 @@ function SaveBtnClick() {
 
 
     var tableLength = document.getElementById('submissionTable').rows.length;
-    debugger
+    //debugger
     if (tableLength == 1) {
         alert("No item rejected, Cannot create intermediate rejection note!");
         $('#btnSave').prop('disabled', true);
@@ -489,7 +489,6 @@ function SelectedIndexChangedLocation(id) {
         }
 
     });
-
 }
 //=============End==============
 
@@ -698,7 +697,7 @@ function OnChangeQty(value, id) {
 var TxtItemDetails = "";
 
 function createJson() {
-    debugger
+    //debugger
     var table = document.getElementById('submissionTable');
     var rowCount = table.rows.length;
     var i = 0, flag = 0;
@@ -706,7 +705,7 @@ function createJson() {
     while (i < rowCount - 1) {
 
         var ItemSelected = false;
-        if ($('#SelectedItem_' + i).is(":checked")) {debugger
+        if ($('#SelectedItem_' + i).is(":checked")) {   //debugger
             ItemSelected = true;
         }
 
@@ -723,7 +722,7 @@ function createJson() {
 
         var Remarks = (document.getElementById("txtRemarks_" + i)).value;
 
-        if (ItemSelected == false) {debugger
+        if (ItemSelected == false) { //debugger
             i++;
             continue;
         }
@@ -750,7 +749,7 @@ function createJson() {
 
     $('#txtItemDetails').val(TxtItemDetails);
 
-    alert(TxtItemDetails);
+    //alert(TxtItemDetails);
 }
 
 function isNumberKey(evt) {

@@ -66,7 +66,7 @@ namespace InVanWebApp_BO
         public DateTime toDate { get; set; }
 
         public bool FlagDebitNote { get; set; } //Rahul added 24-04-23. 
-
+        public string RejectionTypeName { get; set; } //Rahul added 'string RejectionTypeName' 10-08-23. 
         //Added the below property for saving the item table details. 
         public List<RejectionNoteItemDetailsBO> itemDetails { get; set; } 
     }
@@ -120,6 +120,7 @@ namespace InVanWebApp_BO
         public string InwardNumber { get; set; }
         public string InwardQCNumber { get; set; }
         public string ReasonForRR { get; set; }
+        public string RejectionTypeName { get; set; } //Rahul added 'string RejectionTypeName' 10-08-23.
 
         //Added the below feild for Debit note
         public int? CurrencyID { get; set; }
