@@ -11,7 +11,7 @@ function create_custom_dropdowns_PO_Id() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#PO_Id').removeClass('form-control');
-            $(this).after('<div id="divPO_Id" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divPO_Id" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -328,8 +328,16 @@ function OnChangeIWQty(value, id) {debugger
     else {
         $('#btnSave').prop("disabled", false);
         var tempInwQty = document.getElementById("txtInwardQty" + rowNo).value;
-        if (tempInwQty == '' || tempInwQty == null)
-            tempInwQty = 0;
+        if (tempInwQty == '' || tempInwQty == null) {
+            //tempInwQty = 0; //Rahul commented 'tempInwQty = 0;' 08-08-23.
+            alert("Delivered quantity is zero or null! Cannot create inward note as!");
+            $('#btnSave').prop('disabled', true);
+            event.preventDefault();
+            return;
+        }
+        else {
+            $('#btnSave').prop('disabled', false);
+        }
 
         document.getElementById("txtBalanceQty" + rowNo).value = parseFloat(temp_itemQty[0]) - (parseFloat(deliveredQty) + parseFloat(tempInwQty));
         InwardQuantities = InwardQuantities + "txtInwardQty" + rowNo + "*" + value + ",";
@@ -378,8 +386,12 @@ function SetInwardQty() {
                 document.getElementById(PhyQtyId[0].id).setAttribute("class", "border border-1 border-danger");
                 $('#btnSave').prop("disabled", true);
                 event.preventDefault();
-                return;
-            }
+                i++;
+                flag = 0;
+                //continue;
+                //return;
+            }            
+            
             ///Rahul added 'txtBalanceQty' 08-08-23 start.
             DelvQty = DelvQty.split(' ')[0];
             DelvQty = parseFloat(DelvQty);

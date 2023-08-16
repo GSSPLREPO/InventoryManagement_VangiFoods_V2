@@ -11,7 +11,7 @@ function create_custom_dropdowns_PO_Id() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#PO_Id').removeClass('form-control');
-            $(this).after('<div id="divPO_Id" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divPO_Id" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');

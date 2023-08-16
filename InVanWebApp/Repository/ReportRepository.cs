@@ -1567,7 +1567,7 @@ namespace InVanWebApp.Repository
                             SrNo = Convert.ToInt32(reader["SrNo"]),
                             RejectionNoteDate = Convert.ToDateTime(reader["Date"]).ToString("dd/MM/yyyy"),
                             RejectionNoteNo = reader["RejectionNumber"].ToString(),
-                            InwardNumber = reader["DcoumentNumber"].ToString(),
+                            InwardNumber = reader["DocumentNumber"].ToString(),                            
                             Item_Code = reader["ItemCode"].ToString(),
                             Item_Name = reader["ItemName"].ToString(),
                             ItemUnitPrice = Convert.ToDecimal(reader["ItemUnitPrice"]),

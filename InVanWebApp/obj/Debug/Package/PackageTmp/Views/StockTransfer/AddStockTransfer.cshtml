@@ -79,7 +79,8 @@
                                                 <td>
                                                     @*//"--Select Item--",*/ //style = "height:30px;width:270px;", *@
                                                     @*@Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], new { @class = "form-control form-control-sm", style = "height:34px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())"@*onmouseleave = "ValMsgItemList($(this).val(),id)"*@ @*})*@
-                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                    @*Rahul updated 'DropDownList Item_ID' '---------- Select Item ----------' 16-08-23.*@
+                                                    @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["itemListForDD"], "-------------------- Select Item --------------------", new { @class = "form-control form-control-sm", style = "height:30px;width:auto;", onchange = "SelectedIndexChangedItemList($(this).val())" })
                                                     <span id="ValMsgItemList" style="display:none; color:red"></span>
                                                     @*@Html.ValidationMessageFor(model => model.ItemId, "", new { @class = "error mt-2 text-danger" }) Rahul removed ValidationMessageFor ItemId and added ValMsgItemList in span tag onchange SelectedIndexChangedItemList 09-02-23. *@
                                                 </td>
@@ -177,7 +178,7 @@
             if (!$(this).next().hasClass('dropdown-select')) {
                 $('#' + id).removeClass('form-control');
                 $('#' + id).removeClass('form-control-sm');
-                $(this).after('<div id="div' + id + '" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                $(this).after('<div id="div' + id + '" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');

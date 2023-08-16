@@ -263,7 +263,8 @@ namespace InVanWebApp.Repository
                             RecipeName = reader["RecipeName"].ToString(),
                             Description = reader["Description"].ToString(),
                             ProductID = reader["ProductID"] is DBNull ? 0 : Convert.ToInt32(reader["ProductID"]),
-                            ProductName = reader["ProductName"] is DBNull ? "" : reader["ProductName"].ToString()
+                            ProductName = reader["ProductName"] is DBNull ? "" : reader["ProductName"].ToString(),
+                            CreatedDate = Convert.ToDateTime(reader["CreatedDate"]) /*@*added 'CreatedDate' 16 - 08 - 23.*@*/
                         };
                     }
                     con.Close();

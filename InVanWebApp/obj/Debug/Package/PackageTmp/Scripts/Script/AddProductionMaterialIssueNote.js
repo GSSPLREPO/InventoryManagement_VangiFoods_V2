@@ -9,7 +9,7 @@ function createCustomDropdown_LocationId() {
     $('select#LocationId').each(function (i, select) {
         if (!$(this).next().hasClass('dropdown-select')) {
             $('#LocationId').removeClass('form-control');
-            $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divLocationId" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -34,7 +34,7 @@ function createCustomDropdown_ProductionIndentId() {
     $('select#ProductionIndentId').each(function (i, select) {
         if (!$(this).next().hasClass('dropdown-select')) {
             $('#ProductionIndentId').removeClass('form-control');
-            $(this).after('<div id="divProductionIndentId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divProductionIndentId" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');

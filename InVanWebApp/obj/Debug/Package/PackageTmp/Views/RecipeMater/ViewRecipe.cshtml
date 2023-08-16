@@ -53,7 +53,9 @@
                             <h3 class="card-title font-weight-bold col-4 mb-0 align-self-center" style="font-size: 30pt;">Recipe</h3>
                             <div class="col">
                                 <div class="col-md-12">
-                                    <img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" style="width:45px;height:45px" class=" float-right" />
+                                    @*<img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" style="width:45px;height:45px" class=" float-right" />*@
+                                    @*Shweta change Export pdf link formate 10-08-2023*@
+                                    <a id="ExportPdf" href="@Url.Action("ExportAsPDF", "RecipeMater")"> <img class="float-left" src="~/Theme/MainContent/images/ICON.png.png" style="width: 45px; height: 45px; padding-top: 1px; margin-top: 2%; margin-left: 500px" /> </a>
                                 </div>
                             </div>
 
@@ -78,6 +80,13 @@
                                 </div>
 
                                 <div class="row">
+                                    @*added 'CreatedDate' 16-08-23.*@
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Date</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.CreatedDate)
+                                    </div>
                                     <div class="col-md-2">
                                         <label class="font-weight-bold">Description</label>
                                     </div>

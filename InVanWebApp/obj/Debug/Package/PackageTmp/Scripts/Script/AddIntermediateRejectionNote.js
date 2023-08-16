@@ -1,4 +1,4 @@
-﻿//Rahul added 'function createCustomDropdown()'  start 
+﻿//Rahul added 'function createCustomDropdown()'  start
 
 $(document).ready(function () {
     createCustomDropdown_IssueBy();
@@ -13,7 +13,7 @@ function createCustomDropdown_IssueBy() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#IssueBy').removeClass('form-control');
-            $(this).after('<div id="divIssueBy" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divIssueBy" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -40,7 +40,7 @@ function createCustomDropdown_LocationId() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#LocationId').removeClass('form-control');
-            $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divLocationId" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -68,7 +68,7 @@ function createCustomDropdown_Purpose() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#Purpose').removeClass('form-control');
-            $(this).after('<div id="divPurpose" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divPurpose" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -93,7 +93,7 @@ function createCustomDropdown_ddlItem() {
     $('select#ddlItem').each(function (i, select) {
         if (!$(this).next().hasClass('dropdown-select')) {
             $('#ddlItem').removeClass('form-control');
-            $(this).after('<div id="divddlItem" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divddlItem" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -252,7 +252,7 @@ function SaveBtnClick() {
 
 
     var tableLength = document.getElementById('submissionTable').rows.length;
-    debugger
+    //debugger
     if (tableLength == 1) {
         alert("No item rejected, Cannot create intermediate rejection note!");
         $('#btnSave').prop('disabled', true);
@@ -489,7 +489,6 @@ function SelectedIndexChangedLocation(id) {
         }
 
     });
-
 }
 //=============End==============
 
@@ -698,7 +697,7 @@ function OnChangeQty(value, id) {
 var TxtItemDetails = "";
 
 function createJson() {
-    debugger
+    //debugger
     var table = document.getElementById('submissionTable');
     var rowCount = table.rows.length;
     var i = 0, flag = 0;
@@ -706,7 +705,7 @@ function createJson() {
     while (i < rowCount - 1) {
 
         var ItemSelected = false;
-        if ($('#SelectedItem_' + i).is(":checked")) {debugger
+        if ($('#SelectedItem_' + i).is(":checked")) {   //debugger
             ItemSelected = true;
         }
 
@@ -723,7 +722,7 @@ function createJson() {
 
         var Remarks = (document.getElementById("txtRemarks_" + i)).value;
 
-        if (ItemSelected == false) {debugger
+        if (ItemSelected == false) { //debugger
             i++;
             continue;
         }
@@ -750,7 +749,7 @@ function createJson() {
 
     $('#txtItemDetails').val(TxtItemDetails);
 
-    alert(TxtItemDetails);
+    //alert(TxtItemDetails);
 }
 
 function isNumberKey(evt) {

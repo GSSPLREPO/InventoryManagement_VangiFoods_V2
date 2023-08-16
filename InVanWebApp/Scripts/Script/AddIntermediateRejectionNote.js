@@ -13,7 +13,7 @@ function createCustomDropdown_IssueBy() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#IssueBy').removeClass('form-control');
-            $(this).after('<div id="divIssueBy" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divIssueBy" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -40,7 +40,7 @@ function createCustomDropdown_LocationId() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#LocationId').removeClass('form-control');
-            $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divLocationId" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -68,7 +68,7 @@ function createCustomDropdown_Purpose() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#Purpose').removeClass('form-control');
-            $(this).after('<div id="divPurpose" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divPurpose" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -93,7 +93,7 @@ function createCustomDropdown_ddlItem() {
     $('select#ddlItem').each(function (i, select) {
         if (!$(this).next().hasClass('dropdown-select')) {
             $('#ddlItem').removeClass('form-control');
-            $(this).after('<div id="divddlItem" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divddlItem" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');

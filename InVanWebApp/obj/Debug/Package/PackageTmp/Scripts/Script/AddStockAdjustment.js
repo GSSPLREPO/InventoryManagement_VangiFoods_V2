@@ -8,7 +8,7 @@ function createCustomDropdown_ddlItem() {
     $('select#ddlItem').each(function (i, select) {
         if (!$(this).next().hasClass('dropdown-select')) {
             $('#ddlItem').removeClass('form-control');
-            $(this).after('<div id="divddlItem" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divddlItem" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -212,8 +212,8 @@ function SelectedIndexChangedLocation(id) {
         type: "POST",
         data: { id: Location_ID},
         success: function (result) {
-            alert('result: ' + JSON.stringify(result));
-            debugger
+            //alert('result: ' + JSON.stringify(result));
+            //debugger
             var table = document.getElementById('submissionTable');
             for (var j = 0; j < result.length; j++) {
                 var rowCount = table.rows.length;
@@ -320,7 +320,7 @@ function SelectedIndexChangedLocation(id) {
 
 //=====================Onchange of Item===========================
 function SelectedIndexChangedItem(id) {
-    debugger
+    //debugger
     $('#btnSave').prop('disabled', false);
 
     //For deleting the rows of Item table if exist.

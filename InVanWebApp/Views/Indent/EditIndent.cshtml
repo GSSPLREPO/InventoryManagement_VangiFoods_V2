@@ -109,43 +109,41 @@
                                                 {
                                                     string itemListForDD = "itemListForDD";
                                                     itemListForDD = itemListForDD + (c - 1);
-                                                    <tr id="tablerow_@c">
-                                                        <td>                                                            
-                                                            @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
-                                                                                              new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;", onchange = "getitemDetailsJSTbl('" + c + "')" })
-                                                            @*Rahul added class 'DropdownRegular' 10-07-2023.*@
-                                                            @*@Html.TextBoxFor(x => item.Item_ID, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })*@
-                                                        </td>
-                                                        <td class="col-md-4 d-none">
-                                                            @Html.TextBox("Item_Code_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;" })
-                                                        </td>
-                                                        <td class="col-md-4 d-none">
-                                                            @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ItemQuantity_" + c, item.RequiredQuantity, new
-                                                            {
-                                                                @class = "form-control form-control-sm text-right",
-                                                                style = "height:30px;",
-                                                                value = "0",
-                                                                onkeypress = "return isNumberKey(event)",
-                                                           onchange = "OnchangeQty()", maxlength="8"
-                                                            })
-                                                        </td>
-                                                        <td>
-                                                            @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
-                                                        </td>
-                                                    </tr>
-                                                    { c++; }
-                                                }
-
-                                            }
+                                <tr id="tablerow_@c">
+                                    <td>
+                                        @Html.DropDownListFor(model => model.Item_ID, (IEnumerable<SelectListItem>)ViewData[itemListForDD], "--Select Item---",
+                                                                               new { @class = "form-control form-control-sm", id = "Item_ID_" + c, style = "height:30px;", onchange = "getitemDetailsJSTbl('" + c + "')" })
+                                        @*Rahul added class 'DropdownRegular' 10-07-2023.*@
+                                        @*@Html.TextBoxFor(x => item.Item_ID, new { @class = "form-control", @readOnly = "readOnly", style = "height:30px;width:110px;" })*@
+                                    </td>
+                                    <td class="col-md-4 d-none">
+                                        @Html.TextBox("Item_Code_" + c, item.ItemCode, new { @class = "form-control form-control-sm", @readonly = "readonly", style = "height:30px;" })
+                                    </td>
+                                    <td class="col-md-4 d-none">
+                                        @Html.TextBox("ItemName_" + c, item.ItemName, "", new { @class = "form-control form-control-sm", style = "height:30px;", @readonly = "readonly" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBox("ItemQuantity_" + c, item.RequiredQuantity, new
+                                        {
+                                            @class = "form-control form-control-sm text-right",
+                                            style = "height:30px;",
+                                            value = "0",
+                                            onkeypress = "return isNumberKey(event)",
+                                            onchange = "OnchangeQty()",
+                                            maxlength = "8"
+                                        })
+                                    </td>
+                                    <td>
+                                        @Html.TextBox("ItemUnit_" + c, item.ItemUnit, "", new { @class = "form-control form-control-sm", style = "height:30px;width:100px;", @readonly = "readonly" })
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);" onclick="removeTr(@c);">Delete</button>
+                                    </td>
+                                </tr> { c++; }
+                                                } }
                                         </tbody>
                                     </table>
-                                    <br />
+                                    <br /><br /><br /><br />
                                     <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddItem">
                                         + Add Item
                                     </button>
@@ -211,7 +209,7 @@
             if (!$(this).next().hasClass('dropdown-select')) {
 
                 $('#RaisedBy').removeClass('form-control');
-                $(this).after('<div id="divRaisedBy" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                $(this).after('<div id="divRaisedBy" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -231,7 +229,7 @@
             if (!$(this).next().hasClass('dropdown-select')) {
 
                 $('#DesignationId').removeClass('form-control');
-                $(this).after('<div id="divDesignationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                $(this).after('<div id="divDesignationId" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -250,7 +248,7 @@
             if (!$(this).next().hasClass('dropdown-select')) {
 
                 $('#LocationId').removeClass('form-control');
-                $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                $(this).after('<div id="divLocationId" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -269,7 +267,7 @@
                 $('#' + id).removeClass('form-control');
                 $('#' + id).removeClass('form-control-sm');
                 /*Shweta updated 'id="div' to 'id="divItem_ID' in 'function create_custom_dropdowns()' 28-08-2023*/
-                $(this).after('<div id="divItem_ID' + id + '" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                $(this).after('<div id="divItem_ID' + id + '" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');

@@ -12,7 +12,7 @@ function createCustomDropdown_ReturnBy() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#ReturnBy').removeClass('form-control');
-            $(this).after('<div id="divReturnBy" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divReturnBy" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -39,7 +39,7 @@ function createCustomDropdown_LocationId() {
         if (!$(this).next().hasClass('dropdown-select')) {
 
             $('#LocationId').removeClass('form-control');
-            $(this).after('<div id="divLocationId" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divLocationId" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');
@@ -65,7 +65,7 @@ function createCustomDropdown_ddlItem() {
     $('select#ddlItem').each(function (i, select) {
         if (!$(this).next().hasClass('dropdown-select')) {
             $('#ddlItem').removeClass('form-control');
-            $(this).after('<div id="divddlItem" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            $(this).after('<div id="divddlItem" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
             var dropdown = $(this).next();
             var options = $(select).find('option');
             var selected = $(this).find('option:selected');

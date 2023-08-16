@@ -184,7 +184,7 @@
         $('select#SO_Id').each(function (i, select) {
             if (!$(this).next().hasClass('dropdown-select')) {
                 $('#SO_Id').removeClass('form-control');
-                $(this).after('<div id="divSO_Id" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                $(this).after('<div id="divSO_Id" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                 var dropdown = $(this).next();
                 var options = $(select).find('option');
                 var selected = $(this).find('option:selected');
@@ -209,7 +209,7 @@
     //    $('select#RecipeID').each(function (i, select) {
     //        if (!$(this).next().hasClass('dropdown-select')) {
     //            $('#RecipeID').removeClass('form-control');
-    //            $(this).after('<div id="divRecipeID" class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+    //            $(this).after('<div id="divRecipeID" class="dropdown-select wide d-flex align-items-center' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
     //            var dropdown = $(this).next();
     //            var options = $(select).find('option');
     //            var selected = $(this).find('option:selected');
