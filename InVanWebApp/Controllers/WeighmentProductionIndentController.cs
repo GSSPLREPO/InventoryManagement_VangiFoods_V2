@@ -153,9 +153,9 @@ namespace InVanWebApp.Controllers
             return Json(result);
         }
 
-        public JsonResult GetCapturedWeightIndentDetails() 
-        {            
-            var result = _weighmentProductionIndentRepository.GetCapturedWeightIndentDetails(); 
+        public JsonResult GetCapturedWeightIndentDetails()
+        {
+            var result = _weighmentProductionIndentRepository.GetCapturedWeightIndentDetails();
             return Json(result);
         }
 
@@ -316,7 +316,7 @@ namespace InVanWebApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddWeighmentProductionIndent(Weighment_ProductionIndentBO model) 
+        public ActionResult AddWeighmentProductionIndent(Weighment_ProductionIndentBO model)
         {
             try
             {
@@ -403,11 +403,11 @@ namespace InVanWebApp.Controllers
         /// Rahul: //This function is for delete all the temp records of Clear Captured Weight temp Data    
         /// </summary>
         /// <returns></returns>
-        [HttpPost] 
-        public ActionResult ClearCapturedWeightDataDelete() 
+        [HttpPost]
+        public ActionResult ClearCapturedWeightDataDelete()
         {
             if (Session[ApplicationSession.USERID] != null)
-            {               
+            {
                 _weighmentProductionIndentRepository.ClearCapturedWeightDataDelete();
                 //TempData["Success"] = "<script>alert('Captured Weight data deleted successfully!');</script>";
                 return RedirectToAction("Index", "WeighmentProductionIndent");
@@ -428,8 +428,8 @@ namespace InVanWebApp.Controllers
         [HttpGet]
         public ActionResult ViewWeighmentProductionIndent(int ID)
         {
-            Session["WeighmentID"] = ID;   
-            TempData["WeighmentID"] = ID;  
+            Session["WeighmentID"] = ID;
+            TempData["WeighmentID"] = ID;
 
             if (Session[ApplicationSession.USERID] != null)
             {
@@ -467,47 +467,46 @@ namespace InVanWebApp.Controllers
             sb.Append("<label style='font-size:22px;color:black; font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<th colspan='4' style=' padding-left: -130px; font-size:20px;text-align:center;font-family:Times New Roman;'>" + ReportName + "</th>");
             sb.Append("</tr>");
-            sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Weighment Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.WeighmentNo + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Indent Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.ProductionIndentNo + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Weighment Date</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.WeighmentDate + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Weighment Number</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.WeighmentNo + "</td>");
+            /*sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Indent Number</th>");
+                        sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.ProductionIndentNo + "</td>");*/
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Weighment Date</th>");            
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(productionIndentList.WeighmentDate).ToString("dd-MM-yyyy") + "</td>");
             sb.Append("</tr>");
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Indent By</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + productionIndentList.UserName + "</td>");
+            /* sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+                        sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Indent By</th>");
+                        sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + productionIndentList.UserName + "</td>");
+                        sb.Append("</tr>");*/
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:50%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Batch Number</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.BatchNumber + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Batch Planning No.</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.BatchPlanningDocumentNo + "</td>");
             sb.Append("</tr>");
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Product Name</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.RecipeName + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Total Batches</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.TotalBatches + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Product Name</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.RecipeName + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Total Batches</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.TotalBatches + "</td>");
             sb.Append("</tr>");
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>SO Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.SONo + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Work Order No</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.WorkOrderNo + "</td>");
-            sb.Append("</tr>");
-
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Batch Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.BatchNumber + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Remarks</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.Description + "</td>");
-            sb.Append("</tr>");
-
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Batch Planning No.</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.BatchPlanningDocumentNo + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'></th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'></td>");
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>SO Number</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.SONo + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Work Order No</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.WorkOrderNo + "</td>");
             sb.Append("</tr>");
 
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Remarks</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.Description + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'></th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'></td>");
+            sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("</table>");
+
             sb.Append("<hr style='height: 1px; border: none; color:#333;background-color:#333;'></hr>");
 
             sb.Append("<table>");
@@ -694,7 +693,7 @@ namespace InVanWebApp.Controllers
         /// <param name="ID"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult DeleteWeighmentProduction(int ID) 
+        public ActionResult DeleteWeighmentProduction(int ID)
         {
             if (Session[ApplicationSession.USERID] != null)
             {

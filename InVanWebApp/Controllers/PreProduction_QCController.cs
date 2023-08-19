@@ -218,7 +218,7 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        #region Export Pdf Pre-Production QC Report
+        #region Export Pdf Pre-Production QC Report 
         /// <summary>
         /// Created By : Vedant Parikh
         /// Date :  23 June'23
@@ -243,24 +243,34 @@ namespace InVanWebApp.Controllers
             sb.Append("<th colspan='4' style=' padding-left: -130px; font-size:20px;text-align:center;font-family:Times New Roman;'>" + ReportName + "</th>");
             sb.Append("</tr>");
 
-            sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>QC Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + preProductionQCList.QCNumber + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>QC Date</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(preProductionQCList.QCDate).ToString("dd-MM-yyyy") + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>QC Number</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + preProductionQCList.QCNumber + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>QC Date</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(preProductionQCList.QCDate).ToString("dd-MM-yyyy") + "</td>");
             sb.Append("</tr>");
 
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Production Indent Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + preProductionQCList.ProdIndent_No + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Material Issue Note No</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + preProductionQCList.MaterialIssue_No + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Production Indent Number</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + preProductionQCList.ProdIndent_No + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Material Issue Note No</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + preProductionQCList.MaterialIssue_No + "</td>");
             sb.Append("</tr>");
 
             sb.Append("</thead>");
             sb.Append("</table>");
             sb.Append("<hr style='height: 1px; border: none; color:#333;background-color:#333;'></hr>");
-            sb.Append("<br/>");
+            //sb.Append("<br/>"); //Rahul removed 'sb.Append("<br/>");' not in use 19-08-23.
+            ///Rahul added 'table' tag for 'Item Details' start 19-08-23. 
+            sb.Append("<table>");
+            sb.Append("<thead>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center; font-family:Times New Roman;width:87%;font-size:15px;'>Item Details</th>");
+
+            sb.Append("</tr>");
+            sb.Append("</thead>");
+            sb.Append("</table>");
+            ///Rahul added 'table' tag for 'Item Details' end 19-08-23. 
 
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;repeat-header: yes;page-break-inside: auto;'>");
             sb.Append("<thead>");

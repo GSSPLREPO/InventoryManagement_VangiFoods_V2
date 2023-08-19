@@ -123,9 +123,7 @@ namespace InVanWebApp.Controllers
                                 return View(model);
                             }
                         }
-
                         return RedirectToAction("Index", "IssueNote");
-
                     }
                     else
                     {
@@ -140,7 +138,6 @@ namespace InVanWebApp.Controllers
                 }
                 else
                     return RedirectToAction("Index", "Login");
-
             }
             catch (Exception ex)
             {
@@ -186,21 +183,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        //#region This method is for View the Issue Note
-        //[HttpGet]
-        //public ActionResult ViewIssueNote(int ID)
-        //{
-        //    if (Session[ApplicationSession.USERID] != null)
-        //    {
-        //        IssueNoteBO model = _repository.GetById(ID);
-        //        return View(model);
-        //    }
-        //    else
-        //        return RedirectToAction("Index", "Login");
-        //}
-
-        //#endregion
-
         #region This method is for View the Issue Note
         [HttpGet]
         public ActionResult ViewIssueNote(int ID)
@@ -241,50 +223,48 @@ namespace InVanWebApp.Controllers
             sb.Append("<th colspan='4' style=' padding-left: -130px; font-size:20px;text-align:center;font-family:Times New Roman;'>" + ReportName + "</th>");
             sb.Append("</tr>");
 
-            sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Issue Note Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.IssueNoteNo + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Issue Note Date</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.IssueNoteDate + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Issue Note Number</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.IssueNoteNo + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Issue Note Date</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.IssueNoteDate + "</td>");
             sb.Append("</tr>");
 
-            sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Issue By</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.IssueByName + "</td>");
-            //sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Issue Note Date</th>");
-            //sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.IssueNoteDate + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Issue By</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.IssueByName + "</td>");
             sb.Append("</tr>");
 
-            sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Purpose</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.Purpose + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Purpose</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.Purpose + "</td>");
             if (issueNoteList.Purpose == "Production")
             {
-                sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Work Order Number</th>");
-                sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.WorkOrderNumber + "</td>");
+                sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Work Order Number</th>");
+                sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.WorkOrderNumber + "</td>");
             }
             else if (issueNoteList.Purpose == "QC")
             {
-                sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>QC Number</th>");
-                sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.QCNumber + "</td>");
+                sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>QC Number</th>");
+                sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.QCNumber + "</td>");
             }
             else if (issueNoteList.Purpose == "Dispatch")
             {
-                sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Sales Order Number</th>");
-                sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.SONumber + "</td>");
+                sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Sales Order Number</th>");
+                sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.SONumber + "</td>");
             }
             else if (issueNoteList.Purpose == "Others")
             {
-                sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Other Document Number</th>");
-                sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.OtherPurpose + "</td>");
+                sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Other Document Number</th>");
+                sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.OtherPurpose + "</td>");
             }
             sb.Append("</tr>");
 
-            sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Location Name</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.LocationName + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Remarks</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.Remarks + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Location Name</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.LocationName + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Remarks</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + issueNoteList.Remarks + "</td>");
             sb.Append("</tr>");
 
             sb.Append("</thead>");
@@ -306,18 +286,14 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='text-align:center;padding: 5px; font-family:Times New Roman;background-color:#C0DBEA'>");
 
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:0.5%;font-size:10px;border: 0.01px black;'>Sr. No</th>");
-            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:2.5%;font-size:10px;border: 0.01px black;'>Item Description</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1.8%;font-size:10px;border: 0.01px black;'>Item Code</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5.5%;font-size:10px;border: 0.01px black;'>Item</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:2%;font-size:10px;border: 0.01px black;'>Price Per Unit (Rs)</th>");
-            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1%;font-size:10px;border: 0.01px black;'>Currency</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1.4%;font-size:10px;border: 0.01px black;'>Available Stock</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1.4%;font-size:10px;border: 0.01px black;'>Requested Quantity</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1.4%;font-size:10px;border: 0.01px black;'>Issued Quantity</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1.4%;font-size:10px;border: 0.01px black;'>Final Stock</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:0.8%;font-size:10px;border: 0.01px black;'>UOM</th>");
-            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1%;font-size:10px;border: 0.01px black;'>Wastage</ th>");
-            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1%;font-size:10px;border: 0.01px black;'>Tax</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1.8%;font-size:10px;border: 0.01px black;'>Comments</ th>");
 
             sb.Append("</tr>");
@@ -329,19 +305,15 @@ namespace InVanWebApp.Controllers
             {
                 sb.Append("<tr style='text-align:center;'>");
                 sb.Append("<td style='text-align:center;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + i + "</td>");
-                //sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.ItemName + "</td>");
                 sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.Item_Code + "</td>");
                 sb.Append("<td style='text-align:right;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.Item_Name + "</td>");
-                //sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.CurrencyName + "</td>");
                 sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.ItemUnitPrice + " " + item.CurrencyName + "</td>");
                 sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.AvailableStockBeforeIssue + "</td>");
                 sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.QuantityRequested + "</td>");
                 sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.QuantityIssued + "</td>");
                 sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.StockAfterIssuing + "</td>");
                 sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.ItemUnit + "</td>");
-                //sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.ItemTaxValue + "</td>");
                 sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.Description + "</td>");
-
                 sb.Append("</tr>");
                 i++;
             }
@@ -392,12 +364,6 @@ namespace InVanWebApp.Controllers
             pageBorderRect.Right -= pdfDoc.RightMargin - 15;
             pageBorderRect.Top -= pdfDoc.TopMargin - 7;
             pageBorderRect.Bottom += pdfDoc.BottomMargin - 5;
-
-            //content.SetColorStroke(BaseColor.DARK_GRAY);
-            //content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom + 5, pageBorderRect.Width, pageBorderRect.Height);
-            ////content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom - 5, pageBorderRect.Top, pageBorderRect.Right);
-            //content.Stroke();
-
             //---------------------------------------
 
             content.SetColorStroke(BaseColor.RED);
@@ -410,14 +376,11 @@ namespace InVanWebApp.Controllers
         public class PageHeaderFooter : PdfPageEventHelper
         {
             private readonly Font _pageNumberFont = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
-
             public override void OnEndPage(PdfWriter writer, Document document)
             {
                 PurchaseOrderController purchaseOrderController = new PurchaseOrderController();
                 purchaseOrderController.setBorder(writer, document);
-
                 AddPageNumber(writer, document);
-                //base.OnEndPage(writer, document);
             }
 
             private void AddPageNumber(PdfWriter writer, Document document)
@@ -453,7 +416,6 @@ namespace InVanWebApp.Controllers
             public override void OnStartPage(PdfWriter writer, Document document)
             {
                 AddPageHeader(writer, document);
-                //base.OnStartPage(writer, document);
             }
             private void AddPageHeader(PdfWriter writer, Document document)
             {

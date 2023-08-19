@@ -249,46 +249,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        //#region This method is for View the SO payment
-        //[HttpGet]
-        //public ActionResult ViewSOPayment(int ID)
-        //{
-        //    if (Session[ApplicationSession.USERID] != null)
-        //    {
-        //        var result = _SOPaymentRepository.GetByID(ID);
-        //        var salesOrderItems = _SOPaymentRepository.GetSOItemsBySalesOrderId((int)result.SalesOrderId);
-        //        List<SalesOrderItemsDetailBO> items = new List<SalesOrderItemsDetailBO>();
-        //        foreach (var item in salesOrderItems)
-        //        {
-        //            SalesOrderItemsDetailBO salesOrderItem = new SalesOrderItemsDetailBO
-        //            {
-        //                CreatedBy = item.CreatedBy,
-        //                CreatedDate = item.CreatedDate,
-        //                ID = item.ID,
-        //                IsDeleted = item.IsDeleted,
-        //                ItemName = item.ItemName,
-        //                ItemQuantity = item.ItemQuantity,
-        //                ItemTaxValue = item.ItemTaxValue.ToString(),
-        //                ItemUnit = item.ItemUnit,
-        //                ItemUnitPrice = item.ItemUnitPrice,
-        //                Item_Code = item.Item_Code,
-        //                Item_ID = item.Item_ID,
-        //                LastModifiedBy = item.LastModifiedBy,
-        //                LastModifiedDate = item.LastModifiedDate,
-        //                SalesOrderId = item.SalesOrderId,
-        //                TotalItemCost = item.TotalItemCost
-        //            };
-        //            items.Add(salesOrderItem); 
-        //        }
-        //        result.SalesOrderItems = items;
-
-        //        return View(result);
-        //    }
-        //    else
-        //        return RedirectToAction("Index", "Login");
-        //}
-        //#endregion
-
         #region This method is for View the SO payment
         [HttpGet]
         public ActionResult ViewSOPayment(int ID)
@@ -358,25 +318,25 @@ namespace InVanWebApp.Controllers
             sb.Append("<th colspan='4' style=' padding-left: -130px; font-size:20px;text-align:center;font-family:Times New Roman;'>" + ReportName + "</th>");
             sb.Append("</tr>");
 
-            sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>SO Payment </th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + SOPayment.SONumber + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Payment Date</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(SOPayment.PaymentDate).ToString("dd/MM/yyyy") + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>SO Payment </th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + SOPayment.SONumber + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Payment Date</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(SOPayment.PaymentDate).ToString("dd/MM/yyyy") + "</td>");
             sb.Append("</tr>");
 
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Invoice Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + SOPayment.InvoiceNumber + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Invoice Amount</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + SOPayment.PaymentAmount + " " + SOPayment.CurrencyName + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Invoice Number</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + SOPayment.InvoiceNumber + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Invoice Amount</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + SOPayment.PaymentAmount + " " + SOPayment.CurrencyName + "</td>");
             sb.Append("</tr>");
 
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Payment Due Date</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(SOPayment.PaymentDueDate).ToString("dd/MM/yyyy") + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Vendor</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + SOPayment.VendorName + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Payment Due Date</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(SOPayment.PaymentDueDate).ToString("dd/MM/yyyy") + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Vendor</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + SOPayment.VendorName + "</td>");
             sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("</table>");
@@ -434,11 +394,9 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr><th colspan='4'>&nbsp;</th></tr>");
             sb.Append("<tr style='text-align:left;padding: 1px; font-family:Times New Roman;'>");
             sb.Append("<th colspan='3' style='text-align:left;padding: 2px; width:50%; font-family:Times New Roman;font-size:14px;'>PAYMENT MODE</th>");
-            //sb.Append("<th colspan='2' style='border: 0.01px black;text-align:left;padding: 2px; width:50%; font-family:Times New Roman;font-size:14px;'>&nbsp;</th>");
             sb.Append("<td style='text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>  </td>");
 
             sb.Append("<th colspan='2' style='text-align:LEFT;padding: 2px; width:50%; font-family:Times New Roman;font-size:14px;'>PAYMENT DETAILS</th>");
-            //sb.Append("<th colspan='2' style='border: 0.01px black;text-align:Center;padding: 2px; width:50%; font-family:Times New Roman;font-size:14px;'>&nbsp;</th>");
             sb.Append("</tr>");
             sb.Append("<tr>");
             sb.Append("</tr>");
@@ -708,11 +666,6 @@ namespace InVanWebApp.Controllers
             pageBorderRect.Top -= pdfDoc.TopMargin - 7;
             pageBorderRect.Bottom += pdfDoc.BottomMargin - 5;
 
-            //content.SetColorStroke(BaseColor.DARK_GRAY);
-            //content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom + 5, pageBorderRect.Width, pageBorderRect.Height);
-            ////content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom - 5, pageBorderRect.Top, pageBorderRect.Right);
-            //content.Stroke();
-
             //---------------------------------------
 
             content.SetColorStroke(BaseColor.RED);
@@ -725,7 +678,6 @@ namespace InVanWebApp.Controllers
         public class PageHeaderFooter : PdfPageEventHelper
         {
             private readonly Font _pageNumberFont = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
-            //private readonly Font _dateTime = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
             public override void OnEndPage(PdfWriter writer, Document document)
             {
                 PurchaseOrderController purchaseOrderController = new PurchaseOrderController();

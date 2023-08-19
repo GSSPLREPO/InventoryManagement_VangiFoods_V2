@@ -262,7 +262,6 @@ namespace InVanWebApp.Controllers
                 BindCompany();
                 BindCurrencyPrice();
                 BindLocationName();
-                //BindIndentDropDown();
 
                 RequestForQuotationBO model = _requestForQuotationRepository.GetDetailsForRFQView(RequestForQuotationId);
 
@@ -310,7 +309,6 @@ namespace InVanWebApp.Controllers
                             BindCompany();
                             BindCurrencyPrice();
                             BindLocationName();
-                            //BindIndentDropDown();
                             RequestForQuotationBO model1 = _requestForQuotationRepository.GetDetailsForRFQView(model.RequestForQuotationId);
 
                             return View(model1);
@@ -324,7 +322,6 @@ namespace InVanWebApp.Controllers
                         BindCompany();
                         BindCurrencyPrice();
                         BindLocationName();
-                        //BindIndentDropDown();
                         RequestForQuotationBO model1 = _requestForQuotationRepository.GetDetailsForRFQView(model.RequestForQuotationId);
 
                         return View(model1);
@@ -361,34 +358,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        //#region Request For Quotation View for Punch Quotation  
-        ///// <summary>
-        ///// Created By: Rahul 
-        ///// Created Date : 17-12-2022 
-        ///// Description: This method responsible for View of Request For Quotation details.  
-        ///// </summary>
-        ///// <param name="RequestForQuotationId"></param> 
-        ///// <returns></returns>
-        //[HttpGet]
-        //public ActionResult RequestForQuotationView(int ID)
-        //{
-        //    if (Session[ApplicationSession.USERID] != null)
-        //    {
-        //        //Binding item grid.             
-        //        RequestForQuotationBO model = _requestForQuotationRepository.GetDetailsForRFQView(ID);
-        //        if (model.VendorIDs != null)
-        //        {
-        //            string vId = model.VendorIDs;
-        //            string[] values = vId.Split(',');
-        //            model.vendorIdLength = values.Length;
-        //        }
-        //        return PartialView("_RFQPV", model);
-        //    }
-        //    else
-        //        return RedirectToAction("Index", "Login");
-        //}
-        //#endregion
-
         #region Request For Quotation View for Punch Quotation  
         /// <summary>
         /// Created By: Rahul 
@@ -418,83 +387,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        //#region  Insert function RFQ Supplier Details view 
-        ///// <summary>
-        /////Rahul: Rendered the user to the edit RFQ Supplier Details View page with details of a perticular record.
-        ///// </summary>
-        ///// <param name="RequestForQuotationId"></param>
-        ///// <returns></returns>        
-        //[HttpGet]
-        //public ActionResult AddRFQSupplierDetails(int RequestForQuotationId, int VendorsID)
-        //{
-        //    if (Session[ApplicationSession.USERID] != null)
-        //    {
-        //        BindCompany();
-        //        BindCurrencyPrice();
-        //        BindLocationName();
-        //        //BindIndentDropDown();
-
-        //        RequestForQuotationBO model = _requestForQuotationRepository.GetRFQbyId(RequestForQuotationId, VendorsID);
-
-        //        model.VendorsID = VendorsID; //added 01-02-2023
-        //        model.CompanyName = model.companyDetails[0].CompanyName;
-        //        model.SupplierAddress = model.companyDetails[0].Address;
-        //        model.IndianCurrencyValue = model.CurrencyPrice;
-
-        //        return View(model);
-        //    }
-        //    else
-        //        return RedirectToAction("Index", "Login");
-
-        //}
-
-        ///// <summary>
-        ///// Rahul:  Pass the data to the repository for RFQ Supplier Details view insertion that record.
-        ///// </summary>
-        ///// <param name="model"></param>
-        ///// <returns></returns>
-        //[HttpPost]
-        //public ActionResult AddRFQSupplierDetails(RFQ_VendorDetailsBO model)
-        //{
-        //    try
-        //    {
-        //        if (Session[ApplicationSession.USERID] != null)
-        //        {
-        //            ResponseMessageBO response = new ResponseMessageBO();
-
-        //            if (ModelState.IsValid)
-        //            {
-        //                model.CreatedByID = Convert.ToInt32(Session[ApplicationSession.USERID]);
-        //                response = _requestForQuotationRepository.InsertRFQSupplierDetails(model);
-        //                if (response.Status)
-        //                    TempData["Success"] = "<script>alert('RFQ Supplier Details inserted/updated successfully!');</script>";
-        //                else
-        //                {
-        //                    TempData["Success"] = "<script>alert('Error while insertion!');</script>";
-        //                }
-
-        //                return RedirectToAction("Index", "RequestForQuotation");
-
-        //            }
-        //            else
-        //            {
-        //                TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
-        //            }
-        //        }
-        //        else
-        //            return RedirectToAction("Index", "Login");
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        log.Error("Error", ex);
-        //    }
-        //    return RedirectToAction("Index", "RequestForQuotation");
-
-        //}
-
-        //#endregion
-
         #region  Insert function RFQ Supplier Details view 
         /// <summary>
         ///Rahul: Rendered the user to the edit RFQ Supplier Details View page with details of a perticular record.
@@ -509,7 +401,6 @@ namespace InVanWebApp.Controllers
                 BindCompany();
                 BindCurrencyPrice();
                 BindLocationName();
-                //BindIndentDropDown();
 
                 RequestForQuotationBO model = _requestForQuotationRepository.GetRFQbyId(RequestForQuotationId, VendorsID);
 
@@ -613,31 +504,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        //#region View RFQ Supplier Details
-        ///// <summary>
-        ///// Created By: Farheen
-        ///// Created Date : 05-02-2023
-        ///// Description: This method responsible for View of RFQ Supplier details and for generating PO.
-        ///// </summary>
-        ///// <param name="PurchaseOrderId"></param>
-        ///// <returns></returns>
-        //public ActionResult ViewRFQSupplierDetails(int ID, int RfqID)
-        //{
-        //    if (Session[ApplicationSession.USERID] == null)
-        //        return RedirectToAction("Index", "Login");
-
-        //    RFQ_VendorDetailsBO model = _requestForQuotationRepository.ItemDetailsVendorWise(RfqID, 0, ID);
-        //    if (model == null)
-        //    {
-        //        TempData["Success"] = "<script>alert('Quotation for this vendor is not punched yet! Please try again');</script>";
-        //        return RedirectToAction("Index", "RequestForQuotation");
-        //    }
-        //    else
-        //        return View(model);
-
-        //}
-        //#endregion
-
         #region View RFQ Supplier Details
         /// <summary>
         /// Created By: Farheen
@@ -701,7 +567,6 @@ namespace InVanWebApp.Controllers
             }
             model.rfqVendorItemDetails = resultList;
             return View(model);
-
         }
 
 
@@ -813,34 +678,19 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExportAsPDF()
         {
-
             StringBuilder sb = new StringBuilder();
             RequestForQuotationBO ResultList = _requestForQuotationRepository.GetDetailsForRFQView(Convert.ToInt32(Session["RequestForQuotationId"]));
             var CompanyNameList = _requestForQuotationRepository.GetCompanyNameForRFQView(Convert.ToInt32(Session["RequestForQuotationId"]));
-            //var CompanyNameList = _requestForQuotationRepository.GetCompanyNameForRFQView(Convert.ToInt32(Session["CompanyNameID"]));
-            //var CompanyNameList = _purchaseOrderRepository.GetCompanyList(1);
-            //var resultList = new SelectList(CompanyNameList.ToList(), "VendorsID", "CompanyName");
-
-
-            //if (purchaseOrderList.Count <= 0)
-            //    return View("Index");
-
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
             string strSign = Request.Url.GetLeftPart(UriPartial.Authority) + "/Signatures/" + ResultList.Signature;
             string ReportName = "Request For Quotation";
 
-            //string[] CompanyName ;
-            //var CompanyName = new List<string>();
             var CompanyName = "";
             foreach (var items in CompanyNameList)
             {
-                //CompanyName.Add(items.CompanyName);
                 CompanyName = items.CompanyName + "," + CompanyName;
             }
-
-            //string PODate = Convert.ToDateTime(ResultList.PODate).ToString("dd/MM/yyyy") + " ";
-            //string DeliveryDate = Convert.ToDateTime(ResultList.DeliveryDate).ToString("dd/MM/yyyy") + " ";
 
             sb.Append("<div style='vertical-align:top'>");
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-left:center;width: 100%;border:none'>");
@@ -850,34 +700,29 @@ namespace InVanWebApp.Controllers
             sb.Append("<label style='font-size:22px;color:black; font-family:Times New Roman;'>" + ReportName + "</label>");
             sb.Append("<th colspan='4' style=' padding-left: -130px; font-size:20px;text-align:center;font-family:Times New Roman;'>" + ReportName + "</th>");
             sb.Append("</tr>");
-            sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>RFQ Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + ResultList.RFQNO + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>RFQ Document Date</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(ResultList.Date).ToString("dd/MM/yyyy") + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>RFQ Number</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + ResultList.RFQNO + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>RFQ Document Date</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(ResultList.Date).ToString("dd/MM/yyyy") + "</td>");
             sb.Append("</tr>");
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Delivery Date</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(ResultList.DeliveryDate).ToString("dd/MM/yyyy") + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Indent Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + ResultList.IndentNumber + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Delivery Date</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(ResultList.DeliveryDate).ToString("dd/MM/yyyy") + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Indent Number</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + ResultList.IndentNumber + "</td>");
             sb.Append("</tr>");
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Bidding Start Date</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(ResultList.BiddingStartDate).ToString("dd/MM/yyyy") + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Bidding End Date</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(ResultList.BiddingEndDate).ToString("dd/MM/yyyy") + "</td>");
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Bidding Start Date</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(ResultList.BiddingStartDate).ToString("dd/MM/yyyy") + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Bidding End Date</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + Convert.ToDateTime(ResultList.BiddingEndDate).ToString("dd/MM/yyyy") + "</td>");
             sb.Append("</tr>");
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Location Name</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + ResultList.LocationName + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Supplier Name</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + CompanyName + "</td>");
-            //foreach (var item in resultList.Items)
-            //{
-            //    sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" +  + "</td>");
-
-            //}
+            sb.Append("<tr style='width:30%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Location Name</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + ResultList.LocationName + "</td>");
+            sb.Append("<th style='width:30%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Supplier Name</th>");
+            sb.Append("<td style='width:50%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + CompanyName + "</td>");
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
@@ -958,7 +803,6 @@ namespace InVanWebApp.Controllers
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     Document pdfDoc = new Document(PageSize.A4);
-                    //pdfDoc.SetPageSize(new Rectangle(1100f, 850f));
 
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
@@ -996,12 +840,6 @@ namespace InVanWebApp.Controllers
             pageBorderRect.Right -= pdfDoc.RightMargin - 15;
             pageBorderRect.Top -= pdfDoc.TopMargin - 7;
             pageBorderRect.Bottom += pdfDoc.BottomMargin - 5;
-
-            //content.SetColorStroke(BaseColor.DARK_GRAY);
-            //content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom + 5, pageBorderRect.Width, pageBorderRect.Height);
-            ////content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom - 5, pageBorderRect.Top, pageBorderRect.Right);
-            //content.Stroke();
-
             //---------------------------------------
 
             content.SetColorStroke(BaseColor.RED);
@@ -1014,7 +852,6 @@ namespace InVanWebApp.Controllers
         public class PageHeaderFooter : PdfPageEventHelper
         {
             private readonly Font _pageNumberFont = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
-            //private readonly Font _dateTime = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
             public override void OnEndPage(PdfWriter writer, Document document)
             {
                 PurchaseOrderController purchaseOrderController = new PurchaseOrderController();

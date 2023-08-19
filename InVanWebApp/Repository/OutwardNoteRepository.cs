@@ -222,11 +222,11 @@ namespace InVanWebApp.Repository
                         OutwardNoteDetailsBO objItemDetails = new OutwardNoteDetailsBO();
                         objItemDetails.OutwardNoteID = model.ID;
                         objItemDetails.ItemID = Convert.ToInt32(item.ElementAt(0).Value);
-                        objItemDetails.ItemCode = item.ElementAt(1).Value.ToString();
-                        objItemDetails.ItemName = item.ElementAt(2).Value.ToString();
-                        objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(3).Value);
-                        objItemDetails.ItemUnit = item.ElementAt(4).Value.ToString();
-                        objItemDetails.Remarks = item.ElementAt(5).Value.ToString();
+                        objItemDetails.ItemCode = item.ElementAt(2).Value.ToString();
+                        objItemDetails.ItemName = item.ElementAt(3).Value.ToString();
+                        objItemDetails.OutwardQuantity = Convert.ToDecimal(item.ElementAt(4).Value);
+                        objItemDetails.ItemUnit = item.ElementAt(5).Value.ToString();
+                        objItemDetails.Remarks = item.ElementAt(6).Value.ToString();
                         objItemDetails.CreatedBy = model.LastModifiedBy;
                         itemDetails.Add(objItemDetails);
                     }

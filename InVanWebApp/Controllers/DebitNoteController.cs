@@ -68,7 +68,6 @@ namespace InVanWebApp.Controllers
         {
             if (Session[ApplicationSession.USERID] != null)
             {
-                //BindPONumber();
                 GenerateDocumentNo();
                 BindRejectionDropDown();    // Rahul added 21-04-23.
                 DebitNoteBO model = new DebitNoteBO();
@@ -102,20 +101,16 @@ namespace InVanWebApp.Controllers
                         else
                         {
                             TempData["Success"] = "<script>alert('Duplicate debit note! Can not be inserted!');</script>";
-                            //BindPONumber();
                             model.DebitNoteDate = DateTime.Today;
 
                             GenerateDocumentNo();
                             BindRejectionDropDown();// Rahul added 21-04-23.
                             return View(model);
                         }
-
                         return RedirectToAction("Index", "DebitNote");
-
                     }
                     else
                     {
-                        //BindPONumber();
                         GenerateDocumentNo();
                         BindRejectionDropDown();// Rahul added 21-04-23.
                         model.DebitNoteDate = DateTime.Today;                        
@@ -125,21 +120,18 @@ namespace InVanWebApp.Controllers
                 }
                 else
                     return RedirectToAction("Index", "Login");
-
             }
             catch (Exception ex)
             {
                 log.Error("Error", ex);
                 TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
 
-                //BindPONumber();
                 GenerateDocumentNo();
                 BindRejectionDropDown();// Rahul added 21-04-23.
                 model.DebitNoteDate = DateTime.Today;
 
                 return View(model);
             }
-            //return View();
         }
         #endregion
 
@@ -165,21 +157,6 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "Login");
         }
         #endregion
-
-        //#region This method is for View the Debit note Details
-        //[HttpGet]
-        //public ActionResult ViewDebitNote(int ID)
-        //{
-        //    if (Session[ApplicationSession.USERID] != null)
-        //    {
-        //        DebitNoteBO model = _repository.GetById(ID);
-        //        return View(model);
-        //    }
-        //    else
-        //        return RedirectToAction("Index", "Login");
-        //}
-
-        //#endregion
 
         #region This method is for View the Debit note Details
         [HttpGet]
@@ -209,7 +186,6 @@ namespace InVanWebApp.Controllers
             DebitNoteBO debitNoteList = _repository.GetById(Convert.ToInt32(Session["DebitNoteId"]));
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
-            //string strSign = Request.Url.GetLeftPart(UriPartial.Authority) + "/Signatures/" + debitNoteList.Signature;
             string ReportName = "Debit Note";
 
             sb.Append("<div style='vertical-align:top'>");
@@ -252,26 +228,18 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
             sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Rejection Note Number</th>");
             sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + debitNoteList.RejectionNoteNo + "</td>");
-            //sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Supplier Name</th>");
-            //sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + debitNoteList.VendorName + "</td>");
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Delivery Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + debitNoteList.DeliveryAddress + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Supplier Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + debitNoteList.VendorAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px;'>Delivery Details</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + debitNoteList.DeliveryAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px;'>Supplier Details</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + debitNoteList.VendorAddress + "</td>");
             sb.Append("</tr>");
 
             sb.Append("</thead>");
             sb.Append("</table>");
             sb.Append("<hr style='height: 1px; border: none; color:#333;background-color:#333;'></hr>");
-
-            //sb.Append("<tr>");
-            //sb.Append("<th style='text-align:center; font-family:Times New Roman;width:3%;font-size:15px;'>Item Details</th>");
-            //sb.Append("</tr>");
-            //sb.Append("</thead>");
-            //sb.Append("<tbody></tbody></table>");
 
             sb.Append("<table>");
             sb.Append("<thead>");
@@ -359,14 +327,6 @@ namespace InVanWebApp.Controllers
             sb.Append("<td style='text-align:right;padding: 2px;font-size:12px; font-family:Times New Roman;'>" + debitNoteList.GrandTotal + " INR" + "</td>");
             sb.Append("</tr>");
 
-            //sb.Append("<tr style='text-align:left;padding: 2px; font-family:Times New Roman;'>");
-            //sb.Append("<th style='text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'></th>");
-            //sb.Append("<td style='text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + "</td>");
-            //sb.Append("</tr>");
-            //sb.Append("<tr><th colspan='4'>&nbsp;</th></tr>");
-            //sb.Append("<tr><td colspan='4' style='text-align:right;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + "<img height='40%' width='60%' src='" + strSign + "'/></td></tr>");
-            //sb.Append("<tr><th colspan='4' style='text-align:right;padding: 2px; font-family:Times New Roman;font-size:12px;'>Authorized Signature</th></tr>");
-
             sb.Append("</thead>");
             sb.Append("</table>");
             sb.Append("<br />");
@@ -395,7 +355,6 @@ namespace InVanWebApp.Controllers
                     writer.PageEvent = new PageHeaderFooter();
                     pdfDoc.Open();
                     setBorder(writer, pdfDoc);
-
 
                     XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
                     pdfDoc.Close();
@@ -426,7 +385,6 @@ namespace InVanWebApp.Controllers
             pageBorderRect.Right -= pdfDoc.RightMargin - 15;
             pageBorderRect.Top -= pdfDoc.TopMargin - 7;
             pageBorderRect.Bottom += pdfDoc.BottomMargin - 5;
-
             //---------------------------------------
 
             content.SetColorStroke(BaseColor.RED);
@@ -501,13 +459,6 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind dropdowns 
-        //public void BindPONumber()
-        //{
-        //    var result = _repository.GetPONumberForDropdown();
-        //    var resultList = new SelectList(result.ToList(), "PurchaseOrderId", "PONumber");
-        //    ViewData["PONumberAndId"] = resultList;
-        //}
-
         public void GenerateDocumentNo() 
         {
             //==========Document number for GRN note============//

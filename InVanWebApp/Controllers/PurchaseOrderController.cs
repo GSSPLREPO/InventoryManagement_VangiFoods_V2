@@ -83,9 +83,7 @@ namespace InVanWebApp.Controllers
             if (Session[ApplicationSession.USERID] != null)
             {
                 BindCompany();
-                //BindCompanyAddress();
                 BindTermsAndCondition();
-                //BindOrganisations();
                 BindLocationName();
                 BindIndentDropDown();
                 BindCurrencyPrice();
@@ -94,11 +92,6 @@ namespace InVanWebApp.Controllers
                 //=========here document type=3 i.e. for generating the Inward note (logic is in SP).====//
                 var DocumentNumber = objDocNo.GetDocumentNo(2);
                 ViewData["DocumentNo"] = DocumentNumber;
-
-                //Binding item grid with sell type item.
-                //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                //ViewData["itemListForDD"] = dd;
 
                 PurchaseOrderBO model = new PurchaseOrderBO();
                 model.PODate = DateTime.Today;
@@ -141,8 +134,7 @@ namespace InVanWebApp.Controllers
                             if (model.DraftFlag == true)
                                 TempData["Success"] = "<script>alert('Purchase order inserted as draft successfully!');</script>";
                             else
-                                TempData["Success"] = "<script>alert('Purchase Order inserted successfully!');</script>";
-    
+                                TempData["Success"] = "<script>alert('Purchase Order inserted successfully!');</script>";    
                         }
                         else
                         {
@@ -155,9 +147,7 @@ namespace InVanWebApp.Controllers
                             UploadSignature(Signature);
                             return View(model);
                         }
-
                         return RedirectToAction("Index", "PurchaseOrder");
-
                     }
                     else
                     {
@@ -166,18 +156,13 @@ namespace InVanWebApp.Controllers
                         BindIndentDropDown();
                         BindTermsAndCondition();
                         BindCurrencyPrice();
-                        //BindOrganisations();
                         BindLocationName();
                         UploadSignature(Signature);
-                        //var itemList = _purchaseOrderRepository.GetItemDetailsForDD(2);
-                        //var dd = new SelectList(itemList.ToList(), "ID", "Item_Code");
-                        //ViewData["itemListForDD"] = dd;
                         return View(model);
                     }
                 }
                 else
                     return RedirectToAction("Index", "Login");
-
             }
             catch (Exception ex)
             {
@@ -185,7 +170,6 @@ namespace InVanWebApp.Controllers
             }
             return View();
         }
-
         #endregion
        
         #region  Update function
@@ -203,7 +187,6 @@ namespace InVanWebApp.Controllers
                 BindTermsAndCondition();
                 BindCurrencyPrice();
                 BindLocationName();
-                //BindIndentDropDown("POAmendment");
 
                 PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
 
@@ -211,7 +194,6 @@ namespace InVanWebApp.Controllers
             }
             else
                 return RedirectToAction("Index", "Login");
-
         }
 
         /// <summary>
@@ -257,12 +239,10 @@ namespace InVanWebApp.Controllers
                             BindTermsAndCondition();
                             BindCurrencyPrice();
                             BindLocationName();
-                            //BindIndentDropDown("POAmendment");
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
 
                             return View(model1);
                         }
-
                         return RedirectToAction("Index", "PurchaseOrder");
                     }
                     else
@@ -272,7 +252,6 @@ namespace InVanWebApp.Controllers
                         BindTermsAndCondition();
                         BindCurrencyPrice();
                         BindLocationName();
-                        //BindIndentDropDown("POAmendment");
                         PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
 
                         return View(model1);
@@ -280,7 +259,6 @@ namespace InVanWebApp.Controllers
                 }
                 else
                     return RedirectToAction("Index", "Login");
-
             }
             catch (Exception ex)
             {
@@ -289,7 +267,6 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "PurchaseOrder");
             }
         }
-
         #endregion
         
         #region Delete function
@@ -335,7 +312,6 @@ namespace InVanWebApp.Controllers
                     BindTermsAndCondition();
                     BindCurrencyPrice();
                     BindLocationName();
-                    //BindIndentDropDown("POAmendment");
 
                     PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(PurchaseOrderId);
 
@@ -349,8 +325,7 @@ namespace InVanWebApp.Controllers
                 log.Error(ex.Message, ex);
                 TempData["Success"] = "<script>alert('Error while amending the PO!');</script>";
                 return RedirectToAction("Index", "PurchaseOrder");
-            }
-           
+            }           
         }
 
         /// <summary>
@@ -384,7 +359,6 @@ namespace InVanWebApp.Controllers
                             model.Signature = null;
 
                         model.CreatedBy = Convert.ToInt32(Session[ApplicationSession.USERID]);
-                        // response = _purchaseOrderRepository.SaveAmendment(model);
                         response = _purchaseOrderRepository.Insert(model);
                         if (response.Status)
                             TempData["Success"] = "<script>alert('Amendment Details Added successfully!');</script>";
@@ -395,7 +369,6 @@ namespace InVanWebApp.Controllers
                             BindTermsAndCondition();
                             BindCurrencyPrice();
                             BindLocationName();
-                            //BindIndentDropDown("POAmendment");
 
                             PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
 
@@ -410,7 +383,6 @@ namespace InVanWebApp.Controllers
                         BindTermsAndCondition();
                         BindCurrencyPrice();
                         BindLocationName();
-                        //BindIndentDropDown("POAmendment");
                         PurchaseOrderBO model1 = _purchaseOrderRepository.GetPurchaseOrderById(model.PurchaseOrderId);
                         
                         return View(model1);
@@ -422,36 +394,9 @@ namespace InVanWebApp.Controllers
                 log.Error(ex.Message, ex);
                 TempData["Success"] = "<script>alert('Error while amendment of PO!');</script>";
                 return RedirectToAction("Index", "PurchaseOrder");
-            }
-            
+            }            
         }
-
         #endregion
-
-        //#region View Purchase Order
-        ///// <summary>
-        ///// Created By: Raj
-        ///// Created Date : 12-11-2022
-        ///// Description: This method responsible for View of Purchase Order details.
-        ///// </summary>
-        ///// <param name="PurchaseOrderId"></param>
-        ///// <returns></returns>
-        //public ActionResult ViewPurchaseOrder(int ID)
-        //{
-        //    if (Session[ApplicationSession.USERID] == null)
-        //        return RedirectToAction("Index", "Login");
-
-        //    BindCompany();
-        //    BindTermsAndCondition();
-        //    BindCurrencyPrice();
-        //    BindLocationName();
-        //    //BindIndentDropDown("POAmendment");
-
-        //    PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID,1);
-        //    return View(model);
-
-        //}
-        //#endregion
 
         #region View Purchase Order
         /// <summary>
@@ -471,12 +416,10 @@ namespace InVanWebApp.Controllers
             BindTermsAndCondition();
             BindCurrencyPrice();
             BindLocationName();
-            //BindIndentDropDown("POAmendment");
 
             PurchaseOrderBO model = _purchaseOrderRepository.GetPurchaseOrderById(ID, 1);
             TempData["PurchaseOrderPDF"] = model;
             return View(model);
-
         }
         #endregion
 
@@ -488,18 +431,8 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExportAsPDF()
         {
-
-            // List<PurchaseOrderBO> purchasePurchaseOrder = _purchaseOrderRepository.GetPurchaseOrderById(Convert.ToInt32(Session["PurchaseId"]), 1);
-
-            //if (TempData["PurchaseOrderPDF"] == null)
-            //{
-            //    return View("Index");
-            //}
             StringBuilder sb = new StringBuilder();
             PurchaseOrderBO purchaseOrderList = _purchaseOrderRepository.GetPurchaseOrderById(Convert.ToInt32(Session["PurchaseId"]), 1);
-            //if (purchaseOrderList.Count <= 0)
-            //    return View("Index");
-
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
             string strSign = Request.Url.GetLeftPart(UriPartial.Authority) + "/Signatures/" + purchaseOrderList.Signature;
@@ -542,10 +475,11 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Supplier Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + purchaseOrderList.DeliveryAddress + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Delivery Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + purchaseOrderList.SupplierAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px; '>Supplier Address</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + purchaseOrderList.DeliveryAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px; '>Client Address</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + purchaseOrderList.SupplierAddress + "</td>");
+
             sb.Append("</tr>");
 
             sb.Append("</thead>");
@@ -571,7 +505,6 @@ namespace InVanWebApp.Controllers
 
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;repeat-header: yes;page-break-inside: auto;'>");
             sb.Append("<thead>");
-
 
             sb.Append("<tr style='text-align:center;padding: 5px; font-family:Times New Roman;background-color:#C0DBEA'>");
 
@@ -684,11 +617,7 @@ namespace InVanWebApp.Controllers
             {
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    //Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
-                    //Document pdfDoc = new Document(PageSize.A4.Rotate());
                     Document pdfDoc = new Document(PageSize.A4);
-                    //pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
-                    //pdfDoc.SetPageSize(new Rectangle(1100f, 850f));
 
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
@@ -696,7 +625,6 @@ namespace InVanWebApp.Controllers
                     writer.PageEvent = new PageHeaderFooter();
                     pdfDoc.Open();
                     setBorder(writer, pdfDoc);
-
 
                     XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
                     pdfDoc.Close();
@@ -726,20 +654,11 @@ namespace InVanWebApp.Controllers
             pageBorderRect.Right -= pdfDoc.RightMargin - 15;
             pageBorderRect.Top -= pdfDoc.TopMargin - 7;
             pageBorderRect.Bottom += pdfDoc.BottomMargin - 5;
-
-            //content.SetColorStroke(BaseColor.DARK_GRAY);
-            //content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom + 5, pageBorderRect.Width, pageBorderRect.Height);
-            ////content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom - 5, pageBorderRect.Top, pageBorderRect.Right);
-            //content.Stroke();
-
             //---------------------------------------
 
             content.SetColorStroke(BaseColor.RED);
             content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom, pageBorderRect.Width, pageBorderRect.Height);
             content.Stroke();
-
-
-
         }
         #endregion
 
@@ -747,7 +666,6 @@ namespace InVanWebApp.Controllers
         public class PageHeaderFooter : PdfPageEventHelper
         {
             private readonly Font _pageNumberFont = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
-            //private readonly Font _dateTime = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
             public override void OnEndPage(PdfWriter writer, Document document)
             {
                 PurchaseOrderController purchaseOrderController = new PurchaseOrderController();
@@ -762,7 +680,6 @@ namespace InVanWebApp.Controllers
                 Font plainFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL);
 
                 //--------------------------------------------For Generated Date-----------------------------------------------------
-                //var GeneratedDate = "Generated: " + DateTime.Now; 
                 var GeneratedDate = "Generated By: " + System.Web.HttpContext.Current.Session[ApplicationSession.USERNAME] + " On " + DateTime.Now;
                 var generatedDateTable = new PdfPTable(1);
                 generatedDateTable.DefaultCell.Border = 0;
@@ -771,7 +688,6 @@ namespace InVanWebApp.Controllers
                 generatedDateCell.Border = 0;
                 generatedDateTable.TotalWidth = 250;
                 generatedDateTable.AddCell(generatedDateCell);
-                //generatedDateTable.WriteSelectedRows(0, 1, document.Left - 135, document.Bottom - 5, writer.DirectContent);
                 generatedDateTable.WriteSelectedRows(0, 1, document.Left - 50, document.Bottom - 5, writer.DirectContent);
                 //-------------------------------------------For Generated Date-----------------------------------------------------
 
@@ -802,17 +718,13 @@ namespace InVanWebApp.Controllers
 
                 numberTable.TotalWidth = 200;
                 numberTable.WriteSelectedRows(0, 1, document.Left - 40, document.Top + 25, writer.DirectContent);
-
             }
-
-
         }
         #endregion
 
         #endregion
 
         #endregion
-
 
         #region Transaction Timeline View for Purchase Order 
         /// <summary>
@@ -844,27 +756,7 @@ namespace InVanWebApp.Controllers
                 modelPO.InwardDate = (DateTime)inwardNote.InwardDate;
                 modelPO.InwardNumber = inwardNote.InwardNumber;
             }
-            //if (timelinePO.GRNCode != null)
-            //{
-            //    modelPO.GRNDate = (DateTime)timelinePO.GRNDate;
-            //    modelPO.GRNCode = timelinePO.GRNCode;
-            //}
-
-            //if (timelinePO.InvoiceNumber != null)
-            //{
-            //    modelPO.PaymentDate = (DateTime)timelinePO.PaymentDate;
-            //    modelPO.InvoiceNumber = timelinePO.InvoiceNumber;
-            //}
-
-            //if (inwardNote.InwardNumber != null)
-            //{
-            //    modelPO.InwardDate = (DateTime)inwardNote.InwardDate;
-            //    modelPO.InwardNumber = inwardNote.InwardNumber;
-            //}
-
-
             return PartialView("_TimelinePV", modelPO);
-
         }
         #endregion
         
@@ -884,9 +776,6 @@ namespace InVanWebApp.Controllers
             if (id != null && id != "")
                 Id = Convert.ToInt32(id);
             var result = _purchaseOrderRepository.GetCompanyAddressList(Id);
-            //var resultList = new SelectList(result.ToList(), "VendorsID", "SupplierAddress");
-            //var resultList = new SelectList(result.ToList(),"@ID", "SupplierAddress");
-            //ViewData["SupplierAddress"] = resultList;
             return Json(result);
         }
         #endregion
@@ -919,16 +808,8 @@ namespace InVanWebApp.Controllers
         #endregion
 
         #region Bind dropdowns Location Master  
-        //public void BindOrganisations() 
         public JsonResult BindLocationMaster(string id)
         {
-            //var result = _purchaseOrderRepository.GetOrganisationsList();            
-            //var resultList = new SelectList(result.ToList(), "OrganisationId", "DeliveryAddress");
-
-            //var resultList = new SelectList(result.ToList(), "LocationId", "LocationName", "DeliveryAddress");
-            //ViewData["LocationName"] = resultList;
-            //ViewData["DeliveryAddress"] = resultList;
-
             int Id = 0;
             if (id != null && id != "")
                 Id = Convert.ToInt32(id);
@@ -961,7 +842,6 @@ namespace InVanWebApp.Controllers
             var result = _indentRepository.GetItemDetailsById(Id, CurrencyId);
             return Json(result);
         }
-
         #endregion
         
         #region Function for uploading the signature
@@ -970,7 +850,6 @@ namespace InVanWebApp.Controllers
         /// Farheen: Upload Signature File items.
         /// </summary>
         /// <returns></returns>
-
         public void UploadSignature(HttpPostedFileBase Signature)
         {
             if (Signature != null)
@@ -981,7 +860,6 @@ namespace InVanWebApp.Controllers
 
             }
         }
-
         #endregion
         
         #region Function for get item details (Not in used in PO)
@@ -990,8 +868,6 @@ namespace InVanWebApp.Controllers
             var itemId = Convert.ToInt32(id);
             var currencyID = Convert.ToInt32(currencyId);
             var itemDetails = _purchaseOrderRepository.GetItemDetails(itemId, currencyID);
-            //var finalDetials = itemDetails.Item_Name +"#"+ itemDetails.UnitName +"#"+ itemDetails.Price+"#"+itemDetails.Tax;
-            //return Json(finalDetials);
             return Json(itemDetails);
         }
         #endregion

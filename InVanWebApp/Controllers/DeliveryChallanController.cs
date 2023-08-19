@@ -234,12 +234,11 @@ namespace InVanWebApp.Controllers
             sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + DeliveryChallanList.CurrencyName + "</td>");
             sb.Append("</tr>");
 
-
             sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Suppiler Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + DeliveryChallanList.LocationName + " " + DeliveryChallanList.SupplierAddress + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Client Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + DeliveryChallanList.CompanyName + " " + DeliveryChallanList.ShippingAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -24px; font-family:Times New Roman;font-size:12px;'>Suppiler Details</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + DeliveryChallanList.LocationName + " " + DeliveryChallanList.SupplierAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -24px; font-family:Times New Roman;font-size:12px;'>Client Details</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: -24px; font-size:12px; font-family:Times New Roman;'>" + DeliveryChallanList.CompanyName + " " + DeliveryChallanList.ShippingAddress + "</td>");
             sb.Append("</tr>");
 
             //sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");

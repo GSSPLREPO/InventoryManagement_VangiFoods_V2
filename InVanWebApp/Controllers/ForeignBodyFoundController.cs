@@ -260,7 +260,8 @@ namespace InVanWebApp.Controllers
             {
                 DataRow dr = dt.NewRow();
                 //dr["Sr.No"] = i;
-                dr["Date"] = st.Date.ToString();
+                //dr["Date"] = st.Date.ToString(); //Rahul removed 'st.Date.ToString();' not in use 19-08-23.
+                dr["Date"] = Convert.ToDateTime(st.Date).ToString("dd/MM/yyyy"); ///Rahul added 'Convert.ToDateTime(st.Date).ToString("dd/MM/yyyy");'  19-08-23.              
                 dr["Raw Material"] = st.RawMaterial.ToString();
                 dr["On Going Processing"] = st.OnGoingProcessing.ToString();
                 dr["Batching"] = st.Batching.ToString();
@@ -410,19 +411,17 @@ namespace InVanWebApp.Controllers
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;repeat-header: yes;page-break-inside: auto;'>");
             sb.Append("<thead>");
 
-
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1%;;font-size:13px;border: 0.05px  #e2e9f3;'>Sr.No.</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
+            sb.Append("<th style='text-align:center;padding: 3px; font-family:Times New Roman;width:1%;;font-size:13px;border: 0.05px  #e2e9f3;'>Sr.No.</th>");
+            sb.Append("<th style='text-align:center;padding: 10px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Date</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:4%;;font-size:13px;border: 0.05px  #e2e9f3;'>Raw Material</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>On Going Processing</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Batching</th>");
+            sb.Append("<th style='text-align:center;padding: 3px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Batching</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;;font-size:13px;border: 0.05px  #e2e9f3;'>Post Processing</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:2%;;font-size:13px;border: 0.05px  #e2e9f3;'>Corrective Action</th>");
 
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Verify By</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;;font-size:13px;border: 0.05px  #e2e9f3;'>Remark</th>");
-
 
             sb.Append("</tr>");
             sb.Append("</thead>");
@@ -434,7 +433,7 @@ namespace InVanWebApp.Controllers
             {
                 sb.Append("<tr style='text-align:center;padding: 10px;'>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:1%;'>" + i + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:3%;'>" + item.Date + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:3%;'>" + Convert.ToDateTime(item.Date).ToString("dd/MM/yyyy") + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:4%;'>" + item.RawMaterial + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:5%;'>" + item.OnGoingProcessing + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:11px; font-family:Times New Roman;width:5%;'>" + item.Batching + "</td>");

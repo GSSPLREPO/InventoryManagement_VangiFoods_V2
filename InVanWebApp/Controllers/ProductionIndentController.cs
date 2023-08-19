@@ -503,15 +503,15 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
             sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Batch Number</th>");
             sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.BatchNumber + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Remarks</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.Description + "</td>");
-            sb.Append("</tr>");
-
-            sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
             sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Batch Planning No.</th>");
             sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.BatchPlanningDocumentNo + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'></th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'></td>");
+            sb.Append("</tr>");
+            //top: -10 px;
+            sb.Append("<tr style='width:100%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
+            sb.Append("<th style='width:10%;text-align:left;padding-top: -14px; font-family:Times New Roman;font-size:12px;;'>Remarks</th>");
+            sb.Append("<td colspan='3' style='width:90%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + productionIndentList.Description + "</td>");
+            //sb.Append("<th style='width:0%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'></th>");
+            //sb.Append("<td style='width:0%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'></td>");
             sb.Append("</tr>");
 
             sb.Append("</thead>");

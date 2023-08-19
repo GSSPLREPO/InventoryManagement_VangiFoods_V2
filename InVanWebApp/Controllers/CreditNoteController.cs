@@ -252,10 +252,10 @@ namespace InVanWebApp.Controllers
             //sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Delivery Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + CreditNoteList.DeliveryAddress + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Supplier Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + CreditNoteList.VendorAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px;'>Delivery Details</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: -12px;px; font-size:12px; font-family:Times New Roman;'>" + CreditNoteList.DeliveryAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px;'>Supplier Details</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + CreditNoteList.VendorAddress + "</td>");
             sb.Append("</tr>");
 
             sb.Append("</thead>");

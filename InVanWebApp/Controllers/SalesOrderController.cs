@@ -1,4 +1,4 @@
-﻿using System;
+﻿                                                                                                                      using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -237,7 +237,6 @@ namespace InVanWebApp.Controllers
                             BindTermsAndCondition();
                             BindCurrencyPrice();
                             BindLocationName();
-                            //BindIndentDropDown("POAmendment");
                             SalesOrderBO model1 = _repository.GetSalesOrderById(model.SalesOrderId);
 
                             return View(model1);
@@ -269,7 +268,6 @@ namespace InVanWebApp.Controllers
                 return RedirectToAction("Index", "SalesOrder");
             }
         }
-
         #endregion
 
         #region Amendment Operation
@@ -375,9 +373,7 @@ namespace InVanWebApp.Controllers
                 TempData["Success"] = "<script>alert('Error while amendment of SO!');</script>";
                 return RedirectToAction("Index", "SalesOrder");
             }
-
         }
-
         #endregion
 
         #region View Sales Order
@@ -401,7 +397,6 @@ namespace InVanWebApp.Controllers
             SalesOrderBO model = _repository.GetSalesOrderById(ID);
             TempData["SalesOrderPDF"] = model;
             return View(model);
-
         }
         #endregion
 
@@ -413,17 +408,12 @@ namespace InVanWebApp.Controllers
         [Obsolete]
         public ActionResult ExportAsPDF()
         {
-
-
             StringBuilder sb = new StringBuilder();
             SalesOrderBO SalesOrderList = _repository.GetSalesOrderById(Convert.ToInt32(Session["SalesOrderID"]));
 
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
             string strSign = Request.Url.GetLeftPart(UriPartial.Authority) + "/Signatures/" + SalesOrderList.Signature;
             string ReportName = "Sales Order";
-
-            //string PODate = Convert.ToDateTime(SalesOrderList.PODate).ToString("dd/MM/yyyy") + " ";
-            //string DeliveryDate = Convert.ToDateTime(SalesOrderList.DeliveryDate).ToString("dd/MM/yyyy") + " ";
 
             sb.Append("<div style='vertical-align:top'>");
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-left:center;width: 100%;border:none'>");
@@ -454,8 +444,6 @@ namespace InVanWebApp.Controllers
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
             sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Inquiry Number</th>");
             sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + SalesOrderList.InquiryNumber + "</td>");
-            //sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Supplier</th>");
-            //sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + SalesOrderList.CompanyName + "</td>");
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
@@ -466,23 +454,16 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Supplier Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + SalesOrderList.SupplierAddress + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Delivery Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + SalesOrderList.DeliveryAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px;'>Supplier Details</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + SalesOrderList.SupplierAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px;'>Delivery Details</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: -12px; font-size:12px; font-family:Times New Roman;'>" + SalesOrderList.DeliveryAddress + "</td>");
+
             sb.Append("</tr>");
 
             sb.Append("</thead>");
             sb.Append("</table>");
             sb.Append("<hr style='height: 1px; border: none; color:#333;background-color:#333;'></hr>");
-
-            //sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;repeat-header: yes;page-break-inside: auto;'>");
-            //sb.Append("<thead>");
-            //sb.Append("<tr>");
-            //sb.Append("<th style='text-align:center; font-family:Times New Roman;width:3%;font-size:15px;'>Item Details</th>");
-            //sb.Append("</tr>");
-            //sb.Append("</thead>");
-            //sb.Append("<tbody></tbody></table>");
 
             sb.Append("<table>");
             sb.Append("<thead>");
@@ -495,9 +476,7 @@ namespace InVanWebApp.Controllers
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;repeat-header: yes;page-break-inside: auto;'>");
             sb.Append("<thead>");
 
-
             sb.Append("<tr style='text-align:center;padding: 5px; font-family:Times New Roman;background-color:#C0DBEA'>");
-
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:0.5%;font-size:10px;border: 0.01px black;'>#</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:2.5%;font-size:10px;border: 0.01px black;'>Item Code</th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:5%;font-size:10px;border: 0.01px black;'>Item</th>");
@@ -506,7 +485,6 @@ namespace InVanWebApp.Controllers
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:2%;font-size:10px;border: 0.01px black;'>Currency</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:1%;font-size:10px;border: 0.01px black;'>Tax(%)</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:3%;font-size:10px;border: 0.01px black;'>Total Before Tax</ th>");
-
             sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("<tbody>");
@@ -559,7 +537,6 @@ namespace InVanWebApp.Controllers
             sb.Append("<td style='text-align:right;padding: 2px;;font-size:12px; font-family:Times New Roman;'>" + totalTax.ToString("0") + " INR" + "</td>");
             sb.Append("</tr>");
 
-
             sb.Append("<tr style='text-align:left;padding: 2px; font-family:Times New Roman;'>");
             sb.Append("<th style='text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Other Tax:</th>");
             sb.Append("<td style='text-align:right;padding: 2px;font-size:12px; font-family:Times New Roman;'>" + SalesOrderList.OtherTax + " INR" + "</td>");
@@ -604,18 +581,13 @@ namespace InVanWebApp.Controllers
             sb.Append("</thead>");
             sb.Append("</table>");
 
-
             sb.Append("</div>");
 
             using (var sr = new StringReader(sb.ToString()))
             {
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    //Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
-                    //Document pdfDoc = new Document(PageSize.A4.Rotate());
                     Document pdfDoc = new Document(PageSize.A4);
-                    //pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
-                    //pdfDoc.SetPageSize(new Rectangle(1100f, 850f));
 
                     HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
@@ -635,6 +607,7 @@ namespace InVanWebApp.Controllers
             }
         }
         #endregion
+
         #region PDF Helper both Set Border, Report Generated Date and Page Number Sheet
 
         #region Set Border
@@ -653,20 +626,11 @@ namespace InVanWebApp.Controllers
             pageBorderRect.Right -= pdfDoc.RightMargin - 15;
             pageBorderRect.Top -= pdfDoc.TopMargin - 7;
             pageBorderRect.Bottom += pdfDoc.BottomMargin - 5;
-
-            //content.SetColorStroke(BaseColor.DARK_GRAY);
-            //content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom + 5, pageBorderRect.Width, pageBorderRect.Height);
-            ////content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom - 5, pageBorderRect.Top, pageBorderRect.Right);
-            //content.Stroke();
-
             //---------------------------------------
 
             content.SetColorStroke(BaseColor.RED);
             content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom, pageBorderRect.Width, pageBorderRect.Height);
             content.Stroke();
-
-
-
         }
         #endregion
 
@@ -736,31 +700,6 @@ namespace InVanWebApp.Controllers
 
         #endregion
 
-
-        //#region View Sales Order
-        ///// <summary>
-        ///// Created By: Farheen
-        ///// Created Date : 23-03-2023
-        ///// Description: This method responsible for View of sales order details.
-        ///// </summary>
-        ///// <param name="ID"></param>
-        ///// <returns></returns>
-        //public ActionResult ViewSalesOrder(int ID)
-        //{
-        //    if (Session[ApplicationSession.USERID] == null)
-        //        return RedirectToAction("Index", "Login");
-
-        //    BindCompany();
-        //    BindTermsAndCondition();
-        //    BindLocationName();
-
-
-        //    SalesOrderBO model = _repository.GetSalesOrderById(ID);
-        //    return View(model);
-
-        //}
-        //#endregion
-
         #region Delete function
         /// <summary>
         /// Date: 22 Mar'23
@@ -810,7 +749,6 @@ namespace InVanWebApp.Controllers
 
             }
         }
-
         #endregion
 
         #region Dropdowns binding functions
@@ -851,7 +789,6 @@ namespace InVanWebApp.Controllers
             var DocumentNumber = objDocNo.GetWorkOrderNo(18, workOrderNo);
             return Json(DocumentNumber);
         }
-
         #endregion
     }
 }

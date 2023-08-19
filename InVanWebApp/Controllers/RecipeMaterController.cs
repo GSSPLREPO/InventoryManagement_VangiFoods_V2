@@ -399,10 +399,10 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Product Number</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + RecipeList.ProductName + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'> Recipe Name </th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + RecipeList.RecipeName + "</td>");
+            sb.Append("<th style='width:10%;text-align:left;padding-top: -12px; font-family:Times New Roman;font-size:12px;'>Product Name</th>");
+            sb.Append("<td style='width:20%;text-align:left;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + RecipeList.ProductName + "</td>");
+            sb.Append("<th style='width:10%;text-align:left;padding-top: -12px; font-family:Times New Roman;font-size:12px;'> Recipe Name </th>");
+            sb.Append("<td style='width:20%;text-align:left;padding-top: -12px; font-size:12px; font-family:Times New Roman;'>" + RecipeList.RecipeName + "</td>");
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");

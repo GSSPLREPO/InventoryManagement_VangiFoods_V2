@@ -120,13 +120,10 @@ namespace InVanWebApp.Controllers
 
                             return View(model);
                         }
-
                         return RedirectToAction("Index", "GRN");
-
                     }
                     else
                     {
-                        //TempData["Success"] = "<script>alert('Please enter the proper data!');</script>";
                         BindInwardNumber();
                         BindLocationName();
                         model.GRNDate = DateTime.Today;
@@ -140,7 +137,6 @@ namespace InVanWebApp.Controllers
                 }
                 else
                     return RedirectToAction("Index", "Login");
-
             }
             catch (Exception ex)
             {
@@ -156,7 +152,6 @@ namespace InVanWebApp.Controllers
                 ViewData["DocumentNo"] = DocumentNumber;
                 return View(model);
             }
-            //return View();
         }
         #endregion
 
@@ -170,7 +165,6 @@ namespace InVanWebApp.Controllers
             var result = _repository.GetInwardDetailsById(IQCId);
             return Json(result);
         }
-
         #endregion
 
         #region Bind dropdowns 
@@ -220,30 +214,6 @@ namespace InVanWebApp.Controllers
         }
         #endregion
 
-        //#region This method is for View the GRN Details
-        //[HttpGet]
-        //public ActionResult ViewGRN(int ID)
-        //{
-        //    if (Session[ApplicationSession.USERID] != null)
-        //    {
-        //        GRN_BO model = _repository.GetById(ID);
-        //        return View(model);
-        //    }
-        //    else
-        //        return RedirectToAction("Index", "Login");
-        //}
-
-        //public JsonResult BindGRNItemDetails(string id)
-        //{
-        //    int GRN_Id = 0;
-        //    if (id != "" && id != null)
-        //        GRN_Id = Convert.ToInt32(id);
-
-        //    var result = _repository.GetGRNItemDetails(GRN_Id);
-        //    return Json(result);
-        //}
-        //#endregion
-
         #region This method is for View the GRN Details
         [HttpGet]
         public ActionResult ViewGRN(int ID)
@@ -282,13 +252,7 @@ namespace InVanWebApp.Controllers
             GRN_BO GRN = _repository.GetById(Convert.ToInt32(Session["GRN_Id"]));
             List<GRN_BO> GRNUTEMDetalis = _repository.GetGRNItemDetails(Convert.ToInt32(Session["GRNItemDetail_Id"]));
             string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
-            //string strSign = Request.Url.GetLeftPart(UriPartial.Authority) + "/Signatures/" + OutwardNoteList.Signature;
-            //string strAuthorizedSign = Request.Url.GetLeftPart(UriPartial.Authority) + "/Signatures/" + GRNUTEMDetalis.Signature;
-
             string ReportName = "GRN Document";
-
-            //string PODate = Convert.ToDateTime(OutwardNoteList.PODate).ToString("dd/MM/yyyy") + " ";
-            //string DeliveryDate = Convert.ToDateTime(OutwardNoteList.DeliveryDate).ToString("dd/MM/yyyy") + " ";
 
             sb.Append("<div style='vertical-align:top'>");
             sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-left:center;width: 100%;border:none'>");
@@ -338,10 +302,11 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
 
             sb.Append("<tr style='width:10%;text-align:left;padding: 1px; font-family:Times New Roman;'>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;;'>Shipping DetailS</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + GRN.DeliveryAddress + "</td>");
-            sb.Append("<th style='width:10%;text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Supplier Details</th>");
-            sb.Append("<td style='width:20%;text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + GRN.SupplierAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px;'>Shipping DetailS</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + GRN.DeliveryAddress + "</td>");
+            sb.Append("<th style='width:20%;top:-10 px;padding-top: -12px; font-family:Times New Roman;font-size:12px;'>Supplier Details</th>");
+            sb.Append("<td style='width:20%;top:0 px;padding-top: 0px; font-size:12px; font-family:Times New Roman;'>" + GRN.SupplierAddress + "</td>");
+
             sb.Append("</tr>");
 
             sb.Append("</thead>");
@@ -372,7 +337,6 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
             sb.Append("</thead>");
             sb.Append("<tbody>");
-            //int i = 1;
 
             foreach (var item in GRNUTEMDetalis)
             {
@@ -386,7 +350,6 @@ namespace InVanWebApp.Controllers
                 sb.Append("<td style='text-align:left;border: 0.01px black;font-size:10px; font-family:Times New Roman;padding: 5px;'>" + item.ReceivedQty + item.ItemUnit + "</td>");
 
                 sb.Append("</tr>");
-                //i++;
             }
             sb.Append("</tbody>");
             sb.Append("</table>");
@@ -399,11 +362,8 @@ namespace InVanWebApp.Controllers
             sb.Append("</tr>");
 
             sb.Append("<tr><th colspan='4'>&nbsp;</th></tr>");
-            // sb.Append("<tr><td colspan='4' style='text-align:left;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + "<img height='40%' width='60%' src='" + strAuthorizedSign + "'/></td></tr>");
-            //sb.Append("<tr><th colspan='4' style='text-align:left;padding: 2px; font-family:Times New Roman;font-size:12px;'>Authorized Signature</th></tr>");
 
             sb.Append("<tr><th colspan='4'>&nbsp;</th></tr>");
-            //sb.Append("<tr><td colspan='4' style='text-align:right;padding: 2px; font-size:12px; font-family:Times New Roman;'>" + "<img height='40%' width='60%' src='" + strSign + "'/></td></tr>");
             sb.Append("<tr><th colspan='4' style='text-align:right;padding: 2px; font-family:Times New Roman;font-size:12px;'>Authorized Signature</th></tr>");
             sb.Append("</thead>");
             sb.Append("</table>");
@@ -451,12 +411,6 @@ namespace InVanWebApp.Controllers
             pageBorderRect.Right -= pdfDoc.RightMargin - 15;
             pageBorderRect.Top -= pdfDoc.TopMargin - 7;
             pageBorderRect.Bottom += pdfDoc.BottomMargin - 5;
-
-            //content.SetColorStroke(BaseColor.DARK_GRAY);
-            //content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom + 5, pageBorderRect.Width, pageBorderRect.Height);
-            ////content.Rectangle(pageBorderRect.Left, pageBorderRect.Bottom - 5, pageBorderRect.Top, pageBorderRect.Right);
-            //content.Stroke();
-
             //---------------------------------------
 
             content.SetColorStroke(BaseColor.RED);
@@ -469,7 +423,6 @@ namespace InVanWebApp.Controllers
         public class PageHeaderFooter : PdfPageEventHelper
         {
             private readonly Font _pageNumberFont = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
-            //private readonly Font _dateTime = new Font(Font.NORMAL, 10f, Font.NORMAL, BaseColor.BLACK);
             public override void OnEndPage(PdfWriter writer, Document document)
             {
                 PurchaseOrderController purchaseOrderController = new PurchaseOrderController();
@@ -484,7 +437,6 @@ namespace InVanWebApp.Controllers
                 Font plainFont = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL);
 
                 //--------------------------------------------For Generated Date-----------------------------------------------------
-                //var GeneratedDate = "Generated: " + DateTime.Now;
                 var GeneratedDate = "Generated By: " + System.Web.HttpContext.Current.Session[ApplicationSession.USERNAME] + " On " + DateTime.Now;
 
                 var generatedDateTable = new PdfPTable(1);
@@ -524,10 +476,7 @@ namespace InVanWebApp.Controllers
 
                 numberTable.TotalWidth = 200;
                 numberTable.WriteSelectedRows(0, 1, document.Left - 40, document.Top + 25, writer.DirectContent);
-
             }
-
-
         }
         #endregion
 
