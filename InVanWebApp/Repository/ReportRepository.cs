@@ -1594,6 +1594,62 @@ namespace InVanWebApp.Repository
 
         #endregion
 
+        #region Item Ledger Report data    
+
+        /// <summary>
+        /// Repository for Item Ledger Report    
+        /// Developed by  - Rahul 23 Aug'23 
+        /// </summary>
+        /// <param name="fromDate">From Date of report</param>
+        /// <param name="toDate">To Date of Report</param>
+        /// <param name="itemId"></param>
+        /// <returns></returns>
+        public List<StockMasterBO> getItemLedgerReportData(DateTime fromDate, DateTime toDate, int itemId) 
+        {
+            List<StockMasterBO> resultList = new List<StockMasterBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_rpt_ItemLedger_Report", con); 
+                    cmd.Parameters.AddWithValue("@fromDate", fromDate);
+                    cmd.Parameters.AddWithValue("@toDate", toDate);
+                    cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        var result = new StockMasterBO()
+                        {
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            CompanyName = reader["VendorName"].ToString(),
+                            GRNDate = reader["PO_Date"] is DBNull ? "" : Convert.ToDateTime(reader["PO_Date"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                            PO_Number = reader["PO_No"].ToString(),
+                            ItemID = reader["ItemId"] is DBNull ? 0 : Convert.ToInt32(reader["ItemId"]),
+                            Item_Code = reader["ItemCode"].ToString(),
+                            ItemName = reader["ItemName"].ToString(),                          
+                            StockInQty = reader["StockInQty"] is DBNull ? 0 : float.Parse(reader["StockInQty"].ToString()),
+                            StockOutQty = reader["StockIssueQty"] is DBNull ? 0 : float.Parse(reader["StockIssueQty"].ToString()),
+                            AvlQty = reader["AvailableStockQty"] is DBNull ? 0 : float.Parse(reader["AvailableStockQty"].ToString()),
+                            StockRejectionQty = reader["StockRejectionQty"] is DBNull ? 0 : float.Parse(reader["StockRejectionQty"].ToString()),
+                            AvlDate = reader["AvlDate"] is DBNull ? "" : Convert.ToDateTime(reader["AvlDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                resultList = null;
+            }
+            return resultList;
+        }
+        #endregion
 
     }
 }

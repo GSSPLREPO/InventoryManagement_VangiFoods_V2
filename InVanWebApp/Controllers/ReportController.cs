@@ -39,6 +39,7 @@ namespace InVanWebApp.Controllers
         private IStage3Repository _Stage3Repository;
         private IPostProductionRN_Repository _postProductionRN_Repository; //Rahul added 'IPostProductionRN_Repository' 10-08-23.
         private IIntermediateRejectionNoteRepository _intermediateRejectionNoteRepository; //Rahul added 'IIntermediateRejectionNoteRepository' 10-08-23.
+        private IRecipeMaterRepository _productionRecipeRepository;  //Rahul added 'IRecipeMaterRepository' 23-08-23. 
 
         private static ILog log = LogManager.GetLogger(typeof(ReportController));
 
@@ -60,6 +61,7 @@ namespace InVanWebApp.Controllers
             _Stage3Repository = new Stage3Repository();
             _postProductionRN_Repository = new PostProductionRN_Repository(); //Rahul added 'IPostProductionRN_Repository' 10-08-23.
             _intermediateRejectionNoteRepository = new IntermediateRejectionNoteRepository(); //Rahul added 'IIntermediateRejectionNoteRepository' 10-08-23.
+            _productionRecipeRepository = new RecipeMaterRepository(); //Rahul added 'RecipeMaterRepository' 23-08-23.
         }
 
         public ReportController(IReportRepository reportRepository)
@@ -3417,8 +3419,6 @@ namespace InVanWebApp.Controllers
             var model = _itemRepository.GetAll();
             var Item_dd = new SelectList(model.ToList(), "ID", "Item_Name");
             ViewData["Item"] = Item_dd;
-
-
         }
 
         public void BindLocationDropDown()
@@ -3426,8 +3426,6 @@ namespace InVanWebApp.Controllers
             var model = _locationRepository.GetAll();
             var Wearhouse_dd = new SelectList(model.ToList(), "ID", "LocationName");
             ViewData["WearhouseLocation"] = Wearhouse_dd;
-
-
         }
 
         public void PurchaseOrderDropDown()
@@ -3442,8 +3440,6 @@ namespace InVanWebApp.Controllers
             var model = _issueNoteRepository.GetIssueNoteNumber();
             var IssueNoteNo_dd = new SelectList(model.ToList(), "ID", "IssueNoteNo");
             ViewData["IssueNoteNOdd"] = IssueNoteNo_dd;
-
-
         }
 
         public void GRNDropDown()
@@ -3451,8 +3447,6 @@ namespace InVanWebApp.Controllers
             var model = _gRNRepository.GetAll();
             var GRNReport_dd = new SelectList(model.ToList(), "ID", "GRNCode");
             ViewData["GRNReportdd"] = GRNReport_dd;
-
-
         }
 
         public void BindRejectionDropDown()
@@ -3460,8 +3454,6 @@ namespace InVanWebApp.Controllers
             var model = _rejectionNoteRepository.GetAll();
             var RejectionReport_dd = new SelectList(model.ToList(), "ID", "RejectionNoteNo");
             ViewData["RejectionNumberdd"] = RejectionReport_dd;
-
-
         }
 
         public void BindBatchNumberDropDown()
@@ -3501,6 +3493,19 @@ namespace InVanWebApp.Controllers
             var PostProductionRN_dd = new SelectList(model.ToList(), "ID", "Intermediate_Rej_NoteNo");
             ViewData["IntermediateRNdd"] = PostProductionRN_dd;
         }
+        /// <summary>
+        /// Rahul: Bind Item Type Category DropDown 
+        /// Date: 23-08-23.  
+        /// </summary>
+        /// <returns></returns>
+        public void BindItemTypeCategoryDropDown() 
+        {
+            //Binding item grid with Recipe. 
+            var recipeList = _productionRecipeRepository.GetItemDetailsForRecipe();
+            var dd = new SelectList(recipeList.ToList(), "ID", "Item_Code", "UOM_Id");
+            ViewData["Item"] = dd; 
+        }
+
         #endregion
 
         #region  Raw Material Cost analysis 
@@ -6344,6 +6349,241 @@ namespace InVanWebApp.Controllers
             Response.End();
         }
         #endregion
+
+        #endregion
+
+        #region Item Ledger Report  
+
+        #region Binding the Item Ledger Report data 
+        public ActionResult ItemLedgerReport() 
+        {
+            if (Session[ApplicationSession.USERID] != null)
+            {
+                StockMasterBO model = new StockMasterBO();
+                model.fromDate = DateTime.Today;
+                model.toDate = DateTime.Today;
+                BindItemTypeCategoryDropDown();  
+                return View(model);
+            }
+            else
+                return RedirectToAction("Index", "Login");
+        }
+
+        /// <summary>
+        /// Develop By Rahul on 23 Aug'23 
+        /// Calling method for Item Ledger Report data  
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetItemLedgerReportData(DateTime fromDate, DateTime toDate, int ItemId) 
+        {
+            Session["FromDate"] = fromDate;
+            Session["ToDate"] = toDate;
+            Session["ItemId"] = ItemId;
+            var ReportResult = _repository.getItemLedgerReportData(fromDate, toDate, ItemId); 
+            return Json(new { data = ReportResult }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region Export PDF Item Ledger Report 
+        /// <summary>
+        /// Created by: Rahul
+        /// Creadted Date: 21 Jan'23
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete]
+        public ActionResult ExprotAsPDFForItemLedgerReport()  
+        {
+            string Fromdate = "From Date : ";
+            string Todate = "To Date : ";
+
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            var itemId = Convert.ToInt32(Session["ItemId"]);
+            var resultDetails = _repository.getItemLedgerReportData(fromDate, toDate, itemId); 
+
+            TempData["ReportDataTemp"] = resultDetails;
+            if (TempData["ReportDataTemp"] == null)
+            {
+                return RedirectToAction("ItemLedgerReport", "Report");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            List<StockMasterBO> resultList = TempData["ReportDataTemp"] as List<StockMasterBO>;
+
+            if (resultList.Count < 0)
+                return RedirectToAction("ItemLedgerReport", "Report");
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";
+            //string address = ApplicationSession.ORGANISATIONADDRESS;
+            string ReportName = "Item Ledger Report";
+            string name = ApplicationSession.ORGANISATIONTIITLE;
+            string address = ApplicationSession.ORGANISATIONADDRESS;
+            sb.Append("<div style='padding-top:2px; padding-left:10px;padding-right:10px;padding-bottom:-9px; vertical-align:top'>");
+            sb.Append("<table style='vertical-align: top;font-family:Times New Roman;text-align:center;border-collapse: collapse;width: 100%;'>");
+            sb.Append("<thead>");
+            sb.Append("<tr >");
+            sb.Append("<th colspan=2 style='text-align:left;padding-right:-60px;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr >");
+            sb.Append("<th colspan=9 style='text-align:right;padding-right:-174px;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("</th></tr>");
+            sb.Append("<tr>");
+            sb.Append("<th style='text-align:center;' Colspan='1'>" +
+                "<img height='150' width='150' src='" + strPath + "'/></th>");
+            sb.Append("<th Colspan='9' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:-150px'>");
+            sb.Append("<label style='font-size:22px;font-weight:bold;color:Red;font-family:Times New Roman; bottom:20px;'>" + ReportName + "</label>");
+            sb.Append("<br/>");
+            sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
+            sb.Append("<br/><label style='font-size:11px;font-family:Times New Roman;'>" + address + "</label>");
+
+            sb.Append("</th></tr>");
+
+            sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:20%;font-size:10px;border: 0.05px  #e2e9f3;'>Sr. No.</th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:75%;font-size:10px;border: 0.05px  #e2e9f3;'>Vendor Name</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>PO Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>PO No</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>Item Code</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:75%;font-size:10px;border: 0.05px  #e2e9f3;'>Item Name</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock In Quantity</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock Issue Quantity</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Available Stock Quantity</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock Rejection Quantity</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>Available Date</ th>");
+            sb.Append("</tr>");
+
+            sb.Append("</thead>");
+            sb.Append("<tbody>");
+            resultList.Count();
+            foreach (var item in resultList)
+            {
+                sb.Append("<tr style='text-align:center;padding: 10px;'>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.CompanyName + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + Convert.ToDateTime(item.GRNDate).ToString("dd/MM/yyyy") + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.GRNDate + "</td>"); 
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.PO_Number + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.Item_Code + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.ItemName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockInQty + " " + "(" + item.ItemUnit + ")" + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockOutQty + " " + "(" + item.ItemUnit + ")" + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.AvlQty + " " + "(" + item.ItemUnit + ")" + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockRejectionQty + " " + "(" + item.ItemUnit + ")" + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + Convert.ToDateTime(item.AvlDate).ToString("dd/MM/yyyy") + "</td>");
+                sb.Append("</tr>");
+            }
+            sb.Append("</tbody>");
+            sb.Append("</table>");
+            sb.Append("</div>");
+
+            using (var sr = new StringReader(sb.ToString()))
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+                    pdfDoc.SetPageSize(new Rectangle(850f, 1100f));
+
+                    HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
+
+                    writer.PageEvent = new PageHeaderFooter1();
+                    pdfDoc.Open();
+
+                    setBorder(writer, pdfDoc);
+
+                    XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, sr);
+                    pdfDoc.Close();
+                    byte[] bytes = memoryStream.ToArray();
+                    string filename = "Rpt_ItemLedger_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".pdf";
+                    return File(memoryStream.ToArray(), "application/pdf", filename);
+                }
+            }
+        }
+        #endregion
+
+        #region Excel for Item Ledger Report data  
+        public void ExportAsExcelForItemLedgerReport() 
+        {
+            GridView gv = new GridView();
+            DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
+            DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
+            var itemId = Convert.ToInt32(Session["ItemId"]);
+
+            List<StockMasterBO> resultList = _repository.getItemLedgerReportData(fromDate, toDate, itemId); 
+
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Sr.No");
+            dt.Columns.Add("Vendor Name");
+            dt.Columns.Add("PO Date");
+            dt.Columns.Add("PO No");
+            dt.Columns.Add("Item Code");
+            dt.Columns.Add("Item Name");
+            dt.Columns.Add("Stock In Quantity");
+            dt.Columns.Add("Stock Issue Quantity");
+            dt.Columns.Add("Available Stock Quantity");
+            dt.Columns.Add("Stock Rejection Quantity");
+            dt.Columns.Add("Available Stock Date");
+
+            foreach (StockMasterBO st in resultList)
+            {
+                DataRow dr = dt.NewRow();
+                dr["Sr.No"] = st.SrNo.ToString();
+                dr["Vendor Name"] = st.CompanyName.ToString();
+                dr["PO No"] = st.PO_Number.ToString();
+                dr["PO Date"] = st.GRNDate.ToString();
+                dr["Item Code"] = st.Item_Code.ToString();
+                dr["Item Name"] = st.ItemName.ToString();
+                dr["Stock In Quantity"] = st.StockInQty.ToString() + " " + "(" + st.ItemUnit + ")";
+                dr["Stock Issue Quantity"] = st.StockOutQty.ToString() + " " + "(" + st.ItemUnit + ")";
+                dr["Available Stock Quantity"] = st.AvlQty.ToString() + " " + "(" + st.ItemUnit + ")";
+                dr["Stock Rejection Quantity"] = st.StockRejectionQty.ToString() + " " + "(" + st.ItemUnit + ")";
+                dr["Available Stock Date"] = Convert.ToDateTime(st.AvlDate).ToString("dd/MM/yyyy");
+                dt.Rows.Add(dr);
+            }
+            gv.DataSource = dt;
+            gv.DataBind();
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/vnd.ms-excel";
+            Response.ContentEncoding = System.Text.Encoding.Unicode;
+            Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
+            string filename = "Rpt_ItemLedger_Report_" + DateTime.Now.ToString("dd/MM/yyyy") + "_" + DateTime.Now.ToString("HH:mm:ss") + ".xls";
+            Response.AddHeader("content-disposition", "attachment;filename=" + filename);
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+            gv.AllowPaging = false;
+            gv.GridLines = GridLines.Both;
+            gv.RenderControl(hw);
+
+            string strPath = Request.Url.GetLeftPart(UriPartial.Authority) + "/Theme/MainContent/images/logo.png";/* The logo are used  */
+            string ReportName = "Item Ledger Report";
+            string Fromdate = "From Date : ";/* The From Date are given here  */
+            string Todate = "To Date : ";/* The To Date are given here  */
+            string name = ApplicationSession.ORGANISATIONTIITLE;/* The Vangi Foods are given here  */
+            string address = ApplicationSession.ORGANISATIONADDRESS;/* The Address are given here  */
+            String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
+            string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
+            String content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;font-family:Times New Roman;color:Red;'>" + ReportName + "</span></td></tr>" +
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:15px;font-family:Times New Roman;font-weight:bold'>" + name + "</td></tr>" +
+               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
+               + "<tr><td colspan='9' style='text-align:left; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Fromdate + fromdate
+               + "</td><td colspan='2' style='text-align:right; font-size:15px;font-family:Times New Roman;font-weight:bold'>" + Todate + todate
+               /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
+               + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";
+
+
+            string style = @"<!--mce:2-->";
+            Response.Write(style);
+            Response.Output.Write(content1);
+            gv.GridLines = GridLines.None;
+            Response.Flush();
+            Response.Clear();
+            Response.End();
+        }
+        #endregion
+
 
         #endregion
 

@@ -91,7 +91,8 @@ namespace InVanWebApp.Repository.Interface
         //Consolidated Production Stages 1to3 Report.   
         List<RQCCPBO> getConsolidatedStagesReportData(DateTime fromDate, DateTime toDate, int ItemId);
         //Rejection Type wise Report data        
-        List<RejectionNoteItemDetailsBO> getRejectionTypeWiseReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int RejectionType = 0, int PreProductionQCId=0, int PostProductionRNId=0, int IntermediateRNId = 0); 
-
+        List<RejectionNoteItemDetailsBO> getRejectionTypeWiseReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int RejectionType = 0, int PreProductionQCId=0, int PostProductionRNId=0, int IntermediateRNId = 0);
+        //Item Ledger Report data 
+        List<StockMasterBO> getItemLedgerReportData(DateTime fromDate, DateTime toDate, int itemId); 
     }
 }
