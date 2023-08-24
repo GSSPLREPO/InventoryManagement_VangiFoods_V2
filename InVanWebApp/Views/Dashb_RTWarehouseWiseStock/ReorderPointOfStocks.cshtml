@@ -254,8 +254,9 @@
                     }
 
                     coloR.push(dynamicColors());
-                    //serial2.color = getRandomColorgetRandomColor(); //Shweta remove random color option 04/08/2023
-                    xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
+                    ///serial2.color = getRandomColorgetRandomColor(); //Shweta remove random color option 04/08/2023
+                    ///xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')'); ///Rahul removed ' + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')'' from 'xAxisData.push' 24-08-23.
+                    xAxisData.push(jsondata.ItemName); ///Rahul added 'xAxisData.push(jsondata.ItemName);'  24-08-23.
 
                 });
 
@@ -397,7 +398,8 @@
 
                     coloR.push(dynamicColors());
                     //serial2.color = getRandomColor();//Shweta remove random color option 04/08/2023
-                    xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
+                    ///xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')'); ///Rahul removed ' + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')'' from 'xAxisData.push' 24-08-23.
+                    xAxisData.push(jsondata.ItemName); ///Rahul added 'xAxisData.push(jsondata.ItemName);'  24-08-23.
 
                 });
 
