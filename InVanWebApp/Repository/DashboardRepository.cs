@@ -479,5 +479,40 @@ namespace InVanWebApp.Repository
         }
         #endregion
 
+        //Shweta added 'DashboardDataCount' for Dashboard  23-08-2023
+        #region Data for Dashboard
+
+        public DashboardBO DashboardDataCount()
+        {
+            DashboardBO data = new DashboardBO();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connString))
+                {
+                    SqlCommand cmd = new SqlCommand("usp_dashb_data", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        data.PurchaseOpenCount = Convert.ToInt32(reader["OC"]);
+                        data.PurchaseCloseCount = Convert.ToInt32(reader["CC"]);
+                        data.CompletePayment = Convert.ToInt32(reader["CP"]);
+                        data.PandingPayment = Convert.ToInt32(reader["PP"]);
+                        data.InqConvToSales = Convert.ToInt32(reader["S"]);
+                        data.TotalInq = Convert.ToInt32(reader["TI"]);
+                    }
+                    con.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return data;
+        }
+        #endregion
+
     }
 }

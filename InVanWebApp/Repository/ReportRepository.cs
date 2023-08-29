@@ -1623,18 +1623,19 @@ namespace InVanWebApp.Repository
                     {
                         var result = new StockMasterBO()
                         {
-                            SrNo = Convert.ToInt32(reader["SrNo"]),
-                            CompanyName = reader["VendorName"].ToString(),
-                            GRNDate = reader["PO_Date"] is DBNull ? "" : Convert.ToDateTime(reader["PO_Date"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
-                            PO_Number = reader["PO_No"].ToString(),
+                            SrNo = Convert.ToInt32(reader["SrNo"]),                            
+                            GRNDate = reader["Transaction_Date"] is DBNull ? "" : Convert.ToDateTime(reader["Transaction_Date"]).ToString("dd/MM/yyyy").Trim(),
+                            PO_Number = reader["Transaction_No"].ToString(),
+                            TransactionType = reader["TransactionType"].ToString(), 
                             ItemID = reader["ItemId"] is DBNull ? 0 : Convert.ToInt32(reader["ItemId"]),
                             Item_Code = reader["ItemCode"].ToString(),
-                            ItemName = reader["ItemName"].ToString(),                          
+                            ItemName = reader["ItemName"].ToString(),
+                            OpeningStockQuantity = reader["OpeningStockQuantity"] is DBNull ? 0 : float.Parse(reader["OpeningStockQuantity"].ToString()),
                             StockInQty = reader["StockInQty"] is DBNull ? 0 : float.Parse(reader["StockInQty"].ToString()),
-                            StockOutQty = reader["StockIssueQty"] is DBNull ? 0 : float.Parse(reader["StockIssueQty"].ToString()),
-                            AvlQty = reader["AvailableStockQty"] is DBNull ? 0 : float.Parse(reader["AvailableStockQty"].ToString()),
-                            StockRejectionQty = reader["StockRejectionQty"] is DBNull ? 0 : float.Parse(reader["StockRejectionQty"].ToString()),
-                            AvlDate = reader["AvlDate"] is DBNull ? "" : Convert.ToDateTime(reader["AvlDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                            StockOutQty = reader["StockOutQty"] is DBNull ? 0 : float.Parse(reader["StockOutQty"].ToString()),
+                            AvlQty = reader["StockClosingQty"] is DBNull ? 0 : float.Parse(reader["StockClosingQty"].ToString()),
+                            //StockRejectionQty = reader["StockRejectionQty"] is DBNull ? 0 : float.Parse(reader["StockRejectionQty"].ToString()),
+                            //AvlDate = reader["AvlDate"] is DBNull ? "" : Convert.ToDateTime(reader["AvlDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
                         };
                         resultList.Add(result);
                     }

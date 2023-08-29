@@ -1,0 +1,683 @@
+﻿@model InVanWebApp_BO.DashboardBO
+@{
+    ViewBag.Title = "HomeDashboard";
+    Layout = "~/Views/Shared/MainMaster.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <style>
+        .main-panel {
+            transition: width 0.25s ease, margin 0.25s ease;
+            width: calc(113% - 235px);
+            min-height: calc(100vh - 70px);
+            display: flex;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+        }
+
+        .card .card-body1 {
+            padding: 0.5rem;
+        }
+
+        .card1 {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid #eceef3;
+            border-radius: 1.75rem;
+        }
+
+        .card1.card-statistics {
+            background: linear-gradient(85deg, #392c70, #6a005b);
+            color: #ffffff;
+        }
+
+        #title1 {
+            font-size: 2.25rem;
+            color: white;
+            justify-content: space-around;
+            align-content: center;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            color: white;
+        }
+
+        p {
+            display: flex;
+            font-size: 15px;
+            justify-content: center;
+            align-content: center;
+            align-content: center;
+            width: fit-content;
+            margin-top: 0px;
+            margin-bottom: 0;
+            color: white;
+            padding: 2px;
+        }
+
+        .statistics-item {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+
+        }
+
+        .Row {
+            display: flex;
+            justify-content: center;
+            height: 145px;
+            --x-gutter-x: 1.5rem;
+            --x-gutter-y: 0;
+            align-content: space-between;
+            flex-wrap: wrap;
+            margin-top: calc(var(--x-gutter-y)*-1);
+        }
+
+        .DoneData {
+            color: #04B76B;
+        }
+
+        .PendingData {
+            color: #FF5E6D;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h3 class="page-title">
+                        Dashboard
+                    </h3>
+                </div>
+                <div class="col-12">
+                    <div class="Row">
+                        <div class="col-md-4 card1 card-statistics">
+                            <div class="card-body1">
+                                <div class="d-flex flex-column flex-md-row align-items-center justify-content-around">
+                                    <div class="col-md-4 d-flex flex-column align-items-center">
+                                        <p><i class="icon-sm fas fa-wallet mr-2"></i>Purchases</p>
+                                        <div class="d-flex aline-items-center gap-md-8 gap-sm-3">
+                                            <div class="d-flex flex-column align-items-center">
+                                                <h2 class=" justify-content-center">
+                                                    @Html.DisplayFor(model => model.PurchaseCloseCount)
+                                                </h2>
+                                                <label class="DoneData badge badge-outline-success badge-pill">
+                                                    CLOSE
+                                                </label>
+                                            </div>
+                                            @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*@
+                                            <div class="d-flex flex-column align-items-center">
+                                                <h2 class=" align-content-center">
+                                                    @Html.DisplayFor(model => model.PurchaseOpenCount)
+                                                </h2>
+                                                <label class="PendingData badge badge-outline-danger badge-pill">
+                                                    OPEN
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 card1 card-statistics">
+                            <div class="card-body1">
+                                <div class="d-flex flex-column flex-md-row align-items-center justify-content-around">
+                                    <div class="col-md-4 d-flex flex-column align-items-center">
+                                        <p>
+                                            <i class="icon-sm fas fa-hand-holding-usd mr-2"></i>
+                                            Payments
+                                        </p>
+                                        <div class="d-flex aline-items-center  gap-md-8 gap-sm-3">
+                                            <div class="d-flex flex-column align-items-center justify-content-around">
+                                                <h2 class=" justify-content-center">
+                                                    @Html.DisplayFor(model => model.CompletePayment)
+
+                                                </h2>
+                                                <label class="DoneData badge badge-outline-success badge-pill">
+                                                    COMPLETE
+                                                </label>
+                                            </div>
+                                            @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*@
+                                            <div class="d-flex flex-column align-items-center">
+                                                <h2 class=" align-content-center">
+                                                    @Html.DisplayFor(model => model.PandingPayment)
+                                                </h2>
+                                                <label class="PendingData badge badge-outline-danger badge-pill">
+                                                    PENDING
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 card1 card-statistics">
+                            <div class="card-body1">
+                                <div class="d-flex flex-column flex-md-row align-items-center justify-content-around">
+                                    <div class="col-md-4 statistics-item">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <p><i class="icon-sm fas fa-clipboard-check mr-2"></i>Orders</p>
+                                            <h2 class=" justify-content-center">
+                                                @Html.DisplayFor(model => model.InqConvToSales)
+                                            </h2>
+                                            <label class="DoneData badge badge-outline-success badge-pill">
+                                                OUT OF @Html.DisplayFor(model => model.TotalInq) INQUIRIES
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*----------------------------------- Graphs -------------------------------------------*@
+                    <div class="row">
+                        <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                    <h4 class="card-title">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        Order Summery
+                                    </h4>
+                                    <br />
+                                    <div class="row" id="div_individualDashboard">
+                                        <div class="col-md-12">
+                                            <div id="mainWarehouse" style="width:100%;"></div>
+                                            <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                    <h4 class="card-title">
+                                        <i class="fas fa-chart-line"></i>
+                                        Warehouse-wise total Inventory value
+                                    </h4>
+                                    <div class="col-md-12">
+                                        <div id="Warehouse" style="width:100%;"></div>
+                                        <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                                    <h4 class="card-title">
+                                        <i class="fas fa-dolly"></i>
+                                        Reorder Point of Stocks
+                                    </h4>
+                                    <br />
+                                    <div class="row" id="div_individualDashboard">
+                                        <div class="col-md-12">
+                                            <div id="Reorder" style="width:100%;"></div>
+                                            <div id="NoDataFound" style="display:none;"><center>No Data Found</center></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script src="~/Highcharts-10.3.1/code/highcharts.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/export-data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/offline-exporting.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/data.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/accessibility.js"></script>
+<script src="~/Highcharts-10.3.1/code/modules/mouse-wheel-zoom.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        OrderSummery();
+        TotalInventory();
+        StockInformation();
+    });
+
+    function OrderSummery() {
+
+        //-----------Bind data for Order Start-----------------------------------------------------------
+
+        var Duration = 2;
+
+        var date = new Date();
+
+        var day = date.getDate(),
+            month = date.getMonth() + 1,
+            year = date.getFullYear(),
+            month = (month < 10 ? "0" : "") + month;
+        day = (day < 10 ? "0" : "") + day;
+        var Fyear = (month < 04 ? year - 1 : year);//get financial year
+        var fromday = Fyear + "-" + "04" + "-" + "01"
+        var today = year + "-" + month + "-" + day;
+
+        $(".spinner-wrapper").fadeIn("slow");
+
+
+        population = [];
+        xAxisData1 = [];
+        var coloR = [];
+
+        function convertDhms(h, m, s) {
+            h <= 0 ? h = 1 : h = h * 60 * 60 * 1000;
+            m <= 0 ? m = 1 : m = m * 60 * 1000;
+            s <= 0 ? s = 1 : s = s * 1000;
+            return h + m + s;
+        }
+        var request = $.ajax({
+            url: "/Dashb_RTWarehouseWiseStock/GetOrderSummaryDashboardData?fromDate=" + fromday + "&toDate=" + today + "&Duration=" + Duration,
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: "POST",
+            success: function (result) {
+                ond = result;
+                var parsed = $.parseJSON(result);
+                var dataLength = parsed.length;
+
+                var Orderserial1 = {
+                    name: "Open",
+                    type: 'column',
+                    data: [],
+                    color: '#F73D93',
+                    tooltip: {
+                        valueSuffix: ' Count'
+                    }
+                };
+
+                var Orderserial2 = {
+                    name: "Close",
+                    type: 'column',
+                    data: [],
+                    color: '#16003B',
+                    tooltip: {
+                        valueSuffix: ' Count'
+                    }
+
+                };
+                var chart = {
+                    zoomType: 'x',
+                    zoomType: 'y',
+
+                };
+
+                $.each(parsed, function (i, jsondata) {
+
+                    var dynamicColors = function () {
+                        var r = Math.floor(Math.random() * 255);
+                        var g = Math.floor(Math.random() * 255);
+                        var b = Math.floor(Math.random() * 255);
+                        return "rgb(" + r + "," + g + "," + b + ")";
+                    }
+
+                    var serial = new Array(i, parseFloat(jsondata[i]));
+                    if (jsondata.Open_GrandTotal != null) {
+                        Orderserial1.data.push(parseFloat(jsondata.Open_GrandTotal));
+                    } else {
+                        Orderserial1.data.push(parseFloat(0));
+                    }
+
+
+                    var serial = new Array(i, parseFloat(jsondata[i]));
+                    if (jsondata.Closing_GrandTotal != null) {
+                        Orderserial2.data.push(parseFloat(jsondata.Closing_GrandTotal));
+
+                    } else {
+                        Orderserial2.data.push(parseFloat(0));
+                    }
+                    coloR.push(dynamicColors());
+                    xAxisData1.push(jsondata.DateWise);
+
+                });
+                var finalSeries = [Orderserial1, Orderserial2]
+
+                Highcharts.chart('mainWarehouse', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: '       '
+                    },
+                    xAxis: {
+                        categories: xAxisData1,
+                        title: {
+                            text: 'Month-Year',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Black'
+                            }
+                        },
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            style: {
+                                fontWeight: 'bold'
+                            },
+                            text: 'Sales Order (Count)'
+                        },
+                        stackLabels: {
+                            enabled: false,
+                            style: {
+                                fontWeight: 'bold',
+                                color: (
+                                    Highcharts.defaultOptions.title.style &&
+                                    Highcharts.defaultOptions.title.style.color
+                                ) || 'gray'
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        scrollbars: true,
+                        shared: true
+                    },
+
+                    plotOptions: {
+                        column: {
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: false
+                            }
+                        },
+                    },
+                    series: finalSeries,
+
+                    exporting: {
+                        filename: 'Order_Summery'
+                    }
+                    
+
+                });
+
+                if (dataLength > 0) {
+                    $("#mainWarehouse").show();
+                    $("#NoDataFound").hide();
+                } else {
+                    $("#mainWarehouse").hide();
+                    $("#NoDataFound").show();
+
+                }
+
+            }
+
+        });
+        $(".spinner-wrapper").fadeOut("slow");
+    }
+
+    function StockInformation() {
+        $(".spinner-wrapper").fadeIn("slow");
+
+        population = [];
+        xAxisData = [];
+        var coloR = [];
+
+        function convertDhms(h, m, s) {
+            h <= 0 ? h = 1 : h = h * 60 * 60 * 1000;
+            m <= 0 ? m = 1 : m = m * 60 * 1000;
+            s <= 0 ? s = 1 : s = s * 1000;
+            return h + m + s;
+        }
+        var request = $.ajax({
+            url: "/Dashb_RTWarehouseWiseStock/GetDashboardDataReorderPointOfStocks",
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: "POST",
+            success: function (result) {
+                ond = result;
+                var parsed = $.parseJSON(result);
+                var dataLength = parsed.length;
+
+                var serial2 = {
+                    name: "Available Stock (KG)",
+                    type: 'column',
+                    color: 'rgba(248,161,63,1)',
+                    data: [],
+                    pointPadding: 0.3,
+                    pointPlacement: 0.2,
+                    tooltip: {
+                        valueSuffix: ' KG'
+                    }
+
+                };
+                var serialForMinStock = {
+                    name: "Minimum Stock (KG)",
+                    type: 'column',
+                    color: 'rgba(255 , 0, 0, 1)',
+                    data: [],
+                    pointPadding: 0.4,
+                    pointPlacement: 0.2,
+                    tooltip: {
+                        valueSuffix: ' KG'
+                    }
+
+                };
+
+                $.each(parsed, function (i, jsondata) {
+
+                    var dynamicColors = function () {
+                        var r = Math.floor(Math.random() * 255);
+                        var g = Math.floor(Math.random() * 255);
+                        var b = Math.floor(Math.random() * 255);
+                        return "rgb(" + r + "," + g + "," + b + ")";
+                    }
+
+                    var serial = new Array(i, parseFloat(jsondata[i])); //serialized array with province and population values
+                    if (jsondata.StockQuantity != null) {
+                        serial2.data.push(parseFloat(jsondata.StockQuantity));
+                    } else {
+                        serial2.data.push(parseFloat(0));
+                    }
+                    //FN
+                    if (jsondata.MinimumStock != null) {
+                        serialForMinStock.data.push(parseFloat(jsondata.MinimumStock));
+                    } else {
+                        serialForMinStock.data.push(parseFloat(0));
+                    }
+
+                    coloR.push(dynamicColors());
+                    //serial2.color = getRandomColorgetRandomColor(); //Shweta remove random color option 04/08/2023
+                    xAxisData.push(jsondata.ItemName + ' (' + jsondata.ItemUnitPrice + ' ' + jsondata.CurrencyName + ')');
+
+                });
+
+                var finalSeries = [serial2, serialForMinStock];
+
+                //Shweta changes both graphs to bar of highcharts 04/08/2023 start
+                Highcharts.chart('Reorder', {
+                    chart: {
+                        type: 'column',
+                        zoomType: 'x'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: xAxisData,
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        opposite: false,
+                        title: {
+                            text: 'Stock Value (KG)',
+                            style: {
+                                fontWeight: 'bold',
+                                color: 'Balck',
+                            }
+                        }
+
+                    },
+                    legend: {
+                        shadow: false
+                    },
+                    tooltip: {
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            grouping: false,
+                            shadow: false,
+                            borderWidth: 0
+                        }
+                    },
+                    series: finalSeries,
+
+                    exporting: {
+                        filename: 'Reorder_Point_Of_Stocks'
+                    }
+
+                });
+                //Shweta changes both graphs to bar of highcharts 04/08/2023 end
+                if (dataLength > 0) {
+                    $("#Reorder").show();
+                    $("#NoDataFound").hide();
+                } else {
+                    $("#Reorder").hide();
+                    $("#NoDataFound").show();
+
+                }
+
+            }
+
+        });
+
+        $(".spinner-wrapper").fadeOut("slow");
+    }
+
+    function TotalInventory() {
+        $(".spinner-wrapper").fadeIn("slow");
+
+        population = [];
+        xAxisData = [];
+        var coloR = [];
+
+        function convertDhms(h, m, s) {
+            h <= 0 ? h = 1 : h = h * 60 * 60 * 1000;
+            m <= 0 ? m = 1 : m = m * 60 * 1000;
+            s <= 0 ? s = 1 : s = s * 1000;
+            return h + m + s;
+        }
+
+        $(".spinner-wrapper").fadeOut("slow");
+
+        var name = Array();
+        var data = Array();
+        var dataArrayFinal = Array();
+        //-----------Bind data in the total inventory graph Start-----------------------------------------------------------
+        var request = $.ajax({
+            url: "/Dashb_RTWarehouseWiseStock/GetTotalInventoryValue",
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: "POST",
+            success: function (result) {
+                ond = result;
+                var parsed = $.parseJSON(result);
+                //console.log(parsed);
+                var dataLength = parsed.length;
+
+                for (i = 0; i < dataLength; i++) {
+                    name[i] = parsed[i].LocationName;
+                    data[i] = parsed[i].TotalInvValue;
+                }
+
+                for (j = 0; j < name.length; j++) {
+                    var temp = new Array(name[j], data[j]);
+                    dataArrayFinal[j] = temp;
+                }
+                //console.log(dataArrayFinal);
+
+                Highcharts.chart('Warehouse', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: ' ',
+                        //align: 'center',
+                        //verticalAlign: 'middle',
+                        //y: 50
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y} INR'
+                    },
+                    accessibility: {
+                        point: {
+                            valueSuffix: ' INR'
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: <BR> {point.y} INR',
+                            },
+                            center: ['50%', '45%'],
+                            showInLegend: true
+                        }
+                    },
+                    series: [{
+
+                        //innerSize: '50%',
+                        name: 'Total Inv Value',
+                        data: dataArrayFinal
+                    }],
+
+                    exporting: {
+                        filename: 'Total_Invrntory_Value'
+                    }
+                });
+
+                if (dataLength > 0) {
+                    $("#Warehouse").show();
+                    $("#NoDataFound").hide();
+                } else {
+                    $("#Warehouse").hide();
+                    $("#NoDataFound").show();
+
+                }
+
+            }
+
+        });
+    }
+
+</script>
+

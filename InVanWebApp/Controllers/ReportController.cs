@@ -6425,12 +6425,12 @@ namespace InVanWebApp.Controllers
             sb.Append("<th colspan=2 style='text-align:left;padding-right:-60px;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + Fromdate + " " + fromDate.ToString("dd/MM/yyyy"));
             sb.Append("</th></tr>");
             sb.Append("<tr >");
-            sb.Append("<th colspan=9 style='text-align:right;padding-right:-174px;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
+            sb.Append("<th colspan=8 style='text-align:right;padding-right:-174px;font-family:Times New Roman;padding-bottom:-290px;font-size:11px;'>" + Todate + " " + toDate.ToString("dd/MM/yyyy"));
             sb.Append("</th></tr>");
             sb.Append("<tr>");
             sb.Append("<th style='text-align:center;' Colspan='1'>" +
                 "<img height='150' width='150' src='" + strPath + "'/></th>");
-            sb.Append("<th Colspan='9' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:-150px'>");
+            sb.Append("<th Colspan='8' style='text-align:center;font-size:22px;padding-bottom:2px;padding-right:-150px'>");
             sb.Append("<label style='font-size:22px;font-weight:bold;color:Red;font-family:Times New Roman; bottom:20px;'>" + ReportName + "</label>");
             sb.Append("<br/>");
             sb.Append("<br/><label style='font-size:14px;font-family:Times New Roman;'>" + name + "</label>");
@@ -6440,16 +6440,17 @@ namespace InVanWebApp.Controllers
 
             sb.Append("<tr style='text-align:center;padding: 1px; font-family:Times New Roman;background-color:#dedede'>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:20%;font-size:10px;border: 0.05px  #e2e9f3;'>Sr. No.</th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:75%;font-size:10px;border: 0.05px  #e2e9f3;'>Vendor Name</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>PO Date</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>PO No</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>Transaction Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>Transaction Number</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>Transaction Type</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>Item Code</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:75%;font-size:10px;border: 0.05px  #e2e9f3;'>Item Name</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Opening Stock Quantity</ th>");
             sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock In Quantity</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock Issue Quantity</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Available Stock Quantity</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock Rejection Quantity</ th>");
-            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>Available Date</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock Out Quantity</ th>");
+            sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Closing Stock Quantity</ th>");
+            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:35%;font-size:10px;border: 0.05px  #e2e9f3;'>Stock Rejection Quantity</ th>");
+            //sb.Append("<th style='text-align:center;padding: 5px; font-family:Times New Roman;width:45%;font-size:10px;border: 0.05px  #e2e9f3;'>Available Date</ th>");
             sb.Append("</tr>");
 
             sb.Append("</thead>");
@@ -6459,17 +6460,18 @@ namespace InVanWebApp.Controllers
             {
                 sb.Append("<tr style='text-align:center;padding: 10px;'>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.SrNo + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.CompanyName + "</td>");
                 //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + Convert.ToDateTime(item.GRNDate).ToString("dd/MM/yyyy") + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.GRNDate + "</td>"); 
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.PO_Number + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.TransactionType + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.Item_Code + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.ItemName + "</td>");
+                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.OpeningStockQuantity + " " + "(" + item.ItemUnit + ")" + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockInQty + " " + "(" + item.ItemUnit + ")" + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockOutQty + " " + "(" + item.ItemUnit + ")" + "</td>");
                 sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.AvlQty + " " + "(" + item.ItemUnit + ")" + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockRejectionQty + " " + "(" + item.ItemUnit + ")" + "</td>");
-                sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + Convert.ToDateTime(item.AvlDate).ToString("dd/MM/yyyy") + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + item.StockRejectionQty + " " + "(" + item.ItemUnit + ")" + "</td>");
+                //sb.Append("<td style='text-align:center;padding: 10px;border: 0.01px #e2e9f3;font-size:10px; font-family:Times New Roman;'>" + Convert.ToDateTime(item.AvlDate).ToString("dd/MM/yyyy") + "</td>");
                 sb.Append("</tr>");
             }
             sb.Append("</tbody>");
@@ -6513,31 +6515,33 @@ namespace InVanWebApp.Controllers
 
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");
-            dt.Columns.Add("Vendor Name");
-            dt.Columns.Add("PO Date");
-            dt.Columns.Add("PO No");
+            dt.Columns.Add("Transaction Date");
+            dt.Columns.Add("Transaction Number");
+            dt.Columns.Add("Transaction Type");
             dt.Columns.Add("Item Code");
             dt.Columns.Add("Item Name");
+            dt.Columns.Add("Opening Stock Quantity");
             dt.Columns.Add("Stock In Quantity");
-            dt.Columns.Add("Stock Issue Quantity");
-            dt.Columns.Add("Available Stock Quantity");
-            dt.Columns.Add("Stock Rejection Quantity");
-            dt.Columns.Add("Available Stock Date");
+            dt.Columns.Add("Stock Out Quantity");
+            dt.Columns.Add("Closing Stock Quantity");
+            //dt.Columns.Add("Stock Rejection Quantity");
+            //dt.Columns.Add("Available Stock Date");
 
             foreach (StockMasterBO st in resultList)
             {
                 DataRow dr = dt.NewRow();
                 dr["Sr.No"] = st.SrNo.ToString();
-                dr["Vendor Name"] = st.CompanyName.ToString();
-                dr["PO No"] = st.PO_Number.ToString();
-                dr["PO Date"] = st.GRNDate.ToString();
+                dr["Transaction Date"] = st.GRNDate.ToString();
+                dr["Transaction Number"] = st.PO_Number.ToString();
+                dr["Transaction Type"] = st.TransactionType.ToString();
                 dr["Item Code"] = st.Item_Code.ToString();
                 dr["Item Name"] = st.ItemName.ToString();
+                dr["Opening Stock Quantity"] = st.OpeningStockQuantity.ToString() + " " + "(" + st.ItemUnit + ")";
                 dr["Stock In Quantity"] = st.StockInQty.ToString() + " " + "(" + st.ItemUnit + ")";
-                dr["Stock Issue Quantity"] = st.StockOutQty.ToString() + " " + "(" + st.ItemUnit + ")";
-                dr["Available Stock Quantity"] = st.AvlQty.ToString() + " " + "(" + st.ItemUnit + ")";
-                dr["Stock Rejection Quantity"] = st.StockRejectionQty.ToString() + " " + "(" + st.ItemUnit + ")";
-                dr["Available Stock Date"] = Convert.ToDateTime(st.AvlDate).ToString("dd/MM/yyyy");
+                dr["Stock Out Quantity"] = st.StockOutQty.ToString() + " " + "(" + st.ItemUnit + ")";
+                dr["Closing Stock Quantity"] = st.AvlQty.ToString() + " " + "(" + st.ItemUnit + ")";
+                //dr["Stock Rejection Quantity"] = st.StockRejectionQty.ToString() + " " + "(" + st.ItemUnit + ")";
+                //dr["Available Stock Date"] = Convert.ToDateTime(st.AvlDate).ToString("dd/MM/yyyy");
                 dt.Rows.Add(dr);
             }
             gv.DataSource = dt;
@@ -6565,10 +6569,10 @@ namespace InVanWebApp.Controllers
             String fromdate = Convert.ToDateTime(Session["FromDate"]).ToString("dd/MM/yyyy");
             string todate = Convert.ToDateTime(Session["toDate"]).ToString("dd/MM/yyyy");
             String content1 = "<table>" + "<tr><td colspan='2' rowspan='4'> <img height='100' width='150' src='" + strPath + "'/></td></td>" +
-               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;font-family:Times New Roman;color:Red;'>" + ReportName + "</span></td></tr>" +
-               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-size:15px;font-family:Times New Roman;font-weight:bold'>" + name + "</td></tr>" +
-               "<tr><td colspan='9' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
-               + "<tr><td colspan='9' style='text-align:left; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Fromdate + fromdate
+               "<tr><td colspan='8' style='text-align:center'><span align='center' style='font-size:25px;font-weight:bold;font-family:Times New Roman;color:Red;'>" + ReportName + "</span></td></tr>" +
+               "<tr><td colspan='8' style='text-align:center'><span align='center' style='font-size:15px;font-family:Times New Roman;font-weight:bold'>" + name + "</td></tr>" +
+               "<tr><td colspan='8' style='text-align:center'><span align='center' style='font-weight:bold;font-family:Times New Roman;'>" + address + "</td></tr>"
+               + "<tr><td colspan='8' style='text-align:left; font-size:15px;font-weight:bold;font-family:Times New Roman;'>" + Fromdate + fromdate
                + "</td><td colspan='2' style='text-align:right; font-size:15px;font-family:Times New Roman;font-weight:bold'>" + Todate + todate
                /*+ "</td></tr><tr><td colspan='20'></td></tr>"*/ + "</table>"
                + "<table style='text-align:left'><tr style='text-align:left'><td style='text-align:left'>" + sw.ToString() + "</tr></td></table>";

@@ -60,6 +60,8 @@ namespace InVanWebApp_BO
         public string AvlCurrency { get; set; }
         //Added below field for Item Ledger report 23-08-23.  
         public float StockRejectionQty { get; set; } 
+        public float OpeningStockQuantity { get; set; }  
+        public string TransactionType { get; set; }  
 
     }
 }

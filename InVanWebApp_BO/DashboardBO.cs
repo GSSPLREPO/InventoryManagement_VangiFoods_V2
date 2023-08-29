@@ -69,5 +69,19 @@ namespace InVanWebApp_BO
         public string SalesOrderNumber { get; set; }
         public int SalesOrderId { get; set; }
         public decimal RawMatrialCost { get; set; }
+
+        //Shweta added Main Dashboard 21-08-2023
+        /*-------------Start Main Dashboard---------------------------*/
+        public int PurchaseOpenCount { get; set; }
+        public int PurchaseCloseCount { get; set; }
+
+        public int PandingPayment { get; set; }
+        public int CompletePayment { get; set; }
+
+        public int InqConvToSales { get; set; }
+        public int TotalInq { get; set; }
+
+        /*-------------End Main Dashboard---------------------------*/
+
     }
 }

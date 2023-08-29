@@ -21,6 +21,7 @@ namespace InVanWebApp.Repository.Interface
         List<ReportBO> GetDashboardUtilityConsumptionProduction(int SO_ID, DateTime? fromDate = null, DateTime? toDate = null);
         IEnumerable<ReportBO> GetAllWorkOrderNumber();
         List<LocationWiseStockBO> GetTotalInventoryValue();
+        DashboardBO DashboardDataCount();
 
     }
 }

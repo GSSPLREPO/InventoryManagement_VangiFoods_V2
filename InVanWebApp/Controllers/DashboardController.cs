@@ -75,5 +75,21 @@ namespace InVanWebApp.Controllers
             ViewData["WorkOrderDD"] = UtilityConsumptionByWorkOrder;
         }
         #endregion
+
+        #region Home Dashboard
+        /// <summary>
+        /// Shweta: fatching data for Main Dashboard
+        /// </summary>
+        public ActionResult HomeDashboard()
+        {
+            if (Session[ApplicationSession.USERID] == null)
+                return RedirectToAction("Index", "Login");
+
+            var model = _repository.DashboardDataCount();
+
+            return View(model);
+        }
+
+        #endregion
     }
 }
