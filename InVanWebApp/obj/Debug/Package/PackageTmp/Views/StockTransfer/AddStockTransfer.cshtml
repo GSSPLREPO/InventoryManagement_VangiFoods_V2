@@ -355,6 +355,16 @@
                 alert('Select From Location');
 
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' for 'function SelectedIndexChangedFromLocation(id)' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#FromLocationId').focus();
             flag = 1;
             return;
@@ -364,6 +374,16 @@
                 alert('Select Different From Location');
             }
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' for 'function SelectedIndexChangedFromLocation(id)' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#FromLocationId').focus();
             flag = 1;
             return;
@@ -460,6 +480,16 @@
                 alert('Select To Location');
 
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' for 'SelectedIndexChangedToLocation(id)' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#ToLocationId').focus();
             flag = 1;
             return;
@@ -470,6 +500,16 @@
             }
             //alert('Select Different ToLocation');
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#ToLocationId').focus();
             flag = 1;
             return;
@@ -547,6 +587,16 @@
 
             alert('Select Different From Location and To Location');
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' for 'SelectedIndexChangedItemList(id)' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#FromLocationId').focus();
             flag = 1;
             return;
@@ -555,6 +605,16 @@
 
             alert('Select Different To Location and From Location');
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#ToLocationId').focus();
             flag = 1;
             return;
@@ -563,6 +623,16 @@
         else if (FromLocationCheck == ToLocationCheck) {
             alert('Select Different To Location and From Location');
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#ToLocationId').focus();
             flag = 1;
             return;
@@ -571,6 +641,16 @@
 
             alert('Select Different From Location and To Location');
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#FromLocationId').focus();
             flag = 1;
             return;
@@ -594,6 +674,16 @@
             //debugger
             alert('Select Different From Location and To Location');
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' for ' $("#Item_ID").change(function()' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#FromLocationId').focus();
             return;
         }
@@ -601,6 +691,16 @@
             //debugger
             alert('Select Different To Location and From Location');
             document.getElementById('Item_ID').selectedIndex = 0;
+            /*///Rahul added 'firstOption' start 17-08-23.*/
+            var firstOption = $('li.option:first');
+            if (firstOption.attr('data-value') === '') {
+                $('li.option').removeClass('selected');
+                firstOption.addClass('selected');
+                // Update the display text in the <div>
+                var newText = firstOption.text();
+                $('#divItem_ID .current').text(newText);
+            }
+            /*///Rahul added 'firstOption' end 17-08-23.*/
             $('#ToLocationId').focus();
             return;
         } else { getitemDetails();}

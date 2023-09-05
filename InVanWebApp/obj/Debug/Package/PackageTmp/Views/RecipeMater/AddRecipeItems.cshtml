@@ -84,7 +84,8 @@
                                                 <tbody id="myTableBody">
                                                     <tr id="tablerow">
                                                         <td>
-                                                            @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["Ingredients"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
+                                                            @*@Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["Ingredients"], "--Select Item--", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })*@
+                                                            @Html.DropDownList("Item_ID", (IEnumerable<SelectListItem>)ViewData["Ingredients"], "---------- Select Item ----------", new { @class = "form-control form-control-sm", style = "height:30px;", onchange = "SelectedIndexChangedItemList($(this).val())" })
                                                             <span id="ValMsgItemList" style="display:none; color:red"></span>
                                                         </td>
                                                         <td class="col-md-4 d-none">
@@ -114,7 +115,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
-                                            <br />  @*Vedant changed '+ Add Recipe' to '+ Add Item/Ingredient'*@
+                                            <br /><br /><br /><br />  @*Vedant changed '+ Add Recipe' to '+ Add Item/Ingredient'*@
                                             <button type="button" class="btn btn-sm btn-primary shadow" style="background: linear-gradient(85deg, #392c70, #6a005b);" id="AddRecipeItem">
                                                 +  Add Item/Ingredient
                                             </button>

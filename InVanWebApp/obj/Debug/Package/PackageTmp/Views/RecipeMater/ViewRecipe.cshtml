@@ -1,8 +1,6 @@
 ﻿@model InVanWebApp_BO.RecipeMasterBO
-@{
-    ViewBag.Title = "ViewRecipe";
-    Layout = "~/Views/Shared/MainMaster.cshtml";
-}
+@{ ViewBag.Title = "ViewRecipe";
+                Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <html>
 <head>
@@ -43,128 +41,134 @@
     @Html.HiddenFor(model => model.RecipeID)
     @using (Html.BeginForm())
     {
-        @Html.AntiForgeryToken()
-        <div class="row" id="printV" width="1000px">
-            <div class="col-md-12  grid-margin stretch-card">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">@*height:150px;*@
-                            <h3 class="card-title font-weight-bold col-4 mb-0 align-self-center" style="font-size: 30pt;">Recipe</h3>
-                            <div class="col">
-                                <div class="col-md-12">
-                                    @*<img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" style="width:45px;height:45px" class=" float-right" />*@
-                                    @*Shweta change Export pdf link formate 10-08-2023*@
-                                    <a id="ExportPdf" href="@Url.Action("ExportAsPDF", "RecipeMater")"> <img class="float-left" src="~/Theme/MainContent/images/ICON.png.png" style="width: 45px; height: 45px; padding-top: 1px; margin-top: 2%; margin-left: 500px" /> </a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <hr />
-
-                        <div class="col-md-12">
-                            <div style="font-size:110%; color:black">
+@Html.AntiForgeryToken()
+                <div class="row" id="printV" width="1000px">
+                    <div class="col-md-12  grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <label class="font-weight-bold">Product Name</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        @Html.DisplayFor(model => model.ProductName)
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="font-weight-bold">Recipe Name</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        @Html.DisplayFor(model => model.RecipeName)
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    @*added 'CreatedDate' 16-08-23.*@
-                                    <div class="col-md-2">
-                                        <label class="font-weight-bold">Date</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        @Html.DisplayFor(model => model.CreatedDate)
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label class="font-weight-bold">Description</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        @Html.DisplayFor(model => model.Description)
-                                    </div>
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-md-4" style="color:darkcyan">
-                                    @Html.Label("Recipe Ingredient Details")
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                            <table class="table table-hover" id="submissionTable" style="table-layout: auto;width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="sortStyle">#</th>
-                                                        <th class="sortStyle">Item Code</th>
-                                                        <th class="sortStyle">Item</th>
-                                                        <th class="sortStyle">Unit</th>
-                                                        <th class="sortStyle">Percentage (%)</th>
-                                                        <th class="sortStyle">Batch Size (KG)</th>
-                                                        <th class="sortStyle">Description</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="myTableBody">
-                                                    @{ int c = 1;
-                                                        foreach (var item in Model.recipe_Details)
-                                                        {
-                                                            <tr id="tablerow_@c">
-                                                                <td>
-                                                                    <label>@c.</label>
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemCode)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.ItemName)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.UnitName)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.Ratio)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.BatchSize)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(x => item.Description)
-                                                                </td>
-                                                            </tr>
-                                                            { c++; }
-                                                        } }
-                                                </tbody>
-                                            </table>
+                                    <img class="align-self-center" src="~/Theme/MainContent/images/Logo.svg" alt="client-logo" style="width:10%;">@*height:150px;*@
+                                    <h3 class="card-title font-weight-bold col-4 mb-0 align-self-center" style="font-size: 30pt;">Recipe</h3>
+                                    <div class="col">
+                                        <div class="col-md-12">
+                                            @*<img src="~/Theme/MainContent/images/ICON.png.png" id="btnExport" style="width:45px;height:45px" class=" float-right" />*@
+                                            @*Shweta change Export pdf link formate 10-08-2023*@
+                                            <a id="ExportPdf" href="@Url.Action("ExportAsPDF", "RecipeMater")"> <img class="float-left" src="~/Theme/MainContent/images/ICON.png.png" style="width: 45px; height: 45px; padding-top: 1px; margin-top: 2%; margin-left: 500px" /> </a>
                                         </div>
                                     </div>
 
                                 </div>
-                                <div class="col-md-4">
-                                    @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                <hr />
+
+                                <div class="col-md-12">
+                                    <div style="font-size:110%; color:black">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Product Name</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DisplayFor(model => model.ProductName)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Recipe Name</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DisplayFor(model => model.RecipeName)
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            @*added 'CreatedDate' 16-08-23.*@
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Date</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DisplayFor(model => model.CreatedDate)
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label class="font-weight-bold">Description</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                @Html.DisplayFor(model => model.Description)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    @*<div class="row">
+                                            <div class="col-md-4" style="color:darkcyan">
+                                                @Html.Label("Recipe Ingredient Details")
+                                            </div>
+                                        </div>*@
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <Center><h4 class="font-weight-bold">Recipe Ingredient Details</h4></Center>
+                                            <hr />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                    <table class="table table-hover" id="submissionTable" style="table-layout: auto;width: 100%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="sortStyle">#</th>
+                                                                <th class="sortStyle">Item Code</th>
+                                                                <th class="sortStyle">Item</th>
+                                                                <th class="sortStyle">Unit</th>
+                                                                <th class="sortStyle">Percentage (%)</th>
+                                                                <th class="sortStyle">Batch Size (KG)</th>
+                                                                <th class="sortStyle">Description</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="myTableBody">
+                                                            @{ int c = 1;
+                                                                foreach (var item in Model.recipe_Details)
+                                                                {
+                                                <tr id="tablerow_@c">
+                                                    <td>
+                                                        <label>@c.</label>
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.ItemCode)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.ItemName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.UnitName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.Ratio)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.BatchSize)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.Description)
+                                                    </td>
+                                                </tr>
+ { c++; }
+                                            } }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                        </div>
+                                    </div>
+                                    <a href="@Url.Action("Index", "RecipeMater")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                        Back To List
+                                    </a>
                                 </div>
                             </div>
-                            <a href="@Url.Action("Index", "RecipeMater")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
-                                Back To List
-                            </a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>}
+                </div>}
 </body>
 </html>
 

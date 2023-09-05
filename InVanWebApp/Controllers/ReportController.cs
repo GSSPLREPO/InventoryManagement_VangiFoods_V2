@@ -3505,6 +3505,17 @@ namespace InVanWebApp.Controllers
             var dd = new SelectList(recipeList.ToList(), "ID", "Item_Code", "UOM_Id");
             ViewData["Item"] = dd; 
         }
+        /// <summary>
+        /// Rahul: Bind Transaction Type DropDown 
+        /// Date: 05-08-23.  
+        /// </summary>
+        /// <returns></returns>
+        public void BindTransactionTypeDropDown() 
+        {
+            var model = _reportRepository.GetAllTransactionType();
+            var TransactionType_dd = new SelectList(model.ToList(), "ID", "TransactionType");
+            ViewData["TransactionType"] = TransactionType_dd;
+        }
 
         #endregion
 
@@ -6362,7 +6373,9 @@ namespace InVanWebApp.Controllers
                 StockMasterBO model = new StockMasterBO();
                 model.fromDate = DateTime.Today;
                 model.toDate = DateTime.Today;
-                BindItemTypeCategoryDropDown();  
+                BindItemTypeCategoryDropDown();
+                BindLocationDropDown();
+                BindTransactionTypeDropDown();
                 return View(model);
             }
             else
@@ -6374,12 +6387,14 @@ namespace InVanWebApp.Controllers
         /// Calling method for Item Ledger Report data  
         /// </summary>
         /// <returns></returns>
-        public JsonResult GetItemLedgerReportData(DateTime fromDate, DateTime toDate, int ItemId) 
+        public JsonResult GetItemLedgerReportData(DateTime fromDate, DateTime toDate, int ItemId, int LocationId, string TransactionType) 
         {
             Session["FromDate"] = fromDate;
             Session["ToDate"] = toDate;
             Session["ItemId"] = ItemId;
-            var ReportResult = _repository.getItemLedgerReportData(fromDate, toDate, ItemId); 
+            Session["LocationId"] = LocationId;
+            Session["TransactionType"] = TransactionType;
+            var ReportResult = _repository.getItemLedgerReportData(fromDate, toDate, ItemId, LocationId, TransactionType); 
             return Json(new { data = ReportResult }, JsonRequestBehavior.AllowGet);
         }
         #endregion
@@ -6399,7 +6414,9 @@ namespace InVanWebApp.Controllers
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
             var itemId = Convert.ToInt32(Session["ItemId"]);
-            var resultDetails = _repository.getItemLedgerReportData(fromDate, toDate, itemId); 
+            var locationId = Convert.ToInt32(Session["LocationId"]);
+            var transactionType = Convert.ToString(Session["TransactionType"]); 
+            var resultDetails = _repository.getItemLedgerReportData(fromDate, toDate, itemId, locationId, transactionType); 
 
             TempData["ReportDataTemp"] = resultDetails;
             if (TempData["ReportDataTemp"] == null)
@@ -6510,8 +6527,10 @@ namespace InVanWebApp.Controllers
             DateTime fromDate = Convert.ToDateTime(Session["FromDate"]);
             DateTime toDate = Convert.ToDateTime(Session["ToDate"]);
             var itemId = Convert.ToInt32(Session["ItemId"]);
+            var locationId = Convert.ToInt32(Session["LocationId"]);
+            var transactionType = Convert.ToString(Session["transactionType"]);
 
-            List<StockMasterBO> resultList = _repository.getItemLedgerReportData(fromDate, toDate, itemId); 
+            List<StockMasterBO> resultList = _repository.getItemLedgerReportData(fromDate, toDate, itemId, locationId, transactionType); 
 
             DataTable dt = new DataTable();
             dt.Columns.Add("Sr.No");

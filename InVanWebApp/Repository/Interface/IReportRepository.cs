@@ -93,6 +93,8 @@ namespace InVanWebApp.Repository.Interface
         //Rejection Type wise Report data        
         List<RejectionNoteItemDetailsBO> getRejectionTypeWiseReportData(DateTime fromDate, DateTime toDate, int rejectionNumber, int RejectionType = 0, int PreProductionQCId=0, int PostProductionRNId=0, int IntermediateRNId = 0);
         //Item Ledger Report data 
-        List<StockMasterBO> getItemLedgerReportData(DateTime fromDate, DateTime toDate, int itemId); 
+        List<StockMasterBO> getItemLedgerReportData(DateTime fromDate, DateTime toDate, int itemId,int locationId,string transactionType);
+        //Bind All TransactionT ype list from TransactionLogs Table 
+        IEnumerable<StockMasterBO> GetAllTransactionType();
     }
 }

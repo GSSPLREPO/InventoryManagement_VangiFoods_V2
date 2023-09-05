@@ -1604,7 +1604,7 @@ namespace InVanWebApp.Repository
         /// <param name="toDate">To Date of Report</param>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public List<StockMasterBO> getItemLedgerReportData(DateTime fromDate, DateTime toDate, int itemId) 
+        public List<StockMasterBO> getItemLedgerReportData(DateTime fromDate, DateTime toDate, int itemId,int locationId, string transactionType) 
         {
             List<StockMasterBO> resultList = new List<StockMasterBO>();
             try
@@ -1615,6 +1615,8 @@ namespace InVanWebApp.Repository
                     cmd.Parameters.AddWithValue("@fromDate", fromDate);
                     cmd.Parameters.AddWithValue("@toDate", toDate);
                     cmd.Parameters.AddWithValue("@ItemID", itemId);
+                    cmd.Parameters.AddWithValue("@TransactionType", transactionType); 
+                    cmd.Parameters.AddWithValue("@LocationId", locationId);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     con.Open();
@@ -1623,19 +1625,18 @@ namespace InVanWebApp.Repository
                     {
                         var result = new StockMasterBO()
                         {
-                            SrNo = Convert.ToInt32(reader["SrNo"]),                            
-                            GRNDate = reader["Transaction_Date"] is DBNull ? "" : Convert.ToDateTime(reader["Transaction_Date"]).ToString("dd/MM/yyyy").Trim(),
-                            PO_Number = reader["Transaction_No"].ToString(),
+                            SrNo = Convert.ToInt32(reader["SrNo"]),
+                            GRNDate = reader["TransactionDate"] is DBNull ? "" : Convert.ToDateTime(reader["TransactionDate"]).ToString("dd/MM/yyyy").Trim(),
+                            PO_Number = reader["TransactionNo"].ToString(),
                             TransactionType = reader["TransactionType"].ToString(), 
+                            LocationId = Convert.ToInt32(reader["LocationId"]),       //Rahul 'LocationId' added 05-08-23.                       
                             ItemID = reader["ItemId"] is DBNull ? 0 : Convert.ToInt32(reader["ItemId"]),
-                            Item_Code = reader["ItemCode"].ToString(),
-                            ItemName = reader["ItemName"].ToString(),
+                            Item_Code = reader["Item_Code"].ToString(),
+                            ItemName = reader["Item_Name"].ToString(),
                             OpeningStockQuantity = reader["OpeningStockQuantity"] is DBNull ? 0 : float.Parse(reader["OpeningStockQuantity"].ToString()),
-                            StockInQty = reader["StockInQty"] is DBNull ? 0 : float.Parse(reader["StockInQty"].ToString()),
-                            StockOutQty = reader["StockOutQty"] is DBNull ? 0 : float.Parse(reader["StockOutQty"].ToString()),
-                            AvlQty = reader["StockClosingQty"] is DBNull ? 0 : float.Parse(reader["StockClosingQty"].ToString()),
-                            //StockRejectionQty = reader["StockRejectionQty"] is DBNull ? 0 : float.Parse(reader["StockRejectionQty"].ToString()),
-                            //AvlDate = reader["AvlDate"] is DBNull ? "" : Convert.ToDateTime(reader["AvlDate"]).ToString("dd/MM/yyyy hh:mm:ss").Trim(),
+                            StockInQty = reader["StockInQuantity"] is DBNull ? 0 : float.Parse(reader["StockInQuantity"].ToString()),
+                            StockOutQty = reader["StockOutQuantity"] is DBNull ? 0 : float.Parse(reader["StockOutQuantity"].ToString()),
+                            AvlQty = reader["ClosingStockQuantity"] is DBNull ? 0 : float.Parse(reader["ClosingStockQuantity"].ToString()),
                         };
                         resultList.Add(result);
                     }
@@ -1650,6 +1651,45 @@ namespace InVanWebApp.Repository
             }
             return resultList;
         }
+        #endregion
+
+        #region  Bind All TransactionT ype list from TransactionLogs Table
+        /// <summary>
+        /// Siddharth: This function is for fatching the All TransactionT ype list from TransactionLogs Table 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<StockMasterBO> GetAllTransactionType() 
+        {
+            List<StockMasterBO> resultList = new List<StockMasterBO>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conStr))
+                {
+                    //SqlCommand cmd = new SqlCommand("usp_tbl_BatchNumber_Get", con);
+                    SqlCommand cmd = new SqlCommand("usp_tbl_TransactionLogs_GetAllTransactionType", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); //returns the set of row.
+                    while (reader.Read())
+                    {
+                        var result = new StockMasterBO() 
+                        {
+                            ID = Convert.ToInt32(reader["ID"]),
+                            TransactionType = reader["TransactionType"].ToString() 
+                        };
+                        resultList.Add(result);
+                    }
+                    con.Close();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+            }
+            return resultList;
+        }
+
         #endregion
 
     }

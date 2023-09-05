@@ -121,25 +121,28 @@
                                         @Html.DisplayFor(model => model.CompanyName)
                                     </div>
                                 </div>
-                                </div>
-                                <br />
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <h4 class="card-title" style="color:darkgreen;font-size:120%;">Delivery Details</h4>
-                                        <hr />
-                                        @Html.TextBoxFor(model => model.DeliveryAddress, new { style = "border:none; width:100%", @readonly = "readonly", @class = "text-wrap" })
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Supplier Address</label>
                                     </div>
-                                    <div class="col-md-6">
-                                        <h4 class="card-title" style="color:darkgreen;font-size:120%;">Supplier Details</h4>
-                                        <hr />
-                                        @Html.TextBoxFor(model => model.SupplierAddress, new { style = "border:none; width:100%", @readonly = "readonly", @class="text-wrap" })
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.DeliveryAddress)
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label class="font-weight-bold">Client Address</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.DisplayFor(model => model.SupplierAddress)
                                     </div>
                                 </div>
+                            </div>
+                                <br />
                                 <br />
                                 <hr />
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <Center><h5 class="font-weight-bold">Item Details</h5></Center>
+                                        <Center><h4 class="font-weight-bold">Item Details</h4></Center>
                                         <hr />
                                     </div>
                                 </div>

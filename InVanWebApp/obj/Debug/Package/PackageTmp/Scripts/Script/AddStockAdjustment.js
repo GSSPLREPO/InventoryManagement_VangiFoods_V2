@@ -112,8 +112,8 @@ function SaveBtnClick() {
         while (i < tableLength - 1) {
             var PhyQty = document.getElementById("txtPhysicalStock_" + i).value;
             PhyQty = parseFloat(PhyQty);
-
-            if (PhyQty != 0) {
+            //debugger ///Rahul added 'if (PhyQty != 0 || PhyQty== 0)' for 'function SaveBtnClick()' 17-08-23. 
+            if (PhyQty != 0 || PhyQty== 0) { 
                 flag = 1;
                 var Comments = document.getElementById("txtRemarks_" + i).value;
                 if (Comments == '' || Comments == null) {
@@ -518,7 +518,7 @@ function OnChangeQty(value, id) {
 
 var TxtItemDetails = "";
 
-function createJson() {
+function createJson() { ///debugger 
     var table = document.getElementById('submissionTable');
     var rowCount = table.rows.length;
     var i = 0, flag = 0;
@@ -544,10 +544,10 @@ function createJson() {
 
         var Remarks = (document.getElementById("txtRemarks_" + i)).value;
 
-        if (PhyQty == 0) {
-            i++;
-            continue;
-        }
+        //if (PhyQty == 0) {   ///Rahul removed 'if (PhyQty == 0)' for 'VAN-1214' 17-08-23. 
+        //    i++;
+        //    continue;
+        //}
         ///Rahul added 'var ItemSelected' start 31-07-23.
         if (ItemSelected == false) {
             i++;
@@ -559,8 +559,9 @@ function createJson() {
             ", \"ItemName\": \"" + ItemName + "\", \"ItemUnitPrice\": " + PricePerUnit +
             ", \"CurrencyName\": \"" + CurrencyName + "\", \"AvlStock\": " + AvailableStock + ", \"ItemUnit\": \"" + Unit +
             "\", \"PhyQty\": " + PhyQty + ",\"DiffQty\": " + DiffQty +
-            ", \"TransPrice\": " + TransPrice + ",\"Remarks\": \"" + Remarks + "\", \"ItemSelected\":" + ItemSelected;
+            ", \"TransPrice\": " + TransPrice + ",\"Remarks\": \"" + Remarks + "\", \"ItemSelected\":\"" + ItemSelected + "\"";
         ///Rahul added 'var ItemSelected' in 'TxtItemDetails' end 31-07-23.
+
         if (i == (rowCount - 1)) {
             TxtItemDetails = TxtItemDetails + "}";
             flag = 1;
@@ -577,6 +578,7 @@ function createJson() {
         TxtItemDetails = tempTxt + "]";
 
     $('#TxtItemDetails').val(TxtItemDetails);
+    alert('TxtItemDetails: ' + TxtItemDetails);
 }
 
 function isNumberKey(evt) {

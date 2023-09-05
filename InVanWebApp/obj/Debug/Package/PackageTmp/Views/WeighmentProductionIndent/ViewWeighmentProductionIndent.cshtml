@@ -1,7 +1,7 @@
-﻿@model InVanWebApp_BO.Weighment_ProductionIndentBO 
+﻿@model InVanWebApp_BO.Weighment_ProductionIndentBO
 
 @{ ViewBag.Title = "ViewWeighmentProductionIndent";
-                Layout = "~/Views/Shared/MainMaster.cshtml"; }
+    Layout = "~/Views/Shared/MainMaster.cshtml"; }
 
 <html>
 <head>
@@ -12,6 +12,7 @@
             width: 3000px !important;
             height: 2000px !important;
         }
+
         #submissionTable tr td {
             white-space: normal;
             table-layout: auto;
@@ -75,22 +76,37 @@
                                                 @Html.TextBoxFor(model => model.WeighmentDate, "{0:yyyy-MM-dd}", new { style = "border:none; color:black; padding-top:1%; padding-left: 0.05%;font-size: 100%;", @readonly = "readonly" })
                                             </div>
                                         </div>
+                                        @*<div class="row">
+                                                <div class="col-md-2">
+                                                    <label class="font-weight-bold">Indent Number</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.DisplayFor(model => model.ProductionIndentNo)
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <label class="font-weight-bold">Indent By</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    @Html.DisplayFor(model => model.UserName)
+                                                </div>
+                                            </div>*@
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <label class="font-weight-bold">Indent Number</label>
+                                                <label class="font-weight-bold">Batch Number</label>
                                             </div>
                                             <div class="col-md-4">
-                                                @Html.DisplayFor(model => model.ProductionIndentNo)
-                                            </div>                                         
-                                        </div>
-                                        <div class="row">
+                                                @Html.DisplayFor(model => model.BatchNumber)
+                                            </div>
                                             <div class="col-md-2">
-                                                <label class="font-weight-bold">Indent By</label>
+                                                <label class="font-weight-bold">Batch Planning No.</label>
                                             </div>
                                             <div class="col-md-4">
-                                                @Html.DisplayFor(model => model.UserName)
-                                            </div>                                           
+                                                @Html.DisplayFor(model => model.BatchPlanningDocumentNo)
+                                            </div>
                                         </div>
+
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <label class="font-weight-bold">Product Name</label>
@@ -120,136 +136,121 @@
                                                 @Html.DisplayFor(model => model.WorkOrderNo)
                                             </div>
                                         </div>
-                                        <br />
-                                        <div class="row">
+                                        <div class="row">                                          
                                             <div class="col-md-2">
-                                                <label class="font-weight-bold">Batch Number</label>
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.DisplayFor(model => model.BatchNumber)
-                                            </div>
-                                            <div class="col-md-6">
                                                 <label class="font-weight-bold">Remarks</label>
-                                                <hr />
-                                                @Html.TextAreaFor(model => model.Description, new { style = "border:none; width:100%", @readonly = "readonly" })
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <label class="font-weight-bold">Batch Planning No.</label>
                                             </div>
                                             <div class="col-md-4">
-                                                @Html.DisplayFor(model => model.BatchPlanningDocumentNo)
+                                                @Html.DisplayFor(model => model.Description, new { style = "border:none; width:100%", @readonly = "readonly" })
                                             </div>
                                         </div>
                                     </div>
-                                        <br />
-                                        <hr />
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <Center><h5 class="font-weight-bold">Item Details</h5></Center>
-                                                <hr />
-                                            </div>
-                                        </div>
+                                    <br />
+                                    <hr />
+                                    <div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="table-sorter-wrapper col-lg-12 table-responsive">
-                                                        @*Rahul removed class table-striped and added class table-hover in table tag 16-02-2023.*@
-                                                        <table class="table table-hover" id="submissionTable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="sortStyle">
-                                                                        #
-                                                                    </th>
-                                                                    <th class="sortStyle">
-                                                                        Item Code
-                                                                    </th>
-                                                                    <th class="sortStyle">
-                                                                        Item Name
-                                                                    </th>
-                                                                    <th class="sortStyle">
-                                                                        Percentage (%)
-                                                                    </th>
-                                                                    <th class="sortStyle">
-                                                                        Batch Quantity (Kg)
-                                                                    </th>
-                                                                    <th class="sortStyle">
-                                                                        Final Quantity (Kg)
-                                                                    </th>
-                                                                    <th class="sortStyle">Units</th>
-                                                                    <th class="sortStyle">Weight</th>
-                                                                    <th class="sortStyle">Difference</th>
-
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="myTableBody">
-                                                                @{ int c = 1;
-                                                                    foreach (var item in Model.indent_Details)
-                                                                    {
-                                                    <tr id="tablerow_@c">
-                                                        <td>
-                                                            <label>@c.</label>
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(x => item.ItemCode)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(x => item.ItemName)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(x => item.Percentage)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(x => item.ItemUnit)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(x => item.FinalQuantity)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(x => item.ItemUnit)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(x => item.Weight)
-                                                        </td>
-                                                        <td>
-                                                            @Html.DisplayFor(x => item.Difference)
-                                                        </td>
-                                                    </tr>
- { c++; }
-                                                } }
-
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                                <br />
-                                            </div>
-                                            <div class="col-md-4">
-                                                @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
-                                            </div>
+                                            <Center><h4 class="font-weight-bold">Item Details</h4></Center>
+                                            <hr />
                                         </div>
-
-                                        <br />
-                                        <br />
-                                        <div class="row">
-                                            <div class="col-md-10"></div>
-                                            <div class="col-md-2">
-
-                                                @*<div id="imagePreview">
-                        <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
-                        @Html.HiddenFor(x => x.Signature)
-                    </div>*@
-                                                @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
-                                                <p class="font-weight-bold"> Authorized Signature</p>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <a href="@Url.Action("Index", "WeighmentProductionIndent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
-                                            Back To List
-                                        </a>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="table-sorter-wrapper col-lg-12 table-responsive">
+                                                    @*Rahul removed class table-striped and added class table-hover in table tag 16-02-2023.*@
+                                                    <table class="table table-hover" id="submissionTable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="sortStyle">
+                                                                    #
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Item Code
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Item Name
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Percentage (%)
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Batch Quantity (Kg)
+                                                                </th>
+                                                                <th class="sortStyle">
+                                                                    Final Quantity (Kg)
+                                                                </th>
+                                                                <th class="sortStyle">Units</th>
+                                                                <th class="sortStyle">Weight</th>
+                                                                <th class="sortStyle">Difference</th>
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="myTableBody">
+                                                            @{ int c = 1;
+                                                                foreach (var item in Model.indent_Details)
+                                                                {
+                                                <tr id="tablerow_@c">
+                                                    <td>
+                                                        <label>@c.</label>
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.ItemCode)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.ItemName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.Percentage)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.ItemUnit)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.FinalQuantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.ItemUnit)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.Weight)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(x => item.Difference)
+                                                    </td>
+                                                </tr> { c++; }
+                                                                } }
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <br />
+                                        </div>
+                                        <div class="col-md-4">
+                                            @Html.TextBoxFor(model => model.TxtItemDetails, new { style = "display:none" })
+                                        </div>
+                                    </div>
+
+                                    <br />
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-md-10"></div>
+                                        <div class="col-md-2">
+
+                                            @*<div id="imagePreview">
+                                                    <img src="/Signatures/@Model.Signature" style="height:80%;width:60%" />
+                                                    @Html.HiddenFor(x => x.Signature)
+                                                </div>*@
+                                            @*<img src="@ViewBag.ImageURL" style="height:200px;width:200px;" />*@
+                                            <p class="font-weight-bold"> Authorized Signature</p>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <a href="@Url.Action("Index", "WeighmentProductionIndent")" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b); float: right;" id="btnBack">
+                                        Back To List
+                                    </a>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>}
@@ -263,7 +264,8 @@
 <script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/jspdf.min.js"></script>
 <script src="~/Theme/MainContent/jspdf.min.js_1.5.3/unpkg/html2canvas.js"></script>
 
-<script type="text/javascript">$(document).ready(function () {
+<script type="text/javascript">
+    $(document).ready(function () {
         CalculateTotalBeforeTax();
         var type = $('#CurrencyName').val();
         if (type != null) {
