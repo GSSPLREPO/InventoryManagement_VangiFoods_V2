@@ -61,7 +61,8 @@ namespace InVanWebApp_BO
         //Added below field for Item Ledger report 23-08-23.  
         public float StockRejectionQty { get; set; } 
         public float OpeningStockQuantity { get; set; }  
-        public string TransactionType { get; set; }  
+        public string TransactionType { get; set; }
+        public Nullable<int> LocationId { get; set; } //Rahul added 05-08-23. 
 
     }
 }

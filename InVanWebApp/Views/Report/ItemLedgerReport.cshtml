@@ -49,7 +49,7 @@
                                     <div class="col-md-2">
                                         <button id="btnGo" type="button" value="Go" name="Go" class="btn btn-sm btn-primary" style="background: linear-gradient(85deg, #392c70, #6a005b);">Go</button>
                                         <a id="ExportPdf" href="@Url.Action("ExprotAsPDFForItemLedgerReport", "Report")"> <img src="~/Theme/MainContent/images/ICON.png.png" style="width:45px;height:45px;padding-top:1px" /> </a>
-                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForItemLedgerReport", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a> 
+                                        <a id="ExportExcel" href="@Url.Action("ExportAsExcelForItemLedgerReport", "Report")"> <img src="~/Theme/MainContent/images/Excel_Icon_04.png" style="width:45px;height:45px;padding-top:1px" /> </a>
                                     </div>
 
                                 </div>
@@ -61,24 +61,46 @@
                                         @Html.DropDownList("Item", (IEnumerable<SelectListItem>)ViewData["Item"], "--ALL--", new { @class = "form-control", @id = "ItemId", onchange = "SelectedIndexChangedItem()" })
                                         @Html.ValidationMessage("Item", "", new { id = "ItemValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
+
+                                    <div class="col-md-2 ms-1">
+                                        <label>Location:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.DropDownList("LocationName", (IEnumerable<SelectListItem>)ViewData["WearhouseLocation"], "--Select--", new { @class = "form-control DropdownRegular", @id = "LocationNameId", onchange = "SelectedIndexChangedItem()" })
+                                        @Html.ValidationMessage("LocationName", "", new { id = "LocationNameValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 ms-1">
+                                        <label>Transaction Type:</label>
+                                        <span style="color:red">*</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        @Html.DropDownList("TransactionType", (IEnumerable<SelectListItem>)ViewData["TransactionType"], "--Select--", new { @class = "form-control DropdownRegular", @id = "TransactionTypeId", onchange = "SelectedIndexChangedTransactionType($(this).val())" })
+                                        @Html.ValidationMessage("TransactionType", "", new { id = "TransactionTypeValidate", @class = "col-form-label error mt-2 text-danger" })
+                                    </div>
+                                    <div class="col-md-3 d-none">
+                                        @Html.TextBoxFor(model => model.TransactionType, new { @class = "form-control form-control-sm", Value = "", @readonly = "readonly" })
+                                    </div>
                                 </div>
                                 <br />
                                 <div style="margin-top:25px;">
                                     <table class="ui celled table table-striped table-bordered hover table-sm display nowrap" id="tblInward" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th class="text-wrap" style="text-align:center">Sr.No.</th>                                                
+                                                <th class="text-wrap" style="text-align:center">Sr.No.</th>
                                                 <th class="text-wrap" style="text-align:center">Transaction Date</th>
                                                 <th class="text-wrap" style="text-align:center">Transaction Number</th>
                                                 <th class="text-wrap" style="text-align:center">Transaction Type</th>
                                                 @*<th class="d-none" style="text-align:center">ItemId</th>*@
                                                 <th class="text-wrap" style="text-align:center">Item Code</th>
-                                                <th class="text-wrap" style="text-align:center">Item Name</th> 
-                                                <th class="text-wrap" style="text-align:center">Opening Stock Quantity</th>                                                
+                                                <th class="text-wrap" style="text-align:center">Item Name</th>
+                                                <th class="text-wrap" style="text-align:center">Opening Stock Quantity</th>
                                                 <th class="text-wrap" style="text-align:center">Stock In Quantity</th>
-                                                <th class="text-wrap" style="text-align:center">Stock Out Quantity</th>                                                
-                                                <th class="text-wrap" style="text-align:center">Closing Stock Quantity</th>                                                
-                                                @*<th style="text-align:center">Available Date</th>*@                                               
+                                                <th class="text-wrap" style="text-align:center">Stock Out Quantity</th>
+                                                <th class="text-wrap" style="text-align:center">Closing Stock Quantity</th>
+                                                @*<th style="text-align:center">Available Date</th>*@
                                             </tr>
                                         </thead>
                                         <tbody class="text-center"></tbody>
@@ -217,6 +239,15 @@
             $('#ItemValidate').hide();
         }
 
+        function SelectedIndexChangedTransactionType(id) {
+            //$('#valMsgTransactionType').hide();
+
+            var selectedOptionTransactionType, TransactionType;
+            selectedOptionTransactionType = document.getElementById("TransactionTypeId").selectedIndex;
+            TransactionType = document.getElementById("TransactionTypeId").options[selectedOptionTransactionType].innerText;
+            document.getElementById("TransactionType").value = TransactionType;
+        }
+
         function OnChangedFromDate() {
             $('#fromDateValidate').hide();
         }
@@ -268,13 +299,28 @@
             //if (item == '' || item == nul) {
             //    item = 0;
             //}
-                  
+
+            //var locationId = 1; 
+            //var transactionType = 'GRN';
+
+            var locationId = $('#LocationNameId').val();
+            if (locationId == '' || locationId == null) {
+                locationId = 0;
+            }
+            
+            var transactionType = $('#TransactionType').val();
+            //var transactionType = $('#TransactionTypeId').val();
+            //if (transactionType == '' || transactionType == null) {
+            //    transactionType = 0;
+            //}
+
+
             $('#tblInward').dataTable().fnDestroy();
             var t = $('#tblInward').DataTable({
                 //"processing": true, // for show progress bar
                 "serverSide": false, // for process server side
                 "filter": true, // this is for disable filter (search box)
-                "sAjaxSource": "/Report/GetItemLedgerReportData?fromDate=" + fromDate + "&toDate=" + toDate +  "&ItemId=" + item,
+                "sAjaxSource": "/Report/GetItemLedgerReportData?fromDate=" + fromDate + "&toDate=" + toDate + "&ItemId=" + item + "&LocationId=" + locationId + "&TransactionType=" + transactionType,
                 "initComplete": function (settings, json) {
                     var result = JSON.stringify(json);
                     flag = parseFloat(result.length);
