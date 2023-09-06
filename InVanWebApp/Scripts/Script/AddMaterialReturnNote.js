@@ -736,7 +736,7 @@ function createJson() {
 
     $('#txtItemDetails').val(TxtItemDetails);
 
-    alert(TxtItemDetails);
+    //// alert(TxtItemDetails);
 }
 
 function isNumberKey(evt) {

@@ -380,7 +380,7 @@ function SetInwardQty() {
             var POQty = document.getElementById("ItemQty" + i).innerHTML; debugger
             var BalQty = document.getElementById("txtBalanceQty" + i).value; ///Rahul added 'txtBalanceQty' 08-08-23 start.
             var PhyQtyId = $("#txtInwardQty" + i);
-            if (BalQty != 0) {
+            if (BalQty < 0) {
                 alert("Delivered quantity cannot be greater then balanced quantity!");
                 document.getElementById(PhyQtyId[0].id).focus();
                 document.getElementById(PhyQtyId[0].id).setAttribute("class", "border border-1 border-danger");
@@ -391,7 +391,7 @@ function SetInwardQty() {
                 //continue;
                 //return;
             }            
-            
+            //Rahul updated 'if (BalQty != 0)' to 'if (BalQty < 0)' 06-08-23.
             ///Rahul added 'txtBalanceQty' 08-08-23 start.
             DelvQty = DelvQty.split(' ')[0];
             DelvQty = parseFloat(DelvQty);

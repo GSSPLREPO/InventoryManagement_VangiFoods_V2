@@ -56,6 +56,7 @@
                                 <div class="row">
                                     <div class="col-md-2 ms-1">
                                         <label>Item:</label>
+                                        <span style="color:red">*</span> 
                                     </div>
                                     <div class="col-md-3">
                                         @Html.DropDownList("Item", (IEnumerable<SelectListItem>)ViewData["Item"], "--ALL--", new { @class = "form-control", @id = "ItemId", onchange = "SelectedIndexChangedItem()" })
@@ -77,7 +78,15 @@
                                         <span style="color:red">*</span>
                                     </div>
                                     <div class="col-md-3">
-                                        @Html.DropDownList("TransactionType", (IEnumerable<SelectListItem>)ViewData["TransactionType"], "--Select--", new { @class = "form-control DropdownRegular", @id = "TransactionTypeId", onchange = "SelectedIndexChangedTransactionType($(this).val())" })
+                                        @*@Html.DropDownList("TransactionType", (IEnumerable<SelectListItem>)ViewData["TransactionType"], "--Select--", new { @class = "form-control DropdownRegular", @id = "TransactionTypeId", onchange = "SelectedIndexChangedTransactionType($(this).val())" })*@
+                                        @*@Html.ValidationMessage("TransactionType", "", new { id = "TransactionTypeValidate", @class = "col-form-label error mt-2 text-danger" })*@
+                                        @Html.DropDownListFor(model => model.TransactionType, new List<SelectListItem>{
+                                        new SelectListItem{ Text="All", Value = "All" },
+                                        new SelectListItem{ Text="Purchase", Value = "Purchase" },
+                                        new SelectListItem{ Text="Consumption", Value = "Consumption" },
+                                        new SelectListItem{ Text="ProductionReturn", Value = "ProductionReturn" },
+                                        new SelectListItem{ Text="Rejection", Value = "Rejection" }
+                                        }, new { @class = "form-control DropdownRegular", @id = "TransactionTypeId", onchange = "SelectedIndexChangedTransactionType($(this).val())" })
                                         @Html.ValidationMessage("TransactionType", "", new { id = "TransactionTypeValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
                                     <div class="col-md-3 d-none">
