@@ -85,7 +85,11 @@
                                         new SelectListItem{ Text="Purchase", Value = "Purchase" },
                                         new SelectListItem{ Text="Consumption", Value = "Consumption" },
                                         new SelectListItem{ Text="ProductionReturn", Value = "ProductionReturn" },
-                                        new SelectListItem{ Text="Rejection", Value = "Rejection" }
+                                        new SelectListItem{ Text="Rejection", Value = "Rejection" },
+                                        new SelectListItem{ Text="StockTransfer", Value = "StockTransfer" },
+                                        new SelectListItem{ Text="StockAdjustment", Value = "StockAdjustment" }, 
+                                        new SelectListItem{ Text="FinishGoodSeries", Value = "FinishGoodSeries" }, 
+                                        new SelectListItem{ Text="PostProductionRejection", Value = "PostProductionRejection" }
                                         }, new { @class = "form-control DropdownRegular", @id = "TransactionTypeId", onchange = "SelectedIndexChangedTransactionType($(this).val())" })
                                         @Html.ValidationMessage("TransactionType", "", new { id = "TransactionTypeValidate", @class = "col-form-label error mt-2 text-danger" })
                                     </div>
@@ -317,7 +321,7 @@
                 locationId = 0;
             }
             
-            var transactionType = $('#TransactionType').val();
+            var transactionType = $('#TransactionTypeId').val();
             //var transactionType = $('#TransactionTypeId').val();
             //if (transactionType == '' || transactionType == null) {
             //    transactionType = 0;

@@ -578,7 +578,7 @@ function createJson() { ///debugger
         TxtItemDetails = tempTxt + "]";
 
     $('#TxtItemDetails').val(TxtItemDetails);
-    alert('TxtItemDetails: ' + TxtItemDetails);
+    /// alert('TxtItemDetails: ' + TxtItemDetails);
 }
 
 function isNumberKey(evt) {
